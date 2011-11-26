@@ -1,0 +1,33 @@
+﻿@using MethodFitness.Web;
+@using HtmlTags
+
+    @RenderSection("ExtraCss", false)
+
+    @RenderSection("HeaderScripts", false)
+
+<script>
+    var gridDef=  @MvcHtmlString.Create(JsonUtil.ToJson(Model.GridDefinition));
+    var addEditUrl = "@MvcHtmlString.Create(Model.AddEditUrl)";
+    var deleteMultipleUrl = "@MvcHtmlString.Create(Model.DeleteMultipleUrl)";
+    var contentArea;
+    var gridControllerOptions = { gridDef: gridDef,
+        addEditUrl: addEditUrl,
+        deleteMultipleUrl: deleteMultipleUrl,
+        el:"#masterArea"
+    };
+        @RenderSection("HeaderJavascript", false)
+</script>
+
+   <div class="content-header">
+        <input class="search" /> 
+        @RenderSection("ExtraContentHeaderButtons", false)
+        <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+        <button id="new" class="new" title="@WebLocalizationKeys.NEW"></button>
+        <span class="title-name">@Model.Title</span>
+    </div>
+    <div id="contentArea" class="content-inner">
+    <div id="validation-container-wrapper">
+        <div id="errorMessagesGrid" class="mf_ErrorMessages errorMessages"><ul></ul></div>
+    </div>
+        @RenderBody()
+    </div>

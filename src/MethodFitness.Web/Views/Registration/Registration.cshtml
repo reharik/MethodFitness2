@@ -1,0 +1,88 @@
+﻿@using MethodFitness.Core
+@using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web
+@using MethodFitness.Web.Controllers
+@model RegistrationViewModel
+@{
+    ViewBag.Title = "New Purchase";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.mf_CRUD').crudForm({});
+    });
+</script>
+<div class="no-left-nav" style="font-family: Arial, Helvetica, sans-serif; width: 100%; font-size: 1.1em;">
+    <div style="width: 100%; text-align: center; font-size: 1em;">
+        <img src="/content/images/logo_cp.jpg" width="212" height="58" /><img src="/content/images/tag_cp.gif"
+            width="133" height="89" /></div>
+    <p>
+        The Critical Portfolio™ goes beyond the conventional curriculum vitae. This comprehensive
+        representation of professional abilities, achievements and efforts acts as an online
+        safety box for a host portfolio documentation – anytime, anywhere.</p>
+    <p>
+        Your portfolio can include documents, pictures, scanned images, links to websites,
+        and standard information that your would want to add keep safe and include in your
+        resume. Please follow the instructions below to get started.</p>
+    <div align="center">
+        
+        @MvcHtmlString.Create(FormFor<RegistrationController>(x => x.SavePageOne(null)).AddClass("mf_CRUD").ElementId("CRUDForm").ToString())
+            <div class="col ">
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.User.FirstName).AddClassToRoot("two-five first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.User.MiddleInitial).LabelDisplay(WebLocalizationKeys.INITIAL).AddClassToRoot("one-five mid").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.User.LastName).AddClassToRoot("two-five last").ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Address.Address1).ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Address.Address2).ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Address.City).AddClassToRoot("three-five first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.Address.State).AddClassToRoot("one-five ").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.Address.ZipCode).AddClassToRoot("one-five ").ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Email).AddClassToRoot("half first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.PhoneNumber).AddClassToRoot("half first").ToHtmlTag()
+                </div>
+                <div class="fieldRow" align="center">
+                    @Html.SubmissionFor(x => x.PromoCode).AddClassToRoot("two-five").LabelDisplay(WebLocalizationKeys.OPTIONAL_PROMOCODE).ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    <button class="rounded" type="submit" >@WebLocalizationKeys.CONTINUE</button>
+                </div>
+
+            </div>
+        @EndForm()
+        
+        
+        <div style="width: 100%; margin: 0 auto; text-align: center">
+            <span style="font-size: .85em">Official platform for eportfolio services for:</span><br />
+            <img src="/content/images/logo_ancc2.gif" width="204" height="72" /><img src="/content/images/logo_honorsociety.gif"
+                width="215" height="49" /></div>
+        <table style="width: 365px; margin: 0 auto; font-size: .95em; margin-top: 20px;">
+            <tr>
+                <td>
+                    <img src="/content/images/nurse_head.jpg" width="99" height="100" />
+                </td>
+                <td>
+                    <p>
+                        <span style="color: #FF9900; font-weight: bold; font-size: 1.1em">Supporting Future
+                            Nurse Leaders</span><br />
+                        Each new Critical Portfolio subscription results in a $1 donation to the Foundation
+                        of the National Student Nurses Association Marilyn Bagwell Leadership Development
+                        Grant Fund.</p>
+            </tr>
+        </table>
+    </div>
+</div>
+<p>
+    <font size="1">Powered by the Critical Competency Repository&trade; from <a href="http://www.methodfitness.com"
+        target="_top" title="">Decision Critical, Inc.</a><br>
+        Copyright &copy; 2000-2011 by Decision Critical, Inc. All rights reserved.&nbsp;
+        <a href="standard/docs/PrivacyPolicy-MethodFitness_Inc.pdf" target="_BLANK">Privacy
+            Policy</a></font>
+</body></html> 

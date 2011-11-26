@@ -1,0 +1,28 @@
+<Configuration>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/f:DCIWebRegistry.cs" caret="4048" fromTop="12" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Portfolio/d:Controllers/f:DocumentController.cs" caret="5681" fromTop="18" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IFileHandlerService.cs" caret="3177" fromTop="13" />
+    </RecentFiles>
+    <RecentEdits />
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+</Configuration>

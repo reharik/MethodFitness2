@@ -1,0 +1,208 @@
+﻿@using MethodFitness.Core
+@using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web
+@using MethodFitness.Web.Controllers
+@model PaymentViewModel
+@{
+    ViewBag.Title = "New Purchase";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+@section HeaderScripts{
+    @CSS("CC.css").ToHtmlTag()
+    @Script("jqueryPlugins/jquery.maskedinput.js").ToHtmlTag()
+    @Script("jqueryPlugins/jquery.maskedinput.js").ToHtmlTag()
+    @Script("jqueryPlugins/jquery.CenterInClient.js").ToHtmlTag()
+    @Script("mf.CreditCardView.js").ToHtmlTag()
+    @Script("mf.CreditCardController.js").ToHtmlTag()
+}
+@section HeaderJavascript{
+    extraFormOptions.crudFormOptions.successContainer="#errorMessagesForm";
+
+    $(document).ready(function() { new mf.CreditCardController(); }); var ANS_customer_id
+    = "83944633-6767-4a9e-9dca-8264a28438e9"; @*        <script type="text/javascript" language="javascript" src="//verify.authorize.net/anetseal/seal.js"></script>*@
+}
+<div id="masterArea">
+    @MvcHtmlString.Create(FormFor<RegistrationController>(x => x.CCPayment(null)).AddClass("mf_CRUD").ElementId("CRUDForm").ToString())
+    <input type="hidden" name="EntityId", value="@Model.EntityId"/>
+    <div id="divContainer">
+        <table class="BillInfo">
+            <tr>
+                <td colspan="2">
+                    <img src="../../Content/images/pay_cc.gif" />
+                </td>
+            </tr>
+            <tr>
+                <td class="sumalert">
+                        <!-- (c) 2005, 2011. Authorize.Net is a registered trademark of CyberSource Corporation -->
+                        <div class="AuthorizeNetSeal">
+                            <script type="text/javascript" language="javascript">var ANS_customer_id = "83944633-6767-4a9e-9dca-8264a28438e9";</script>
+                            <script type="text/javascript" language="javascript" src="//verify.authorize.net/anetseal/seal.js"></script>
+                            <a href="http://www.authorize.net/" id="AuthorizeNetText" target="_blank">Accept Credit
+                                Cards Online</a>
+                        </div>
+                </td>
+                <td class="sumalert">
+                    <div id="tTotals" style="height: 120px; width: 200px;">
+                        <table cellspacing="0" class="alerts" summary="Standard alerts box">
+                            <tbody>
+                                <tr>
+                                    <td class="alertHd">
+                                        Order Summary
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="alertBod">
+                                        <div class="rightDate" id="order_subscription">
+                                            Subscription: @Model.OrderDetail.SubscriptionMonths Months</div>
+                                        <div class="rightDate" id="order_subtotal">
+                                            Order SubTotal: $@Model.OrderDetail.Price</div>
+                                        <div class="rightDate" id="order_tax">
+                                            Order Tax: <u>$@Model.OrderDetail.Tax</u></div>
+                                        <br>
+                                        <div class="rightDate" id="order_total">
+                                            <b>Order Total: $@Model.OrderDetail.Total</b></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="header">
+                    <img src="../../Content/images/billcc.png" />
+                    Credit Card Information
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div id="errorMessagesForm" class="mf_ErrorMessages errorMessages">
+                        <ul>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="contact">
+                    <div class="error" style="display: none;">
+                        <img src="../../Content/images/warning.gif" alt="Warning!" width="24" height="24"
+                            style="float: left; margin: -5px 10px 0px 0px;" />
+                        <span></span>.<br clear="all" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="contact">
+                    <label for="CardType">
+                        Credit Card Type:</label>
+                </td>
+                <td class="contact">
+                    <select id="cc_type" name="CardType" class="{required:true,messages:{required: 'Credit Card Type Field is Required'}} creditCardType"
+                        tabindex="1">
+                        <option value="">Choose Credit Card</option>
+                        <option value="amex">American Express</option>
+                        <option value="discover">Discover</option>
+                        <option value="mastercard">MasterCard</option>
+                        <option value="visa">Visa</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="contact">
+                    <label for="ExpirationMonth">
+                        Expiration Month:</label>
+                </td>
+                <td class="contact">
+                    <select id="cc_exp_month" class="{required:true,messages:{required: 'Expiration Month Field is Required'}}"
+                        name="ExpirationMonth" title="ExpirationMonth" tabindex="2">
+                        @foreach (var m in Model.ExpirationMonthList)
+                        {
+                            <option value="@m.Value">@m.Text</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="contact">
+                    <label for="ExpirationYear">
+                        Expiration Year:</label>
+                </td>
+                <td class="contact">
+                    <select id="cc_exp_year" class="{required:true,messages:{required: 'Expiration Year Field is Required'}}"
+                        name="ExpirationYear" title="ExpirationYear" tabindex="3">
+                        @foreach (var y in Model.ExpirationYearList)
+                        {
+                            <option value="@y.Value">@y.Text</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="contact">
+                    <label for="CardNumber">
+                        Credit Card Number:</label>
+                </td>
+                <td class="contact">
+                    <input maxlength="40" id="creditcard" class="{required:true,messages:{required: 'Credit Card Number Field is Required'}}  required"
+                        name="CardNumber" size="20" type="text" tabindex="4" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="contact">
+                    <label for="Email">
+                        Email(for order confirmation):</label>
+                </td>
+                <td class="contact">
+                    <input id="email" class="{required:true,messages:{required: 'Email Field is Required'}} email" maxlength="40" name="Email" size="35" type="text"
+                            tabindex="5" value="@Model.Email" />
+                </td>
+            </tr>
+            <tr>
+                <td class="contact">
+                    <label for="SecurityCode">
+                        Security Code:</label>
+                </td>
+                <td class="contact">
+                    <input id="ccNumber" class="{required:true,messages:{required: 'Security Code Field is Required'}}"
+                        maxlength="4" name="SecurityCode" style="width: 30px;" type="text" style="vertical-align: top;"
+                        tabindex="5" value="" />&nbsp; <a id="csvHelp">click for help</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="contact">
+                    <div id="tMode">
+                    </div>
+                </td>
+                <td class="contact">
+                    <div class="buttonSubmit">
+                        <span></span>
+                        <input class="formButton" type="button" value="Complete Order" style="width: 140px"
+                            tabindex="14" id="save" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="contact" colspan="2" align="center">
+                </td>
+            </tr>
+        </table>
+        <div id="dialog" title="Dialog Title">
+            <p>
+                &nbsp;<div id="pMessage">
+                </div>
+            </p>
+        </div>
+        <div id="backgroundPopup" />
+    </div>
+    @EndForm()
+</div>

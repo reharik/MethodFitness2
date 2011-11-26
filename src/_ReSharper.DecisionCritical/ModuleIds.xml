@@ -1,0 +1,5 @@
+<Modules>
+  <Module PersistentId="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7" ModuleId="DecisionCritical.Core" />
+  <Module PersistentId="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2" ModuleId="DecisionCritical.Web" />
+  <Module PersistentId="C50EBA4F-FDC0-45E9-ADEA-9AA109B690CA" ModuleId="DecisionCritical.Tests" />
+</Modules>
