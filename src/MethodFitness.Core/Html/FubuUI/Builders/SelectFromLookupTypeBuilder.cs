@@ -35,7 +35,6 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
                 
                 var selectListItemService = ObjectFactory.Container.GetInstance<ISelectListItemService>();
                 var selectListItems = selectListItemService.CreateLookupList(lookupTypes, l => l.Name, l => l.EntityId, true);
-                repository.EnableFilter("TenantConditionFilter", "TenantId", getIdsFromPrincipal.GetTenantId());
                 repository.EnableFilter("OrgConditionFilter", "OrgId", getIdsFromPrincipal.GetOrgId());
                 //if (selectListItems == null) return;
 

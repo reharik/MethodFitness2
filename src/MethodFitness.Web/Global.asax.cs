@@ -47,10 +47,10 @@ namespace MethodFitness.Web
                 if (ex.GetHttpCode() == 404)
                     e.Dismiss();
             }
-            if (e.Exception.Source != "CATCH RAISED")
-            {
-                Response.Redirect(@"/Error/Trouble"); //...nothing seems to get to error page anyway    
-            }
+//            if (e.Exception.Source != "CATCH RAISED")
+//            {
+//                Response.Redirect(@"/Error/Trouble"); //...nothing seems to get to error page anyway    
+//            }
         }
         //end Elmah
 

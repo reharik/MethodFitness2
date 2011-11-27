@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="G:\Git\MethodFitness\Developement\src\MethodFitness.Tests\bin\Debug\MethodFitness.Tests.dll" total="0" failures="0" not-run="0" date="2011-11-26" time="09:42:56">
+  <environment nunit-version="2.4.7.0" clr-version="4.0.30319.239" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="G:\Git\MethodFitness\Developement" machine-name="HARIK-PC" user="Harik" user-domain="Harik-PC" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite name="G:\Git\MethodFitness\Developement\src\MethodFitness.Tests\bin\Debug\MethodFitness.Tests.dll" success="True" time="0.003" asserts="0">
+    <results />
+  </test-suite>
+</test-results>

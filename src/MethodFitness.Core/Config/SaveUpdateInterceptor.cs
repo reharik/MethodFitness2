@@ -52,10 +52,6 @@ namespace MethodFitness.Core.Config
                     {
                         state[i] = getSettingsFromPrincipal.GetOrgId();
                     }
-                    if ("TenantId".Equals(propertyNames[i]))
-                    {
-                        state[i] = getSettingsFromPrincipal.GetTenantId();
-                    }
                 }
                 return true;
             }

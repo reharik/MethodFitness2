@@ -6,9 +6,7 @@ namespace MethodFitness.Core.Services
 {
     public interface ISessionContext
     {
-        int GetTenantId();
         int GetOrgId();
-        int GetLoginInfoId();
         int GetUserEntityId();
         object RetrieveSessionObject(Guid sessionKey);
         object RetrieveSessionObject(string sessionKey);
@@ -21,12 +19,6 @@ namespace MethodFitness.Core.Services
 
     public class SessionContext : ISessionContext
     {
-        public int GetTenantId()
-        {
-            var httpContext = HttpContext.Current;
-            var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
-            return customPrincipal != null ? customPrincipal.TenantId : 0;
-        }
         public int GetOrgId()
         {
             var httpContext = HttpContext.Current;
@@ -38,13 +30,6 @@ namespace MethodFitness.Core.Services
             var httpContext = HttpContext.Current;
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
             return customPrincipal != null ? customPrincipal.UserId : 0;
-        }
-
-        public int GetLoginInfoId()
-        {
-            var httpContext = HttpContext.Current;
-            var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
-            return customPrincipal != null ? customPrincipal.LoginInfoId : 0;
         }
 
         public object RetrieveSessionObject(Guid sessionKey)

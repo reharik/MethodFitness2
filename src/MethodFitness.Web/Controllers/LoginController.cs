@@ -61,8 +61,7 @@ namespace MethodFitness.Web.Controllers
                     var user = _securityDataService.AuthenticateForUserId(input.UserName, input.Password);
                     if (user != null)
                     {
-                        var loginInfo = user.UserLoginInfos.First(n => n.LoginName.ToLowerInvariant() == input.UserName);
-                        redirectUrl = _authenticationContext.ThisUserHasBeenAuthenticated(user, loginInfo, input.RememberMe);
+                        redirectUrl = _authenticationContext.ThisUserHasBeenAuthenticated(user, input.RememberMe);
                         notification.Success = true;
                         notification.Message = string.Empty;
                         notification.Redirect = true;
@@ -95,13 +94,12 @@ namespace MethodFitness.Web.Controllers
         public ActionResult Log_in(LoginViewModel input)
         {
             var user = _repository.Find<User>(input.EntityId);
-            var loginInfo = user.UserLoginInfos.FirstOrDefault(x=>x.ByPassToken==input.Guid);
-            if(loginInfo == null)
+            if(user.UserLoginInfo.ByPassToken!=input.Guid)
             {
                 return RedirectToAction("Login");
             }
-            var redirectUrl = _authenticationContext.ThisUserHasBeenAuthenticated(user,loginInfo,false);
-            loginInfo.ByPassToken = Guid.Empty;
+            var redirectUrl = _authenticationContext.ThisUserHasBeenAuthenticated(user,false);
+            user.UserLoginInfo.ByPassToken = Guid.Empty;
             var crudManager = _saveEntityService.ProcessSave(user);
             crudManager.Finish();
 

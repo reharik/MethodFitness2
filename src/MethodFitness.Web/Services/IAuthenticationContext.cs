@@ -7,16 +7,16 @@ namespace MethodFitness.Web.Services
 {
     public interface IAuthenticationContext
     {
-        string ThisUserHasBeenAuthenticated(User username, UserLoginInfo loginInfo, bool rememberMe);
+        string ThisUserHasBeenAuthenticated(User username, bool rememberMe);
         void SignOut();
     }
 
     public class WebAuthenticationContext : IAuthenticationContext
     {
-        public string ThisUserHasBeenAuthenticated(User user, UserLoginInfo loginInfo,  bool rememberMe)
+        public string ThisUserHasBeenAuthenticated(User user,  bool rememberMe)
         {
             string userData = String.Empty;
-            userData = userData + "UserId=" + user.EntityId + "|OrgId=" + loginInfo.OrgId + "|TenantId=" + loginInfo.TenantId +"|LoginInfoId="+loginInfo.EntityId;
+            userData = userData + "UserId=" + user.EntityId + "|OrgId=" + user.OrgId;
             var ticket = new FormsAuthenticationTicket(1, user.FullNameLNF, DateTime.Now, DateTime.Now.AddMinutes(30),
                                                        rememberMe, userData);
             string encTicket = FormsAuthentication.Encrypt(ticket);

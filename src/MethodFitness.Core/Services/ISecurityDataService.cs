@@ -30,14 +30,12 @@ namespace MethodFitness.Core.Services
             _repository.CurrentSession().DisableFilter("TenantConditionFilter");
             //var user = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username && u.UserLoginInfo.Password == password).FirstOrDefault();
             //return user;
-            var users = _repository.Query<User>(u => u.UserLoginInfos.Any(x=>x.LoginName.ToLowerInvariant() == username 
-                                                && x.IsActive == true ));// && u.UserLoginInfo.Password == password).FirstOrDefault();
+            var users = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username );// && u.UserLoginInfo.Password == password).FirstOrDefault();
             User ValidUser = null;
             users.Each(x =>
             {
-                var loginInfo = x.UserLoginInfos.First(n=>n.LoginName.ToLowerInvariant() == username);
-                var passwordHash = CreatePasswordHash(password, loginInfo.Salt);
-                if (loginInfo.Password == passwordHash && loginInfo.UserSubscriptions.OrderBy(p => p.ExpirationDate.GetValueOrDefault(DateTime.MinValue)).First().ExpirationDate>DateTime.Now)
+                var passwordHash = CreatePasswordHash(password, x.UserLoginInfo.Salt);
+                if (x.UserLoginInfo.Password == passwordHash)
                 {
                     ValidUser = x;
                 }

@@ -50,7 +50,6 @@ namespace MethodFitness.Web.Controllers
             origional.FirstName = input.User.FirstName;
             origional.MiddleInitial = input.User.MiddleInitial;
             origional.LastName = input.User.LastName;
-            origional.Title = input.User.Title;
             origional.BirthDate= input.User.BirthDate;
 
             handlePassword(input, origional);
@@ -70,8 +69,7 @@ namespace MethodFitness.Web.Controllers
         {
             if (input.Password.IsNotEmpty())
             {
-                var loginInfoId = _sessionContext.GetLoginInfoId();
-                var loginInfo = origional.UserLoginInfos.FirstOrDefault(x=>x.EntityId==loginInfoId);
+                var loginInfo = origional.UserLoginInfo;
                 loginInfo.Salt = _securityDataService.CreateSalt();
                 loginInfo.Password = _securityDataService.CreatePasswordHash(input.Password,
                                                             loginInfo.Salt);

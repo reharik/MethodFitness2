@@ -15,20 +15,22 @@ namespace MethodFitness.Web.Menus
         {
             _builder = builder;
         }
-//
-//        public IList<MenuItem> Build(bool withoutPermissions = false)
-//        {
-//            return DefaultMenubuilder(withoutPermissions);
-//        }
 
-//        private IList<MenuItem> DefaultMenubuilder(bool withoutPermissions = false)
-//        {
-//            return _builder;
+        public IList<MenuItem> Build(bool withoutPermissions = false)
+        {
+            return DefaultMenubuilder(withoutPermissions);
+        }
 
-//                .CreateNode<PortfolioDashboardController>(c => c.Display(null), WebLocalizationKeys.PORTFOLIO_DASHBOARD, AreaName.Portfolio)
-//                .CreateNode<PortfolioListController>(c => c.ItemList(null), WebLocalizationKeys.PORTFOLIOS, AreaName.Portfolio, "portfolios")
+        private IList<MenuItem> DefaultMenubuilder(bool withoutPermissions = false)
+        {
+            return _builder
+                                .CreateNode(WebLocalizationKeys.PROFESSIONAL_EXPERIENCE, "repository")
+
+//            .CreateNode<PortfolioDashboardController>(c => c.Display(null), WebLocalizationKeys.PORTFOLIO_DASHBOARD,
+//                                                     AreaName.Portfolio)
+//                .CreateNode<PortfolioListController>(c => c.ItemList(null), WebLocalizationKeys.PORTFOLIOS,
+//                                                     AreaName.Portfolio, "portfolios")
 //                .CreateNode(WebLocalizationKeys.EMPTY_TOKEN, "separator")
-//                .CreateNode(WebLocalizationKeys.PROFESSIONAL_EXPERIENCE, "repository")
 //                    .HasChildren()
 //                    .CreateNode<AllAssetsController>(c => c.AllAssetsList(null), WebLocalizationKeys.ALL_EXPERIENCE, AreaName.Portfolio, "assets")
 //                    .CreateNode(WebLocalizationKeys.EMPTY_TOKEN, "separator")
@@ -93,11 +95,7 @@ namespace MethodFitness.Web.Menus
 //                    .HasChildren()
 //                    .CreateNode<ComplianceItemSettingsController>(c => c.ComplianceItemSetting(null), WebLocalizationKeys.COMPLIANCE_SETTINGS, AreaName.Portfolio)
 //                    .EndChildren()
-//                .MenuTree(withoutPermissions);
-//        }
-        public IList<MenuItem> Build(bool withoutPermissions = false)
-        {
-            throw new System.NotImplementedException();
+                .MenuTree(withoutPermissions);
         }
     }
 }
