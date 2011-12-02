@@ -50,7 +50,7 @@ namespace MethodFitness.Core.Config
                     }
                     if ("OrgId".Equals(propertyNames[i]))
                     {
-                        state[i] = getSettingsFromPrincipal.GetOrgId();
+                        state[i] = getSettingsFromPrincipal.GetCompanyId();
                     }
                 }
                 return true;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
+using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
 using System.Linq;
 using Rhino.Security;
@@ -17,9 +18,25 @@ namespace MethodFitness.Core.Domain
         public virtual string MiddleInitial { get; set; }
         [ValidateNonEmpty]
         public virtual string LastName { get; set; }
-        [ValidateSqlDateTime]
+        [ValidateNonEmpty]
+        public virtual string Email { get; set; }
+        [ValidateNonEmpty]
+        public virtual string PhoneMobile { get; set; }
+        public virtual string PhoneHome { get; set; }
+        public virtual string Address1 { get; set; }
+        public virtual string Address2 { get; set; }
+        public virtual string City { get; set; }
+        [ValueOf(typeof(State))]
+        public virtual string State { get; set; }
+        public virtual string ZipCode { get; set; }
+        [TextArea]
+        public virtual string Notes { get; set; }
         public virtual DateTime? BirthDate { get; set; }
-
+        public virtual string ImageUrl { get; set; }
+        public virtual Company Company { get; set; }
+        [ValueOf(typeof(Status))]
+        public virtual string Status { get; set; }
+        
         public virtual UserLoginInfo UserLoginInfo { get; set; }
         public virtual string FullNameLNF
         {
@@ -31,6 +48,19 @@ namespace MethodFitness.Core.Domain
         }
        
         #region Collections
+        private IList<UserRole> _userRoles = new List<UserRole>();
+        public virtual void EmptyUserRoles() { _userRoles.Clear(); }
+        public virtual IEnumerable<UserRole> UserRoles { get { return _userRoles; } }
+        public virtual void RemoveUserRole(UserRole userRole)
+        {
+            _userRoles.Remove(userRole);
+        }
+        public virtual void AddUserRole(UserRole userRole)
+        {
+            if (_userRoles.Contains(userRole)) return;
+            _userRoles.Add(userRole);
+        }
+
         #endregion
 
         public virtual SecurityInfo SecurityInfo
@@ -45,7 +75,6 @@ namespace MethodFitness.Core.Domain
         public virtual string LoginName { get; set; }
         [ValidateNonEmpty]
         public virtual string Password { get; set; }
-        public virtual UserType UserType { get; set; }
         [ValidateSqlDateTime]
         public virtual string Salt { get; set; }
         public virtual bool CanLogin { get; set; }

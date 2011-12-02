@@ -21,7 +21,7 @@ namespace MethodFitness.Core.Domain
             var enableDeleteFilter = _session.EnableFilter("DeletedConditionFilter");
             if (enableOrgFilter == null) return;
 
-            enableOrgFilter.SetParameter("OrgId", _sessionContext.GetOrgId());
+            enableOrgFilter.SetParameter("OrgId", _sessionContext.GetCompanyId());
             enableDeleteFilter.SetParameter("Archived", false);
         }
         //No filters

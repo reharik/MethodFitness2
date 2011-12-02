@@ -42,5 +42,6 @@ namespace MethodFitness.Core.Domain
         IList<T> GetNamedQuery<T>(string sprocName);
         void DisableFilter(string FilterName);
         void EnableFilter(string FilterName, string field, object value);
+        IUnitOfWork UnitOfWork { get; set; }
     }
 }

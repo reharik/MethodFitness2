@@ -6,7 +6,7 @@ namespace MethodFitness.Core.Services
 {
     public interface ISessionContext
     {
-        int GetOrgId();
+        int GetCompanyId();
         int GetUserEntityId();
         object RetrieveSessionObject(Guid sessionKey);
         object RetrieveSessionObject(string sessionKey);
@@ -19,7 +19,7 @@ namespace MethodFitness.Core.Services
 
     public class SessionContext : ISessionContext
     {
-        public int GetOrgId()
+        public int GetCompanyId()
         {
             var httpContext = HttpContext.Current;
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;

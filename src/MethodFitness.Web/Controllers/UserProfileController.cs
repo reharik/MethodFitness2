@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Castle.Components.Validator;
 using MethodFitness.Core;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 using System.Linq;
@@ -91,9 +92,11 @@ namespace MethodFitness.Web.Controllers
         public User User { get; set; }
         public string Password { get; set; }
         [ValidateSameAs("Password")]
+        public string RepeatPassword { get; set; }
+        public IEnumerable<TokenInputDto> AvailableItems { get; set; }
+        public IEnumerable<TokenInputDto> SelectedItems { get; set; }
 
-        public IEnumerable<SelectListItem> PhoneTypeList { get; set; }
-        public IEnumerable<SelectListItem> AddressTypeList { get; set; }
+        public bool DeleteImage { get; set; }
     }
 
     

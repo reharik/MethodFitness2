@@ -11,7 +11,20 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.MiddleInitial);
             Map(x => x.LastName);
             Map(x => x.BirthDate);
+            Map(x => x.Email);
+            Map(x => x.PhoneMobile);
+            Map(x => x.PhoneHome);
+            Map(x => x.Address1);
+            Map(x => x.Address2);
+            Map(x => x.City);
+            Map(x => x.State);
+            Map(x => x.ZipCode);
+            Map(x => x.Notes);
+            Map(x => x.ImageUrl);
             References(x => x.UserLoginInfo);
+            References(x => x.Company);
+            HasMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
+
         } 
 
         public class UserLoginInfoMap : DomainEntityMap<UserLoginInfo>

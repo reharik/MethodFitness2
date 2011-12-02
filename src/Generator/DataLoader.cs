@@ -18,6 +18,8 @@ namespace Generator
         private ISecurityDataService _securityDataService;
         private IDynamicExpressionQuery _dynamicExpressionQuery;
         private User _defaultUser;
+        private UserRole _userRoleTrainer;
+        private UserRole _userRoleAdmin;
 
 
         public void Load(string extraDataKey)
@@ -28,9 +30,20 @@ namespace Generator
             _securityDataService = ObjectFactory.GetInstance<ISecurityDataService>();
 
             _repository.Initialize();
-
+            createUserRoles();
             createUser();
             _repository.Commit();
+        }
+        private void createUserRoles()
+        {
+            _userRoleTrainer = new UserRole
+                                   {
+                                       Name = "Trainer"
+                                   };
+            _userRoleAdmin = new UserRole
+                                 {
+                                     Name = "Admin"
+                                 };
         }
 
         private void createUser()
@@ -42,6 +55,8 @@ namespace Generator
                                    FirstName = "Raif",
                                    LastName = "Harik"
                                };
+            _defaultUser.AddUserRole(_userRoleTrainer);
+            _defaultUser.AddUserRole(_userRoleAdmin);
             _defaultUser.UserLoginInfo = new UserLoginInfo
                                              {
                                                  LoginName = "Admin",
