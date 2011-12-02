@@ -46,6 +46,7 @@
     @Script("mf.complianceNotificationModule.js").ToHtmlTag()
     @Script("mf.userProfileController.js").ToHtmlTag()
     @Script("mf.portfolioDashboardController.js").ToHtmlTag()
+    @Script("mf.TrainerController.js").ToHtmlTag())
     
     @Script("internalHelpers/mf.mediaHandler.js").ToHtmlTag()
     @Script("internalHelpers/multiRowRepeater.js").ToHtmlTag()
@@ -58,7 +59,7 @@
     @RenderSection("HeaderJavascript", false)
 }
 <div id="left-navigation" class="mf_menuContainer">
-    @Html.Action("AssetMenu", "Orthogonal")
+    @Html.Action("MainMenu", "Orthogonal")
 </div>
 <div id="main-content">
     <div class="content-outer" >

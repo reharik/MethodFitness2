@@ -7,6 +7,7 @@ using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;
 using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Localization;
+using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Menus;
 using MethodFitness.Web.Services;
@@ -31,7 +32,7 @@ namespace MethodFitness.Web
             Scan(x =>
             {
                 x.TheCallingAssembly();
-               // x.ConnectImplementationsToTypesClosing(typeof(IEntityListGrid<>));
+                x.ConnectImplementationsToTypesClosing(typeof(IEntityListGrid<>));
                 x.AssemblyContainingType(typeof(CoreLocalizationKeys));
                 x.AssemblyContainingType(typeof(MergedEmailFactory));
                 x.AssemblyContainingType(typeof(Gateway));
@@ -72,8 +73,7 @@ namespace MethodFitness.Web
             For<ILocalizationDataProvider>().Use<LocalizationDataProvider>();
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();
 
-            For<IMenuConfig>().Use<HeaderMenu>();
-            For<IMenuConfig>().Add<AssetMenu>().Named("AssetMenu");
+            For<IMenuConfig>().Use<MainMenu>();
             For<IMergedEmailFactory>().LifecycleIs(new UniquePerRequestLifecycle()).Use<MergedEmailFactory>();
 
             For<IAuthorizationService>().HybridHttpOrThreadLocalScoped().Use<AuthorizationService>();

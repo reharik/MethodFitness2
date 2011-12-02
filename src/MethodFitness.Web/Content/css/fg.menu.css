@@ -186,7 +186,6 @@ Date:		September 2008
 
 #left-navigation ul li.portfolios>a 
 	, #left-navigation ul li.repository>a
-	, #left-navigation ul li.assets>a 
 	, #left-navigation ul li.tools>a 
 	{
     /*padding-left: 25px !important;*/

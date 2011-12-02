@@ -19,7 +19,7 @@ mf.PortfolioLandingPageView = Backbone.View.extend({
     },
 
     buildNewPortfolio: function(){
-        $.publish("/contentLevel/grid/AddEditItem",[this.options.addEditUrl]);
+        $.publish("/contentLevel/grid/AddUpdateItem",[this.options.addEditUrl]);
     }
 
 });

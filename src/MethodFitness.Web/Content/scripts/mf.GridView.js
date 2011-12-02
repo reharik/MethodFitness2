@@ -27,7 +27,7 @@ mf.GridView = Backbone.View.extend({
         return this;
     },
     addNew:function(){
-        $.publish('/contentLevel/grid/AddEditItem', [this.options.addEditUrl]);
+        $.publish('/contentLevel/grid/AddUpdateItem', [this.options.addEditUrl]);
     },
     deleteItems:function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
@@ -74,7 +74,7 @@ mf.AssetGridView = mf.GridView.extend({
         },
     handleAddToPortfolioCallback:function(result){
         $.subscribe("/pageLoaded", $.proxy(function(){
-            $.publish('/contentLevel/grid/AddEditItem', [this.options.addEditPortfolioUrl +"/"+result.EntityId]);
+            $.publish('/contentLevel/grid/AddUpdateItem', [this.options.addEditPortfolioUrl +"/"+result.EntityId]);
             $.unsubscribe("/pageLoaded")
         },this));
         $.publish("/contentLevel/popup_addToPortfolio/cancel",[]);

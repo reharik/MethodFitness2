@@ -10,7 +10,7 @@ namespace MethodFitness.Core.Services
     {
         HttpPostedFile RetrieveUploadedFile();
         string GetUrlForFile(HttpPostedFile file, string leafDirectoryName);
-        bool SaveUploadedFile(HttpPostedFile file, string path);
+        bool SaveUploadedFile(HttpPostedFile file, string leafDirectoryName);
         string GetPhysicalPathForFile(HttpPostedFile file, string leafDirectoryName);
         string GetGeneratedFileName(HttpPostedFile file);
     }
@@ -34,13 +34,13 @@ namespace MethodFitness.Core.Services
 
         public string GetUrlForFile(HttpPostedFile file, string leafDirectoryName)
         {
-            var orgId = _sessionContext.GetOrgId();
+            var orgId = _sessionContext.GetCompanyId();
             return @"/Tenant/Organizations/" + orgId + @"/" + leafDirectoryName + @"/" + GetGeneratedFileName(file);
         }
 
         public string GetPhysicalPathForFile(HttpPostedFile file, string leafDirectoryName)
         {
-            var orgId = _sessionContext.GetOrgId();
+            var orgId = _sessionContext.GetCompanyId();
             return ImageResizer.Util.PathUtils.AppPhysicalPath + @"Tenant\Organizations\" + orgId + @"\" + leafDirectoryName + @"\";
         }
 

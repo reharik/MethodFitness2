@@ -47,21 +47,11 @@ namespace MethodFitness.Web.Areas.Portfolio.Controllers
         }
 
         //remove true param when permissions are implemented
-        public PartialViewResult MethodFitnessMenu()
+        public PartialViewResult MainMenu()
         {
-            return PartialView(new MenuViewModel
-                                   {
-                                       MenuItems = _menuConfig.Build(true)
-                                   });
-        }
-
-        //remove true param when permissions are implemented
-        public PartialViewResult AssetMenu()
-        {
-            var menuConfig = _container.GetInstance<IMenuConfig>("AssetMenu");
             return PartialView(new MenuViewModel
             {
-                MenuItems = menuConfig.Build(true)
+                MenuItems = _menuConfig.Build(true)
             });
         }
     }

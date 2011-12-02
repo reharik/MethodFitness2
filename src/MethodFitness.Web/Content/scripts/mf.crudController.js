@@ -27,7 +27,7 @@ mf.CrudController  = mf.Controller.extend({
     },
 
     registerSubscriptions: function(){
-        $.subscribe('/contentLevel/grid/AddEditItem',$.proxy(this.addEditItem,this), this.cid);
+        $.subscribe('/contentLevel/grid/AddUpdateItem',$.proxy(this.addEditItem,this), this.cid);
         //
         $.subscribe("/contentLevel/form_mainForm/pageLoaded", $.proxy(this.formLoaded,this),this.cid);
         //

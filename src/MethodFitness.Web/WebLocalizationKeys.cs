@@ -14,6 +14,18 @@ namespace MethodFitness.Web
         {
         }
 
+        public static readonly StringToken EMPLOYEE_DASHBOARD = new WebLocalizationKeys("EMPLOYEE_DASHBOARD", "Employee Dashboard");
+        public static readonly StringToken CALENDAR = new WebLocalizationKeys("CALENDAR", "Calendar");
+        public static readonly StringToken TRAINERS = new WebLocalizationKeys("TRAINERS", "Trainers");
+        public static readonly StringToken TRAINER = new WebLocalizationKeys("TRAINER", "Trainer");
+        public static readonly StringToken NEW_TRAINER = new WebLocalizationKeys("NEW_TRAINER", "New Trainer");
+        public static readonly StringToken TRAINER_INFORMATION = new WebLocalizationKeys("TRAINER_INFORMATION", "Trainer Information");
+
+
+
+
+
+
         public static readonly StringToken ADMIN_TOOLS = new WebLocalizationKeys("ADMIN_TOOLS", "Admin Tools");
         public static readonly StringToken REQUIRED = new WebLocalizationKeys("REQUIRED", "Required");
         public static readonly StringToken EMPTY_TOKEN = new WebLocalizationKeys("EMPTY_TOKEN", "");
@@ -44,9 +56,6 @@ namespace MethodFitness.Web
 
         public static readonly StringToken DASHBOARD = new WebLocalizationKeys("DASHBOARD", "Dashboard");
         public static readonly StringToken PORTFOLIOS = new WebLocalizationKeys("PORTFOLIOS", "Portfolios");
-        public static readonly StringToken ASSISTANTS = new WebLocalizationKeys("ASSISTANTS", "Assistants");
-        public static readonly StringToken ASSESTS = new WebLocalizationKeys("ASSESTS", "Assets");
-
 
         public static readonly StringToken FIELD_REQUIRED = new WebLocalizationKeys("FIELD_REQUIRED", "{0} Field is Required");
         public static readonly StringToken USER_COMPLIANCE_ITEM_NOT_IN_USER_COMPLIANCE_SET = new WebLocalizationKeys("USER_COMPLIANCE_ITEM_NOT_IN_USER_COMPLIANCE_SET", "User Assistant Item is not in the User Assistant Set");

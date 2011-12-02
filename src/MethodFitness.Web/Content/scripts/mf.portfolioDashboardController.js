@@ -29,21 +29,21 @@ mf.PortfolioDashboardController  = mf.Controller.extend({
     },
     buildNewPortfolio:function(){
         $.subscribe("/pageLoaded", $.proxy(function(){
-            $.publish('/contentLevel/grid/AddEditItem', [this.options.portfolioAddUpdatetUrl]);
+            $.publish('/contentLevel/grid/AddUpdateItem', [this.options.portfolioAddUpdatetUrl]);
             $.unsubscribe("/pageLoaded")
         },this));
         $.address.value(this.options.portfolioListUrl);
     },
     addCoverText:function () {
         $.subscribe("/pageLoaded", function () {
-            $.publish('/contentLevel/grid/AddEditItem', [this.options.coverTextAddUpdateUrl]);
+            $.publish('/contentLevel/grid/AddUpdateItem', [this.options.coverTextAddUpdateUrl]);
             $.unsubscribe("/pageLoaded")
         });
         $.address.value(this.options.coverTextListUrl);
     },
     addReflections:function () {
         $.subscribe("/pageLoaded", function () {
-            $.publish('/contentLevel/grid/AddEditItem', [this.options.reflectionAddUpdateUrl]);
+            $.publish('/contentLevel/grid/AddUpdateItem', [this.options.reflectionAddUpdateUrl]);
             $.unsubscribe("/pageLoaded")
         });
         $.address.value(this.options.reflectionListUrl);

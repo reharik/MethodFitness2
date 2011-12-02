@@ -28,7 +28,7 @@ mf.PortfolioBuilderController  = mf.Controller.extend({
     },
 
     registerSubscriptions: function(){
-        $.subscribe('/contentLevel/grid/AddEditItem',$.proxy(this.addEditItem,this),this.cid);
+        $.subscribe('/contentLevel/grid/AddUpdateItem',$.proxy(this.addEditItem,this),this.cid);
         $.subscribe('/contentLevel/grid/Preview',$.proxy(this.loadPreviewPortfolioDisplay,this),this.cid);
         $.subscribe("/contentLevel/gridLoadComplete",$.proxy(this.resetLandingPageIfEmpty,this) ,this.cid);
         // from form

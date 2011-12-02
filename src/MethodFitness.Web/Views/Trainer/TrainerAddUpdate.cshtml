@@ -1,0 +1,60 @@
+﻿@using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web
+@using MethodFitness.Web.Controllers
+@model UserViewModel
+
+@{
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+
+@section HeaderJavascript{
+
+}
+
+  @MvcHtmlString.Create(FormFor<TrainerController>(x => x.Save(null)).AddClass("dci_CRUD").ElementId("CRUDForm").ToString())
+        <input type="hidden" id="EntityId" name="EntityId" value="@Model.User.EntityId">
+        <div class="col left">
+            <div class="fieldRow">
+                <h4>@WebLocalizationKeys.PERSONAL_INFORMATION</h4>
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.User.FirstName).AddClassToRoot("two-five first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.MiddleInitial).LabelDisplay(WebLocalizationKeys.INITIAL).AddClassToRoot("one-five mid").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.LastName).AddClassToRoot("two-five last").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.ViewFor(x => x.User.UserLoginInfo.LoginName).AddClassToRoot("half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.BirthDate).AddClassToRoot("half").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.User.Address1).AddClassToRoot("half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.Address2).AddClassToRoot("half").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.User.City).AddClassToRoot("half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.State).AddClassToRoot("one-quarter").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.ZipCode).AddClassToRoot("one-quarter").ToHtmlTag()
+            </div>
+        </div>
+        <div class="col right">
+            <div class="fieldRow">
+                <h4>@WebLocalizationKeys.PASSWORD</h4>
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Password).InputId("Password").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.PasswordConfirmation).ToHtmlTag()
+            </div>
+             <div class="fieldRow">
+                @Html.SubmissionFor(x => x.User.Email).ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.User.PhoneHome).ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.User.PhoneMobile).ToHtmlTag()
+            </div>
+        </div>
+     
+    @EndForm()

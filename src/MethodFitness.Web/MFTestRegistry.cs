@@ -67,8 +67,7 @@ namespace MethodFitness.Web.Config
 
             For<ILocalizationDataProvider>().Use<LocalizationDataProvider>();
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();
-            For<IMenuConfig>().Use<HeaderMenu>();
-            For<IMenuConfig>().Add<AssetMenu>().Named("AssetMenu");
+            For<IMenuConfig>().Use<MainMenu>();
             For<IMergedEmailFactory>().LifecycleIs(new UniquePerRequestLifecycle()).Use<MergedEmailFactory>();
 
             For<IAuthorizationService>().HybridHttpOrThreadLocalScoped().Use<AuthorizationService>();

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using xVal.ServerSide;
 
@@ -13,6 +14,13 @@ namespace MethodFitness.Core.Domain.Tools
     {
         public Notification()
         {
+        }
+
+        public Notification(RulesResult rulesResult)
+        {
+            Success = rulesResult.Success;
+            if (!Success && rulesResult.RuleResults.Count > 1) Errors = new List<ErrorInfo>();
+            rulesResult.RuleResults.Each(x => Errors.Add(new ErrorInfo(CoreLocalizationKeys.BUISNESS_RULE.ToString(), x.Message)));
         }
 
         public Notification(Notification report)

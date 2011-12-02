@@ -3,7 +3,7 @@
     public class TokenInputDto
     {
         public string TokenType { get; set; }
-        public int id { get; set; }
+        public long id { get; set; }
         public string name { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace MethodFitness.Web.Controllers
          {
              var methodFitnessViewModel = new MethodFitnessViewModel
                                                  {
-                                                     UserProfileUrl = UrlContext.GetUrlForAction<UserProfileController>(x => x.UserProfile(null))
+                                                     UserProfileUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null))
                                                  };
              return View(methodFitnessViewModel);
          }

@@ -41,6 +41,8 @@ namespace MethodFitness.Core
                                                                                                                        "The email will contain a link that will direct you to your new account at Decision Critical!");
         public static readonly StringToken THANK_YOU_FOR_SUBSCRIBING = new CoreLocalizationKeys("THANK_YOU_FOR_SUBSCRIBING", "Thank you for joining Decision Critical!");
 
-        
+
+        public static readonly StringToken BUISNESS_RULE = new CoreLocalizationKeys("BUISNESS_RULE", "Business Rule");
+
     }
 }
