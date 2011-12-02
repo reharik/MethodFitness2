@@ -1,0 +1,32 @@
+<Configuration>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/f:connectionStrings.config" caret="1195" fromTop="16" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/f:Web.config" caret="0" fromTop="0" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Config/f:SqlServerSessionSourceConfiguration.cs" caret="2700" fromTop="30" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:App.config" caret="785" fromTop="8" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/f:connectionStrings.config" caret="197" fromTop="4" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:App.config" caret="140" fromTop="3" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+</Configuration>
