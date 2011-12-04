@@ -7,10 +7,8 @@ namespace MethodFitness.Core.Domain.Persistence
     {
         public DomainEntityMap()
         {
-            Map(x => x.TenantId);
-            Map(x => x.OrgId);
-            ApplyFilter<TenantConditionFilter>("(TenantId= :TenantId Or TenantId= 1)");
-            ApplyFilter<OrgConditionFilter>("(OrgId= :OrgId or OrgId = 1)");
+            Map(x => x.CompanyId);
+            ApplyFilter<CompanyConditionFilter>("(CompanyId= :CompanyId)");
         }
     }
 

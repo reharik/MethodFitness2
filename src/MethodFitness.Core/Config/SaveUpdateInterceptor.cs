@@ -48,7 +48,7 @@ namespace MethodFitness.Core.Config
                     {
                         state[i] = getSettingsFromPrincipal.GetUserEntityId();
                     }
-                    if ("OrgId".Equals(propertyNames[i]))
+                    if ("CompanyId".Equals(propertyNames[i]))
                     {
                         state[i] = getSettingsFromPrincipal.GetCompanyId();
                     }

@@ -1,0 +1,12 @@
+﻿@model CalendarViewModel
+@using MethodFitness.Core.CoreViewModelAndDTOs
+@using HtmlTags
+<script>    var calendarDef=  @MvcHtmlString.Create(JsonUtil.ToJson(Model.CalendarDefinition));
+    calendarDef.calendarContainer="#calendar";
+    
+    $(document).ready(function(){
+        new mf.AppointmentCalendarController(calendarDef,{height:"800px"});
+        });
+
+</script>
+<div id='calendar'></div>

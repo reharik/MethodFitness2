@@ -26,7 +26,7 @@ namespace MethodFitness.Web.Menus
         {
             return _builder
                 .CreateNode<EmployeeDashboardController>(c => c.Display(null), WebLocalizationKeys.EMPLOYEE_DASHBOARD)
-                .CreateNode<CalendarController>(c => c.Display(null), WebLocalizationKeys.CALENDAR,
+                .CreateNode<AppointmentCalendarController>(c => c.AppointmentCalendar(), WebLocalizationKeys.CALENDAR,
                                         AreaName.Schedule)
                 .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                     .HasChildren()

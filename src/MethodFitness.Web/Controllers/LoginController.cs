@@ -43,7 +43,6 @@ namespace MethodFitness.Web.Controllers
         {
             var loginViewModel = new LoginViewModel
                                      {
-                                         Title = WebLocalizationKeys.REGISTER_FOR_DECISION_CRITICAL.ToString(),
                                      };
             return View(loginViewModel);
         }

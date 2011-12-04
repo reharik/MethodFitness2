@@ -63,7 +63,7 @@ namespace MethodFitness.Web.Controllers
             var model = new UserViewModel
             {
                 User = trainer,
-                AddEditUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId,
+                AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId,
                 Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
             };
             return PartialView("TrainerView", model);
@@ -87,17 +87,7 @@ namespace MethodFitness.Web.Controllers
         public ActionResult Save(UserViewModel input)
         {
             User trainer;
-            if (input.EntityId > 0)
-            {
-                trainer = _repository.Find<User>(input.EntityId);
-            }
-            else
-            {
-                trainer = new User();
-                var companyId = _sessionContext.GetCompanyId();
-                var company = _repository.Find<Company>(companyId);
-                trainer.Company = company;
-            }
+            trainer = input.EntityId > 0 ? _repository.Find<User>(input.EntityId) : new User();
             trainer = mapToDomain(input, trainer);
             handlePassword(input, trainer);
 //            if (input.DeleteImage)
@@ -141,11 +131,21 @@ namespace MethodFitness.Web.Controllers
             trainer.Notes = trainerModel.Notes;
             trainer.Status = trainerModel.Status;
             trainer.BirthDate = trainerModel.BirthDate;
+            trainer.Color = trainerModel.Color;
             
             trainer.UserLoginInfo = new UserLoginInfo()
             {
                 LoginName = trainer.Email
             };
+            trainer.EmptyUserRoles();
+            if (model.UserRolesInput.IsNotEmpty())
+            {
+                model.UserRolesInput.Split(',').Each(x =>
+                                                         {
+                                                             var userRole = _repository.Find<UserRole>(Int32.Parse(x));
+                                                             trainer.AddUserRole(userRole);
+                                                         });
+            }
             return trainer;
         }
     }
@@ -159,5 +159,6 @@ namespace MethodFitness.Web.Controllers
         [ValidateSameAs("Password")]
         public string Password { get; set; }
         public string PasswordConfirmation { get; set; }
+        public string UserRolesInput { get; set; }
     }
 }

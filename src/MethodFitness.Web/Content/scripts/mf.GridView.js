@@ -56,32 +56,6 @@ mf.GridView = Backbone.View.extend({
 });
 
 
-mf.AssetGridView = mf.GridView.extend({
-    events:_.extend({
-       'click .copy' : 'copyItems',
-       'click .addToPortfolio' : 'addToPortfolio'
-    }, mf.GridView.prototype.events),
-    copyItems:function(){
-        var ids = cc.gridMultiSelect.getCheckedBoxes();
-        mf.repository.ajaxGet(this.options.copyItemsUrl,$.param({"EntityIds":ids},true),$.proxy(function(){this.reloadGrid()},this));
-    },
-    addToPortfolio:function(){
-        $.publish('/contentLevel/grid/addToPortfolio', []);
-    },
-    handleAddToPortfolio:function(portfolioId){
-            var ids = cc.gridMultiSelect.getCheckedBoxes();
-            mf.repository.ajaxGet(this.options.handleAddItemsToPortfolioUrl,$.param({"EntityIds":ids,"EntityId":portfolioId},true),$.proxy(this.handleAddToPortfolioCallback,this));
-        },
-    handleAddToPortfolioCallback:function(result){
-        $.subscribe("/pageLoaded", $.proxy(function(){
-            $.publish('/contentLevel/grid/AddUpdateItem', [this.options.addEditPortfolioUrl +"/"+result.EntityId]);
-            $.unsubscribe("/pageLoaded")
-        },this));
-        $.publish("/contentLevel/popup_addToPortfolio/cancel",[]);
-        $.address.value(this.options.portfolioListUrl);
-    }
-});
-
 mf.gridDefaults = {
     searchField:"Name",
     showSearch:true

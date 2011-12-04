@@ -34,14 +34,14 @@ namespace MethodFitness.Core.Services
 
         public string GetUrlForFile(HttpPostedFile file, string leafDirectoryName)
         {
-            var orgId = _sessionContext.GetCompanyId();
-            return @"/Tenant/Organizations/" + orgId + @"/" + leafDirectoryName + @"/" + GetGeneratedFileName(file);
+            var companyId = _sessionContext.GetCompanyId();
+            return @"/Company/" + companyId + @"/" + leafDirectoryName + @"/" + GetGeneratedFileName(file);
         }
 
         public string GetPhysicalPathForFile(HttpPostedFile file, string leafDirectoryName)
         {
-            var orgId = _sessionContext.GetCompanyId();
-            return ImageResizer.Util.PathUtils.AppPhysicalPath + @"Tenant\Organizations\" + orgId + @"\" + leafDirectoryName + @"\";
+            var companyId = _sessionContext.GetCompanyId();
+            return ImageResizer.Util.PathUtils.AppPhysicalPath + @"Company\" + companyId + @"\" + leafDirectoryName + @"\";
         }
 
         public string GetGeneratedFileName(HttpPostedFile file)

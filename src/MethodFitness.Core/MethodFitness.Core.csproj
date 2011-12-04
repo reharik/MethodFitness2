@@ -159,6 +159,7 @@
     <Compile Include="Config\ForeignKeyConstraintNameConvention.cs" />
     <Compile Include="Config\StructuremapGridConvention.cs" />
     <Compile Include="Config\TextAreaConvention.cs" />
+    <Compile Include="CoreViewModelAndDTOs\CalendarViewModel.cs" />
     <Compile Include="CoreViewModelAndDTOs\OrderDetailsDto.cs" />
     <Compile Include="CoreViewModelAndDTOs\TokenInputDto.cs" />
     <Compile Include="Config\CustomIdentitiy.cs" />
@@ -170,12 +171,16 @@
     <Compile Include="CoreViewModelAndDTOs\GridItemViewModel.cs" />
     <Compile Include="CoreViewModelAndDTOs\MembershipDto.cs" />
     <Compile Include="CoreViewModelAndDTOs\ViewModel.cs" />
+    <Compile Include="Domain\Appointment.cs" />
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
     <Compile Include="Domain\LocalizedEnumeration.cs" />
     <Compile Include="Domain\LocalizedProperty.cs" />
     <Compile Include="Domain\LocalizedText.cs" />
+    <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
+    <Compile Include="Domain\Persistence\AppointmentMap.cs" />
+    <Compile Include="Domain\Persistence\LocationMap.cs" />
     <Compile Include="Domain\Persistence\UserRoleMap.cs" />
     <Compile Include="Domain\Persistence\UserMap.cs" />
     <Compile Include="Domain\Persistence\DomainEntityMap.cs" />
@@ -276,6 +281,7 @@
     <Compile Include="Rules\FieldHasNoOutstandingEvents.cs" />
     <Compile Include="Rules\FieldHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\RulesEngineBase.cs" />
+    <Compile Include="Services\DateTimeUtilities.cs" />
     <Compile Include="Services\ICastleValidationRunner.cs" />
     <Compile Include="Services\ICrudManager.cs" />
     <Compile Include="Services\IDynamicExpressionBuilder.cs" />

@@ -36,7 +36,7 @@ namespace MethodFitness.Core.Domain
         {
             return Fluently.Configure()
                 .Database(_config.DBConfiguration(_connectionStr))
-              //  .Mappings(m => m.FluentMappings.Add(typeof(TenantConditionFilter)))
+              //  .Mappings(m => m.FluentMappings.Add(typeof(CompanyConditionFilter)))
                // .Mappings(m => m.FluentMappings.Add(typeof(OrgConditionFilter)))
                 .Mappings(_config.MappingConfiguration())
                 .ExposeConfiguration(x=>
@@ -53,7 +53,7 @@ namespace MethodFitness.Core.Domain
         {
             return Fluently.Configure()
                 .Database(_config.DBConfiguration(_connectionStr))
-               // .Mappings(m => m.FluentMappings.Add(typeof(TenantConditionFilter)))
+               // .Mappings(m => m.FluentMappings.Add(typeof(CompanyConditionFilter)))
               //  .Mappings(m => m.FluentMappings.Add(typeof(OrgConditionFilter)))
               //  .Mappings(m => m.FluentMappings.Add(typeof(DeletedConditionFilter)))
                 .Mappings(_config.MappingConfiguration())

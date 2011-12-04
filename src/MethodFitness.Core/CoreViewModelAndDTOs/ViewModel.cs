@@ -8,7 +8,7 @@ namespace MethodFitness.Core
         public int ParentId { get; set; }
         public int RootId { get; set; }
         public string Title { get; set; }
-        public string AddEditUrl { get; set; }
+        public string AddUpdateUrl { get; set; }
     }
 
     public class ListViewModel :ViewModel

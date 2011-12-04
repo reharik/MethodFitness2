@@ -3,12 +3,12 @@ using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
+using MethodFitness.Web.Controllers;
 
-namespace MethodFitness.Web.Controllers
+namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
     public class TrainerListController:MFController
     {
@@ -27,7 +27,7 @@ namespace MethodFitness.Web.Controllers
             var url = UrlContext.GetUrlForAction<TrainerListController>(x => x.Trainers(null));
             var model = new ListViewModel()
             {
-                AddEditUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
+                AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
                 GridDefinition = _trainerListGrid.GetGridDefinition(url)
             };
             return View(model);

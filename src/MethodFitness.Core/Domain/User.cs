@@ -33,9 +33,9 @@ namespace MethodFitness.Core.Domain
         public virtual string Notes { get; set; }
         public virtual DateTime? BirthDate { get; set; }
         public virtual string ImageUrl { get; set; }
-        public virtual Company Company { get; set; }
         [ValueOf(typeof(Status))]
         public virtual string Status { get; set; }
+        public virtual string Color { get; set; }
         
         public virtual UserLoginInfo UserLoginInfo { get; set; }
         public virtual string FullNameLNF
@@ -67,6 +67,7 @@ namespace MethodFitness.Core.Domain
         {
             get { return new SecurityInfo(FullNameLNF, EntityId); }
         }
+
     }
 
     public class UserLoginInfo : DomainEntity

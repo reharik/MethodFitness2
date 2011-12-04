@@ -7,9 +7,7 @@ namespace MethodFitness.Core.Domain
 {
     public class DomainEntity : Entity
     {
-        public virtual int TenantId { get; set; }
-        public virtual int OrgId { get; set; }
-
+        public virtual int CompanyId { get; set; }
     }
 
     public class Entity :  IGridEnabledClass, IEquatable<Entity>

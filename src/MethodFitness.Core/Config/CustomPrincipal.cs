@@ -8,7 +8,7 @@ namespace MethodFitness.Core.Config
     {
         private readonly IIdentity _identity;
         private string _userId;
-        private string _orgId;
+        private string _companyId;
 
         public CustomPrincipal(IIdentity identity, string userData)
         {
@@ -16,8 +16,8 @@ namespace MethodFitness.Core.Config
             var data = userData.Split('|');
             var userIdProp = data.FirstOrDefault(x=>x.Contains("UserId="));
             _userId = userIdProp.Replace("UserId=","");
-            var orgIdProp = data.FirstOrDefault(x => x.Contains("OrgId="));
-            _orgId = orgIdProp.Replace("OrgId=", "");
+            var companyId = data.FirstOrDefault(x => x.Contains("CompanyId="));
+            _companyId = companyId.Replace("CompanyId=", "");
         }
 
         public bool IsInRole(string role)
@@ -28,6 +28,6 @@ namespace MethodFitness.Core.Config
         public IIdentity Identity{ get { return _identity; } }
 
         public int UserId { get{return _userId.IsNotEmpty()? Int32.Parse(_userId):0;} }
-        public int OrgId { get { return _orgId.IsNotEmpty() ? Int32.Parse(_orgId) : 0; } }
+        public int CompanyId { get { return _companyId.IsNotEmpty() ? Int32.Parse(_companyId) : 0; } }
     }
 }

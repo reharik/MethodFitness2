@@ -21,8 +21,8 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.ZipCode);
             Map(x => x.Notes);
             Map(x => x.ImageUrl);
+            Map(x => x.Color);
             References(x => x.UserLoginInfo);
-            References(x => x.Company);
             HasMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
 
         } 

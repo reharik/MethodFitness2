@@ -6,6 +6,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Areas.Schedule.Controllers;
 using MethodFitness.Web.Controllers;
 using MethodFitness.Web.Services;
 using StructureMap;
@@ -30,10 +31,27 @@ namespace Generator
             _securityDataService = ObjectFactory.GetInstance<ISecurityDataService>();
 
             _repository.Initialize();
+            createCompany();
+            createLocations();
             createUserRoles();
             createUser();
             _repository.Commit();
         }
+
+        private void createCompany()
+        {
+            var company = new Company{Name = "Method Fitness"};
+            _repository.Save(company);
+        }
+
+        private void createLocations()
+        {
+            var location1 = new Location { Name = "West", CompanyId = 1};
+            var location2 = new Location { Name = "East", CompanyId = 1 };
+            _repository.Save(location1);
+            _repository.Save(location2);
+        }
+
         private void createUserRoles()
         {
             _userRoleTrainer = new UserRole
@@ -53,7 +71,8 @@ namespace Generator
             _defaultUser = new User
                                {
                                    FirstName = "Raif",
-                                   LastName = "Harik"
+                                   LastName = "Harik",
+                                   CompanyId = 1
                                };
             _defaultUser.AddUserRole(_userRoleTrainer);
             _defaultUser.AddUserRole(_userRoleAdmin);
@@ -61,7 +80,8 @@ namespace Generator
                                              {
                                                  LoginName = "Admin",
                                                  Password = passwordHash,
-                                                 Salt = salt
+                                                 Salt = salt,
+                                                 CompanyId = 1
                                              };
             _repository.Save(_defaultUser);
         }

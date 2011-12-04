@@ -23,7 +23,7 @@ mf.CrudController  = mf.Controller.extend({
 
         var _options = $.extend({},this.options, options);
         _options.el="#masterArea";
-        this.views.gridView = new mf.AssetGridView(_options);
+        this.views.gridView = new mf.GridView(_options);
     },
 
     registerSubscriptions: function(){

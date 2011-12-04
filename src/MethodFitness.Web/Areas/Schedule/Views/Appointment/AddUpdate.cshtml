@@ -1,0 +1,47 @@
+﻿@using MethodFitness.Core.Enumerations
+@using MethodFitness.Core.Html.Expressions
+@using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web.Areas.Schedule.Controllers
+@using MethodFitness.Web.Controllers
+@model AppointmentViewModel
+@{
+    Layout = "~/Views/Shared/_popupLayout.cshtml";
+}
+
+<script>
+    var isCopy = '@Model.Copy';
+    extraFormOptions.runAfterRenderFunction = function () {
+        if (isCopy == "True") {
+            $("#Appointment_EntityId").val(0);
+        }
+    };
+</script>
+
+@MvcHtmlString.Create(FormFor<AppointmentController>(x => x.Save(null), AreaName.Schedule).AddClass("CRUD").ElementId("CRUDForm").ToString())
+    @Html.SubmissionFor(x => x.Appointment.EntityId).HideRoot().ToHtmlTag()
+    <div class="col left">
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.Location).ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.Trainer).ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.Client).ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.Notes).ToHtmlTag()
+        </div>
+    </div>
+    <div class="col right">
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.ScheduledStartTime).ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.ScheduledEndTime).ToHtmlTag()
+        </div>
+    </div>
+          

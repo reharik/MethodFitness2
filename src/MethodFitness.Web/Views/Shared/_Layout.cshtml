@@ -26,13 +26,14 @@
     @Script("jqueryPlugins/jquery-1.6.2.min.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.transform-0.9.3.min.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery-ui-1.8.16.custom.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.tokeninput.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.validate.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.form.2.83.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.tokeninput.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.ie-select-style.pack.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.pubsub.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.cleditor.min.js").ToHtmlTag()
+    @Script("jqueryPlugins/jquery.ui.timepicker-0.0.8.js").ToHtmlTag()
+
     @Script("externalHelpers/modernizr-2.0.min.js").ToHtmlTag()
     @Script("externalHelpers/respond.min.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.metadata.js").ToHtmlTag()
@@ -41,7 +42,6 @@
     @Script("externalHelpers/underscore.js").ToHtmlTag()
     @Script("externalHelpers/backbone.js").ToHtmlTag()
     
-
     
     @Script("externalHelpers/superfish.js").ToHtmlTag()
     @Script("internalHelpers/cc.ccMenu.js").ToHtmlTag()
@@ -62,11 +62,10 @@
         var rootId = @Model.RootId ;
         var mfCurrentLocaton;
         var extraFormOptions = {};
-        var userProfileUrl = "@Model.UserProfileUrl";
         extraFormOptions.crudFormOptions = { };
         
         $(document).ready(function() {
-            var options = { el: ".mf_dyn", userProfileUrl: userProfileUrl };
+            var options = { el: ".mf_dyn"};
             new mf.HomeController(options);
         });
         @RenderSection("HeaderJavascript", false)

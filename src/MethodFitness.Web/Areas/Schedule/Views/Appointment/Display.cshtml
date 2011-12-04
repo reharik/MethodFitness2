@@ -1,0 +1,19 @@
+﻿@model AppointmentViewModel
+@using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web
+@using MethodFitness.Web.Areas.Schedule.Controllers
+
+@{
+    Layout = "~/Views/Shared/_popupLayout.cshtml";
+}
+        @MvcHtmlString.Create(Html.HiddenFor(x => x.Appointment.EntityId, new { @class = "copyEntityId" }).ToString())
+            <input type="hidden" name="Appointment.EntityId" id="EntityId" value="@Model.Appointment.EntityId"/>
+            @Html.ViewFor(x => x.AddUpdateUrl).HideRoot().ToHtmlTag()
+            @Html.ViewFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
+            @Html.ViewFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
+            @Html.ViewFor(x => x.Appointment.ScheduledEndTime).ToHtmlTag()
+            @Html.ViewFor(x => x.Appointment.Location.Name).ToHtmlTag()
+            @Html.ViewFor(x => x.Appointment.Client).ToHtmlTag()
+            @Html.ViewFor(x => x.Appointment.Notes).ToHtmlTag()
+
+

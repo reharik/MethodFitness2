@@ -16,7 +16,7 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
         public override HtmlTag Build(ElementRequest request)
         {
             var date = request.StringValue().IsNotEmpty() ? DateTime.Parse(request.StringValue()).ToShortDateString() : "";
-            return new TextboxTag().Attr("value", date).AddClass("mf_datePicker");
+            return new TextboxTag().Attr("value", date).AddClass("datePicker");
         }
     }
 
@@ -47,7 +47,7 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
         public override HtmlTag Build(ElementRequest request)
         {
             var date = request.StringValue().IsNotEmpty() ? DateTime.Parse(request.StringValue()).ToShortTimeString() : "";
-            return new TextboxTag().Attr("value", date).AddClass("mf_timePicker");
+            return new TextboxTag().Attr("value", date).AddClass("timePicker");
         }
     }
 

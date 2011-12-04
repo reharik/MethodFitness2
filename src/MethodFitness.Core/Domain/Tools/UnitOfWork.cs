@@ -17,11 +17,11 @@ namespace MethodFitness.Core.Domain
         {
             _session = session;
             _sessionContext = sessionContext;
-            var enableOrgFilter = _session.EnableFilter("OrgConditionFilter");
+            var enableCompanyFilter = _session.EnableFilter("CompanyConditionFilter");
             var enableDeleteFilter = _session.EnableFilter("DeletedConditionFilter");
-            if (enableOrgFilter == null) return;
+            if (enableCompanyFilter == null) return;
 
-            enableOrgFilter.SetParameter("OrgId", _sessionContext.GetCompanyId());
+            enableCompanyFilter.SetParameter("CompanyId", _sessionContext.GetCompanyId());
             enableDeleteFilter.SetParameter("Archived", false);
         }
         //No filters

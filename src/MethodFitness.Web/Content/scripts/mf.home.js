@@ -36,9 +36,16 @@ mf.HomeController = mf.Controller.extend({
         }, "Please enter a valid number.");
 
         // the events delegate doesn't seem to be picking up focusin
-        $(".mf_datePicker").live('focusin', function() {
+        $(".datePicker").live('focusin', function() {
             var $this = $(this);
             $this.datepicker({ changeYear: true, changeMonth: true });
+        });
+        $(".timePicker").live('focusin', function() {
+            var $this = $(this);
+            $this.timepicker({
+                    showPeriod: true,
+                    showLeadingZero: false
+                });
         });
         // this and address should be put in there own header contorller
         $("#main-tabs li" ,"#main-header").click(function(e){

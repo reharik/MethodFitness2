@@ -2,20 +2,12 @@
 
 namespace MethodFitness.Core.Config
 {
-    public class OrgConditionFilter : FilterDefinition
+    public class CompanyConditionFilter : FilterDefinition
     {
-        public OrgConditionFilter()
+        public CompanyConditionFilter()
         {
-            WithName("OrgConditionFilter")
-                .AddParameter("OrgId", NHibernate.NHibernateUtil.Int32);
-        }
-    }
-    public class TenantConditionFilter : FilterDefinition
-    {
-        public TenantConditionFilter()
-        {
-            WithName("TenantConditionFilter")
-                .AddParameter("TenantId", NHibernate.NHibernateUtil.Int32);
+            WithName("CompanyConditionFilter")
+                .AddParameter("CompanyId", NHibernate.NHibernateUtil.Int32);
         }
     }
 

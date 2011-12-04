@@ -26,8 +26,7 @@ namespace MethodFitness.Core.Services
 
         public User AuthenticateForUserId(string username, string password)
         {
-            _repository.CurrentSession().DisableFilter("OrgConditionFilter");
-            _repository.CurrentSession().DisableFilter("TenantConditionFilter");
+            _repository.CurrentSession().DisableFilter("CompanyConditionFilter");
             //var user = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username && u.UserLoginInfo.Password == password).FirstOrDefault();
             //return user;
             var users = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username );// && u.UserLoginInfo.Password == password).FirstOrDefault();

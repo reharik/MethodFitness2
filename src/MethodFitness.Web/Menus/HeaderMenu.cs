@@ -26,10 +26,10 @@ namespace KnowYourTurf.Web.Config
             return _builder
                 .CreateNode<MethodFitnessController>(c => c.Home(null), WebLocalizationKeys.DASHBOARD)
                 //.CreateNode<PortfolioDashboardController>(c => c.PortfolioDashboard(null), WebLocalizationKeys.ASSESTS,AreaName.Portfolio)
-                .CreateNode(WebLocalizationKeys.CALNEDAR)
-                .CreateNode(WebLocalizationKeys.LEARNING)
-               // .CreateNode<PortfolioDashboardController>("/MethodFitness/Home#", x=>x.Display(null), WebLocalizationKeys.PORTFOLIOS, AreaName.Portfolio, "selected") 
-                .CreateNode(WebLocalizationKeys.EVALUATIONS)
+//                .CreateNode(WebLocalizationKeys.CALNEDAR)
+//                .CreateNode(WebLocalizationKeys.LEARNING)
+//               // .CreateNode<PortfolioDashboardController>("/MethodFitness/Home#", x=>x.Display(null), WebLocalizationKeys.PORTFOLIOS, AreaName.Portfolio, "selected") 
+//                .CreateNode(WebLocalizationKeys.EVALUATIONS)
                 .MenuTree(withoutPermissions);
         }
     }

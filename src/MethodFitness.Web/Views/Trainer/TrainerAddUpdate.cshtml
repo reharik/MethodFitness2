@@ -1,4 +1,5 @@
-﻿@using MethodFitness.Core.Html.FubuUI
+﻿@using HtmlTags
+@using MethodFitness.Core.Html.FubuUI
 @using MethodFitness.Web
 @using MethodFitness.Web.Controllers
 @model UserViewModel
@@ -8,10 +9,11 @@
 }
 
 @section HeaderJavascript{
-
+        extraFormOptions.availableItems= @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableItems));
+        extraFormOptions.selectedItems= @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedItems));
 }
 
-  @MvcHtmlString.Create(FormFor<TrainerController>(x => x.Save(null)).AddClass("dci_CRUD").ElementId("CRUDForm").ToString())
+  @MvcHtmlString.Create(FormFor<TrainerController>(x => x.Save(null)).AddClass("CRUD").ElementId("CRUDForm").ToString())
         <input type="hidden" id="EntityId" name="EntityId" value="@Model.User.EntityId">
         <div class="col left">
             <div class="fieldRow">
@@ -35,6 +37,7 @@
                 @Html.SubmissionFor(x => x.User.State).AddClassToRoot("one-quarter").ToHtmlTag()
                 @Html.SubmissionFor(x => x.User.ZipCode).AddClassToRoot("one-quarter").ToHtmlTag()
             </div>
+            
         </div>
         <div class="col right">
             <div class="fieldRow">
@@ -50,11 +53,25 @@
                 @Html.SubmissionFor(x => x.User.Email).ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.User.PhoneHome).ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.PhoneHome).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.PhoneMobile).AddClassToRoot("half").ToHtmlTag()
             </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.User.PhoneMobile).ToHtmlTag()
+        </div>
+        <div class="col full">
+            <div class="fieldRow artifact-field">
+                <div id="userRoles">
+                    <label class="section">@WebLocalizationKeys.USER_ROLES</label>
+                    <div id="userRoles" class="dci_assetSection">
+                        <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE_OR.ToString()</div>
+                        <input type="text" name="UserRolesInput" id="Input" class="artifact nolabels"/>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="col full">
+        @WebLocalizationKeys.SELECT_COLOR_TO_ASSOCIATE_WITH_THIS_PERSON.ToString()
+            @MvcHtmlString.Create(Html.SubmissionFor(x => x.User.Color).InputId("color").ToString())
+            <div id="colorPicker"></div>
         </div>
      
     @EndForm()
