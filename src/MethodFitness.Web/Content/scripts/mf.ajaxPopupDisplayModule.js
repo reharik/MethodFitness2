@@ -44,6 +44,5 @@ mf.AjaxPopupDisplayModule  = mf.Module.extend({
     formCancel:function(){
         $.publish("/contentLevel/ajaxPopupDisplayModule_" + this.id + "/displayCancel",[this.id]);
         this.views[this.id + "Form"].remove();
-        delete this.views[this.id + "Form"];
     }
 });

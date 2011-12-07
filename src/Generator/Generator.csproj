@@ -138,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandRegistry.cs" />
+    <Compile Include="Commands\DefaultSecuritySetupCommand.cs" />
+    <Compile Include="Commands\DropReaddDatabaseCommand.cs" />
     <Compile Include="Commands\DumpStringsCommand.cs" />
     <Compile Include="Commands\EnterStringsCommand.cs" />
     <Compile Include="Commands\KillAllFKsCommand.cs" />

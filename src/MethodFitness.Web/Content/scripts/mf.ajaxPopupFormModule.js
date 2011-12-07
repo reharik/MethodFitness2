@@ -42,10 +42,6 @@ mf.AjaxPopupFormModule  = mf.Module.extend({
     },
     formSuccess:function(result){
         $.publish("/contentLevel/ajaxPopupFormModule_" + this.id + "/formSuccess",[result,this.id]);
-        this.views[this.id + "Form"].remove();
-        delete this.views[this.id + "Form"];
-        this.views[this.id + "Popup"].remove();
-        delete this.views[this.id + "Popup"];
     },
 
     formSave:function(){
@@ -54,9 +50,5 @@ mf.AjaxPopupFormModule  = mf.Module.extend({
 
     formCancel:function(){
         $.publish("/contentLevel/ajaxPopupFormModule_" + this.id + "/formCancel",[this.id]);
-        this.views[this.id + "Form"].remove();
-        delete this.views[this.id + "Form"];
-        this.views[this.id + "Popup"].remove();
-        delete this.views[this.id + "Popup"];
     }
 });

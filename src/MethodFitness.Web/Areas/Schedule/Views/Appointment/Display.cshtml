@@ -8,12 +8,19 @@
 }
         @MvcHtmlString.Create(Html.HiddenFor(x => x.Appointment.EntityId, new { @class = "copyEntityId" }).ToString())
             <input type="hidden" name="Appointment.EntityId" id="EntityId" value="@Model.Appointment.EntityId"/>
-            @Html.ViewFor(x => x.AddUpdateUrl).HideRoot().ToHtmlTag()
-            @Html.ViewFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
-            @Html.ViewFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
-            @Html.ViewFor(x => x.Appointment.ScheduledEndTime).ToHtmlTag()
-            @Html.ViewFor(x => x.Appointment.Location.Name).ToHtmlTag()
-            @Html.ViewFor(x => x.Appointment.Client).ToHtmlTag()
-            @Html.ViewFor(x => x.Appointment.Notes).ToHtmlTag()
-
+            <input type="hidden" name="AddUpdateUrl" id="AddUpdateUrl" value="@Model.AddUpdateUrl"/>
+<div class="col left">
+    <div class="fieldRow">
+        @Html.ViewFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
+    </div>
+    <div class="fieldRow">
+        @Html.ViewFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
+    </div>
+    <div class="fieldRow">    @Html.ViewFor(x => x.Appointment.ScheduledEndTime).ToHtmlTag()
+        @Html.ViewFor(x => x.Appointment.Location.Name).ToHtmlTag()
+    </div>
+    <div class="fieldRow">@Html.ViewFor(x => x.Appointment.Client).ToHtmlTag()
+        @Html.ViewFor(x => x.Appointment.Notes).ToHtmlTag()
+    </div>
+</div>
 

@@ -16,11 +16,15 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
     {
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
+        private readonly ISessionContext _sessionContext;
 
-        public AppointmentCalendarController(IRepository repository, ISaveEntityService saveEntityService)
+        public AppointmentCalendarController(IRepository repository,
+            ISaveEntityService saveEntityService,
+            ISessionContext sessionContext)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
+            _sessionContext = sessionContext;
         }
 
         public ActionResult AppointmentCalendar()
@@ -55,17 +59,23 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
             var appointments = _repository.Query<Appointment>(x => x.ScheduledDate >= startDateTime && x.ScheduledDate <= endDateTime);
-            appointments.Each(x =>
-                       events.Add(new CalendarEvent
-                       {
-                           EntityId = x.EntityId,
-                           title = x.Location.Name,
-                           start = x.ScheduledStartTime.ToString(),
-                           end = x.ScheduledEndTime.ToString(),
-                           color = x.Trainer.Color
-                       })
-                );
+            appointments.Each(x => GetValue(x, events) );
             return Json(events, JsonRequestBehavior.AllowGet);
+        }
+
+        private void GetValue(Appointment x, List<CalendarEvent> events)
+        {
+            // create some operations here and grant to usergroups
+            var userId = _sessionContext.GetUserEntityId();
+            var calendarEvent = new CalendarEvent
+                                    {
+                                        EntityId = x.EntityId,
+                                        title = x.Location.Name,
+                                        start = x.ScheduledStartTime.ToString(),
+                                        end = x.ScheduledEndTime.ToString(),
+                                        color = x.Trainer.Color
+                                    };
+            events.Add(calendarEvent);
         }
     }
 

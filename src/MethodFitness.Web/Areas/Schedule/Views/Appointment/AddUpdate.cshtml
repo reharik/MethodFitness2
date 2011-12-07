@@ -1,6 +1,7 @@
 ﻿@using MethodFitness.Core.Enumerations
 @using MethodFitness.Core.Html.Expressions
 @using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web
 @using MethodFitness.Web.Areas.Schedule.Controllers
 @using MethodFitness.Web.Controllers
 @model AppointmentViewModel
@@ -24,7 +25,13 @@
             @Html.SubmissionFor(x => x.Appointment.Location).ToHtmlTag()
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.Trainer).ToHtmlTag()
+            @if (@Model.AsAdmin)
+            {
+                @Html.SubmissionFor(x => x.Appointment.Trainer).ToHtmlTag()
+            }else
+            {
+                @Html.ViewFor(x => x.TrainerName).ToHtmlTag()
+            }
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Appointment.Client).ToHtmlTag()
@@ -37,11 +44,19 @@
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
         </div>
+        <h5>@WebLocalizationKeys.STARTTIME</h5>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.ScheduledStartTime).ToHtmlTag()
+            @Html.SubmissionFor(x => x.sHour).AddClassToRoot("first one-five").LabelDisplay(WebLocalizationKeys.HOUR).ToHtmlTag()
+            @Html.SubmissionFor(x => x.sMinutes).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.MINUTES).ToHtmlTag()
+            @Html.SubmissionFor(x => x.sAMPM).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.AMPM).ToHtmlTag()
         </div>
+        <h5>
+            @WebLocalizationKeys.ENDTIME
+        </h5>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.ScheduledEndTime).ToHtmlTag()
+            @Html.SubmissionFor(x => x.eHour).AddClassToRoot("first one-five").LabelDisplay(WebLocalizationKeys.HOUR).ToHtmlTag()
+            @Html.SubmissionFor(x => x.eMinutes).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.MINUTES).ToHtmlTag()
+            @Html.SubmissionFor(x => x.eAMPM).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.AMPM).ToHtmlTag()
         </div>
     </div>
           

@@ -22,14 +22,14 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         this.views.calendarView = new mf.CalendarView(options);
     },
     registerSubscriptions:function(){
-        $.subscribe('/calendar_appointment/dayClick', $.proxy(this.dayClick,this), this.cid);
-        $.subscribe('/calendar_appointment/eventClick', $.proxy(this.eventClick,this), this.cid);
+        $.subscribe('/contentLevel/calendar_appointment/dayClick', $.proxy(this.dayClick,this), this.cid);
+        $.subscribe('/contentLevel/calendar_appointment/eventClick', $.proxy(this.eventClick,this), this.cid);
         // from form
-        $.subscribe('/form_editModule/success', $.proxy(this.formSuccess,this), this.cid);
-        $.subscribe('/form_editModule/cancel', $.proxy(this.formCancel,this), this.cid);
+        $.subscribe('/contentLevel/form_editModule/success', $.proxy(this.formSuccess,this), this.cid);
+        $.subscribe('/contentLevel/popup_editModule/cancel', $.proxy(this.formCancel,this), this.cid);
         // from display
-        $.subscribe('/popup_displayModule/cancel', $.proxy(this.displayCancel,this), this.cid);
-        $.subscribe('/popup_displayModule/edit', $.proxy(this.displayEdit,this), this.cid);
+        $.subscribe('/contentLevel/popup_displayModule/cancel', $.proxy(this.displayCancel,this), this.cid);
+        $.subscribe('/contentLevel/popup_displayModule/edit', $.proxy(this.displayEdit,this), this.cid);
     },
     dayClick:function(date, allDay, jsEvent, view) {
         var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
@@ -96,7 +96,8 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         this.modules.popupDisplay.destroy();
     },
 
-    displayEdit:function(url){
+    displayEdit:function(event){
+        var url = $("#AddUpdateUrl",this.modules.popupDisplay.el).val();
         this.modules.popupDisplay.destroy();
         this.editEvent(url);
     }

@@ -105,6 +105,14 @@ namespace MethodFitness.Web
         public static readonly StringToken INITIAL = new WebLocalizationKeys("INITIAL", "Initial");
         public static readonly StringToken PASSWORD = new WebLocalizationKeys("PASSWORD", "Password");
         public static readonly StringToken SAVE = new WebLocalizationKeys("SAVE", "Save");
-    
+
+        public static readonly StringToken HOUR = new WebLocalizationKeys("HOUR", "Hour");
+        public static readonly StringToken MINUTES = new WebLocalizationKeys("MINUTES", "Minutes");
+        public static readonly StringToken AMPM = new WebLocalizationKeys("AMPM", "AM/PM");
+
+        public static readonly StringToken STARTTIME= new WebLocalizationKeys("STARTTIME", "Start Time");
+        public static readonly StringToken ENDTIME = new WebLocalizationKeys("ENDTIME", "End Time");
+
+
     }
 }

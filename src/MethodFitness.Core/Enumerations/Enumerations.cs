@@ -134,26 +134,39 @@ namespace MethodFitness.Core.Enumerations
     }
 
     [Serializable]
-    public class ComplianceItemEnum : Enumeration
+    public class Minutes : Enumeration
     {
-        public static readonly ComplianceItemEnum Empty = new ComplianceItemEnum { IsActive = false, Key = "" };
-        public static readonly ComplianceItemEnum License = new ComplianceItemEnum { IsActive = true, Key = "License" };
-        public static readonly ComplianceItemEnum ProfessionalCertification = new ComplianceItemEnum { IsActive = true, Key = "Professional Certification" };
-        public static readonly ComplianceItemEnum TechnicalCertification = new ComplianceItemEnum { IsActive = true, Key = "Technical Certification" };
+        public static readonly Minutes Empty = new Minutes { IsActive = false, Key = "" };
+        public static readonly Minutes Zero = new Minutes { IsActive = true, Key = "00" };
+        public static readonly Minutes Fifteen = new Minutes { IsActive = true, Key = "15" };
+        public static readonly Minutes Thirty = new Minutes { IsActive = true, Key = "30" };
+        public static readonly Minutes FortyFive = new Minutes { IsActive = true, Key = "45" };
     }
 
     [Serializable]
-    public class YesNo : Enumeration
+    public class Hours : Enumeration
     {
-        public static readonly YesNo Empty = new YesNo { IsActive = false, Key = "" };
-        public static readonly YesNo Yes = new YesNo { IsActive = true, Key = "Yes" };
-        public static readonly YesNo No = new YesNo { IsActive = true, Key = "No" };
+        public static readonly Hours Empty = new Hours {IsActive = false, Key = ""};
+        public static readonly Hours One = new Hours { IsActive = true, Key = "1" };
+        public static readonly Hours Two = new Hours { IsActive = true, Key = "2" };
+        public static readonly Hours Three = new Hours { IsActive = true, Key = "3" };
+        public static readonly Hours Four = new Hours { IsActive = true, Key = "4" };
+        public static readonly Hours Five = new Hours { IsActive = true, Key = "5" };
+        public static readonly Hours Six = new Hours { IsActive = true, Key = "6" };
+        public static readonly Hours Seven = new Hours { IsActive = true, Key = "7" };
+        public static readonly Hours Eight = new Hours { IsActive = true, Key = "8" };
+        public static readonly Hours Nine = new Hours { IsActive = true, Key = "9" };
+        public static readonly Hours Ten = new Hours { IsActive = true, Key = "10" };
+        public static readonly Hours Eleven = new Hours { IsActive = true, Key = "11" };
+        public static readonly Hours Twelve = new Hours { IsActive = true, Key = "12" };
     }
 
     [Serializable]
-    public class DefaultPhotoUrl : Enumeration
+    public class AMPM : Enumeration
     {
-        public static readonly DefaultPhotoUrl HeadShotUrl = new DefaultPhotoUrl { IsActive = true, Key = "/content/images/avatar.jpg" };
+        public static readonly AMPM Empty = new AMPM { IsActive = false, Key = "" };
+        public static readonly AMPM AM = new AMPM { IsActive = true, Key = "AM" };
+        public static readonly AMPM PM = new AMPM { IsActive = true, Key = "PM" };
     }
 
 

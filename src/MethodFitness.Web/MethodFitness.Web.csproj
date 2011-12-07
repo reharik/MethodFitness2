@@ -227,6 +227,7 @@
     <Compile Include="CustomViewPage.cs" />
     <Compile Include="Menus\HeaderMenu.cs" />
     <Compile Include="Services\IAuthenticationContext.cs" />
+    <Compile Include="Services\ISecuritySetupService.cs" />
     <Compile Include="WebLocalizationKeys.cs" />
     <Compile Include="MFWebRegistry.cs" />
     <Compile Include="Global.asax.cs">

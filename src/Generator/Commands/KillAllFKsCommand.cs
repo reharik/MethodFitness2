@@ -15,7 +15,7 @@ namespace Generator.Commands
 
         public void Execute(string[] args)
         {
-            SqlServerHelper.KillAllFKs();
+            SqlServerHelper.KillAllFKs(_sessionFactory);
         }
     }
 }

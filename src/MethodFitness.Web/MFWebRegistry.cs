@@ -1,5 +1,6 @@
 using Alpinely.TownCrier;
 using AuthorizeNet;
+using KnowYourTurf.Core.Services;
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
@@ -77,9 +78,10 @@ namespace MethodFitness.Web
             For<IMergedEmailFactory>().LifecycleIs(new UniquePerRequestLifecycle()).Use<MergedEmailFactory>();
 
             For<IAuthorizationService>().HybridHttpOrThreadLocalScoped().Use<AuthorizationService>();
-            For<IAuthorizationRepository>().HybridHttpOrThreadLocalScoped().Use<AuthorizationRepository>();
+            For<IAuthorizationRepository>().HybridHttpOrThreadLocalScoped().Use<CustomAuthorizationRepository>();
             For<IPermissionsBuilderService>().HybridHttpOrThreadLocalScoped().Use<PermissionsBuilderService>();
             For<IPermissionsService>().HybridHttpOrThreadLocalScoped().Use<PermissionsService>();
+            For<ISecuritySetupService>().Use<DefaultSecuritySetupService>();
 
             For(typeof(IGridBuilder<>)).Use(typeof(GridBuilder<>));
             

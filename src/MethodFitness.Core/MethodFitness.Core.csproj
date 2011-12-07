@@ -281,6 +281,7 @@
     <Compile Include="Rules\FieldHasNoOutstandingEvents.cs" />
     <Compile Include="Rules\FieldHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\RulesEngineBase.cs" />
+    <Compile Include="Services\CustomAuthorizationRepository.cs" />
     <Compile Include="Services\DateTimeUtilities.cs" />
     <Compile Include="Services\ICastleValidationRunner.cs" />
     <Compile Include="Services\ICrudManager.cs" />
@@ -288,6 +289,7 @@
     <Compile Include="Services\IDynamicExpressionQuery.cs" />
     <Compile Include="Services\IEmailTemplateService.cs" />
     <Compile Include="Services\IFileHandlerService.cs" />
+    <Compile Include="Services\IMFPermissionsService.cs" />
     <Compile Include="Services\ISessionContext.cs" />
     <Compile Include="Services\ISaveEntityService.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />

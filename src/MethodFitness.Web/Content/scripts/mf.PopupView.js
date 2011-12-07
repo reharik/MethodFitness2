@@ -50,7 +50,7 @@ mf.popupButtonBuilder = (function(){
         var saveFunc = function() {
             $.publish("/contentLevel/popup_"+id+"/save",[]);
         };
-        var editFunc = function(event) {mf.popupCrud.controller.editFromDisplay(event);};
+        var editFunc = function(event) {$.publish("/contentLevel/popup_"+id+"/edit",[event]);};
         var cancelFunc = function(){
                             $.publish("/contentLevel/popup_"+id+"/cancel",[]);
                             $(this).dialog("close");

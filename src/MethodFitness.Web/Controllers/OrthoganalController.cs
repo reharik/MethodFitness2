@@ -51,7 +51,7 @@ namespace MethodFitness.Web.Areas.Portfolio.Controllers
         {
             return PartialView(new MenuViewModel
             {
-                MenuItems = _menuConfig.Build(true)
+                MenuItems = _menuConfig.Build()
             });
         }
     }

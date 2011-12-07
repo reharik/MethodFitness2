@@ -23,7 +23,7 @@ namespace Generator
         private UserRole _userRoleAdmin;
 
 
-        public void Load(string extraDataKey)
+        public void Load()
         {
             _dynamicExpressionQuery = ObjectFactory.GetInstance<IDynamicExpressionQuery>();
             _repository = ObjectFactory.GetNamedInstance<IRepository>("NoFiltersOrInterceptor");
