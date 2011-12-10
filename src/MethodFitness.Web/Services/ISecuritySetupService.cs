@@ -36,7 +36,7 @@ namespace MethodFitness.Web.Services
             IMFPermissionsService permissionsService)
         {
             _container = container;
-            _repository = new Repository();
+            _repository = ObjectFactory.Container.GetInstance<IRepository>("NoFilters");
             _authorizationRepository = authorizationRepository;
             _permissionsBuilderService = permissionsBuilderService;
             _permissionsService = permissionsService;
@@ -49,6 +49,7 @@ namespace MethodFitness.Web.Services
             CreateKYTAdminOperation();
             CreateOperationsForAllControllers();
             CreateOperationsForAllMenuItems();
+            CreateMiscellaneousOperations();
             CreateAdminPermissions();
             _permissionsService.GrantDefaultAdminPermissions("Administrator");
             _permissionsService.GrantDefaultTrainersPermissions();
@@ -111,6 +112,7 @@ namespace MethodFitness.Web.Services
             _authorizationRepository.CreateOperation("/Calendar/CanEditOtherAppointments");
             _authorizationRepository.CreateOperation("/Calendar/CanEnterRetroactiveAppointments");
             _authorizationRepository.CreateOperation("/Calendar/CanEditPastAppointments");
+            _authorizationRepository.CreateOperation("/Calendar/SetAppointmentForOthers");
         }
 
         public void AssociateAllUsersWithThierTypeGroup()

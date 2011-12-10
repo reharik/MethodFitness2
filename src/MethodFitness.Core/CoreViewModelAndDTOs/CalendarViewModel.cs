@@ -24,6 +24,11 @@
 
         public string DisplayUrl { get; set; }
 
+        public bool CanEditRetroactive { get; set; }
+
+        public bool CanAddRetroactive { get; set; }
+
+        public string DeleteUrl { get; set; }
     }
 
     public class CalendarEvent

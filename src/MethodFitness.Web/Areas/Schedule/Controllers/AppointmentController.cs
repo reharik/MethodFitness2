@@ -19,16 +19,18 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private readonly ISelectListItemService _selectListItemService;
         private readonly ISaveEntityService _saveEntityService;
         private readonly ISessionContext _sessionContext;
+        private readonly IUserPermissionService _userPermissionService;
 
         public AppointmentController(IRepository repository,
             ISelectListItemService selectListItemService,
             ISaveEntityService saveEntityService,
-            ISessionContext sessionContext )
+            ISessionContext sessionContext,IUserPermissionService userPermissionService)
         {
             _repository = repository;
             _selectListItemService = selectListItemService;
             _saveEntityService = saveEntityService;
             _sessionContext = sessionContext;
+            _userPermissionService = userPermissionService;
         }
 
         public ActionResult AddUpdate(AddEditAppointmentViewModel input)
@@ -45,8 +47,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                                 Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString()
                             };
             model.Appointment.EntityId = input.Copy ? 0 : model.Appointment.EntityId;
-            handelTime(model,input.ScheduledStartTime.Value);
-            handleTrainer(model, input.AsAdmin);
+            handelTime(model, appointment.ScheduledStartTime.Value);
+            handleTrainer(model);
             return PartialView("AddUpdate", model);
         }
 
@@ -63,18 +65,18 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         }
 
-        private void handleTrainer(AppointmentViewModel model, bool isAdmin)
+        private void handleTrainer(AppointmentViewModel model)
         {
-            if (isAdmin)
+            if (_userPermissionService.IsAllowed("/Calendar/SetAppointmentForOthers"))
             {
                 var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
                 model.TrainerList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true);
-                model.AsAdmin = true;
             }else
             {
                 var userId = _sessionContext.GetUserEntityId();
                 var user = _repository.Find<User>(userId);
                 model.TrainerName = user.FullNameFNF;
+                model.Appointment.Trainer = user;
             }
         }
 
@@ -112,11 +114,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             var appointmentModel = model.Appointment;
             appointment.ScheduledDate = appointmentModel.ScheduledDate;
-            appointment.ScheduledStartTime = DateTime.Parse(appointmentModel.ScheduledDate.Value.ToShortDateString() + " " + appointmentModel.ScheduledStartTime.Value.ToShortTimeString());
-            if (appointmentModel.ScheduledEndTime.HasValue)
-            {
-                appointment.ScheduledEndTime = DateTime.Parse(appointmentModel.ScheduledDate.Value.ToShortDateString() + " " + appointmentModel.ScheduledEndTime.Value.ToShortTimeString());
-            }
+            appointment.ScheduledStartTime = DateTime.Parse(appointmentModel.ScheduledDate.Value.ToShortDateString() + " " + model.sHour+":"+model.sMinutes+" "+model.sAMPM);
+            appointment.ScheduledEndTime = DateTime.Parse(appointmentModel.ScheduledDate.Value.ToShortDateString() + " " + model.eHour + ":" + model.eMinutes + " " + model.eAMPM);
             var trainer = _repository.Find<User>(appointmentModel.Trainer.EntityId);
             var location = _repository.Find<Location>(appointmentModel.Location.EntityId);
             appointment.Trainer = trainer;
@@ -147,7 +146,6 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         [ValueOf(typeof(AMPM))]
         public string eAMPM { get; set; }
 
-        public bool AsAdmin { get; set; }
 
         public string TrainerName { get; set; }
     }

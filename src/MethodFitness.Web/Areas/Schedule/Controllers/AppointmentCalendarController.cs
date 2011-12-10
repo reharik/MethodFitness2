@@ -9,6 +9,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Controllers;
+using Rhino.Security.Interfaces;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
@@ -17,18 +18,24 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
         private readonly ISessionContext _sessionContext;
+        private readonly IAuthorizationService _authorizationService;
 
         public AppointmentCalendarController(IRepository repository,
             ISaveEntityService saveEntityService,
-            ISessionContext sessionContext)
+            ISessionContext sessionContext,
+            IAuthorizationService authorizationService)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
             _sessionContext = sessionContext;
+            _authorizationService = authorizationService;
         }
 
         public ActionResult AppointmentCalendar()
         {
+            var userEntityId = _sessionContext.GetUserEntityId();
+            var user = _repository.Find<User>(userEntityId);
+
             var model = new CalendarViewModel
             {
                 CalendarDefinition = new CalendarDefinition
@@ -36,7 +43,11 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     Url = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.Events(null), AreaName.Schedule),
                     AddEditUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.AddUpdate(null), AreaName.Schedule),
                     DisplayUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Display(null), AreaName.Schedule),
-                    EventChangedUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.EventChanged(null), AreaName.Schedule)
+                    DeleteUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Delete(null), AreaName.Schedule),
+                    EventChangedUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.EventChanged(null), AreaName.Schedule),
+                    CanEditRetroactive = _authorizationService.IsAllowed(user, "/Calendar/CanEditPastAppointments"),
+                    CanAddRetroactive = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments")
+                
                 }
             };
             return View(model);
@@ -55,31 +66,45 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public JsonResult Events(GetEventsViewModel input)
         {
+            var userEntityId = _sessionContext.GetUserEntityId();
+            var user = _repository.Find<User>(userEntityId);
+            var canSeeOthers = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOtherAppointments");
             var events = new List<CalendarEvent>();
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
             var appointments = _repository.Query<Appointment>(x => x.ScheduledDate >= startDateTime && x.ScheduledDate <= endDateTime);
-            appointments.Each(x => GetValue(x, events) );
+            appointments.Each(x => GetValue(x, events, user, canSeeOthers) );
             return Json(events, JsonRequestBehavior.AllowGet);
         }
 
-        private void GetValue(Appointment x, List<CalendarEvent> events)
+        private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)
         {
-            // create some operations here and grant to usergroups
-            var userId = _sessionContext.GetUserEntityId();
             var calendarEvent = new CalendarEvent
                                     {
                                         EntityId = x.EntityId,
-                                        title = x.Location.Name,
+                                        title = x.Location.Name+": "+x.Client,
                                         start = x.ScheduledStartTime.ToString(),
                                         end = x.ScheduledEndTime.ToString(),
                                         color = x.Trainer.Color
                                     };
+
+            if (x.Trainer != user && canSeeOthers)
+            {
+                calendarEvent.color = "#fffff";
+                calendarEvent.title = string.Empty;
+                calendarEvent.className = "hiddenEvent";
+            }
             events.Add(calendarEvent);
         }
     }
 
-    
+    public class AppointmentPermissionsDto
+    {
+        public bool CanSeeOthers { get; set; }
+        public bool CanEditOthers { get; set; }
+        public bool CanEnterRetroactive { get; set; }
+        public bool CanEditRetroactive { get; set; }
+    }
 
     public class AppointmentChangedViewModel : ViewModel
     {

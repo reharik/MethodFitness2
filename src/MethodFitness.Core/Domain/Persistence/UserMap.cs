@@ -23,7 +23,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.ImageUrl);
             Map(x => x.Color);
             References(x => x.UserLoginInfo);
-            HasMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
+            HasManyToMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
 
         } 
 

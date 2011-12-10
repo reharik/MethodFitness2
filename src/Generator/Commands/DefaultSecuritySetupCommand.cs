@@ -19,7 +19,6 @@ namespace Generator.Commands
         public void Execute(string[] args)
         {
             _securitySetupService.ExecuteAll();
-            _repository.UnitOfWork.Commit(); ;
         }
     }
 }

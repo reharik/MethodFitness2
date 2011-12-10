@@ -25,7 +25,6 @@ namespace Generator.Commands
             var sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
 
             new DataLoader().Load();
-
             SqlServerHelper.AddRhinoSecurity(sessionFactory);
 
             var securitySetup = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");

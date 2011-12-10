@@ -34,7 +34,6 @@ mf.PopupView = Backbone.View.extend({
             title: this.options.title,
             close:function(){
                 $.publish("/contentLevel/popup_"+that.id+"/cancel",[]);
-                $(that.el).remove();
                 $(".ui-dialog").remove();
             }
         });
@@ -52,10 +51,8 @@ mf.popupButtonBuilder = (function(){
         };
         var editFunc = function(event) {$.publish("/contentLevel/popup_"+id+"/edit",[event]);};
         var cancelFunc = function(){
-                            $.publish("/contentLevel/popup_"+id+"/cancel",[]);
                             $(this).dialog("close");
-                            $(this).remove();
-                            $(".ui-dialog").remove();
+                            //$(this).remove();
                         };
         return{
             getButtons:function(){return buttons;},

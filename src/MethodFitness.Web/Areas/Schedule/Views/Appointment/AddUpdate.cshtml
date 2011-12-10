@@ -1,6 +1,7 @@
 ﻿@using MethodFitness.Core.Enumerations
 @using MethodFitness.Core.Html.Expressions
 @using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Core.Services
 @using MethodFitness.Web
 @using MethodFitness.Web.Areas.Schedule.Controllers
 @using MethodFitness.Web.Controllers
@@ -18,17 +19,20 @@
     };
 </script>
 
+<div id="errorMessagesForm" class="dci_ErrorMessages errorMessages"><ul></ul></div>
 @MvcHtmlString.Create(FormFor<AppointmentController>(x => x.Save(null), AreaName.Schedule).AddClass("CRUD").ElementId("CRUDForm").ToString())
     @Html.SubmissionFor(x => x.Appointment.EntityId).HideRoot().ToHtmlTag()
+    @Html.SubmissionFor(x => x.Appointment.Trainer.EntityId).HideRoot().ToHtmlTag()
     <div class="col left">
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Appointment.Location).ToHtmlTag()
         </div>
         <div class="fieldRow">
-            @if (@Model.AsAdmin)
+            @if (@UserPermissionService.Allow("/Calendar/SetAppointmentForOthers"))
             {
                 @Html.SubmissionFor(x => x.Appointment.Trainer).ToHtmlTag()
-            }else
+            }
+            else
             {
                 @Html.ViewFor(x => x.TrainerName).ToHtmlTag()
             }

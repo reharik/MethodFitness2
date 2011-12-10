@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
-using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Controllers;
-using MethodFitness.Web.Controllers;
-using MethodFitness.Web.Services;
 using StructureMap;
 
 namespace Generator
@@ -60,8 +52,10 @@ namespace Generator
                                    };
             _userRoleAdmin = new UserRole
                                  {
-                                     Name = "Admin"
+                                     Name = "Administrator"
                                  };
+            _repository.Save(_userRoleAdmin);
+            _repository.Save(_userRoleTrainer);
         }
 
         private void createUser()

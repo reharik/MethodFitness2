@@ -26,7 +26,7 @@ mf.AjaxPopupDisplayModule  = mf.Module.extend({
         $.subscribe("/contentLevel/display_"+ this.id +"/pageLoaded", $.proxy(this.loadPopupView,this),this.cid);
         $.subscribe("/contentLevel/display_"+ this.id + "/success", $.proxy(this.formSuccess,this), this.cid);
         //
-        $.subscribe("/contentLevel/popup_" + this.id + "/save", $.proxy(this.formSave,this), this.cid);
+//        $.subscribe("/contentLevel/popup_" + this.id + "/save", $.proxy(this.formSave,this), this.cid);
         $.subscribe("/contentLevel/popup_" + this.id + "/cancel", $.proxy(this.formCancel,this), this.cid);
     },
 

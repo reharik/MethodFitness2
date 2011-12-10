@@ -290,6 +290,7 @@
     <Compile Include="Services\IEmailTemplateService.cs" />
     <Compile Include="Services\IFileHandlerService.cs" />
     <Compile Include="Services\IMFPermissionsService.cs" />
+    <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISessionContext.cs" />
     <Compile Include="Services\ISaveEntityService.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />

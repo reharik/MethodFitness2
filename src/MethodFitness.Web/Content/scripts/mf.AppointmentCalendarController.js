@@ -26,12 +26,16 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         $.subscribe('/contentLevel/calendar_appointment/eventClick', $.proxy(this.eventClick,this), this.cid);
         // from form
         $.subscribe('/contentLevel/form_editModule/success', $.proxy(this.formSuccess,this), this.cid);
-        $.subscribe('/contentLevel/popup_editModule/cancel', $.proxy(this.formCancel,this), this.cid);
+        $.subscribe('/contentLevel/ajaxPopupDisplayModule_editModule/cancel', $.proxy(this.formCancel,this), this.cid);
         // from display
-        $.subscribe('/contentLevel/popup_displayModule/cancel', $.proxy(this.displayCancel,this), this.cid);
+        $.subscribe('/contentLevel/ajaxPopupDisplayModule_displayModule/cancel', $.proxy(this.displayCancel,this), this.cid);
         $.subscribe('/contentLevel/popup_displayModule/edit', $.proxy(this.displayEdit,this), this.cid);
     },
     dayClick:function(date, allDay, jsEvent, view) {
+        if(new XDate(date).diffHours(new XDate())<0 && !this.options.CanAddRetroactive){
+            alert("you can't add retroactively");
+            return;
+        }
         var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
         this.editEvent(this.options.AddEditUrl,data);
     },
@@ -49,6 +53,10 @@ mf.AppointmentCalendarController = mf.Controller.extend({
     },
 
     eventClick:function(calEvent, jsEvent, view) {
+        if(new XDate(calEvent.start).diffHours(new XDate())<0 && !this.options.CanAddRetroactive){
+            alert("you can't add retroactively");
+            return;
+        }
         var data = {"EntityId": calEvent.EntityId};
         var builder = mf.popupButtonBuilder.builder("displayModule");
         builder.addButton("Delete", $.proxy(this.deleteItem,this));
@@ -76,7 +84,7 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         if (confirm("Are you sure you would like to delete this Item?")) {
             ///// do delete here!
         var entityId = $("#EntityId").val();
-        mf.repository.ajaxGet(this.options.deleteUrl,{"EntityId":entityId}, $.proxy(function(){
+        mf.repository.ajaxGet(this.options.DeleteUrl,{"EntityId":entityId}, $.proxy(function(){
             this.modules.popupDisplay.destroy();
             this.views.calendarView.reload();},this));
         }
