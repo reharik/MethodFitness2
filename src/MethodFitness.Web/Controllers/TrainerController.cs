@@ -13,6 +13,7 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Localization;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
+using Rhino.Security.Interfaces;
 using StructureMap;
 
 namespace MethodFitness.Web.Controllers
@@ -24,18 +25,21 @@ namespace MethodFitness.Web.Controllers
         private readonly IFileHandlerService _uploadedFileHandlerService;
         private readonly ISessionContext _sessionContext;
         private readonly ISecurityDataService _securityDataService;
+        private readonly IAuthorizationRepository _authorizationRepository;
 
         public TrainerController(IRepository repository,
             ISaveEntityService saveEntityService,
             IFileHandlerService uploadedFileHandlerService,
             ISessionContext sessionContext,
-            ISecurityDataService securityDataService)
+            ISecurityDataService securityDataService,
+            IAuthorizationRepository authorizationRepository)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
             _uploadedFileHandlerService = uploadedFileHandlerService;
             _sessionContext = sessionContext;
             _securityDataService = securityDataService;
+            _authorizationRepository = authorizationRepository;
         }
 
         public ActionResult AddUpdate(ViewModel input)
@@ -90,6 +94,7 @@ namespace MethodFitness.Web.Controllers
             trainer = input.EntityId > 0 ? _repository.Find<User>(input.EntityId) : new User();
             trainer = mapToDomain(input, trainer);
             handlePassword(input, trainer);
+            addSecurityUserGroups(trainer);
 //            if (input.DeleteImage)
 //            {
 ////                _uploadedFileHandlerService.DeleteFile(trainer.ImageUrl);
@@ -104,6 +109,15 @@ namespace MethodFitness.Web.Controllers
 //            _uploadedFileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
             var notification = crudManager.Finish();
             return Json(notification, "text/plain");
+        }
+
+        private void addSecurityUserGroups(User trainer)
+        {
+            _authorizationRepository.AssociateUserWith(trainer,SecurityUserGroups.Trainer.ToString());
+            if(trainer.UserRoles.Any(x=>x.Name==SecurityUserGroups.Administrator.ToString()))
+            {
+                _authorizationRepository.AssociateUserWith(trainer, SecurityUserGroups.Administrator.ToString());
+            }
         }
 
         private void handlePassword(UserViewModel input, User origional)
@@ -156,8 +170,8 @@ namespace MethodFitness.Web.Controllers
         public IEnumerable<TokenInputDto> AvailableItems { get; set; }
         public IEnumerable<TokenInputDto> SelectedItems { get; set; }
         public bool DeleteImage { get; set; }
-        [ValidateSameAs("Password")]
         public string Password { get; set; }
+        [ValidateSameAs("Password")]
         public string PasswordConfirmation { get; set; }
         public string UserRolesInput { get; set; }
     }

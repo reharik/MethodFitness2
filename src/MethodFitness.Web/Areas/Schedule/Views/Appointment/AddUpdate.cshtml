@@ -22,7 +22,6 @@
 <div id="errorMessagesForm" class="dci_ErrorMessages errorMessages"><ul></ul></div>
 @MvcHtmlString.Create(FormFor<AppointmentController>(x => x.Save(null), AreaName.Schedule).AddClass("CRUD").ElementId("CRUDForm").ToString())
     @Html.SubmissionFor(x => x.Appointment.EntityId).HideRoot().ToHtmlTag()
-    @Html.SubmissionFor(x => x.Appointment.Trainer.EntityId).HideRoot().ToHtmlTag()
     <div class="col left">
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Appointment.Location).ToHtmlTag()
@@ -35,6 +34,7 @@
             else
             {
                 @Html.ViewFor(x => x.TrainerName).ToHtmlTag()
+                @Html.SubmissionFor(x => x.Appointment.Trainer.EntityId).HideRoot().ToHtmlTag()
             }
         </div>
         <div class="fieldRow">

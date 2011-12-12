@@ -45,9 +45,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     DisplayUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Display(null), AreaName.Schedule),
                     DeleteUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Delete(null), AreaName.Schedule),
                     EventChangedUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.EventChanged(null), AreaName.Schedule),
-                    CanEditRetroactive = _authorizationService.IsAllowed(user, "/Calendar/CanEditPastAppointments"),
-                    CanAddRetroactive = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments")
-                
+                    CanEditPastAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEditPastAppointments"),
+                    CanEnterRetroactiveAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"),
+                    CanSeeOthersAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOthersAppointments"),
+                    TrainerId = user.EntityId
                 }
             };
             return View(model);
@@ -85,10 +86,11 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                                         title = x.Location.Name+": "+x.Client,
                                         start = x.ScheduledStartTime.ToString(),
                                         end = x.ScheduledEndTime.ToString(),
-                                        color = x.Trainer.Color
+                                        color = x.Trainer.Color,
+                                        trainerId = x.Trainer.EntityId
                                     };
 
-            if (x.Trainer != user && canSeeOthers)
+            if (x.Trainer != user && !canSeeOthers)
             {
                 calendarEvent.color = "#fffff";
                 calendarEvent.title = string.Empty;

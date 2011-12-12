@@ -52,7 +52,6 @@ mf.popupButtonBuilder = (function(){
         var editFunc = function(event) {$.publish("/contentLevel/popup_"+id+"/edit",[event]);};
         var cancelFunc = function(){
                             $(this).dialog("close");
-                            //$(this).remove();
                         };
         return{
             getButtons:function(){return buttons;},

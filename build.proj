@@ -36,7 +36,7 @@
     </Time>
 
     <PropertyGroup>
-      <OutputDirectory>c:\MF\BuildFiles\MethodFitness\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute)</OutputDirectory>
+      <OutputDirectory>c:\development\BuildFiles\MethodFitness\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute)</OutputDirectory>
     </PropertyGroup>
 
     <MakeDir Directories="$(OutputDirectory)"  />

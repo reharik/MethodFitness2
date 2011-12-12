@@ -32,7 +32,7 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         $.subscribe('/contentLevel/popup_displayModule/edit', $.proxy(this.displayEdit,this), this.cid);
     },
     dayClick:function(date, allDay, jsEvent, view) {
-        if(new XDate(date).diffHours(new XDate())<0 && !this.options.CanAddRetroactive){
+        if(new XDate(date).diffHours(new XDate())>0 && !this.options.CanEnterRetroactiveAppointments){
             alert("you can't add retroactively");
             return;
         }
@@ -53,10 +53,10 @@ mf.AppointmentCalendarController = mf.Controller.extend({
     },
 
     eventClick:function(calEvent, jsEvent, view) {
-        if(new XDate(calEvent.start).diffHours(new XDate())<0 && !this.options.CanAddRetroactive){
-            alert("you can't add retroactively");
+        if(calEvent.trainerId!= this.options.TrainerId && !this.options.CanSeeOthersAppointments){
             return;
         }
+        this.options.canEdit = new XDate(calEvent.start).diffHours(new XDate())<0 || this.options.CanEditPastAppointments;
         var data = {"EntityId": calEvent.EntityId};
         var builder = mf.popupButtonBuilder.builder("displayModule");
         builder.addButton("Delete", $.proxy(this.deleteItem,this));
@@ -69,7 +69,7 @@ mf.AppointmentCalendarController = mf.Controller.extend({
             el:"#dialogHolder",
             url: this.options.DisplayUrl,
             data:data,
-            buttons:builder.getButtons()
+            buttons:builder.getButtons(),
         };
         this.modules.popupDisplay = new mf.AjaxPopupDisplayModule(moduleOptions);
     },
@@ -82,7 +82,6 @@ mf.AppointmentCalendarController = mf.Controller.extend({
 
     deleteItem: function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
-            ///// do delete here!
         var entityId = $("#EntityId").val();
         mf.repository.ajaxGet(this.options.DeleteUrl,{"EntityId":entityId}, $.proxy(function(){
             this.modules.popupDisplay.destroy();
@@ -105,6 +104,10 @@ mf.AppointmentCalendarController = mf.Controller.extend({
     },
 
     displayEdit:function(event){
+        if(!this.options.canEdit){
+             alert("you can't edit retroactively");
+            return;
+        }
         var url = $("#AddUpdateUrl",this.modules.popupDisplay.el).val();
         this.modules.popupDisplay.destroy();
         this.editEvent(url);

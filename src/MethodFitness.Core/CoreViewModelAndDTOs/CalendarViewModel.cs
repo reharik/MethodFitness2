@@ -24,11 +24,17 @@
 
         public string DisplayUrl { get; set; }
 
-        public bool CanEditRetroactive { get; set; }
+        public bool CanEditPastAppointments { get; set; }
 
-        public bool CanAddRetroactive { get; set; }
-
+        public bool CanEnterRetroactiveAppointments { get; set; }
+       
         public string DeleteUrl { get; set; }
+
+        public bool CanEditOthersAppointments { get; set; }
+
+        public bool CanSeeOthersAppointments { get; set; }
+
+        public int TrainerId { get; set; }
     }
 
     public class CalendarEvent
@@ -40,5 +46,7 @@
         public string url { get; set; }
         public string className { get; set; }
         public string color { get; set; }
+
+        public int trainerId { get; set; }
     }
 }

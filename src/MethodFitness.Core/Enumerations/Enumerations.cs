@@ -169,5 +169,13 @@ namespace MethodFitness.Core.Enumerations
         public static readonly AMPM PM = new AMPM { IsActive = true, Key = "PM" };
     }
 
+    [Serializable]
+    public class SecurityUserGroups : Enumeration
+    {
+        public static readonly SecurityUserGroups Empty = new SecurityUserGroups { IsActive = false, Key = "" };
+        public static readonly SecurityUserGroups Administrator = new SecurityUserGroups { IsActive = true, Key = "Administrator" };
+        public static readonly SecurityUserGroups Trainer = new SecurityUserGroups { IsActive = true, Key = "Trainer" };
+    }
+
 
 }

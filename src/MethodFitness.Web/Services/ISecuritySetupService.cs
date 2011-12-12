@@ -6,6 +6,7 @@ using KnowYourTurf.Core.Services;
 using KnowYourTurf.Web.Config;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Enumerations;
 using MethodFitness.Web.Controllers;
 using Rhino.Security.Interfaces;
 using StructureMap;
@@ -108,7 +109,7 @@ namespace MethodFitness.Web.Services
 
         public void CreateMiscellaneousOperations()
         {
-            _authorizationRepository.CreateOperation("/Calendar/CanSeeOtherAppointments");
+            _authorizationRepository.CreateOperation("/Calendar/CanSeeOthersAppointments");
             _authorizationRepository.CreateOperation("/Calendar/CanEditOtherAppointments");
             _authorizationRepository.CreateOperation("/Calendar/CanEnterRetroactiveAppointments");
             _authorizationRepository.CreateOperation("/Calendar/CanEditPastAppointments");
@@ -117,21 +118,21 @@ namespace MethodFitness.Web.Services
 
         public void AssociateAllUsersWithThierTypeGroup()
         {
-            var admins = _repository.Query<User>(x => x.UserRoles.Any(y=>y.Name == "Administrator"));
-            admins.Each(x => _authorizationRepository.AssociateUserWith(x, "Administrator"));
+            var admins = _repository.Query<User>(x => x.UserRoles.Any(y=>y.Name == SecurityUserGroups.Administrator.ToString()));
+            admins.Each(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
             var employees = _repository.FindAll<User>();
-            employees.Each(x => _authorizationRepository.AssociateUserWith(x, "Trainer"));
+            employees.Each(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
         }
 
         public void CreateUserGroups()
         {
-            if (_authorizationRepository.GetUsersGroupByName("Administrator") == null)
+            if (_authorizationRepository.GetUsersGroupByName(SecurityUserGroups.Administrator.ToString()) == null)
             {
-                _authorizationRepository.CreateUsersGroup("Administrator");
+                _authorizationRepository.CreateUsersGroup(SecurityUserGroups.Administrator.ToString());
             }
-            if (_authorizationRepository.GetUsersGroupByName("Trainer") == null)
+            if (_authorizationRepository.GetUsersGroupByName(SecurityUserGroups.Trainer.ToString()) == null)
             {
-                _authorizationRepository.CreateUsersGroup("Trainer");
+                _authorizationRepository.CreateUsersGroup(SecurityUserGroups.Trainer.ToString());
             }
         }
 
