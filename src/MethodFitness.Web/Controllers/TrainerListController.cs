@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
@@ -24,10 +25,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<TrainerListController>(x => x.Trainers(null));
+            var url = UrlContext.GetUrlForAction<TrainerListController>(x => x.Trainers(null), AreaName.Schedule);
             var model = new ListViewModel()
             {
-                AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
+                AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null), AreaName.Schedule),
                 GridDefinition = _trainerListGrid.GetGridDefinition(url)
             };
             return View(model);
