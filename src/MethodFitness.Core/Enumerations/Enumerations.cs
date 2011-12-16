@@ -35,6 +35,15 @@ namespace MethodFitness.Core.Enumerations
     }
 
     [Serializable]
+    public class Source : Enumeration
+    {
+        public static readonly Source Empty = new Source { IsActive = false, Key = "" };
+        public static readonly Source Street = new Source { IsActive = true, Key = "Street" };
+        public static readonly Source Web = new Source { IsActive = true, Key = "Web" };
+        public static readonly Source Ad = new Source { IsActive = true, Key = "Ad" };
+    }
+
+    [Serializable]
     public class RuleOperatorEnum : Enumeration
     {
         public static readonly RuleOperatorEnum Empty = new RuleOperatorEnum { IsActive = false, Key = "" };

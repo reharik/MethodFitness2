@@ -29,7 +29,8 @@ namespace MethodFitness.Web.Menus
                 .CreateNode<AppointmentCalendarController>(c => c.AppointmentCalendar(), WebLocalizationKeys.CALENDAR, AreaName.Schedule)
                 .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                     .HasChildren()
-                        .CreateNode<TrainerListController>(c => c.ItemList(null), WebLocalizationKeys.TRAINERS, AreaName.Schedule)
+                        .CreateNode<TrainerListController>(c => c.ItemList(null), WebLocalizationKeys.TRAINERS)
+                        .CreateNode<ClientListController>(c => c.ItemList(null), WebLocalizationKeys.CLIENTS)
                     .EndChildren()
                 //                .CreateNode<PortfolioListController>(c => c.ItemList(null), WebLocalizationKeys.PORTFOLIOS,
 //                                                     AreaName.Portfolio, "portfolios")

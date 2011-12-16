@@ -11,14 +11,26 @@ namespace MethodFitness.Core.Services
                     IEnumerable<ENTITY> newItems,
                     Action<ENTITY> addEntity,
                     Action<ENTITY> removeEntity) where ENTITY : Entity;
+
+        void UpdateFromCSV<ENTITY>(IEnumerable<ENTITY> origional,
+                                                   string newItemsCSV,
+                                                   Action<ENTITY> addEntity,
+                                                   Action<ENTITY> removeEntity) where ENTITY : Entity;
     }
 
     public class UpdateCollectionService : IUpdateCollectionService 
     {
+        private readonly IRepository _repository;
+
+        public UpdateCollectionService(IRepository repository)
+        {
+            _repository = repository;
+        }
+
         public void Update<ENTITY>(IEnumerable<ENTITY> origional,
             IEnumerable<ENTITY> newItems,
             Action<ENTITY> addEntity,
-            Action<ENTITY> removeEntity) where ENTITY : Entity 
+            Action<ENTITY> removeEntity) where ENTITY : Entity
         {
             var remove = new List<ENTITY>();
             origional.Each(x =>
@@ -42,5 +54,21 @@ namespace MethodFitness.Core.Services
                 }
             });
         }
+
+        public void UpdateFromCSV<ENTITY>(IEnumerable<ENTITY> origional,
+                    string newItemsCSV,
+                    Action<ENTITY> addEntity,
+                    Action<ENTITY> removeEntity) where ENTITY : Entity
+        {
+            var newItems = new List<ENTITY>();
+            if (newItemsCSV.IsEmpty())
+            {
+                origional.Each(removeEntity);
+                return;
+            }
+            newItemsCSV.Split(',').Each(x => newItems.Add(_repository.Find<ENTITY>(Int32.Parse(x))));
+            Update(origional, newItems, addEntity, removeEntity);
+        }
+
     }
 }

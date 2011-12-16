@@ -25,15 +25,15 @@
                 @Html.SubmissionFor(x => x.User.LastName).AddClassToRoot("two-five last").ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.ViewFor(x => x.User.UserLoginInfo.LoginName).AddClassToRoot("half").ToHtmlTag()
+                @Html.ViewFor(x => x.User.UserLoginInfo.LoginName).AddClassToRoot("half first").ToHtmlTag()
                 @Html.SubmissionFor(x => x.User.BirthDate).AddClassToRoot("half").ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.User.Address1).AddClassToRoot("half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.Address1).AddClassToRoot("half first").ToHtmlTag()
                 @Html.SubmissionFor(x => x.User.Address2).AddClassToRoot("half").ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.User.City).AddClassToRoot("half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.User.City).AddClassToRoot("half first").ToHtmlTag()
                 @Html.SubmissionFor(x => x.User.State).AddClassToRoot("one-quarter").ToHtmlTag()
                 @Html.SubmissionFor(x => x.User.ZipCode).AddClassToRoot("one-quarter").ToHtmlTag()
             </div>

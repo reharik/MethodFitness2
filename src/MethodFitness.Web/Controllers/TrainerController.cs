@@ -26,13 +26,15 @@ namespace MethodFitness.Web.Controllers
         private readonly ISessionContext _sessionContext;
         private readonly ISecurityDataService _securityDataService;
         private readonly IAuthorizationRepository _authorizationRepository;
+        private readonly IUpdateCollectionService _updateCollectionService;
 
         public TrainerController(IRepository repository,
             ISaveEntityService saveEntityService,
             IFileHandlerService uploadedFileHandlerService,
             ISessionContext sessionContext,
             ISecurityDataService securityDataService,
-            IAuthorizationRepository authorizationRepository)
+            IAuthorizationRepository authorizationRepository,
+            IUpdateCollectionService updateCollectionService)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
@@ -40,6 +42,7 @@ namespace MethodFitness.Web.Controllers
             _sessionContext = sessionContext;
             _securityDataService = securityDataService;
             _authorizationRepository = authorizationRepository;
+            _updateCollectionService = updateCollectionService;
         }
 
         public ActionResult AddUpdate(ViewModel input)
@@ -151,15 +154,8 @@ namespace MethodFitness.Web.Controllers
             {
                 LoginName = trainer.Email
             };
-            trainer.EmptyUserRoles();
-            if (model.UserRolesInput.IsNotEmpty())
-            {
-                model.UserRolesInput.Split(',').Each(x =>
-                                                         {
-                                                             var userRole = _repository.Find<UserRole>(Int32.Parse(x));
-                                                             trainer.AddUserRole(userRole);
-                                                         });
-            }
+
+            _updateCollectionService.UpdateFromCSV(trainer.UserRoles,model.UserRolesInput,trainer.AddUserRole,trainer.RemoveUserRole);
             return trainer;
         }
     }

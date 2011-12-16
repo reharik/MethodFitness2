@@ -26,7 +26,16 @@
       <file leaf-file-name="mf.AppointmentCalendarController.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/mf.AppointmentCalendarController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="58" selection-start="2435" selection-end="2435" vertical-scroll-proportion="0.6629087">
+            <state line="24" column="50" selection-start="790" selection-end="790" vertical-scroll-proportion="0.46674183">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mf.TrainerController.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/mf.TrainerController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="6" selection-start="306" selection-end="414" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -272,11 +281,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/css/jquery.miniColors.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.crudController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="30" selection-start="248" selection-end="248" vertical-scroll-proportion="0.025555555" />
@@ -351,9 +355,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/mf.TrainerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="6" selection-start="306" selection-end="414" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.AppointmentCalendarController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="58" selection-start="2435" selection-end="2435" vertical-scroll-proportion="0.6629087">
+        <state line="24" column="50" selection-start="790" selection-end="790" vertical-scroll-proportion="0.46674183">
           <folding />
         </state>
       </provider>

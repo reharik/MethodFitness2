@@ -10,9 +10,10 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.ScheduledDate);
             Map(x => x.ScheduledStartTime);
             Map(x => x.ScheduledEndTime);
-            Map(x => x.Client);
             References(x => x.Location);
             References(x => x.Trainer);
+            HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
+
         } 
     }
 }

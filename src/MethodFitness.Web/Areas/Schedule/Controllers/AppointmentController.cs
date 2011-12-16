@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Castle.Components.Validator;
 using MethodFitness.Core;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
@@ -20,17 +21,21 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private readonly ISaveEntityService _saveEntityService;
         private readonly ISessionContext _sessionContext;
         private readonly IUserPermissionService _userPermissionService;
+        private readonly IUpdateCollectionService _updateCollectionService;
 
         public AppointmentController(IRepository repository,
             ISelectListItemService selectListItemService,
             ISaveEntityService saveEntityService,
-            ISessionContext sessionContext,IUserPermissionService userPermissionService)
+            ISessionContext sessionContext,
+            IUserPermissionService userPermissionService,
+            IUpdateCollectionService updateCollectionService)
         {
             _repository = repository;
             _selectListItemService = selectListItemService;
             _saveEntityService = saveEntityService;
             _sessionContext = sessionContext;
             _userPermissionService = userPermissionService;
+            _updateCollectionService = updateCollectionService;
         }
 
         public ActionResult AddUpdate(AddEditAppointmentViewModel input)
@@ -39,8 +44,13 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.ScheduledDate = input.ScheduledDate.HasValue ? input.ScheduledDate.Value : appointment.ScheduledDate;
             appointment.ScheduledStartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.ScheduledStartTime;
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
+            var clients = _repository.FindAll<Client>();
+            var availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameFNF});
+            var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameFNF });
             var model = new AppointmentViewModel
                             {
+                                AvailableItems = availableClients,
+                                SelectedItems = selectedClients,
                                 LocationList = locations,
                                 Appointment = appointment,
                                 Copy = input.Copy,
@@ -120,8 +130,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var location = _repository.Find<Location>(appointmentModel.Location.EntityId);
             appointment.Trainer = trainer;
             appointment.Location = location;
-            appointment.Client = appointmentModel.Client;
             appointment.Notes = appointmentModel.Notes;
+            _updateCollectionService.UpdateFromCSV(appointment.Clients, model.ClientInput, appointment.AddClient, appointment.RemoveClient);
+
             return;
         }
     }
@@ -131,6 +142,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public Appointment Appointment { get; set; }
         [ValidateNonEmpty]
         public bool Copy { get; set; }
+        public string ClientInput { get; set; }
+        public IEnumerable<TokenInputDto> AvailableItems { get; set; }
+        public IEnumerable<TokenInputDto> SelectedItems { get; set; }
         public IEnumerable<SelectListItem> LocationList { get; set; }
         public IEnumerable<SelectListItem> TrainerList { get; set; }
         [ValueOf(typeof(Hours))]

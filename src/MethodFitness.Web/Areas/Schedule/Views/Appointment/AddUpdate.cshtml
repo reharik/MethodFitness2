@@ -1,4 +1,5 @@
-﻿@using MethodFitness.Core.Enumerations
+﻿@using HtmlTags
+@using MethodFitness.Core.Enumerations
 @using MethodFitness.Core.Html.Expressions
 @using MethodFitness.Core.Html.FubuUI
 @using MethodFitness.Core.Services
@@ -12,6 +13,8 @@
 
 <script>
     var isCopy = '@Model.Copy';
+     extraFormOptions.availableItems= @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableItems));
+        extraFormOptions.selectedItems= @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedItems));
     extraFormOptions.runAfterRenderFunction = function () {
         if (isCopy == "True") {
             $("#Appointment_EntityId").val(0);
@@ -38,9 +41,6 @@
             }
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.Client).ToHtmlTag()
-        </div>
-        <div class="fieldRow">
             @Html.SubmissionFor(x => x.Appointment.Notes).ToHtmlTag()
         </div>
     </div>
@@ -63,4 +63,15 @@
             @Html.SubmissionFor(x => x.eAMPM).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.AMPM).ToHtmlTag()
         </div>
     </div>
-          
+    <div class="col full clear">
+        <div class="fieldRow artifact-field">
+            <div id="clients">
+                <label class="section">@WebLocalizationKeys.CLIENTS</label>
+                <div id="clients" class="dci_assetSection">
+                    <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE_OR.ToString()</div>
+                    <input type="text" name="ClientInput" id="Input" class="artifact nolabels"/>
+                </div>
+            </div>
+        </div>
+    </div>
+

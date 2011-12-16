@@ -22,6 +22,8 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         this.views.calendarView = new mf.CalendarView(options);
     },
     registerSubscriptions:function(){
+        $.subscribe('/contentLevel/form_editModule/pageLoaded', $.proxy(this.loadTokenizers,this), this.cid);
+
         $.subscribe('/contentLevel/calendar_appointment/dayClick', $.proxy(this.dayClick,this), this.cid);
         $.subscribe('/contentLevel/calendar_appointment/eventClick', $.proxy(this.eventClick,this), this.cid);
         // from form
@@ -30,6 +32,10 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         // from display
         $.subscribe('/contentLevel/ajaxPopupDisplayModule_displayModule/cancel', $.proxy(this.displayCancel,this), this.cid);
         $.subscribe('/contentLevel/popup_displayModule/edit', $.proxy(this.displayEdit,this), this.cid);
+    },
+    loadTokenizers: function(formOptions){
+        var options = $.extend({},formOptions,{el:"#clients"});
+        this.views.roles = new mf.TokenView(options);
     },
     dayClick:function(date, allDay, jsEvent, view) {
         if(new XDate(date).diffHours(new XDate())>0 && !this.options.CanEnterRetroactiveAppointments){

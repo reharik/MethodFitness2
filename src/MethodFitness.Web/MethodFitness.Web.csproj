@@ -199,7 +199,8 @@
   <ItemGroup>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
-    <Compile Include="Areas\Schedule\Grids\TrainerListGrid.cs" />
+    <Compile Include="Grids\ClientListGrid.cs" />
+    <Compile Include="Grids\TrainerListGrid.cs" />
     <Compile Include="Areas\Schedule\Models\BulkAction\BulkActionViewModel.cs" />
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Config\Bootstrapper.cs" />
@@ -207,6 +208,8 @@
     <Content Include="Content\images\ajax-loader.gif" />
     <Compile Include="Config\ModelBinders.cs" />
     <Compile Include="Config\ModelBindingBootstaper.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\ClientListController.cs" />
     <Compile Include="Controllers\DecisionCriticalController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
@@ -487,6 +490,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Schedule\Views\Appointment\Display.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Client\AddUpdate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

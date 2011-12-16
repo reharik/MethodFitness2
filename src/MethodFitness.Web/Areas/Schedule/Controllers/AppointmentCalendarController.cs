@@ -83,7 +83,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var calendarEvent = new CalendarEvent
                                     {
                                         EntityId = x.EntityId,
-                                        title = x.Location.Name+": "+x.Client,
+                                        title = x.Location.Name,
                                         start = x.ScheduledStartTime.ToString(),
                                         end = x.ScheduledEndTime.ToString(),
                                         color = x.Trainer.Color,
