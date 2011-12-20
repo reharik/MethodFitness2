@@ -32,7 +32,7 @@ namespace MethodFitness.Web.Controllers
 
         public ActionResult AddUpdate(ViewModel input)
         {
-            var client = input.EntityId > 0 ? _repository.Find<Client>(input.EntityId) : new Client();
+            var client = input.EntityId > 0 ? _repository.Find<Client>(input.EntityId) : new Client{StartDate = DateTime.Now};
             var model = new ClientViewModel
             {
                 Item = client,

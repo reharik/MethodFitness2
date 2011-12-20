@@ -25,10 +25,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<TrainerListController>(x => x.Trainers(null), AreaName.Schedule);
+            var url = UrlContext.GetUrlForAction<TrainerListController>(x => x.Trainers(null));
             var model = new ListViewModel()
             {
-                AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null), AreaName.Schedule),
+                AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
                 GridDefinition = _trainerListGrid.GetGridDefinition(url)
             };
             return View(model);
