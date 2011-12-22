@@ -1,9 +1,17 @@
-﻿namespace MethodFitness.Core.CoreViewModelAndDTOs
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using MethodFitness.Web.Areas.Schedule.Controllers;
+
+namespace MethodFitness.Core.CoreViewModelAndDTOs
 {
     public class CalendarViewModel : ViewModel
     {
         public CalendarDefinition CalendarDefinition { get; set; }
         public string DeleteUrl { get; set; }
+        public Location Location { get; set; }
+        public IEnumerable<SelectListItem> LocationList { get; set; }
+        public string CalendarUrl { get; set; }
+        public string Loc { get; set; }
 
     }
 
@@ -11,11 +19,14 @@
     {
         public double start { get; set; }
         public double end { get; set; }
+
+        public int Loc { get; set; }
     }
 
     public class CalendarDefinition
     {
         public string Url { get; set; }
+        public string EventsUrlBase { get; set; }
         public string Title { get; set; }
 
         public string AddEditUrl { get; set; }

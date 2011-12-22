@@ -57,7 +57,7 @@
                 @Html.SubmissionFor(x => x.User.PhoneMobile).AddClassToRoot("half").ToHtmlTag()
             </div>
         </div>
-        <div class="col full">
+        <div class="col full clear">
             <div class="fieldRow artifact-field">
                 <div id="userRoles">
                     <label class="section">@WebLocalizationKeys.USER_ROLES</label>
@@ -68,10 +68,14 @@
                 </div>
             </div>
         </div>
-        <div class="col full">
-        @WebLocalizationKeys.SELECT_COLOR_TO_ASSOCIATE_WITH_THIS_PERSON.ToString()
-            @MvcHtmlString.Create(Html.SubmissionFor(x => x.User.Color).InputId("color").ToString())
-            <div id="colorPicker"></div>
+        <div class="col full clear">
+            <div class="fieldRow">
+                @WebLocalizationKeys.SELECT_COLOR_TO_ASSOCIATE_WITH_THIS_PERSON.ToString()
+            </div>
+            <div class="fieldRow">
+                @MvcHtmlString.Create(Html.SubmissionFor(x => x.User.Color).AddClassToRoot("first half").InputId("color").ToString())
+                <div id="colorPicker"></div>
+            </div>
         </div>
      
     @EndForm()

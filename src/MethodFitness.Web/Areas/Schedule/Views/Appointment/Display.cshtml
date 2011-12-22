@@ -11,16 +11,36 @@
             <input type="hidden" name="AddUpdateUrl" id="AddUpdateUrl" value="@Model.AddUpdateUrl"/>
 <div class="col left">
     <div class="fieldRow">
-        @Html.ViewFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
+        @Html.ViewFor(x => x.Appointment.Date).ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.ViewFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
+        @Html.ViewFor(x => x.Appointment.StartTime).ToHtmlTag()
     </div>
-    <div class="fieldRow">    @Html.ViewFor(x => x.Appointment.ScheduledEndTime).ToHtmlTag()
-        @Html.ViewFor(x => x.Appointment.Location.Name).ToHtmlTag()
+    <div class="fieldRow">
+        @Html.ViewFor(x => x.Appointment.EndTime).ToHtmlTag()
+    </div>
+    <div class="fieldRow">
+        @Html.ViewFor(x => x.Appointment.Location.Name).LabelDisplay(WebLocalizationKeys.LOCATION).ToHtmlTag()
     </div>
     <div class="fieldRow">
         @Html.ViewFor(x => x.Appointment.Notes).ToHtmlTag()
+    </div>  
+    <div class="fieldRow">
+        @Html.ViewFor(x => x.Appointment.Trainer.FullNameFNF).ToHtmlTag()
+    </div>  
+    <div class="fieldRow">
+        <div class="view_root half first">
+            <div class="view_label">
+                <label>@WebLocalizationKeys.CLIENTS</label>
+            </div>
+            <div class="view_input">
+                @foreach (var c in @Model.Appointment.Clients)
+                {
+                    <span>@c.FullNameLNF</span>
+                    <br/>  
+                }
+            </div>
+        </div>
     </div>
 </div>
 

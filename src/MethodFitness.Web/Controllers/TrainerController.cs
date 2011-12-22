@@ -15,6 +15,7 @@ using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using Rhino.Security.Interfaces;
 using StructureMap;
+using xVal.ServerSide;
 
 namespace MethodFitness.Web.Controllers
 {
@@ -96,6 +97,30 @@ namespace MethodFitness.Web.Controllers
             User trainer;
             trainer = input.EntityId > 0 ? _repository.Find<User>(input.EntityId) : new User();
             trainer = mapToDomain(input, trainer);
+            Notification notification;
+            if (!trainer.UserRoles.Any())
+            {
+                notification = new Notification { Success = false };
+                notification.Errors = new List<ErrorInfo> { new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(), WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString()) };
+                return Json(notification, JsonRequestBehavior.AllowGet);
+            }
+            if(trainer.UserRoles.FirstOrDefault(x=>x.Name=="Trainer")==null)
+            {
+                notification = new Notification { Success = false };
+                notification.Errors = new List<ErrorInfo> { new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(), WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString()) };
+                return Json(notification, JsonRequestBehavior.AllowGet);
+            } if (!trainer.UserRoles.Any())
+            {
+                notification = new Notification { Success = false };
+                notification.Errors = new List<ErrorInfo> { new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(), WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString()) };
+                return Json(notification, JsonRequestBehavior.AllowGet);
+            }
+            if(trainer.UserRoles.FirstOrDefault(x=>x.Name=="Trainer")==null)
+            {
+                notification = new Notification { Success = false };
+                notification.Errors = new List<ErrorInfo> { new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(), WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString()) };
+                return Json(notification, JsonRequestBehavior.AllowGet);
+            }
             handlePassword(input, trainer);
             addSecurityUserGroups(trainer);
 //            if (input.DeleteImage)
@@ -110,7 +135,7 @@ namespace MethodFitness.Web.Controllers
             var crudManager = _saveEntityService.ProcessSave(trainer);
 
 //            _uploadedFileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
-            var notification = crudManager.Finish();
+            notification = crudManager.Finish();
             return Json(notification, "text/plain");
         }
 

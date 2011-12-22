@@ -22,7 +22,7 @@
     };
 </script>
 
-<div id="errorMessagesForm" class="dci_ErrorMessages errorMessages"><ul></ul></div>
+<div id="errorMessagesForm" class="mf_ErrorMessages errorMessages"><ul></ul></div>
 @MvcHtmlString.Create(FormFor<AppointmentController>(x => x.Save(null), AreaName.Schedule).AddClass("CRUD").ElementId("CRUDForm").ToString())
     @Html.SubmissionFor(x => x.Appointment.EntityId).HideRoot().ToHtmlTag()
     <div class="col left">
@@ -40,13 +40,23 @@
                 @Html.SubmissionFor(x => x.Appointment.Trainer.EntityId).HideRoot().ToHtmlTag()
             }
         </div>
-        <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.Notes).ToHtmlTag()
+    </div>
+    <div class="col full clear">
+
+        <div class="fieldRow artifact-field">
+            <div id="clients">
+                <label class="section">@WebLocalizationKeys.CLIENTS</label>
+                <div id="clients" class="dci_assetSection">
+                    <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE_OR.ToString()</div>
+                    <input type="text" name="ClientInput" id="Input" class="artifact nolabels"/>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col right">
+    <div class="col left">
+        
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.ScheduledDate).ToHtmlTag()
+            @Html.SubmissionFor(x => x.Appointment.Date).ToHtmlTag()
         </div>
         <h5>@WebLocalizationKeys.STARTTIME</h5>
         <div class="fieldRow">
@@ -62,16 +72,8 @@
             @Html.SubmissionFor(x => x.eMinutes).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.MINUTES).ToHtmlTag()
             @Html.SubmissionFor(x => x.eAMPM).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.AMPM).ToHtmlTag()
         </div>
-    </div>
-    <div class="col full clear">
-        <div class="fieldRow artifact-field">
-            <div id="clients">
-                <label class="section">@WebLocalizationKeys.CLIENTS</label>
-                <div id="clients" class="dci_assetSection">
-                    <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE_OR.ToString()</div>
-                    <input type="text" name="ClientInput" id="Input" class="artifact nolabels"/>
-                </div>
-            </div>
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.Notes).ToHtmlTag()
         </div>
     </div>
 

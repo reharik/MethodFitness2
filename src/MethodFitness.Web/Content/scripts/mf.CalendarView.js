@@ -18,6 +18,8 @@ mf.CalendarView = Backbone.View.extend({
     },
     render: function(){
         $(this.options.calendarContainer,this.el).asCalendar(this.options);
+        $.publish("/contentLevel/calendar_"+this.id+"/pageLoaded",[this.id]);
+
         return this;
     },
     registerSubscriptions:function(){
@@ -47,5 +49,8 @@ mf.CalendarView = Backbone.View.extend({
     },
     reload:function(){
         $(this.options.calendarContainer,this.el).fullCalendar( 'refetchEvents' )
+    },
+    replaceSource:function(source){
+        $(this.options.calendarContainer,this.el).fullCalendar( 'replaceEventSource', source )
     }
 });

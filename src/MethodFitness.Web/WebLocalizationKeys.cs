@@ -35,7 +35,7 @@ namespace MethodFitness.Web
         public static readonly StringToken SIGN_IN = new WebLocalizationKeys("SIGN_IN", "Sign In");
         public static readonly StringToken LOG_OUT = new WebLocalizationKeys("LOG_OUT", "Logout");
         public static readonly StringToken WELCOME = new WebLocalizationKeys("WELCOME", "Welcome ,");
-        public static readonly StringToken USER_ROLES = new WebLocalizationKeys("USER_ROLES", "UserRoles");
+        public static readonly StringToken USER_ROLES = new WebLocalizationKeys("USER_ROLES", "User Roles");
         public static readonly StringToken ACCOUNT_LOGIN = new WebLocalizationKeys("ACCOUNT_LOGIN", "Account LogIn");
         public static readonly StringToken INVALID_USERNAME_OR_PASSWORD = new WebLocalizationKeys("INVALID_USERNAME_OR_PASSWORD", "Invalid Username or Password");
         public static readonly StringToken PLEASE_ENTER_YOUR_USERNAME_AND_PASSWORD_BELOW_KEY = new WebLocalizationKeys("PLEASE_ENTER_YOUR_USERNAME_AND_PASSWORD_BELOW_KEY", "Please enter your Username and Password below");
@@ -116,6 +116,11 @@ namespace MethodFitness.Web
 
         public static readonly StringToken STARTTIME= new WebLocalizationKeys("STARTTIME", "Start Time");
         public static readonly StringToken ENDTIME = new WebLocalizationKeys("ENDTIME", "End Time");
+        public static readonly StringToken ALL = new WebLocalizationKeys("ALL", "All");
+        public static readonly StringToken SELECT_AT_LEAST_ONE_CLIENT = new WebLocalizationKeys("SELECT_AT_LEAST_ONE_CLIENT", "You must select at least one Client.");
+        public static readonly StringToken SELECT_AT_LEAST_ONE_USER_ROLE = new WebLocalizationKeys("SELECT_AT_LEAST_ONE_USER_ROLE", "You must select at least one User Role.");
+        public static readonly StringToken MUST_HAVE_TRAINER_USER_ROLE = new WebLocalizationKeys("MUST_HAVE_TRAINER_USER_ROLE", "A Trainer must have the User Role of Trainer.");
+        public static readonly StringToken LOCATION = new WebLocalizationKeys("LOCATION", "Location");
 
 
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using KnowYourTurf.Core;
 using MethodFitness.Core;
@@ -19,25 +20,32 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private readonly ISaveEntityService _saveEntityService;
         private readonly ISessionContext _sessionContext;
         private readonly IAuthorizationService _authorizationService;
+        private readonly ISelectListItemService _selectListItemService;
 
         public AppointmentCalendarController(IRepository repository,
             ISaveEntityService saveEntityService,
             ISessionContext sessionContext,
-            IAuthorizationService authorizationService)
+            IAuthorizationService authorizationService,
+            ISelectListItemService selectListItemService
+            )
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
             _sessionContext = sessionContext;
             _authorizationService = authorizationService;
+            _selectListItemService = selectListItemService;
         }
 
-        public ActionResult AppointmentCalendar()
+        public ActionResult AppointmentCalendar(CalendarViewModel input)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
             var user = _repository.Find<User>(userEntityId);
-
+            var locations = _selectListItemService.CreateList<Location>(x=>x.Name,x=>x.EntityId,false).ToList();
+            locations.Insert(0,new SelectListItem{Text=WebLocalizationKeys.ALL.ToString(),Value = "0"});
             var model = new CalendarViewModel
             {
+                LocationList = locations,
+                CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
                 CalendarDefinition = new CalendarDefinition
                 {
                     Url = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.Events(null), AreaName.Schedule),
@@ -57,9 +65,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public JsonResult EventChanged(AppointmentChangedViewModel input)
         {
             var appointment = _repository.Find<Appointment>(input.EntityId);
-            appointment.ScheduledDate = input.ScheduledDate;
-            appointment.ScheduledEndTime = input.EndTime;
-            appointment.ScheduledStartTime = input.StartTime;
+            appointment.Date = input.ScheduledDate;
+            appointment.EndTime = input.EndTime;
+            appointment.StartTime = input.StartTime;
             var crudManager = _saveEntityService.ProcessSave(appointment);
             var notification = crudManager.Finish();
             return Json(notification, JsonRequestBehavior.AllowGet);
@@ -73,7 +81,11 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var events = new List<CalendarEvent>();
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
-            var appointments = _repository.Query<Appointment>(x => x.ScheduledDate >= startDateTime && x.ScheduledDate <= endDateTime);
+            var appointments = input.Loc<=0
+                ? _repository.Query<Appointment>(x => x.StartTime >= startDateTime && x.Date <= endDateTime)
+                : _repository.Query<Appointment>(x => x.StartTime >= startDateTime 
+                                                && x.Date <= endDateTime
+                                                && x.Location.EntityId==input.Loc);
             appointments.Each(x => GetValue(x, events, user, canSeeOthers) );
             return Json(events, JsonRequestBehavior.AllowGet);
         }
@@ -84,8 +96,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                                     {
                                         EntityId = x.EntityId,
                                         title = x.Location.Name,
-                                        start = x.ScheduledStartTime.ToString(),
-                                        end = x.ScheduledEndTime.ToString(),
+                                        start = x.StartTime.ToString(),
+                                        end = x.EndTime.ToString(),
                                         color = x.Trainer.Color,
                                         trainerId = x.Trainer.EntityId
                                     };

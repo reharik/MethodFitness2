@@ -9,11 +9,11 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
     public class Appointment:DomainEntity
     {
         [ValidateNonEmpty]
-        public virtual DateTime? ScheduledDate { get; set; }
+        public virtual DateTime? Date { get; set; }
         [ValidateNonEmpty]
-        public virtual DateTime? ScheduledEndTime { get; set; }
+        public virtual DateTime? EndTime { get; set; }
         [ValidateNonEmpty]
-        public virtual DateTime? ScheduledStartTime { get; set; }
+        public virtual DateTime? StartTime { get; set; }
         [ValidateNonEmpty]
         public virtual Location Location { get; set; }
         [ValidateNonEmpty]

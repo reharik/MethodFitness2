@@ -14,7 +14,12 @@
             allDaySlot:false,
             allDayDefault:false,
             slotMinutes:15,
-            events: calendarDefinition.Url,
+            minTime:4,
+            maxTime:22,
+            events: {
+                url:calendarDefinition.Url,
+                data: { Loc: $("[name=Location]").val() }
+            },
             dayClick: function(date, allDay, jsEvent, view){ $.publish('/contentLevel/calendar_'+calendarDefinition.id+'/dayClick', [date, allDay, jsEvent, view]);},
             eventClick: function(calEvent, jsEvent, view){ $.publish('/contentLevel/calendar_'+calendarDefinition.id+'/eventClick', [calEvent, jsEvent, view]);},
             eventDrop: function(event, dayDelta,minuteDelta,allDay,revertFunc){ $.publish('/contentLevel/calendar_'+calendarDefinition.id+'/eventDrop', [event, dayDelta,minuteDelta,allDay,revertFunc]);},

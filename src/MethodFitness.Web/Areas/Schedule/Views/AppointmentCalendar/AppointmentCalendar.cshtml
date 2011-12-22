@@ -1,6 +1,7 @@
 ﻿@model CalendarViewModel
 @using MethodFitness.Core.CoreViewModelAndDTOs
 @using HtmlTags
+@using MethodFitness.Core.Html.FubuUI
 <script>
     var calendarDef=  @MvcHtmlString.Create(JsonUtil.ToJson(Model.CalendarDefinition));
     calendarDef.calendarContainer="#calendar";
@@ -11,6 +12,7 @@
 </script>
 
 <div class="content-header">
+    @Html.SubmissionFor(x=>x.Location).HideLabel().ToHtmlTag()
     <span class="title-name">@Model.Title</span>
 </div>
 <div id="contentArea" class="content-inner">

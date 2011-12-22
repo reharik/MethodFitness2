@@ -8,6 +8,7 @@ namespace MethodFitness.Core.Domain
 {
     public class Client:DomainEntity
     {
+        [ValidateNonEmpty]
         public virtual string FirstName { get; set; }
         public virtual string MiddleInitial { get; set; }
         [ValidateNonEmpty]

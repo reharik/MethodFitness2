@@ -22,6 +22,7 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         this.views.calendarView = new mf.CalendarView(options);
     },
     registerSubscriptions:function(){
+        $.subscribe('/contentLevel/calendar_appointment/pageLoaded', $.proxy(this.loadEvents,this), this.cid);
         $.subscribe('/contentLevel/form_editModule/pageLoaded', $.proxy(this.loadTokenizers,this), this.cid);
 
         $.subscribe('/contentLevel/calendar_appointment/dayClick', $.proxy(this.dayClick,this), this.cid);
@@ -33,6 +34,14 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         $.subscribe('/contentLevel/ajaxPopupDisplayModule_displayModule/cancel', $.proxy(this.displayCancel,this), this.cid);
         $.subscribe('/contentLevel/popup_displayModule/edit', $.proxy(this.displayEdit,this), this.cid);
     },
+    loadEvents:function(){
+        $("[name=Location]").change($.proxy(function(){
+            var locId = $("[name=Location]").val();
+            this.views.calendarView.replaceSource({url : this.options.Url, data:{Loc:locId} });// function(){return { Loc: $("[name=Location]").val() }}})
+         this.views.calendarView.reload();
+        },this));
+    },
+
     loadTokenizers: function(formOptions){
         var options = $.extend({},formOptions,{el:"#clients"});
         this.views.roles = new mf.TokenView(options);

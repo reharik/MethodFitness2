@@ -18,11 +18,11 @@ mf.PopupView = Backbone.View.extend({
         $(".ui-dialog").remove();
         // since dialog probably has a form in it.  much swich from form em to pu em
         // look at doing this in the form setup
-        var errorMessages = $("div[id*='errorMessages']", this.el);
-        if(errorMessages){
-            var id = errorMessages.attr("id");
-            errorMessages.attr("id","errorMessagesPU").removeClass(id).addClass("errorMessagesPU");
-        }
+//        var errorMessages = $("div[id*='errorMessages']", this.el);
+//        if(errorMessages){
+//            var id = errorMessages.attr("id");
+//            errorMessages.attr("id","errorMessagesPU").removeClass(id).addClass("errorMessagesPU");
+//        }
         this.render()
     },
     render:function(){

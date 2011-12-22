@@ -1,6 +1,9 @@
-2011-12-18 21:06:27,841 [10] ERROR - Could not execute query: select client0_.EntityId as EntityId2_, client0_.CreateDate as CreateDate2_, client0_.ChangeDate as ChangeDate2_, client0_.ChangedBy as ChangedBy2_, client0_.Archived as Archived2_, client0_.CompanyId as CompanyId2_, client0_.FirstName as FirstName2_, client0_.MiddleInitial as MiddleIn8_2_, client0_.LastName as LastName2_, client0_.BirthDate as BirthDate2_, client0_.Email as Email2_, client0_.MobilePhone as MobileP12_2_, client0_.SecondaryPhone as Seconda13_2_, client0_.Address1 as Address14_2_, client0_.Address2 as Address15_2_, client0_.City as City2_, client0_.State as State2_, client0_.ZipCode as ZipCode2_, client0_.Notes as Notes2_, client0_.ImageUrl as ImageUrl2_ from [Client] client0_ where client0_.Archived= @p0 and (client0_.CompanyId= @p1)
-System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'MobilePhone'.
-Invalid column name 'SecondaryPhone'.
+2011-12-21 08:46:17,271 [9] ERROR - Could not execute query: select appointmen0_.EntityId as EntityId0_, appointmen0_.CreateDate as CreateDate0_, appointmen0_.ChangeDate as ChangeDate0_, appointmen0_.ChangedBy as ChangedBy0_, appointmen0_.Archived as Archived0_, appointmen0_.CompanyId as CompanyId0_, appointmen0_.Date as Date0_, appointmen0_.StartTime as StartTime0_, appointmen0_.EndTime as EndTime0_, appointmen0_.LocationId as LocationId0_, appointmen0_.TrainerId as TrainerId0_ from [Appointment] appointmen0_ where appointmen0_.Archived= @p0 and (appointmen0_.CompanyId= @p1) and appointmen0_.Date>=@p2 and appointmen0_.Date<=@p3
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
    at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
    at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
    at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
@@ -15,15 +18,25 @@ Invalid column name 'SecondaryPhone'.
    at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
    at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
    at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
-2011-12-18 21:06:27,868 [10] ERROR - Invalid column name 'MobilePhone'.
-Invalid column name 'SecondaryPhone'.
-2011-12-18 21:06:27,887 [10] ERROR - Invalid column name 'MobilePhone'.
-Invalid column name 'SecondaryPhone'.
-2011-12-18 21:06:27,888 [10] ERROR - Invalid column name 'MobilePhone'.
-Invalid column name 'SecondaryPhone'.
-2011-12-18 21:06:45,071 [13] ERROR - Could not execute query: select client0_.EntityId as EntityId2_, client0_.CreateDate as CreateDate2_, client0_.ChangeDate as ChangeDate2_, client0_.ChangedBy as ChangedBy2_, client0_.Archived as Archived2_, client0_.CompanyId as CompanyId2_, client0_.FirstName as FirstName2_, client0_.MiddleInitial as MiddleIn8_2_, client0_.LastName as LastName2_, client0_.BirthDate as BirthDate2_, client0_.Email as Email2_, client0_.MobilePhone as MobileP12_2_, client0_.SecondaryPhone as Seconda13_2_, client0_.Address1 as Address14_2_, client0_.Address2 as Address15_2_, client0_.City as City2_, client0_.State as State2_, client0_.ZipCode as ZipCode2_, client0_.Notes as Notes2_, client0_.ImageUrl as ImageUrl2_ from [Client] client0_ where client0_.Archived= @p0 and (client0_.CompanyId= @p1)
-System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'MobilePhone'.
-Invalid column name 'SecondaryPhone'.
+2011-12-21 08:46:17,371 [9] ERROR - Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+2011-12-21 08:46:17,426 [9] ERROR - Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+2011-12-21 08:46:17,432 [9] ERROR - Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+2011-12-21 08:47:03,616 [15] ERROR - Could not execute query: INSERT INTO [Appointment] (CreateDate, ChangeDate, ChangedBy, Archived, CompanyId, Date, StartTime, EndTime, LocationId, TrainerId) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9); select SCOPE_IDENTITY()
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
    at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
    at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
    at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
@@ -38,9 +51,6 @@ Invalid column name 'SecondaryPhone'.
    at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
    at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
    at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
-2011-12-18 21:06:45,088 [13] ERROR - Invalid column name 'MobilePhone'.
-Invalid column name 'SecondaryPhone'.
-2011-12-18 21:06:45,104 [13] ERROR - Invalid column name 'MobilePhone'.
-Invalid column name 'SecondaryPhone'.
-2011-12-18 21:06:45,105 [13] ERROR - Invalid column name 'MobilePhone'.
-Invalid column name 'SecondaryPhone'.
+2011-12-21 08:47:03,685 [15] ERROR - Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.

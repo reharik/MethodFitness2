@@ -6,11 +6,13 @@ using Castle.Components.Validator;
 using MethodFitness.Core;
 using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Controllers;
+using xVal.ServerSide;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
@@ -41,12 +43,12 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public ActionResult AddUpdate(AddEditAppointmentViewModel input)
         {
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
-            appointment.ScheduledDate = input.ScheduledDate.HasValue ? input.ScheduledDate.Value : appointment.ScheduledDate;
-            appointment.ScheduledStartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.ScheduledStartTime;
+            appointment.Date = input.ScheduledDate.HasValue ? input.ScheduledDate.Value : appointment.Date;
+            appointment.StartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.StartTime;
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var clients = _repository.FindAll<Client>();
-            var availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameFNF});
-            var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameFNF });
+            var availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
+            var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF });
             var model = new AppointmentViewModel
                             {
                                 AvailableItems = availableClients,
@@ -57,7 +59,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                                 Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString()
                             };
             model.Appointment.EntityId = input.Copy ? 0 : model.Appointment.EntityId;
-            handelTime(model, appointment.ScheduledStartTime.Value);
+            handelTime(model, appointment.StartTime.Value);
             handleTrainer(model);
             return PartialView("AddUpdate", model);
         }
@@ -115,17 +117,24 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             var _event = input.Appointment.EntityId > 0 ? _repository.Find<Appointment>(input.Appointment.EntityId) : new Appointment();
             mapToDomain(input, _event);
+            Notification notification;
+            if (!_event.Clients.Any())
+            {
+                notification = new Notification {Success = false};
+                notification.Errors = new List<ErrorInfo> {new ErrorInfo(WebLocalizationKeys.CLIENTS.ToString(),WebLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString())};
+                return Json(notification, JsonRequestBehavior.AllowGet);
+            }
             var crudManager = _saveEntityService.ProcessSave(_event);
-            var notification = crudManager.Finish();
+            notification = crudManager.Finish();
             return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)
         {
             var appointmentModel = model.Appointment;
-            appointment.ScheduledDate = appointmentModel.ScheduledDate;
-            appointment.ScheduledStartTime = DateTime.Parse(appointmentModel.ScheduledDate.Value.ToShortDateString() + " " + model.sHour+":"+model.sMinutes+" "+model.sAMPM);
-            appointment.ScheduledEndTime = DateTime.Parse(appointmentModel.ScheduledDate.Value.ToShortDateString() + " " + model.eHour + ":" + model.eMinutes + " " + model.eAMPM);
+            appointment.Date = appointmentModel.Date;
+            appointment.StartTime = DateTime.Parse(appointmentModel.Date.Value.ToShortDateString() + " " + model.sHour+":"+model.sMinutes+" "+model.sAMPM);
+            appointment.EndTime = DateTime.Parse(appointmentModel.Date.Value.ToShortDateString() + " " + model.eHour + ":" + model.eMinutes + " " + model.eAMPM);
             var trainer = _repository.Find<User>(appointmentModel.Trainer.EntityId);
             var location = _repository.Find<Location>(appointmentModel.Location.EntityId);
             appointment.Trainer = trainer;

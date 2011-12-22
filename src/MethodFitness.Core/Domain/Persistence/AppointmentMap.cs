@@ -7,9 +7,9 @@ namespace MethodFitness.Core.Domain.Persistence
     {
         public AppointmentMap()
         {
-            Map(x => x.ScheduledDate);
-            Map(x => x.ScheduledStartTime);
-            Map(x => x.ScheduledEndTime);
+            Map(x => x.Date);
+            Map(x => x.StartTime);
+            Map(x => x.EndTime);
             References(x => x.Location);
             References(x => x.Trainer);
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
