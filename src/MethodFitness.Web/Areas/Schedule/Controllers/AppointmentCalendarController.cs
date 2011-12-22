@@ -95,12 +95,18 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var calendarEvent = new CalendarEvent
                                     {
                                         EntityId = x.EntityId,
-                                        title = x.Location.Name,
                                         start = x.StartTime.ToString(),
                                         end = x.EndTime.ToString(),
                                         color = x.Trainer.Color,
                                         trainerId = x.Trainer.EntityId
                                     };
+            if(x.Clients.Count()>1)
+            {
+                calendarEvent.title = x.Location.Name + ": Multiple";
+            }else if(x.Clients.Count()==1)
+            {
+                calendarEvent.title = x.Location.Name + ": " +x.Clients.FirstOrDefault().FullNameLNF;
+            }
 
             if (x.Trainer != user && !canSeeOthers)
             {
