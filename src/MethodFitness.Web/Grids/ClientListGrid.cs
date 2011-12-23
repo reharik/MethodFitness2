@@ -18,11 +18,12 @@ namespace MethodFitness.Web.Grids
 
         protected override Grid<Client> BuildGrid()
         {
-            GridBuilder.LinkColumnFor(x => x.FirstName)
+            GridBuilder.LinkColumnFor(x => x.LastName)
                 .ForAction<ClientController>(x => x.AddUpdate(null))
                 .ToPerformAction(ColumnAction.AddUpdateItem)
                 .ToolTip(WebLocalizationKeys.EDIT_ITEM)
                 .DefaultSortColumn();
+            GridBuilder.DisplayFor(x => x.FirstName);
             GridBuilder.DisplayFor(x => x.Email);
             GridBuilder.DisplayFor(x => x.MobilePhone);
             return this;

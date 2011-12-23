@@ -114,6 +114,7 @@ namespace MethodFitness.Web.Services
             _authorizationRepository.CreateOperation("/Calendar/CanEnterRetroactiveAppointments");
             _authorizationRepository.CreateOperation("/Calendar/CanEditPastAppointments");
             _authorizationRepository.CreateOperation("/Calendar/SetAppointmentForOthers");
+            _authorizationRepository.CreateOperation("/Calendar/CanDeleteRetroactiveAppointments");
         }
 
         public void AssociateAllUsersWithThierTypeGroup()

@@ -23,6 +23,7 @@ namespace MethodFitness.Web.Areas.Schedule.Grids
                 .ToPerformAction(ColumnAction.AddUpdateItem)
                 .ToolTip(WebLocalizationKeys.EDIT_ITEM)
                 .DefaultSortColumn();
+            GridBuilder.DisplayFor(x => x.LastName);
             GridBuilder.DisplayFor(x => x.Email);
             GridBuilder.DisplayFor(x => x.PhoneMobile);
             return this;

@@ -44,6 +44,9 @@
                 <h4>@WebLocalizationKeys.PASSWORD</h4>
             </div>
             <div class="fieldRow">
+                @Html.SubmissionFor(x => x.User.UserLoginInfo.LoginName).ToHtmlTag()
+            </div>
+            <div class="fieldRow">
                 @Html.SubmissionFor(x => x.Password).InputId("Password").ToHtmlTag()
             </div>
             <div class="fieldRow">

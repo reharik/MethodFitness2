@@ -44,6 +44,7 @@ mf.CalendarView = Backbone.View.extend({
     },
     changeEventCallback:function(result,revertFunc){
         if(!result.Success){
+            alert(result.Message);
             revertFunc();
         }
     },

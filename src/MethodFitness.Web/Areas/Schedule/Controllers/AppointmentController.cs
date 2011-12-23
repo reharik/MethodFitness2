@@ -12,6 +12,7 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Controllers;
+using Rhino.Security.Interfaces;
 using xVal.ServerSide;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
@@ -24,13 +25,15 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private readonly ISessionContext _sessionContext;
         private readonly IUserPermissionService _userPermissionService;
         private readonly IUpdateCollectionService _updateCollectionService;
+        private readonly IAuthorizationService _authorizationService;
 
         public AppointmentController(IRepository repository,
             ISelectListItemService selectListItemService,
             ISaveEntityService saveEntityService,
             ISessionContext sessionContext,
             IUserPermissionService userPermissionService,
-            IUpdateCollectionService updateCollectionService)
+            IUpdateCollectionService updateCollectionService,
+            IAuthorizationService authorizationService)
         {
             _repository = repository;
             _selectListItemService = selectListItemService;
@@ -38,6 +41,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _sessionContext = sessionContext;
             _userPermissionService = userPermissionService;
             _updateCollectionService = updateCollectionService;
+            _authorizationService = authorizationService;
         }
 
         public ActionResult AddUpdate(AddEditAppointmentViewModel input)
@@ -107,7 +111,13 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public ActionResult Delete(ViewModel input)
         {
             //TODO needs rule engine
+            var userEntityId = _sessionContext.GetUserEntityId();
+            var user = _repository.Find<User>(userEntityId);
             var appointment = _repository.Find<Appointment>(input.EntityId);
+            if (appointment.StartTime < DateTime.Now && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
+            {
+                return null;
+            }
             _repository.HardDelete(appointment);
             _repository.UnitOfWork.Commit();
             return null;
@@ -116,12 +126,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public ActionResult Save(AppointmentViewModel input)
         {
             var _event = input.Appointment.EntityId > 0 ? _repository.Find<Appointment>(input.Appointment.EntityId) : new Appointment();
+            var userEntityId = _sessionContext.GetUserEntityId();
+            var user = _repository.Find<User>(userEntityId);
             mapToDomain(input, _event);
-            Notification notification;
-            if (!_event.Clients.Any())
+            var notification = new Notification { Success = true };
+            notification = _event.CheckPermissions(user, _authorizationService, notification);
+            notification = _event.CheckForClients(notification);
+            if(!notification.Success)
             {
-                notification = new Notification {Success = false};
-                notification.Errors = new List<ErrorInfo> {new ErrorInfo(WebLocalizationKeys.CLIENTS.ToString(),WebLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString())};
                 return Json(notification, JsonRequestBehavior.AllowGet);
             }
             var crudManager = _saveEntityService.ProcessSave(_event);

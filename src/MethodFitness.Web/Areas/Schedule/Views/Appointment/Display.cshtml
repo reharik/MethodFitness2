@@ -26,12 +26,12 @@
         @Html.ViewFor(x => x.Appointment.Notes).ToHtmlTag()
     </div>  
     <div class="fieldRow">
-        @Html.ViewFor(x => x.Appointment.Trainer.FullNameFNF).ToHtmlTag()
+        @Html.ViewFor(x => x.Appointment.Trainer.FullNameFNF).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
     </div>  
     <div class="fieldRow">
         <div class="view_root half first">
             <div class="view_label">
-                <label>@WebLocalizationKeys.CLIENTS</label>
+                <label>@WebLocalizationKeys.CLIENTS:</label>
             </div>
             <div class="view_input">
                 @foreach (var c in @Model.Appointment.Clients)

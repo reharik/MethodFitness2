@@ -63,7 +63,9 @@ namespace MethodFitness.Core.Services
             var newItems = new List<ENTITY>();
             if (newItemsCSV.IsEmpty())
             {
-                origional.Each(removeEntity);
+                var remove = new List<ENTITY>();
+                origional.Each(remove.Add);
+                remove.Each(removeEntity);
                 return;
             }
             newItemsCSV.Split(',').Each(x => newItems.Add(_repository.Find<ENTITY>(Int32.Parse(x))));

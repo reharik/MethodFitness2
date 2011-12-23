@@ -177,7 +177,7 @@ namespace MethodFitness.Web.Controllers
             
             trainer.UserLoginInfo = new UserLoginInfo()
             {
-                LoginName = trainer.Email
+                LoginName = trainerModel.UserLoginInfo.LoginName
             };
 
             _updateCollectionService.UpdateFromCSV(trainer.UserRoles,model.UserRolesInput,trainer.AddUserRole,trainer.RemoveUserRole);

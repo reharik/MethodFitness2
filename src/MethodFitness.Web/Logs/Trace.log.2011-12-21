@@ -1,0 +1,94 @@
+2011-12-21 08:46:17,271 [9] ERROR - Could not execute query: select appointmen0_.EntityId as EntityId0_, appointmen0_.CreateDate as CreateDate0_, appointmen0_.ChangeDate as ChangeDate0_, appointmen0_.ChangedBy as ChangedBy0_, appointmen0_.Archived as Archived0_, appointmen0_.CompanyId as CompanyId0_, appointmen0_.Date as Date0_, appointmen0_.StartTime as StartTime0_, appointmen0_.EndTime as EndTime0_, appointmen0_.LocationId as LocationId0_, appointmen0_.TrainerId as TrainerId0_ from [Appointment] appointmen0_ where appointmen0_.Archived= @p0 and (appointmen0_.CompanyId= @p1) and appointmen0_.Date>=@p2 and appointmen0_.Date<=@p3
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-21 08:46:17,371 [9] ERROR - Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+2011-12-21 08:46:17,426 [9] ERROR - Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+2011-12-21 08:46:17,432 [9] ERROR - Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+2011-12-21 08:47:03,616 [15] ERROR - Could not execute query: INSERT INTO [Appointment] (CreateDate, ChangeDate, ChangedBy, Archived, CompanyId, Date, StartTime, EndTime, LocationId, TrainerId) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9); select SCOPE_IDENTITY()
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-21 08:47:03,685 [15] ERROR - Invalid column name 'Date'.
+Invalid column name 'StartTime'.
+Invalid column name 'EndTime'.
+2011-12-21 23:19:00,812 [51] ERROR - Could not execute query: select user0_.EntityId as EntityId5_, user0_.CreateDate as CreateDate5_, user0_.ChangeDate as ChangeDate5_, user0_.ChangedBy as ChangedBy5_, user0_.Archived as Archived5_, user0_.CompanyId as CompanyId5_, user0_.UserId as UserId5_, user0_.FirstName as FirstName5_, user0_.MiddleInitial as MiddleIn9_5_, user0_.LastName as LastName5_, user0_.BirthDate as BirthDate5_, user0_.Email as Email5_, user0_.PhoneMobile as PhoneMo13_5_, user0_.PhoneHome as PhoneHome5_, user0_.Address1 as Address15_5_, user0_.Address2 as Address16_5_, user0_.City as City5_, user0_.State as State5_, user0_.ZipCode as ZipCode5_, user0_.Notes as Notes5_, user0_.ImageUrl as ImageUrl5_, user0_.Color as Color5_, user0_.UserLoginInfoId as UserLog23_5_ from [User] user0_ where user0_.Archived= @p0 and (user0_.CompanyId= @p1) and (exists (select userrole2_.EntityId from User_UserRole userroles1_, [UserRole] userrole2_ where user0_.EntityId=userroles1_.UserId and userroles1_.UserRoleId=userrole2_.EntityId and userrole2_.Name=@p2))
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'User_UserRole'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-21 23:19:00,857 [51] ERROR - Invalid object name 'User_UserRole'.
+2011-12-21 23:19:00,862 [51] ERROR - Invalid object name 'User_UserRole'.
+2011-12-21 23:19:00,872 [51] ERROR - Invalid object name 'User_UserRole'.
+2011-12-21 23:19:35,709 [15] ERROR - Could not execute query: select user0_.EntityId as EntityId5_, user0_.CreateDate as CreateDate5_, user0_.ChangeDate as ChangeDate5_, user0_.ChangedBy as ChangedBy5_, user0_.Archived as Archived5_, user0_.CompanyId as CompanyId5_, user0_.UserId as UserId5_, user0_.FirstName as FirstName5_, user0_.MiddleInitial as MiddleIn9_5_, user0_.LastName as LastName5_, user0_.BirthDate as BirthDate5_, user0_.Email as Email5_, user0_.PhoneMobile as PhoneMo13_5_, user0_.PhoneHome as PhoneHome5_, user0_.Address1 as Address15_5_, user0_.Address2 as Address16_5_, user0_.City as City5_, user0_.State as State5_, user0_.ZipCode as ZipCode5_, user0_.Notes as Notes5_, user0_.ImageUrl as ImageUrl5_, user0_.Color as Color5_, user0_.UserLoginInfoId as UserLog23_5_ from [User] user0_ where user0_.Archived= @p0 and (user0_.CompanyId= @p1) and (exists (select userrole2_.EntityId from User_UserRole userroles1_, [UserRole] userrole2_ where user0_.EntityId=userroles1_.UserId and userroles1_.UserRoleId=userrole2_.EntityId and userrole2_.Name=@p2))
+System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'User_UserRole'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-21 23:19:35,720 [15] ERROR - Invalid object name 'User_UserRole'.
+2011-12-21 23:19:35,723 [15] ERROR - Invalid object name 'User_UserRole'.
+2011-12-21 23:19:35,725 [15] ERROR - Invalid object name 'User_UserRole'.

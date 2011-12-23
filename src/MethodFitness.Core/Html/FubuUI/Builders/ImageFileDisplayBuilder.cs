@@ -42,4 +42,20 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
         }
     }
 
+    public class TimeFormatter : ElementBuilder
+    {
+        protected override bool matches(AccessorDef def)
+        {
+            return (def.Accessor.PropertyType == typeof(DateTime)
+                || def.Accessor.PropertyType == typeof(DateTime?))
+                && def.Accessor.FieldName.EndsWith("Time");
+        }
+
+        public override HtmlTag Build(ElementRequest request)
+        {
+            var date = request.StringValue().IsNotEmpty() ? DateTime.Parse(request.StringValue()).ToShortTimeString() : "";
+            return new HtmlTag("span").Text(date);
+        }
+    }
+
 }

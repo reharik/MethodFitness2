@@ -1,68 +1,68 @@
 <Configuration>
   <RecentFiles>
     <RecentFiles>
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:Expressions/f:FormExpression.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Enumerations/f:Enumerations.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:Trainer/f:TrainerAddUpdate.cshtml" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/f:Web.config" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:ISecurityDataService.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Domain/d:Persistence/f:ClientMap.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentCalendarController.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Domain/d:Persistence/f:AppointmentMap.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IUpdateCollectionService.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:Grid/f:Pager.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:ClientList/f:ItemList.cshtml" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Menus/f:MainMenu.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Grids/f:ClientListGrid.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Controllers/f:ClientListController.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Domain/f:DomainEntity.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/f:Global.asax.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/f:ScheduleAreaRegistration.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Services/f:ISecuritySetupService.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:CoreViewModelAndDTOs/f:CalendarViewModel.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IPermissionService.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:FubuUI/d:Builders/f:ValidationModifier.cs" caret="0" fromTop="0" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Controllers/f:ClientController.cs" caret="762" fromTop="15" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/f:connectionStrings.config" caret="508" fromTop="9" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="2860" fromTop="14" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Rules/f:FieldHasNoOutstandingEvents.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Rules/f:EmployeeHasNoOutstandingTasks.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Rules/f:FieldHasNoOutstandingTasks.cs" caret="0" fromTop="0" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Rules/f:DeleteEmployeeRules.cs" caret="252" fromTop="9" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Rules/f:DeleteFieldRules.cs" caret="525" fromTop="17" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:Display.cshtml" caret="1118" fromTop="23" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Controllers/f:TrainerListController.cs" caret="1473" fromTop="23" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Rules/f:EmployeeHasNoOutstandingTasks.cs" caret="242" fromTop="9" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Rules/f:RulesEngineBase.cs" caret="136" fromTop="2" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Rules/f:DeleteEmployeeRules.cs" caret="413" fromTop="13" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Domain/d:Tools/f:Repository.cs" caret="2730" fromTop="16" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Controllers/f:ClientController.cs" caret="538" fromTop="0" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IUpdateCollectionService.cs" caret="2398" fromTop="22" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IDynamicExpressionBuilder.cs" caret="2610" fromTop="24" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="6520" fromTop="16" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Domain/f:Client.cs" caret="2429" fromTop="32" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Domain/f:Appointment.cs" caret="2471" fromTop="11" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Domain/f:DomainEntity.cs" caret="1868" fromTop="17" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentCalendarController.cs" caret="6501" fromTop="77" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:Shared/f:_popupLayout.cshtml" caret="0" fromTop="0" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:AppointmentCalendar/f:AppointmentCalendar.cshtml" caret="497" fromTop="14" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:ClientList/f:ItemList.cshtml" caret="110" fromTop="4" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:Shared/f:_ListLayout.cshtml" caret="801" fromTop="23" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Grids/f:ClientListGrid.cs" caret="660" fromTop="19" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Menus/f:MainMenu.cs" caret="1091" fromTop="12" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Services/f:ISecuritySetupService.cs" caret="4887" fromTop="20" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:App.config" caret="1412" fromTop="20" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:FubuUI/d:Builders/f:ImageFileDisplayBuilder.cs" caret="2016" fromTop="30" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:FubuUI/d:HtmlConventionRegistries/f:DecisionCriticalHtmlConventions.cs" caret="1651" fromTop="25" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:AddUpdate.cshtml" caret="780" fromTop="0" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:Display.cshtml" caret="1452" fromTop="27" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Domain/f:User.cs" caret="2623" fromTop="17" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Controllers/f:TrainerController.cs" caret="8716" fromTop="30" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:Trainer/f:TrainerAddUpdate.cshtml" caret="2181" fromTop="9" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Grids/f:TrainerListGrid.cs" caret="381" fromTop="11" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="144" fromTop="4" />
     </RecentFiles>
     <RecentEdits>
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:Shared/f:_ContentAreaLayout.cshtml" caret="2688" fromTop="32" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentCalendarController.cs" caret="3400" fromTop="23" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="5654" fromTop="24" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="3887" fromTop="34" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentCalendarController.cs" caret="4259" fromTop="35" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentCalendarController.cs" caret="2142" fromTop="24" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:CoreViewModelAndDTOs/f:CalendarViewModel.cs" caret="802" fromTop="30" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:AddUpdate.cshtml" caret="1368" fromTop="16" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IPermissionService.cs" caret="799" fromTop="22" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IPermissionService.cs" caret="159" fromTop="5" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IPermissionService.cs" caret="287" fromTop="10" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IPermissionService.cs" caret="528" fromTop="16" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IPermissionService.cs" caret="1589" fromTop="36" />
-      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IPermissionService.cs" caret="1621" fromTop="38" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:AddUpdate.cshtml" caret="1235" fromTop="14" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Services/f:ISecuritySetupService.cs" caret="4801" fromTop="30" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Services/f:ISecuritySetupService.cs" caret="1773" fromTop="22" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Services/f:ISecuritySetupService.cs" caret="1490" fromTop="12" />
-      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/d:Commands/f:RebuildDatabaseCommand.cs" caret="966" fromTop="20" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="2525" fromTop="36" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="1081" fromTop="26" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="3374" fromTop="28" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="7041" fromTop="21" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Controllers/f:AppointmentController.cs" caret="3641" fromTop="34" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:AddUpdate.cshtml" caret="583" fromTop="21" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:AppointmentCalendar/f:AppointmentCalendar.cshtml" caret="546" fromTop="16" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Controllers/f:TrainerListController.cs" caret="1205" fromTop="24" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Controllers/f:ClientController.cs" caret="1179" fromTop="25" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/f:connectionStrings.config" caret="263" fromTop="5" />
-      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:Display.cshtml" caret="926" fromTop="22" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Services/f:IUpdateCollectionService.cs" caret="2398" fromTop="22" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Grids/f:ClientListGrid.cs" caret="715" fromTop="20" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:ClientList/f:ItemList.cshtml" caret="319" fromTop="11" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:Shared/f:_ListLayout.cshtml" caret="801" fromTop="23" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Menus/f:MainMenu.cs" caret="1091" fromTop="12" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Grids/f:ClientListGrid.cs" caret="997" fromTop="25" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:App.config" caret="411" fromTop="6" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:FubuUI/d:Builders/f:ImageFileDisplayBuilder.cs" caret="1454" fromTop="18" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:FubuUI/d:Builders/f:ImageFileDisplayBuilder.cs" caret="1712" fromTop="24" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:FubuUI/d:Builders/f:ImageFileDisplayBuilder.cs" caret="1958" fromTop="29" />
+      <File id="3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7/d:Html/d:FubuUI/d:HtmlConventionRegistries/f:DecisionCriticalHtmlConventions.cs" caret="1651" fromTop="25" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:Display.cshtml" caret="1261" fromTop="22" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Areas/d:Schedule/d:Views/d:Appointment/f:Display.cshtml" caret="1452" fromTop="27" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Controllers/f:TrainerController.cs" caret="8700" fromTop="29" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Views/d:Trainer/f:TrainerAddUpdate.cshtml" caret="2367" fromTop="13" />
+      <File id="67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2/d:Grids/f:TrainerListGrid.cs" caret="1000" fromTop="25" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="3834" fromTop="32" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="3272" fromTop="28" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="2532" fromTop="15" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="3453" fromTop="15" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="3624" fromTop="20" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="3958" fromTop="21" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="5723" fromTop="32" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="4535" fromTop="12" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="4938" fromTop="24" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="5339" fromTop="12" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="6028" fromTop="29" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="5737" fromTop="13" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="6332" fromTop="29" />
+      <File id="E40B313E-1001-41D6-825F-F87B3CB68E2F/f:DataLoader.cs" caret="700" fromTop="14" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -85,34 +85,34 @@
   </SettingsComponent>
   <CompletionStatisticsManager>
     <ItemStatistics item="CSharpCodeCompletionContext">
-      <Item value="if" priority="157" />
-      <Item value="input" priority="226" />
-      <Item value="else" priority="95" />
-      <Item value="var" priority="127" />
-      <Item value="new" priority="191" />
+      <Item value="if" priority="317" />
+      <Item value="input" priority="323" />
+      <Item value="else" priority="127" />
+      <Item value="var" priority="255" />
+      <Item value="new" priority="351" />
       <Item value="User" priority="91" />
-      <Item value="origional" priority="63" />
-      <Item value="_sessionContext" priority="181" />
-      <Item value="_repository" priority="287" />
+      <Item value="origional" priority="159" />
+      <Item value="_sessionContext" priority="213" />
+      <Item value="_repository" priority="351" />
       <Item value="Company`0" priority="31" />
       <Item value="companyId" priority="64" />
       <Item value="Company" priority="60" />
       <Item value="ViewModel`0" priority="93" />
       <Item value="User`0" priority="93" />
       <Item value="model" priority="511" />
-      <Item value="string" priority="312" />
+      <Item value="string" priority="405" />
       <Item value="ISecurityDataService`0" priority="31" />
       <Item value="securityDataService" priority="27" />
-      <Item value="CompanyId" priority="65" />
-      <Item value="WebLocalizationKeys`0" priority="29" />
-      <Item value="Html" priority="29" />
+      <Item value="CompanyId" priority="93" />
+      <Item value="WebLocalizationKeys`0" priority="220" />
+      <Item value="Html" priority="59" />
       <Item value="Each`1" priority="26" />
-      <Item value="UserRole`0" priority="31" />
+      <Item value="UserRole`0" priority="63" />
       <Item value="List" priority="28" />
       <Item value="roles" priority="31" />
-      <Item value="trainer" priority="95" />
+      <Item value="trainer" priority="127" />
       <Item value="DomainEntity`0" priority="63" />
-      <Item value="prop" priority="223" />
+      <Item value="prop" priority="319" />
       <Item value="References`1" priority="31" />
       <Item value="Trainer" priority="28" />
       <Item value="MFController`0" priority="31" />
@@ -120,7 +120,7 @@
       <Item value="Appointment`0" priority="31" />
       <Item value="Appointment" priority="94" />
       <Item value="ISelectListItemService" priority="16" />
-      <Item value="selectListItemService" priority="27" />
+      <Item value="selectListItemService" priority="55" />
       <Item value="TextArea" priority="16" />
       <Item value="appointmentModel" priority="95" />
       <Item value="ISaveEntityService`0" priority="31" />
@@ -129,15 +129,15 @@
       <Item value="areaName" priority="31" />
       <Item value="CustomWebViewPage" priority="22" />
       <Item value="private" priority="63" />
-      <Item value="void" priority="95" />
-      <Item value="Name" priority="63" />
+      <Item value="void" priority="127" />
+      <Item value="Name" priority="95" />
       <Item value="company" priority="31" />
       <Item value="location1" priority="31" />
-      <Item value="x" priority="127" />
+      <Item value="x" priority="319" />
       <Item value="YesNo`0" priority="31" />
       <Item value="y" priority="63" />
       <Item value="trainersList" priority="32" />
-      <Item value="appointment" priority="31" />
+      <Item value="appointment" priority="63" />
       <Item value="ValueOf" priority="16" />
       <Item value="typeof" priority="31" />
       <Item value="Minutes`0" priority="31" />
@@ -151,11 +151,11 @@
       <Item value="ISessionContext`0" priority="95" />
       <Item value="sessionContext" priority="120" />
       <Item value="userId" priority="31" />
-      <Item value="user" priority="351" />
+      <Item value="user" priority="383" />
       <Item value="bool" priority="126" />
-      <Item value="Model" priority="64" />
-      <Item value="public" priority="94" />
-      <Item value="DateTime`0" priority="96" />
+      <Item value="Model" priority="96" />
+      <Item value="public" priority="158" />
+      <Item value="DateTime`0" priority="127" />
       <Item value="startTime" priority="63" />
       <Item value="handelTime`0" priority="31" />
       <Item value="key" priority="28" />
@@ -180,14 +180,14 @@
       <Item value="Util" priority="26" />
       <Item value="Cache" priority="26" />
       <Item value="CanEditOthers" priority="26" />
-      <Item value="userEntityId" priority="127" />
+      <Item value="userEntityId" priority="159" />
       <Item value="CanEditRetroactive" priority="27" />
-      <Item value="_authorizationService" priority="195" />
+      <Item value="_authorizationService" priority="227" />
       <Item value="CanEnterRetroactive" priority="32" />
       <Item value="CanSeeOthers" priority="32" />
       <Item value="seeOthers" priority="31" />
       <Item value="color" priority="31" />
-      <Item value="calendarEvent" priority="63" />
+      <Item value="calendarEvent" priority="223" />
       <Item value="AuthorizationContext`0" priority="32" />
       <Item value="interface" priority="30" />
       <Item value="IRepository" priority="16" />
@@ -200,28 +200,80 @@
       <Item value="SessionContext`0" priority="30" />
       <Item value="ObjectFactory`0" priority="95" />
       <Item value="IRepository`0" priority="61" />
-      <Item value="return" priority="31" />
+      <Item value="return" priority="95" />
       <Item value="repository" priority="31" />
       <Item value="sessionFactory" priority="31" />
       <Item value="IUserPermissionService`0" priority="31" />
       <Item value="userPermissionService" priority="27" />
       <Item value="_userPermissionService" priority="31" />
-      <Item value="StartDate" priority="31" />
+      <Item value="StartDate" priority="63" />
+      <Item value="ISelectListItemService`0" priority="31" />
+      <Item value="_selectListItemService" priority="31" />
+      <Item value="locations" priority="96" />
+      <Item value="DefaultViewLocationCache`0" priority="30" />
+      <Item value="UrlContext`0" priority="31" />
+      <Item value="AppointmentCalendarController`0" priority="31" />
+      <Item value="CalendarViewModel`0" priority="31" />
+      <Item value="SelectListItem" priority="28" />
+      <Item value="Text" priority="31" />
+      <Item value="Value" priority="32" />
+      <Item value="_event" priority="31" />
+      <Item value="notification" priority="95" />
+      <Item value="Notification" priority="28" />
+      <Item value="Success" priority="31" />
+      <Item value="false" priority="32" />
+      <Item value="Errors" priority="32" />
+      <Item value="ErrorInfo" priority="28" />
+      <Item value="List&lt;ErrorInfo&gt;" priority="87" />
+      <Item value="entity" priority="95" />
+      <Item value="userRole" priority="63" />
+      <Item value="Description" priority="31" />
+      <Item value="foreach" priority="29" />
+      <Item value="in" priority="31" />
+      <Item value="c" priority="61" />
+      <Item value="eventBackgroundColor" priority="32" />
+      <Item value="FullNameLNF" priority="26" />
+      <Item value="null" priority="63" />
+      <Item value="override" priority="63" />
+      <Item value="FirstName" priority="59" />
+      <Item value="UpdateSelf`0" priority="31" />
+      <Item value="self" priority="479" />
+      <Item value="MiddleInitial" priority="26" />
+      <Item value="LastName" priority="64" />
+      <Item value="Email" priority="59" />
+      <Item value="Address1" priority="63" />
+      <Item value="Address2" priority="31" />
+      <Item value="City" priority="64" />
+      <Item value="GCNotificationStatus`0" priority="31" />
+      <Item value="State" priority="59" />
+      <Item value="ZipCode" priority="64" />
+      <Item value="MobilePhone" priority="59" />
+      <Item value="SecondaryPhone" priority="31" />
+      <Item value="Notes" priority="63" />
+      <Item value="Status" priority="31" />
+      <Item value="ImageUrl" priority="31" />
+      <Item value="Source" priority="31" />
+      <Item value="removeEntity" priority="58" />
+      <Item value="remove" priority="63" />
+      <Item value="Client`0" priority="31" />
+      <Item value="Client" priority="28" />
+      <Item value="as" priority="31" />
+      <Item value="_client1" priority="31" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Web.Controllers.UserViewModel">
       <Item value="EntityId" priority="26" />
-      <Item value="User" priority="26" />
+      <Item value="User" priority="53" />
       <Item value="AddEditUrl" priority="26" />
       <Item value="Input" priority="26" />
       <Item value="UserRolesInput" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.Services.ISessionContext">
       <Item value="GetCompanyId`0" priority="26" />
-      <Item value="GetUserEntityId`0" priority="134" />
+      <Item value="GetUserEntityId`0" priority="161" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.Domain.IRepository">
-      <Item value="Find`1" priority="211" />
-      <Item value="Save`1" priority="80" />
+      <Item value="Find`1" priority="238" />
+      <Item value="Save`1" priority="107" />
       <Item value="Query`1" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.Domain.User">
@@ -232,9 +284,11 @@
       <Item value="AddUserRole`0" priority="26" />
       <Item value="EmptyUserRoles`0" priority="26" />
       <Item value="Color" priority="82" />
-      <Item value="UserRoles" priority="26" />
-      <Item value="FullNameFNF" priority="54" />
+      <Item value="UserRoles" priority="80" />
+      <Item value="FullNameFNF" priority="81" />
       <Item value="EntityId" priority="53" />
+      <Item value="UserLoginInfo" priority="54" />
+      <Item value="LastName" priority="27" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Web.Controllers.TrainerController">
       <Item value="AddUpdate`0" priority="27" />
@@ -243,22 +297,31 @@
       <Item value="CompanyId" priority="27" />
     </ItemStatistics>
     <ItemStatistics item="RazorTransitionCompletionContext">
-      <Item value="WebLocalizationKeys`0" priority="9" />
-      <Item value="Html" priority="7" />
+      <Item value="WebLocalizationKeys`0" priority="17" />
+      <Item value="Html" priority="15" />
       <Item value="WebLocalizationKeys" priority="4" />
       <Item value="if" priority="7" />
       <Item value="Model" priority="9" />
+      <Item value="foreach" priority="7" />
+      <Item value="c" priority="7" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@MethodFitness.Web.WebLocalizationKeys">
-      <Item value="USER_ROLES" priority="53" />
+      <Item value="USER_ROLES" priority="81" />
       <Item value="AMPM" priority="27" />
+      <Item value="CLIENTS" priority="53" />
+      <Item value="TRAINER" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="HtmlCodeCompletionContext">
-      <Item value="div" priority="17" />
-      <Item value="text" priority="4" />
+      <Item value="div" priority="23" />
+      <Item value="text" priority="10" />
       <Item value="script" priority="5" />
       <Item value="h2" priority="5" />
       <Item value="h5" priority="5" />
+      <Item value="class" priority="5" />
+      <Item value="label" priority="5" />
+      <Item value="select" priority="5" />
+      <Item value="option" priority="5" />
+      <Item value="br" priority="6" />
     </ItemStatistics>
     <ItemStatistics item="JavaScriptSpecificContext">
       <Item value="var" priority="10" />
@@ -271,24 +334,29 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.Html.FubuUI.HtmlExpressions.EditorExpression`1">
       <Item value="HideRoot`0" priority="53" />
-      <Item value="ToHtmlTag`0" priority="26" />
-      <Item value="AddClassToRoot`0" priority="26" />
+      <Item value="ToHtmlTag`0" priority="53" />
+      <Item value="AddClassToRoot`0" priority="53" />
       <Item value="LabelDisplay`0" priority="26" />
+      <Item value="HideLabel`0" priority="53" />
+      <Item value="InLine`0" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.String">
       <Item value="Split`0" priority="26" />
       <Item value="IsNotEmpty`0" priority="26" />
-      <Item value="Substring`0" priority="27" />
-      <Item value="Length" priority="26" />
+      <Item value="Substring`0" priority="81" />
+      <Item value="Length" priority="53" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Int32">
       <Item value="Parse`0" priority="53" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
-      <Item value="Add`0" priority="26" />
+      <Item value="Add`0" priority="77" />
+      <Item value="Insert`0" priority="27" />
+      <Item value="Each`1" priority="27" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.Domain.UserRole">
-      <Item value="Name" priority="53" />
+      <Item value="Name" priority="107" />
+      <Item value="Description" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.Html.Expressions.ScriptReferenceExpression">
       <Item value="ToHtmlTag`0" priority="27" />
@@ -298,27 +366,30 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Web.Areas.Schedule.Controllers.Appointment">
       <Item value="ScheduledDate" priority="50" />
-      <Item value="ScheduledStartTime" priority="111" />
+      <Item value="ScheduledStartTime" priority="139" />
       <Item value="ScheduledEndTime" priority="134" />
       <Item value="Client" priority="161" />
-      <Item value="Location" priority="105" />
-      <Item value="Trainer" priority="218" />
+      <Item value="Location" priority="159" />
+      <Item value="Trainer" priority="246" />
       <Item value="EntityId" priority="26" />
+      <Item value="StartTime" priority="54" />
+      <Item value="Clients" priority="188" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Web.Areas.Schedule.Controllers.Location">
       <Item value="nguid" priority="27" />
-      <Item value="Name" priority="54" />
+      <Item value="Name" priority="108" />
       <Item value="Address1" priority="27" />
       <Item value="Address2" priority="27" />
       <Item value="City" priority="27" />
       <Item value="State" priority="27" />
       <Item value="Zip" priority="27" />
+      <Item value="EntityId" priority="53" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Web.Areas.Schedule.Controllers.AppointmentCalendarController">
-      <Item value="AppointmentCalendar`0" priority="55" />
+      <Item value="AppointmentCalendar`0" priority="83" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Web.Areas.Schedule.Controllers.AppointmentViewModel">
-      <Item value="Appointment" priority="137" />
+      <Item value="Appointment" priority="164" />
       <Item value="LocationList" priority="27" />
       <Item value="Hours" priority="27" />
       <Item value="Minutes" priority="27" />
@@ -338,6 +409,7 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.Html.FubuUI.HtmlExpressions.ViewExpression`1">
       <Item value="HideRoot`0" priority="27" />
+      <Item value="LabelDisplay`0" priority="80" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@MethodFitness.Core.Enumerations.AreaName">
       <Item value="Schedule" priority="49" />
@@ -353,22 +425,26 @@
     <ItemStatistics item="Qualified:System.DateTime">
       <Item value="Hour" priority="27" />
       <Item value="Minute" priority="27" />
-      <Item value="ToShortTimeString`0" priority="27" />
+      <Item value="ToShortTimeString`0" priority="50" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Int32">
       <Item value="ToString`0" priority="136" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.IEnumerable`1">
-      <Item value="Any`1" priority="27" />
+      <Item value="Any`1" priority="54" />
+      <Item value="Contains`1" priority="26" />
+      <Item value="FirstOrDefault`1" priority="82" />
+      <Item value="Each`1" priority="53" />
+      <Item value="Count`1" priority="53" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:KnowYourTurf.Core.Services.IMFPermissionsService">
       <Item value="GrantDefaultTrainersPermissions`0" priority="22" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Rhino.Security.Interfaces.IAuthorizationService">
-      <Item value="IsAllowed`1" priority="216" />
+      <Item value="IsAllowed`1" priority="243" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.CoreViewModelAndDTOs.CalendarEvent">
-      <Item value="title" priority="26" />
+      <Item value="title" priority="134" />
       <Item value="className" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.String">
@@ -376,6 +452,8 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:MethodFitness.Core.CoreViewModelAndDTOs.CalendarViewModel">
       <Item value="AddUpdateUrl" priority="24" />
+      <Item value="Location" priority="26" />
+      <Item value="Loc" priority="50" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@StructureMap.ObjectFactory">
       <Item value="Container" priority="107" />
@@ -393,7 +471,50 @@
       <Item value="IsAllowed`0" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.DateTime">
-      <Item value="Now" priority="27" />
+      <Item value="Now" priority="54" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:MethodFitness.Core.Domain.Client">
+      <Item value="FullNameLNF" priority="161" />
+      <Item value="FirstName" priority="54" />
+      <Item value="MiddleInitial" priority="26" />
+      <Item value="LastName" priority="54" />
+      <Item value="Email" priority="26" />
+      <Item value="Address1" priority="26" />
+      <Item value="Address2" priority="26" />
+      <Item value="City" priority="26" />
+      <Item value="State" priority="53" />
+      <Item value="ZipCode" priority="26" />
+      <Item value="MobilePhone" priority="26" />
+      <Item value="SecondaryPhone" priority="26" />
+      <Item value="Notes" priority="26" />
+      <Item value="ImageUrl" priority="26" />
+      <Item value="Source" priority="26" />
+      <Item value="StartDate" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:MethodFitness.Core.Services.ISelectListItemService">
+      <Item value="CreateList`1" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@MethodFitness.Core.Html.UrlContext">
+      <Item value="GetUrlForAction`1" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:MethodFitness.Core.CoreViewModelAndDTOs.GetEventsViewModel">
+      <Item value="Loc" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:MethodFitness.Core.Localization.StringToken">
+      <Item value="ToString`0" priority="82" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:MethodFitness.Core.Domain.Tools.Notification">
+      <Item value="Success" priority="26" />
+      <Item value="Errors" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:MethodFitness.Core.Domain.Entity">
+      <Item value="IsNew`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:MethodFitness.Core.Html.Grid.ColumnBase`1">
+      <Item value="DefaultSortColumn`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:MethodFitness.Core.Domain.UserLoginInfo">
+      <Item value="LoginName" priority="55" />
     </ItemStatistics>
   </CompletionStatisticsManager>
 </Configuration>

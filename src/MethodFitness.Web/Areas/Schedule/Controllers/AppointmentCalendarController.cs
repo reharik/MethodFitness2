@@ -6,6 +6,7 @@ using KnowYourTurf.Core;
 using MethodFitness.Core;
 using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
@@ -68,8 +69,17 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.Date = input.ScheduledDate;
             appointment.EndTime = input.EndTime;
             appointment.StartTime = input.StartTime;
+            var userEntityId = _sessionContext.GetUserEntityId();
+            var user = _repository.Find<User>(userEntityId);
+            var notification = new Notification { Success = true };
+            notification = appointment.CheckPermissions(user, _authorizationService, notification);
+            notification = appointment.CheckForClients(notification);
+            if (!notification.Success)
+            {
+                return Json(notification, JsonRequestBehavior.AllowGet);
+            }
             var crudManager = _saveEntityService.ProcessSave(appointment);
-            var notification = crudManager.Finish();
+            notification = crudManager.Finish();
             return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
@@ -110,6 +120,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
             if (x.Trainer != user && !canSeeOthers)
             {
+                return;
                 calendarEvent.color = "#fffff";
                 calendarEvent.title = string.Empty;
                 calendarEvent.className = "hiddenEvent";

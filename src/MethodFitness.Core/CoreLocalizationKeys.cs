@@ -43,6 +43,10 @@ namespace MethodFitness.Core
 
 
         public static readonly StringToken BUISNESS_RULE = new CoreLocalizationKeys("BUISNESS_RULE", "Business Rule");
+        public static readonly StringToken YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS = new CoreLocalizationKeys("YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS", "You can not create retroactive Appointments.");
 
-    }
+        public static readonly StringToken CLIENTS = new CoreLocalizationKeys("CLIENTS", "Clients");
+        public static readonly StringToken SELECT_AT_LEAST_ONE_CLIENT = new CoreLocalizationKeys("SELECT_AT_LEAST_ONE_CLIENT", "You must select at least one Client.");
+    
+    }       
 }

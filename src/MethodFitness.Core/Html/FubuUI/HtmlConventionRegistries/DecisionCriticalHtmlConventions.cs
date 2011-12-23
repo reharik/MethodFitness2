@@ -35,6 +35,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
             Displays.Builder<LinkDisplayBuilder>();
             Displays.Builder<ImageFileDisplayBuilder>();
             Displays.Builder<DateFormatter>();
+            Displays.Builder<TimeFormatter>();
             Displays.If(x => x.Accessor.PropertyType == typeof(DateTime) || x.Accessor.PropertyType == typeof(DateTime?))
                 .BuildBy(req => req.RawValue != null ? new HtmlTag("span").Text(DateTime.Parse(req.RawValue.ToString()).ToLongDateString()) : new HtmlTag("span"));
             Displays.Always.BuildBy(req => new HtmlTag("span").Text(req.StringValue()));

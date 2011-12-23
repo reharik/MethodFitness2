@@ -42,5 +42,26 @@ namespace MethodFitness.Core.Domain
         {
             get { return FirstName + " " + LastName; }
         }
+
+        public override void UpdateSelf(Entity entity)
+        {
+            var self = (Client) entity;
+            FirstName = self.FirstName;
+            MiddleInitial = self.MiddleInitial;
+            LastName = self.LastName;
+            Email = self.Email;
+            Address1 = self.Address1;
+            Address2 = self.Address2;
+            City = self.City;
+            State = self.State;
+            ZipCode = self.ZipCode;
+            MobilePhone = self.MobilePhone;
+            SecondaryPhone = self.SecondaryPhone;
+            Notes = self.Notes;
+            Status = self.State;
+            ImageUrl = self.ImageUrl;
+            Source = self.Source;
+            StartDate = self.StartDate;
+        }
     }
-}
+}   
