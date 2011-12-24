@@ -1,6 +1,8 @@
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Controllers;
+using Rhino.Security.Interfaces;
 using StructureMap;
 
 namespace Generator
@@ -19,20 +21,22 @@ namespace Generator
         private Client _client3;
         private Client _client4;
         private Client _client5;
+        private IAuthorizationRepository _authorizationRepository;
 
 
         public void Load()
         {
             _dynamicExpressionQuery = ObjectFactory.GetInstance<IDynamicExpressionQuery>();
             _repository = ObjectFactory.GetNamedInstance<IRepository>("NoFiltersOrInterceptor");
-
             _securityDataService = ObjectFactory.GetInstance<ISecurityDataService>();
+            _authorizationRepository = ObjectFactory.GetInstance<IAuthorizationRepository>();
 
             _repository.Initialize();
             createCompany();
             createLocations();
             createUserRoles();
             createUser();
+            CreateClients();
             _repository.Commit();
         }
 
@@ -62,6 +66,7 @@ namespace Generator
                                  };
             _repository.Save(_userRoleAdmin);
             _repository.Save(_userRoleTrainer);
+
         }
 
         private void createUser()
@@ -84,7 +89,7 @@ namespace Generator
                                                  CompanyId = 1
                                              };
             var salt1 = _securityDataService.CreateSalt();
-            var passwordHash1 = _securityDataService.CreatePasswordHash("123", salt);
+            var passwordHash1 = _securityDataService.CreatePasswordHash("123", salt1);
             _defaultUser1 = new User
             {
                 FirstName = "Amahl",
@@ -99,7 +104,9 @@ namespace Generator
                 Salt = salt1,
                 CompanyId = 1
             };
+            _repository.Save(_defaultUser);
             _repository.Save(_defaultUser1);
+        
         }
         public void CreateClients()
         {

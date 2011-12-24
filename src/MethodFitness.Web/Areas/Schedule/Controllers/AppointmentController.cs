@@ -116,11 +116,12 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var appointment = _repository.Find<Appointment>(input.EntityId);
             if (appointment.StartTime < DateTime.Now && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
             {
-                return null;
+                var notification = new Notification{Message=WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
+                return Json(notification,JsonRequestBehavior.AllowGet);
             }
             _repository.HardDelete(appointment);
             _repository.UnitOfWork.Commit();
-            return null;
+            return Json(new Notification{Success = true},JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Save(AppointmentViewModel input)

@@ -29,7 +29,7 @@ namespace MethodFitness.Core.Services
             _repository.CurrentSession().DisableFilter("CompanyConditionFilter");
             //var user = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username && u.UserLoginInfo.Password == password).FirstOrDefault();
             //return user;
-            var users = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username );// && u.UserLoginInfo.Password == password).FirstOrDefault();
+            var users = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username.ToLowerInvariant() );// && u.UserLoginInfo.Password == password).FirstOrDefault();
             User ValidUser = null;
             users.Each(x =>
             {

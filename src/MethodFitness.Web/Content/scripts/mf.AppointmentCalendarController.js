@@ -84,7 +84,7 @@ mf.AppointmentCalendarController = mf.Controller.extend({
             el:"#dialogHolder",
             url: this.options.DisplayUrl,
             data:data,
-            buttons:builder.getButtons(),
+            buttons:builder.getButtons()
         };
         this.modules.popupDisplay = new mf.AjaxPopupDisplayModule(moduleOptions);
     },
@@ -98,10 +98,16 @@ mf.AppointmentCalendarController = mf.Controller.extend({
     deleteItem: function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
         var entityId = $("#EntityId").val();
-        mf.repository.ajaxGet(this.options.DeleteUrl,{"EntityId":entityId}, $.proxy(function(){
+        mf.repository.ajaxGet(this.options.DeleteUrl,{"EntityId":entityId}, $.proxy(function(result){
             this.modules.popupDisplay.destroy();
-            this.views.calendarView.reload();},this));
+                if(!result.Success){
+                    alert(result.Message);
+                }else{
+                   this.views.calendarView.reload();
+                }
+            },this));
         }
+
     },
     //from form
     formSuccess:function(){

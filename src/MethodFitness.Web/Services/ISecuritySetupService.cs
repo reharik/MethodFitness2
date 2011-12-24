@@ -52,6 +52,7 @@ namespace MethodFitness.Web.Services
             CreateOperationsForAllMenuItems();
             CreateMiscellaneousOperations();
             CreateAdminPermissions();
+            CreateTrainerPermissions();
             _permissionsService.GrantDefaultAdminPermissions("Administrator");
             _permissionsService.GrantDefaultTrainersPermissions();
             CreateFacilitiesPermissions();
@@ -139,8 +140,16 @@ namespace MethodFitness.Web.Services
 
         public void CreateAdminPermissions()
         {
-
+            var users = _repository.Query<User>(x=>x.UserRoles.Any(y=>y.Name== SecurityUserGroups.Administrator.ToString()));
+            users.Each(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
         }
+
+        public void CreateTrainerPermissions()
+        {
+            var users = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Trainer.ToString()));
+            users.Each(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
+        }
+
 
         public void CreateFacilitiesPermissions()
         {

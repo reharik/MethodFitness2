@@ -47,6 +47,7 @@ namespace KnowYourTurf.Core.Services
          //   _permissionsBuilderService.Allow("/MenuItem/Home").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/MenuItem/EmployeeDashboard").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/MenuItem/Calendar").For("Trainer").OnEverything().Level(1).Save();
+            _permissionsBuilderService.Allow("/MenuItem/Clients").For("Trainer").OnEverything().Level(1).Save();
         }
 
     }
