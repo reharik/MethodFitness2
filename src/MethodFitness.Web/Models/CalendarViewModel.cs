@@ -19,6 +19,7 @@ namespace MethodFitness.Web.Models
 
     public class GetEventsViewModel : ViewModel
     {
+        public string TrainerIds { get; set; }
         public double start { get; set; }
         public double end { get; set; }
 

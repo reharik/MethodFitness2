@@ -40,17 +40,52 @@ mf.AppointmentCalendarController = mf.Controller.extend({
         if(this.options.trainers.length<=0){
             $("#legend").hide();
         }
-        $.each(this.options.trainers, function(i,item){
-            var div = '<div class="legendItem"><div class="legendLabel">'+item.Name+'</div><div class="legendColor" style="background-color: '+item.Color+'"></div></div>';
-            $("#legend").append(div);
-        })
+        $( "#legendTemplate" ).tmpl( this.options.trainers ).appendTo( "#legendItems" );
+        $(".legendHeader").addClass("showing");
+        $(".legendLabel").each(function(i,item){ $(item).addClass("showing"); });
     },
     loadEvents:function(){
         $("[name=Location]").change($.proxy(function(){
-            var locId = $("[name=Location]").val();
-            this.views.calendarView.replaceSource({url : this.options.calendarDef.Url, data:{Loc:locId} });// function(){return { Loc: $("[name=Location]").val() }}})
-         this.views.calendarView.reload();
+            this.reloadCalendar();
         },this));
+        $("#legend").delegate(".legendLabel","click",$.proxy(function(e){
+            $(e.target).toggleClass("showing");
+            this.reloadCalendar();
+        },this));
+        $("#legend").delegate(".legendHeader","click",$.proxy(function(e){
+            if($(e.target).hasClass("showing")){
+                $(".legendHeader").removeClass("showing");
+                $(".legendLabel").each(function(i,item){
+                    $(item).removeClass("showing");
+                })
+            }else{
+                $(".legendHeader").addClass("showing");
+                $(".legendLabel").each(function(i,item){
+                    if(!$(item).hasClass("showing")){
+                        $(item).addClass("showing");
+                    }
+                })
+            }
+            this.reloadCalendar();
+        },this));
+    },
+
+    reloadCalendar:function(){
+        var locId = $("[name=Location]").val();
+        var ids="";
+        $(".legendLabel").each(function(i,item){
+            if($(item).hasClass("showing")){
+                ids+= $("#trainerId",$(item).parent()).val()+",";
+            }
+        });
+        if(ids){
+            ids = ids.substr(0,ids.length-1);
+        }else{
+            ids="0";
+        }
+        this.views.calendarView.replaceSource({url : this.options.calendarDef.Url,
+                data:{Loc:locId, TrainerIds:ids} });
+        this.views.calendarView.reload();
     },
     timeEvents:function(){
         $("[name='Appointment.Length']").change($.proxy(this.handleTimeChange,this));

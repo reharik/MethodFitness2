@@ -1,0 +1,49 @@
+2011-12-26 09:18:40,956 [44] ERROR - Could not execute query: select appointmen0_.EntityId as EntityId0_, appointmen0_.CreateDate as CreateDate0_, appointmen0_.ChangeDate as ChangeDate0_, appointmen0_.ChangedBy as ChangedBy0_, appointmen0_.Archived as Archived0_, appointmen0_.CompanyId as CompanyId0_, appointmen0_.Date as Date0_, appointmen0_.StartTime as StartTime0_, appointmen0_.EndTime as EndTime0_, appointmen0_.Length as Length0_, appointmen0_.LocationId as LocationId0_, appointmen0_.TrainerId as TrainerId0_ from [Appointment] appointmen0_ where appointmen0_.Archived= @p0 and (appointmen0_.CompanyId= @p1) and appointmen0_.StartTime>=@p2 and appointmen0_.Date<=@p3 and (appointmen0_.EntityId in (@p4))
+System.InvalidCastException: Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32. ---> System.InvalidCastException: Object must implement IConvertible.
+   at System.Convert.ChangeType(Object value, Type conversionType, IFormatProvider provider)
+   at System.Data.SqlClient.SqlParameter.CoerceValue(Object value, MetaType destinationType)
+   --- End of inner exception stack trace ---
+   at System.Data.SqlClient.SqlParameter.CoerceValue(Object value, MetaType destinationType)
+   at System.Data.SqlClient.SqlParameter.GetCoercedValue()
+   at System.Data.SqlClient.SqlParameter.Validate(Int32 index, Boolean isCommandProc)
+   at System.Data.SqlClient.SqlCommand.BuildParamList(TdsParser parser, SqlParameterCollection parameters)
+   at System.Data.SqlClient.SqlCommand.BuildExecuteSql(CommandBehavior behavior, String commandText, SqlParameterCollection parameters, _SqlRPC& rpc)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-26 09:18:41,022 [44] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
+2011-12-26 09:18:41,024 [44] ERROR - Object must implement IConvertible.
+2011-12-26 09:18:41,030 [44] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
+2011-12-26 09:18:41,032 [44] ERROR - Object must implement IConvertible.
+2011-12-26 09:18:41,035 [44] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
+2011-12-26 09:18:41,037 [44] ERROR - Object must implement IConvertible.
+2011-12-26 09:19:09,027 [57] ERROR - Could not execute query: select appointmen0_.EntityId as EntityId0_, appointmen0_.CreateDate as CreateDate0_, appointmen0_.ChangeDate as ChangeDate0_, appointmen0_.ChangedBy as ChangedBy0_, appointmen0_.Archived as Archived0_, appointmen0_.CompanyId as CompanyId0_, appointmen0_.Date as Date0_, appointmen0_.StartTime as StartTime0_, appointmen0_.EndTime as EndTime0_, appointmen0_.Length as Length0_, appointmen0_.LocationId as LocationId0_, appointmen0_.TrainerId as TrainerId0_ from [Appointment] appointmen0_ where appointmen0_.Archived= @p0 and (appointmen0_.CompanyId= @p1) and appointmen0_.StartTime>=@p2 and appointmen0_.Date<=@p3 and (appointmen0_.EntityId in (@p4))
+System.InvalidCastException: Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32. ---> System.InvalidCastException: Object must implement IConvertible.
+   at System.Convert.ChangeType(Object value, Type conversionType, IFormatProvider provider)
+   at System.Data.SqlClient.SqlParameter.CoerceValue(Object value, MetaType destinationType)
+   --- End of inner exception stack trace ---
+   at System.Data.SqlClient.SqlParameter.CoerceValue(Object value, MetaType destinationType)
+   at System.Data.SqlClient.SqlParameter.GetCoercedValue()
+   at System.Data.SqlClient.SqlParameter.Validate(Int32 index, Boolean isCommandProc)
+   at System.Data.SqlClient.SqlCommand.BuildParamList(TdsParser parser, SqlParameterCollection parameters)
+   at System.Data.SqlClient.SqlCommand.BuildExecuteSql(CommandBehavior behavior, String commandText, SqlParameterCollection parameters, _SqlRPC& rpc)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-26 09:19:09,067 [57] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
+2011-12-26 09:19:09,068 [57] ERROR - Object must implement IConvertible.
+2011-12-26 09:19:09,106 [57] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
+2011-12-26 09:19:09,107 [57] ERROR - Object must implement IConvertible.
+2011-12-26 09:19:09,108 [57] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
+2011-12-26 09:19:09,108 [57] ERROR - Object must implement IConvertible.
+2011-12-26 10:24:26,775 [42] ERROR - Exception has been thrown by the target of an invocation.
+2011-12-26 10:24:26,793 [42] ERROR - Index and length must refer to a location within the string.
+Parameter name: length

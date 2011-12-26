@@ -48,7 +48,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             if(user.UserRoles.Any(x=>x.Name==SecurityUserGroups.Administrator.ToString()))
             {
                 var trainers = _repository.Query<User>(x=>x.UserRoles.Any(y=>y.Name==SecurityUserGroups.Trainer.ToString()));
-                trainersDto = trainers.Select(x=> new TrainerLegendDto {Name=x.FirstName +" "+x.LastName,Color=x.Color}).ToList();
+                trainersDto = trainers.Select(x=> new TrainerLegendDto {Name=processTrainerName(x),
+                    Color=x.Color,
+                EntityId = x.EntityId}).ToList();
             }
 
             var model = new CalendarViewModel
@@ -70,6 +72,15 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 }
             };
             return View(model);
+        }
+        public string processTrainerName(User trainer)
+        {
+            var name = trainer.LastName + ", " + trainer.FirstName[0];
+            if(name.Length>12)
+            {
+                name = name.Substring(0, 12);
+            }
+            return name;
         }
 
         public JsonResult EventChanged(AppointmentChangedViewModel input)
@@ -105,7 +116,12 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 : _repository.Query<Appointment>(x => x.StartTime >= startDateTime 
                                                 && x.Date <= endDateTime
                                                 && x.Location.EntityId==input.Loc);
-            appointments.Each(x => GetValue(x, events, user, canSeeOthers) );
+            if (input.TrainerIds.IsNotEmpty())
+            {
+                IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
+                appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId));
+            }
+            appointments.Each(x => GetValue(x, events, user, canSeeOthers));
             return Json(events, JsonRequestBehavior.AllowGet);
         }
 
@@ -143,6 +159,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public string Name { get; set; }
 
         public string Color { get; set; }
+
+        public int EntityId { get; set; }
     }
 
     public class AppointmentPermissionsDto

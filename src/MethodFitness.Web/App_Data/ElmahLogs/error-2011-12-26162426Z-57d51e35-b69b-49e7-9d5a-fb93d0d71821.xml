@@ -1,0 +1,173 @@
+﻿<error errorId="57d51e35-b69b-49e7-9d5a-fb93d0d71821" host="RAIFHARIK-MAC" type="System.ArgumentOutOfRangeException" message="Index and length must refer to a location within the string.&#xD;&#xA;Parameter name: length" source="mscorlib" detail="NHibernate.Exceptions.GenericADOException: Could not execute query[SQL: SQL not available] ---&gt; System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---&gt; System.ArgumentOutOfRangeException: Index and length must refer to a location within the string.&#xD;&#xA;Parameter name: length&#xD;&#xA;   at System.String.InternalSubStringWithChecks(Int32 startIndex, Int32 length, Boolean fAlwaysCopy)&#xD;&#xA;   at lambda_method(Closure , Object[] )&#xD;&#xA;   --- End of inner exception stack trace ---&#xD;&#xA;   at System.RuntimeMethodHandle._InvokeMethodFast(IRuntimeMethodInfo method, Object target, Object[] arguments, SignatureStruct&amp; sig, MethodAttributes methodAttributes, RuntimeType typeOwner)&#xD;&#xA;   at System.RuntimeMethodHandle.InvokeMethodFast(IRuntimeMethodInfo method, Object target, Object[] arguments, Signature sig, MethodAttributes methodAttributes, RuntimeType typeOwner)&#xD;&#xA;   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean skipVisibilityChecks)&#xD;&#xA;   at System.Delegate.DynamicInvokeImpl(Object[] args)&#xD;&#xA;   at NHibernate.Linq.ResultTransformer.TransformTuple(Object[] tuple, String[] aliases) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Linq\ResultTransformer.cs:line 22&#xD;&#xA;   at NHibernate.Hql.Ast.ANTLR.Loader.QueryLoader.GetResultList(IList results, IResultTransformer resultTransformer) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Hql\Ast\ANTLR\Loader\QueryLoader.cs:line 314&#xD;&#xA;   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Loader\Loader.cs:line 1601&#xD;&#xA;   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Loader\Loader.cs:line 1591&#xD;&#xA;   at NHibernate.Hql.Ast.ANTLR.Loader.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Hql\Ast\ANTLR\Loader\QueryLoader.cs:line 300&#xD;&#xA;   at NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Hql\Ast\ANTLR\QueryTranslatorImpl.cs:line 108&#xD;&#xA;   at NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Engine\Query\HQLQueryPlan.cs:line 78&#xD;&#xA;   at NHibernate.Impl.SessionImpl.List(IQueryExpression queryExpression, QueryParameters queryParameters, IList results) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Impl\SessionImpl.cs:line 642&#xD;&#xA;   --- End of inner exception stack trace ---&#xD;&#xA;   at NHibernate.Impl.SessionImpl.List(IQueryExpression queryExpression, QueryParameters queryParameters, IList results) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Impl\SessionImpl.cs:line 652&#xD;&#xA;   at NHibernate.Impl.AbstractSessionImpl.List(IQueryExpression queryExpression, QueryParameters parameters) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Impl\AbstractSessionImpl.cs:line 92&#xD;&#xA;   at NHibernate.Impl.ExpressionQueryImpl.List() in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Impl\ExpressionQueryImpl.cs:line 60&#xD;&#xA;   at NHibernate.Linq.NhQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Linq\NhQueryProvider.cs:line 79&#xD;&#xA;   at NHibernate.Linq.NhQueryProvider.Execute[TResult](Expression expression) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\Linq\NhQueryProvider.cs:line 103&#xD;&#xA;   at Remotion.Data.Linq.QueryableBase`1.GetEnumerator() in :line 0&#xD;&#xA;   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)&#xD;&#xA;   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)&#xD;&#xA;   at MethodFitness.Web.Areas.Schedule.Controllers.AppointmentCalendarController.AppointmentCalendar(CalendarViewModel input) in C:\Development\MethodFitness\src\MethodFitness.Web\Areas\Schedule\Controllers\AppointmentCalendarController.cs:line 51&#xD;&#xA;   at lambda_method(Closure , ControllerBase , Object[] )&#xD;&#xA;   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)&#xD;&#xA;   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.&lt;&gt;c__DisplayClass15.&lt;InvokeActionMethodWithFilters&gt;b__12()&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.&lt;&gt;c__DisplayClass15.&lt;&gt;c__DisplayClass17.&lt;InvokeActionMethodWithFilters&gt;b__14()&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)&#xD;&#xA;   at System.Web.Mvc.Controller.ExecuteCore()&#xD;&#xA;   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)&#xD;&#xA;   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;&gt;c__DisplayClass6.&lt;&gt;c__DisplayClassb.&lt;BeginProcessRequest&gt;b__5()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.&lt;&gt;c__DisplayClass1.&lt;MakeVoidDelegate&gt;b__0()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.&lt;&gt;c__DisplayClass8`1.&lt;BeginSynchronous&gt;b__7(IAsyncResult _)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;&gt;c__DisplayClasse.&lt;EndProcessRequest&gt;b__d()&#xD;&#xA;   at System.Web.Mvc.SecurityUtil.&lt;GetCallInAppTrustThunk&gt;b__0(Action f)&#xD;&#xA;   at System.Web.Mvc.SecurityUtil.ProcessInApplicationTrust(Action action)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="Harik, Raif" time="2011-12-26T16:24:26.8022869Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:*/*&#xD;&#xA;HTTP_ACCEPT_CHARSET:ISO-8859-1,utf-8;q=0.7,*;q=0.7&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-us,en;q=0.5&#xD;&#xA;HTTP_COOKIE:MF=491ACB528A0AF969A5FE651EC361C7BEB0052DBD52F19578AF5DDB42917E4A415E2DBA78CFEAED2D10973AB66E866066C862A02076526982F428B50B34601E53D14A252FF74048D072F8458DF1D1F14EF820D328D418A179EC0E3CD651A6956D5F5D135DD7E213CB7BAF076F3E44A30554C73E9939AF594A5685F09F9F71BAC2CB30A5DA9EB87BE209A87541257ED1BDF22CF149B8D298B4CA5EF3AB4EC182ECE705283A0B3B2C0339A83D4FA6D176033FB2713519CF069B32827095F48C3657&#xD;&#xA;HTTP_HOST:localhost:888&#xD;&#xA;HTTP_REFERER:http://localhost:888/MethodFitness/Home&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0.1) Gecko/20100101 Firefox/8.0.1&#xD;&#xA;HTTP_X_REQUESTED_WITH:XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: */*&#xD;&#xA;Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7&#xD;&#xA;Accept-Encoding: gzip, deflate&#xD;&#xA;Accept-Language: en-us,en;q=0.5&#xD;&#xA;Cookie: MF=491ACB528A0AF969A5FE651EC361C7BEB0052DBD52F19578AF5DDB42917E4A415E2DBA78CFEAED2D10973AB66E866066C862A02076526982F428B50B34601E53D14A252FF74048D072F8458DF1D1F14EF820D328D418A179EC0E3CD651A6956D5F5D135DD7E213CB7BAF076F3E44A30554C73E9939AF594A5685F09F9F71BAC2CB30A5DA9EB87BE209A87541257ED1BDF22CF149B8D298B4CA5EF3AB4EC182ECE705283A0B3B2C0339A83D4FA6D176033FB2713519CF069B32827095F48C3657&#xD;&#xA;Host: localhost:888&#xD;&#xA;Referer: http://localhost:888/MethodFitness/Home&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0.1) Gecko/20100101 Firefox/8.0.1&#xD;&#xA;X-Requested-With: XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Development\MethodFitness\src\MethodFitness.Web\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms Authentication" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="Harik, Raif" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="RaifHarik-Mac\Raif Harik" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="Harik, Raif" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="" />
+    </item>
+    <item name="HTTPS">
+      <value string="" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Schedule/AppointmentCalendar/AppointmentCalendar" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Development\MethodFitness\src\MethodFitness.Web\Schedule\AppointmentCalendar\AppointmentCalendar" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="_=1324916665334" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Schedule/AppointmentCalendar/AppointmentCalendar" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="888" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="" />
+    </item>
+    <item name="URL">
+      <value string="/Schedule/AppointmentCalendar/AppointmentCalendar" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="*/*" />
+    </item>
+    <item name="HTTP_ACCEPT_CHARSET">
+      <value string="ISO-8859-1,utf-8;q=0.7,*;q=0.7" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-us,en;q=0.5" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="MF=491ACB528A0AF969A5FE651EC361C7BEB0052DBD52F19578AF5DDB42917E4A415E2DBA78CFEAED2D10973AB66E866066C862A02076526982F428B50B34601E53D14A252FF74048D072F8458DF1D1F14EF820D328D418A179EC0E3CD651A6956D5F5D135DD7E213CB7BAF076F3E44A30554C73E9939AF594A5685F09F9F71BAC2CB30A5DA9EB87BE209A87541257ED1BDF22CF149B8D298B4CA5EF3AB4EC182ECE705283A0B3B2C0339A83D4FA6D176033FB2713519CF069B32827095F48C3657" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:888" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:888/MethodFitness/Home" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0.1) Gecko/20100101 Firefox/8.0.1" />
+    </item>
+    <item name="HTTP_X_REQUESTED_WITH">
+      <value string="XMLHttpRequest" />
+    </item>
+  </serverVariables>
+  <queryString>
+    <item name="_">
+      <value string="1324916665334" />
+    </item>
+  </queryString>
+  <cookies>
+    <item name="MF">
+      <value string="491ACB528A0AF969A5FE651EC361C7BEB0052DBD52F19578AF5DDB42917E4A415E2DBA78CFEAED2D10973AB66E866066C862A02076526982F428B50B34601E53D14A252FF74048D072F8458DF1D1F14EF820D328D418A179EC0E3CD651A6956D5F5D135DD7E213CB7BAF076F3E44A30554C73E9939AF594A5685F09F9F71BAC2CB30A5DA9EB87BE209A87541257ED1BDF22CF149B8D298B4CA5EF3AB4EC182ECE705283A0B3B2C0339A83D4FA6D176033FB2713519CF069B32827095F48C3657" />
+    </item>
+  </cookies>
+</error>
