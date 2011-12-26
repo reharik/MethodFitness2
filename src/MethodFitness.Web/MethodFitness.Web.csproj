@@ -229,6 +229,7 @@
     <Compile Include="Controllers\DCIController.cs" />
     <Compile Include="CustomViewPage.cs" />
     <Compile Include="Menus\HeaderMenu.cs" />
+    <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Services\IAuthenticationContext.cs" />
     <Compile Include="Services\ISecuritySetupService.cs" />
     <Compile Include="WebLocalizationKeys.cs" />
@@ -396,7 +397,6 @@
   <ItemGroup>
     <Folder Include="Areas\Schedule\Views\Shared\" />
     <Folder Include="Logs\" />
-    <Folder Include="Models\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

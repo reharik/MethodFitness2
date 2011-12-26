@@ -56,6 +56,9 @@
     <div class="col left">
         
         <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Appointment.Length).ToHtmlTag()
+        </div>
+        <div class="fieldRow">
             @Html.SubmissionFor(x => x.Appointment.Date).ToHtmlTag()
         </div>
         <h5>@WebLocalizationKeys.STARTTIME</h5>
@@ -68,9 +71,7 @@
             @WebLocalizationKeys.ENDTIME
         </h5>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.eHour).AddClassToRoot("first one-five").LabelDisplay(WebLocalizationKeys.HOUR).ToHtmlTag()
-            @Html.SubmissionFor(x => x.eMinutes).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.MINUTES).ToHtmlTag()
-            @Html.SubmissionFor(x => x.eAMPM).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.AMPM).ToHtmlTag()
+           <span id="endTime">@Model.Appointment.EndTime.Value.ToShortTimeString()</span>
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Appointment.Notes).ToHtmlTag()

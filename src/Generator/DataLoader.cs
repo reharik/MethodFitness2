@@ -77,7 +77,8 @@ namespace Generator
                                {
                                    FirstName = "Raif",
                                    LastName = "Harik",
-                                   CompanyId = 1
+                                   CompanyId = 1,
+                                   Color = "#148509"
                                };
             _defaultUser.AddUserRole(_userRoleTrainer);
             _defaultUser.AddUserRole(_userRoleAdmin);
@@ -94,7 +95,8 @@ namespace Generator
             {
                 FirstName = "Amahl",
                 LastName = "Harik",
-                CompanyId = 1
+                CompanyId = 1,
+                Color = "#c41d1d"
             };
             _defaultUser1.AddUserRole(_userRoleTrainer);
             _defaultUser1.UserLoginInfo = new UserLoginInfo

@@ -11,6 +11,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Controllers;
+using MethodFitness.Web.Models;
 using Rhino.Security.Interfaces;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
@@ -43,8 +44,16 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var user = _repository.Find<User>(userEntityId);
             var locations = _selectListItemService.CreateList<Location>(x=>x.Name,x=>x.EntityId,false).ToList();
             locations.Insert(0,new SelectListItem{Text=WebLocalizationKeys.ALL.ToString(),Value = "0"});
+            var trainersDto = new List<TrainerLegendDto>();
+            if(user.UserRoles.Any(x=>x.Name==SecurityUserGroups.Administrator.ToString()))
+            {
+                var trainers = _repository.Query<User>(x=>x.UserRoles.Any(y=>y.Name==SecurityUserGroups.Trainer.ToString()));
+                trainersDto = trainers.Select(x=> new TrainerLegendDto {Name=x.FirstName +" "+x.LastName,Color=x.Color}).ToList();
+            }
+
             var model = new CalendarViewModel
             {
+                Trainers = trainersDto,
                 LocationList = locations,
                 CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
                 CalendarDefinition = new CalendarDefinition
@@ -127,6 +136,13 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             }
             events.Add(calendarEvent);
         }
+    }
+
+    public class TrainerLegendDto   
+    {
+        public string Name { get; set; }
+
+        public string Color { get; set; }
     }
 
     public class AppointmentPermissionsDto

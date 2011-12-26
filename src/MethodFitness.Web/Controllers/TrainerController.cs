@@ -49,6 +49,11 @@ namespace MethodFitness.Web.Controllers
         public ActionResult AddUpdate(ViewModel input)
         {
             var trainer = input.EntityId > 0 ? _repository.Find<User>(input.EntityId) : new User();
+            var clients = _repository.FindAll<Client>();
+            var availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
+            var selectedClients = trainer.Clients.Any()
+                ? trainer.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF })
+                : null;
             var userRoles = _repository.FindAll<UserRole>();
             var availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name});
             var selectedUserRoles = trainer.UserRoles.Any()
@@ -60,6 +65,8 @@ namespace MethodFitness.Web.Controllers
                 User = trainer,
                 AvailableItems = availableUserRoles,
                 SelectedItems = selectedUserRoles,
+                AvailableClients = availableClients,
+                SelectedClients = selectedClients,
                 Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
             };
             return PartialView("TrainerAddUpdate", model);
@@ -97,30 +104,9 @@ namespace MethodFitness.Web.Controllers
             User trainer;
             trainer = input.EntityId > 0 ? _repository.Find<User>(input.EntityId) : new User();
             trainer = mapToDomain(input, trainer);
-            Notification notification;
-            if (!trainer.UserRoles.Any())
-            {
-                notification = new Notification { Success = false };
-                notification.Errors = new List<ErrorInfo> { new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(), WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString()) };
-                return Json(notification, JsonRequestBehavior.AllowGet);
-            }
-            if(trainer.UserRoles.FirstOrDefault(x=>x.Name=="Trainer")==null)
-            {
-                notification = new Notification { Success = false };
-                notification.Errors = new List<ErrorInfo> { new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(), WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString()) };
-                return Json(notification, JsonRequestBehavior.AllowGet);
-            } if (!trainer.UserRoles.Any())
-            {
-                notification = new Notification { Success = false };
-                notification.Errors = new List<ErrorInfo> { new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(), WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString()) };
-                return Json(notification, JsonRequestBehavior.AllowGet);
-            }
-            if(trainer.UserRoles.FirstOrDefault(x=>x.Name=="Trainer")==null)
-            {
-                notification = new Notification { Success = false };
-                notification.Errors = new List<ErrorInfo> { new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(), WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString()) };
-                return Json(notification, JsonRequestBehavior.AllowGet);
-            }
+            ActionResult json;
+            if (userRoleRules(trainer, out json)) return json;
+
             handlePassword(input, trainer);
             addSecurityUserGroups(trainer);
 //            if (input.DeleteImage)
@@ -135,8 +121,67 @@ namespace MethodFitness.Web.Controllers
             var crudManager = _saveEntityService.ProcessSave(trainer);
 
 //            _uploadedFileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
-            notification = crudManager.Finish();
+            var notification = crudManager.Finish();
             return Json(notification, "text/plain");
+        }
+
+        private bool userRoleRules(User trainer, out ActionResult json)
+        {
+            Notification notification;
+            if (!trainer.UserRoles.Any())
+            {
+                notification = new Notification {Success = false};
+                notification.Errors = new List<ErrorInfo>
+                                          {
+                                              new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(),
+                                                            WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
+                                          };
+                {
+                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    return true;
+                }
+            }
+            if (trainer.UserRoles.FirstOrDefault(x => x.Name == "Trainer") == null)
+            {
+                notification = new Notification {Success = false};
+                notification.Errors = new List<ErrorInfo>
+                                          {
+                                              new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(),
+                                                            WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
+                                          };
+                {
+                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    return true;
+                }
+            }
+            if (!trainer.UserRoles.Any())
+            {
+                notification = new Notification {Success = false};
+                notification.Errors = new List<ErrorInfo>
+                                          {
+                                              new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(),
+                                                            WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
+                                          };
+                {
+                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    return true;
+                }
+            }
+            if (trainer.UserRoles.FirstOrDefault(x => x.Name == "Trainer") == null)
+            {
+                notification = new Notification {Success = false};
+                notification.Errors = new List<ErrorInfo>
+                                          {
+                                              new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(),
+                                                            WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
+                                          };
+                {
+                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    return true;
+                }
+            }
+            json = null;
+            return false;
         }
 
         private void addSecurityUserGroups(User trainer)
@@ -173,14 +218,12 @@ namespace MethodFitness.Web.Controllers
             trainer.Notes = trainerModel.Notes;
             trainer.Status = trainerModel.Status;
             trainer.BirthDate = trainerModel.BirthDate;
-            trainer.Color = trainerModel.Color;
-            
-            trainer.UserLoginInfo = new UserLoginInfo()
-            {
-                LoginName = trainerModel.UserLoginInfo.LoginName
-            };
+            trainer.Color = trainerModel.Color.IsNotEmpty()?trainerModel.Color:"#3366CC";
+            if (trainer.UserLoginInfo==null) trainer.UserLoginInfo = new UserLoginInfo();
+            trainer.UserLoginInfo.LoginName = trainerModel.UserLoginInfo.LoginName;
 
-            _updateCollectionService.UpdateFromCSV(trainer.UserRoles,model.UserRolesInput,trainer.AddUserRole,trainer.RemoveUserRole);
+            _updateCollectionService.UpdateFromCSV(trainer.UserRoles, model.UserRolesInput, trainer.AddUserRole, trainer.RemoveUserRole);
+            _updateCollectionService.UpdateFromCSV(trainer.Clients, model.ClientsInput, trainer.AddClient, trainer.RemoveClient);
             return trainer;
         }
     }
@@ -195,5 +238,9 @@ namespace MethodFitness.Web.Controllers
         [ValidateSameAs("Password")]
         public string PasswordConfirmation { get; set; }
         public string UserRolesInput { get; set; }
+        public string ClientsInput { get; set; }
+
+        public IEnumerable<TokenInputDto> AvailableClients { get; set; }
+        public IEnumerable<TokenInputDto> SelectedClients { get; set; }
     }
 }

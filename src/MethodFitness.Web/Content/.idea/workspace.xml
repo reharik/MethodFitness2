@@ -35,7 +35,61 @@
       <file leaf-file-name="mf.AppointmentCalendarController.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/mf.AppointmentCalendarController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="9" selection-start="4764" selection-end="4764" vertical-scroll-proportion="0.69024044">
+            <state line="39" column="42" selection-start="1905" selection-end="1905" vertical-scroll-proportion="0.41442716">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mf.CalendarView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/mf.CalendarView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="0" selection-start="578" selection-end="578" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mf.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/mf.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="355" column="0" selection-start="6181" selection-end="6181" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="token-input.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/token-input.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="73" column="14" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mf.TrainerController.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/mf.TrainerController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="60" selection-start="799" selection-end="799" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mf.TokenView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/mf.TokenView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="42" selection-start="557" selection-end="557" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mf.ajaxPopupFormModule.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/mf.ajaxPopupFormModule.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="6" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -51,9 +105,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/scripts/mf.GridView.js" />
-        <option value="$PROJECT_DIR$/scripts/mf.crudController.js" />
-        <option value="$PROJECT_DIR$/scripts/mf.TrainerController.js" />
         <option value="$PROJECT_DIR$/css/jquery.miniColors.css" />
         <option value="$PROJECT_DIR$/scripts/mf.Calendar.js" />
         <option value="$PROJECT_DIR$/scripts/mf.EventCalendarController.js" />
@@ -66,6 +117,9 @@
         <option value="$PROJECT_DIR$/scripts/mf.ajaxPopupFormModule.js" />
         <option value="$PROJECT_DIR$/scripts/mf.PopupView.js" />
         <option value="$PROJECT_DIR$/scripts/mf.CalendarView.js" />
+        <option value="$PROJECT_DIR$/css/token-input.css" />
+        <option value="$PROJECT_DIR$/scripts/mf.TrainerController.js" />
+        <option value="$PROJECT_DIR$/css/mf.css" />
         <option value="$PROJECT_DIR$/scripts/mf.AppointmentCalendarController.js" />
       </list>
     </option>
@@ -124,7 +178,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -139,6 +193,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redmond" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -246,16 +304,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/internalHelpers/jquery.cc.grid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="34" selection-start="268" selection-end="268" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/internalHelpers/cc.gridHelpers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="8" selection-start="2513" selection-end="2513" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.baseClass.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="0" selection-start="317" selection-end="317" vertical-scroll-proportion="0.0" />
@@ -264,16 +312,6 @@
     <entry file="file://$PROJECT_DIR$/scripts/mf.ajaxPopupDisplayModule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="78" selection-start="1226" selection-end="1226" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/mf.TrainerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="6" selection-start="306" selection-end="414" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/mf.ajaxPopupFormModule.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="51" selection-start="1423" selection-end="1423" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.PopupView.js">
@@ -306,26 +344,50 @@
         <state line="25" column="51" selection-start="1230" selection-end="1230" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/mf.GridView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="23" selection-start="1953" selection-end="1953" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/token-input.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="14" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/mf.TrainerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="60" selection-start="799" selection-end="799" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.TokenView.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="33" selection-start="1873" selection-end="1945" vertical-scroll-proportion="0.0" />
+        <state line="20" column="42" selection-start="557" selection-end="557" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/mf.ajaxPopupFormModule.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="6" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.CalendarView.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="6" selection-start="2109" selection-end="2109" vertical-scroll-proportion="0.7468175" />
+        <state line="21" column="0" selection-start="578" selection-end="578" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/mf.GridView.js">
+    <entry file="file://$PROJECT_DIR$/css/mf.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="23" selection-start="1953" selection-end="1953" vertical-scroll-proportion="0.0">
+        <state line="355" column="0" selection-start="6181" selection-end="6181" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.AppointmentCalendarController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="9" selection-start="4764" selection-end="4764" vertical-scroll-proportion="0.69024044">
+        <state line="39" column="42" selection-start="1905" selection-end="1905" vertical-scroll-proportion="0.41442716">
           <folding />
         </state>
       </provider>

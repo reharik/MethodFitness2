@@ -50,11 +50,20 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.Date = input.ScheduledDate.HasValue ? input.ScheduledDate.Value : appointment.Date;
             appointment.StartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.StartTime;
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
-            var clients = _repository.FindAll<Client>();
+            var userEntityId = _sessionContext.GetUserEntityId();
+            var user = _repository.Find<User>(userEntityId);
+            IEnumerable<Client> clients;
+            if(!_authorizationService.IsAllowed(user,"/Clients/CanScheduleAllClients"))
+            {
+                clients = user.Clients;
+            }else
+            {
+                clients = _repository.FindAll<Client>();
+            }
             var availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
             var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF });
-            var model = new AppointmentViewModel
-                            {
+            var model = new AppointmentViewModel{
+                            
                                 AvailableItems = availableClients,
                                 SelectedItems = selectedClients,
                                 LocationList = locations,
@@ -73,12 +82,24 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model.sHour = startTime.Hour <= 12 ? startTime.Hour.ToString() : (startTime.Hour - 12).ToString();
             model.sMinutes = startTime.Minute.ToString();
             model.sAMPM = startTime.Hour > 12 ? "PM" : "AM";
-            var endHour = (Int32.Parse(model.sHour) + 1);
-            endHour = endHour > 12 ? endHour - 12 : endHour;
-            model.eHour = endHour.ToString();
-            model.eMinutes = model.sMinutes;
-            model.eAMPM = model.eHour == "1" ? "PM" : model.sAMPM;
+            if(model.Appointment.Length.IsEmpty())
+            {
+                model.Appointment.EndTime =  startTime.AddHours(1);
+                return;
+            }
+            switch(model.Appointment.Length)
+            {
+                case "Half Hour":
+                    model.Appointment.EndTime = startTime.AddMinutes(30);
+                    break;
+                case "Hour":
+                    model.Appointment.EndTime = startTime.AddMinutes(60);
+                    break;
+                case "Hour And A Half":
+                    model.Appointment.EndTime = startTime.AddMinutes(90);
+                    break;
 
+            }
         }
 
         private void handleTrainer(AppointmentViewModel model)
@@ -147,7 +168,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var appointmentModel = model.Appointment;
             appointment.Date = appointmentModel.Date;
             appointment.StartTime = DateTime.Parse(appointmentModel.Date.Value.ToShortDateString() + " " + model.sHour+":"+model.sMinutes+" "+model.sAMPM);
-            appointment.EndTime = DateTime.Parse(appointmentModel.Date.Value.ToShortDateString() + " " + model.eHour + ":" + model.eMinutes + " " + model.eAMPM);
+            appointment.EndTime = appointment.StartTime.Value.AddMinutes(Int32.Parse(model.Appointment.Length));
+            appointment.Length = AppointmentLength.FromValue<AppointmentLength>(model.Appointment.Length).Key;
             var trainer = _repository.Find<User>(appointmentModel.Trainer.EntityId);
             var location = _repository.Find<Location>(appointmentModel.Location.EntityId);
             appointment.Trainer = trainer;

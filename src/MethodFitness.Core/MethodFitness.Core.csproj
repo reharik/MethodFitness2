@@ -159,7 +159,6 @@
     <Compile Include="Config\ForeignKeyConstraintNameConvention.cs" />
     <Compile Include="Config\StructuremapGridConvention.cs" />
     <Compile Include="Config\TextAreaConvention.cs" />
-    <Compile Include="CoreViewModelAndDTOs\CalendarViewModel.cs" />
     <Compile Include="CoreViewModelAndDTOs\OrderDetailsDto.cs" />
     <Compile Include="CoreViewModelAndDTOs\TokenInputDto.cs" />
     <Compile Include="Config\CustomIdentitiy.cs" />

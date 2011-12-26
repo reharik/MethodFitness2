@@ -6,6 +6,8 @@ using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
+using MethodFitness.Core.Enumerations;
+using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
 using Rhino.Security.Interfaces;
 using xVal.ServerSide;
@@ -26,7 +28,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public virtual User Trainer { get; set; }
         [TextArea]
         public virtual string Notes { get; set; }
-       
+        [ValueOf(typeof(AppointmentLength))]
+        public virtual string Length { get; set; }
 
         #region Collections
         private IList<Client> _clients = new List<Client>();

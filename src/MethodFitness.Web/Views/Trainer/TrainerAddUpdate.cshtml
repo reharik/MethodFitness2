@@ -9,8 +9,16 @@
 }
 
 @section HeaderJavascript{
-        extraFormOptions.availableItems= @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableItems));
-        extraFormOptions.selectedItems= @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedItems));
+    var userRolesOptions = {
+        availableItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableItems)),
+        selectedItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedItems))
+    }
+    var clientOptions={
+        availableItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableClients)),
+        selectedItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedClients))
+    }
+    extraFormOptions.userRolesOptions = userRolesOptions;
+    extraFormOptions.clientOptions = clientOptions;
 }
 
   @MvcHtmlString.Create(FormFor<TrainerController>(x => x.Save(null)).AddClass("CRUD").ElementId("CRUDForm").ToString())
@@ -37,6 +45,22 @@
                 @Html.SubmissionFor(x => x.User.State).AddClassToRoot("one-quarter").ToHtmlTag()
                 @Html.SubmissionFor(x => x.User.ZipCode).AddClassToRoot("one-quarter").ToHtmlTag()
             </div>
+            <div class="fieldRow">
+                @WebLocalizationKeys.SELECT_COLOR_TO_ASSOCIATE_WITH_THIS_PERSON.ToString()
+            </div>
+            <div class="fieldRow">
+                @MvcHtmlString.Create(Html.SubmissionFor(x => x.User.Color).HideLabel().AddClassToRoot("first half").InputId("color").ToString())
+                <div id="colorPicker"></div>
+            </div>
+           <div class="fieldRow artifact-field">
+                <div id="userRoles">
+                    <label class="section">@WebLocalizationKeys.USER_ROLES</label>
+                    <div id="userRoles" class="dci_assetSection">
+                        <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE_OR.ToString()</div>
+                        <input type="text" name="UserRolesInput" id="Input" class="artifact nolabels"/>
+                    </div>
+                </div>
+            </div>
             
         </div>
         <div class="col right">
@@ -59,25 +83,14 @@
                 @Html.SubmissionFor(x => x.User.PhoneHome).AddClassToRoot("half first").ToHtmlTag()
                 @Html.SubmissionFor(x => x.User.PhoneMobile).AddClassToRoot("half").ToHtmlTag()
             </div>
-        </div>
-        <div class="col full clear">
-            <div class="fieldRow artifact-field">
-                <div id="userRoles">
-                    <label class="section">@WebLocalizationKeys.USER_ROLES</label>
-                    <div id="userRoles" class="dci_assetSection">
+           <div class="fieldRow artifact-field">
+                <div id="clients">
+                    <label class="section">@WebLocalizationKeys.CLIENTS</label>
+                    <div id="clients" class="dci_assetSection">
                         <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE_OR.ToString()</div>
-                        <input type="text" name="UserRolesInput" id="Input" class="artifact nolabels"/>
+                        <input type="text" name="ClientsInput" id="Input" class="artifact nolabels"/>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col full clear">
-            <div class="fieldRow">
-                @WebLocalizationKeys.SELECT_COLOR_TO_ASSOCIATE_WITH_THIS_PERSON.ToString()
-            </div>
-            <div class="fieldRow">
-                @MvcHtmlString.Create(Html.SubmissionFor(x => x.User.Color).AddClassToRoot("first half").InputId("color").ToString())
-                <div id="colorPicker"></div>
             </div>
         </div>
      

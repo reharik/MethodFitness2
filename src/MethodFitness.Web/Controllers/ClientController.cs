@@ -22,12 +22,14 @@ namespace MethodFitness.Web.Controllers
     {
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
+        private readonly ISessionContext _sessionContext;
 
         public ClientController(IRepository repository,
-            ISaveEntityService saveEntityService)
+            ISaveEntityService saveEntityService, ISessionContext sessionContext)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
+            _sessionContext = sessionContext;
         }
 
         public ActionResult AddUpdate(ViewModel input)
@@ -61,6 +63,7 @@ namespace MethodFitness.Web.Controllers
             Client client;
             client = input.EntityId > 0 ? _repository.Find<Client>(input.EntityId) : new Client();
             client = mapToDomain(input, client);
+            associateWithUser(client);
 //            if (input.DeleteImage)
 //            {
 ////                _uploadedFileHandlerService.DeleteFile(client.ImageUrl);
@@ -75,6 +78,14 @@ namespace MethodFitness.Web.Controllers
 //            _uploadedFileHandlerService.SaveUploadedFile(file, client.FirstName + "_" + client.LastName);
             var notification = crudManager.Finish();
             return Json(notification, "text/plain");
+        }
+
+        private void associateWithUser(Client client)
+        {
+            var userEntityId = _sessionContext.GetUserEntityId();
+            var user = _repository.Find<User>(userEntityId);
+            user.AddClient(client);
+            _saveEntityService.ProcessSave(user);
         }
 
         private Client mapToDomain(ClientViewModel model, Client client)

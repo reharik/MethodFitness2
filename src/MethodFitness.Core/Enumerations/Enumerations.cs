@@ -186,5 +186,14 @@ namespace MethodFitness.Core.Enumerations
         public static readonly SecurityUserGroups Trainer = new SecurityUserGroups { IsActive = true, Key = "Trainer" };
     }
 
+    [Serializable]
+    public class AppointmentLength : Enumeration
+    {
+        public static readonly AppointmentLength Empty = new AppointmentLength { IsActive = false, Key = "" };
+        public static readonly AppointmentLength HalfHour = new AppointmentLength { IsActive = true, Key = "Half Hour", Value = "30"};
+        public static readonly AppointmentLength Hour = new AppointmentLength { IsActive = true, Key = "Hour",Value = "60",IsDefault = true};
+        public static readonly AppointmentLength HourAndAHalf = new AppointmentLength { IsActive = true, Value = "90", Key = "Hour And a Half" };
+    }
+
 
 }

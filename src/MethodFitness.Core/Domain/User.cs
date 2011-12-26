@@ -61,6 +61,20 @@ namespace MethodFitness.Core.Domain
             _userRoles.Add(userRole);
         }
 
+        private IList<Client> _clients = new List<Client>();
+        public virtual void EmptyClients() { _clients.Clear(); }
+        public virtual IEnumerable<Client> Clients { get { return _clients; } }
+        public virtual void RemoveClient(Client client)
+        {
+            _clients.Remove(client);
+        }
+        public virtual void AddClient(Client client)
+        {
+            if (_clients.Contains(client)) return;
+            _clients.Add(client);
+        }
+
+
         #endregion
 
         public virtual SecurityInfo SecurityInfo

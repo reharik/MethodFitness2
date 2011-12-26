@@ -2,11 +2,18 @@
 @using MethodFitness.Core.CoreViewModelAndDTOs
 @using HtmlTags
 @using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web
+@using MethodFitness.Web.Models
 <script>
+    
     var calendarDef=  @MvcHtmlString.Create(JsonUtil.ToJson(Model.CalendarDefinition));
     calendarDef.calendarContainer="#calendar";
+    var options = {
+        calendarDef: calendarDef,
+        trainers: @MvcHtmlString.Create(JsonUtil.ToJson(Model.Trainers))
+    };
     $(document).ready(function(){
-        new mf.AppointmentCalendarController(calendarDef,{height:"800px"});
+        new mf.AppointmentCalendarController(options);
         });
 
 </script>
@@ -17,8 +24,14 @@
 </div>
 <div id="contentArea" class="content-inner">
     <div id="errorMessagesCalendar" class="dci_ErrorMessages errorMessages"><ul></ul></div>
-        <div id='calendar'></div>
-        <div class="footer">
+    <div id="legend" class="legend">
+        <h3>@WebLocalizationKeys.TRAINERS</h3>
+      
+    </div>
+    <div class="calendarContainer">
+            <div id='calendar'></div>
+            <div class="footer">
+        </div>
     </div>
 </div>
 

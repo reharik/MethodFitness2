@@ -17,8 +17,10 @@ mf.TrainerController = mf.CrudController.extend({
     },
 
     loadTokenizers: function(formOptions){
-        var options = $.extend({},formOptions,{el:"#userRoles"});
-        this.views.roles = new mf.TokenView(options);
+        var clientOptions = $.extend({el:"#clients"},formOptions.clientOptions);
+        var userRoleOptions = $.extend({el:"#userRoles"},formOptions.userRolesOptions);
+        this.views.userRoles = new mf.TokenView(userRoleOptions);
+        this.views.clients = new mf.TokenView(clientOptions);
     },
     loadPlugins:function(){
         $('#color',"#detailArea").miniColors();

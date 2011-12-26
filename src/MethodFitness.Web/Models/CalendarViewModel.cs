@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using MethodFitness.Core;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 
-namespace MethodFitness.Core.CoreViewModelAndDTOs
+namespace MethodFitness.Web.Models
 {
     public class CalendarViewModel : ViewModel
     {
@@ -13,6 +14,7 @@ namespace MethodFitness.Core.CoreViewModelAndDTOs
         public string CalendarUrl { get; set; }
         public string Loc { get; set; }
 
+        public List<TrainerLegendDto> Trainers { get; set; }
     }
 
     public class GetEventsViewModel : ViewModel

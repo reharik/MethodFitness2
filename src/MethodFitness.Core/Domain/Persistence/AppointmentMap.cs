@@ -10,6 +10,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.Date);
             Map(x => x.StartTime);
             Map(x => x.EndTime);
+            Map(x => x.Length);
             References(x => x.Location);
             References(x => x.Trainer);
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
