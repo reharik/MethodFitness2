@@ -25,7 +25,7 @@ namespace MethodFitness.Web.Menus
         private IList<MenuItem> DefaultMenubuilder(bool withoutPermissions = false)
         {
             return _builder
-                .CreateNode<EmployeeDashboardController>(c => c.Display(null), WebLocalizationKeys.EMPLOYEE_DASHBOARD)
+//                .CreateNode<EmployeeDashboardController>(c => c.Display(null), WebLocalizationKeys.EMPLOYEE_DASHBOARD)
                 .CreateNode<AppointmentCalendarController>(c => c.AppointmentCalendar(null), WebLocalizationKeys.CALENDAR, AreaName.Schedule)
                 .CreateNode<ClientListController>(c => c.ItemList(null), WebLocalizationKeys.CLIENTS)
                 .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")

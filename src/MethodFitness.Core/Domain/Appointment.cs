@@ -49,7 +49,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
   
         public virtual Notification CheckPermissions(User user, IAuthorizationService authorizationService, Notification notification)
         {
-            if(StartTime<DateTime.Now && !authorizationService.IsAllowed(user,"/Calendar/CanEnterRetroactiveAppointments"))
+            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now,TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+            if (StartTime < convertTime && !authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();

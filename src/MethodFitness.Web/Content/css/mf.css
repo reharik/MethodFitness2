@@ -63,6 +63,12 @@ div.fieldRow textarea
     display: block;
 }
 
+div.puCol {
+    width: 235px;
+    padding: 10px 20px;
+    display: block;
+}
+
  div.top {
     padding-top: 0;
     display: block;
@@ -84,6 +90,11 @@ div.fieldRow textarea
 
  div.full {
     width: 710px;
+    padding: 10px 0 10px 20px;
+}
+
+ div.full {
+    width: 525px;
     padding: 10px 0 10px 20px;
 }
 
@@ -368,4 +379,11 @@ margin: 0;
 }
 .showing{
     text-decoration: underline;
+}
+
+/************************/
+.view_label{
+    float: left;
+    font-weight: bold;
+    padding-right: 8px;
 }
