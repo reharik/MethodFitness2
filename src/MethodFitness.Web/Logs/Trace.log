@@ -1,13 +1,12 @@
-2011-12-26 09:18:40,956 [44] ERROR - Could not execute query: select appointmen0_.EntityId as EntityId0_, appointmen0_.CreateDate as CreateDate0_, appointmen0_.ChangeDate as ChangeDate0_, appointmen0_.ChangedBy as ChangedBy0_, appointmen0_.Archived as Archived0_, appointmen0_.CompanyId as CompanyId0_, appointmen0_.Date as Date0_, appointmen0_.StartTime as StartTime0_, appointmen0_.EndTime as EndTime0_, appointmen0_.Length as Length0_, appointmen0_.LocationId as LocationId0_, appointmen0_.TrainerId as TrainerId0_ from [Appointment] appointmen0_ where appointmen0_.Archived= @p0 and (appointmen0_.CompanyId= @p1) and appointmen0_.StartTime>=@p2 and appointmen0_.Date<=@p3 and (appointmen0_.EntityId in (@p4))
-System.InvalidCastException: Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32. ---> System.InvalidCastException: Object must implement IConvertible.
-   at System.Convert.ChangeType(Object value, Type conversionType, IFormatProvider provider)
-   at System.Data.SqlClient.SqlParameter.CoerceValue(Object value, MetaType destinationType)
-   --- End of inner exception stack trace ---
-   at System.Data.SqlClient.SqlParameter.CoerceValue(Object value, MetaType destinationType)
-   at System.Data.SqlClient.SqlParameter.GetCoercedValue()
-   at System.Data.SqlClient.SqlParameter.Validate(Int32 index, Boolean isCommandProc)
-   at System.Data.SqlClient.SqlCommand.BuildParamList(TdsParser parser, SqlParameterCollection parameters)
-   at System.Data.SqlClient.SqlCommand.BuildExecuteSql(CommandBehavior behavior, String commandText, SqlParameterCollection parameters, _SqlRPC& rpc)
+2011-12-28 11:20:11,422 [26] ERROR - Could not execute query: SELECT user0_.EntityId as EntityId5_0_, user0_.CreateDate as CreateDate5_0_, user0_.ChangeDate as ChangeDate5_0_, user0_.ChangedBy as ChangedBy5_0_, user0_.Archived as Archived5_0_, user0_.CompanyId as CompanyId5_0_, user0_.UserId as UserId5_0_, user0_.FirstName as FirstName5_0_, user0_.LastName as LastName5_0_, user0_.BirthDate as BirthDate5_0_, user0_.Email as Email5_0_, user0_.PhoneMobile as PhoneMo12_5_0_, user0_.SecondaryPhone as Seconda13_5_0_, user0_.Address1 as Address14_5_0_, user0_.Address2 as Address15_5_0_, user0_.City as City5_0_, user0_.State as State5_0_, user0_.ZipCode as ZipCode5_0_, user0_.Notes as Notes5_0_, user0_.ImageUrl as ImageUrl5_0_, user0_.Color as Color5_0_, user0_.UserLoginInfoId as UserLog22_5_0_ FROM [User] user0_ WHERE user0_.EntityId=@p0
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SecondaryPhone'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
    at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
    at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
    at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
@@ -15,22 +14,17 @@ System.InvalidCastException: Failed to convert parameter value from a WhereSelec
    at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
    at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
    at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
-2011-12-26 09:18:41,022 [44] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
-2011-12-26 09:18:41,024 [44] ERROR - Object must implement IConvertible.
-2011-12-26 09:18:41,030 [44] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
-2011-12-26 09:18:41,032 [44] ERROR - Object must implement IConvertible.
-2011-12-26 09:18:41,035 [44] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
-2011-12-26 09:18:41,037 [44] ERROR - Object must implement IConvertible.
-2011-12-26 09:19:09,027 [57] ERROR - Could not execute query: select appointmen0_.EntityId as EntityId0_, appointmen0_.CreateDate as CreateDate0_, appointmen0_.ChangeDate as ChangeDate0_, appointmen0_.ChangedBy as ChangedBy0_, appointmen0_.Archived as Archived0_, appointmen0_.CompanyId as CompanyId0_, appointmen0_.Date as Date0_, appointmen0_.StartTime as StartTime0_, appointmen0_.EndTime as EndTime0_, appointmen0_.Length as Length0_, appointmen0_.LocationId as LocationId0_, appointmen0_.TrainerId as TrainerId0_ from [Appointment] appointmen0_ where appointmen0_.Archived= @p0 and (appointmen0_.CompanyId= @p1) and appointmen0_.StartTime>=@p2 and appointmen0_.Date<=@p3 and (appointmen0_.EntityId in (@p4))
-System.InvalidCastException: Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32. ---> System.InvalidCastException: Object must implement IConvertible.
-   at System.Convert.ChangeType(Object value, Type conversionType, IFormatProvider provider)
-   at System.Data.SqlClient.SqlParameter.CoerceValue(Object value, MetaType destinationType)
-   --- End of inner exception stack trace ---
-   at System.Data.SqlClient.SqlParameter.CoerceValue(Object value, MetaType destinationType)
-   at System.Data.SqlClient.SqlParameter.GetCoercedValue()
-   at System.Data.SqlClient.SqlParameter.Validate(Int32 index, Boolean isCommandProc)
-   at System.Data.SqlClient.SqlCommand.BuildParamList(TdsParser parser, SqlParameterCollection parameters)
-   at System.Data.SqlClient.SqlCommand.BuildExecuteSql(CommandBehavior behavior, String commandText, SqlParameterCollection parameters, _SqlRPC& rpc)
+2011-12-28 11:20:11,491 [26] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:20:11,502 [26] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:20:15,464 [23] ERROR - Could not execute query: SELECT user0_.EntityId as EntityId5_0_, user0_.CreateDate as CreateDate5_0_, user0_.ChangeDate as ChangeDate5_0_, user0_.ChangedBy as ChangedBy5_0_, user0_.Archived as Archived5_0_, user0_.CompanyId as CompanyId5_0_, user0_.UserId as UserId5_0_, user0_.FirstName as FirstName5_0_, user0_.LastName as LastName5_0_, user0_.BirthDate as BirthDate5_0_, user0_.Email as Email5_0_, user0_.PhoneMobile as PhoneMo12_5_0_, user0_.SecondaryPhone as Seconda13_5_0_, user0_.Address1 as Address14_5_0_, user0_.Address2 as Address15_5_0_, user0_.City as City5_0_, user0_.State as State5_0_, user0_.ZipCode as ZipCode5_0_, user0_.Notes as Notes5_0_, user0_.ImageUrl as ImageUrl5_0_, user0_.Color as Color5_0_, user0_.UserLoginInfoId as UserLog22_5_0_ FROM [User] user0_ WHERE user0_.EntityId=@p0
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SecondaryPhone'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
    at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
    at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
    at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
@@ -38,12 +32,97 @@ System.InvalidCastException: Failed to convert parameter value from a WhereSelec
    at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
    at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
    at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
-2011-12-26 09:19:09,067 [57] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
-2011-12-26 09:19:09,068 [57] ERROR - Object must implement IConvertible.
-2011-12-26 09:19:09,106 [57] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
-2011-12-26 09:19:09,107 [57] ERROR - Object must implement IConvertible.
-2011-12-26 09:19:09,108 [57] ERROR - Failed to convert parameter value from a WhereSelectArrayIterator`2 to a Int32.
-2011-12-26 09:19:09,108 [57] ERROR - Object must implement IConvertible.
-2011-12-26 10:24:26,775 [42] ERROR - Exception has been thrown by the target of an invocation.
-2011-12-26 10:24:26,793 [42] ERROR - Index and length must refer to a location within the string.
-Parameter name: length
+2011-12-28 11:20:15,468 [23] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:20:15,479 [23] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:07,253 [23] ERROR - Could not execute query: SELECT user0_.EntityId as EntityId5_0_, user0_.CreateDate as CreateDate5_0_, user0_.ChangeDate as ChangeDate5_0_, user0_.ChangedBy as ChangedBy5_0_, user0_.Archived as Archived5_0_, user0_.CompanyId as CompanyId5_0_, user0_.UserId as UserId5_0_, user0_.FirstName as FirstName5_0_, user0_.LastName as LastName5_0_, user0_.BirthDate as BirthDate5_0_, user0_.Email as Email5_0_, user0_.PhoneMobile as PhoneMo12_5_0_, user0_.SecondaryPhone as Seconda13_5_0_, user0_.Address1 as Address14_5_0_, user0_.Address2 as Address15_5_0_, user0_.City as City5_0_, user0_.State as State5_0_, user0_.ZipCode as ZipCode5_0_, user0_.Notes as Notes5_0_, user0_.ImageUrl as ImageUrl5_0_, user0_.Color as Color5_0_, user0_.UserLoginInfoId as UserLog22_5_0_ FROM [User] user0_ WHERE user0_.EntityId=@p0
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SecondaryPhone'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-28 11:21:07,257 [23] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:07,261 [23] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:11,685 [23] ERROR - Could not execute query: SELECT user0_.EntityId as EntityId5_0_, user0_.CreateDate as CreateDate5_0_, user0_.ChangeDate as ChangeDate5_0_, user0_.ChangedBy as ChangedBy5_0_, user0_.Archived as Archived5_0_, user0_.CompanyId as CompanyId5_0_, user0_.UserId as UserId5_0_, user0_.FirstName as FirstName5_0_, user0_.LastName as LastName5_0_, user0_.BirthDate as BirthDate5_0_, user0_.Email as Email5_0_, user0_.PhoneMobile as PhoneMo12_5_0_, user0_.SecondaryPhone as Seconda13_5_0_, user0_.Address1 as Address14_5_0_, user0_.Address2 as Address15_5_0_, user0_.City as City5_0_, user0_.State as State5_0_, user0_.ZipCode as ZipCode5_0_, user0_.Notes as Notes5_0_, user0_.ImageUrl as ImageUrl5_0_, user0_.Color as Color5_0_, user0_.UserLoginInfoId as UserLog22_5_0_ FROM [User] user0_ WHERE user0_.EntityId=@p0
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SecondaryPhone'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-28 11:21:11,689 [23] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:11,691 [23] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:21,454 [24] ERROR - Could not execute query: SELECT user0_.EntityId as EntityId5_0_, user0_.CreateDate as CreateDate5_0_, user0_.ChangeDate as ChangeDate5_0_, user0_.ChangedBy as ChangedBy5_0_, user0_.Archived as Archived5_0_, user0_.CompanyId as CompanyId5_0_, user0_.UserId as UserId5_0_, user0_.FirstName as FirstName5_0_, user0_.LastName as LastName5_0_, user0_.BirthDate as BirthDate5_0_, user0_.Email as Email5_0_, user0_.PhoneMobile as PhoneMo12_5_0_, user0_.SecondaryPhone as Seconda13_5_0_, user0_.Address1 as Address14_5_0_, user0_.Address2 as Address15_5_0_, user0_.City as City5_0_, user0_.State as State5_0_, user0_.ZipCode as ZipCode5_0_, user0_.Notes as Notes5_0_, user0_.ImageUrl as ImageUrl5_0_, user0_.Color as Color5_0_, user0_.UserLoginInfoId as UserLog22_5_0_ FROM [User] user0_ WHERE user0_.EntityId=@p0
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SecondaryPhone'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-28 11:21:21,458 [24] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:21,461 [24] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:50,555 [13] ERROR - Could not execute query: select user0_.EntityId as EntityId5_, user0_.CreateDate as CreateDate5_, user0_.ChangeDate as ChangeDate5_, user0_.ChangedBy as ChangedBy5_, user0_.Archived as Archived5_, user0_.CompanyId as CompanyId5_, user0_.UserId as UserId5_, user0_.FirstName as FirstName5_, user0_.LastName as LastName5_, user0_.BirthDate as BirthDate5_, user0_.Email as Email5_, user0_.PhoneMobile as PhoneMo12_5_, user0_.SecondaryPhone as Seconda13_5_, user0_.Address1 as Address14_5_, user0_.Address2 as Address15_5_, user0_.City as City5_, user0_.State as State5_, user0_.ZipCode as ZipCode5_, user0_.Notes as Notes5_, user0_.ImageUrl as ImageUrl5_, user0_.Color as Color5_, user0_.UserLoginInfoId as UserLog22_5_ from [User] user0_, [UserLoginInfo] userlogini1_ where user0_.Archived= @p0 and user0_.UserLoginInfoId=userlogini1_.EntityId and userlogini1_.Archived= @p1 and lower(userlogini1_.LoginName)=@p2
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SecondaryPhone'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-28 11:21:50,617 [13] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:50,672 [13] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:21:50,677 [13] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:23:23,448 [13] ERROR - Could not execute query: select user0_.EntityId as EntityId5_, user0_.CreateDate as CreateDate5_, user0_.ChangeDate as ChangeDate5_, user0_.ChangedBy as ChangedBy5_, user0_.Archived as Archived5_, user0_.CompanyId as CompanyId5_, user0_.UserId as UserId5_, user0_.FirstName as FirstName5_, user0_.LastName as LastName5_, user0_.BirthDate as BirthDate5_, user0_.Email as Email5_, user0_.PhoneMobile as PhoneMo12_5_, user0_.SecondaryPhone as Seconda13_5_, user0_.Address1 as Address14_5_, user0_.Address2 as Address15_5_, user0_.City as City5_, user0_.State as State5_, user0_.ZipCode as ZipCode5_, user0_.Notes as Notes5_, user0_.ImageUrl as ImageUrl5_, user0_.Color as Color5_, user0_.UserLoginInfoId as UserLog22_5_ from [User] user0_, [UserLoginInfo] userlogini1_ where user0_.Archived= @p0 and user0_.UserLoginInfoId=userlogini1_.EntityId and userlogini1_.Archived= @p1 and lower(userlogini1_.LoginName)=@p2
+System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'SecondaryPhone'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd) in d:\CSharp\NH\NH\nhibernate\src\NHibernate\AdoNet\AbstractBatcher.cs:line 241
+2011-12-28 11:23:23,500 [13] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:23:23,554 [13] ERROR - Invalid column name 'SecondaryPhone'.
+2011-12-28 11:23:23,556 [13] ERROR - Invalid column name 'SecondaryPhone'.

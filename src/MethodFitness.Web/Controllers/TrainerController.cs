@@ -62,7 +62,8 @@ namespace MethodFitness.Web.Controllers
 
             var model = new UserViewModel
             {
-                User = trainer,
+                Item = trainer,
+                DeleteUrl = UrlContext.GetUrlForAction<TrainerController>(x=>x.Delete(null)),
                 AvailableItems = availableUserRoles,
                 SelectedItems = selectedUserRoles,
                 AvailableClients = availableClients,
@@ -77,7 +78,7 @@ namespace MethodFitness.Web.Controllers
             var trainer = _repository.Find<User>(input.EntityId);
             var model = new UserViewModel
             {
-                User = trainer,
+                Item = trainer,
                 AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId,
                 Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
             };
@@ -92,11 +93,12 @@ namespace MethodFitness.Web.Controllers
             if (!rulesResult.Success)
             {
                 Notification notification = new Notification(rulesResult);
-                return Json(notification);
+                return Json(notification, JsonRequestBehavior.AllowGet);
             }
             _repository.Delete(trainer);
             _repository.UnitOfWork.Commit();
-            return null;
+            return Json(new Notification{Success = true}, JsonRequestBehavior.AllowGet);
+
         }
 
         public ActionResult Save(UserViewModel input)
@@ -205,7 +207,7 @@ namespace MethodFitness.Web.Controllers
 
         private User mapToDomain(UserViewModel model, User trainer)
         {
-            var trainerModel = model.User;
+            var trainerModel = model.Item;
             trainer.Address1 = trainerModel.Address1;
             trainer.Address2 = trainerModel.Address2;
             trainer.FirstName = trainerModel.FirstName;
@@ -230,7 +232,7 @@ namespace MethodFitness.Web.Controllers
 
     public class UserViewModel:ViewModel
     {
-        public User User { get; set; }
+        public User Item { get; set; }
         public IEnumerable<TokenInputDto> AvailableItems { get; set; }
         public IEnumerable<TokenInputDto> SelectedItems { get; set; }
         public bool DeleteImage { get; set; }
@@ -242,5 +244,7 @@ namespace MethodFitness.Web.Controllers
 
         public IEnumerable<TokenInputDto> AvailableClients { get; set; }
         public IEnumerable<TokenInputDto> SelectedClients { get; set; }
+
+        public string DeleteUrl { get; set; }
     }
 }

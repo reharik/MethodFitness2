@@ -276,6 +276,8 @@
     <Compile Include="Localization\LocalizedEnumRegistry.cs" />
     <Compile Include="Localization\StringToken.cs" />
     <Compile Include="Config\NullSqlServerSessionSourceConfiguration.cs" />
+    <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
+    <Compile Include="Rules\DeleteTrainerRules.cs" />
     <Compile Include="Rules\DeleteEmployeeRules.cs" />
     <Compile Include="Rules\DeleteFieldRules.cs" />
     <Compile Include="Rules\EmployeeHasNoOutstandingTasks.cs" />

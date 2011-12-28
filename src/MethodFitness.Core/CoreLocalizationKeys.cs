@@ -47,6 +47,8 @@ namespace MethodFitness.Core
 
         public static readonly StringToken CLIENTS = new CoreLocalizationKeys("CLIENTS", "Clients");
         public static readonly StringToken SELECT_AT_LEAST_ONE_CLIENT = new CoreLocalizationKeys("SELECT_AT_LEAST_ONE_CLIENT", "You must select at least one Client.");
+        public static readonly StringToken CLIENT_HAS_APPOINTMENTS_IN_FUTURE = new CoreLocalizationKeys("CLIENT_HAS_APPOINTMENTS_IN_FUTURE", "This Client has {0} Appointment(s) in the Future.");
+        public static readonly StringToken TRAINER_HAS_APPOINTMENTS_IN_FUTURE = new CoreLocalizationKeys("TRAINER_HAS_APPOINTMENTS_IN_FUTURE", "This Trainer has {0} Appointment(s) in the Future.");
     
     }       
 }

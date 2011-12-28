@@ -38,9 +38,11 @@ namespace MethodFitness.Core.Enumerations
     public class Source : Enumeration
     {
         public static readonly Source Empty = new Source { IsActive = false, Key = "" };
-        public static readonly Source Street = new Source { IsActive = true, Key = "Street" };
-        public static readonly Source Web = new Source { IsActive = true, Key = "Web" };
-        public static readonly Source Ad = new Source { IsActive = true, Key = "Ad" };
+        public static readonly Source Referral = new Source { IsActive = true, Key = "Referral" };
+        public static readonly Source DriveBy = new Source { IsActive = true, Key = "Drive/Walk By" };
+        public static readonly Source WebSearch = new Source { IsActive = true, Key = "Web Search" };
+        public static readonly Source PrintAd = new Source { IsActive = true, Key = "Print Ad" };
+        public static readonly Source Network = new Source { IsActive = true, Key = "Network" };
     }
 
     [Serializable]
@@ -94,7 +96,7 @@ namespace MethodFitness.Core.Enumerations
         public static readonly State OK = new State { IsActive = true, Key = "OK" };
         public static readonly State OR = new State { IsActive = true, Key = "OR" };
         public static readonly State PA = new State { IsActive = true, Key = "PA" };
-        public static readonly State RI = new State { IsActive = true, Key = "RI" };
+        public static readonly State RI = new State { IsActive = true, Key = "RI", IsDefault = true};
         public static readonly State SC = new State { IsActive = true, Key = "SC" };
         public static readonly State SD = new State { IsActive = true, Key = "SD" };
         public static readonly State TN = new State { IsActive = true, Key = "TN" };

@@ -8,6 +8,7 @@ using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;
 using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Localization;
+using MethodFitness.Core.Rules;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Menus;
@@ -86,7 +87,8 @@ namespace MethodFitness.Web
             For(typeof(IGridBuilder<>)).Use(typeof(GridBuilder<>));
             
             For<ILogger>().Use(() => new Log4NetLogger(typeof(string)));
-
+            For<RulesEngineBase>().Use<DeleteEmployeeRules>().Named("DeleteClientRules");
+            For<RulesEngineBase>().Add<DeleteTrainerRules>().Named("DeleteTrainerRules");
         }
     }
 }

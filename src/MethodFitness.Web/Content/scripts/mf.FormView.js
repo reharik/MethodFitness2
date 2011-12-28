@@ -13,7 +13,8 @@ if (typeof mf == "undefined") {
 mf.BaseFormView = Backbone.View.extend({
     events:{
         'click #save' : 'saveItem',
-        'click .cancel' : 'cancel'
+        'click .cancel' : 'cancel',
+        'click .delete' : 'deleteItem'
     },
 
     initialize: function(){
@@ -41,6 +42,23 @@ mf.BaseFormView = Backbone.View.extend({
     cancel:function(){
         $.publish("/contentLevel/form_"+this.id+"/cancel",[this.id]);
     },
+    deleteItem:function(){
+        if (confirm("Are you sure you would like to delete this Item?")) {
+            var id = $("#EntityId",this.el).val();
+
+            mf.repository.ajaxGet(this.options.deleteUrl,
+                $.param({"EntityId":id},true),
+                $.proxy(function(result){
+                    var notification = cc.utilities.messageHandling.notificationResult();
+                    notification.setErrorContainer("#errorMessagesForm");
+                    notification.setSuccessContainer("#errorMessagesGrid");
+                    notification.result(result);
+                    $.publish("/contentLevel/form_"+this.id+"/delete",[result]);
+                },this));
+        }
+    },
+
+
     successHandler:function(result, form, notification){
         var emh = cc.utilities.messageHandling.messageHandler();
         var message = cc.utilities.messageHandling.mhMessage("success",result.Message,"");

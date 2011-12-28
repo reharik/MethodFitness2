@@ -1,28 +1,31 @@
+using System.Linq;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Areas.Schedule.Controllers;
 
 namespace MethodFitness.Core.Rules
 {
-    public class EmployeeHasNoOutstandingTasks:IRule
+    public class ClientHasNoOutstandingAppointments : IRule
     {
         private readonly ISystemClock _systemClock;
+        private readonly IRepository _repository;
 
-        public EmployeeHasNoOutstandingTasks(ISystemClock systemClock)
+        public ClientHasNoOutstandingAppointments(ISystemClock systemClock, IRepository repository)
         {
             _systemClock = systemClock;
+            _repository = repository;
         }
 
-        public RuleResult Execute<ENTITY>(ENTITY employee) where ENTITY : DomainEntity
+        public RuleResult Execute<ENTITY>(ENTITY client) where ENTITY : DomainEntity
         {
             var result = new RuleResult {Success = true};
-//            var count = 0;
-//            var _employee = employee as User;
-//            _employee.GetTasks().Each(x => { if (x.ScheduledStartTime > _systemClock.Now) count++; });
-//            if(count>0)
-//            {
-//                result.Success = false;
-//                result.Message = CoreLocalizationKeys.EMPLOYEE_HAS_TASKS_IN_FUTURE.ToFormat(count);
-//            }
+            var _client = client as Client;
+            var appointments = _repository.Query<Appointment>(x => x.Clients.Any(i => i == _client));
+            if (appointments.Any())
+            {
+                result.Success = false;
+                result.Message = CoreLocalizationKeys.CLIENT_HAS_APPOINTMENTS_IN_FUTURE.ToFormat(appointments.Count());
+            }
             return result;
         }
     }

@@ -7,7 +7,6 @@ namespace MethodFitness.Core.Domain.Persistence
         public ClientMap()
         {
             Map(x => x.FirstName);
-            Map(x => x.MiddleInitial);
             Map(x => x.LastName);
             Map(x => x.BirthDate);
             Map(x => x.Email);

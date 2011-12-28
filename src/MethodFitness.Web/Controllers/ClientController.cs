@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
-using Castle.Components.Validator;
-using KnowYourTurf.Core;
 using MethodFitness.Core;
-using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
-using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
-using MethodFitness.Core.Localization;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
-using Rhino.Security.Interfaces;
+using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
 using StructureMap;
 
 namespace MethodFitness.Web.Controllers
@@ -38,24 +31,37 @@ namespace MethodFitness.Web.Controllers
             var model = new ClientViewModel
             {
                 Item = client,
-                Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString()
+                Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString(),
+                DeleteUrl = UrlContext.GetUrlForAction<ClientController>(x=>x.Delete(null))
             };
             return PartialView(model);
         }
 
         public ActionResult Delete(ViewModel input)
         {
-            var client = _repository.Find<User>(input.EntityId);
+            var client = _repository.Find<Client>(input.EntityId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
             var rulesResult = rulesEngineBase.ExecuteRules(client);
             if (!rulesResult.Success)
             {
                 Notification notification = new Notification(rulesResult);
-                return Json(notification);
+                return Json(notification,JsonRequestBehavior.AllowGet);
             }
             _repository.Delete(client);
             _repository.UnitOfWork.Commit();
-            return null;
+            return Json(new Notification{Success = true}, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult DeleteMultiple(BulkActionViewModel input)
+        {
+            input.EntityIds.Each(x =>
+            {
+                var item = _repository.Find<Client>(x);
+                _repository.Delete(item);
+            });
+            _repository.Commit();
+            return Json(new Notification { Success = true }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Save(ClientViewModel input)
@@ -110,5 +116,7 @@ namespace MethodFitness.Web.Controllers
     public class ClientViewModel:ViewModel
     {
         public Client Item { get; set; }
+
+        public string DeleteUrl { get; set; }
     }
 }

@@ -30,6 +30,7 @@ mf.CrudController  = mf.Controller.extend({
         $.subscribe('/contentLevel/grid/AddUpdateItem',$.proxy(this.addEditItem,this), this.cid);
         //
         $.subscribe("/contentLevel/form_mainForm/pageLoaded", $.proxy(this.formLoaded,this),this.cid);
+        $.subscribe("/contentLevel/form_mainForm/delete", $.proxy(this.itemDelete,this),this.cid);
         //
         $.subscribe('/contentLevel/formModule_mainForm/moduleSuccess',$.proxy(this.moduleSuccess,this),this.cid);
         $.subscribe('/contentLevel/formModule_mainForm/moduleCancel',$.proxy(this.moduleCancel,this), this.cid);
@@ -57,5 +58,11 @@ mf.CrudController  = mf.Controller.extend({
     moduleCancel: function(){
         this.modules.formModule.destroy();
         $("#masterArea").show();
+    },
+    itemDelete:function(result){
+        if(result.Success){
+            this.moduleCancel();
+            this.views.gridView.reloadGrid();
+        }
     }
 });

@@ -24,6 +24,7 @@ namespace MethodFitness.Web
         public static readonly StringToken NEW_CLIENT = new WebLocalizationKeys("NEW_CLIENT", "New Client");
         public static readonly StringToken CLIENT_INFORMATION = new WebLocalizationKeys("CLIENT_INFORMATION", "Client Information");
         public static readonly StringToken TRAINER_INFORMATION = new WebLocalizationKeys("TRAINER_INFORMATION", "Trainer Information");
+        public static readonly StringToken CLOSE = new WebLocalizationKeys("CLOSE", "Close");
 
 
 
@@ -121,6 +122,7 @@ namespace MethodFitness.Web
         public static readonly StringToken SELECT_AT_LEAST_ONE_USER_ROLE = new WebLocalizationKeys("SELECT_AT_LEAST_ONE_USER_ROLE", "You must select at least one User Role.");
         public static readonly StringToken MUST_HAVE_TRAINER_USER_ROLE = new WebLocalizationKeys("MUST_HAVE_TRAINER_USER_ROLE", "A Trainer must have the User Role of Trainer.");
         public static readonly StringToken LOCATION = new WebLocalizationKeys("LOCATION", "Location");
+        public static readonly StringToken DATE_ADDED = new WebLocalizationKeys("DATE_ADDED", "Date Added {0}");
 
         public static readonly StringToken YOU_CAN_NOT_DELETE_RETROACTIVELY = new WebLocalizationKeys("YOU_CAN_NOT_DELETE_RETROACTIVELY", "You can not delete appointments Retroactively");
 

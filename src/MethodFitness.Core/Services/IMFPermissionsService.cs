@@ -39,13 +39,13 @@ namespace KnowYourTurf.Core.Services
         public void GrantDefaultTrainersPermissions()
         {
            // _permissionsBuilderService.Allow("/HomeController").For("Trainer").OnEverything().Level(1).Save();
-            _permissionsBuilderService.Allow("/EmployeeDashboardController").For("Trainer").OnEverything().Level(1).Save();
+//            _permissionsBuilderService.Allow("/EmployeeDashboardController").For("Trainer").OnEverything().Level(1).Save();
             //_permissionsBuilderService.Allow("/EmployeeController").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/AppointmentCalendarController").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/AppointmentController").For("Trainer").OnEverything().Level(1).Save();
 
          //   _permissionsBuilderService.Allow("/MenuItem/Home").For("Trainer").OnEverything().Level(1).Save();
-            _permissionsBuilderService.Allow("/MenuItem/EmployeeDashboard").For("Trainer").OnEverything().Level(1).Save();
+//            _permissionsBuilderService.Allow("/MenuItem/EmployeeDashboard").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/MenuItem/Calendar").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/MenuItem/Clients").For("Trainer").OnEverything().Level(1).Save();
         }

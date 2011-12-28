@@ -15,14 +15,13 @@ namespace MethodFitness.Core.Domain
         public virtual string UserId { get; set; }
         [ValidateNonEmpty]
         public virtual string FirstName { get; set; }
-        public virtual string MiddleInitial { get; set; }
         [ValidateNonEmpty]
         public virtual string LastName { get; set; }
         [ValidateNonEmpty]
         public virtual string Email { get; set; }
         [ValidateNonEmpty]
         public virtual string PhoneMobile { get; set; }
-        public virtual string PhoneHome { get; set; }
+        public virtual string SecondaryPhone { get; set; }
         public virtual string Address1 { get; set; }
         public virtual string Address2 { get; set; }
         public virtual string City { get; set; }

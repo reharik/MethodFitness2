@@ -1,4 +1,5 @@
-﻿@using HtmlTags
+﻿
+@using HtmlTags
 @using MethodFitness.Core.Html.FubuUI
 @using MethodFitness.Web
 @using MethodFitness.Web.Controllers
@@ -9,6 +10,15 @@
 }
 
 @section HeaderJavascript{
+    extraFormOptions.deleteUrl = '@Model.DeleteUrl';
+
+    $(document).ready(function(){
+        $("[name='Item.FirstName']").focus();
+    });
+    
+}
+@section ExtraContentHeaderButtons{
+    <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
 }
 
   @MvcHtmlString.Create(FormFor<ClientController>(x => x.Save(null)).AddClass("CRUD").ElementId("CRUDForm").ToString())
@@ -18,9 +28,8 @@
                 <h4>@WebLocalizationKeys.CLIENT_INFORMATION</h4>
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.FirstName).AddClassToRoot("two-five first").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.MiddleInitial).LabelDisplay(WebLocalizationKeys.INITIAL).AddClassToRoot("one-five mid").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.LastName).AddClassToRoot("two-five last").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item.FirstName).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item.LastName).AddClassToRoot("half last").ToHtmlTag()
             </div>
             <div class="fieldRow">
                 @Html.SubmissionFor(x => x.Item.BirthDate).AddClassToRoot("half first").ToHtmlTag()
@@ -41,12 +50,18 @@
                 @Html.SubmissionFor(x => x.Item.Email).ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half first").ToHtmlTag()
                 @Html.SubmissionFor(x => x.Item.MobilePhone).AddClassToRoot("half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half first").ToHtmlTag()
             </div>
             <div class="fieldRow">
                 @Html.SubmissionFor(x => x.Item.Source).AddClassToRoot("half first").ToHtmlTag()
                 @Html.SubmissionFor(x => x.Item.StartDate).AddClassToRoot("half").ToHtmlTag()
             </div>
         </div>
+        <div class="col full clear">
+             <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Item.Notes).ToHtmlTag()
+            </div>
+        </div>
+
     @EndForm()

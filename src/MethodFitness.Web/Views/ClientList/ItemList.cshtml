@@ -9,8 +9,10 @@
     $(document).ready(function(){
         gridControllerOptions.id="trainer";
         gridControllerOptions.searchField="LastName"
+        gridControllerOptions.deleteMultipleUrl=  '@Model.DeleteMultipleUrl';
         new mf.CrudController(gridControllerOptions);
     });
 }
+
 <table id="gridContainer" class="scroll"></table>
 <div id="pager" class="scroll" style="text-align:center;"></div>

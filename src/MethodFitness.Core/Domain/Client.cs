@@ -10,7 +10,6 @@ namespace MethodFitness.Core.Domain
     {
         [ValidateNonEmpty]
         public virtual string FirstName { get; set; }
-        public virtual string MiddleInitial { get; set; }
         [ValidateNonEmpty]
         public virtual string LastName { get; set; }
         [ValidateNonEmpty]
@@ -47,7 +46,6 @@ namespace MethodFitness.Core.Domain
         {
             var self = (Client) entity;
             FirstName = self.FirstName;
-            MiddleInitial = self.MiddleInitial;
             LastName = self.LastName;
             Email = self.Email;
             Address1 = self.Address1;

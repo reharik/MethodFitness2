@@ -29,7 +29,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var model = new ListViewModel()
             {
                 AddUpdateUrl = UrlContext.GetUrlForAction<ClientController>(x => x.AddUpdate(null)),
-                GridDefinition = _clientListGrid.GetGridDefinition(url)
+                DeleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
+                GridDefinition = _clientListGrid.GetGridDefinition(url),
+                Title = WebLocalizationKeys.CLIENTS.ToString() 
             };
             return View(model);
         }
