@@ -18,7 +18,7 @@ hr {
 }
 
 #main-header {
-    background: url(../images/header-title.png) no-repeat scroll top left
+    background: url(../images/banner-long.jpg) no-repeat scroll top left
         #407397;
     height: 71px;
     min-width: 870px;
@@ -524,7 +524,7 @@ body#signin {
 }
 
 #signin .content-header {
-    background: url("../images/bg-header-signin.png") no-repeat scroll 0 0
+    background: url("../images/banner-short.jpg") no-repeat scroll 0 0
         #8eb9ce;
     height: 73px;
 }

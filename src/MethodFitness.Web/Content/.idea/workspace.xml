@@ -41,10 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1876" column="21" selection-start="37869" selection-end="37875" vertical-scroll-proportion="-8.84">
+            <state line="526" column="47" selection-start="12151" selection-end="12151" vertical-scroll-proportion="0.36746988">
               <folding />
             </state>
           </provider>
@@ -59,10 +59,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mf.crudController.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="mf.crudController.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/mf.crudController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="25" selection-start="2093" selection-end="2093" vertical-scroll-proportion="0.8034188">
+            <state line="62" column="25" selection-start="2093" selection-end="2093" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -134,11 +134,11 @@
         <option value="$PROJECT_DIR$/css/token-input.css" />
         <option value="$PROJECT_DIR$/scripts/mf.TrainerController.js" />
         <option value="$PROJECT_DIR$/scripts/mf.AppointmentCalendarController.js" />
-        <option value="$PROJECT_DIR$/css/main.css" />
         <option value="$PROJECT_DIR$/css/mf.css" />
         <option value="$PROJECT_DIR$/scripts/jqueryPlugins/jquery.pubsub.js" />
         <option value="$PROJECT_DIR$/scripts/mf.FormView.js" />
         <option value="$PROJECT_DIR$/scripts/mf.crudController.js" />
+        <option value="$PROJECT_DIR$/css/main.css" />
       </list>
     </option>
   </component>
@@ -390,13 +390,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1876" column="21" selection-start="37869" selection-end="37875" vertical-scroll-proportion="-8.84">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.TrainerController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="31" selection-start="172" selection-end="172" vertical-scroll-proportion="0.0">
@@ -427,7 +420,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/mf.crudController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="25" selection-start="2093" selection-end="2093" vertical-scroll-proportion="0.8034188">
+        <state line="62" column="25" selection-start="2093" selection-end="2093" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="526" column="47" selection-start="12151" selection-end="12151" vertical-scroll-proportion="0.36746988">
           <folding />
         </state>
       </provider>
