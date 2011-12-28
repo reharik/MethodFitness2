@@ -1,3 +1,4 @@
+using System;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
@@ -36,7 +37,7 @@ namespace Generator
             createLocations();
             createUserRoles();
             createUser();
-            CreateClients();
+//            CreateClients();
             _repository.Commit();
         }
 
@@ -78,7 +79,8 @@ namespace Generator
                                    FirstName = "Raif",
                                    LastName = "Harik",
                                    CompanyId = 1,
-                                   Color = "#148509"
+                                   Color = "#148509",
+                                   CreateDate = DateTime.Now
                                };
             _defaultUser.AddUserRole(_userRoleTrainer);
             _defaultUser.AddUserRole(_userRoleAdmin);
@@ -96,7 +98,8 @@ namespace Generator
                 FirstName = "Amahl",
                 LastName = "Harik",
                 CompanyId = 1,
-                Color = "#c41d1d"
+                Color = "#c41d1d",
+                CreateDate = DateTime.Now
             };
             _defaultUser1.AddUserRole(_userRoleTrainer);
             _defaultUser1.UserLoginInfo = new UserLoginInfo
