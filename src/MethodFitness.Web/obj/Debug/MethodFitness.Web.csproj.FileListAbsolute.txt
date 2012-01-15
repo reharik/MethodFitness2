@@ -142,3 +142,7 @@ C:\Development\MethodFitness\src\MethodFitness.Web\bin\System.Web.Helpers.xml
 C:\Development\MethodFitness\src\MethodFitness.Web\obj\Debug\ResolveAssemblyReference.cache
 C:\Development\MethodFitness\src\MethodFitness.Web\obj\Debug\MethodFitness.Web.dll
 C:\Development\MethodFitness\src\MethodFitness.Web\obj\Debug\MethodFitness.Web.pdb
+C:\Development\MethodFitness\Development\src\MethodFitness.Web\obj\Debug\RdlCompile.cache
+C:\Development\MethodFitness\Development\src\MethodFitness.Web\obj\Debug\RdlCompile.compiled
+C:\Development\MethodFitness\Development\src\MethodFitness.Web\bin\MethodFitness.ReportingDataSets.dll
+C:\Development\MethodFitness\Development\src\MethodFitness.Web\bin\MethodFitness.ReportingDataSets.pdb

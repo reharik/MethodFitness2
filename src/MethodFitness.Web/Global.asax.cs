@@ -56,7 +56,7 @@ namespace MethodFitness.Web
 
         public static void RegisterRoutes(RouteCollection routes)
         {
-           // routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("elmah.axd");
             routes.MapRoute(
                 "Default", // Route name

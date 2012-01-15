@@ -52,8 +52,8 @@ namespace MethodFitness.Web.Controllers
         {
             var notification = new Notification {Message = WebLocalizationKeys.INVALID_USERNAME_OR_PASSWORD.ToString()};
 
-            try
-            {
+//            try
+//            {
                 if (input.HasCredentials())
                 {
                     var redirectUrl = string.Empty;
@@ -67,13 +67,13 @@ namespace MethodFitness.Web.Controllers
                         notification.RedirectUrl = redirectUrl;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                notification = new Notification { Message = WebLocalizationKeys.ERROR_UNEXPECTED.ToString() };
-                ex.Source = "CATCH RAISED";
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-            }
+//            }
+//            catch (Exception ex)
+//            {
+//                notification = new Notification { Message = WebLocalizationKeys.ERROR_UNEXPECTED.ToString() };
+//                ex.Source = "CATCH RAISED";
+//                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+//            }
             return Json(notification);
         }
             

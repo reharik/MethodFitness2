@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace MethodFitness.Core.Services
 {
     public class DateTimeUtilities
@@ -18,7 +19,7 @@ namespace MethodFitness.Core.Services
             var hour = standard.Substring(0, standard.Length - 6);
             var minutes = standard.Substring(standard.Length - 5, 2);
             var AmPm = standard.Substring(standard.Length - 2);
-            var hourAsInt = Int32.Parse(hour) * 100;
+            var hourAsInt = Int32.Parse(hour)*100;
             var military = AmPm == "PM" ? hourAsInt + 1200 : hourAsInt;
             military += Int32.Parse(minutes);
             return military;
@@ -37,5 +38,21 @@ namespace MethodFitness.Core.Services
             TimeSpan diff = date - origin;
             return Math.Floor(diff.TotalSeconds);
         }
+    }
+
+    public static class DateTimeExtensions
+    {
+
+        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        {
+            int diff = dt.DayOfWeek - startOfWeek;
+            if (diff < 0)
+            {
+                diff += 7;
+            }
+
+            return dt.AddDays(-1*diff).Date;
+        }
+
     }
 }

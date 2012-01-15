@@ -81,7 +81,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             model.sHour = startTime.Hour <= 12 ? startTime.Hour.ToString() : (startTime.Hour - 12).ToString();
             model.sMinutes = startTime.Minute.ToString();
-            model.sAMPM = startTime.Hour > 12 ? "PM" : "AM";
+            model.sAMPM = startTime.Hour >= 12 ? "PM" : "AM";
             if(model.Appointment.Length.IsEmpty())
             {
                 model.Appointment.EndTime =  startTime.AddHours(1);

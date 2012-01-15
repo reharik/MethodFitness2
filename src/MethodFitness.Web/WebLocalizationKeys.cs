@@ -125,6 +125,8 @@ namespace MethodFitness.Web
         public static readonly StringToken DATE_ADDED = new WebLocalizationKeys("DATE_ADDED", "Date Added {0}");
 
         public static readonly StringToken YOU_CAN_NOT_DELETE_RETROACTIVELY = new WebLocalizationKeys("YOU_CAN_NOT_DELETE_RETROACTIVELY", "You can not delete appointments Retroactively");
+        public static readonly StringToken TIME_SHEET = new WebLocalizationKeys("TIME_SHEET", "Time Sheet");
+        public static readonly StringToken VIEW_REPORT = new WebLocalizationKeys("VIEW_REPORT", "View Report");
 
 
     }

@@ -15,12 +15,18 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
     {
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IEntityListGrid<Client> _clientListGrid;
+        private readonly ISessionContext _sessionContext;
+        private readonly IRepository _repository;
 
         public ClientListController(IDynamicExpressionQuery dynamicExpressionQuery,
-            IEntityListGrid<Client> clientListGrid)
+            IEntityListGrid<Client> clientListGrid,
+            ISessionContext sessionContext,
+            IRepository repository)
         {
             _dynamicExpressionQuery = dynamicExpressionQuery;
             _clientListGrid = clientListGrid;
+            _sessionContext = sessionContext;
+            _repository = repository;
         }
 
         public ActionResult ItemList(ViewModel input)
@@ -38,8 +44,16 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public JsonResult Clients(GridItemsRequestModel input)
         {
-            //TODO find way to deal with string here
-            var items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
+            var userEntityId = _sessionContext.GetUserEntityId();
+            var user = _repository.Find<User>(userEntityId);
+            IQueryable<Client> items;
+            if (user.UserRoles.Any(x => x.Name == "Administrator"))
+            {
+                items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
+            }else
+            {
+                items = _dynamicExpressionQuery.PerformQueryWithItems(user.Clients, input.filters);
+            }
             var gridItemsViewModel = _clientListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
         }

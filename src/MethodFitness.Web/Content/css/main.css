@@ -18,8 +18,7 @@ hr {
 }
 
 #main-header {
-    background: url(../images/banner-long.jpg) no-repeat scroll top left
-        #407397;
+    background: url(../images/banner-long-no-bckgnd.gif) no-repeat scroll top left #538EAE;
     height: 71px;
     min-width: 870px;
     display: block;

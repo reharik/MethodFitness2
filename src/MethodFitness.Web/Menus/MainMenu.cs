@@ -3,6 +3,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html.Menu;
 using MethodFitness.Web.Areas.Portfolio.Controllers;
 using KnowYourTurf.Web.Config;
+using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 using MethodFitness.Web.Controllers;
 
@@ -31,6 +32,7 @@ namespace MethodFitness.Web.Menus
                 .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                     .HasChildren()
                         .CreateNode<TrainerListController>(c => c.ItemList(null), WebLocalizationKeys.TRAINERS)
+                        .CreateNode<TimeSheetController>(c => c.Display(null), WebLocalizationKeys.TIME_SHEET,AreaName.Reports)
                     .EndChildren()
                 //                .CreateNode<PortfolioListController>(c => c.ItemList(null), WebLocalizationKeys.PORTFOLIOS,
 //                                                     AreaName.Portfolio, "portfolios")
