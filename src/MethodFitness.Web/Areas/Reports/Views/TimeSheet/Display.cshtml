@@ -1,0 +1,25 @@
+﻿@using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web
+@model MethodFitness.Web.Areas.Reports.Controllers.TimeSheetViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "../Shared/_ReportLayout.cshtml";
+}
+@section HeaderJavascript{
+    $(document).ready(function(){
+        new mf.TimeSheetController({reportUrl: '@Model.ReportUrl'});
+    });
+}
+<div class="col full">
+        <div class="fieldRow">
+            @Html.SubmissionFor(x=>x.Trainer).AddClassToRoot("one-third first").ToHtmlTag()
+            @Html.SubmissionFor(x=>x.StartDate).AddClassToRoot("one-third").ToHtmlTag()
+            @Html.SubmissionFor(x => x.EndDate).AddClassToRoot("one-third").ToHtmlTag()
+            @StandardButtonFor("viewReport", WebLocalizationKeys.VIEW_REPORT).AddClass("save").ToHtmlTag()
+
+    </div>
+</div>
+
+
+<iframe width="900px" height="900px" id="reportBody"></iframe>
