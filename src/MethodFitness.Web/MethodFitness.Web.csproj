@@ -211,6 +211,8 @@
     </Compile>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
     <Compile Include="Grids\TrainerListGrid.cs" />
     <Compile Include="Areas\Schedule\Models\BulkAction\BulkActionViewModel.cs" />

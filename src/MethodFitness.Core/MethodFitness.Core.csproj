@@ -185,6 +185,7 @@
     <Compile Include="Domain\Persistence\UserRoleMap.cs" />
     <Compile Include="Domain\Persistence\UserMap.cs" />
     <Compile Include="Domain\Persistence\DomainEntityMap.cs" />
+    <Compile Include="Domain\Session.cs" />
     <Compile Include="Domain\SiteConfiguration.cs" />
     <Compile Include="Domain\Tools\Continuation.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\LinkDisplayAttribute.cs" />

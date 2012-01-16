@@ -138,22 +138,14 @@ mf.ComplianceItemsFormView = mf.FormView.extend({
     }
 });
 
-mf.AssetFormView = mf.AjaxFormView.extend({
+mf.ClientFormView = mf.AjaxFormView.extend({
     events:_.extend({
-        'click .delete':'deleteItem',
-        'click .print':'print'
+        'click .payment':'payment'
     }, mf.AjaxFormView.prototype.events),
-    deleteItem:function(){
-        if (confirm("Are you sure you would like to delete this Item?")) {
-            var entityId = $(this.el).find("#EntityId").val();
-            mf.repository.ajaxGet(this.options.deleteUrl,{"EntityId":entityId}, $.proxy(function(result){
-            $.publish("/contentLevel/form_"+this.id+"/success",[result])
-            },this));
-         }
-    },
-    print:function(){
-        $(this.el).jqprint();
+    payment:function(){
+        $.publish("/contentLevel/form_"+this.id+"/payment",[]);
     }
+
 });
 
 mf.PortfolioFormView = mf.AjaxFormView.extend({

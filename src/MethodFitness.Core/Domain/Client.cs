@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
@@ -41,6 +42,22 @@ namespace MethodFitness.Core.Domain
         {
             get { return FirstName + " " + LastName; }
         }
+
+        #region Collections
+        private IList<Session> _sessions = new List<Session>();
+        public virtual void EmptySessions() { _sessions.Clear(); }
+        public virtual IEnumerable<Session> Sessions { get { return _sessions; } }
+        public virtual void RemoveSession(Session session)
+        {
+            _sessions.Remove(session);
+        }
+        public virtual void AddSession(Session session)
+        {
+            if (_sessions.Contains(session)) return;
+            _sessions.Add(session);
+        }
+
+        #endregion
 
         public override void UpdateSelf(Entity entity)
         {

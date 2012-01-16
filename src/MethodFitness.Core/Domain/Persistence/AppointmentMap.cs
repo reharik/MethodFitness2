@@ -11,10 +11,11 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.StartTime);
             Map(x => x.EndTime);
             Map(x => x.Length);
+            Map(x => x.Completed);
             References(x => x.Location);
             References(x => x.Trainer);
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
-
+            HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
         } 
     }
 }

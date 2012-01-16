@@ -19,6 +19,8 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.ZipCode);
             Map(x => x.Notes);
             Map(x => x.ImageUrl);
+            HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
+
         } 
     }
 }

@@ -24,6 +24,7 @@ namespace MethodFitness.Core.Domain.Persistence
             References(x => x.UserLoginInfo);
             HasManyToMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
+            HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
 
         } 
 

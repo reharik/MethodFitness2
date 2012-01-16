@@ -4,3 +4,9 @@ C:\Development\MethodFitness\Development\src\ReportingDataSets\bin\Debug\MethodF
 C:\Development\MethodFitness\Development\src\ReportingDataSets\obj\Debug\ResolveAssemblyReference.cache
 C:\Development\MethodFitness\Development\src\ReportingDataSets\obj\Debug\MethodFitness.ReportingDataSets.dll
 C:\Development\MethodFitness\Development\src\ReportingDataSets\obj\Debug\MethodFitness.ReportingDataSets.pdb
+C:\Development\MethodFitness\src\ReportingDataSets\bin\Debug\MethodFitness.ReportingDataSets.dll.config
+C:\Development\MethodFitness\src\ReportingDataSets\bin\Debug\MethodFitness.ReportingDataSets.dll
+C:\Development\MethodFitness\src\ReportingDataSets\bin\Debug\MethodFitness.ReportingDataSets.pdb
+C:\Development\MethodFitness\src\ReportingDataSets\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\MethodFitness\src\ReportingDataSets\obj\Debug\MethodFitness.ReportingDataSets.dll
+C:\Development\MethodFitness\src\ReportingDataSets\obj\Debug\MethodFitness.ReportingDataSets.pdb

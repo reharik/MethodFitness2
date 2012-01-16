@@ -146,3 +146,7 @@ C:\Development\MethodFitness\Development\src\MethodFitness.Web\obj\Debug\RdlComp
 C:\Development\MethodFitness\Development\src\MethodFitness.Web\obj\Debug\RdlCompile.compiled
 C:\Development\MethodFitness\Development\src\MethodFitness.Web\bin\MethodFitness.ReportingDataSets.dll
 C:\Development\MethodFitness\Development\src\MethodFitness.Web\bin\MethodFitness.ReportingDataSets.pdb
+C:\Development\MethodFitness\src\MethodFitness.Web\obj\Debug\RdlCompile.cache
+C:\Development\MethodFitness\src\MethodFitness.Web\obj\Debug\RdlCompile.compiled
+C:\Development\MethodFitness\src\MethodFitness.Web\bin\MethodFitness.ReportingDataSets.dll
+C:\Development\MethodFitness\src\MethodFitness.Web\bin\MethodFitness.ReportingDataSets.pdb

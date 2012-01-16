@@ -16,5 +16,7 @@ namespace MethodFitness.Core
         public string DeleteMultipleUrl { get; set; }
         public GridDefinition GridDefinition { get; set; }
         public string DisplayUrl { get; set; }
+
+        public string PaymentUrl { get; set; }
     }
 }

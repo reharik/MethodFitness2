@@ -147,18 +147,19 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public ActionResult Save(AppointmentViewModel input)
         {
-            var _event = input.Appointment.EntityId > 0 ? _repository.Find<Appointment>(input.Appointment.EntityId) : new Appointment();
+            var appointment = input.Appointment.EntityId > 0 ? _repository.Find<Appointment>(input.Appointment.EntityId) : new Appointment();
             var userEntityId = _sessionContext.GetUserEntityId();
             var user = _repository.Find<User>(userEntityId);
-            mapToDomain(input, _event);
+            mapToDomain(input, appointment);
             var notification = new Notification { Success = true };
-            notification = _event.CheckPermissions(user, _authorizationService, notification);
-            notification = _event.CheckForClients(notification);
+            notification = appointment.CheckPermissions(user, _authorizationService, notification);
+            notification = appointment.CheckForClients(notification);
+            appointment.SetSessionsForClients();
             if(!notification.Success)
             {
                 return Json(notification, JsonRequestBehavior.AllowGet);
             }
-            var crudManager = _saveEntityService.ProcessSave(_event);
+            var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
             return Json(notification, JsonRequestBehavior.AllowGet);
         }
@@ -176,8 +177,6 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.Location = location;
             appointment.Notes = appointmentModel.Notes;
             _updateCollectionService.UpdateFromCSV(appointment.Clients, model.ClientInput, appointment.AddClient, appointment.RemoveClient);
-
-            return;
         }
     }
 

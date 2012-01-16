@@ -30,7 +30,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public virtual string Notes { get; set; }
         [ValueOf(typeof(AppointmentLength))]
         public virtual string Length { get; set; }
-
+        public virtual bool Completed { get; set; }
+        
         #region Collections
         private IList<Client> _clients = new List<Client>();
         public virtual void EmptyClients() { _clients.Clear(); }
@@ -44,7 +45,18 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             if (_clients.Contains(client)) return;
             _clients.Add(client);
         }
-
+        private IList<Session> _sessions = new List<Session>();
+        public virtual void EmptySessions() { _sessions.Clear(); }
+        public virtual IEnumerable<Session> Sessions { get { return _sessions; } }
+        public virtual void RemoveSession(Session session)
+        {
+            _sessions.Remove(session);
+        }
+        public virtual void AddSession(Session session)
+        {
+            if (_sessions.Contains(session)) return;
+            _sessions.Add(session);
+        }
         #endregion
   
         public virtual Notification CheckPermissions(User user, IAuthorizationService authorizationService, Notification notification)
@@ -67,7 +79,35 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             }
             return notification;
         }
+        public virtual void SetSessionsForClients()
+        {
+            Clients.Each(x =>
+            {
+                var sessions =
+                    x.Sessions.Where(
+                        s => s.Appointment == null && s.Length == Length);
+                if (sessions.Any())
+                {
+                    var session = sessions.OrderBy(s => s.Date).First();
+                    session.Appointment = this;
+                    session.Trainer = Trainer;
+                }
+                else
+                {
+                    var session = new Session
+                    {
+                        Appointment = this,
+                        Trainer = Trainer,
+                        Client = x,
+                        InArrears = true,
+                        Length = Length
+                    };
+                    x.AddSession(session);
+                    AddSession(session);
+                }
 
+            });
+        }
 
     }
 }

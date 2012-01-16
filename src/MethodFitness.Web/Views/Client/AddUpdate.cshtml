@@ -1,5 +1,4 @@
-﻿
-@using HtmlTags
+﻿@using HtmlTags
 @using MethodFitness.Core.Html.FubuUI
 @using MethodFitness.Web
 @using MethodFitness.Web.Controllers
@@ -19,6 +18,7 @@
 }
 @section ExtraContentHeaderButtons{
     <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+    <button class="payment" title="@WebLocalizationKeys.MAKE_PAYMENT"></button>
 }
 
   @MvcHtmlString.Create(FormFor<ClientController>(x => x.Save(null)).AddClass("CRUD").ElementId("CRUDForm").ToString())
@@ -50,8 +50,8 @@
                 @Html.SubmissionFor(x => x.Item.Email).ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.MobilePhone).AddClassToRoot("half").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item.MobilePhone).AddClassToRoot("first half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half").ToHtmlTag()
             </div>
             <div class="fieldRow">
                 @Html.SubmissionFor(x => x.Item.Source).AddClassToRoot("half first").ToHtmlTag()
