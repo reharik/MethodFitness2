@@ -143,6 +143,7 @@ namespace MethodFitness.Core.Enumerations
         public static readonly AreaName Empty = new AreaName { IsActive = false, Key = "" };
         public static readonly AreaName Schedule = new AreaName { IsActive = true, Key = "Schedule" };
         public static readonly AreaName Reports = new AreaName { IsActive = true, Key = "Reports" };
+        public static readonly AreaName Billing = new AreaName { IsActive = true, Key = "Billing" };
     }
 
     [Serializable]

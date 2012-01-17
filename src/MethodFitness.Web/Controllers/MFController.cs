@@ -1,7 +1,5 @@
 ﻿using System.IO;
 using System.Web.Mvc;
-using MethodFitness.Core;
-using MethodFitness.Core.Config;
 using MethodFitness.Web.Config;
 
 namespace MethodFitness.Web.Controllers

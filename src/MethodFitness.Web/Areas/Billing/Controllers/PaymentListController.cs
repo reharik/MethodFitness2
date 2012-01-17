@@ -11,53 +11,50 @@ using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
-    public class ClientListController:MFController
+    public class PaymentListController:MFController
     {
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
-        private readonly IEntityListGrid<Client> _clientListGrid;
+        private readonly IEntityListGrid<Payment> _paymentListGrid;
         private readonly ISessionContext _sessionContext;
         private readonly IRepository _repository;
 
-        public ClientListController(IDynamicExpressionQuery dynamicExpressionQuery,
-            IEntityListGrid<Client> clientListGrid,
+        public PaymentListController(IDynamicExpressionQuery dynamicExpressionQuery,
+            IEntityListGrid<Payment> paymentListGrid,
             ISessionContext sessionContext,
             IRepository repository)
         {
             _dynamicExpressionQuery = dynamicExpressionQuery;
-            _clientListGrid = clientListGrid;
+            _paymentListGrid = paymentListGrid;
             _sessionContext = sessionContext;
             _repository = repository;
         }
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<ClientListController>(x => x.Clients(null));
+            var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null));
             var model = new ListViewModel()
             {
-                AddUpdateUrl = UrlContext.GetUrlForAction<ClientController>(x => x.AddUpdate(null)),
-                DeleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
-                PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
-                GridDefinition = _clientListGrid.GetGridDefinition(url),
+                AddUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null)),
+                GridDefinition = _paymentListGrid.GetGridDefinition(url),
                 Title = WebLocalizationKeys.CLIENTS.ToString() 
             };
             return View(model);
         }
 
-        public JsonResult Clients(GridItemsRequestModel input)
+        public JsonResult Payments(GridItemsRequestModel input)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
             var user = _repository.Find<User>(userEntityId);
-            IQueryable<Client> items;
+            IQueryable<Payment> items;
             if (user.UserRoles.Any(x => x.Name == "Administrator"))
             {
-                items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
+                items = _dynamicExpressionQuery.PerformQuery<Payment>(input.filters);
             }else
             {
-                items = _dynamicExpressionQuery.PerformQueryWithItems(user.Clients, input.filters);
+                items = _dynamicExpressionQuery.PerformQueryWithItems(user.Payments, input.filters);
             }
-            var gridItemsViewModel = _clientListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
+            var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
         }
     }
-    
 }

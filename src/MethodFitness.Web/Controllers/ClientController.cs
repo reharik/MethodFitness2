@@ -11,7 +11,7 @@ using StructureMap;
 
 namespace MethodFitness.Web.Controllers
 {
-    public class ClientController : AdminController
+    public class ClientController : MFController
     {
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;

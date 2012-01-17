@@ -178,6 +178,7 @@
     <Compile Include="Domain\LocalizedProperty.cs" />
     <Compile Include="Domain\LocalizedText.cs" />
     <Compile Include="Domain\Location.cs" />
+    <Compile Include="Domain\Payment.cs" />
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
