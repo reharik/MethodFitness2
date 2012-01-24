@@ -182,6 +182,7 @@
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
+    <Compile Include="Domain\Persistence\SessionMap.cs" />
     <Compile Include="Domain\Persistence\LocationMap.cs" />
     <Compile Include="Domain\Persistence\UserRoleMap.cs" />
     <Compile Include="Domain\Persistence\UserMap.cs" />
