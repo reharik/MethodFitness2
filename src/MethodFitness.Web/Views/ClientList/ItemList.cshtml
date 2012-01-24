@@ -7,10 +7,9 @@
 }
 @section HeaderJavascript{
     $(document).ready(function(){
-        gridControllerOptions.id="trainer";
+        gridControllerOptions.id="client";
         gridControllerOptions.searchField="LastName"
-        gridControllerOptions.deleteMultipleUrl=  '@Model.DeleteMultipleUrl';
-        new mf.CrudController(gridControllerOptions);
+        new mf.ClientController(gridControllerOptions);
     });
 }
 

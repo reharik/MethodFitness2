@@ -18,7 +18,7 @@ mf.FormModule  = mf.Module.extend({
             $.extend(this,this.defaults());
 
             this.registerSubscriptions();
-            this.views.formView = new mf.AjaxFormView(this.options);
+            this.views.formView = this.options.formViewName ? new mf[this.options.formViewName](this.options): new mf.AjaxFormView(this.options);
             this.views.formView.render();
         },
 

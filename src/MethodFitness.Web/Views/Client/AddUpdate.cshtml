@@ -10,6 +10,7 @@
 
 @section HeaderJavascript{
     extraFormOptions.deleteUrl = '@Model.DeleteUrl';
+    extraFormOptions.paymentListUrl = '@Model.PaymentListUrl';
 
     $(document).ready(function(){
         $("[name='Item.FirstName']").focus();
@@ -59,8 +60,29 @@
             </div>
         </div>
         <div class="col full clear">
-             <div class="fieldRow">
+            <div class="fieldRow">
                 @Html.SubmissionFor(x => x.Item.Notes).ToHtmlTag()
+            </div>
+        </div>
+        <div class="col full clear"></div>
+        <div class="col left">
+            <div class="fieldRow">
+                <h4>@WebLocalizationKeys.CLIENT_RATES</h4>
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Item.SessionRates.FullHour).AddClassToRoot("half first").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Item.SessionRates.HalfHour).AddClassToRoot("half first").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Item.SessionRates.FullHourTenPack).AddClassToRoot("half first").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Item.SessionRates.HalfHourTenPack).AddClassToRoot("half first").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Item.SessionRates.Pair).AddClassToRoot("half first").ToHtmlTag()
             </div>
         </div>
 

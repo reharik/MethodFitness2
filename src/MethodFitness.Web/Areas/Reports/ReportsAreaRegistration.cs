@@ -16,8 +16,8 @@ namespace MethodFitness.Web.Areas.Reports
         {
             context.MapRoute(
                 "Reports_default",
-                "Reports/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                "Reports/{controller}/{action}/{EntityId}",
+                new { action = "Index", EntityId = UrlParameter.Optional }
             );
         }
     }

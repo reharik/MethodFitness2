@@ -16,8 +16,8 @@ namespace MethodFitness.Web.Areas.Schedule
         {
             context.MapRoute(
                 "Schedule_default",
-                "Schedule/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                "Schedule/{controller}/{action}/{EntityId}",
+                new { action = "Index", EntityId = UrlParameter.Optional }
             );
         }
     }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
@@ -7,9 +7,11 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
+using MethodFitness.Web.Controllers;
+using NHibernate.Linq;
 using StructureMap;
 
-namespace MethodFitness.Web.Controllers
+namespace MethodFitness.Web.Areas.Billing.Controllers
 {
     public class PaymentController : MFController
     {
@@ -27,14 +29,18 @@ namespace MethodFitness.Web.Controllers
 
         public ActionResult AddUpdate(ViewModel input)
         {
-            var payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
+//            var client = _repository.QueryWithFetch<Client, SessionRates>(x => x.EntityId == input.ParentId, x => x.SessionRates).ToList().First();
+
+            var clientx = _repository.Query<Client>(x => x.EntityId == input.ParentId);
+            var client = _repository.Query<Client>(x => x.EntityId == input.ParentId).First();
+            var payment = input.EntityId > 0 ? client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId) : new Payment { Client = client};
             var model = new PaymentViewModel
             {
                 Item = payment,
                 Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString(),
                 DeleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null))
             };
-            return PartialView(model);
+            return View(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -86,7 +92,7 @@ namespace MethodFitness.Web.Controllers
     public class PaymentViewModel:ViewModel
     {
         public Payment Item { get; set; }
-
         public string DeleteUrl { get; set; }
+        public double Total { get; set; }
     }
 }

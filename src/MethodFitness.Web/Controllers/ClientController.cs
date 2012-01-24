@@ -3,10 +3,13 @@ using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
+using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
+using MethodFitness.Web.Areas.Schedule.Controllers;
 using StructureMap;
 
 namespace MethodFitness.Web.Controllers
@@ -27,14 +30,23 @@ namespace MethodFitness.Web.Controllers
 
         public ActionResult AddUpdate(ViewModel input)
         {
-            var client = input.EntityId > 0 ? _repository.Find<Client>(input.EntityId) : new Client{StartDate = DateTime.Now};
+            Client client;
+            if (input.EntityId > 0)
+            {
+                client = _repository.Find<Client>(input.EntityId);
+            }
+            else
+            {
+                client = new Client {StartDate = DateTime.Now, SessionRates = new SessionRates(true)};
+            }
             var model = new ClientViewModel
             {
                 Item = client,
                 Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString(),
-                DeleteUrl = UrlContext.GetUrlForAction<ClientController>(x=>x.Delete(null))
+                DeleteUrl = UrlContext.GetUrlForAction<ClientController>(x=>x.Delete(null)),
+                PaymentListUrl = UrlContext.GetUrlForAction<PaymentListController>(x=>x.ItemList(null),AreaName.Billing)+"?ParentId="+client.EntityId
             };
-            return PartialView(model);
+            return View(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -109,6 +121,12 @@ namespace MethodFitness.Web.Controllers
             client.Notes = clientModel.Notes;
             client.Status = clientModel.Status;
             client.BirthDate = clientModel.BirthDate;
+            if(client.SessionRates==null)client.SessionRates = new SessionRates();
+            client.SessionRates.FullHour = clientModel.SessionRates.FullHour;
+            client.SessionRates.HalfHour = clientModel.SessionRates.HalfHour;
+            client.SessionRates.FullHourTenPack = clientModel.SessionRates.FullHourTenPack;
+            client.SessionRates.HalfHourTenPack = clientModel.SessionRates.HalfHourTenPack;
+            client.SessionRates.Pair = clientModel.SessionRates.Pair;
             return client;
         }
     }
@@ -116,7 +134,7 @@ namespace MethodFitness.Web.Controllers
     public class ClientViewModel:ViewModel
     {
         public Client Item { get; set; }
-
         public string DeleteUrl { get; set; }
+        public string PaymentListUrl { get; set; }
     }
 }

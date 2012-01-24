@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.CoreViewModelAndDTOs;
@@ -9,26 +8,29 @@ using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Controllers;
 
-namespace MethodFitness.Web.Areas.Schedule.Controllers
+namespace MethodFitness.Web.Areas.Billing.Controllers
 {
     public class PaymentListController:MFController
     {
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IEntityListGrid<Payment> _paymentListGrid;
+        private readonly IRepository _repository;
 
         public PaymentListController(IDynamicExpressionQuery dynamicExpressionQuery,
-            IEntityListGrid<Payment> paymentListGrid)
+            IEntityListGrid<Payment> paymentListGrid,
+            IRepository repository)
         {
             _dynamicExpressionQuery = dynamicExpressionQuery;
             _paymentListGrid = paymentListGrid;
+            _repository = repository;
         }
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null));
+            var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.ParentId;
             var model = new ListViewModel()
             {
-                AddUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null)),
+                AddUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.ParentId,
                 GridDefinition = _paymentListGrid.GetGridDefinition(url),
                 Title = WebLocalizationKeys.PAYMENTS.ToString() 
             };
@@ -37,7 +39,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public JsonResult Payments(GridItemsRequestModel input)
         {
-            var items = _dynamicExpressionQuery.PerformQuery<Payment>(input.filters);
+            var client = _repository.Find<Client>(input.ParentId);
+            var items = _dynamicExpressionQuery.PerformQueryWithItems(client.Payments, input.filters);
             var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
         }

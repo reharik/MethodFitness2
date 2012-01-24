@@ -33,7 +33,7 @@ namespace MethodFitness.Core.Domain
         [ValueOf(typeof(Source))]
         public virtual string Source { get; set; }
         public virtual DateTime StartDate { get; set; }
-
+        public virtual SessionRates SessionRates { get; set; }
         public virtual string FullNameLNF
         {
             get { return LastName + ", " + FirstName; }
@@ -45,7 +45,6 @@ namespace MethodFitness.Core.Domain
 
         #region Collections
         private IList<Session> _sessions = new List<Session>();
-        public virtual void EmptySessions() { _sessions.Clear(); }
         public virtual IEnumerable<Session> Sessions { get { return _sessions; } }
         public virtual void RemoveSession(Session session)
         {
@@ -55,6 +54,17 @@ namespace MethodFitness.Core.Domain
         {
             if (_sessions.Contains(session)) return;
             _sessions.Add(session);
+        }
+        private IList<Payment> _payments = new List<Payment>();
+        public virtual IEnumerable<Payment> Payments { get { return _payments; } }
+        public virtual void RemovePayment(Payment payment)
+        {
+            _payments.Remove(payment);
+        }
+        public virtual void AddPayment(Payment payment)
+        {
+            if (_payments.Contains(payment)) return;
+            _payments.Add(payment);
         }
 
         #endregion

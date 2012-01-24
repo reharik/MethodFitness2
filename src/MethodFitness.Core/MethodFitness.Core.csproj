@@ -182,12 +182,15 @@
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
+    <Compile Include="Domain\Persistence\PaymentMap.cs" />
+    <Compile Include="Domain\Persistence\SessionRatesMap.cs" />
     <Compile Include="Domain\Persistence\SessionMap.cs" />
     <Compile Include="Domain\Persistence\LocationMap.cs" />
     <Compile Include="Domain\Persistence\UserRoleMap.cs" />
     <Compile Include="Domain\Persistence\UserMap.cs" />
     <Compile Include="Domain\Persistence\DomainEntityMap.cs" />
     <Compile Include="Domain\Session.cs" />
+    <Compile Include="Domain\SessionRates.cs" />
     <Compile Include="Domain\SiteConfiguration.cs" />
     <Compile Include="Domain\Tools\Continuation.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\LinkDisplayAttribute.cs" />

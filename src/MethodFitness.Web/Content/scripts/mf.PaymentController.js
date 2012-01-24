@@ -10,15 +10,15 @@ if (typeof mf == "undefined") {
 }
 
 
-mf.ClientController  = mf.CrudController.extend({
+mf.PaymentController  = mf.CrudController.extend({
     events:_.extend({
     }, mf.CrudController.prototype.events),
 
     initialize:function(options){
         $.extend(this,this.defaults());
-        mf.contentLevelControllers["ClientController"]=this;
+        mf.contentLevelControllers["PaymentController"]=this;
         $.unsubscribeByPrefix("/contentLevel");
-        this.id="clientController";
+        this.id="paymentController";
         this.registerSubscriptions();
 
         var _options = $.extend({},this.options, options);
@@ -29,16 +29,13 @@ mf.ClientController  = mf.CrudController.extend({
     registerAdditionalSubscriptions: function(){
         $.subscribe('/contentLevel/form_mainForm/payment',$.proxy(this.payment,this), this.cid);
     },
-    payment:function(url){
-        $.address.value(url);
-    },
     //from grid
     addEditItem: function(url){
         var formOptions = {
             el: "#detailArea",
             id: "mainForm",
             url: url,
-            formViewName:"ClientFormView"
+            formViewName:"PaymentFormView"
         };
         $("#masterArea","#contentInner").after("<div id='detailArea'/>");
         this.modules.formModule = new mf.FormModule(formOptions);

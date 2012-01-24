@@ -16,8 +16,8 @@ namespace MethodFitness.Web.Areas.Billing
         {
             context.MapRoute(
                 "Billing_default",
-                "Billing/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                "Billing/{controller}/{action}/{EntityId}",
+                new { action = "Index", EntityId = UrlParameter.Optional }
             );
         }
     }

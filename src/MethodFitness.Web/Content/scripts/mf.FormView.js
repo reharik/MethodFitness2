@@ -98,298 +98,47 @@ mf.AjaxFormView = mf.BaseFormView.extend({
     }
 });
 
-mf.ComplianceItemsFormView = mf.FormView.extend({
-    events:
-        _.extend({
-        'change [name="ComplianceNotificationSchedule.DaysBeforeExpiration"]':'daysBefore',
-        'change [name="ComplianceNotificationSchedule.RepeatDaysUntilExpiration"]':'daysUntil',
-        'change [name="ComplianceNotificationSchedule.RepeatDaysAfterExpiration"]':'daysAfter',
-        'change [name="ComplianceNotificationSchedule.EndDaysAfterExpiration"]':'endDay'
-    }, mf.FormView.prototype.events),
-    render:function(){
-        $.publish("/contentLevel/form_"+this.id+"/pageLoaded",[this.options]);
-        this.attachPlugins();
-        this.prePopulate();
-    },
-    attachPlugins:function(){
-        $("#daysBefore", this.el).slider({min:0,max:60,slide:function(event,ui){$("[name='ComplianceNotificationSchedule.DaysBeforeExpiration']").val(ui.value);}});
-        $("#repeatDaysUntil", this.el).slider({min:0,max:60,slide:function(event,ui){$("[name='ComplianceNotificationSchedule.RepeatDaysUntilExpiration']").val(ui.value);}});
-        $("#repeatDaysAfter", this.el).slider({min:0,max:60,slide:function(event,ui){$("[name='ComplianceNotificationSchedule.RepeatDaysAfterExpiration']").val(ui.value);}});
-        $("#endPeriod", this.el).slider({min:0,max:60,slide:function(event,ui){$("[name='ComplianceNotificationSchedule.EndDaysAfterExpiration']").val(ui.value);}});
-
-    },
-    prePopulate: function(){
-        $("#daysBefore", this.el ).slider( "option", "value", $("[name='ComplianceNotificationSchedule.DaysBeforeExpiration']").val());
-        $( "#repeatDaysUntil", this.el ).slider( "option", "value", $("[name='ComplianceNotificationSchedule.RepeatDaysUntilExpiration']").val());
-        $( "#repeatDaysAfter", this.el ).slider( "option", "value", $("[name='ComplianceNotificationSchedule.RepeatDaysAfterExpiration']").val());
-        $( "#endPeriod", this.el ).slider( "option", "value", $("[name='ComplianceNotificationSchedule.EndDaysAfterExpiration']").val());
-    },
-    daysBefore:function(){
-        $("#daysBefore", this.el).slider( "option", "value", $(this).val() );
-    },
-    daysUntil:function(){
-        $("#repeatDaysUntil", this.el).slider( "option", "value", $(this).val() );
-    },
-    daysAfter:function(){
-         $("#repeatDaysAfter", this.el).slider( "option", "value", $(this).val() );
-    },
-    endDay:function(){
-        $("#endPeriod", this.el).slider( "option", "value", $(this).val() );
-    }
-});
-
 mf.ClientFormView = mf.AjaxFormView.extend({
     events:_.extend({
         'click .payment':'payment'
     }, mf.AjaxFormView.prototype.events),
     payment:function(){
-        $.publish("/contentLevel/form_"+this.id+"/payment",[]);
+        $.publish("/contentLevel/form_"+this.id+"/payment",[this.options.paymentListUrl]);
     }
 
 });
 
-mf.PortfolioFormView = mf.AjaxFormView.extend({
+mf.PaymentFormView = mf.AjaxFormView.extend({
     events:_.extend({
-        'click .delete':'deleteItem',
-        'click .print':'print',
-        'click .preview':'previewItem',
-        'click .addToPortfolio':'addAllItems',
-        'click .rmvpage':'removeAllItems',
-        'click .download':'downloadItem',
-        'click .mail':'emailForm',
-        'click #changePictureButton':'changePictureClick',
-        'change [name="Item.HeadShot.EntityId"]':'headshotChange',
-        'click #addHeadShot':'setupNewHeadshot'
-
-    }, mf.AjaxFormView.prototype.events),
-
+    },mf.AjaxFormView.prototype.events),
     viewLoaded:function(){
-        if(!$("#headShotSelector").val()){
-            $("#changePictureButton").hide();
-            $("#headShotSelector").show();
-        }else{
-            $("#changePictureButton").show();
-            $("#headShotSelector").hide();
-        }
-    },
-    setupNewHeadshot: function(){
-        $.publish("/contentLevel/form_"+this.id+"/setupNewHeadshot",[]);
-        return false;
-    },
-    changePictureClick:function(){
-        $("#changePictureButton").hide();
-        $("#headShotSelector").show();
-    },
-
-    headshotChange:function(e){
-        var id = $(e.target).val();
-        $.each(this.options.headShotDtos,function(i,item){
-            if(item.EntityId == id){
-                $("a#FileUrl img").attr("src",item.Url);
-            }
-        });
-        $("#changePictureButton").show();
-        $("#headShotSelector").hide();
-    },
-
-    deleteItem:function(){
-        if (confirm("Are you sure you would like to delete this Item?")) {
-            var entityId = $(this.el).find("#EntityId").val();
-            mf.repository.ajaxGet(this.options.deleteUrl,{"EntityId":entityId}, $.proxy(function(result){
-                $.publish("/contentLevel/form_"+this.id+"/success",[result])
-            },this));
-         }
-    },
-    print:function(){
-        var id = $("#EntityId",this.el).val();
-        if(id<=0){
-            this.saveFirstAlert();
-            return false;
-        }
-        $.publish("/contentLevel/form_"+this.id+"/print",[]);
-    },
-    emailForm:function(){
-        var id = $("#EntityId",this.el).val();
-        if(id<=0){
-            this.saveFirstAlert();
-            return false;
-        }
-        $.publish("/contentLevel/form_"+this.id+"/emailPortfolio",[]);
-    },
-    previewItem:function(){
-        var id = $("#EntityId",this.el).val();
-        if(id<=0){
-            this.saveFirstAlert();
-            return false;
-        }
-        $.publish("/contentLevel/form_"+this.id+"/preview",[]);
-    },
-    downloadItem:function(){
-        var id = $("#EntityId",this.el).val();
-        if(id<=0){
-            this.saveFirstAlert();
-            return false;
-        }
-        window.open(this.options.downloadUrl+"/"+id);
-    },
-    addAllItems:function(){
-        var id = $("#EntityId",this.el).val();
-        if(id<=0){
-            this.saveFirstAlert();
-            return false;
-        }
-        mf.repository.ajaxGet(this.options.addAllItemsUrl,{"EntityId":id},$.proxy(function(){
-           $.publish("/contentLevel/form_"+this.id+"/addAllItems",[]);
+        $("#fullHour").change($.proxy(function(e){
+            this.calculateTotal("FullHour","#fullHourTotal",e.target);
+        },this));
+        $("#halfHour").change($.proxy(function(e){
+            this.calculateTotal("HalfHour","#halfHourTotal",e.target);
+        },this));
+        $("#fullHourTenPack").change($.proxy(function(e){
+            this.calculateTotal("FullHourTenPack","#fullHourTenPackTotal",e.target);
+        },this));
+        $("#halfHourTenPack").change($.proxy(function(e){
+            this.calculateTotal("HalfHourTenPack","#halfHourTenPackTotal",e.target);
+        },this));
+        $("#pair").change($.proxy(function(e){
+            this.calculateTotal("Pair","#pairTotal",e.target);
         },this));
     },
-    removeAllItems: function(){
-        var id = $("#EntityId",this.el).val();
-        if(id<=0){
-            this.saveFirstAlert();
-            return false;
-        }
-        mf.repository.ajaxGet(this.options.removeAllItemsUrl,{"EntityId":id},$.proxy(function(){
-            $.publish("/contentLevel/form_"+this.id+"/removeAllItems",[]);
-        },this))
-    },
-    saveFirstAlert:function(){
-        alert("You must save your portfolio before perfoming this function!");
-    }
+    calculateTotal:function(type, totalSelector, numberSelector){
+        var number = $(numberSelector).val();
+        var itemTotal = (this.options.sessionRates[type] * number);
+        $(totalSelector).val(itemTotal);
+        var total = $("#fullHourTotal").val()
+            + $("#halfHourTotal").val()
+            + $("#fullHourTenPackTotal").val()
+            + $("#halfHourTenPackTotal").val()
+            + $("#pairTotal").val();
+        $("#total").val(total);
 
-
-});
-
-
-mf.userProfileViewModel =  {
-    AddressItem: function(data) {
-        ko.mapping.fromJS(data, {}, this);
-        this.removeItem = function() {
-            mf.userProfileViewModel.addressItems.remove(this)
-        }
-    },
-    EmailItem: function(data) {
-        ko.mapping.fromJS(data, {}, this);
-        this.removeItem = function() {
-            mf.userProfileViewModel.emailItems.remove(this)
-        }
-    },
-    PhoneItem: function(data) {
-        ko.mapping.fromJS(data, {}, this);
-        this.removeItem = function() {
-            mf.userProfileViewModel.phoneItems.remove(this)
-        }
-    },
-    addAddress:function() {
-        var el = $("#addressContainer");
-        $("form",el).validate({
-            errorContainer: $(mf.formDefaults.crudFormOptions.errorContainer),
-            errorLabelContainer: $(mf.formDefaults.crudFormOptions.errorContainer).find("ul"),
-            wrapper: 'li',
-            validClass: "valid_field",
-            errorClass: "invalid_field"
-        });
-        if($("form", el).valid()){
-
-            var addressItem = {
-                Type:$("[name='Type']", el).val(),
-                IsDefault:$("[name='IsDefault']", el).val(),
-                Address1:$("[name='Address1']", el).val(),
-                Address2:$("[name='Address2']", el).val(),
-                City:$("[name='City']", el).val(),
-                State:$("[name='State']", el).val(),
-                ZipCode:$("[name='ZipCode']", el).val(),
-                EntityId:$("[name='EntityId']", el).val(),
-                AddressType:{EntityId:$("[name='AddressType'] :selected", el).val(),
-                    Name:$("[name='AddressType'] :selected", el).text()}
-            };
-            var newAddress = new this.AddressItem(addressItem);
-            this.addressItems.push(newAddress);
-            el.clearForm();
-        }
-    },
-    addPhone:function() {
-        var el = $("#phoneContainer");
-        $("form",el).validate({
-           errorContainer: $(mf.formDefaults.crudFormOptions.errorContainer),
-           errorLabelContainer: $(mf.formDefaults.crudFormOptions.errorContainer).find("ul"),
-           wrapper: 'li',
-           validClass: "valid_field",
-           errorClass: "invalid_field"
-        });
-        if($("form", el).valid()){
-
-        var phoneItem = {
-            Type:$("[name='Type']", el).val(),
-            IsDefault:$("[name='IsDefault']", el).val(),
-            PhoneNumber:$("[name='PhoneNumber']", el).val(),
-            EntityId:$("[name='EntityId']", el).val(),
-            PhoneType:{EntityId:$("[name='PhoneType'] :selected", el).val(),
-                Name:$("[name='PhoneType'] :selected", el).text()}
-        };
-        var newPhone = new this.PhoneItem(phoneItem);
-        this.phoneItems.push(newPhone);
-        el.clearForm();
-        }
-    },
-    addEmail:function() {
-        var el = $("#emailContainer");
-
-        $("form",el).validate({
-           errorContainer: $(mf.formDefaults.crudFormOptions.errorContainer),
-           errorLabelContainer: $(mf.formDefaults.crudFormOptions.errorContainer).find("ul"),
-           wrapper: 'li',
-           validClass: "valid_field",
-           errorClass: "invalid_field"
-        });
-        if($("form", el).valid()){
-            var emailItem = {
-                IsDefault:$("[name='IsDefault']", el).val(),
-                EmailAddress:$("[name='EmailAddress']", el).val(),
-                EntityId:$("[name='EntityId']", el).val()
-            };
-            var newEmail = new this.EmailItem(emailItem);
-            this.emailItems.push(newEmail);
-            el.clearForm();
-        }
-    },
-    mapping:{
-        'addressItems': {
-            create: function(options) {
-                return new mf.userProfileViewModel.AddressItem(options.data);
-            }
-        },
-        'emailItems': {
-            create: function(options) {
-                return new mf.userProfileViewModel.EmailItem(options.data);
-            }
-        },
-        'phoneItems': {
-            create: function(options) {
-                return new mf.userProfileViewModel.PhoneItem(options.data);
-            }
-        }
-    }
-};
-
-
-mf.UserProfileView = mf.AjaxFormView.extend({
-    events:_.extend({
-    }, mf.AjaxFormView.prototype.events),
-    initialize: function(){
-        this.options = $.extend({},mf.formDefaults,this.options);
-        this.id=this.options.id;
-        this.options.crudFormOptions.additionBeforeSubmitFunc = this.beforeSubmitFunc;
-    },
-    viewLoaded:function(){
-        ko.mapping.defaultOptions().ignore =["TenantId", "OrgId", "CreateDate", "ChangeDate", "ChangedBy", "Archived"];
-        ko.mapping.fromJS(this.options.repeaters, mf.userProfileViewModel.mapping, mf.userProfileViewModel);
-        ko.applyBindings(mf.userProfileViewModel);
-        $.toDictionary(ko.mapping.toJSON(mf.userProfileViewModel.addressItems))
-    },
-    beforeSubmitFunc:function(arr){
-        $.each($.toDictionary(ko.mapping.toJS(mf.userProfileViewModel.addressItems),"User.Addresses"),function(){arr.push(this)});
-        $.each($.toDictionary(ko.mapping.toJS(mf.userProfileViewModel.emailItems),"User.Emails"),function(){arr.push(this)});
-        $.each($.toDictionary(ko.mapping.toJS(mf.userProfileViewModel.phoneItems),"User.Phones"),function(){arr.push(this)});
     }
 });
 

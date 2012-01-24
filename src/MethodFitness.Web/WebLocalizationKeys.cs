@@ -20,14 +20,12 @@ namespace MethodFitness.Web
         public static readonly StringToken TRAINER = new WebLocalizationKeys("TRAINER", "Trainer");
         public static readonly StringToken CLIENTS = new WebLocalizationKeys("CLIENTS", "Clients");
         public static readonly StringToken CLIENT = new WebLocalizationKeys("CLIENT", "Client");
+        public static readonly StringToken CLIENT_RATES = new WebLocalizationKeys("CLIENT_RATES", "Client Rates");
         public static readonly StringToken NEW_TRAINER = new WebLocalizationKeys("NEW_TRAINER", "New Trainer");
         public static readonly StringToken NEW_CLIENT = new WebLocalizationKeys("NEW_CLIENT", "New Client");
         public static readonly StringToken CLIENT_INFORMATION = new WebLocalizationKeys("CLIENT_INFORMATION", "Client Information");
         public static readonly StringToken TRAINER_INFORMATION = new WebLocalizationKeys("TRAINER_INFORMATION", "Trainer Information");
         public static readonly StringToken CLOSE = new WebLocalizationKeys("CLOSE", "Close");
-
-
-
 
 
 
