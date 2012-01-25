@@ -37,7 +37,7 @@ namespace MethodFitness.Web.Controllers
             }
             else
             {
-                client = new Client {StartDate = DateTime.Now, SessionRates = new SessionRates(true)};
+                client = new Client {StartDate = DateTime.Now, SessionRates = new SessionRates()};
             }
             var model = new ClientViewModel
             {

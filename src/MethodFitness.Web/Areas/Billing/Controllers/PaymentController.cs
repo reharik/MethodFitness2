@@ -29,14 +29,21 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult AddUpdate(ViewModel input)
         {
-//            var client = _repository.QueryWithFetch<Client, SessionRates>(x => x.EntityId == input.ParentId, x => x.SessionRates).ToList().First();
-
-            var clientx = _repository.Query<Client>(x => x.EntityId == input.ParentId);
-            var client = _repository.Query<Client>(x => x.EntityId == input.ParentId).First();
-            var payment = input.EntityId > 0 ? client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId) : new Payment { Client = client};
+            var client = _repository.Find<Client>(input.ParentId);
+            var payment = input.EntityId > 0 ? client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId) : new Payment { Client = client };
+            // have to map this for some stupid reason I'm getting circular reference.
+            var sessionRatesDto = new SessionRatesDto
+                                      {
+                                          FullHour = client.SessionRates.FullHour,
+                                          HalfHour = client.SessionRates.HalfHour,
+                                          FullHourTenPack = client.SessionRates.FullHourTenPack,
+                                          HalfHourTenPack = client.SessionRates.HalfHourTenPack,
+                                          Pair = client.SessionRates.Pair,
+                                      };
             var model = new PaymentViewModel
             {
                 Item = payment,
+                SessionRateDto = sessionRatesDto,
                 Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString(),
                 DeleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null))
             };
@@ -89,10 +96,25 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         }
     }
 
+    public class SessionRatesDto
+    {
+        public double FullHour { get; set; }
+
+        public double HalfHour { get; set; }
+
+        public double FullHourTenPack { get; set; }
+
+        public double HalfHourTenPack { get; set; }
+
+        public double Pair { get; set; }
+    }
+
     public class PaymentViewModel:ViewModel
     {
         public Payment Item { get; set; }
         public string DeleteUrl { get; set; }
         public double Total { get; set; }
+
+        public SessionRatesDto SessionRateDto { get; set; }
     }
 }

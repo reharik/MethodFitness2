@@ -98,7 +98,6 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     {
                         Appointment = this,
                         Trainer = Trainer,
-                        Client = x,
                         InArrears = true,
                         Length = Length
                     };

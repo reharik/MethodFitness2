@@ -8,6 +8,7 @@ namespace MethodFitness.Core.Domain
         public virtual int HalfHourTenPacks { get; set; }
         public virtual int Pairs { get; set; }
         public virtual double PaymentTotal { get; set; }
+
         public virtual Client Client { get; set; }
     }
 }

@@ -1,15 +1,15 @@
-﻿@using MethodFitness.Core.Enumerations
+﻿@using HtmlTags
+@using MethodFitness.Core.Enumerations
 @using MethodFitness.Core.Html.FubuUI
 @using MethodFitness.Web.Areas.Billing.Controllers
-@using MethodFitness.Web.Controllers
-@model MethodFitness.Web.Areas.Billing.Controllers.PaymentViewModel
+@model PaymentViewModel
 
 @{
     Layout = "~/Views/Shared/_FormLayout.cshtml";
 }
 
 @section HeaderJavascript{
-    extraFormOptions.sessionRates = '@Model.Item.Client.SessionRates';
+    extraFormOptions.sessionRates = @MvcHtmlString.Create(JsonUtil.ToJson(@Model.SessionRateDto));
 }
 
 <div id="errorMessagesForm" class="mf_ErrorMessages errorMessages"><ul></ul></div>
