@@ -17,25 +17,50 @@
     @Html.SubmissionFor(x => x.Item.EntityId).HideRoot().ToHtmlTag()
     <div class="col left">
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Item.FullHours).InputId("fullHour").ToHtmlTag()
-            <div id="fullHourTotal"></div>
+            @Html.SubmissionFor(x => x.Item.FullHours).AddClassToInput("half").InputId("fullHour").ToHtmlTag()
+            <div class="view_root">
+                    <div class="view_label"></div>
+                    <div class="view_input">
+                        <span id="fullHourTotal">0</span>
+                    </div>
+                </div>
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Item.HalfHours).InputId("halfHour").ToHtmlTag()
-            <div id="halfHourTotal"></div>
+            <div class="view_root">
+                <div class="view_label"></div>
+                <div class="view_input">
+                    <span id="halfHourTotal">0</span>
+                </div>
+            </div>
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Item.FullHourTenPacks).InputId("fullHourTenPack").ToHtmlTag()
-            <div id="fullHourTenPackTotal"></div>
+            <div class="view_root">
+                <div class="view_label"></div>
+                <div class="view_input">
+                    <span id="fullHourTenPackTotal">0</span>
+                </div>
+            </div>
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Item.HalfHourTenPacks).InputId("halfHourTenPack").ToHtmlTag()
-            <div id="halfHourTenPackTotal"></div>
+            <div class="view_root">
+                <div class="view_label"></div>
+                <div class="view_input">
+                    <span id="halfHourTenPackTotal">0</span>
+                </div>
+            </div>
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Item.Pairs).InputId("pair").ToHtmlTag()
-            <div id="pairTotal"></div>
-        </div>  
+            <div class="view_root">
+                <div class="view_label"></div>
+                <div class="view_input">
+                    <span id="pairTotal">0</span>
+                </div>
+            </div>
+        </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Total).InputId("total").AddClassToInput("disableInput").ToHtmlTag()
         </div>
