@@ -199,5 +199,16 @@ namespace MethodFitness.Core.Enumerations
         public static readonly AppointmentLength HourAndAHalf = new AppointmentLength { IsActive = true, Value = "90", Key = "Hour And a Half" };
     }
 
+    [Serializable]
+    public class AppointmentType : Enumeration
+    {
+        public static readonly AppointmentType Empty = new AppointmentType { IsActive = false, Key = "" };
+        public static readonly AppointmentType HalfHour = new AppointmentType { IsActive = true, Key = "Half Hour", Value = "30" };
+        public static readonly AppointmentType Hour = new AppointmentType { IsActive = true, Key = "Hour", Value = "60", IsDefault = true };
+        public static readonly AppointmentType HourAndAHalf = new AppointmentType { IsActive = true, Value = "90", Key = "Hour And a Half" };
+        public static readonly AppointmentType Pair = new AppointmentType { IsActive = true, Value = "60", Key = "Pair" };
+    }
+
+
 
 }

@@ -14,54 +14,62 @@
 
 <div id="errorMessagesForm" class="mf_ErrorMessages errorMessages"><ul></ul></div>
 @MvcHtmlString.Create(FormFor<PaymentController>(x => x.Save(null), AreaName.Billing).AddClass("CRUD").ElementId("CRUDForm").ToString())
-    @Html.SubmissionFor(x => x.Item.EntityId).HideRoot().ToHtmlTag()
-    <div class="col left">
+    <input type="hidden" name="EntityId" value="@Model.EntityId"/>
+    <input type="hidden" name="ParentId" value="@Model.ParentId"/>
+    <input type="hidden" name="Item.FullHoursPrice" value="@Model.SessionRateDto.FullHour"/>
+    <input type="hidden" name="Item.FullHourTenPacksPrice" value="@Model.SessionRateDto.FullHourTenPack"/>
+    <input type="hidden" name="Item.HalfHoursPrice" value="@Model.SessionRateDto.HalfHour"/>
+    <input type="hidden" name="Item.HalfHourTenPacksPrice" value="@Model.SessionRateDto.HalfHourTenPack"/>
+    <input type="hidden" name="Item.PairsPrice" value="@Model.SessionRateDto.Pair"/>
+    
+<div class="col left">
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Item.FullHours).AddClassToInput("half").InputId("fullHour").ToHtmlTag()
+            @Html.SubmissionFor(x => x.Item.FullHours).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
             <div class="view_root">
                     <div class="view_label"></div>
                     <div class="view_input">
-                        <span id="fullHourTotal">0</span>
+                        <span id="fullHourTotal">$0</span>
                     </div>
                 </div>
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Item.HalfHours).InputId("halfHour").ToHtmlTag()
+            @Html.SubmissionFor(x => x.Item.HalfHours).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
             <div class="view_root">
                 <div class="view_label"></div>
                 <div class="view_input">
-                    <span id="halfHourTotal">0</span>
+                    <span id="halfHourTotal">$0</span>
                 </div>
             </div>
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Item.FullHourTenPacks).InputId("fullHourTenPack").ToHtmlTag()
+            @Html.SubmissionFor(x => x.Item.FullHourTenPacks).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHourTenPack").ToHtmlTag()
             <div class="view_root">
                 <div class="view_label"></div>
                 <div class="view_input">
-                    <span id="fullHourTenPackTotal">0</span>
+                    <span id="fullHourTenPackTotal">$0</span>
                 </div>
             </div>
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Item.HalfHourTenPacks).InputId("halfHourTenPack").ToHtmlTag()
+            @Html.SubmissionFor(x => x.Item.HalfHourTenPacks).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHourTenPack").ToHtmlTag()
             <div class="view_root">
                 <div class="view_label"></div>
                 <div class="view_input">
-                    <span id="halfHourTenPackTotal">0</span>
+                    <span id="halfHourTenPackTotal">$0</span>
                 </div>
             </div>
         </div>
-        <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Item.Pairs).InputId("pair").ToHtmlTag()
-            <div class="view_root">
-                <div class="view_label"></div>
-                <div class="view_input">
-                    <span id="pairTotal">0</span>
-                </div>
+    <div class="fieldRow">
+        @Html.SubmissionFor(x => x.Item.Pairs).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
+        <div class="view_root">
+            <div class="view_label"></div>
+            <div class="view_input">
+                <span id="pairTotal">$0</span>
             </div>
         </div>
+    </div>
+    <hr/>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Total).InputId("total").AddClassToInput("disableInput").ToHtmlTag()
+            @Html.SubmissionFor(x => x.Item.PaymentTotal).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").InputId("total").ToHtmlTag()
         </div>
     </div>

@@ -1,5 +1,6 @@
 ﻿using System;
 using Castle.Components.Validator;
+using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Localization;
 using MethodFitness.Web.Areas.Schedule.Controllers;
@@ -8,13 +9,13 @@ namespace MethodFitness.Core.Domain
 {
     public class Session:DomainEntity
     {
-        [ValidateNonEmpty]
-        public virtual DateTime Date { get; set; }
+        [ValidateSqlDateTime]
+        public virtual DateTime? Date { get; set; }
         [ValidateNonEmpty]
         public virtual double Cost { get; set; }
         [ValidateNonEmpty]
-        [ValueOf(typeof(AppointmentLength))]
-        public virtual string Length { get; set; }
+        [ValueOf(typeof(AppointmentType))]
+        public virtual string AppointmentType { get; set; }
         [ValidateNonEmpty]
         public virtual Client Client { get; set; }
         public virtual Appointment Appointment { get; set; }

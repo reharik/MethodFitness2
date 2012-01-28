@@ -37,7 +37,7 @@ namespace MethodFitness.Web.Controllers
             }
             else
             {
-                client = new Client {StartDate = DateTime.Now, SessionRates = new SessionRates()};
+                client = new Client {StartDate = DateTime.Now, SessionRates = new SessionRates(true)};
             }
             var model = new ClientViewModel
             {
@@ -121,6 +121,7 @@ namespace MethodFitness.Web.Controllers
             client.Notes = clientModel.Notes;
             client.Status = clientModel.Status;
             client.BirthDate = clientModel.BirthDate;
+            client.StartDate = clientModel.StartDate;
             if(client.SessionRates==null)client.SessionRates = new SessionRates();
             client.SessionRates.FullHour = clientModel.SessionRates.FullHour;
             client.SessionRates.HalfHour = clientModel.SessionRates.HalfHour;

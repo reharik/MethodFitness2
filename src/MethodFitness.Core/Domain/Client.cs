@@ -32,6 +32,7 @@ namespace MethodFitness.Core.Domain
         public virtual string Status { get; set; }
         [ValueOf(typeof(Source))]
         public virtual string Source { get; set; }
+        [ValidateNonEmpty,ValidateSqlDateTime]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
         public virtual string FullNameLNF
@@ -52,7 +53,6 @@ namespace MethodFitness.Core.Domain
         }
         public virtual void AddSession(Session session)
         {
-            if (_sessions.Contains(session)) return;
             _sessions.Add(session);
         }
         private IList<Payment> _payments = new List<Payment>();

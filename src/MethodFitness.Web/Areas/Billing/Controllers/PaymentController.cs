@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
@@ -18,13 +19,17 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
         private readonly ISessionContext _sessionContext;
+        private readonly IClientPaymentToSessions _clientPaymentToSessions;
 
         public PaymentController(IRepository repository,
-            ISaveEntityService saveEntityService, ISessionContext sessionContext)
+            ISaveEntityService saveEntityService,
+            ISessionContext sessionContext,
+            IClientPaymentToSessions clientPaymentToSessions)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
             _sessionContext = sessionContext;
+            _clientPaymentToSessions = clientPaymentToSessions;
         }
 
         public ActionResult AddUpdate(ViewModel input)
@@ -45,7 +50,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 Item = payment,
                 SessionRateDto = sessionRatesDto,
                 Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString(),
-                DeleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null))
+                DeleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null)),
+                ParentId = client.EntityId
             };
             return View(model);
         }
@@ -79,10 +85,20 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult Save(PaymentViewModel input)
         {
+            var client = _repository.Find<Client>(input.ParentId);
             Payment payment;
-            payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
+            if (input.EntityId > 0)
+            {
+                payment = client.Payments.FirstOrDefault(x=>x.EntityId== input.EntityId);
+            }
+            else
+            {
+                payment = new Payment{Client = client, PaymentBatchId = Guid.NewGuid()};
+            }
             payment = mapToDomain(input, payment);
-            var crudManager = _saveEntityService.ProcessSave(payment);
+            client = _clientPaymentToSessions.Execute(client, payment);
+            client.AddPayment(payment);
+            var crudManager = _saveEntityService.ProcessSave(client);
 
             var notification = crudManager.Finish();
             return Json(notification, "text/plain");
@@ -92,6 +108,17 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         private Payment mapToDomain(PaymentViewModel model, Payment payment)
         {
             var paymentModel = model.Item;
+            payment.FullHourTenPacks = paymentModel.FullHourTenPacks;
+            payment.FullHourTenPacksPrice = paymentModel.FullHourTenPacksPrice;
+            payment.FullHours = paymentModel.FullHours;
+            payment.FullHoursPrice = paymentModel.FullHoursPrice;
+            payment.HalfHourTenPacks = paymentModel.HalfHourTenPacks;
+            payment.HalfHourTenPacksPrice = paymentModel.HalfHourTenPacksPrice;
+            payment.HalfHours = paymentModel.HalfHours;
+            payment.HalfHoursPrice = paymentModel.HalfHoursPrice;
+            payment.Pairs = paymentModel.Pairs;
+            payment.PairsPrice = paymentModel.PairsPrice;
+            payment.PaymentTotal= paymentModel.PaymentTotal;
             return payment;
         }
     }

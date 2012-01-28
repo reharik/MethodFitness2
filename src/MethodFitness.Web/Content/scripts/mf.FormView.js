@@ -131,12 +131,12 @@ mf.PaymentFormView = mf.AjaxFormView.extend({
     calculateTotal:function(type, totalSelector, numberSelector){
         var number = $(numberSelector).val();
         var itemTotal = (this.options.sessionRates[type] * number);
-        $(totalSelector).text(itemTotal);
-        var total = parseInt($("#fullHourTotal").text())
-            + parseInt($("#halfHourTotal").text())
-            + parseInt($("#fullHourTenPackTotal").text())
-            + parseInt($("#halfHourTenPackTotal").text())
-            + parseInt($("#pairTotal").text());
+        $(totalSelector).text("$" + itemTotal);
+        var total = parseInt($("#fullHourTotal").text().substring(1))
+            + parseInt($("#halfHourTotal").text().substring(1))
+            + parseInt($("#fullHourTenPackTotal").text().substring(1))
+            + parseInt($("#halfHourTenPackTotal").text().substring(1))
+            + parseInt($("#pairTotal").text().substring(1));
         $("#total").val(total);
 
     }

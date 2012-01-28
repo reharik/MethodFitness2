@@ -387,3 +387,14 @@ margin: 0;
     font-weight: bold;
     padding-right: 8px;
 }
+
+.editor_label_inline{
+    float:left;
+}
+
+.payment_input{
+    float: right;
+    width: 40px !important;
+    margin-right: 10px;
+    margin-right: 10px;
+}

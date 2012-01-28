@@ -8,7 +8,7 @@ namespace MethodFitness.Core.Domain.Persistence
         {
             Map(x => x.Date);
             Map(x => x.Cost);
-            Map(x => x.Length);
+            Map(x => x.AppointmentType);
             Map(x => x.SessionCompleted);
             Map(x => x.TrainerPaid);
             Map(x => x.PurchaseBatchNumber);

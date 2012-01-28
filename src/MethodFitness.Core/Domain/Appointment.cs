@@ -85,7 +85,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             {
                 var sessions =
                     x.Sessions.Where(
-                        s => s.Appointment == null && s.Length == Length);
+                        s => s.Appointment == null && s.AppointmentType == Length);
                 if (sessions.Any())
                 {
                     var session = sessions.OrderBy(s => s.Date).First();
@@ -99,7 +99,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                         Appointment = this,
                         Trainer = Trainer,
                         InArrears = true,
-                        Length = Length
+                        AppointmentType = Length
                     };
                     x.AddSession(session);
                     AddSession(session);

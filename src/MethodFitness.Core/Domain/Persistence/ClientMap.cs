@@ -9,6 +9,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.FirstName);
             Map(x => x.LastName);
             Map(x => x.BirthDate);
+            Map(x => x.StartDate);
             Map(x => x.Email);
             Map(x => x.MobilePhone);
             Map(x => x.SecondaryPhone);
