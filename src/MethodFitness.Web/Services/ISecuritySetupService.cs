@@ -34,13 +34,15 @@ namespace MethodFitness.Web.Services
         public DefaultSecuritySetupService(IContainer container,
             IAuthorizationRepository authorizationRepository,
             IPermissionsBuilderService permissionsBuilderService,
-            IMFPermissionsService permissionsService)
+            IMFPermissionsService permissionsService,
+            IRepository repository)
         {
             _container = container;
-            _repository = ObjectFactory.Container.GetInstance<IRepository>("NoFilters");
+            //_repository = ObjectFactory.Container.GetInstance<IRepository>("NoFilters");
             _authorizationRepository = authorizationRepository;
             _permissionsBuilderService = permissionsBuilderService;
             _permissionsService = permissionsService;
+            _repository = repository;
         }
 
         public void ExecuteAll()
@@ -55,14 +57,13 @@ namespace MethodFitness.Web.Services
             CreateTrainerPermissions();
             _permissionsService.GrantDefaultAdminPermissions("Administrator");
             _permissionsService.GrantDefaultTrainersPermissions();
-            CreateFacilitiesPermissions();
             _repository.UnitOfWork.Commit();
         }
 
         private void CreateKYTAdminOperation()
         {
             _authorizationRepository.CreateOperation("/AdminOrGreater");
-            _authorizationRepository.CreateOperation("/KYTAdmin");
+            _authorizationRepository.CreateOperation("/MFAdmin");
         }
 
         private void CreateOperationsForAllControllers()
@@ -117,6 +118,10 @@ namespace MethodFitness.Web.Services
             _authorizationRepository.CreateOperation("/Calendar/SetAppointmentForOthers");
             _authorizationRepository.CreateOperation("/Calendar/CanDeleteRetroactiveAppointments");
             _authorizationRepository.CreateOperation("/Clients/CanScheduleAllClients");
+
+            _authorizationRepository.CreateOperation("/Payment/Display");
+            _authorizationRepository.CreateOperation("/Payment/AddUpdate");
+
         }
 
         public void AssociateAllUsersWithThierTypeGroup()
@@ -151,11 +156,5 @@ namespace MethodFitness.Web.Services
             users.Each(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
         }
 
-
-        public void CreateFacilitiesPermissions()
-        {
-
-
-        }
     }
 }

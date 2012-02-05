@@ -1,0 +1,38 @@
+﻿@using HtmlTags
+@using MethodFitness.Core.Enumerations
+@using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Web.Areas.Billing.Controllers
+@model PaymentViewModel
+
+@{
+    Layout = "~/Views/Shared/_DisplayLayout.cshtml";
+}
+
+@section HeaderJavascript{
+    extraFormOptions.sessionRates = @MvcHtmlString.Create(JsonUtil.ToJson(@Model.SessionRateDto));
+}
+
+    <input type="hidden" name="EntityId" value="@Model.EntityId"/>
+    <input type="hidden" name="ParentId" value="@Model.ParentId"/>
+    
+<div class="col left">
+        <div class="fieldRow">
+            @Html.ViewFor(x => x.Item.FullHours).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.ViewFor(x => x.Item.HalfHours).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.ViewFor(x => x.Item.FullHourTenPacks).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHourTenPack").ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.ViewFor(x => x.Item.HalfHourTenPacks).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHourTenPack").ToHtmlTag()
+        </div>
+    <div class="fieldRow">
+        @Html.ViewFor(x => x.Item.Pairs).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
+    </div>
+    <hr/>
+        <div class="fieldRow">
+            @Html.ViewFor(x => x.Item.PaymentTotal).AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").InputId("total").ToHtmlTag()
+        </div>
+    </div>

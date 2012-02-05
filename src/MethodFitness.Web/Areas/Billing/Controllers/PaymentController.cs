@@ -34,9 +34,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult AddUpdate(ViewModel input)
         {
-            var client = _repository.Find<Client>(input.ParentId);
-            var payment = input.EntityId > 0 ? client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId) : new Payment { Client = client };
-            // have to map this for some stupid reason I'm getting circular reference.
+            var payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
+            var client = input.ParentId > 0 ? _repository.Find<Client>(input.ParentId) : payment.Client;
             var sessionRatesDto = new SessionRatesDto
                                       {
                                           FullHour = client.SessionRates.FullHour,
@@ -49,9 +48,20 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             {
                 Item = payment,
                 SessionRateDto = sessionRatesDto,
-                Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString(),
+                Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
                 DeleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null)),
                 ParentId = client.EntityId
+            };
+            return View(model);
+        }
+
+        public ActionResult Display(ViewModel input)
+        {
+            var payment =  _repository.Find<Payment>(input.EntityId);
+            var model = new PaymentViewModel
+            {
+                Item = payment,
+                Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
             };
             return View(model);
         }

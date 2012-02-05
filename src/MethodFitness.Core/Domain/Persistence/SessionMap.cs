@@ -9,13 +9,13 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.Date);
             Map(x => x.Cost);
             Map(x => x.AppointmentType);
-            Map(x => x.SessionCompleted);
+            Map(x => x.SessionUsed);
             Map(x => x.TrainerPaid);
             Map(x => x.PurchaseBatchNumber);
             Map(x => x.TrainerCheckNumber);
             Map(x => x.InArrears);
-            References(x => x.Client);
-            References(x => x.Appointment);
+            References(x => x.Client).Cascade.None();
+            References(x => x.Appointment).Cascade.None();
             References(x => x.Trainer);
 
         } 

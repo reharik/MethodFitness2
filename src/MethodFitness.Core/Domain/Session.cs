@@ -20,7 +20,7 @@ namespace MethodFitness.Core.Domain
         public virtual Client Client { get; set; }
         public virtual Appointment Appointment { get; set; }
         public virtual User Trainer { get; set; }
-        public virtual bool SessionCompleted { get; set; }
+        public virtual bool SessionUsed { get; set; }
         public virtual bool TrainerPaid { get; set; }
         public virtual string PurchaseBatchNumber { get; set; }
         public virtual int TrainerCheckNumber { get; set; }

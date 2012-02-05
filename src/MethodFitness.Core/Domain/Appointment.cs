@@ -2,17 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Castle.Components.Validator;
-using MethodFitness.Core;
-using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Localization;
-using MethodFitness.Core.Services;
+using MethodFitness.Web.Areas.Schedule.Controllers;
 using Rhino.Security.Interfaces;
 using xVal.ServerSide;
 
-namespace MethodFitness.Web.Areas.Schedule.Controllers
+namespace MethodFitness.Core.Domain
 {
     public class Appointment:DomainEntity
     {
@@ -88,9 +86,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                         s => s.Appointment == null && s.AppointmentType == Length);
                 if (sessions.Any())
                 {
-                    var session = sessions.OrderBy(s => s.Date).First();
+                    var session = sessions.OrderBy(s => s.CreateDate).First();
                     session.Appointment = this;
                     session.Trainer = Trainer;
+                    session.SessionUsed = true;
                 }
                 else
                 {
@@ -99,13 +98,20 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                         Appointment = this,
                         Trainer = Trainer,
                         InArrears = true,
-                        AppointmentType = Length
+                        AppointmentType = Length,
+                        SessionUsed = true
+
                     };
                     x.AddSession(session);
                     AddSession(session);
                 }
 
             });
+        }
+
+        public virtual void RestoreSessionsWhenDeleted()
+        {
+            Sessions.Each(x => x.Client.RestoreSession(x));
         }
 
     }

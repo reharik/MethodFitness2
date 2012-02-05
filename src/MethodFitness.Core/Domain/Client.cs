@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
@@ -87,6 +88,24 @@ namespace MethodFitness.Core.Domain
             ImageUrl = self.ImageUrl;
             Source = self.Source;
             StartDate = self.StartDate;
+        }
+
+        public virtual void RestoreSession(Session session)
+        {
+            if(session.InArrears)
+            {
+                RemoveSession(session);
+                return;
+            }
+
+            var arrear = Sessions.FirstOrDefault(x => x.InArrears && x.AppointmentType == session.AppointmentType);
+            if(arrear==null)
+            {
+                session.SessionUsed = false;
+            }else
+            {
+                RemoveSession(arrear);
+            }
         }
     }
 }   

@@ -27,7 +27,10 @@ mf.PaymentController  = mf.CrudController.extend({
     },
 
     registerAdditionalSubscriptions: function(){
+        $.subscribe('/contentLevel/grid/DisplayItem',$.proxy(this.displayItem,this), this.cid);
         $.subscribe('/contentLevel/form_mainForm/payment',$.proxy(this.payment,this), this.cid);
+        $.subscribe("/contentLevel/display_display/cancel", $.proxy(this.displayCancel,this), this.cid);
+        $.subscribe("/contentLevel/display_display/pageLoaded", $.proxy(this.displayLoaded,this),this.cid);
     },
     //from grid
     addEditItem: function(url){
@@ -39,5 +42,22 @@ mf.PaymentController  = mf.CrudController.extend({
         };
         $("#masterArea","#contentInner").after("<div id='detailArea'/>");
         this.modules.formModule = new mf.FormModule(formOptions);
+    },
+    displayItem: function(url){
+        var formOptions = {
+            el: "#detailArea",
+            id: "display",
+            url: url
+        };
+        $("#masterArea","#contentInner").after("<div id='detailArea'/>");
+        this.views.displayView = new mf.AjaxDisplayView(formOptions);
+        this.views.displayView.render();
+    },
+    displayCancel:function(){
+        this.views.displayView.remove();
+        $("#masterArea").show();
+    },
+    displayLoaded:function(){
+        $("#masterArea").hide();
     }
 });

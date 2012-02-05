@@ -26,7 +26,8 @@ namespace KnowYourTurf.Core.Services
             var operations = ((CustomAuthorizationRepository)_authorizationRepository).GetAllOperations();
             foreach (var operation in operations)
             {
-                if (operation.Name != "/MFAdmin")
+                //this is a fucking hack obviously
+                if (operation.Name != "/MFAdmin" && operation.Name != "/Payment/Display")
                     _permissionsBuilderService
                         .Allow(operation)
                         .For(type)
@@ -38,16 +39,13 @@ namespace KnowYourTurf.Core.Services
 
         public void GrantDefaultTrainersPermissions()
         {
-           // _permissionsBuilderService.Allow("/HomeController").For("Trainer").OnEverything().Level(1).Save();
-//            _permissionsBuilderService.Allow("/EmployeeDashboardController").For("Trainer").OnEverything().Level(1).Save();
-            //_permissionsBuilderService.Allow("/EmployeeController").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/AppointmentCalendarController").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/AppointmentController").For("Trainer").OnEverything().Level(1).Save();
 
-         //   _permissionsBuilderService.Allow("/MenuItem/Home").For("Trainer").OnEverything().Level(1).Save();
-//            _permissionsBuilderService.Allow("/MenuItem/EmployeeDashboard").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/MenuItem/Calendar").For("Trainer").OnEverything().Level(1).Save();
             _permissionsBuilderService.Allow("/MenuItem/Clients").For("Trainer").OnEverything().Level(1).Save();
+
+            _permissionsBuilderService.Allow("/Payment/Display").For("Trainer").OnEverything().Level(1).Save();
         }
 
     }

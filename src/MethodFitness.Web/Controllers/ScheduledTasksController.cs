@@ -23,7 +23,7 @@ namespace MethodFitness.Web.Controllers
                                   {
                                       x.Sessions.Each(s =>
                                                           {
-                                                              s.SessionCompleted = true;
+                                                              s.SessionUsed = true;
                                                               s.Trainer = x.Trainer;
                                                               x.Trainer.AddSession(s);
                                                           });

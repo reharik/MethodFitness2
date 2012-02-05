@@ -140,6 +140,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 var notification = new Notification{Message=WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
                 return Json(notification,JsonRequestBehavior.AllowGet);
             }
+            appointment.RestoreSessionsWhenDeleted();
+            //first save app to save the clients and sessions that have been restored
+            _repository.Save(appointment);
             _repository.HardDelete(appointment);
             _repository.UnitOfWork.Commit();
             return Json(new Notification{Success = true},JsonRequestBehavior.AllowGet);
@@ -154,7 +157,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var notification = new Notification { Success = true };
             notification = appointment.CheckPermissions(user, _authorizationService, notification);
             notification = appointment.CheckForClients(notification);
-            appointment.SetSessionsForClients();
+            if(appointment.EntityId==0)
+            {
+                appointment.SetSessionsForClients();
+            }
             if(!notification.Success)
             {
                 return Json(notification, JsonRequestBehavior.AllowGet);

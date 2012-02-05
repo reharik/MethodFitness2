@@ -21,8 +21,8 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.Notes);
             Map(x => x.ImageUrl);
             References(x => x.SessionRates);
-            HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
-            HasMany(x => x.Payments).Access.CamelCaseField(Prefix.Underscore);
+            HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore).Cascade.AllDeleteOrphan();
+            HasMany(x => x.Payments).Access.CamelCaseField(Prefix.Underscore).Cascade.AllDeleteOrphan();
 
         } 
     }

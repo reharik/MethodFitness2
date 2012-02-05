@@ -1,4 +1,5 @@
 ﻿using MethodFitness.Core.Domain;
+using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
@@ -20,10 +21,15 @@ namespace MethodFitness.Web.Grids
         protected override Grid<Payment> BuildGrid()
         {
             GridBuilder.LinkColumnFor(x => x.CreateDate)
-                .ForAction<PaymentController>(x => x.AddUpdate(null))
+                .ForAction<PaymentController>(x => x.AddUpdate(null),AreaName.Billing)
                 .ToPerformAction(ColumnAction.AddUpdateItem)
                 .ToolTip(WebLocalizationKeys.EDIT_ITEM)
-                .DefaultSortColumn();
+                .DefaultSortColumn().SecurityOperation("/Payment/AddUpdate");
+            GridBuilder.LinkColumnFor(x => x.CreateDate)
+                .ForAction<PaymentController>(x => x.Display(null), AreaName.Billing)
+                .ToPerformAction(ColumnAction.DisplayItem)
+                .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
+                .DefaultSortColumn().SecurityOperation("/Payment/Display");
             GridBuilder.DisplayFor(x => x.PaymentTotal);
             return this;
         }

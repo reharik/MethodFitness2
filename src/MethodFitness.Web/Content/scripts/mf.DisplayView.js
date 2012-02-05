@@ -7,23 +7,6 @@
  */
 
 
-mf.PortfolioLandingPageView = Backbone.View.extend({
-    events:{
-        'click #buildNewPortfolio': "buildNewPortfolio"
-    },
-    initialize:function(){
-        this.render();
-    },
-    render:function(){
-        $(this.el).show();
-    },
-
-    buildNewPortfolio: function(){
-        $.publish("/contentLevel/grid/AddUpdateItem",[this.options.addEditUrl]);
-    }
-
-});
-
 mf.AjaxDisplayView = Backbone.View.extend({
     events:{
         'click .cancel' : 'cancel'
@@ -52,17 +35,6 @@ mf.AjaxDisplayView = Backbone.View.extend({
     cancel:function(){
         $.publish("/contentLevel/display_"+this.id+"/cancel",[this.id]);
     }
-});
-
-mf.AddToPortfolioView = mf.AjaxDisplayView.extend({
-    events:_.extend({
-        'click .portfolioClick' : 'portfolioClick'
-    }, mf.AjaxDisplayView.prototype.events),
-
-    portfolioClick:function(e){
-        $.publish("/contentLevel/display_"+this.id+"/portfolioChosen",[$(e.currentTarget).attr("id")]);
-    }
-
 });
 
 
