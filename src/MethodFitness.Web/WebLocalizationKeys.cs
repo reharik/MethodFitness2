@@ -129,6 +129,8 @@ namespace MethodFitness.Web
         public static readonly StringToken PAYMENTS = new WebLocalizationKeys("PAYMENTS", "Payments");
         public static readonly StringToken PAYMENT_INFORMATION = new WebLocalizationKeys("PAYMENT_INFORMATION", "Payment Information");
         public static readonly StringToken MAKE_PAYMENT = new WebLocalizationKeys("MAKE_PAYMENT", "Make Payment");
+        public static readonly StringToken CURRENT_CLIENT_INVENTORY = new WebLocalizationKeys("CURRENT_CLIENT_INVENTORY", "Current Client Inventory");
+        public static readonly StringToken CLIENT_PURCHASE = new WebLocalizationKeys("CLIENT_PURCHASE", "Client Purchase");
 
     }
 }

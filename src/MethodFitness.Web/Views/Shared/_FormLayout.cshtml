@@ -24,6 +24,7 @@
     <div id="errorMessagesForm" class="dci_ErrorMessages errorMessages"><ul></ul></div>
         @RenderBody()
          <div class="footer">
+            @StandardButtonFor("save", WebLocalizationKeys.SAVE).AddClass("save").ToHtmlTag()
             @StandardButtonFor("cancel", WebLocalizationKeys.CANCEL).AddClass("cancel").ToHtmlTag()
         </div>
     </div>

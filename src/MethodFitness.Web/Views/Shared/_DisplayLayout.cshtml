@@ -23,7 +23,7 @@
     <div id="contentArea" class="content-inner">
     <div id="errorMessagesForm" class="dci_ErrorMessages errorMessages"><ul></ul></div>
         @RenderBody()
-         <div class="footer">
-            @StandardButtonFor("cancel", WebLocalizationKeys.CANCEL).AddClass("cancel").ToHtmlTag()
+        <div class="footer">
+            @RenderSection("FooterButtons", false)
         </div>
     </div>

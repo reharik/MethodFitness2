@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
+using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
@@ -44,10 +45,24 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                           HalfHourTenPack = client.SessionRates.HalfHourTenPack,
                                           Pair = client.SessionRates.Pair,
                                       };
+            //hijacking sessionratesdto since I need exact same object just different name
+            var clientSessionsDto = new SessionRatesDto
+                                        {
+                                            FullHour = client.Sessions.Any(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
+                                                ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
+                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString()),
+                                            HalfHour = client.Sessions.Any(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears)
+                                                ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears)
+                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString()),
+                                            Pair = client.Sessions.Any(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears)
+                                                ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears)
+                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString()),
+                                        };
             var model = new PaymentViewModel
             {
                 Item = payment,
                 SessionRateDto = sessionRatesDto,
+                SessionsAvailable = clientSessionsDto,
                 Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
                 DeleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null)),
                 ParentId = client.EntityId
@@ -151,7 +166,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public Payment Item { get; set; }
         public string DeleteUrl { get; set; }
         public double Total { get; set; }
-
         public SessionRatesDto SessionRateDto { get; set; }
+        public SessionRatesDto SessionsAvailable { get; set; }
     }
 }
