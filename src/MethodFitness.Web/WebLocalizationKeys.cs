@@ -89,7 +89,7 @@ namespace MethodFitness.Web
         public static readonly StringToken REQUIRED_BY_SYSTEM = new WebLocalizationKeys("REQUIRED_BY_SYSTEM", "Is Required By the System");
 
         public static readonly StringToken YOU_HAVE_NOT_ADDED_ANY = new WebLocalizationKeys("YOU_HAVE_NOT_ADDED_ANY", "You have not added any {0} ");
-        public static readonly StringToken SELECT_ONE_OR_MORE_OR = new WebLocalizationKeys("SELECT_ONE_OR_MORE", "Select one or more or ...");
+        public static readonly StringToken SELECT_ONE_OR_MORE = new WebLocalizationKeys("SELECT_ONE_OR_MORE", "Select one or more");
         public static readonly StringToken ADD_A_NEW = new WebLocalizationKeys("ADD_A_NEW", "Add a new {0}");
         public static readonly StringToken ADD_A_NEW_ONE = new WebLocalizationKeys("ADD_A_NEW_ONE", "add a new one");
 
@@ -131,6 +131,8 @@ namespace MethodFitness.Web
         public static readonly StringToken MAKE_PAYMENT = new WebLocalizationKeys("MAKE_PAYMENT", "Make Payment");
         public static readonly StringToken CURRENT_CLIENT_INVENTORY = new WebLocalizationKeys("CURRENT_CLIENT_INVENTORY", "Current Client Inventory");
         public static readonly StringToken CLIENT_PURCHASE = new WebLocalizationKeys("CLIENT_PURCHASE", "Client Purchase");
+        public static readonly StringToken PRICE_SESSION = new WebLocalizationKeys("PRICE_SESSION", "Price/Session");
+        
 
     }
 }

@@ -10,16 +10,27 @@
 
 @section HeaderJavascript{
     var userRolesOptions = {
-        availableItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableItems)),
-        selectedItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedItems))
+    availableItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableItems)),
+    selectedItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedItems))
     }
     var clientOptions={
-        availableItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableClients)),
-        selectedItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedClients))
+    availableItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableClients)),
+    selectedItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedClients)),
+    selectedItemsArray: "SelectedClients"
     }
     extraFormOptions.userRolesOptions = userRolesOptions;
     extraFormOptions.clientOptions = clientOptions;
     extraFormOptions.deleteUrl = '@Model.DeleteUrl';
+    extraFormOptions.crudFormOptions={};
+    extraFormOptions.crudFormOptions.additionBeforeSubmitFunc = function(arr){
+        var items =$("[name='ClientsInput']").data('selectedItems');
+        $.each(items, function(i,item){
+            arr.push({"name":"SelectedClients["+i+"].id","value":item.id});
+            arr.push({"name":"SelectedClients["+i+"].name","value":item.name});
+        });
+    }
+
+
 }
 @section ExtraContentHeaderButtons{
     <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
@@ -59,7 +70,7 @@
                 <div id="userRoles">
                     <label class="section">@WebLocalizationKeys.USER_ROLES</label>
                     <div id="userRoles" class="dci_assetSection">
-                        <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE_OR.ToString()</div>
+                        <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE.ToString()</div>
                         <input type="text" name="UserRolesInput" id="Input" class="artifact nolabels"/>
                     </div>
                 </div>
@@ -83,14 +94,14 @@
                 @Html.SubmissionFor(x => x.Item.Email).ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.PhoneMobile).AddClassToRoot("half").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item.PhoneMobile).AddClassToRoot("first half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half").ToHtmlTag()
             </div>
            <div class="fieldRow artifact-field">
                 <div id="clients">
                     <label class="section">@WebLocalizationKeys.CLIENTS</label>
                     <div id="clients" class="dci_assetSection">
-                        <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE_OR.ToString()</div>
+                        <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE.ToString()</div>
                         <input type="text" name="ClientsInput" id="Input" class="artifact nolabels"/>
                     </div>
                 </div>
@@ -98,3 +109,19 @@
         </div>
      
     @EndForm()
+    
+        <script id="percentageTemplate" type="text/x-jQuery-tmpl">
+            <div class="col left">
+                <div class="fieldRow">
+                   
+                    <div class="editor_root half first">
+                        <div class="editor_label">
+                            <label for="TrainerPercentage">Trainer Percentage</label>
+                        </div>
+                        <div class="editor_input">
+                            <input name="TrainerPercentage" type="text" value='${id}'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </script>

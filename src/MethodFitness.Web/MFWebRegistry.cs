@@ -37,7 +37,6 @@ namespace MethodFitness.Web
                 x.ConnectImplementationsToTypesClosing(typeof(IEntityListGrid<>));
                 x.AssemblyContainingType(typeof(CoreLocalizationKeys));
                 x.AssemblyContainingType(typeof(MergedEmailFactory));
-                x.AssemblyContainingType(typeof(Gateway));
                 x.WithDefaultConventions();
             });
             For<IGateway>().Use<Gateway>().Ctor<string>("apiLogin").EqualToAppSetting("Authorize.Net_apiLogin")

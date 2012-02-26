@@ -37,7 +37,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             {
                 AddUpdateUrl = UrlContext.GetUrlForAction<ClientController>(x => x.AddUpdate(null)),
                 DeleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
-                PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
+               // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
                 GridDefinition = _clientListGrid.GetGridDefinition(url),
                 Title = WebLocalizationKeys.CLIENTS.ToString() 
             };

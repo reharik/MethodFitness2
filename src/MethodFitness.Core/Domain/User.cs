@@ -73,6 +73,19 @@ namespace MethodFitness.Core.Domain
             _clients.Add(client);
         }
 
+        private IList<TrainerClientRate> _trainerClientRates = new List<TrainerClientRate>();
+        public virtual void EmptyTrainerClientRates() { _trainerClientRates.Clear(); }
+        public virtual IEnumerable<TrainerClientRate> TrainerClientRates { get { return _trainerClientRates; } }
+        public virtual void RemoveTrainerClientRate(TrainerClientRate trainerClientRate)
+        {
+            _trainerClientRates.Remove(trainerClientRate);
+        }
+        public virtual void AddTrainerClientRate(TrainerClientRate trainerClientRate)
+        {
+            if (_trainerClientRates.Contains(trainerClientRate)) return;
+            _trainerClientRates.Add(trainerClientRate);
+        }
+
         private IList<Session> _sessions = new List<Session>();
         public virtual void EmptySessions() { _sessions.Clear(); }
         public virtual IEnumerable<Session> Sessions { get { return _sessions; } }

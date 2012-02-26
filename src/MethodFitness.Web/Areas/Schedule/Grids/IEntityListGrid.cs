@@ -7,7 +7,7 @@ using MethodFitness.Core.Html.Grid;
 
 namespace MethodFitness.Web.Areas.Schedule.Grids
 {
-    public interface IEntityListGrid<ENTITY> where ENTITY : Entity
+    public interface IEntityListGrid<ENTITY> where ENTITY : IGridEnabledClass
     {
         void AddColumnModifications(Action<HtmlTag, ENTITY> modification);
         GridDefinition GetGridDefinition(string url);

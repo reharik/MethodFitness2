@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
@@ -39,12 +40,26 @@ namespace MethodFitness.Web.Controllers
             {
                 client = new Client {StartDate = DateTime.Now, SessionRates = new SessionRates(true)};
             }
+            //hijacking sessionratesdto since I need exact same object just different name
+            var clientSessionsDto = new SessionRatesDto
+            {
+                FullHour = client.Sessions.Any(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
+                    ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
+                    : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString()),
+                HalfHour = client.Sessions.Any(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears)
+                    ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears)
+                    : client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString()),
+                Pair = client.Sessions.Any(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears)
+                    ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears)
+                    : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString()),
+            };
             var model = new ClientViewModel
             {
                 Item = client,
                 Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString(),
                 DeleteUrl = UrlContext.GetUrlForAction<ClientController>(x=>x.Delete(null)),
-                PaymentListUrl = UrlContext.GetUrlForAction<PaymentListController>(x=>x.ItemList(null),AreaName.Billing)+"?ParentId="+client.EntityId
+                PaymentListUrl = UrlContext.GetUrlForAction<PaymentListController>(x=>x.ItemList(null),AreaName.Billing)+"?ParentId="+client.EntityId,
+                SessionsAvailable = clientSessionsDto
             };
             return View(model);
         }
@@ -137,5 +152,7 @@ namespace MethodFitness.Web.Controllers
         public Client Item { get; set; }
         public string DeleteUrl { get; set; }
         public string PaymentListUrl { get; set; }
+
+        public SessionRatesDto SessionsAvailable { get; set; }
     }
 }

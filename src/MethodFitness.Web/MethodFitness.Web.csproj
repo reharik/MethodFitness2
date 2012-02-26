@@ -201,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerPaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentListController.cs" />
     <Compile Include="Areas\Reports\Controllers\TimeSheetController.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
+    <Compile Include="Grids\SessionPaymentListGrid.cs" />
     <Compile Include="Grids\PaymentListGrid.cs" />
     <Compile Include="Grids\TrainerListGrid.cs" />
     <Compile Include="Areas\Schedule\Models\BulkAction\BulkActionViewModel.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="Controllers\EmployeeDashboardController.cs" />
     <Compile Include="Areas\Schedule\Controllers\AppointmentCalendarController.cs" />
     <Compile Include="Controllers\TrainerListController.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerPaymentListController.cs" />
     <Compile Include="MFTestRegistry.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\IMenuConfig.cs" />

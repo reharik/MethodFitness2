@@ -12,9 +12,7 @@ namespace MethodFitness.Core.Domain
 
     public class Entity :  IGridEnabledClass, IEquatable<Entity>
     {
-        
         public virtual int EntityId { get; set; }
-        
         
         [ValidateSqlDateTime]
         public virtual DateTime? CreateDate { get; set; }
@@ -23,39 +21,6 @@ namespace MethodFitness.Core.Domain
         public virtual DateTime? ChangeDate { get; set; }
 
         
-        //private DateTime? _createDate;
-        //[ValidateSqlDateTime]
-        //public virtual DateTime? CreateDate
-        //{
-        //    get
-        //    {   if (_createDate == null)
-        //            { return System.DateTime.Now; }
-        //        else
-        //            { return _createDate; }
-        //    }
-        //    set { _createDate = value; }
-        //}
-
-
-
-        ////private DateTime _changeDate = System.DateTime.Now;
-        ////pzt
-        //private DateTime? _changeDate;
-        //[ValidateSqlDateTime]
-        //public virtual DateTime? ChangeDate
-        //{
-        //    get
-        //    {
-        //        if (_changeDate == null)
-        //        { return System.DateTime.Now; }
-        //        else
-        //        { return _changeDate; }
-        //    }
-        //    set { _changeDate = value; }
-        //}
-
-
-
         public virtual int ChangedBy { get; set; }
 
         [System.ComponentModel.DefaultValue(0)] //pzt

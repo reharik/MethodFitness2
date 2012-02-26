@@ -32,7 +32,7 @@ var DEFAULT_SETTINGS = {
     onDelete: null,
     idPrefix: "token-input-",
     internalTokenMarkup:function(item){return "<p>"+ item.name +"</p>";},
-    afterTokenSelectedFunction:function(){}
+    afterTokenSelectedFunction:function(item){}
 };
 
 // Default classes to use when theming
@@ -461,7 +461,7 @@ $.TokenList = function (input, url_or_data, settings) {
         $(hidden_input).val(token_ids.join(settings.tokenDelimiter));
 
         token_count += 1;
-        settings.afterTokenSelectedFunction();
+        settings.afterTokenSelectedFunction(item);
         return this_token;
     }
 

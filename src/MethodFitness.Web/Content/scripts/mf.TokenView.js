@@ -28,27 +28,18 @@ mf.TokenView = Backbone.View.extend({
     },
     inputSetup:function(){
         $(this.options.inputSelector, this.el).tokenInput(this.options.availableItems, {prePopulate: this.options.selectedItems,
-            internalTokenMarkup:function(item) {
-//                var cssClass = that.options.tooltipAjaxUrl ? "class='mf_tokenTooltip selectedItem' rel='" + this.options.tooltipAjaxUrl + "?EntityId=" + item.id + "'" : "class='selectedItem'";
-                var cssClass = "class='selectedItem'";
-                return "<p><a " + cssClass + ">" + item.name + "</a></p>";
-            },
-            afterTokenSelectedFunction:function() {
-                $(".mf_tokenTooltip").cluetip({showTitle: false,
-                    cluetipClass: 'rounded',
-                    arrows: true,
-                    hoverIntent: {
-                        sensitivity:  3,
-                        interval:     50,
-                        timeout:      500
-                    },
-                    mouseOutClose:true
-                    //delayedClose:5000
-                });
-            }
+            internalTokenMarkup:$.proxy(this.internalTokenMarkup,this),
+            afterTokenSelectedFunction:$.proxy(this.afterTokenSelectedFunction,this),
+            onDelete:$.proxy(this.deleteToken,this)
         });
         this.options.instantiated = true;
     },
+    internalTokenMarkup:function(item) {
+        var cssClass = "class='selectedItem'";
+        return "<p><a " + cssClass + ">" + item.name + "</a></p>";
+    },
+    afterTokenSelectedFunction:function(item) {},
+    deleteToken:function(hidden_input,token_data) {},
     addNew:function(){
         $.publish("/contentLevel/token_"+this.id+"/addEdit",[this.id]);
         return false;

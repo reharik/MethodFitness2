@@ -37,8 +37,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public JsonResult Trainers(GridItemsRequestModel input)
         {
             //TODO find way to deal with string here
-            var items = _dynamicExpressionQuery.PerformQuery<User>(input.filters, 
-                x=>x.UserRoles.Any(r=>r.Name == "Trainer" ));
+            var items = _dynamicExpressionQuery.PerformQuery<User>(input.filters, x=>x.UserRoles.Any(r=>r.Name == "Trainer" ));
             var gridItemsViewModel = _trainerListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
         }
