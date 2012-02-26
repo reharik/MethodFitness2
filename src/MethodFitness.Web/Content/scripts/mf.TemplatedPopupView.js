@@ -14,15 +14,7 @@ mf.TemplatedPopupView = Backbone.View.extend({
     initialize: function(){
         this.options = $.extend({},mf.popupDefaults,this.options);
         this.id=this.options.id;
-
         $(".ui-dialog").remove();
-        // since dialog probably has a form in it.  much swich from form em to pu em
-        // look at doing this in the form setup
-//        var errorMessages = $("div[id*='errorMessages']", this.el);
-//        if(errorMessages){
-//            var id = errorMessages.attr("id");
-//            errorMessages.attr("id","errorMessagesPU").removeClass(id).addClass("errorMessagesPU");
-//        }
         this.render()
     },
     render:function(){
@@ -42,42 +34,3 @@ mf.TemplatedPopupView = Backbone.View.extend({
     }
 });
 
-mf.popupButtonBuilder = (function(){
-    return {
-        builder: function(id){
-        var buttons = {};
-        var _addButton = function(name,func){ buttons[name] = func; };
-        var saveFunc = function() {
-            $.publish("/contentLevel/popup_"+id+"/save",[]);
-        };
-        var editFunc = function(event) {$.publish("/contentLevel/popup_"+id+"/edit",[event]);};
-        var cancelFunc = function(){
-                            $(this).dialog("close");
-                        };
-        return{
-            getButtons:function(){return buttons;},
-            getSaveFunc:function(){return saveFunc;},
-            getCancelFunc:function(){return cancelFunc;},
-            addSaveButton:function(){_addButton("Save",saveFunc); return this},
-            addEditButton:function(){_addButton("Edit",editFunc);return this},
-            addCancelButton:function(){_addButton("Cancel",cancelFunc);return this},
-            addButton:function(name,func){_addButton(name,func);return this},
-            clearButtons:function(){buttons = {};return this},
-            standardEditButons: function(){
-                _addButton("Save",saveFunc);
-                _addButton("Cancel",cancelFunc);
-                return buttons;
-            },
-            standardDisplayButtons: function(){
-                _addButton("Cancel",cancelFunc);
-                return buttons;
-            }
-        };
-    }
-    }
-}());
-
-
-mf.popupDefaults = {
-    title:""
-};

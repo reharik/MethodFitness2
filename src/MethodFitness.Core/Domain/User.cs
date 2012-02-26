@@ -35,6 +35,7 @@ namespace MethodFitness.Core.Domain
         [ValueOf(typeof(Status))]
         public virtual string Status { get; set; }
         public virtual string Color { get; set; }
+        public virtual int ClientRateDefault { get; set; }
         
         public virtual UserLoginInfo UserLoginInfo { get; set; }
         public virtual string FullNameLNF

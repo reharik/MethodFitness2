@@ -85,18 +85,18 @@
                 @Html.SubmissionFor(x => x.Item.SessionRates.Pair).AddClassToRoot("half first").ToHtmlTag()
             </div>
         </div>
-        <div class="col right">
-    <div class="fieldRow">
-        <h4>@WebLocalizationKeys.CURRENT_CLIENT_INVENTORY</h4>
-    </div>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.SessionsAvailable.FullHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
-    </div>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.SessionsAvailable.HalfHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
-    </div>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.SessionsAvailable.Pair).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
-    </div>
-</div>
     @EndForm()
+        <div class="col right">
+            <div class="fieldRow">
+                <h4>@WebLocalizationKeys.CURRENT_CLIENT_INVENTORY</h4>
+            </div>
+            <div class="fieldRow">
+                @Html.ViewFor(x => x.SessionsAvailable.FullHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.ViewFor(x => x.SessionsAvailable.HalfHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.ViewFor(x => x.SessionsAvailable.Pair).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
+            </div>
+        </div>

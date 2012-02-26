@@ -33,6 +33,7 @@ mf.TokenView = Backbone.View.extend({
             onDelete:$.proxy(this.deleteToken,this)
         });
         this.options.instantiated = true;
+        if(this.postSetup)this.postSetup();
     },
     internalTokenMarkup:function(item) {
         var cssClass = "class='selectedItem'";

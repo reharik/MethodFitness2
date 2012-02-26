@@ -12,7 +12,8 @@ namespace MethodFitness.Core.Domain
         public virtual string ScriptsPath { get; set; }
         public virtual string CssPath { get; set; }
         public virtual string ImagesPath { get; set; }
-        public virtual string WebSiteRoot { get; set; }         
+        public virtual string WebSiteRoot { get; set; }
+        public virtual string TrainerClientRateDefault { get; set; }
     }
 
     public static class SiteConfig

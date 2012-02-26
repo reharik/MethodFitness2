@@ -27,6 +27,7 @@
         $.each(items, function(i,item){
             arr.push({"name":"SelectedClients["+i+"].id","value":item.id});
             arr.push({"name":"SelectedClients["+i+"].name","value":item.name});
+            arr.push({"name":"SelectedClients["+i+"].percentage","value":item.percentage});
         });
     }
 
@@ -97,7 +98,10 @@
                 @Html.SubmissionFor(x => x.Item.PhoneMobile).AddClassToRoot("first half").ToHtmlTag()
                 @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half").ToHtmlTag()
             </div>
-           <div class="fieldRow artifact-field">
+             <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Item.ClientRateDefault).ToHtmlTag()
+            </div>
+            <div class="fieldRow artifact-field">
                 <div id="clients">
                     <label class="section">@WebLocalizationKeys.CLIENTS</label>
                     <div id="clients" class="dci_assetSection">
@@ -111,17 +115,18 @@
     @EndForm()
     
         <script id="percentageTemplate" type="text/x-jQuery-tmpl">
+            <input type="hidden" id="editingId" value="${id}" />
             <div class="col left">
                 <div class="fieldRow">
-                   
+                    <h3>@WebLocalizationKeys.TRAINER_PERCENTAGE_FOR_CLIENT</h3>
                     <div class="editor_root half first">
                         <div class="editor_label">
-                            <label for="TrainerPercentage">Trainer Percentage</label>
+                            <label for="newTrainerPercentage">Trainer Percentage</label>
                         </div>
                         <div class="editor_input">
-                            <input name="TrainerPercentage" type="text" value='${id}'/>
+                            <input id="newTrainerPercentage" type="text" value='${percentage}'/>
                         </div>
                     </div>
                 </div>
             </div>
-    </script>
+        </script>

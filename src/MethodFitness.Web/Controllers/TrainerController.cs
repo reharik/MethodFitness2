@@ -48,11 +48,20 @@ namespace MethodFitness.Web.Controllers
 
         public ActionResult AddUpdate(ViewModel input)
         {
-            var trainer = input.EntityId > 0 ? _repository.Find<User>(input.EntityId) : new User();
+            User trainer;
+            if (input.EntityId > 0)
+            {
+                trainer = _repository.Find<User>(input.EntityId);
+            }
+            else
+            {
+                trainer = new User();
+                trainer.ClientRateDefault = Int32.Parse(SiteConfig.Settings().TrainerClientRateDefault);
+            }
             var clients = _repository.FindAll<Client>();
-            var availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
+            var availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId, name = x.FullNameLNF, percentage = trainer.ClientRateDefault});
             var selectedClients = trainer.Clients.Any()
-                ? trainer.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF })
+                ? trainer.Clients.Select(x => new TCRTokenInputDto { id = x.EntityId, name = x.FullNameLNF, percentage = trainer.TrainerClientRates.FirstOrDefault(c=>c.Client==x).Percent})
                 : null;
             var userRoles = _repository.FindAll<UserRole>();
             var availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name});
@@ -225,9 +234,28 @@ namespace MethodFitness.Web.Controllers
             trainer.UserLoginInfo.LoginName = trainerModel.UserLoginInfo.LoginName;
 
             _updateCollectionService.UpdateFromCSV(trainer.UserRoles, model.UserRolesInput, trainer.AddUserRole, trainer.RemoveUserRole);
-            _updateCollectionService.UpdateFromCSV(trainer.Clients, model.ClientsInput, trainer.AddClient, trainer.RemoveClient);
+            updateClientInfo(model, trainer);
             return trainer;
         }
+        private User updateClientInfo(UserViewModel model, User trainer)
+        {
+            var newClients = new List<Client>();
+            var newTCR = new List<TrainerClientRate>();
+            model.SelectedClients.Each(x =>
+                                           {
+                                               var client = _repository.Find<Client>(x.id);
+                                               newClients.Add(client);
+                                               newTCR.Add(new TrainerClientRate { Trainer = trainer, Client = client, Percent = x.percentage });
+                                           });
+            _updateCollectionService.Update(trainer.Clients, newClients, trainer.AddClient, trainer.RemoveClient);
+            _updateCollectionService.Update(trainer.TrainerClientRates, newTCR, trainer.AddTrainerClientRate, trainer.RemoveTrainerClientRate);
+            return trainer;
+        }
+    }
+
+    public class TCRTokenInputDto : TokenInputDto
+    {
+        public int percentage { get; set; }
     }
 
     public class UserViewModel:ViewModel
@@ -242,8 +270,8 @@ namespace MethodFitness.Web.Controllers
         public string UserRolesInput { get; set; }
         public string ClientsInput { get; set; }
 
-        public IEnumerable<TokenInputDto> AvailableClients { get; set; }
-        public IEnumerable<TokenInputDto> SelectedClients { get; set; }
+        public IEnumerable<TCRTokenInputDto> AvailableClients { get; set; }
+        public IEnumerable<TCRTokenInputDto> SelectedClients { get; set; }
 
         public string DeleteUrl { get; set; }
     }

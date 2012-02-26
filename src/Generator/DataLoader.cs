@@ -80,7 +80,9 @@ namespace Generator
                                    LastName = "Harik",
                                    CompanyId = 1,
                                    Color = "#148509",
-                                   CreateDate = DateTime.Now
+                                   CreateDate = DateTime.Now,
+                                   ClientRateDefault = 65
+            
                                };
             _defaultUser.AddUserRole(_userRoleTrainer);
             _defaultUser.AddUserRole(_userRoleAdmin);
@@ -99,7 +101,8 @@ namespace Generator
                 LastName = "Harik",
                 CompanyId = 1,
                 Color = "#c41d1d",
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                ClientRateDefault = 65
             };
             _defaultUser1.AddUserRole(_userRoleTrainer);
             _defaultUser1.UserLoginInfo = new UserLoginInfo

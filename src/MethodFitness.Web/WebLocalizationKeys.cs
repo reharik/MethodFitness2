@@ -132,6 +132,7 @@ namespace MethodFitness.Web
         public static readonly StringToken CURRENT_CLIENT_INVENTORY = new WebLocalizationKeys("CURRENT_CLIENT_INVENTORY", "Current Client Inventory");
         public static readonly StringToken CLIENT_PURCHASE = new WebLocalizationKeys("CLIENT_PURCHASE", "Client Purchase");
         public static readonly StringToken PRICE_SESSION = new WebLocalizationKeys("PRICE_SESSION", "Price/Session");
+        public static readonly StringToken TRAINER_PERCENTAGE_FOR_CLIENT = new WebLocalizationKeys("TRAINER_PERCENTAGE_FOR_CLIENT", "Enter percentage for ${name}");
         
 
     }

@@ -21,10 +21,12 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.Notes);
             Map(x => x.ImageUrl);
             Map(x => x.Color);
+            Map(x => x.ClientRateDefault);
             References(x => x.UserLoginInfo);
             HasManyToMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
             HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
+            HasMany(x => x.TrainerClientRates).Access.CamelCaseField(Prefix.Underscore);
 
         } 
 
