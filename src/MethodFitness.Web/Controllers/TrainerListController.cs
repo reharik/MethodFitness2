@@ -23,15 +23,16 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _trainerListGrid = trainerListGrid;
         }
 
-        public ActionResult ItemList(ViewModel input)
+        public JsonResult ItemList(ViewModel input)
         {
             var url = UrlContext.GetUrlForAction<TrainerListController>(x => x.Trainers(null));
             var model = new ListViewModel()
             {
-                AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
-                GridDefinition = _trainerListGrid.GetGridDefinition(url)
+                addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
+                gridDef = _trainerListGrid.GetGridDefinition(url)
             };
-            return View(model);
+            model.headerButtons.Add("new");
+            return Json(model,JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Trainers(GridItemsRequestModel input)

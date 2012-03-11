@@ -123,7 +123,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var model = new AppointmentViewModel
             {
                 Appointment = _event,
-                AddUpdateUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.AddUpdate(null),AreaName.Schedule) + "?EntityId=" + _event.EntityId,
+                addUpdateUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.AddUpdate(null),AreaName.Schedule) + "?EntityId=" + _event.EntityId,
                 Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString()
             };
             return PartialView(model);

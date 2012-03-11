@@ -30,7 +30,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var url = UrlContext.GetUrlForAction<TrainerPaymentListController>(x => x.TrainerPayments(null)) + "?ParentId="+input.ParentId;
             var model = new ListViewModel()
             {
-                GridDefinition = _grid.GetGridDefinition(url)
+                gridDef = _grid.GetGridDefinition(url)
             };
             return View(model);
         }

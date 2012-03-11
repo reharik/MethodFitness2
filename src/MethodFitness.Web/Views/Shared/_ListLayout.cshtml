@@ -6,7 +6,7 @@
     @RenderSection("HeaderScripts", false)
     </script>
 <script>
-    var gridDef=  @MvcHtmlString.Create(JsonUtil.ToJson(Model.GridDefinition));
+    var gridDef=  @MvcHtmlString.Create(JsonUtil.ToJson(Model.GridDef));
     var addEditUrl = "@MvcHtmlString.Create(Model.AddUpdateUrl)";
     var deleteMultipleUrl = "@MvcHtmlString.Create(Model.DeleteMultipleUrl)";
     var contentArea;

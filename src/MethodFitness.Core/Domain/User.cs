@@ -79,7 +79,7 @@ namespace MethodFitness.Core.Domain
         public virtual IEnumerable<TrainerClientRate> TrainerClientRates { get { return _trainerClientRates; } }
         public virtual void RemoveTrainerClientRate(TrainerClientRate trainerClientRate)
         {
-            _trainerClientRates.Remove(trainerClientRate);
+            _trainerClientRates.Remove(trainerClientRate); 
         }
         public virtual void AddTrainerClientRate(TrainerClientRate trainerClientRate)
         {

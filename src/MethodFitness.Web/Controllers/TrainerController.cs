@@ -88,7 +88,7 @@ namespace MethodFitness.Web.Controllers
             var model = new UserViewModel
             {
                 Item = trainer,
-                AddUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId,
+                addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId,
                 Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
             };
             return PartialView("TrainerView", model);
@@ -241,14 +241,45 @@ namespace MethodFitness.Web.Controllers
         {
             var newClients = new List<Client>();
             var newTCR = new List<TrainerClientRate>();
-            model.SelectedClients.Each(x =>
-                                           {
-                                               var client = _repository.Find<Client>(x.id);
-                                               newClients.Add(client);
-                                               newTCR.Add(new TrainerClientRate { Trainer = trainer, Client = client, Percent = x.percentage });
-                                           });
+            if (model.SelectedClients != null)
+            {
+                model.SelectedClients.Each(x =>
+                                               {
+                                                   var client = _repository.Find<Client>(x.id);
+                                                   newClients.Add(client);
+                                                   var tcr = trainer.TrainerClientRates.FirstOrDefault(t => t.Client == client);
+                                                   if (tcr == null)
+                                                   {
+                                                       newTCR.Add(new TrainerClientRate { User = trainer, Client = client, Percent = x.percentage });
+                                                   }else
+                                                   {
+                                                       tcr.Percent = x.percentage;
+                                                       newTCR.Add(tcr);
+                                                   }
+                                               });
+            }
             _updateCollectionService.Update(trainer.Clients, newClients, trainer.AddClient, trainer.RemoveClient);
-            _updateCollectionService.Update(trainer.TrainerClientRates, newTCR, trainer.AddTrainerClientRate, trainer.RemoveTrainerClientRate);
+            var remove = new List<TrainerClientRate>();
+            trainer.TrainerClientRates.Each(x =>
+            {
+                var newItem = newTCR.FirstOrDefault(i => i.EntityId == x.EntityId);
+                if (newItem == null)
+                {
+                    remove.Add(x);
+                }
+                else
+                {
+                    x.UpdateSelf(newItem);
+                }
+            });
+            remove.Each(x=>
+                            {
+                                trainer.RemoveTrainerClientRate(x);
+                                _repository.HardDelete(x);
+                            });
+            newTCR.Each(trainer.AddTrainerClientRate);
+
+
             return trainer;
         }
     }

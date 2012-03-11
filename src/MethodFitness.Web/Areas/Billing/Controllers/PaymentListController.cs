@@ -25,16 +25,18 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             _repository = repository;
         }
 
-        public ActionResult ItemList(ViewModel input)
+        public JsonResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.ParentId;
+            var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.EntityId;
             var model = new ListViewModel()
             {
-                AddUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.ParentId,
-                GridDefinition = _paymentListGrid.GetGridDefinition(url),
-                Title = WebLocalizationKeys.PAYMENTS.ToString() 
+                addUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
+                gridDef = _paymentListGrid.GetGridDefinition(url),
+                Title = WebLocalizationKeys.PAYMENTS.ToString(),
+                ParentId = input.EntityId
             };
-            return View(model);
+            model.headerButtons.Add("new");
+            return Json(model,JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Payments(GridItemsRequestModel input)

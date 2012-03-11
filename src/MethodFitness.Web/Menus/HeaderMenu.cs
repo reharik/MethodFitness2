@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html.Menu;
 using MethodFitness.Web;
-using MethodFitness.Web.Areas.Portfolio.Controllers;
 using MethodFitness.Web.Controllers;
 
 namespace KnowYourTurf.Web.Config

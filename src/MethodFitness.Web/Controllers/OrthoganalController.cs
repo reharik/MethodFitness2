@@ -2,15 +2,12 @@
 using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Html.Menu;
 using MethodFitness.Core.Services;
-using MethodFitness.Web.Controllers;
 using KnowYourTurf.Web.Config;
 using StructureMap;
 
-namespace MethodFitness.Web.Areas.Portfolio.Controllers
+namespace MethodFitness.Web.Controllers
 {
     public class OrthogonalController : MFController
     {
@@ -47,9 +44,9 @@ namespace MethodFitness.Web.Areas.Portfolio.Controllers
         }
 
         //remove true param when permissions are implemented
-        public PartialViewResult MainMenu()
+        public ActionResult MainMenu()
         {
-            return PartialView(new MenuViewModel
+            return View(new MenuViewModel
             {
                 MenuItems = _menuConfig.Build()
             });

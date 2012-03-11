@@ -20,10 +20,10 @@
                 url:calendarDefinition.Url,
                 data: { Loc: $("[name=Location]").val() }
             },
-            dayClick: function(date, allDay, jsEvent, view){ $.publish('/contentLevel/calendar_'+calendarDefinition.id+'/dayClick', [date, allDay, jsEvent, view]);},
-            eventClick: function(calEvent, jsEvent, view){ $.publish('/contentLevel/calendar_'+calendarDefinition.id+'/eventClick', [calEvent, jsEvent, view]);},
-            eventDrop: function(event, dayDelta,minuteDelta,allDay,revertFunc){ $.publish('/contentLevel/calendar_'+calendarDefinition.id+'/eventDrop', [event, dayDelta,minuteDelta,allDay,revertFunc]);},
-            eventResize: function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){$.publish('/contentLevel/calendar_'+calendarDefinition.id+'/eventResize', [event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ]);}
+            dayClick: function(date, allDay, jsEvent, view){ MF.vent.trigger("calendar:"+calendarDefinition.id+":dayClick", date, allDay, jsEvent, view);},
+            eventClick: function(calEvent, jsEvent, view){ MF.vent.trigger("calendar:"+calendarDefinition.id+":eventClick", calEvent, jsEvent, view);},
+            eventDrop: function(event, dayDelta,minuteDelta,allDay,revertFunc){ MF.vent.trigger("calendar:"+calendarDefinition.id+":eventDrop", event, dayDelta,minuteDelta,allDay,revertFunc);},
+            eventResize: function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){MF.vent.trigger("calendar:"+calendarDefinition.id+":eventResize", event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view );}
         };
 
         var calendarOptions = $.extend(calendarDefaultOptions, userOptions || {});

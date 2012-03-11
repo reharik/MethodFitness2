@@ -8,12 +8,12 @@
     
     var calendarDef=  @MvcHtmlString.Create(JsonUtil.ToJson(Model.CalendarDefinition));
     calendarDef.calendarContainer="#calendar";
-    var options = {
+    extraFormOptions = {
         calendarDef: calendarDef,
         trainers: @MvcHtmlString.Create(JsonUtil.ToJson(Model.Trainers))
     };
     $(document).ready(function(){
-        new mf.AppointmentCalendarController(options);
+        //new mf.AppointmentCalendarController(options);
         });
 
 </script>

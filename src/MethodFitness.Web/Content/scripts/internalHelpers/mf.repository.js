@@ -5,8 +5,11 @@
  * Time: 10:52 AM
  * To change this template use File | Settings | File Templates.
  */
+if (typeof mf == "undefined") {
+    var mf = {};
+}
 
-mf.repository= (function(){
+MF.repository= (function(){
     var repositoryCallback = function(result,callback){
         clearTimeout(showLoader);
         $("#ajaxLoading").hide();

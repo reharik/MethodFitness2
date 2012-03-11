@@ -105,7 +105,6 @@ mf.ClientFormView = mf.AjaxFormView.extend({
     payment:function(){
         $.publish("/contentLevel/form_"+this.id+"/payment",[this.options.paymentListUrl]);
     }
-
 });
 
 mf.PaymentFormView = mf.AjaxFormView.extend({

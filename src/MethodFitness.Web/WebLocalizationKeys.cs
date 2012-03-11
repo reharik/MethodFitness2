@@ -51,9 +51,10 @@ namespace MethodFitness.Web
 
         public static readonly StringToken FIELD_REQUIRED = new WebLocalizationKeys("FIELD_REQUIRED", "{0} Field is Required");
         public static readonly StringToken USER_COMPLIANCE_ITEM_NOT_IN_USER_COMPLIANCE_SET = new WebLocalizationKeys("USER_COMPLIANCE_ITEM_NOT_IN_USER_COMPLIANCE_SET", "User Assistant Item is not in the User Assistant Set");
-        public static readonly StringToken DELETE_ITEM = new WebLocalizationKeys("DELETE_ITEM", "Delete this item!");
-        public static readonly StringToken EDIT_ITEM = new WebLocalizationKeys("EDIT_ITEM", "Edit this item!");
-        public static readonly StringToken DISPLAY_ITEM = new WebLocalizationKeys("DISPLAY_ITEM", "Display this item!");
+        public static readonly StringToken DELETE_ITEM = new WebLocalizationKeys("DELETE_ITEM", "Delete this item");
+        public static readonly StringToken DELETE_ITEMS = new WebLocalizationKeys("DELETE_ITEMS", "Delete these items");
+        public static readonly StringToken EDIT_ITEM = new WebLocalizationKeys("EDIT_ITEM", "Edit this item");
+        public static readonly StringToken DISPLAY_ITEM = new WebLocalizationKeys("DISPLAY_ITEM", "Display this item");
         public static readonly StringToken USER_HAS_DATA = new WebLocalizationKeys("USER_HAS_DATA", "User Has Data");
         public static readonly StringToken TASK_NAME = new WebLocalizationKeys("TASK_NAME", "Task Name");
         public static readonly StringToken NAME = new WebLocalizationKeys("NAME", "Name");

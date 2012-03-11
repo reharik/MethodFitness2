@@ -46,8 +46,10 @@ namespace MethodFitness.Core.Html.Grid
         private HtmlTag buildAnchor(ENTITY item)
         {
             var anchor = new HtmlTag("a");
-            anchor.Attr("onclick",
-                        "$.publish('/contentLevel/grid/" + _action + "',['" + _actionUrl + "/" + item.EntityId + "']);");
+            anchor.Attr("onclick", "MF.vent.trigger('" + _action + "'," + item.EntityId + ")");
+
+//            anchor.Attr("onclick",
+//                        "$.publish('/contentLevel/grid/" + _action + "',['" + _actionUrl + "/" + item.EntityId + "']);");
             return anchor;
         }
     }

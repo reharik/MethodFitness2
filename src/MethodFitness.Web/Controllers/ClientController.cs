@@ -118,7 +118,7 @@ namespace MethodFitness.Web.Controllers
             var userEntityId = _sessionContext.GetUserEntityId();
             var user = _repository.Find<User>(userEntityId);
             user.AddClient(client);
-            user.AddTrainerClientRate(new TrainerClientRate{Trainer=user,Client = client, Percent = Int32.Parse(SiteConfig.Settings().TrainerClientRateDefault)});
+            user.AddTrainerClientRate(new TrainerClientRate{User=user,Client = client, Percent = Int32.Parse(SiteConfig.Settings().TrainerClientRateDefault)});
             _saveEntityService.ProcessSave(user);
         }
 

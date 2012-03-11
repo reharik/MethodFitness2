@@ -1,8 +1,5 @@
-﻿@model MenuViewModel
-@using MethodFitness.Web.Areas.Portfolio.Controllers
-<script>
-    $(document).ready(function () {
-        $(".ccMenu").ccMenu({ backLink: false, width : 220 });
-    });
-</script>
-@MenuItems(Model.MenuItems).filGroup().ToHtmlTag()
+﻿@model MethodFitness.Web.Controllers.MenuViewModel
+@{ Layout =""; }
+<div id="menu">
+    @MenuItems(Model.MenuItems).filGroup().ToHtmlTag()
+</div>

@@ -127,7 +127,7 @@ $(document).ready(function() {
     $.fn.crudForm.defaults = {
         dataType: 'json',
         errorContainer: '#errorMessagesForm',
-        beforeSubmitCallbackFunctions: [mf.crudHelpers.documentHandler,mf.crudHelpers.photoHandler]
+        beforeSubmitCallbackFunctions: []
     };
 })(jQuery);
 

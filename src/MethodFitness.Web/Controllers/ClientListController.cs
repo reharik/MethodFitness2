@@ -30,18 +30,19 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _repository = repository;
         }
 
-        public ActionResult ItemList(ViewModel input)
+        public JsonResult ItemList(ViewModel input)
         {
             var url = UrlContext.GetUrlForAction<ClientListController>(x => x.Clients(null));
             var model = new ListViewModel()
             {
-                AddUpdateUrl = UrlContext.GetUrlForAction<ClientController>(x => x.AddUpdate(null)),
-                DeleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
+                addUpdateUrl = UrlContext.GetUrlForAction<ClientController>(x => x.AddUpdate(null)),
+                deleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
                // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
-                GridDefinition = _clientListGrid.GetGridDefinition(url),
+                gridDef = _clientListGrid.GetGridDefinition(url),
                 Title = WebLocalizationKeys.CLIENTS.ToString() 
             };
-            return View(model);
+            model.headerButtons.Add("new");
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Clients(GridItemsRequestModel input)

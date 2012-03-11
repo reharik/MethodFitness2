@@ -14,11 +14,14 @@ mf.TemplatedPopupView = Backbone.View.extend({
     initialize: function(){
         this.options = $.extend({},mf.popupDefaults,this.options);
         this.id=this.options.id;
-        $(".ui-dialog").remove();
-        this.render()
     },
     render:function(){
-        var that = this;
+        $(".ui-dialog").remove();
+        var errorMessages = $("div[id*='errorMessages']", this.el);
+        if(errorMessages){
+            var id = errorMessages.attr("id");
+            errorMessages.attr("id","errorMessagesPU").removeClass(id).addClass("errorMessagesPU");
+        }
         $(this.el).append($(this.options.template).tmpl(this.options.data));
         $(this.el).dialog({
             modal: true,
@@ -26,8 +29,7 @@ mf.TemplatedPopupView = Backbone.View.extend({
             buttons:this.options.buttons,
             title: this.options.title,
             close:function(){
-                $.publish("/contentLevel/popup_"+that.id+"/cancel",[]);
-                $(".ui-dialog").remove();
+                 MF.vent.trigger("popup:"+id+":cancel");
             }
         });
         return this;

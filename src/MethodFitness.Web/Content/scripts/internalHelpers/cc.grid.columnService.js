@@ -1,6 +1,10 @@
+if (typeof cc == "undefined") {
+    var cc = {};
+}
+if (typeof cc.grid == "undefined") {
+    cc.grid = {};
+}
 
-
-cc.namespace("cc.grid");
 
 cc.grid.columnService = (function() {
     return {

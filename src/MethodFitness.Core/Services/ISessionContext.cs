@@ -25,6 +25,7 @@ namespace MethodFitness.Core.Services
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
             return customPrincipal != null ? customPrincipal.CompanyId : 0;
         }
+
         public int GetUserEntityId()
         {
             var httpContext = HttpContext.Current;

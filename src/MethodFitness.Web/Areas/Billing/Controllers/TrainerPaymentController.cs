@@ -30,8 +30,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var url = UrlContext.GetUrlForAction<TrainerPaymentController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.ParentId;
             var model = new ListViewModel()
             {
-                AddUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.ParentId,
-                GridDefinition = _TrainerPaymentGrid.GetGridDefinition(url),
+                addUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.ParentId,
+                gridDef = _TrainerPaymentGrid.GetGridDefinition(url),
                 Title = WebLocalizationKeys.PAYMENTS.ToString() 
             };
             return View(model);

@@ -9,6 +9,7 @@
 mf.AppointmentCalendarController = mf.Controller.extend({
     events:_.extend({
     }, mf.Controller.prototype.events),
+
     initialize:function(){
         $.extend(this,this.defaults());
         this.options = $.extend({},mf.crudControllerDefaults, this.options);

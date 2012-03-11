@@ -17,6 +17,7 @@ using FubuMVC.UI;
 using FubuMVC.UI.Configuration;
 using FubuMVC.UI.Tags;
 using KnowYourTurf.Web.Config;
+using MethodFitness.Web.Services.ViewOptions;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using Rhino.Security.Interfaces;
@@ -82,6 +83,7 @@ namespace MethodFitness.Web
             For<IPermissionsBuilderService>().HybridHttpOrThreadLocalScoped().Use<PermissionsBuilderService>();
             For<IPermissionsService>().HybridHttpOrThreadLocalScoped().Use<PermissionsService>();
             For<ISecuritySetupService>().Use<DefaultSecuritySetupService>();
+            For<IViewOptionConfig>().Add<ScheduleViewOptionList>();
 
             For(typeof(IGridBuilder<>)).Use(typeof(GridBuilder<>));
             
