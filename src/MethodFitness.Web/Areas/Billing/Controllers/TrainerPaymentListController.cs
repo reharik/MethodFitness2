@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using MethodFitness.Core;
 using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Services;
@@ -27,15 +28,15 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<TrainerPaymentListController>(x => x.TrainerPayments(null)) + "?ParentId="+input.ParentId;
+            var url = UrlContext.GetUrlForAction<TrainerPaymentListController>(x => x.TrainerPayments(null),AreaName.Billing) + "?ParentId="+input.ParentId;
             var model = new ListViewModel()
             {
                 gridDef = _grid.GetGridDefinition(url)
             };
-            return View(model);
+            return Json(model,JsonRequestBehavior.AllowGet);
         }
 
-        private JsonResult TrainerPayments(GridItemsRequestModel input)
+        public JsonResult TrainerPayments(GridItemsRequestModel input)
         {
             var trainer = _repository.Find<User>(input.ParentId);
             var sessions = trainer.Sessions.Where(x => !x.TrainerPaid);

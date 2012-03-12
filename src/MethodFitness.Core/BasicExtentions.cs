@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Html;
 using FubuMVC.Core.Util;
+using NHibernate.Proxy;
 
 namespace MethodFitness.Core
 {
@@ -298,8 +299,23 @@ namespace MethodFitness.Core
 
             return UrlContext.GetFullUrl(formattedUrl);
         }
+        
+        
+        public static Type GetTypeWhenProxy(this object possibleProxy)
+        {
+            if (possibleProxy is INHibernateProxy)
+            {
+                var lazyInitialiser = ((INHibernateProxy)possibleProxy).HibernateLazyInitializer;
+                return lazyInitialiser.PersistentClass;
+            }
+            else
+            {
+                return possibleProxy.GetType();
+            }
+        }
 
-            
+
+
             //public static Continuation ToContinuation(this Result result, Continuation continuation)
         //{
         //    List<ErrorInfo> errors = new List<ErrorInfo>();

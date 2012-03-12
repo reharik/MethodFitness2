@@ -47,7 +47,7 @@ namespace MethodFitness.Core.Domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (GetType() != obj.GetType()) return false;
+            if (this.GetTypeWhenProxy() != obj.GetTypeWhenProxy()) return false;
             return obj.EntityId == EntityId;
         }
 
@@ -55,7 +55,7 @@ namespace MethodFitness.Core.Domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (GetType() != obj.GetType()) return false;
+            if (this.GetTypeWhenProxy() != obj.GetTypeWhenProxy()) return false;
             return Equals((Entity) obj);
         }
 

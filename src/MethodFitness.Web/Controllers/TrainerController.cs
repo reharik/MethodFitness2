@@ -229,6 +229,7 @@ namespace MethodFitness.Web.Controllers
             trainer.Notes = trainerModel.Notes;
             trainer.Status = trainerModel.Status;
             trainer.BirthDate = trainerModel.BirthDate;
+            trainer.ClientRateDefault = trainerModel.ClientRateDefault;
             trainer.Color = trainerModel.Color.IsNotEmpty()?trainerModel.Color:"#3366CC";
             if (trainer.UserLoginInfo==null) trainer.UserLoginInfo = new UserLoginInfo();
             trainer.UserLoginInfo.LoginName = trainerModel.UserLoginInfo.LoginName;

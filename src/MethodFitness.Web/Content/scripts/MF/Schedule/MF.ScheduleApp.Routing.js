@@ -34,7 +34,7 @@ MF.Routing.ScheduleApp = (function(MF, Backbone){
     // Initialize the router when the application starts
     MF.addInitializer(function(){
         ScheduleApp.router = new ScheduleApp.Router({
-            controller: MF.ScheduleApp
+            controller: MF.Controller
         });
     });
 
