@@ -9,9 +9,9 @@
 MF.Controller = (function(MF, Backbone){
     var Controller = {};
 
-       Controller.scheduleViews=function(splat,entityId, parentId){
+       Controller.showViews=function(splat,entityId, parentId){
            var routeToken = _.find(MF.routeTokens,function(item){
-               return item.routeSplat == splat;
+               return item.route == splat;
            });
            if(!routeToken)return;
            // this is so you don't set the id to the routetoken which stays in scope

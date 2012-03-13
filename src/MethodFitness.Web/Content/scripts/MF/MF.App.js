@@ -34,6 +34,16 @@ MF.addInitializer(function(){
         var $this = $(this);
         $this.datepicker({ changeYear: true, changeMonth: true });
     });
+
+    MF.vent.bind("route",function(route,triggerRoute){
+        MF.Routing.showRoute(route,triggerRoute);
+    });
+});
+
+MF.bind("initialize:before", function(){
+    MF.ScheduleApp.router = new MF.Routing.ScheduleApp.Router({
+            controller: MF.Controller
+        });
 });
 
 MF.bind("initialize:after", function(){

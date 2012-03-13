@@ -28,7 +28,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<TrainerPaymentListController>(x => x.TrainerPayments(null),AreaName.Billing) + "?ParentId="+input.ParentId;
+            var url = UrlContext.GetUrlForAction<TrainerPaymentListController>(x => x.TrainerPayments(null),AreaName.Billing) + "?ParentId="+input.EntityId;
             var model = new ListViewModel()
             {
                 gridDef = _grid.GetGridDefinition(url)

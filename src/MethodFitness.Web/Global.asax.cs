@@ -59,6 +59,10 @@ namespace MethodFitness.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("elmah.axd");
             routes.MapRoute(
+               "Schedular",
+               "Schedular",
+               new { controller = "MethodFitness", action = "Home" }); 
+            routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{EntityId}", // URL with parameters
                 new { controller = "Login", action = "Login", EntityId = UrlParameter.Optional } // Parameter defaults

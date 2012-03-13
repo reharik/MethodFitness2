@@ -9,7 +9,6 @@ namespace MethodFitness.Web.Services.ViewOptions
 {
     public class ViewOption
     {
-        public string routeSplat { get; set; }
         public string url { get; set; }
         public string viewName { get; set; }
         public string subViewName { get; set; }
@@ -24,12 +23,6 @@ namespace MethodFitness.Web.Services.ViewOptions
         public void CreateUrl<CONTROLLER>(Expression<Func<CONTROLLER, object>> expression, AreaName areaName = null) where CONTROLLER : MFController
         {
             url = UrlContext.GetUrlForAction(expression, areaName);
-        }
-
-        public void CreateRouteAndSplat(string _routeSplat, AreaName areaName = null)
-        {
-            routeSplat = _routeSplat;
-            route = areaName.ToString().ToLowerInvariant() + "/" + _routeSplat;
         }
 
     }

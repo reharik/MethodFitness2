@@ -17,7 +17,7 @@ namespace MethodFitness.Web.Services.ViewOptions
         IViewOptionBuilder UrlForList<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
         IViewOptionBuilder UrlForForm<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
         IViewOptionBuilder Url<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName=null) where CONTROLLER : Controller;
-        IViewOptionBuilder RouteToken(string splat, AreaName areaName);
+        IViewOptionBuilder RouteToken(string route);
         IViewOptionBuilder ViewName(string viewName);
         IViewOptionBuilder SubViewName(string subViewName);
         IViewOptionBuilder ViewId(string ViewId);
@@ -62,8 +62,8 @@ namespace MethodFitness.Web.Services.ViewOptions
             var itemName = typeof(CONTROLLER).Name.Replace("Controller", "").ToLowerInvariant();
             currentItem.id = itemName;
             currentItem.viewName = "GridView";
-            currentItem.CreateRouteAndSplat(itemName, AreaName.Schedule);
-            currentItem.addUpate = AreaName.Schedule.ToString().ToLowerInvariant() + "/" + itemName.Replace("list", "");
+            currentItem.route = itemName;
+            currentItem.addUpate = itemName.Replace("list", "");
             return this;
         }
 
@@ -73,7 +73,7 @@ namespace MethodFitness.Web.Services.ViewOptions
             var itemName = typeof(CONTROLLER).Name.Replace("Controller", "").ToLowerInvariant();
             currentItem.id = itemName;
             currentItem.viewName = "AjaxFormView";
-            currentItem.CreateRouteAndSplat(itemName, AreaName.Schedule);
+            currentItem.route = itemName;
             currentItem.isChild = true;
             return this;
         }
@@ -84,9 +84,9 @@ namespace MethodFitness.Web.Services.ViewOptions
             return this;
         }
 
-        public IViewOptionBuilder RouteToken(string splat, AreaName areaName)
+        public IViewOptionBuilder RouteToken(string route)
         {
-            currentItem.CreateRouteAndSplat(splat, areaName);
+            currentItem.route = route;
             return this;
         }
 

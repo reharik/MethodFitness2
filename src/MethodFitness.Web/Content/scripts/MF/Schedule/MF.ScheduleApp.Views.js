@@ -271,7 +271,7 @@ MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
     }, MF.Views.AjaxFormView.prototype.events),
     payment:function(){
         var id = $(this.el).find("#EntityId").val();
-        MF.vent.trigger("route","schedule/paymentlist/"+id,true);
+        MF.vent.trigger("route","paymentlist/"+id,true);
     }
 });
 MF.Views.PaymentListView = MF.Views.GridView.extend({
@@ -422,3 +422,11 @@ MF.Views.TrainerEditableTokenView = MF.Views.EditableTokenView.extend({
 
 });
 
+MF.Views.TrainerGridView = MF.Views.GridView.extend({
+    viewLoaded:function(){
+        MF.vent.bind("Redirect",this.showPayGrid,this);
+    },
+    showPayGrid:function(id){
+        MF.vent.trigger("route","trainerpaymentlist/"+id,true);
+    }
+});

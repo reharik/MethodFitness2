@@ -24,7 +24,7 @@ namespace MethodFitness.Core.Html.Menu
         IMenuBuilder CreateNode<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, StringToken text, string urlParam, AreaName areaName = null, string cssClass=null) where CONTROLLER : Controller;
         IMenuBuilder CreateNode(StringToken text, string cssClass=null);
         string OutputFlatJson();
-        IMenuBuilder CreateTagNode<CONTROLLER>(StringToken text, string prefix) where CONTROLLER : Controller;
+        IMenuBuilder CreateTagNode<CONTROLLER>(StringToken text) where CONTROLLER : Controller;
     }
 
     public class MenuBuilder : IMenuBuilder
@@ -84,7 +84,7 @@ namespace MethodFitness.Core.Html.Menu
             return this;
         }
 
-        public IMenuBuilder CreateTagNode<CONTROLLER>(StringToken text, string prefix) where CONTROLLER : Controller
+        public IMenuBuilder CreateTagNode<CONTROLLER>(StringToken text) where CONTROLLER : Controller
         {
             var _itemList = getList();
             var type = typeof(CONTROLLER).Name.ToLowerInvariant();
@@ -92,7 +92,7 @@ namespace MethodFitness.Core.Html.Menu
             _itemList.Add(new MenuItem
             {
                 Text = text.DefaultValue,
-                Url = prefix + type
+                Url = type
             });
             return this;
         }

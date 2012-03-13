@@ -12,7 +12,7 @@ MF.ScheduleApp = (function(MF, Backbone){
     //show user settings and hide the menu
     ScheduleApp.show = function(){
         ScheduleApp.Menu.show();
-        MF.vent.trigger("route", "schedule/calendar",true);
+        MF.vent.trigger("route", "calendar",true);
     };
 
     MF.State.bind("change:application", function(e,f,g){

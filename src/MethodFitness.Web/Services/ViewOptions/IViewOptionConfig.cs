@@ -23,12 +23,12 @@ namespace MethodFitness.Web.Services.ViewOptions
         {
             _builder.WithoutPermissions(withoutPermissions);
             _builder.Url<OrthogonalController>(x => x.MainMenu()).ViewId("scheduleMenu").End();
-            _builder.UrlForForm<AppointmentCalendarController>(x => x.AppointmentCalendar(null),AreaName.Schedule).RouteToken("calendar",AreaName.Schedule).ViewName("CalendarView").IsChild(false).End();
+            _builder.UrlForForm<AppointmentCalendarController>(x => x.AppointmentCalendar(null),AreaName.Schedule).RouteToken("calendar").ViewName("CalendarView").IsChild(false).End();
 
             _builder.UrlForList<ClientListController>(x => x.ItemList(null)).End();
             _builder.UrlForForm<ClientController>(x => x.AddUpdate(null)).ViewName("ClientFormView").End();
 
-            _builder.UrlForList<TrainerListController>(x => x.ItemList(null)).End();
+            _builder.UrlForList<TrainerListController>(x => x.ItemList(null)).ViewName("TrainerGridView").End();
             _builder.UrlForForm<TrainerController>(x => x.AddUpdate(null)).ViewName("TrainerFormView").End();
 
             _builder.UrlForList<PaymentListController>(x => x.ItemList(null), AreaName.Billing).ViewName("PaymentListView").End();

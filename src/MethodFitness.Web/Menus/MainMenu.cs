@@ -25,12 +25,12 @@ namespace MethodFitness.Web.Menus
         private IList<MenuItem> DefaultMenubuilder(bool withoutPermissions = false)
         {
             return _builder
-                .CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR, "schedule/")
-                .CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS, "schedule/")
+                .CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR)
+                .CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS)
                 .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                     .HasChildren()
-                        .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS, "schedule/")
-                        .CreateTagNode<TimeSheetController>(WebLocalizationKeys.TIME_SHEET, "schedule/")
+                        .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS)
+                        .CreateTagNode<TimeSheetController>(WebLocalizationKeys.TIME_SHEET)
                     .EndChildren()
             .MenuTree(withoutPermissions);
         }

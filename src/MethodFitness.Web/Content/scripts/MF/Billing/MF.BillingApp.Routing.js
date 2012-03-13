@@ -8,16 +8,6 @@
 MF.Routing.BillingApp = (function(MF, Backbone){
     var BillingApp = {};
 
-    // Router
-    // ------
-    BillingApp.Router = Backbone.Marionette.AppRouter.extend({
-          appRoutes: {
-              "billing/*path/:entityId/:parentId": "scheduleViews",
-              "billing/*path/:entityId": "scheduleViews",
-              "billing/*path": "scheduleViews",
-          }
-      });
-
     // Initialize the router when the application starts
     MF.addInitializer(function(){
         BillingApp.router = new BillingApp.Router({

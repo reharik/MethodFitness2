@@ -12,30 +12,17 @@ MF.Routing.ScheduleApp = (function(MF, Backbone){
     // ------
     ScheduleApp.Router = Backbone.Marionette.AppRouter.extend({
           appRoutes: {
-              "schedule/*path/:entityId/:parentId": "scheduleViews",
-              "schedule/*path/:entityId": "scheduleViews",
-              "schedule/*path": "scheduleViews",
-              "":"show"
+              "*path/:entityId/:parentId": "showViews",
+              "*path/:entityId": "showViews",
+              "*path": "showViews"
           }
       });
-
-    MF.vent.bind("route",function(route,triggerRoute){
-        MF.Routing.showRoute(route,triggerRoute);
-    });
-
-    MF.vent.bind("home", function(){
-        MF.Routing.showRoute("home");
-    });
-
 
     // Initialization
     // --------------
 
     // Initialize the router when the application starts
     MF.addInitializer(function(){
-        ScheduleApp.router = new ScheduleApp.Router({
-            controller: MF.Controller
-        });
     });
 
     return ScheduleApp;
