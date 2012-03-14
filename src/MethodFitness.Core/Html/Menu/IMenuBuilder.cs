@@ -25,6 +25,7 @@ namespace MethodFitness.Core.Html.Menu
         IMenuBuilder CreateNode(StringToken text, string cssClass=null);
         string OutputFlatJson();
         IMenuBuilder CreateTagNode<CONTROLLER>(StringToken text) where CONTROLLER : Controller;
+        IMenuBuilder Route(string route);
     }
 
     public class MenuBuilder : IMenuBuilder
@@ -129,6 +130,14 @@ namespace MethodFitness.Core.Html.Menu
             });
             return this;
         }
+        public IMenuBuilder Route(string route)
+        {
+            var _itemList = getList();
+            var lastItem = _itemList.LastOrDefault();
+            lastItem.Url=route;
+            return this;
+
+        } 
         public IList<MenuItem> MenuTree(bool withoutPermissions = false)
         {
             if (withoutPermissions) return _items;

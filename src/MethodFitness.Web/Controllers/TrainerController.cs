@@ -240,47 +240,25 @@ namespace MethodFitness.Web.Controllers
         }
         private User updateClientInfo(UserViewModel model, User trainer)
         {
-            var newClients = new List<Client>();
-            var newTCR = new List<TrainerClientRate>();
-            if (model.SelectedClients != null)
+            var remove = new List<Client>();
+            if (model.SelectedClients == null)
+            {
+                trainer.Clients.Each(remove.Add);
+                remove.Each(trainer.RemoveClient);
+            }
+            else
             {
                 model.SelectedClients.Each(x =>
                                                {
                                                    var client = _repository.Find<Client>(x.id);
-                                                   newClients.Add(client);
-                                                   var tcr = trainer.TrainerClientRates.FirstOrDefault(t => t.Client == client);
-                                                   if (tcr == null)
-                                                   {
-                                                       newTCR.Add(new TrainerClientRate { User = trainer, Client = client, Percent = x.percentage });
-                                                   }else
-                                                   {
-                                                       tcr.Percent = x.percentage;
-                                                       newTCR.Add(tcr);
-                                                   }
+                                                   trainer.AddClient(client, x.percentage);
                                                });
+                trainer.Clients.Each(x =>
+                                         {
+                                             if (!model.SelectedClients.Any(c => c.id == x.EntityId))
+                                                 trainer.RemoveClient(x);
+                                         });
             }
-            _updateCollectionService.Update(trainer.Clients, newClients, trainer.AddClient, trainer.RemoveClient);
-            var remove = new List<TrainerClientRate>();
-            trainer.TrainerClientRates.Each(x =>
-            {
-                var newItem = newTCR.FirstOrDefault(i => i.EntityId == x.EntityId);
-                if (newItem == null)
-                {
-                    remove.Add(x);
-                }
-                else
-                {
-                    x.UpdateSelf(newItem);
-                }
-            });
-            remove.Each(x=>
-                            {
-                                trainer.RemoveTrainerClientRate(x);
-                                _repository.HardDelete(x);
-                            });
-            newTCR.Each(trainer.AddTrainerClientRate);
-
-
             return trainer;
         }
     }

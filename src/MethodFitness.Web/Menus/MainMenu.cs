@@ -25,7 +25,7 @@ namespace MethodFitness.Web.Menus
         private IList<MenuItem> DefaultMenubuilder(bool withoutPermissions = false)
         {
             return _builder
-                .CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR)
+                .CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR).Route("calendar")
                 .CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS)
                 .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                     .HasChildren()

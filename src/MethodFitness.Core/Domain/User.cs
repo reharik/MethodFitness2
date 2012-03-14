@@ -60,18 +60,24 @@ namespace MethodFitness.Core.Domain
             if (_userRoles.Contains(userRole)) return;
             _userRoles.Add(userRole);
         }
-
         private IList<Client> _clients = new List<Client>();
         public virtual void EmptyClients() { _clients.Clear(); }
         public virtual IEnumerable<Client> Clients { get { return _clients; } }
         public virtual void RemoveClient(Client client)
         {
             _clients.Remove(client);
+            _trainerClientRates.Remove(_trainerClientRates.FirstOrDefault(x => x.Client == client));
         }
-        public virtual void AddClient(Client client)
+        public virtual void AddClient(Client client, int clientRate)
         {
-            if (_clients.Contains(client)) return;
-            _clients.Add(client);
+            if (_clients.Contains(client))
+            {
+                _trainerClientRates.FirstOrDefault(x => x.Client == client).Percent = clientRate;
+            }else
+            {
+                _clients.Add(client);
+                AddTrainerClientRate(new TrainerClientRate { User = this, Client = client, Percent = clientRate });
+            }
         }
 
         private IList<TrainerClientRate> _trainerClientRates = new List<TrainerClientRate>();

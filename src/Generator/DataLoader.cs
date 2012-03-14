@@ -37,7 +37,7 @@ namespace Generator
             createLocations();
             createUserRoles();
             createUser();
-//            CreateClients();
+            CreateClients();
             _repository.Commit();
         }
 
@@ -128,7 +128,9 @@ namespace Generator
                                CompanyId = 1,
                                FirstName = "Raif",
                                LastName = "Harik",
-                               MobilePhone = "512.228.6069"
+                               MobilePhone = "512.228.6069",
+                               StartDate = DateTime.Now,
+                               CreateDate = DateTime.Now
                            };
             _client2 = new Client
             {
@@ -140,7 +142,9 @@ namespace Generator
                 CompanyId = 1,
                 FirstName = "Ralf",
                 LastName = "harris",
-                MobilePhone = "512.228.6069"
+                MobilePhone = "512.228.6069",
+                StartDate = DateTime.Now,
+                CreateDate = DateTime.Now
             };
             _client3 = new Client
             {
@@ -152,7 +156,9 @@ namespace Generator
                 CompanyId = 1,
                 FirstName = "Green",
                 LastName = "Jarvis",
-                MobilePhone = "512.228.6069"
+                MobilePhone = "512.228.6069",
+                StartDate = DateTime.Now,
+                CreateDate = DateTime.Now
             };
             _client4 = new Client
             {
@@ -164,7 +170,9 @@ namespace Generator
                 CompanyId = 1,
                 FirstName = "Brandon",
                 LastName = "Mcclary",
-                MobilePhone = "512.228.6069"
+                MobilePhone = "512.228.6069",
+                StartDate = DateTime.Now,
+                CreateDate = DateTime.Now
             };
             _client5 = new Client
             {
@@ -176,13 +184,16 @@ namespace Generator
                 CompanyId = 1,
                 FirstName = "Schmudge",
                 LastName = "Harik",
-                MobilePhone = "512.228.6069"
+                MobilePhone = "512.228.6069",
+                StartDate = DateTime.Now,
+                CreateDate = DateTime.Now
             };
-            _repository.Save(_client1);
-            _repository.Save(_client2);
-            _repository.Save(_client3);
-            _repository.Save(_client4);
-            _repository.Save(_client5);
+            _defaultUser.AddClient(_client1, _defaultUser.ClientRateDefault);
+            _defaultUser.AddClient(_client2, _defaultUser.ClientRateDefault);
+            _defaultUser.AddClient(_client3, _defaultUser.ClientRateDefault);
+            _defaultUser.AddClient(_client4, _defaultUser.ClientRateDefault);
+            _defaultUser.AddClient(_client5, _defaultUser.ClientRateDefault);
+            _repository.Save(_defaultUser);
         }
     }
 }
