@@ -24,6 +24,7 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
     },
     viewLoaded:function(){
         MF.vent.bind("Redirect",this.showPayGrid,this);
+        $(this.el).find(".content-header").append("<button class='delete'></button>");
     },
     showPayGrid:function(id){
         MF.vent.trigger("route","trainerpaymentlist/"+id,true);
