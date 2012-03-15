@@ -32,7 +32,8 @@ namespace Generator
                 IGeneratorCommand command;
                 if (args.Length == 0) //displayHelpAndExit(args, commands);
                 {
-                    command = ObjectFactory.Container.GetInstance<IGeneratorCommand>("rebuilddatabase");
+                    command = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
+//                    command = ObjectFactory.Container.GetInstance<IGeneratorCommand>("rebuilddatabase");
                 }else
                 {
                     command = commands.FirstOrDefault(c => c.toCanonicalCommandName() == args[0].toCanonicalCommandName());
@@ -74,7 +75,7 @@ namespace Generator
 
             ObjectFactory.Initialize(x =>
                                          {
-                                             x.AddRegistry(new MFWebRegistry());
+                                             x.AddRegistry(new GenRegistry());
                                              x.AddRegistry(new CommandRegistry());
                                          });
             //ObjectFactory.AssertConfigurationIsValid();

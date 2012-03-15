@@ -8,12 +8,11 @@ namespace Generator.Commands
     public class RebuildDatabaseCommand : IGeneratorCommand
     {
         private readonly ILocalizedStringLoader _loader;
-        private readonly IRepository _repository;
+        private  IRepository _repository;
 
-        public RebuildDatabaseCommand(IRepository repository, ILocalizedStringLoader loader)
+        public RebuildDatabaseCommand(ILocalizedStringLoader loader)
         {
             _loader = loader;
-            _repository = repository;
         }
 
         public string Description { get { return "Rebuilds the db and data"; } }
@@ -29,6 +28,26 @@ namespace Generator.Commands
 
             var securitySetup = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
             securitySetup.Execute(null);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//            new DataLoader().Load();
+//            SqlServerHelper.AddRhinoSecurity(sessionFactory);
+//
+//            var securitySetup = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
+//            securitySetup.Execute(null);
 
 
             //_loader.ClearStrings();

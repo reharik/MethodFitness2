@@ -32,7 +32,6 @@ namespace Generator
             _securityDataService = ObjectFactory.GetInstance<ISecurityDataService>();
             _authorizationRepository = ObjectFactory.GetInstance<IAuthorizationRepository>();
 
-            _repository.Initialize();
             createCompany();
             createLocations();
             createUserRoles();
