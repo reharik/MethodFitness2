@@ -863,6 +863,9 @@ div.ui-dialog {
     color: #666666;
 }
 
+.ui-jqgrid tr.gridRowStrikeThrough td{
+    background: transparent url('../images/strike.png') 0 50% repeat-x;
+}
 .ui-jqgrid tr.ui-state-hover td {
     background: #fae8b3; /* Old browsers */
     background: -moz-linear-gradient(top, #fae8b3 0%, #f9e1a0 100%);

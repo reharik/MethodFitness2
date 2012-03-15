@@ -130,7 +130,8 @@ namespace Generator
                                LastName = "Harik",
                                MobilePhone = "512.228.6069",
                                StartDate = DateTime.Now,
-                               CreateDate = DateTime.Now
+                               CreateDate = DateTime.Now,
+                               SessionRates = new SessionRates(true)
                            };
             _client2 = new Client
             {
@@ -144,7 +145,8 @@ namespace Generator
                 LastName = "harris",
                 MobilePhone = "512.228.6069",
                 StartDate = DateTime.Now,
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                SessionRates = new SessionRates(true)
             };
             _client3 = new Client
             {
@@ -158,7 +160,8 @@ namespace Generator
                 LastName = "Jarvis",
                 MobilePhone = "512.228.6069",
                 StartDate = DateTime.Now,
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                SessionRates = new SessionRates(true)
             };
             _client4 = new Client
             {
@@ -172,7 +175,8 @@ namespace Generator
                 LastName = "Mcclary",
                 MobilePhone = "512.228.6069",
                 StartDate = DateTime.Now,
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                SessionRates = new SessionRates(true)
             };
             _client5 = new Client
             {
@@ -186,7 +190,8 @@ namespace Generator
                 LastName = "Harik",
                 MobilePhone = "512.228.6069",
                 StartDate = DateTime.Now,
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                SessionRates = new SessionRates(true)
             };
             _defaultUser.AddClient(_client1, _defaultUser.ClientRateDefault);
             _defaultUser.AddClient(_client2, _defaultUser.ClientRateDefault);

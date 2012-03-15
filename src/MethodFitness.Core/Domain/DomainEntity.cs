@@ -48,7 +48,7 @@ namespace MethodFitness.Core.Domain
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (this.GetTypeWhenProxy() != obj.GetTypeWhenProxy()) return false;
-            return obj.EntityId == EntityId;
+            return !IsNew() && obj.EntityId == EntityId;
         }
 
         public override bool Equals(object obj)

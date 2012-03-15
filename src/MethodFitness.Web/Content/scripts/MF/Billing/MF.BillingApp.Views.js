@@ -7,10 +7,25 @@
  */
 
 MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
+    onPreRender:function(){
+        this.options.gridOptions={loadComplete : function(){
+            var ids = $("#gridContainer").jqGrid('getDataIDs');
+            for (var i = 0, l = ids.length; i < l; i++) {
+                var rowid = ids[i];
+                var rowData =$("#gridContainer").jqGrid('getRowData',ids[i]);
+                if (parseInt($(rowData.TrainerPay).text())<=0) {
+                    var row = $('#' + rowid, this.el);
+                    row.addClass('gridRowStrikeThrough');
+                   // row.find("td").addClass('gridRowStrikeThrough');
+                    row.find("td:first input").hide();
+                }
+            }
+        }}
+    },
     viewLoaded:function(){
         MF.vent.bind("Redirect",this.showPayGrid,this);
     },
     showPayGrid:function(id){
-        MF.vent.trigger("route","trainerpaymentlist/"+id);
+        MF.vent.trigger("route","trainerpaymentlist/"+id,true);
     }
 });

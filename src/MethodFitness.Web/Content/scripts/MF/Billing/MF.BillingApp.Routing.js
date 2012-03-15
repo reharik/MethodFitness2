@@ -10,9 +10,9 @@ MF.Routing.BillingApp = (function(MF, Backbone){
 
     // Initialize the router when the application starts
     MF.addInitializer(function(){
-        BillingApp.router = new BillingApp.Router({
-            controller: MF.Controller
-        });
+//        BillingApp.router = new BillingApp.Router({
+//            controller: MF.Controller
+//        });
     });
 
     return BillingApp;

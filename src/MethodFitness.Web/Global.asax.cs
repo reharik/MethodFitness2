@@ -59,8 +59,8 @@ namespace MethodFitness.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("elmah.axd");
             routes.MapRoute(
-               "Schedular",
-               "Schedular",
+               "Scheduler",
+               "Scheduler",
                new { controller = "MethodFitness", action = "Home" }); 
             routes.MapRoute(
                 "Default", // Route name
