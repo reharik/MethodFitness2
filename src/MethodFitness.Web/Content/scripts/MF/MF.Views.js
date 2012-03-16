@@ -359,7 +359,6 @@ MF.Views.TemplatedPopupView = MF.Views.View.extend({
 
     initialize: function(){
         this.options = $.extend({},mf.popupDefaults,this.options);
-        this.id=this.options.id;
     },
     render:function(){
         $(this.el).append($(this.options.template).tmpl(this.options.data));

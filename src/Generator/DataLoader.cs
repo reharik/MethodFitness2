@@ -80,7 +80,9 @@ namespace Generator
                                    CompanyId = 1,
                                    Color = "#148509",
                                    CreateDate = DateTime.Now,
-                                   ClientRateDefault = 65
+                                   ClientRateDefault = 65,
+                                   PhoneMobile = "123456789",
+                                   Email = "reharik@gmail.com"
             
                                };
             _defaultUser.AddUserRole(_userRoleTrainer);
@@ -101,7 +103,9 @@ namespace Generator
                 CompanyId = 1,
                 Color = "#c41d1d",
                 CreateDate = DateTime.Now,
-                ClientRateDefault = 65
+                ClientRateDefault = 65,
+                PhoneMobile = "123456789",
+                Email = "reharik@gmail.com"
             };
             _defaultUser1.AddUserRole(_userRoleTrainer);
             _defaultUser1.UserLoginInfo = new UserLoginInfo

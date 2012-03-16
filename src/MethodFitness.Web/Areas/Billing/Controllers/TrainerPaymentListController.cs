@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MethodFitness.Core;
@@ -18,22 +19,41 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         private readonly IEntityListGrid<SessionPaymentDto> _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IRepository _repository;
+        private readonly ISaveEntityService _saveEntityService;
 
-        public TrainerPaymentListController(IEntityListGrid<SessionPaymentDto> grid, IDynamicExpressionQuery dynamicExpressionQuery, IRepository repository)
+        public TrainerPaymentListController(IEntityListGrid<SessionPaymentDto> grid,
+            IDynamicExpressionQuery dynamicExpressionQuery,
+            IRepository repository,
+            ISaveEntityService saveEntityService )
         {
             _grid = grid;
             _dynamicExpressionQuery = dynamicExpressionQuery;
             _repository = repository;
+            _saveEntityService = saveEntityService;
         }
 
         public ActionResult ItemList(ViewModel input)
         {
+            var trainer = _repository.Find<User>(input.EntityId);
             var url = UrlContext.GetUrlForAction<TrainerPaymentListController>(x => x.TrainerPayments(null),AreaName.Billing) + "?ParentId="+input.EntityId;
-            var model = new ListViewModel()
+            var model = new TrainersPaymentListViewModel()
             {
-                gridDef = _grid.GetGridDefinition(url)
+                gridDef = _grid.GetGridDefinition(url),
+                Title = trainer.FullNameFNF+"'s " + WebLocalizationKeys.PAYMENT_AMOUNT,
+                TrainersName = trainer.FullNameFNF,
+                EntityId = trainer.EntityId,
+                PayTrainerUrl = UrlContext.GetUrlForAction<TrainerPaymentListController>(x=>x.PayTrainer(null),AreaName.Billing)
             };
             return Json(model,JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult PayTrainer(TrainerPaymentViewModel input)
+        {
+            var trainer = _repository.Find<User>(input.EntityId);
+            input.PaymentDetailsDto.items.Each(x => trainer.Sessions.First(y => y.EntityId == x.id).TrainerPaid = true);
+            var crudManager = _saveEntityService.ProcessSave(trainer);
+            var notification = crudManager.Finish();
+            return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult TrainerPayments(GridItemsRequestModel input)
@@ -62,7 +82,22 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         }
     }
 
+    public class TrainerPaymentViewModel:ViewModel
+    {
+        public PaymentDetailsDto PaymentDetailsDto { get; set; }
 
+    }
+    public class PaymentDetailsDto
+    {
+        public double amount { get; set; }
+        public IEnumerable<PaymentSessionDetailsDto> items { get; set; }
+    }
+    
+    public class PaymentSessionDetailsDto
+    {
+        public long id { get; set; }
+        public double amount { get; set; }
+    }
 
     public class SessionPaymentDto : IGridEnabledClass
     {
@@ -73,5 +108,12 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public double PricePerSession { get; set; }
         public int TrainerPercentage { get; set; }
         public double TrainerPay { get; set; }
+    }
+
+    public class TrainersPaymentListViewModel:ListViewModel
+    {
+        public string TrainersName { get; set; }
+
+        public string PayTrainerUrl { get; set; }
     }
 }

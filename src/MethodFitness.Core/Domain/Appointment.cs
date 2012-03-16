@@ -114,5 +114,21 @@ namespace MethodFitness.Core.Domain
             Sessions.Each(x => x.Client.RestoreSession(x));
         }
 
+        public override Entity CloneSelf()
+        {
+            var appointment = new Appointment()
+                                  {
+                                      CompanyId = CompanyId,
+                                      Date = Date,
+                                      EndTime = EndTime,
+                                      StartTime = StartTime,
+                                      Location = Location,
+                                      Trainer = Trainer,
+                                      Notes = Notes,
+                                      Length = Length,
+                                  };
+            _clients.Each(appointment.AddClient);
+            return appointment;
+        }
     }
 }

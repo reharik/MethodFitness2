@@ -3,7 +3,6 @@ using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Localization;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 
 namespace MethodFitness.Core.Domain
 {
