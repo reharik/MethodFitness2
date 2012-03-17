@@ -50,13 +50,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                         {
                                             FullHour = client.Sessions.Any(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
                                                 ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
-                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString()),
+                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString() && !x.SessionUsed),
                                             HalfHour = client.Sessions.Any(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears)
                                                 ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears)
-                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString()),
+                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && !x.SessionUsed),
                                             Pair = client.Sessions.Any(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears)
                                                 ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears)
-                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString()),
+                                                : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && !x.SessionUsed),
                                         };
             var model = new PaymentViewModel
             {

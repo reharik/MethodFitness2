@@ -16,7 +16,6 @@ namespace MethodFitness.Core.Services
         void RemoveSessionItem(string sessionKey);
     }
 
-
     public class SessionContext : ISessionContext
     {
         public int GetCompanyId()
@@ -66,6 +65,52 @@ namespace MethodFitness.Core.Services
         }
 
     }
+
+
+    public class DataLoaderSessionContext : ISessionContext
+    {
+        public int GetCompanyId()
+        {
+            return 1;
+        }
+
+        public int GetUserEntityId()
+        {
+            return 1;
+        }
+
+        public object RetrieveSessionObject(Guid sessionKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object RetrieveSessionObject(string sessionKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SessionItem RetrieveSessionItem(string sessionKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddUpdateSessionItem(SessionItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveSessionItem(Guid sessionKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveSessionItem(string sessionKey)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
 
     public class SessionItem
     {

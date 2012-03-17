@@ -156,9 +156,9 @@ MF.Views.CalendarView = MF.Views.View.extend({
              alert("you can't edit retroactively");
             return;
         }
-        var url = $("#AddUpdateUrl",this.ajaxPopupDisplay.el).val();
+        var id = $("#EntityId",this.ajaxPopupDisplay.el).val();
         this.ajaxPopupDisplay.close();
-        this.editEvent(url);
+        this.editEvent(this.options.calendarDef.AddEditUrl+"/"+id);
     },
 
 
@@ -235,7 +235,19 @@ MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
         $("#endTime").text(endTimeString);
     },
     getEndTimeString:function(startTime){
-        var endTime = startTime.addMinutes($("[name='Appointment.Length']").val());
+        var min;
+        switch($("[name='Appointment.Length']").val()){
+            case "Hour":
+                min = 60;
+                break;
+            case "Half Hour":
+                min = 30;
+                break;
+            case "Hour and a Half":
+                min = 90;
+                break;
+        }
+        var endTime = startTime.addMinutes(min);
         var endHour = endTime.getHours();
             var amPm = "AM";
             if(endHour>12){

@@ -41,6 +41,10 @@ namespace MethodFitness.Core.Domain
             throw new NotImplementedException();
         }
 
+        public virtual Entity CloneSelf()
+        {
+            throw new NotImplementedException();
+        }
         #region IEquatable
 
         public virtual bool Equals(Entity obj)

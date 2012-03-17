@@ -71,7 +71,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                                 Copy = input.Copy,
                                 Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString()
                             };
-            model.Appointment.EntityId = input.Copy ? 0 : model.Appointment.EntityId;
+            if(input.Copy)
+            {
+                model.Appointment = (Appointment) appointment.CloneSelf();
+            }
             handelTime(model, appointment.StartTime.Value);
             handleTrainer(model);
             return PartialView("AddUpdate", model);
@@ -79,27 +82,28 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public void handelTime(AppointmentViewModel model, DateTime startTime)
         {
+            getStartTime(model,startTime);
+            model.Appointment.EndTime = getEndTime(model.Appointment.Length, startTime);
+        }
+
+        private void getStartTime(AppointmentViewModel model, DateTime startTime)
+        {
             model.sHour = startTime.Hour <= 12 ? startTime.Hour.ToString() : (startTime.Hour - 12).ToString();
             model.sMinutes = startTime.Minute.ToString();
             model.sAMPM = startTime.Hour >= 12 ? "PM" : "AM";
-            if(model.Appointment.Length.IsEmpty())
-            {
-                model.Appointment.EndTime =  startTime.AddHours(1);
-                return;
-            }
-            switch(model.Appointment.Length)
+        }
+        private DateTime getEndTime(string length, DateTime startTime)
+        {
+            switch (length)
             {
                 case "Half Hour":
-                    model.Appointment.EndTime = startTime.AddMinutes(30);
-                    break;
+                    return startTime.AddMinutes(30);
                 case "Hour":
-                    model.Appointment.EndTime = startTime.AddMinutes(60);
-                    break;
+                    return startTime.AddMinutes(60);
                 case "Hour And A Half":
-                    model.Appointment.EndTime = startTime.AddMinutes(90);
-                    break;
-
+                    return startTime.AddMinutes(90);
             }
+            return startTime.AddMinutes(60);
         }
 
         private void handleTrainer(AppointmentViewModel model)
@@ -123,7 +127,6 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var model = new AppointmentViewModel
             {
                 Appointment = _event,
-                addUpdateUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.AddUpdate(null),AreaName.Schedule) + "?EntityId=" + _event.EntityId,
                 Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString()
             };
             return PartialView(model);
@@ -175,8 +178,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var appointmentModel = model.Appointment;
             appointment.Date = appointmentModel.Date;
             appointment.StartTime = DateTime.Parse(appointmentModel.Date.Value.ToShortDateString() + " " + model.sHour+":"+model.sMinutes+" "+model.sAMPM);
-            appointment.EndTime = appointment.StartTime.Value.AddMinutes(Int32.Parse(model.Appointment.Length));
-            appointment.Length = AppointmentLength.FromValue<AppointmentLength>(model.Appointment.Length).Key;
+            appointment.EndTime = getEndTime(model.Appointment.Length, appointment.StartTime.Value);
+            appointment.Length =model.Appointment.Length;
             var trainer = _repository.Find<User>(appointmentModel.Trainer.EntityId);
             var location = _repository.Find<Location>(appointmentModel.Location.EntityId);
             appointment.Trainer = trainer;

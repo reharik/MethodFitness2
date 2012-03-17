@@ -139,8 +139,16 @@
             {{if ParentId}}
             <input id="ParentId" type="hidden" value="${ParentId}"/>
             {{/if}}
-        <table id="gridContainer" class="scroll"></table>
-        <div id="pager" class="scroll" style="text-align:center;"></div>
-    </div>
+            <table id="gridContainer" class="scroll"></table>
+            <div id="pager" class="scroll" style="text-align:center;"></div>
+        </div>
+    </script>
+    
+    <script id="payTrainerTemplate" type="text/x-jQuery-tmpl">
+        <div class="col left">
+            <div class="fieldRow">
+                Are you sure you would like to pay $${amount} to ${trainersName}?
+            </div>
+        </div>
     </script>
 </html>

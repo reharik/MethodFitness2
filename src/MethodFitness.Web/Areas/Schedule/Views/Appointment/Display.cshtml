@@ -8,7 +8,6 @@
 }
         @MvcHtmlString.Create(Html.HiddenFor(x => x.Appointment.EntityId, new { @class = "copyEntityId" }).ToString())
             <input type="hidden" name="Appointment.EntityId" id="EntityId" value="@Model.Appointment.EntityId"/>
-            <input type="hidden" name="AddUpdateUrl" id="AddUpdateUrl" value="@Model.AddUpdateUrl"/>
 <div class="col full">
     <div class="fieldRow">
         @Model.Appointment.Date.Value.ToLongDateString(), @Model.Appointment.StartTime.Value.ToShortTimeString() - @Model.Appointment.EndTime.Value.ToShortTimeString()    
