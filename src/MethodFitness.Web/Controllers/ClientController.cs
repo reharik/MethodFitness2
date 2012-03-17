@@ -116,9 +116,9 @@ namespace MethodFitness.Web.Controllers
         private void associateWithUser(Client client)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
-            var user = _repository.Find<User>(userEntityId);
-            user.AddClient(client,user.ClientRateDefault);
-            _saveEntityService.ProcessSave(user);
+            var trainer = _repository.Find<Trainer>(userEntityId);
+            trainer.AddClient(client,trainer.ClientRateDefault);
+            _saveEntityService.ProcessSave(trainer);
         }
 
         private Client mapToDomain(ClientViewModel model, Client client)
