@@ -47,7 +47,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public JsonResult TrainerPayments(GridItemsRequestModel input)
         {
-            var trainer = _repository.Find<User>(input.ParentId);
+            var trainer = _repository.Find<Trainer>(input.ParentId);
             var sessions = trainer.Sessions.Where(x => !x.TrainerPaid);
             var items = _dynamicExpressionQuery.PerformQueryWithItems(sessions,input.filters);
             var sessionPaymentDtos = items.Select(x => new SessionPaymentDto

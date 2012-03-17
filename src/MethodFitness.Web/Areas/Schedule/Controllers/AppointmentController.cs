@@ -51,11 +51,11 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.StartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.StartTime;
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserEntityId();
-            var user = _repository.Find<User>(userEntityId);
+            var trainer = _repository.Find<Trainer>(userEntityId);
             IEnumerable<Client> clients;
-            if(!_authorizationService.IsAllowed(user,"/Clients/CanScheduleAllClients"))
+            if(!_authorizationService.IsAllowed(trainer,"/Clients/CanScheduleAllClients"))
             {
-                clients = user.Clients;
+                clients = trainer.Clients;
             }else
             {
                 clients = _repository.FindAll<Client>();
@@ -110,14 +110,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             if (_userPermissionService.IsAllowed("/Calendar/SetAppointmentForOthers"))
             {
-                var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
+                var trainers = _repository.Query<Trainer>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
                 model.TrainerList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true);
             }else
             {
                 var userId = _sessionContext.GetUserEntityId();
-                var user = _repository.Find<User>(userId);
-                model.TrainerName = user.FullNameFNF;
-                model.Appointment.Trainer = user;
+                var trainer = _repository.Find<Trainer>(userId);
+                model.TrainerName = trainer.FullNameFNF;
+                model.Appointment.Trainer = trainer;
             }
         }
 
@@ -180,7 +180,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.StartTime = DateTime.Parse(appointmentModel.Date.Value.ToShortDateString() + " " + model.sHour+":"+model.sMinutes+" "+model.sAMPM);
             appointment.EndTime = getEndTime(model.Appointment.Length, appointment.StartTime.Value);
             appointment.Length =model.Appointment.Length;
-            var trainer = _repository.Find<User>(appointmentModel.Trainer.EntityId);
+            var trainer = _repository.Find<Trainer>(appointmentModel.Trainer.EntityId);
             var location = _repository.Find<Location>(appointmentModel.Location.EntityId);
             appointment.Trainer = trainer;
             appointment.Location = location;

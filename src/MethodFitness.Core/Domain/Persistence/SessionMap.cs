@@ -16,7 +16,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.InArrears);
             References(x => x.Client).Cascade.None();
             References(x => x.Appointment).Cascade.None();
-            References(x => x.Trainer).Column("UserId");
+            References(x => x.Trainer);//.Column("UserId");
 
         } 
     }
