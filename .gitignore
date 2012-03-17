@@ -30,7 +30,7 @@ Thumbs.db
 *.cache
 *.ilk
 *.[Ll]og
-*.[Ll]ogs/
+[Ll]ogs/
 [Bb]in
 [Dd]ebug*/
 *.lib
