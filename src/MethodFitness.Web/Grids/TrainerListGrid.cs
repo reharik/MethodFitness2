@@ -27,7 +27,7 @@ namespace MethodFitness.Web.Areas.Schedule.Grids
             GridBuilder.DisplayFor(x => x.LastName);
             GridBuilder.DisplayFor(x => x.Email);
             GridBuilder.DisplayFor(x => x.PhoneMobile);
-            GridBuilder.ImageButtonColumn().ForAction<TrainerPaymentListController>(x => x.ItemList(null))
+            GridBuilder.ImageButtonColumn().ForAction<PayTrainerListController>(x => x.ItemList(null))
                 .ToPerformAction(ColumnAction.Redirect).ImageName("hello.jpg");
             return this;
         }

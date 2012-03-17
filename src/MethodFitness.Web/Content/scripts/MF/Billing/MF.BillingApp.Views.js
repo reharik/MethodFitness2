@@ -31,7 +31,7 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
         $(this.el).find(".content-header > .title-name").append("<span class='paymentAmount'></span>");
         $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
 
-        MF.vent.bind("popup:payTrainerPopup:save",this.formSuccess,this);
+        MF.vent.bind("popup:payTrainerPopup:save",this.formSave,this);
         MF.vent.bind("popup:payTrainerPopup:cancel",this.formCancel,this);
         $("#payTrainerButton").click($.proxy(this.payTrainer, this));
     },
@@ -52,7 +52,7 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
         this.templatePopup.render();
         this.storeChild(this.templatePopup);
     },
-    formSuccess:function(){
+    formSave:function(){
         var total = $(this.el).find(".paymentAmount").data().total;
         var arr = [];
         arr.push({"name":"EntityId", "value":this.options.EntityId});
@@ -69,11 +69,11 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
         var notification = cc.utilities.messageHandling.notificationResult();
         notification.setErrorContainer('#errorMessagesGrid');
         notification.result(result);
-        if(result.Success){
-            window.open(result.Variable);
-        this.reload();
-        }
         this.formCancel();
+        if(result.Success){
+            this.reloadGrid();
+            window.open(result.Variable);
+        }
     },
     formCancel:function(){
         this.templatePopup.close();

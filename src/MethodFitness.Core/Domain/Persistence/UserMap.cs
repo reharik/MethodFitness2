@@ -27,7 +27,7 @@ namespace MethodFitness.Core.Domain.Persistence
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
             HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
             HasMany(x => x.TrainerClientRates).Access.CamelCaseField(Prefix.Underscore);
-
+            HasMany(x => x.TrainerPayments).Access.CamelCaseField(Prefix.Underscore);
         } 
 
         public class UserLoginInfoMap : DomainEntityMap<UserLoginInfo>

@@ -132,7 +132,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     copyItem:function(){
-        var entityId = $("[name$='EntityId']").val();
+        var entityId = $("#EntityId",this.ajaxPopupDisplay.el).val();
         var data = {"EntityId":entityId,"Copy":true};
         this.editEvent(this.options.calendarDef.AddEditUrl,data);
         this.ajaxPopupDisplay.close();
@@ -344,6 +344,10 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
 });
 
 MF.Views.TrainerFormView = MF.Views.AjaxFormView.extend({
+     events:_.extend({
+        'click #trainerPayments' : 'trainerPayments',
+         'click #payTrainer' : 'payTrainer'
+    }, MF.Views.AjaxFormView.prototype.events),
     viewLoaded:function(){
         this.loadPlugins();
         this.loadTokenizers();
@@ -361,6 +365,14 @@ MF.Views.TrainerFormView = MF.Views.AjaxFormView.extend({
     },
     loadPlugins:function(){
         $('#color',"#detailArea").miniColors();
+    },
+    trainerPayments:function(){
+        var id = $(this.el).find("#EntityId").val();
+        MF.vent.trigger("route","trainerpaymentlist/"+id,true);
+    },
+    payTrainer:function(){
+        var id = $(this.el).find("#EntityId").val();
+        MF.vent.trigger("route","paytrainerlist/"+id,true);
     }
 });
 
@@ -439,6 +451,6 @@ MF.Views.TrainerGridView = MF.Views.GridView.extend({
         MF.vent.bind("Redirect",this.showPayGrid,this);
     },
     showPayGrid:function(id){
-        MF.vent.trigger("route","trainerpaymentlist/"+id,true);
+        MF.vent.trigger("route","paytrainerlist/"+id,true);
     }
 });

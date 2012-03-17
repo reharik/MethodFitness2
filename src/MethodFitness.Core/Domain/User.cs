@@ -6,6 +6,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
 using System.Linq;
+using MethodFitness.Web.Areas.Billing.Controllers;
 using Rhino.Security;
 
 namespace MethodFitness.Core.Domain
@@ -105,6 +106,19 @@ namespace MethodFitness.Core.Domain
             if (_sessions.Contains(session)) return;
             _sessions.Add(session);
         }
+
+        private IList<TrainerPayment> _trainerPayments = new List<TrainerPayment>();
+        public virtual void EmptyTrainerPayments() { _trainerPayments.Clear(); }
+        public virtual IEnumerable<TrainerPayment> TrainerPayments { get { return _trainerPayments; } }
+        public virtual void RemoveTrainerPayment(TrainerPayment trainerPayment)
+        {
+            _trainerPayments.Remove(trainerPayment);
+        }
+        public virtual void AddTrainerPayment(TrainerPayment trainerPayment)
+        {
+            if (_trainerPayments.Contains(trainerPayment)) return;
+            _trainerPayments.Add(trainerPayment);
+        }
         #endregion
 
         public virtual SecurityInfo SecurityInfo
@@ -112,6 +126,28 @@ namespace MethodFitness.Core.Domain
             get { return new SecurityInfo(FullNameLNF, EntityId); }
         }
 
+        public virtual TrainerPayment PayTrainer(PaymentDetailsDto input)
+        {
+            if (input == null || input.items == null || !input.items.Any()) return null;
+            var trainerPayment = new TrainerPayment
+                                     {
+                                         Trainer = this, Total = input.amount
+                                     };
+            input.items.Each(x =>
+                                 {
+                                     var session = Sessions.First(y => y.EntityId == x.id);
+                                     session.TrainerPaid = true;
+                                     trainerPayment.AddTrainerPaymentSessionItem(new TrainerPaymentSessionItem
+                                                                                     {
+                                                                                         Appointment = session.Appointment,
+                                                                                         AppointmentCost = session.Cost,
+                                                                                         Client = session.Client,
+                                                                                         TrainerPay = x.amount
+                                                                                     });
+                                 });
+            AddTrainerPayment(trainerPayment);
+            return trainerPayment;
+        }
     }
 
     public class UserLoginInfo : DomainEntity

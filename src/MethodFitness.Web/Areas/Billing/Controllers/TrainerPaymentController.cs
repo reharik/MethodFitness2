@@ -1,48 +1,44 @@
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using MethodFitness.Core;
-using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
+using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
-using MethodFitness.Web.Areas.Schedule.Grids;
+using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
 using MethodFitness.Web.Controllers;
+using NHibernate.Linq;
+using StructureMap;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
-    public class TrainerPaymentController:MFController
+    public class TrainerPaymentController : MFController
     {
-        private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
-        private readonly IEntityListGrid<Payment> _TrainerPaymentGrid;
         private readonly IRepository _repository;
 
-        public TrainerPaymentController(IDynamicExpressionQuery dynamicExpressionQuery,
-            IEntityListGrid<Payment> TrainerPaymentGrid,
-            IRepository repository)
+        public TrainerPaymentController(IRepository repository)
         {
-            _dynamicExpressionQuery = dynamicExpressionQuery;
-            _TrainerPaymentGrid = TrainerPaymentGrid;
             _repository = repository;
         }
 
-        public ActionResult ItemList(ViewModel input)
+        public ActionResult Display(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<TrainerPaymentController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.ParentId;
-            var model = new ListViewModel()
+            var trainerPayment = _repository.Find<TrainerPayment>(input.EntityId);
+            var model = new TrainerPaymentViewModel
             {
-                addUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.ParentId,
-                gridDef = _TrainerPaymentGrid.GetGridDefinition(url),
-                Title = WebLocalizationKeys.PAYMENTS.ToString() 
+                Item = trainerPayment,
+                Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
             };
             return View(model);
         }
-
-        public JsonResult Payments(GridItemsRequestModel input)
-        {
-            var client = _repository.Find<Client>(input.ParentId);
-            var items = _dynamicExpressionQuery.PerformQueryWithItems(client.Payments, input.filters);
-            var gridItemsViewModel = _TrainerPaymentGrid.GetGridItemsViewModel(input.PageSortFilter, items);
-            return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
-        }
     }
+
+    public class TrainerPaymentViewModel : ViewModel
+    {
+        public TrainerPayment Item { get; set; }
+    }
+
 }
