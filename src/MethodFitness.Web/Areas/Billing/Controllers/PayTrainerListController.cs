@@ -59,10 +59,12 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                                                Type = x.AppointmentType,
                                                                TrainerPercentage =
                                                                    x.Trainer.TrainerClientRates.FirstOrDefault(
-                                                                       y => y.Client == x.Client).Percent,
+                                                                       y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
+                                                                       y => y.Client == x.Client).Percent:x.Trainer.ClientRateDefault,
                                                                TrainerPay =
                                                                    x.Trainer.TrainerClientRates.FirstOrDefault(
-                                                                       y => y.Client == x.Client).Percent*.01*x.Cost
+                                                                       y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
+                                                                       y => y.Client == x.Client).Percent * .01 * x.Cost : x.Trainer.ClientRateDefault * .01 * x.Cost
                                                            });
 
 

@@ -31,6 +31,7 @@
 						 src\MethodFitness.Web\Tenant\**;
 						 src\MethodFitness.Web\App_Data\**;
 						 src\MethodFitness.Web\Logs\**; 		 "
+                />
     </ItemGroup>
     <Time>
       <Output TaskParameter="Month" PropertyName="Month" />
