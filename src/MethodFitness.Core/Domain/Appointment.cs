@@ -109,7 +109,7 @@ namespace MethodFitness.Core.Domain
             });
         }
 
-        public virtual void RestoreSessionsWhenDeleted()
+        public virtual void RestoreSessionsToClientWhenDeleted()
         {
             Sessions.Each(x => x.Client.RestoreSession(x));
         }

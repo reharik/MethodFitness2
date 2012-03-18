@@ -143,7 +143,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 var notification = new Notification{Message=WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
                 return Json(notification,JsonRequestBehavior.AllowGet);
             }
-            appointment.RestoreSessionsWhenDeleted();
+            appointment.RestoreSessionsToClientWhenDeleted();
             //first save app to save the clients and sessions that have been restored
             _repository.Save(appointment);
             _repository.HardDelete(appointment);

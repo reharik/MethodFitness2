@@ -40,20 +40,20 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.vent.bind("calendar:"+this.id+":eventClick",this.eventClick,this);
         MF.vent.bind("ajaxPopupFormModule:editModule:success",this.formSuccess,this);
         MF.vent.bind("ajaxPopupFormModule:editModule:cancel",this.formCancel,this);
-        MF.vent.bind("popup:displayModule:edit",this.displayEdit,this);
         MF.vent.bind("ajaxPopupDisplayModule:displayModule:cancel",this.displayCancel,this);
+        MF.vent.bind("popup:displayModule:edit",this.displayEdit,this);
 
         this.setupLegend();
     },
     onClose:function(){
         MF.vent.unbind("calendar:"+this.id+":eventDrop");
         MF.vent.unbind("calendar:"+this.id+":eventResize");
-        MF.vent.unbind("calendar:"+this.id+":eventResize");
         MF.vent.unbind("calendar:"+this.id+":eventClick");
+        MF.vent.unbind("calendar:"+this.id+":dayClick");
         MF.vent.unbind("ajaxPopupFormModule:editModule:success");
         MF.vent.unbind("ajaxPopupFormModule:editModule:cancel");
-        MF.vent.unbind("ajaxPopupDisplayModule:displayModule:edit");
         MF.vent.unbind("ajaxPopupDisplayModule:displayModule:cancel");
+        MF.vent.unbind("popup:displayModule:edit");
     },
     setupLegend:function(){
          if(this.options.trainers.length<=0){

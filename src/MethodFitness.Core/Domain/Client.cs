@@ -104,6 +104,10 @@ namespace MethodFitness.Core.Domain
                 session.SessionUsed = false;
             }else
             {
+                //switch app and trainer over to the session since the app that origionally
+                //had the session will be deleted.
+                session.Appointment = arrear.Appointment;
+                session.Trainer = arrear.Trainer;
                 RemoveSession(arrear);
             }
         }
