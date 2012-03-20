@@ -136,7 +136,16 @@ namespace MethodFitness.Web
         public static readonly StringToken PRICE_SESSION = new WebLocalizationKeys("PRICE_SESSION", "Price/Session");
         public static readonly StringToken TRAINER_PERCENTAGE_FOR_CLIENT = new WebLocalizationKeys("TRAINER_PERCENTAGE_FOR_CLIENT", "Enter percentage for ${name}");
         public static readonly StringToken PAYMENT_AMOUNT = new WebLocalizationKeys("PAYMENT_AMOUNT", "Payment Amount: $");
-        
+        public static readonly StringToken YOU_MUST_SELECT_AT_ONE_SESSION = new WebLocalizationKeys("YOU_MUST_SELECT_AT_ONE_SESSION", "You must select at least one session for payment");
+
+        public static readonly StringToken CLIENT_NAME = new WebLocalizationKeys("CLIENT_NAME", "Client Name");
+        public static readonly StringToken DATE = new WebLocalizationKeys("DATE", "Date");
+        public static readonly StringToken TIME = new WebLocalizationKeys("TIME", "Time");
+        public static readonly StringToken CLIENT_COST = new WebLocalizationKeys("CLIENT_COST", "Client Cost");
+        public static readonly StringToken TRAINER_PAYMENT = new WebLocalizationKeys("TRAINER_PAYMENT", "Trainer Payment");
+        public static readonly StringToken TRAINER_PAYMENTS = new WebLocalizationKeys("TRAINER_PAYMENTS", "Trainer Payments");
+        public static readonly StringToken TOTAL = new WebLocalizationKeys("TOTAL", "Total:");
+        public static readonly StringToken PAY_TRAINER = new WebLocalizationKeys("PAY_TRAINER", "Pay Trainer");
 
     }
 }
