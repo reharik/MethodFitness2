@@ -8,7 +8,8 @@
 
 MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
      events:_.extend({
-        'change .cbox':'checkboxClick'
+         'click .jqgrow':'handleSingleClick',
+         'click .cbox':'handleSelectAllClick'
 
     }, MF.Views.GridView.prototype.events),
     onPreRender:function(){
@@ -31,7 +32,7 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
         $(this.el).find(".content-header > .title-name").append("<span class='paymentAmount'></span>");
         $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
 
-        MF.vent.bind("popup:payTrainerPopup:save",this.formSuccess,this);
+        MF.vent.bind("popup:payTrainerPopup:save",this.formSave,this);
         MF.vent.bind("popup:payTrainerPopup:cancel",this.formCancel,this);
         $("#payTrainerButton").click($.proxy(this.payTrainer, this));
     },
@@ -52,7 +53,7 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
         this.templatePopup.render();
         this.storeChild(this.templatePopup);
     },
-    formSuccess:function(){
+    formSave:function(){
         var total = $(this.el).find(".paymentAmount").data().total;
         var arr = [];
         arr.push({"name":"EntityId", "value":this.options.EntityId});
@@ -69,29 +70,25 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
         var notification = cc.utilities.messageHandling.notificationResult();
         notification.setErrorContainer('#errorMessagesGrid');
         notification.result(result);
-        if(result.Success){
-            window.open(result.Variable);
-        this.reload();
-        }
         this.formCancel();
+        if(result.Success){
+            this.reloadGrid();
+            window.open(result.Variable);
+        }
     },
     formCancel:function(){
         this.templatePopup.close();
     },
-    checkboxClick:function(e) {
-        if($(e.target).closest("tr").attr("role")=="rowheader"){
-            this.handleSelectAllClick(e);
-        }else{
-            this.handleSingleClick(e);
-        }
-    },
     handleSingleClick:function(e) {
-        var id = $(e.target).closest("tr").attr("id");
+        var checkbox = $(e.currentTarget).find(".cbox");
+        if(!checkbox||checkbox.attr("disabled")){return;}
+
+        var id = $(e.currentTarget).attr("id");
         var data = $("#gridContainer").jqGrid('getRowData', id);
         var $span = $(this.el).find(".paymentAmount");
         var itemAmount = parseFloat($(data.TrainerPay).text());
 
-        if (e.currentTarget.checked) {
+        if (checkbox.is(":checked")) {
             $span.data().total.amount = $span.data().total.amount + itemAmount;
             $span.data().total.items.push({id:id,amount:itemAmount});
         } else {
@@ -103,9 +100,10 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
         $span.text($span.data().total.amount);
     },
     handleSelectAllClick:function(e){
+        if($(e.target).closest("tr").attr("role")!="rowheader"){return;}
         var $span = $(this.el).find(".paymentAmount");
         $span.data().total ={amount:0,items:[]};
-        if(e.currentTarget.checked){
+        if($(e.currentTarget).is(":checked")){
             var ids = cc.gridMultiSelect.getCheckedBoxes();
             $.each(ids,function(i,id){
                 var data = $("#gridContainer").jqGrid('getRowData', id);

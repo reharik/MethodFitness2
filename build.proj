@@ -22,10 +22,16 @@
     <ItemGroup>
       <WebFiles Include="src\MethodFitness.Web\**\*.*;"
                 Exclude="src\MethodFitness.Web\obj\**;
-             src\MethodFitness.Web\**\*.cs;
-             src\MethodFitness.Web\**\.idea\**;
-             src\MethodFitness.Web\**\.svn\**;
-             src\MethodFitness.Web\**\*.pdb;" />
+						 src\MethodFitness.Web\**\*.cs;
+						 src\MethodFitness.Web\**\.idea\**;
+						 src\MethodFitness.Web\**\.svn\**;
+						 src\MethodFitness.Web\**\*.pdb;
+						 src\MethodFitness.Web\*.csproj.*;
+						 src\MethodFitness.Web\*.sln;
+						 src\MethodFitness.Web\Tenant\**;
+						 src\MethodFitness.Web\App_Data\**;
+						 src\MethodFitness.Web\Logs\**; 		 "
+                />
     </ItemGroup>
     <Time>
       <Output TaskParameter="Month" PropertyName="Month" />

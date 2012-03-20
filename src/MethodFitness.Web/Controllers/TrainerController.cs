@@ -48,14 +48,14 @@ namespace MethodFitness.Web.Controllers
 
         public ActionResult AddUpdate(ViewModel input)
         {
-            User trainer;
+            Trainer trainer;
             if (input.EntityId > 0)
             {
-                trainer = _repository.Find<User>(input.EntityId);
+                trainer = _repository.Find<Trainer>(input.EntityId);
             }
             else
             {
-                trainer = new User();
+                trainer = new Trainer();
                 trainer.ClientRateDefault = Int32.Parse(SiteConfig.Settings().TrainerClientRateDefault);
             }
             var clients = _repository.FindAll<Client>();
@@ -69,7 +69,7 @@ namespace MethodFitness.Web.Controllers
                 ? trainer.UserRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name })
                 : null;
 
-            var model = new UserViewModel
+            var model = new TrainerViewModel
             {
                 Item = trainer,
                 DeleteUrl = UrlContext.GetUrlForAction<TrainerController>(x=>x.Delete(null)),
@@ -84,8 +84,8 @@ namespace MethodFitness.Web.Controllers
 
         public ActionResult Display(ViewModel input)
         {
-            var trainer = _repository.Find<User>(input.EntityId);
-            var model = new UserViewModel
+            var trainer = _repository.Find<Trainer>(input.EntityId);
+            var model = new TrainerViewModel
             {
                 Item = trainer,
                 addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId,
@@ -110,10 +110,10 @@ namespace MethodFitness.Web.Controllers
 
         }
 
-        public ActionResult Save(UserViewModel input)
+        public ActionResult Save(TrainerViewModel input)
         {
-            User trainer;
-            trainer = input.EntityId > 0 ? _repository.Find<User>(input.EntityId) : new User();
+            Trainer trainer;
+            trainer = input.EntityId > 0 ? _repository.Find<Trainer>(input.EntityId) : new Trainer();
             trainer = mapToDomain(input, trainer);
             ActionResult json;
             if (userRoleRules(trainer, out json)) return json;
@@ -204,7 +204,7 @@ namespace MethodFitness.Web.Controllers
             }
         }
 
-        private void handlePassword(UserViewModel input, User origional)
+        private void handlePassword(TrainerViewModel input, User origional)
         {
             if (input.Password.IsNotEmpty())
             {
@@ -214,7 +214,7 @@ namespace MethodFitness.Web.Controllers
             }
         }
 
-        private User mapToDomain(UserViewModel model, User trainer)
+        private Trainer mapToDomain(TrainerViewModel model, Trainer trainer)
         {
             var trainerModel = model.Item;
             trainer.Address1 = trainerModel.Address1;
@@ -238,7 +238,7 @@ namespace MethodFitness.Web.Controllers
             updateClientInfo(model, trainer);
             return trainer;
         }
-        private User updateClientInfo(UserViewModel model, User trainer)
+        private User updateClientInfo(TrainerViewModel model, Trainer trainer)
         {
             var remove = new List<Client>();
             if (model.SelectedClients == null)
@@ -268,9 +268,9 @@ namespace MethodFitness.Web.Controllers
         public int percentage { get; set; }
     }
 
-    public class UserViewModel:ViewModel
+    public class TrainerViewModel:ViewModel
     {
-        public User Item { get; set; }
+        public Trainer Item { get; set; }
         public IEnumerable<TokenInputDto> AvailableItems { get; set; }
         public IEnumerable<TokenInputDto> SelectedItems { get; set; }
         public bool DeleteImage { get; set; }

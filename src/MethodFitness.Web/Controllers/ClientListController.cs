@@ -48,14 +48,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public JsonResult Clients(GridItemsRequestModel input)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
-            var user = _repository.Find<User>(userEntityId);
+            var trainer = _repository.Find<Trainer>(userEntityId);
             IQueryable<Client> items;
-            if (user.UserRoles.Any(x => x.Name == "Administrator"))
+            if (trainer.UserRoles.Any(x => x.Name == "Administrator"))
             {
                 items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
             }else
             {
-                items = _dynamicExpressionQuery.PerformQueryWithItems(user.Clients, input.filters);
+                items = _dynamicExpressionQuery.PerformQueryWithItems(trainer.Clients, input.filters);
             }
             var gridItemsViewModel = _clientListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);

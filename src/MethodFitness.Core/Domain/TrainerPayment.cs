@@ -6,17 +6,16 @@ namespace MethodFitness.Core.Domain
     {
         public virtual User Trainer { get; set; }
         public virtual double Total { get; set; }
-        private IList<TrainerPaymentSessionItem> _sessions = new List<TrainerPaymentSessionItem>();
-        public virtual void EmptyTrainerPaymentSessionItems() { _sessions.Clear(); }
-        public virtual IEnumerable<TrainerPaymentSessionItem> TrainerPaymentSessionItems { get { return _sessions; } }
+        private IList<TrainerPaymentSessionItem> _trainerPaymentSessionItems = new List<TrainerPaymentSessionItem>();
+        public virtual IEnumerable<TrainerPaymentSessionItem> TrainerPaymentSessionItems { get { return _trainerPaymentSessionItems; } }
         public virtual void RemoveTrainerPaymentSessionItem(TrainerPaymentSessionItem session)
         {
-            _sessions.Remove(session);
+            _trainerPaymentSessionItems.Remove(session);
         }
         public virtual void AddTrainerPaymentSessionItem(TrainerPaymentSessionItem session)
         {
-            if (_sessions.Contains(session)) return;
-            _sessions.Add(session);
+            if (_trainerPaymentSessionItems.Contains(session)) return;
+            _trainerPaymentSessionItems.Add(session);
         }
     }
 

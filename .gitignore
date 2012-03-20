@@ -14,7 +14,7 @@ App_Data
 Thumbs.db
 #Ignore files build by Visual Studio
 *.obj
-
+*.[Xx][Mm][Ll]
 *.pdb
 *.user
 *.aps

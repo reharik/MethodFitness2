@@ -41,13 +41,13 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public ActionResult AppointmentCalendar(CalendarViewModel input)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
-            var user = _repository.Find<User>(userEntityId);
+            var user = _repository.Find<Trainer>(userEntityId);
             var locations = _selectListItemService.CreateList<Location>(x=>x.Name,x=>x.EntityId,false).ToList();
             locations.Insert(0,new SelectListItem{Text=WebLocalizationKeys.ALL.ToString(),Value = "0"});
             var trainersDto = new List<TrainerLegendDto>();
             if(user.UserRoles.Any(x=>x.Name==SecurityUserGroups.Administrator.ToString()))
             {
-                var trainers = _repository.Query<User>(x=>x.UserRoles.Any(y=>y.Name==SecurityUserGroups.Trainer.ToString()));
+                var trainers = _repository.Query<Trainer>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Trainer.ToString()));
                 trainersDto = trainers.Select(x=> new TrainerLegendDto {Name=processTrainerName(x),
                     Color=x.Color,
                 EntityId = x.EntityId}).ToList();

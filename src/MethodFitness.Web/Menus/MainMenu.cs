@@ -30,7 +30,6 @@ namespace MethodFitness.Web.Menus
                 .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                     .HasChildren()
                         .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS)
-                        .CreateTagNode<TimeSheetController>(WebLocalizationKeys.TIME_SHEET)
                     .EndChildren()
             .MenuTree(withoutPermissions);
         }

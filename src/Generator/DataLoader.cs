@@ -13,10 +13,10 @@ namespace Generator
         private IRepository _repository;
         private ISecurityDataService _securityDataService;
         private IDynamicExpressionQuery _dynamicExpressionQuery;
-        private User _defaultUser;
+        private Trainer _defaultUser;
         private UserRole _userRoleTrainer;
         private UserRole _userRoleAdmin;
-        private User _defaultUser1;
+        private Trainer _defaultUser1;
         private Client _client1;
         private Client _client2;
         private Client _client3;
@@ -73,7 +73,7 @@ namespace Generator
         {
             var salt = _securityDataService.CreateSalt();
             var passwordHash = _securityDataService.CreatePasswordHash("123", salt);
-            _defaultUser = new User
+            _defaultUser = new Trainer
                                {
                                    FirstName = "Raif",
                                    LastName = "Harik",
@@ -96,7 +96,7 @@ namespace Generator
                                              };
             var salt1 = _securityDataService.CreateSalt();
             var passwordHash1 = _securityDataService.CreatePasswordHash("123", salt1);
-            _defaultUser1 = new User
+            _defaultUser1 = new Trainer
             {
                 FirstName = "Amahl",
                 LastName = "Harik",

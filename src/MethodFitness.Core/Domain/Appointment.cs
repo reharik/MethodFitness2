@@ -23,7 +23,7 @@ namespace MethodFitness.Core.Domain
         [ValidateNonEmpty]
         public virtual Location Location { get; set; }
         [ValidateNonEmpty]
-        public virtual User Trainer { get; set; }
+        public virtual Trainer Trainer { get; set; }
         [TextArea]
         public virtual string Notes { get; set; }
         [ValueOf(typeof(AppointmentLength))]
@@ -109,7 +109,7 @@ namespace MethodFitness.Core.Domain
             });
         }
 
-        public virtual void RestoreSessionsWhenDeleted()
+        public virtual void RestoreSessionsToClientWhenDeleted()
         {
             Sessions.Each(x => x.Client.RestoreSession(x));
         }

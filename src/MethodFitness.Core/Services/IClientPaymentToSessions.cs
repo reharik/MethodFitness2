@@ -157,10 +157,13 @@ namespace MethodFitness.Core.Services
                 .Where(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
                 .Each(x =>
                 {
-                    x.InArrears = false;
-                    x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
-                    x.Cost = payment.FullHoursPrice;
-                    sessions--;
+                    if (sessions > 0)
+                    {
+                        x.InArrears = false;
+                        x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
+                        x.Cost = payment.FullHoursPrice;
+                        sessions--;
+                    }
                 });
             for (int i = 0; i < sessions; i++)
             {
