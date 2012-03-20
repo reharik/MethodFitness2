@@ -127,6 +127,7 @@ namespace MethodFitness.Web
         public static readonly StringToken TIME_SHEET = new WebLocalizationKeys("TIME_SHEET", "Time Sheet");
         public static readonly StringToken VIEW_REPORT = new WebLocalizationKeys("VIEW_REPORT", "View Report");
 
+        public static readonly StringToken OTHER = new WebLocalizationKeys("OTHER", "Other");
         public static readonly StringToken PAYMENTS = new WebLocalizationKeys("PAYMENTS", "Payments");
         public static readonly StringToken PAYMENT_INFORMATION = new WebLocalizationKeys("PAYMENT_INFORMATION", "Payment Information");
         public static readonly StringToken MAKE_PAYMENT = new WebLocalizationKeys("MAKE_PAYMENT", "Make Payment");

@@ -20,6 +20,8 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.ZipCode);
             Map(x => x.Notes);
             Map(x => x.ImageUrl);
+            Map(x => x.Source);
+            Map(x => x.SourceOther);
             References(x => x.SessionRates);
             HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore).Cascade.AllDeleteOrphan();
             HasMany(x => x.Payments).Access.CamelCaseField(Prefix.Underscore).Cascade.AllDeleteOrphan();

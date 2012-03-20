@@ -43,6 +43,7 @@ namespace MethodFitness.Core.Enumerations
         public static readonly Source WebSearch = new Source { IsActive = true, Key = "Web Search" };
         public static readonly Source PrintAd = new Source { IsActive = true, Key = "Print Ad" };
         public static readonly Source Network = new Source { IsActive = true, Key = "Network" };
+        public static readonly Source Other = new Source { IsActive = true, Key = "Other" };
     }
 
     [Serializable]
