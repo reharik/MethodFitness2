@@ -59,8 +59,11 @@
                 @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half").ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.Source).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item.Source).AddClassToRoot("half first").InputId("source").ToHtmlTag()
                 @Html.SubmissionFor(x => x.Item.StartDate).AddClassToRoot("half").ToHtmlTag()
+            </div>
+            <div class="fieldRow">
+                @Html.SubmissionFor(x => x.Item.SourceOther).RootId("other").AddClassToRoot("first").LabelDisplay(WebLocalizationKeys.OTHER).ToHtmlTag()
             </div>
         </div>
         <div class="col full clear">
