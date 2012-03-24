@@ -58,8 +58,8 @@ namespace MethodFitness.Web.Services
 
         private void CreateKYTAdminOperation()
         {
-            _authorizationRepository.CreateOperation("/AdminOrGreater");
-            _authorizationRepository.CreateOperation("/MFAdmin");
+            createOperation("/AdminOrGreater");
+            createOperation("/MFAdmin");
         }
 
         private void CreateOperationsForAllControllers()
@@ -77,17 +77,19 @@ namespace MethodFitness.Web.Services
                 if (!Operations.Contains(operation))
                 {
                     Operations.Add(operation);
-                    if (_authorizationRepository.GetOperationByName(operation) == null)
-                        _authorizationRepository.CreateOperation(operation);
+                    createOperation(operation);
                 }
                 //}
             }
         }
+        private void createOperation(string operation)
+        {
+            if (_authorizationRepository.GetOperationByName(operation) == null)
+                _authorizationRepository.CreateOperation(operation);
+        }
 
         public void CreateOperationsForAllMenuItems()
         {
-
-
             var menuConfig = _container.GetAllInstances<IMenuConfig>();
             menuConfig.Each(x =>
             {
@@ -98,8 +100,7 @@ namespace MethodFitness.Web.Services
                     if (!Operations.Contains(operation))
                     {
                         Operations.Add(operation);
-                        if (_authorizationRepository.GetOperationByName(operation) == null)
-                            _authorizationRepository.CreateOperation(operation);
+                        createOperation(operation);
                     }
                 });
             });
@@ -107,16 +108,17 @@ namespace MethodFitness.Web.Services
 
         public void CreateMiscellaneousOperations()
         {
-            _authorizationRepository.CreateOperation("/Calendar/CanSeeOthersAppointments");
-            _authorizationRepository.CreateOperation("/Calendar/CanEditOtherAppointments");
-            _authorizationRepository.CreateOperation("/Calendar/CanEnterRetroactiveAppointments");
-            _authorizationRepository.CreateOperation("/Calendar/CanEditPastAppointments");
-            _authorizationRepository.CreateOperation("/Calendar/SetAppointmentForOthers");
-            _authorizationRepository.CreateOperation("/Calendar/CanDeleteRetroactiveAppointments");
-            _authorizationRepository.CreateOperation("/Clients/CanScheduleAllClients");
-
-            _authorizationRepository.CreateOperation("/Payment/Display");
-            _authorizationRepository.CreateOperation("/Payment/AddUpdate");
+           createOperation("/Calendar/CanSeeOthersAppointments");
+           createOperation("/Calendar/CanEditOtherAppointments");
+           createOperation("/Calendar/CanEnterRetroactiveAppointments");
+           createOperation("/Calendar/CanEditPastAppointments");
+           createOperation("/Calendar/SetAppointmentForOthers");
+           createOperation("/Calendar/CanDeleteRetroactiveAppointments");
+           createOperation("/Clients/CanScheduleAllClients");
+           
+           createOperation("/Payment/Display");
+           createOperation("/Payment/AddUpdate");
+           createOperation("/Billing/ChangeClientRates");
 
         }
 

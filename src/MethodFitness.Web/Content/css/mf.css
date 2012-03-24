@@ -398,4 +398,29 @@ margin: 0;
     margin-right: 10px;
     margin-right: 10px;
 }
+.content-outer .content-header label {
+    float: left;
+    height: 23px;
+    margin: 8px 0 0 30px;
+    padding: 5px 0 0;
+     color: #666666;
+    font-size: 0.85em;
+}
+
+.content-outer .content-header input {
+    float: left;
+    height: 23px;
+    margin: 8px 10px 0 16px;
+    padding: 5px 0 0;
+     color: #666666;
+    font-size: 0.85em;
+}
+
+.content-outer .content-header input#endDate{
+    font-size: 1em;
+    text-align: center;
+    width:100px;
+    margin: 8px 10px 0 6px;
+
+}
 

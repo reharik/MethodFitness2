@@ -137,12 +137,15 @@ namespace MethodFitness.Web.Controllers
             client.Status = clientModel.Status;
             client.BirthDate = clientModel.BirthDate;
             client.StartDate = clientModel.StartDate;
-            if(client.SessionRates==null)client.SessionRates = new SessionRates();
-            client.SessionRates.FullHour = clientModel.SessionRates.FullHour;
-            client.SessionRates.HalfHour = clientModel.SessionRates.HalfHour;
-            client.SessionRates.FullHourTenPack = clientModel.SessionRates.FullHourTenPack;
-            client.SessionRates.HalfHourTenPack = clientModel.SessionRates.HalfHourTenPack;
-            client.SessionRates.Pair = clientModel.SessionRates.Pair;
+            if (client.SessionRates == null) {client.SessionRates = new SessionRates(true);}
+            else
+            {
+                client.SessionRates.FullHour = clientModel.SessionRates.FullHour;
+                client.SessionRates.HalfHour = clientModel.SessionRates.HalfHour;
+                client.SessionRates.FullHourTenPack = clientModel.SessionRates.FullHourTenPack;
+                client.SessionRates.HalfHourTenPack = clientModel.SessionRates.HalfHourTenPack;
+                client.SessionRates.Pair = clientModel.SessionRates.Pair;
+            }
             return client;
         }
     }

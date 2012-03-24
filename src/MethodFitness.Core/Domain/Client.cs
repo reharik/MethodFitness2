@@ -102,6 +102,7 @@ namespace MethodFitness.Core.Domain
             if(arrear==null)
             {
                 session.SessionUsed = false;
+                session.Trainer = null;
             }else
             {
                 //switch app and trainer over to the session since the app that origionally

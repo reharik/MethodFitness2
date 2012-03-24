@@ -80,7 +80,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
     dayClick:function(date, allDay, jsEvent, view) {
         if(new XDate(date).diffHours(new XDate())>0 && !this.options.calendarDef.CanEnterRetroactiveAppointments){
-            alert("you can't add retroactively");
+            alert("That period is closed");
             return;
         }
         var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
@@ -349,8 +349,19 @@ MF.Views.TrainerFormView = MF.Views.AjaxFormView.extend({
          'click #payTrainer' : 'payTrainer'
     }, MF.Views.AjaxFormView.prototype.events),
     viewLoaded:function(){
+        this.$el.find(this.options.crudFormSelector).data().crudForm.setBeforeSubmitFuncs(this.clientRateBeforeSubmit);
         this.loadPlugins();
         this.loadTokenizers();
+    },
+    clientRateBeforeSubmit:function(arr){
+        var items =$("[name='ClientsInput']").data('selectedItems');
+        if(items&&$(items).size()>0){
+            $.each(items, function(i,item){
+            arr.push({"name":"SelectedClients["+i+"].id","value":item.id});
+            arr.push({"name":"SelectedClients["+i+"].name","value":item.name});
+            arr.push({"name":"SelectedClients["+i+"].percentage","value":item.percentage});
+            })
+        }
     },
     loadTokenizers: function(){
         var clientOptions = $.extend({el:"#clients", id:"clientToken"},this.options.clientOptions);
@@ -452,5 +463,14 @@ MF.Views.TrainerGridView = MF.Views.GridView.extend({
     },
     showPayGrid:function(id){
         MF.vent.trigger("route","paytrainerlist/"+id,true);
+    }
+});
+
+MF.Views.ClientGridView = MF.Views.GridView.extend({
+    viewLoaded:function(){
+        MF.vent.bind("Redirect",this.showPayGrid,this);
+    },
+    showPayGrid:function(id){
+        MF.vent.trigger("route","paymentlist/"+id,true);
     }
 });

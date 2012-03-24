@@ -1,5 +1,9 @@
-﻿@using HtmlTags
+﻿
+
+
+@using HtmlTags
 @using MethodFitness.Core.Html.FubuUI
+@using MethodFitness.Core.Services
 @using MethodFitness.Web
 @using MethodFitness.Web.Controllers
 @model ClientViewModel
@@ -64,27 +68,30 @@
                 @Html.SubmissionFor(x => x.Item.Notes).ToHtmlTag()
             </div>
         </div>
-        <div class="col full clear"></div>
-        <div class="col left">
-            <div class="fieldRow">
-                <h4>@WebLocalizationKeys.CLIENT_RATES</h4>
+        @if (UserPermissionService.Allow("/Billing/ChangeClientRates"))
+        {
+            <div class="col full clear"></div>
+            <div class="col left">
+                <div class="fieldRow">
+                    <h4>@WebLocalizationKeys.CLIENT_RATES</h4>
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Item.SessionRates.FullHour).AddClassToRoot("half first").ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Item.SessionRates.HalfHour).AddClassToRoot("half first").ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Item.SessionRates.FullHourTenPack).AddClassToRoot("half first").ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Item.SessionRates.HalfHourTenPack).AddClassToRoot("half first").ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Item.SessionRates.Pair).AddClassToRoot("half first").ToHtmlTag()
+                </div>
             </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.SessionRates.FullHour).AddClassToRoot("half first").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.SessionRates.HalfHour).AddClassToRoot("half first").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.SessionRates.FullHourTenPack).AddClassToRoot("half first").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.SessionRates.HalfHourTenPack).AddClassToRoot("half first").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.SessionRates.Pair).AddClassToRoot("half first").ToHtmlTag()
-            </div>
-        </div>
+        }
     @EndForm()
         <div class="col right">
             <div class="fieldRow">

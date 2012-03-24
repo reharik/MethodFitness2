@@ -45,11 +45,12 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         
 
-        public JsonResult TrainerPayments(GridItemsRequestModel input)
+        public JsonResult TrainerPayments(TrainerPaymentGridItemsRequestModel input)
         {
             var trainer = _repository.Find<Trainer>(input.ParentId);
             var sessions = trainer.Sessions.Where(x => !x.TrainerPaid);
-            var items = _dynamicExpressionQuery.PerformQueryWithItems(sessions,input.filters);
+            var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
+            var items = _dynamicExpressionQuery.PerformQueryWithItems(sessions,input.filters, x=>x.Appointment.Date<=endDate);
             var sessionPaymentDtos = items.Select(x => new SessionPaymentDto
                                                            {
                                                                AppointmentDate = x.Appointment.Date,
@@ -71,6 +72,11 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
         }
+    }
+
+    public class TrainerPaymentGridItemsRequestModel : GridItemsRequestModel
+    {
+        public DateTime? endDate { get; set; }
     }
 
     public class PayTrainerViewModel:ViewModel

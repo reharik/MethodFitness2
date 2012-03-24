@@ -6,10 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 
-MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
+MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
      events:_.extend({
          'click .jqgrow':'handleSingleClick',
-         'click .cbox':'handleSelectAllClick'
+         'click .cbox':'handleSelectAllClick',
+         'click #payTrainerButton':'payTrainer',
+         'change #endDate':'dateChange'
 
     }, MF.Views.GridView.prototype.events),
     onPreRender:function(){
@@ -29,12 +31,22 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
     },
     viewLoaded:function(){
         $(this.el).find(".content-header").append("<button id='payTrainerButton' ></button>");
+        $(this.el).find(".content-header").append("<label>End Date</label><input type='text' class='datePicker' id='endDate' />");
         $(this.el).find(".content-header > .title-name").append("<span class='paymentAmount'></span>");
         $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
-
+        $(this.el).find("#endDate").val(new XDate().toString("MM/dd/yyyy"));
         MF.vent.bind("popup:payTrainerPopup:save",this.formSave,this);
         MF.vent.bind("popup:payTrainerPopup:cancel",this.formCancel,this);
-        $("#payTrainerButton").click($.proxy(this.payTrainer, this));
+    },
+    onClose:function(){
+         MF.vent.unbind("popup:payTrainerPopup:save");
+         MF.vent.unbind("popup:payTrainerPopup:cancel");
+    },
+    dateChange:function(e){
+        var date = $(e.currentTarget).val();
+        var obj = {"endDate":date};
+        $(this.options.gridContainer).jqGrid('setGridParam',{postData:obj});
+        this.reloadGrid();
     },
     payTrainer:function(){
         jQuery.ajaxSettings.traditional = true;
@@ -114,4 +126,20 @@ MF.Views.TrainerPaymentGridView = MF.Views.GridView.extend({
         }
         $span.text($span.data().total.amount);
     }
+});
+
+
+MF.Views.TrainerPaymentListGridView = MF.Views.GridView.extend({
+    viewLoaded:function(){
+        MF.vent.bind("DisplayItem",this.displayItem,this);
+    },
+    displayItem:function(id){
+        var parentId = this.$el.find("#EntityId").val();
+        window.open("/Billing/PayTrainer/TrainerReceipt/"+id+"?ParentId="+parentId);
+    },
+    onClose:function(){
+        MF.vent.unbind("AddUpdateItem");
+        MF.vent.unbind("DisplayItem");
+    }
+
 });

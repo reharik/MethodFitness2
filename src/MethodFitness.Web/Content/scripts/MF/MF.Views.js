@@ -189,24 +189,14 @@ MF.Views.GridView = MF.Views.View.extend({
         //callback for render
         this.viewLoaded();
         //general notification of pageloaded
-        this.checkForInstructions();
         MF.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
         MF.vent.bind("AddUpdateItem",this.editItem,this);
-    },
-    checkForInstructions:function(){
-        if($(".page-instructions").size()>0){
-            this.instructions =  this.instructions = new MF.Instructions({el:".page-instructions"});
-            this.instructions.render();
-            this.storeChild(this.instructions);
-        }
     },
     addNew:function(){
         MF.vent.trigger("route",this.options.addUpate,true);
         //$.publish('/contentLevel/grid_'+this.id+'/AddUpdateItem', [this.options.addUpdateUrl]);
     },
-    editItem:function(id,itemType){
-        var _itemType = itemType?itemType:"";
-        // fix this for all assets
+    editItem:function(id){
         MF.vent.trigger("route",this.options.addUpate+"/"+id,true);
     },
     deleteItems:function(){

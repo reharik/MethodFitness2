@@ -30,7 +30,7 @@ MF.addInitializer(function(){
     }, "Please enter a valid number.");
 
     // the events delegate doesn't seem to be picking up focusin
-    $(".MF_datePicker").live('focusin', function() {
+    $(".datePicker").live('focusin', function() {
         var $this = $(this);
         $this.datepicker({ changeYear: true, changeMonth: true });
     });

@@ -22,14 +22,6 @@
     extraFormOptions.clientOptions = clientOptions;
     extraFormOptions.deleteUrl = '@Model.DeleteUrl';
     extraFormOptions.crudFormOptions={};
-    extraFormOptions.crudFormOptions.additionBeforeSubmitFunc = function(arr){
-        var items =$("[name='ClientsInput']").data('selectedItems');
-        $.each(items, function(i,item){
-            arr.push({"name":"SelectedClients["+i+"].id","value":item.id});
-            arr.push({"name":"SelectedClients["+i+"].name","value":item.name});
-            arr.push({"name":"SelectedClients["+i+"].percentage","value":item.percentage});
-        });
-    }
 
 
 }

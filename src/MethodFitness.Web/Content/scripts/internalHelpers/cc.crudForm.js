@@ -35,12 +35,6 @@ mf.crudHelpers = {
     }
 };
 
-$(document).ready(function() {
-    // this must be on the form view if it's retrieved by ajax. don't know how to make it a delegate.
-//    $('.mf_CRUD').crudForm({});
-    $(".mf_datepicker").datepicker({ changeMonth: true, changeYear: true, yearRange: '1950:' + new Date().getFullYear() });
-    });
-
     if (typeof cc == "undefined") {
         var cc = {};
     }
@@ -72,7 +66,7 @@ $(document).ready(function() {
     };
 
     var CrudFunction = function(options, elem){
-        var myOptions = $.extend({}, $.fn.crudForm.defaults, options || {});
+        var myOptions = $.extend({}, options, $.fn.crudForm.defaults);
         var errorContainer = myOptions.errorContainer;
         var successContainer = myOptions.successContainer?myOptions.successContainer:myOptions.errorContainer;
         // do not move this into crudForm.defaults.  it end up using the same one for every call.
@@ -100,13 +94,19 @@ $(document).ready(function() {
         }
         var beforSubmitCallback = function(arr, form, options){
             var _arr = arr;
-            $(myOptions.beforeSubmitCallbackFunctions).each(function(i,item){
-                if(typeof(item) === 'function') item(_arr);
-            });
+            if(myOptions.beforeSubmitCallbackFunctions){
+                $(myOptions.beforeSubmitCallbackFunctions).each(function(i,item){
+                    if(typeof(item) === 'function') item(_arr);
+                });
+            }
         };
 
         this.setBeforeSubmitFuncs = function(beforeSubmitFunc){
              var array = !$.isArray(beforeSubmitFunc) ? [beforeSubmitFunc] : beforeSubmitFunc;
+            if(!myOptions.beforeSubmitCallbackFunctions){
+                myOptions.beforeSubmitCallbackFunctions = [];
+            }
+            
             $(array).each(function(i,item){
                 if($.inArray(item,myOptions.beforeSubmitCallbackFunctions)<=0){
                     myOptions.beforeSubmitCallbackFunctions.push(item);
@@ -126,8 +126,7 @@ $(document).ready(function() {
 
     $.fn.crudForm.defaults = {
         dataType: 'json',
-        errorContainer: '#errorMessagesForm',
-        beforeSubmitCallbackFunctions: []
+        errorContainer: '#errorMessagesForm'
     };
 })(jQuery);
 
