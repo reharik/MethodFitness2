@@ -85,6 +85,8 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
         this.formCancel();
         if(result.Success){
             this.reloadGrid();
+            $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
+            $(this.el).find(".paymentAmount").text(0);
             window.open(result.Variable);
         }
     },

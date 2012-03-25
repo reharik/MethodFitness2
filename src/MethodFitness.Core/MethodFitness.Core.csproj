@@ -240,7 +240,6 @@
     <Compile Include="Html\FubuUI\Builders\EmailDisplayBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\GroupedSelectBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\ListDisplayBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\RadioButtonListBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\SelectFromEnumerationBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\SelectFromIEnumerableBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\TextAreaBuilder.cs" />
