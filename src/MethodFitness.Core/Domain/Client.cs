@@ -33,6 +33,7 @@ namespace MethodFitness.Core.Domain
         public virtual string Status { get; set; }
         [ValueOf(typeof(Source))]
         public virtual string Source { get; set; }
+        public virtual string SourceOther { get; set; }
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
         public virtual string FullNameLNF
@@ -57,6 +58,7 @@ namespace MethodFitness.Core.Domain
         }
         private IList<Payment> _payments = new List<Payment>();
         public virtual IEnumerable<Payment> Payments { get { return _payments; } }
+
 
 
         public virtual void RemovePayment(Payment payment)
