@@ -1,340 +1,486 @@
 ﻿.raif{ width:300px; height:300px;}
-
-div.fieldRow textarea
-	{ height: 45px;
-	overflow: auto; }
- div.fieldRow textarea.medium
-	{ height: 90px	;
-	  overflow: auto; }
- div.fieldRow textarea.large
-		{ height: 180px	;
-	  overflow: auto; }
-
-.unit a.close {
-    background: url(../images/close-x.png) no-repeat top left;
-    width: 14px;
-    height: 16px;
-    display:block;
-    text-indent: -999em;
-    margin-right: 15px;
-    float: right;
+.shortWidth {
+	width: 100px !important;
 }
- .repeaterItems {
-     background-color: #C0D4DE;
-     padding: 8px;
- }
-
- .unit{
-     width: 100%;
-     border: 1px black solid;
- }
+div.fieldRow textarea {
+	/*height: 45px;*/
+	overflow: auto;
+}
+div.fieldRow textarea.medium {
+	height: 90px;
+	overflow: auto;
+}
+div.fieldRow textarea.large {
+	height: 180px;
+	overflow: auto;
+}
+.unit a.close {
+	background: url(../images/close-x.png) no-repeat top left;
+	width: 16px;
+	height: 16px;
+	display: block;
+	text-indent: -999em;
+	margin: 0 0 5px 0;
+	float: right;
+}
+.repeaterItems {
+	background-color: #C0D4DE;
+	padding: 8px;
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.unit {
+	width: 100%;
+}
 
 .unit .move-up {
-    background: url("../images/move-up-icon.png") no-repeat scroll 0 0 transparent;
-    display: block;
-    height: 8px;
-    margin-top: 1px;
-    width: 11px;
-    cursor: pointer;
+	background: url("../images/move-up-icon.png") no-repeat scroll 0 0 transparent;
+	display: block;
+	height: 8px;
+	margin-top: 1px;
+	width: 11px;
+	cursor: pointer;
 }
-
 .unit .move-down {
-    background: url("../images/move-down-icon.png") no-repeat scroll 0 0 transparent;
-    display: block;
-    height: 8px;
-    margin-top: 2px;
-    width: 11px;
-    cursor: pointer;
+	background: url("../images/move-down-icon.png") no-repeat scroll 0 0 transparent;
+	display: block;
+	height: 8px;
+	margin-top: 2px;
+	width: 11px;
+	cursor: pointer;
 }
-
 /******  FORMS  *******/
- div.-scroll-wrapper {
-    padding-top: 12px;
+div.-scroll-wrapper {
+	padding-top: 12px;
+}
+div.-scroll-inner {
+	height: 480px;
+	overflow-y: auto;
+}
+div.col {
+	width: 335px;
+	padding: 10px 20px;
+	display: block;
+}
+div.dashboardCol {
+	width: 400px;
+	padding: 10px 20px;
+	display: block;
+}
+div.dashboardWidget {
+	height: 350px;
+	margin-bottom: 50px
+}
+div.top {
+	padding-top: 0;
+	display: block;
+}
+div.footer {
+	display: block;
+	clear: both;
+	padding: 10px 0 10px 30px;
+}
+div.left {
+	float: left;
+}
+div.right {
+	float: left;
+}
+div.full {
+	width: 710px;
+	padding: 10px 0 10px 20px;
+}
+/*div.centered {
+	background-color:chartreuse ;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}*/
+div.fieldRow {
+	font-size: 12px;
+	color: #666666;
+	padding: 3px 0;
+	clear: both;
+}
+div.fieldRow label {
+	/*width: 100%;*/
+	margin-bottom: 4px;
+	display: block;
+}
+div.fieldRow label.small {
+	font-size: 0.7em;
+}
+div.fieldRow a {
+	color: #666666;
+	text-decoration: underline;
+}
+div.fieldRow .checkbox .editor_label label {
+	float: left;
+	line-height: 25px;
+	margin: 16px 7px 0 7px;
+	width: auto !important;
 }
 
- div.-scroll-inner {
-    height: 480px;
-    overflow-y: auto;
+div.fieldRow div.full-row
+{
+	width: 329px;
 }
 
- div.col {
-    width: 335px;
-    padding: 10px 20px;
-    display: block;
+div.fieldRow div.one-third {
+	margin-right: 8px;
+	width: 100.5px;
+	float: left;
+}
+div.fieldRow div.half {
+	float: left;
+	margin-right: 8px;
+	width: 157px;
+}
+div.fieldRow div.two-thirds {
+	margin-right: 8px;
+	width: 218px;
+	float: left;
+}
+div.fieldRow div.one-quarter {
+	margin-right: 8px;
+	width: 79px;
+	float: left;
+}
+div.fieldRow div.three-quarters {
+	float: left;
+	margin-right: 8px;
+	width: 234px;
+}
+div.fieldRow div.first {
+	margin-left: 0;
+}
+div.fieldRow input, div.fieldRow select {
+	width: 100%;
+	height: 25px;
+	padding-left: 5px;
+	color: #838383;
+}
+div.fieldRow  textarea {
+	width: 100%;
+	color: #838383;
+	font-size: 100%;
+	padding: 2px;
+}
+div.fieldRow .checkbox .editor_input input {
+	float: left;
+	width: 15px;
+	margin-top: 16px;
+}
+div.fieldRow input.num, div.fieldRow input.money {
+	width: 40%;
+}
+div.fieldRow input.password {
+	font-size: 11px;
 }
 
-div.puCol {
-    width: 235px;
-    padding: 10px 20px;
-    display: block;
+div.assetTypePicker {
+	 margin-left: 15px;
 }
 
- div.top {
-    padding-top: 0;
-    display: block;
+.pad-bottom {
+	padding-bottom: 50px;
 }
 
- div.footer {
-    display: block;
-    clear: both;
-    padding: 10px 0 10px 30px;
+#portfolio hr {
+	clear: both;
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 710px;
 }
 
- div.left {
-    float: left;
+label.section {
+	clear: left;
+	color: #457596;
+	background: url('../images/button-v.png') no-repeat;
+	font-size: 13px;
+	font-weight: bold;
+	height: 21px;
+	padding-left: 25px;
+	width: 200px !important;
 }
 
- div.right {
-    float: left;
+label.assetTypeHeader {
+	clear: none;
+	font-size: 13px;
+	font-weight: bold;
+	height: 21px;
+	margin-left: 5px;
 }
 
- div.full {
-    width: 710px;
-    padding: 10px 0 10px 20px;
+label.section-selected {
+	color: green;
 }
 
- div.full {
-    width: 525px;
-    padding: 10px 0 10px 20px;
+label.section-available {
+	color: brown;
 }
 
- div.fieldRow {
-    font-size: 13px;
-    color: #666666;
-    display: block;
-    margin: 8px 10px;
-    overflow: hidden;
+.footer button {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: bold;
+	padding-bottom: 5px;
 }
-
- div.fieldRow label {
-    width: 100%;
-    margin-bottom: 4px;
-    display: block;
+.footer button.save {
+	background: url("../images/button-save-bg.png") repeat-x scroll 0 0 #CCCCCC;
+	border: 1px solid #B7D6DE;
+	height: 27px;
+	width: 80px;
+	color: #437182;
 }
-
- div.fieldRow label.small {
-    font-size: 0.7em;
+.footer button.cancel {
+	background: url("../images/button-cancel-bg.png") repeat-x scroll 0 0 #CCCCCC;
+	border: 1px solid #dfdfdf;
+	height: 27px;
+	width: 80px;
+	color: #8F8F8F;
 }
-
- div.fieldRow a {
-    color: #666666;
-    text-decoration: underline;
+.footer button.save:hover {
+	background: url("../images/button-save-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
 }
-
- div.fieldRow .checkbox .editor_label label {
-    float: left;
-    line-height: 25px;
-    margin: 16px 7px 0 7px;
-    width: auto;
+.footer button.cancel:hover {
+	background: url("../images/button-cancel-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
 }
-
- div.fieldRow div.one-quarter {
-    margin-left: 2%;
-    width: 23%;
-    float: left;
+.footer button.save:active {
+	background: url("../images/button-save-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
+	-webkit-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
+	-moz-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
+	box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
 }
-
- div.fieldRow div.one-third {
-    margin-left: 2%;
-    width: 31%;
-    float: left;
-}
-
- div.fieldRow div.half {
-    margin-left: 2%;
-    width: 48%;
-    float: left;
-}
-
- div.fieldRow div.two-thirds {
-    margin-left: 2%;
-    width: 64%;
-    float: left;
-}
-
- div.fieldRow div.three-quarters {
-    margin-left: 2%;
-    width: 73%;
-    float: left;
-}
-
- div.fieldRow div.first {
-    margin-left: 0;
-    margin-right: 2%;
-}
-
- div.fieldRow input, div.fieldRow select {
-    width: 100%;
-    height: 25px;
-    color: #838383;
-    padding: 2px;
-}
-
- div.fieldRow  textarea {
-    width: 100%;
-    color: #838383;
-    font-size: 100%;
-    padding: 2px;
-}
-
- div.fieldRow .checkbox .editor_input input {
-    float: left;
-    width: 12px;
-    margin-top: 16px;
-}
-
- div.fieldRow input.num, div.fieldRow input.money {
-    width: 40%;
-}
-
- div.fieldRow input.password {
-    font-size: 11px;
-}
-
- label.section {
-    color: #457596;
-    background: url('../images/button-v.png') no-repeat;
-    padding-left: 25px;
-    height: 21px;
-    font-weight: bold;
-    font-size: 13px;
-}
-
- .section-divider {
-    width: 710px;
-    display: block;
-    clear: both;
-    padding: 0 0 0 20px;
-}
-
- .section-divider label.section {
-    margin-left: 10px;
-}
-
- .footer button {
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-    padding-bottom: 5px;
-}
-
- .footer button.save {
-    background: url("../images/button-save-bg.png") repeat-x scroll 0 0 #CCCCCC;
-    border: 1px solid #B7D6DE;
-    height: 27px;
-    width: 80px;
-    color: #437182;
-}
-
- .footer button.cancel {
-    background: url("../images/button-cancel-bg.png") repeat-x scroll 0 0 #CCCCCC;
-    border: 1px solid #dfdfdf;
-    height: 27px;
-    width: 80px;
-    color: #8F8F8F;
-}
-
- .footer button.save:hover {
-    background: url("../images/button-save-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
-}
-
- .footer button.cancel:hover {
-    background: url("../images/button-cancel-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
-}
-
- .footer button.save:active {
-    background: url("../images/button-save-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
-    -webkit-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-    -moz-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-    box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-}
-
- .footer button.cancel:active {
-    background: url("../images/button-cancel-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
-}
-
-  .artifact-field .editor_root,   .artifact-field .editor_label,   .artifact-field .editor_input {
-    width:100%;
+.footer button.cancel:active {
+	background: url("../images/button-cancel-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
 }
 
 
- div.fieldRow div.one-five {
-    width: 20%;
-    float: left;
-    margin-left: 2%;
+
+form button {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+form button.save {
+	background: url("../images/button-save-bg.png") repeat-x scroll 0 0 #CCCCCC;
+	border: 1px solid #B7D6DE;
+	height: 27px;
+	width: 80px;
+	color: #437182;
+}
+form button.cancel {
+	background: url("../images/button-cancel-bg.png") repeat-x scroll 0 0 #CCCCCC;
+	border: 1px solid #dfdfdf;
+	height: 27px;
+	width: 80px;
+	color: #8F8F8F;
+}
+form button.save:hover {
+	background: url("../images/button-save-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
+}
+form button.cancel:hover {
+	background: url("../images/button-cancel-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
+}
+form button.save:active {
+	background: url("../images/button-save-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
+	-webkit-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
+	-moz-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
+	box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
+}
+form button.cancel:active {
+	background: url("../images/button-cancel-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
 }
 
- div.fieldRow div.two-five {
-    width: 38%;
-    float: left;
+
+.artifact-field .editor_root, .artifact-field .editor_label, .artifact-field .editor_input {
+	width: 100%;
+}
+/*  The editor_root was focused upon to fix the margin issues with the fields.  Please manipulate this to fix any further issues.*/
+.editor_root {
+	margin: 8px 0 8px 8px !important;
 }
 
+.view_root {
+	/*margin: 8px 0 8px 8px !important;*/
+}
+
+.editor_input{
+	width: 97%;
+}
+
+.checkbox .editor_input
+{
+	display:inline
+}
+
+div.fieldRow div.one-five {
+	width: 61px;
+	float: left;
+	margin-left: 2%;
+}
+div.fieldRow div.two-five {
+	width: 122px;
+	float: left;
+}
 div.fieldRow div.three-five {
-    width: 54%;
-    float: left;
+	width: 183px;
+	float: left;
 }
-
- div.fieldRow div.mid {
-    margin: 0;
+div.fieldRow div.mid {
+	margin: 0;
 }
-
- div.fieldRow div.last {
-    margin: 0 0 0 2%;
+div.fieldRow div.last {
+	margin: 0 0 0 2%;
 }
-
 div.footer div.col {
-    padding: 10px 20px 10px 0;
+	padding: 10px 20px 10px 0;
 }
-
 #portfolios #main-header ul#main-tabs li.selected {
-    background: white;
-    border-top: medium none;
-    height: 33px;
+	background: white;
+	border-top: medium none;
+	height: 33px;
 }
-
 #portfolios #main-header ul#main-tabs li.selected a {
-    color: #333333;
-    text-shadow: -1px -1px 1px #DDDDDD;
+	color: #333333;
+	text-shadow: -1px -1px 1px #DDDDDD;
 }
-
-.headShotImage img{
-    width: 80px;
+.headShotImage img {
+	width: 70px;
 }
-
 #ajaxLoading {
-    position: absolute;
-    height: 30px;
-    width: 30px;
-    left: 50%;
-    top: 50%;
-    background: url(../images/ajax-loader.gif);
+	position: absolute;
+	height: 30px;
+	width: 30px;
+	left: 50%;
+	top: 50%;
+	background: url(../images/ajax-loader.gif);
 }
-
 .ui-jqgrid .loading {
-    position: absolute;
-    height: 30px;
-    width: 30px;
-    left: 50%;
-    top: 50%;
-    background: url(../images/ajax-loader.gif);
+	position: absolute;
+	height: 30px;
+	width: 30px;
+	left: 50%;
+	top: 50%;
+	background: url(../images/ajax-loader.gif);
 }
-
-
 /*********** Overrides to make menu wider ********************/
 
 #left-navigation {
-    width: 222px;
+	width: 222px;
 }
-
 #main-content {
-    margin: 10px 16px 0 222px;
+	margin: 10px 16px 0 222px;
+}
+.ui-icon {
+	width: 17px;
+	height: 17px;
 }
 
-.ui-icon {
-	 width: 17px; 
-	 height: 17px;
+/*Directly below was used to adjust the margins for the picture preview icon.*/
+.view_label, .view_display{
+	 margin: 8px 0 0 8px;
+}
+
+.create_port{
+	margin-left: 8px;
+}
+
+/* PZT: START Dashboard Tiles */
+div.dashboard-tile .content-inner
+{
+	max-height: 300px;
+	min-height: 300px;
+	padding-bottom: 2px;
+}
+div.dashboard-tile .ui-jqgrid-view
+{
+	padding-bottom: 2px;
+}
+/* Change individual tiles */
+div.r1c1 .content-inner
+{
+    max-height: 300px;
+    min-height: 300px;
+
+}
+
+/* PZT: END Dashboard Tiles */
+
+/* Profile Page */
+.profile_add{
+    margin:10px 0 10px 0;
+    float: left;
+}
+/*  End Profile Page */
+
+
+.hyperlink{
+    color:blue;
+    cursor: pointer;
+}
+
+.menuItem-disabled a{
+    color:black;
+}
+
+
+.menuItem-disabled a{
+    color:#9A9C9C!important;
+    background-color: #E9E9EA!important;
+    margin: 1px;
+}
+
+#left-navigation ul.fg-menu li.menuItem-disabled a.ui-state-hover {
+    color:#7B7D7D  !important;
+    background-color: #E4E4E6 !important;
+    margin: 1px;
+}
+
+#left-navigation ul.fg-menu li.menuItem-disabled a.ui-state-active {
+    color:#818585  !important;
+    background-color: #E7E7E9 !important;
+    margin: 1px;
+}
+
+
+
+
+.copyright {
+	font-size: 10px;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+
+.img-float-right {
+	float: right;
+	padding-left: 5px;
+	padding-right: 10px;
+	padding-top: 0;
+	padding-bottom: 5px;
+
+}
+
+div.bordered-box{
+	border: 1px dotted #a8a8a8;
+}
+
+.centered {
+	padding-left: 10px;
+	padding-right: 10px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
 }
 
 /************************/
@@ -380,47 +526,3 @@ margin: 0;
 .showing{
     text-decoration: underline;
 }
-
-/************************/
-.view_label{
-    float: left;
-    font-weight: bold;
-    padding-right: 8px;
-}
-
-.editor_label_inline{
-    float:left;
-}
-
-.payment_input{
-    float: right;
-    width: 40px !important;
-    margin-right: 10px;
-    margin-right: 10px;
-}
-.content-outer .content-header label {
-    float: left;
-    height: 23px;
-    margin: 8px 0 0 30px;
-    padding: 5px 0 0;
-     color: #666666;
-    font-size: 0.85em;
-}
-
-.content-outer .content-header input {
-    float: left;
-    height: 23px;
-    margin: 8px 10px 0 16px;
-    padding: 5px 0 0;
-     color: #666666;
-    font-size: 0.85em;
-}
-
-.content-outer .content-header input#endDate{
-    font-size: 1em;
-    text-align: center;
-    width:100px;
-    margin: 8px 10px 0 6px;
-
-}
-

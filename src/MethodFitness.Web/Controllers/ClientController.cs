@@ -139,7 +139,7 @@ namespace MethodFitness.Web.Controllers
             client.BirthDate = clientModel.BirthDate;
             client.StartDate = clientModel.StartDate;
             if (client.SessionRates == null) {client.SessionRates = new SessionRates(true);}
-            else
+            else if(clientModel.SessionRates!=null)
             {
                 client.SessionRates.FullHour = clientModel.SessionRates.FullHour;
                 client.SessionRates.HalfHour = clientModel.SessionRates.HalfHour;
