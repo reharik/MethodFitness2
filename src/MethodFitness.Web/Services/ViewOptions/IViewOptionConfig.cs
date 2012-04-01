@@ -32,7 +32,8 @@ namespace MethodFitness.Web.Services.ViewOptions
             _builder.UrlForForm<TrainerController>(x => x.AddUpdate(null)).ViewName("TrainerFormView").End();
 
             _builder.UrlForList<PaymentListController>(x => x.ItemList(null), AreaName.Billing).ViewName("PaymentListView").End();
-            _builder.UrlForForm<PaymentController>(x => x.AddUpdate(null),AreaName.Billing).ViewName("PaymentFormView").End();
+            _builder.UrlForForm<PaymentController>(x => x.AddUpdate(null), AreaName.Billing).ViewName("PaymentFormView").End();
+            _builder.UrlForDisplay<PaymentController>(x => x.Display(null), AreaName.Billing).End();
 
             _builder.UrlForList<PayTrainerListController>(x => x.ItemList(null), AreaName.Billing).ViewName("PayTrainerGridView").End();
             //_builder.UrlForForm<PayTrainerController>(x => x.AddUpdate(null), AreaName.Billing).End();

@@ -15,6 +15,7 @@ namespace MethodFitness.Web.Services.ViewOptions
         public string id { get; set; }
         public string route { get; set; }
         public string addUpate { get; set; }
+        public string display { get; set; }
         public bool isChild { get; set; }
         public bool noBubbleUp { get; set; }
         [ScriptIgnore]

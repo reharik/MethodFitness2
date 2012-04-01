@@ -33,6 +33,7 @@ namespace MethodFitness.Core.Domain
         public virtual string Status { get; set; }
         [ValueOf(typeof(Source))]
         public virtual string Source { get; set; }
+        [TextArea]
         public virtual string SourceOther { get; set; }
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }

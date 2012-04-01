@@ -146,6 +146,7 @@ namespace MethodFitness.Web
         public static readonly StringToken TRAINER_PAYMENTS = new WebLocalizationKeys("TRAINER_PAYMENTS", "Trainer Payments");
         public static readonly StringToken TOTAL = new WebLocalizationKeys("TOTAL", "Total:");
         public static readonly StringToken PAY_TRAINER = new WebLocalizationKeys("PAY_TRAINER", "Pay Trainer");
+        public static readonly StringToken SOURCE_NOTES = new WebLocalizationKeys("SOURCE_NOTES", "Source Notes");
 
     }
 }

@@ -11,8 +11,6 @@ if (typeof mf == "undefined") {
 
 MF.repository= (function(){
     var repositoryCallback = function(result,callback){
-        clearTimeout(showLoader);
-        $("#ajaxLoading").hide();
         if(result.LoggedOut){
             window.location.replace(result.RedirectUrl);
             return;
@@ -21,11 +19,11 @@ MF.repository= (function(){
     };
     return {
         ajaxPost:function(url, data, callback){
-            showLoader = setTimeout(function() { $("#ajaxLoading").show(); }, 1000);
+             MF.showThrob=true;
             $.post(url,data,function(result){ repositoryCallback(result,callback)});
         },
         ajaxGet:function(url, data, callback){
-            showLoader = setTimeout(function() { $("#ajaxLoading").show(); }, 1000);
+             MF.showThrob=true;
             $.get(url,data,function(result){repositoryCallback(result,callback);
             });
         }

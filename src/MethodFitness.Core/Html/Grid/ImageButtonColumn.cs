@@ -30,17 +30,18 @@ namespace MethodFitness.Core.Html.Grid
             return this;
         }
 
-        public override HtmlTag BuildColumn(object item, User user, IAuthorizationService _authorizationService)
+        public override ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService)
         {
             var _item = (ENTITY) item;
-            var value = FormatValue(_item, user, _authorizationService);
-            if (value.Text().IsEmpty()) return null;
+            var valueDto = FormatValue(_item, user, _authorizationService);
+            if (valueDto.HtmlTag.Text().IsEmpty()) return valueDto;
             var divTag = BuildDiv();
             var anchor = buildAnchor(_item);
             var image = BuildImage();
             divTag.Children.Add(image);
             anchor.Children.Add(divTag);
-            return anchor;
+            valueDto.HtmlTag = anchor;
+            return valueDto;
         }
 
         private HtmlTag buildAnchor(ENTITY item)

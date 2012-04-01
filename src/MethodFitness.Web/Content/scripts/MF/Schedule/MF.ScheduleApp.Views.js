@@ -279,31 +279,17 @@ MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
 });
 MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
     events:_.extend({
-        'click .payment':'payment',
-        'change #source':'sourceOther'
+        'click .payment':'payment'
     }, MF.Views.AjaxFormView.prototype.events),
-    viewLoaded:function(){
-        this.sourceOther();
-    },
     payment:function(){
         var id = $(this.el).find("#EntityId").val();
         MF.vent.trigger("route","paymentlist/"+id,true);
-    },
-    sourceOther:function(){
-        if($(this.el).find("#source").val()=="Other"){
-            $(this.el).find("#other").show();
-        }else{
-            $(this.el).find("#other").hide();
-        }
     }
 });
 MF.Views.PaymentListView = MF.Views.GridView.extend({
     addNew:function(){
         var parentId = $(this.el).find("#ParentId").val();
         MF.vent.trigger("route",this.options.addUpate+"/0/"+parentId ,true);
-        //$.publish('/contentLevel/grid_'+this.id+'/AddUpdateItem', [this.options.addU+
-        //
-        // pdateUrl]);
     },
     editItem:function(id,itemType){
         var parentId = $(this.el).find("#ParentId").val();

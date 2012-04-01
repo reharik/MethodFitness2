@@ -35,6 +35,7 @@ namespace KnowYourTurf.Core.Services
                         .Level(10)
                         .Save();
             }
+            _permissionsBuilderService.Deny("/Payment/Display").For(type).OnEverything().Level(11).Save();
         }
 
         public void GrantDefaultTrainersPermissions()

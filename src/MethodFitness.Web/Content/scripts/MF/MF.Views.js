@@ -144,14 +144,12 @@ MF.Views.AjaxDisplayView = MF.Views.View.extend({
         if(extraFormOptions){
             $.extend(true,this.options, extraFormOptions);
         }
-//        if(typeof this.options.runAfterRenderFunction == 'function'){
-//            this.options.runAfterRenderFunction.apply(this,[this.el]);
-//        }
-      //  $.publish("/contentLevel/display_"+this.id+"/pageLoaded",[this.options]);
         MF.vent.trigger("display:"+this.id+":pageLoaded",this.options);
     },
     cancel:function(){
-        MF.vent.trigger(this.id+":cancel",this.id);
+        MF.vent.trigger("display:"+this.id+":cancel",this.id);
+        if(!this.options.noBubbleUp)
+            MF.WorkflowManager.returnParentView();
     }
 });
 
@@ -191,6 +189,7 @@ MF.Views.GridView = MF.Views.View.extend({
         //general notification of pageloaded
         MF.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
         MF.vent.bind("AddUpdateItem",this.editItem,this);
+        MF.vent.bind("DisplayItem",this.displayItem,this);
     },
     addNew:function(){
         MF.vent.trigger("route",this.options.addUpate,true);
@@ -198,6 +197,9 @@ MF.Views.GridView = MF.Views.View.extend({
     },
     editItem:function(id){
         MF.vent.trigger("route",this.options.addUpate+"/"+id,true);
+    },
+    displayItem:function(id){
+        MF.vent.trigger("route",this.options.display+"/"+id,true);
     },
     deleteItems:function(){
         if (confirm("Are you sure you would like to delete this Item?")) {

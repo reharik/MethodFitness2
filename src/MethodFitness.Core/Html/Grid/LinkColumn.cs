@@ -68,17 +68,18 @@ namespace MethodFitness.Core.Html.Grid
             return this;
         }
 
-        public override HtmlTag BuildColumn(object item, User user, IAuthorizationService _authorizationService)
+        public override ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService)
         {
             var _item = (ENTITY)item;
-            var value = FormatValue(_item, user, _authorizationService);
-            if (value==null || value.Text().IsEmpty()) return null;
-            addToolTipAndClasses(value);
+            var valueDto = FormatValue(_item, user, _authorizationService);
+            if (valueDto.HtmlTag == null || valueDto.HtmlTag.Text().IsEmpty()) return valueDto;
+            addToolTipAndClasses(valueDto.HtmlTag);
             var anchor = buildAnchor(_item);
             var div = BuildDiv();
-            div.Children.Add(value);
+            div.Children.Add(valueDto.HtmlTag);
             anchor.Children.Add(div);
-            return anchor;
+            valueDto.HtmlTag = anchor;
+            return valueDto;
         }
 
         protected DivTag BuildDiv()

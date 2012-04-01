@@ -30,15 +30,16 @@ namespace MethodFitness.Core.Html.Grid
             Properties[GridColumnProperties.width.ToString()] = width;
             return this;
         }
-        public override HtmlTag BuildColumn(object item, User user, IAuthorizationService _authorizationService)
+        public override ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService)
         {
             var _item = (ENTITY)item;
-            var value = FormatValue(_item, user, _authorizationService);
-            if (value.Text().IsEmpty()) return null;
+            var valueDto = FormatValue(_item, user, _authorizationService);
+            if (valueDto.HtmlTag.Text().IsEmpty()) return valueDto;
             var divTag = BuildDiv();
             var image = BuildImage();
             divTag.Children.Add(image);
-            return divTag;
+            valueDto.HtmlTag = divTag;
+            return valueDto;
         }
 
         protected HtmlTag 

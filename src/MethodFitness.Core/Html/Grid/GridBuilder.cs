@@ -43,8 +43,11 @@ namespace MethodFitness.Core.Html.Grid
             foreach (var column in columns)
             {
                 var value = column.BuildColumn(item, user, _authorizationService);
-                modifications.Each(x => x.Invoke(value, item));
-                cellValues.Add(value == null ? string.Empty: value.ToPrettyString());
+                modifications.Each(x => x.Invoke(value.HtmlTag, item));
+                if (value.Authorized)
+                {
+                    cellValues.Add(value.HtmlTag == null ? string.Empty : value.HtmlTag.ToPrettyString());
+                }
             }
             return cellValues.ToArray();
         }
