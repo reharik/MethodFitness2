@@ -8,7 +8,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Localization;
 using FubuMVC.Core.Util;
 using HtmlTags;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Core.Html.Grid
 {

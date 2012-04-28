@@ -7,7 +7,7 @@ using MethodFitness.Core.Localization;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using MethodFitness.Core.Services;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 using StructureMap;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions

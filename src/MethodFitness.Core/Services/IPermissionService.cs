@@ -1,5 +1,5 @@
 ﻿using MethodFitness.Core.Domain;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 using StructureMap;
 
 namespace MethodFitness.Core.Services

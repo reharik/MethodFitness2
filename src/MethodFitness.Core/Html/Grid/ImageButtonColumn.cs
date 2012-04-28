@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using HtmlTags;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Core.Html.Grid
 {

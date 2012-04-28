@@ -1,9 +1,8 @@
 using System;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
+using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Areas.Schedule.Controllers;
-using Rhino.Security.Interfaces;
 using StructureMap;
 
 namespace Generator

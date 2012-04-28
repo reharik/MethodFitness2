@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using MethodFitness.Security.Model;
+using MethodFitness.Security.Services;
 using NHibernate;
-using Rhino.Security.Model;
-using Rhino.Security.Services;
 
-namespace KnowYourTurf.Core.Services
+namespace MethodFitness.Core.Services
 {
     public class CustomAuthorizationRepository : AuthorizationRepository
     {

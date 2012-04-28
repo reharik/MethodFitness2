@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html.Menu;
-using KnowYourTurf.Web.Config;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 using MethodFitness.Web.Controllers;

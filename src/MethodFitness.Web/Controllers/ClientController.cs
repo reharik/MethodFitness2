@@ -136,6 +136,7 @@ namespace MethodFitness.Web.Controllers
             client.Notes = clientModel.Notes;
             client.Status = clientModel.Status;
             client.SourceOther = clientModel.SourceOther;
+            client.Source = clientModel.Source;
             client.BirthDate = clientModel.BirthDate;
             client.StartDate = clientModel.StartDate;
             if (client.SessionRates == null) {client.SessionRates = new SessionRates(true);}

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MethodFitness.Core.Domain;
 using FubuMVC.Core.Util;
 using HtmlTags;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Core.Html.Grid
 {

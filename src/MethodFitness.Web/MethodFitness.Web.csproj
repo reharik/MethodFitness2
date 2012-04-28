@@ -120,10 +120,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fluentnhibernate\Remotion.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Security">
-      <HintPath>..\..\lib\Rhino.Security.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="RouteDebug">
       <HintPath>..\..\lib\RouteDebug.dll</HintPath>
       <Private>True</Private>
@@ -243,13 +239,11 @@
     <Compile Include="MFTestRegistry.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\IMenuConfig.cs" />
-    <Compile Include="Config\SecurityBootstrapper.cs" />
     <Compile Include="Config\StructureMapBootstrapper.cs" />
     <Compile Include="Config\StructureMapControllerFactory.cs" />
     <Compile Include="Config\StructureMapServiceLocator.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrthoganalController.cs" />
-    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\MFController.cs" />
     <Compile Include="CustomViewPage.cs" />
     <Compile Include="Menus\HeaderMenu.cs" />
@@ -450,6 +444,10 @@
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
       <Name>MethodFitness.Core</Name>
       <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\MethodFitness.Security\MethodFitness.Security.csproj">
+      <Project>{DBA372FE-3D52-45B3-AF82-B37696328764}</Project>
+      <Name>MethodFitness.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReportingDataSets\MethodFitness.ReportingDataSets.csproj">
       <Project>{231B4A24-89B4-4212-AAA9-F234087037D1}</Project>

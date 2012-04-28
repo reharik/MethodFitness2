@@ -1,20 +1,18 @@
 ﻿using Alpinely.TownCrier;
-using KnowYourTurf.Core.Services;
-using KnowYourTurf.Web.Config;
+using MethodFitness.Core.Services;
+using MethodFitness.Security.Interfaces;
+using MethodFitness.Security.Services;
+using MethodFitness.Web.Config;
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Localization;
-using MethodFitness.Core.Rules;
-using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Menus;
 using MethodFitness.Web.Services;
 using MethodFitness.Web.Services.ViewOptions;
 using NHibernate;
-using Rhino.Security.Interfaces;
-using Rhino.Security.Services;
 using StructureMap.Configuration.DSL;
 using Log4NetLogger = MethodFitness.Core.Log4NetLogger;
 

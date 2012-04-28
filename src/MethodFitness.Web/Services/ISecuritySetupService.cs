@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using KnowYourTurf.Core.Services;
-using KnowYourTurf.Web.Config;
+using MethodFitness.Core.Services;
+using MethodFitness.Security.Interfaces;
+using MethodFitness.Web.Config;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Web.Controllers;
-using Rhino.Security.Interfaces;
 using StructureMap;
 
 namespace MethodFitness.Web.Services
@@ -46,14 +46,14 @@ namespace MethodFitness.Web.Services
         public void ExecuteAll()
         {
             CreateUserGroups();
-            AssociateAllUsersWithThierTypeGroup();
-            CreateKYTAdminOperation();
-            CreateOperationsForAllControllers();
-            CreateOperationsForAllMenuItems();
-            CreateMiscellaneousOperations();
-            _permissionsService.GrantDefaultAdminPermissions("Administrator");
-            _permissionsService.GrantDefaultTrainersPermissions();
-            _repository.UnitOfWork.Commit();
+//            AssociateAllUsersWithThierTypeGroup();
+//            CreateKYTAdminOperation();
+//            CreateOperationsForAllControllers();
+//            CreateOperationsForAllMenuItems();
+//            CreateMiscellaneousOperations();
+//           // _permissionsService.GrantDefaultAdminPermissions("Administrator");
+//            _permissionsService.GrantDefaultTrainersPermissions();
+//            _repository.UnitOfWork.Commit();
         }
 
         private void CreateKYTAdminOperation()
@@ -115,7 +115,9 @@ namespace MethodFitness.Web.Services
            createOperation("/Calendar/SetAppointmentForOthers");
            createOperation("/Calendar/CanDeleteRetroactiveAppointments");
            createOperation("/Clients/CanScheduleAllClients");
-           
+
+           createOperation("/TrainerPayment/Display");
+           createOperation("/TrainerPayment/Active");
            createOperation("/Payment/Display");
            createOperation("/Payment/AddUpdate");
            createOperation("/Billing/ChangeClientRates");

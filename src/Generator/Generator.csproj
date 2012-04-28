@@ -99,10 +99,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fluentnhibernate\Remotion.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Security, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Rhino.Security.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap, Version=2.5.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\StructureMap.dll</HintPath>
@@ -188,6 +184,10 @@
     <ProjectReference Include="..\MethodFitness.Core\MethodFitness.Core.csproj">
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
       <Name>MethodFitness.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MethodFitness.Security\MethodFitness.Security.csproj">
+      <Project>{DBA372FE-3D52-45B3-AF82-B37696328764}</Project>
+      <Name>MethodFitness.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\MethodFitness.Web\MethodFitness.Web.csproj">
       <Project>{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}</Project>

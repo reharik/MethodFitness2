@@ -4,7 +4,7 @@ using MethodFitness.Core.Html.Menu;
 using MethodFitness.Web;
 using MethodFitness.Web.Controllers;
 
-namespace KnowYourTurf.Web.Config
+namespace MethodFitness.Web.Config
 {
     public class HeaderMenu : IMenuConfig
     {

@@ -4,7 +4,7 @@ using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Html.Menu;
 using MethodFitness.Core.Services;
-using KnowYourTurf.Web.Config;
+using MethodFitness.Web.Config;
 using StructureMap;
 
 namespace MethodFitness.Web.Controllers

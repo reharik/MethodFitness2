@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Castle.Components.Validator;
-using KnowYourTurf.Core;
 using MethodFitness.Core;
 using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
-using MethodFitness.Core.Localization;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 using StructureMap;
 using xVal.ServerSide;
 

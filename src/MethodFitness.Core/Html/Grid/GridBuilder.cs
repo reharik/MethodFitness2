@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using MethodFitness.Core.Domain;
 using HtmlTags;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Core.Html.Grid
 {

@@ -122,8 +122,10 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
             $.each(ids,function(i,id){
                 var data = $("#gridContainer").jqGrid('getRowData', id);
                 var itemAmount = parseFloat($(data.TrainerPay).text());
-                $span.data().total.amount = $span.data().total.amount + itemAmount;
-                $span.data().total.items.push({id:id,amount:itemAmount});
+                if(itemAmount>0){
+                    $span.data().total.amount = $span.data().total.amount + itemAmount;
+                    $span.data().total.items.push({id:id,amount:itemAmount});
+                }
             });
         }
         $span.text($span.data().total.amount);
@@ -137,7 +139,8 @@ MF.Views.TrainerPaymentListGridView = MF.Views.GridView.extend({
     },
     displayItem:function(id){
         var parentId = this.$el.find("#EntityId").val();
-        window.open("/Billing/PayTrainer/TrainerReceipt/"+id+"?ParentId="+parentId);
+        window.open("/Billing/PayTrainer/TrainerReceipt/"+id+"?ParentId="+parentId,"_blank");
+        return false;
     },
     onClose:function(){
         MF.vent.unbind("AddUpdateItem");

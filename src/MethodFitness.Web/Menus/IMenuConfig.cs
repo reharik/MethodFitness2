@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MethodFitness.Core.Html.Menu;
 
-namespace KnowYourTurf.Web.Config
+namespace MethodFitness.Web.Config
 {
     public interface IMenuConfig
     {

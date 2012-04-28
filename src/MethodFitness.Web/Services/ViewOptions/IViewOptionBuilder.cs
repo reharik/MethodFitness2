@@ -7,7 +7,7 @@ using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Web.Services.ViewOptions
 {

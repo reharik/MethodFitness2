@@ -3,7 +3,7 @@ using MethodFitness.Core.Services;
 using NHibernate;
 using StructureMap;
 
-namespace KnowYourTurf.Core.Domain
+namespace MethodFitness.Core.Domain
 {
     public class NullNHibernateUnitOfWork : IUnitOfWork
     {

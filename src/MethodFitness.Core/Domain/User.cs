@@ -5,8 +5,8 @@ using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Localization;
 using System.Linq;
+using MethodFitness.Security;
 using MethodFitness.Web.Areas.Billing.Controllers;
-using Rhino.Security;
 
 namespace MethodFitness.Core.Domain
 {
@@ -27,7 +27,7 @@ namespace MethodFitness.Core.Domain
         [ValueOf(typeof(State))]
         public virtual string State { get; set; }
         public virtual string ZipCode { get; set; }
-        [TextArea]
+        [Tools.CustomAttributes.TextArea]
         public virtual string Notes { get; set; }
         public virtual DateTime? BirthDate { get; set; }
         public virtual string ImageUrl { get; set; }
