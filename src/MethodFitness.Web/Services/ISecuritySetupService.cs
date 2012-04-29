@@ -46,14 +46,14 @@ namespace MethodFitness.Web.Services
         public void ExecuteAll()
         {
             CreateUserGroups();
-//            AssociateAllUsersWithThierTypeGroup();
-//            CreateKYTAdminOperation();
-//            CreateOperationsForAllControllers();
-//            CreateOperationsForAllMenuItems();
-//            CreateMiscellaneousOperations();
-//           // _permissionsService.GrantDefaultAdminPermissions("Administrator");
-//            _permissionsService.GrantDefaultTrainersPermissions();
-//            _repository.UnitOfWork.Commit();
+            AssociateAllUsersWithThierTypeGroup();
+            CreateKYTAdminOperation();
+            CreateOperationsForAllControllers();
+            CreateOperationsForAllMenuItems();
+            CreateMiscellaneousOperations();
+            _permissionsService.GrantDefaultAdminPermissions("Administrator");
+            _permissionsService.GrantDefaultTrainersPermissions();
+            _repository.UnitOfWork.Commit();
         }
 
         private void CreateKYTAdminOperation()
@@ -126,7 +126,8 @@ namespace MethodFitness.Web.Services
 
         public void AssociateAllUsersWithThierTypeGroup()
         {
-            var admins = _repository.Query<User>(x => x.UserRoles.Any(y=>y.Name == SecurityUserGroups.Administrator.ToString()));
+            _repository.DisableFilter("CompanyConditionFilter");
+            var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
             admins.Each(x =>
                 _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
             var employees = _repository.FindAll<User>();

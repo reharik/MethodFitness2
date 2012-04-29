@@ -148,5 +148,8 @@ namespace MethodFitness.Web
         public static readonly StringToken PAY_TRAINER = new WebLocalizationKeys("PAY_TRAINER", "Pay Trainer");
         public static readonly StringToken SOURCE_NOTES = new WebLocalizationKeys("SOURCE_NOTES", "Source Notes");
 
+        public static readonly StringToken END_DATE = new WebLocalizationKeys("END_DATE", "End Date");
+        public static readonly StringToken FILTER = new WebLocalizationKeys("FILTER", "Filter");
+
     }
 }

@@ -940,7 +940,7 @@ td.jqg_cb {
 }
 
 .ui-jqgrid tr.ui-priority-secondary td {
-    background: #f6f6f6;
+    background-color: #f6f6f6;
     color: #666666;
 }
 

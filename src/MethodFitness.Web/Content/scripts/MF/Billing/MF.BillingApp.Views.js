@@ -11,7 +11,7 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
          'click .jqgrow':'handleSingleClick',
          'click .cbox':'handleSelectAllClick',
          'click #payTrainerButton':'payTrainer',
-         'change #endDate':'dateChange'
+         "click #search":"filterByDate"
 
     }, MF.Views.GridView.prototype.events),
     onPreRender:function(){
@@ -22,19 +22,19 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
                 var rowData =$("#gridContainer").jqGrid('getRowData',ids[i]);
                 if (parseInt($(rowData.TrainerPay).text())<=0) {
                     var row = $('#' + rowid, this.el);
-                    row.addClass('gridRowStrikeThrough');
-                   // row.find("td").addClass('gridRowStrikeThrough');
-                    row.find("td:first input").hide();
+                   row.find("td").addClass('gridRowStrikeThrough');
+                    row.find("td:first input").remove();
                 }
             }
         }}
     },
     viewLoaded:function(){
+        $(this.el).find($(".content-header > .search")).hide();
+        $(this.el).find($(".content-header").append($("#payTrainerSearchTemplate").tmpl()));
+        $(this.el).find($(".content-header #end_date")).val(new XDate().toString("MM/dd/yyyy"));
         $(this.el).find(".content-header").append("<button id='payTrainerButton' ></button>");
-        $(this.el).find(".content-header").append("<label>End Date</label><input type='text' class='datePicker' id='endDate' />");
         $(this.el).find(".content-header > .title-name").append("<span class='paymentAmount'></span>");
         $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
-        $(this.el).find("#endDate").val(new XDate().toString("MM/dd/yyyy"));
         MF.vent.bind("popup:payTrainerPopup:save",this.formSave,this);
         MF.vent.bind("popup:payTrainerPopup:cancel",this.formCancel,this);
     },
@@ -42,8 +42,8 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
          MF.vent.unbind("popup:payTrainerPopup:save");
          MF.vent.unbind("popup:payTrainerPopup:cancel");
     },
-    dateChange:function(e){
-        var date = $(e.currentTarget).val();
+    filterByDate:function(e){
+        var date = $(this.el).find($(".content-header #end_date")).val();
         var obj = {"endDate":date};
         $(this.options.gridContainer).jqGrid('setGridParam',{postData:obj});
         this.reloadGrid();
@@ -134,12 +134,9 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
 
 
 MF.Views.TrainerPaymentListGridView = MF.Views.GridView.extend({
-    viewLoaded:function(){
-        MF.vent.bind("DisplayItem",this.displayItem,this);
-    },
     displayItem:function(id){
         var parentId = this.$el.find("#EntityId").val();
-        window.open("/Billing/PayTrainer/TrainerReceipt/"+id+"?ParentId="+parentId,"_blank");
+        window.open("/Billing/PayTrainer/TrainerReceipt/"+id+"?ParentId="+parentId);
         return false;
     },
     onClose:function(){

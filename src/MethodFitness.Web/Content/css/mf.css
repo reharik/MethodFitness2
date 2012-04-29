@@ -526,3 +526,23 @@ margin: 0;
 .showing{
     text-decoration: underline;
 }
+
+.gridRowStrikeThrough{
+    background: url(../images/strike.png) center center;
+}
+
+div.headerInput{
+	float: left;
+    margin: 11px 0 0 10px;
+    color: #666666;
+    font-size: .8em;
+    font-family: verdana;
+}
+
+div.headerInput input{
+    color: #666666;
+    font-size: 1em;
+    font-family: verdana;
+    width:90px;
+    text-align: center;
+}
