@@ -68,27 +68,40 @@ namespace MethodFitness.Web.Controllers
         {
             var client = _repository.Find<Client>(input.EntityId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
-            var rulesResult = rulesEngineBase.ExecuteRules(client);
-            if (!rulesResult.Success)
+            var validationManager = rulesEngineBase.ExecuteRules(client);
+            if (validationManager.Success)
             {
-                Notification notification = new Notification(rulesResult);
-                return Json(notification,JsonRequestBehavior.AllowGet);
+                _repository.Delete(client);
+                _repository.UnitOfWork.Commit();
             }
-            _repository.Delete(client);
-            _repository.UnitOfWork.Commit();
-            return Json(new Notification{Success = true}, JsonRequestBehavior.AllowGet);
+            var notification = new Notification(validationManager);
+            return Json(notification, JsonRequestBehavior.AllowGet);
 
         }
 
         public ActionResult DeleteMultiple(BulkActionViewModel input)
         {
+            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
+            var results = new ValidationManager<Client>(_repository);
             input.EntityIds.Each(x =>
             {
-                var item = _repository.Find<Client>(x);
-                _repository.Delete(item);
+                var client = _repository.Find<Client>(x);
+                results = rulesEngineBase.ExecuteRules(client, results);
+                var report = results.GetLastValidationReport();
+                if (report.Success)
+                {
+                    report.SuccessAction = a=> _repository.Delete(a);
+                }
             });
-            _repository.Commit();
-            return Json(new Notification { Success = true }, JsonRequestBehavior.AllowGet);
+            if (results.Success)
+            {
+                _repository.Commit();
+            }else
+            {
+                _repository.Rollback();
+            }
+            var notification = new Notification(results);
+            return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Save(ClientViewModel input)

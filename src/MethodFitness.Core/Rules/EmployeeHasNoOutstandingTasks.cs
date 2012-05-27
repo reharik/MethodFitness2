@@ -2,6 +2,7 @@ using System.Linq;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Controllers;
+using xVal.ServerSide;
 
 namespace MethodFitness.Core.Rules
 {
@@ -16,15 +17,15 @@ namespace MethodFitness.Core.Rules
             _repository = repository;
         }
 
-        public RuleResult Execute<ENTITY>(ENTITY client) where ENTITY : DomainEntity
+        public ValidationReport Execute<ENTITY>(ENTITY client) where ENTITY : DomainEntity
         {
-            var result = new RuleResult {Success = true};
+            var result = new ValidationReport {Success = true};
             var _client = client as Client;
             var appointments = _repository.Query<Appointment>(x => x.Clients.Any(i => i == _client));
             if (appointments.Any())
             {
                 result.Success = false;
-                result.Message = CoreLocalizationKeys.CLIENT_HAS_APPOINTMENTS_IN_FUTURE.ToFormat(appointments.Count());
+                result.AddErrorInfo(new ErrorInfo("Rule",CoreLocalizationKeys.CLIENT_HAS_APPOINTMENTS_IN_FUTURE.ToFormat(appointments.Count())));
             }
             return result;
         }

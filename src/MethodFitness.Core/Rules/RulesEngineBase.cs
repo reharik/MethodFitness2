@@ -1,46 +1,28 @@
 ﻿using System.Collections.Generic;
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Services;
+using StructureMap;
 
 namespace MethodFitness.Core.Rules
 {
     public abstract class RulesEngineBase
     {
+        public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity) where ENTITY : DomainEntity
+        {
+            var validationManager = ObjectFactory.GetInstance<IValidationManager<ENTITY>>();
+            return ExecuteRules(entity, validationManager);
+        }
         public List<IRule> Rules { get; set; }
-        public RulesResult ExecuteRules<ENTITY>(ENTITY entity) where ENTITY : DomainEntity
+        public ValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity, ValidationManager<ENTITY> validationManager) where ENTITY : DomainEntity
         {
-            var rulesResult = new RulesResult {Success = true};
-            Rules.Each(x =>
-                           {
-                               var result = x.Execute(entity);
-                               if (!result.Success)
-                               {
-                                   rulesResult.Success = false;
-                                   rulesResult.RuleResults.Add(result);
-                               }
-                           });
-            return rulesResult;
+            Rules.Each(x => validationManager.AddValidationReport(x.Execute(entity)));
+            return validationManager;
         }
-    }
-
-    public class RulesResult
-    {
-        public RulesResult()
-        {
-            RuleResults = new List<RuleResult>();
-        }
-
-        public bool Success { get; set; }
-        public List<RuleResult> RuleResults { get; set; }
     }
 
     public interface IRule
     {
-        RuleResult Execute<ENTITY>(ENTITY entity) where ENTITY : DomainEntity;
+        ValidationReport Execute<ENTITY>(ENTITY entity) where ENTITY : DomainEntity;
     }
 
-    public class RuleResult
-    {
-        public bool Success { get; set; }
-        public string Message { get; set; }
-    }
 }
