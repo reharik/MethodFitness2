@@ -23,7 +23,7 @@
 }
 @section ExtraContentHeaderButtons{
     <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
-    <button class="payment" title="@WebLocalizationKeys.MAKE_PAYMENT"></button>
+    <button class="client_payment" title="@WebLocalizationKeys.MAKE_PAYMENT"></button>
 }
 
   @MvcHtmlString.Create(FormFor<ClientController>(x => x.Save(null)).AddClass("CRUD").ElementId("CRUDForm").ToString())

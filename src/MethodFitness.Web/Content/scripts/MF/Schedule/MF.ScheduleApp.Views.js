@@ -14,7 +14,6 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     render:function(){
-        if(this.onPreRender)this.onPreRender();
        MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(function(result){this.renderCallback(result)},this));
     },
     renderCallback:function(result){
@@ -279,7 +278,7 @@ MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
 });
 MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
     events:_.extend({
-        'click .payment':'payment'
+        'click .client_payment':'payment'
     }, MF.Views.AjaxFormView.prototype.events),
     payment:function(){
         var id = $(this.el).find("#EntityId").val();
@@ -460,6 +459,10 @@ MF.Views.TrainerGridView = MF.Views.GridView.extend({
     },
     showPayGrid:function(id){
         MF.vent.trigger("route","paytrainerlist/"+id,true);
+    },
+    onClose:function(){
+        MF.vent.unbind("Redirect");
+        this._super("onClose",arguments);
     }
 });
 
@@ -469,5 +472,9 @@ MF.Views.ClientGridView = MF.Views.GridView.extend({
     },
     showPayGrid:function(id){
         MF.vent.trigger("route","paymentlist/"+id,true);
+    },
+    onClose:function(){
+        MF.vent.unbind("Redirect");
+        this._super("onClose",arguments);
     }
 });

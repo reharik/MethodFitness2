@@ -40,12 +40,6 @@ MF.addInitializer(function(){
     });
 });
 
-MF.bind("initialize:before", function(){
-    MF.ScheduleApp.router = new MF.Routing.ScheduleApp.Router({
-            controller: MF.Controller
-        });
-});
-
 MF.bind("initialize:after", function(){
   if (Backbone.history){
     Backbone.history.start();

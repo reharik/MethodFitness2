@@ -288,6 +288,35 @@ form hr {
     margin: 8px 0 0 6px;
 }
 
+.content-outer .content-header button.return{
+    background: url(../images/return_button.jpg) no-repeat scroll 0 0
+        transparent;
+}
+
+.content-outer .content-header button.dollar_sign{
+    background: url(../images/dollar-sign.png) no-repeat scroll 0 0
+        transparent;
+}
+.content-outer .content-header button.filter{
+    background: url(../images/filter.gif) no-repeat scroll 0 0
+        transparent;
+}
+
+.content-outer .content-header button.pay_trainer {
+    background: url(../images/pay_trainer.png) no-repeat scroll 0 0
+        transparent;
+}
+
+.content-outer .content-header button.trainer_payment_history{
+    background: url(../images/trainer_payment_history.png) no-repeat scroll 0 0
+        transparent;
+}
+
+.content-outer .content-header button.client_payment {
+    background: url(../images/client_payment.png) no-repeat scroll 0 0
+        transparent;
+}
+
 .content-outer .content-header button.delete {
     background: url(../images/icon-header-delete.png) no-repeat scroll 0 0
         transparent;

@@ -11,15 +11,17 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
          'click .jqgrow':'handleSingleClick',
          'click .cbox':'handleSelectAllClick',
          'click #payTrainerButton':'payTrainer',
+         'click .return':'retunToParent',
          "click #search":"filterByDate"
 
     }, MF.Views.GridView.prototype.events),
-    onPreRender:function(){
+    beforeInitGrid:function(){
+        var $gridContainer = this.options.$gridContainer;
         this.options.gridOptions={loadComplete : function(){
-            var ids = $("#gridContainer").jqGrid('getDataIDs');
+            var ids = $gridContainer.jqGrid('getDataIDs');
             for (var i = 0, l = ids.length; i < l; i++) {
                 var rowid = ids[i];
-                var rowData =$("#gridContainer").jqGrid('getRowData',ids[i]);
+                var rowData =$gridContainer.jqGrid('getRowData',ids[i]);
                 if (parseInt($(rowData.TrainerPay).text())<=0) {
                     var row = $('#' + rowid, this.el);
                    row.find("td").addClass('gridRowStrikeThrough');
@@ -29,10 +31,10 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
         }}
     },
     viewLoaded:function(){
-        $(this.el).find($(".content-header > .search")).hide();
-        $(this.el).find($(".content-header").append($("#payTrainerSearchTemplate").tmpl()));
-        $(this.el).find($(".content-header #end_date")).val(new XDate().toString("MM/dd/yyyy"));
-        $(this.el).find(".content-header").append("<button id='payTrainerButton' ></button>");
+        $(this.el).find(".content-header > .search").hide();
+        $(this.el).find(".content-header").prepend("<button id='payTrainerButton' class='dollar_sign' ></button>");
+        $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
+        $(this.el).find(".content-header #end_date").val(new XDate().toString("MM/dd/yyyy"));
         $(this.el).find(".content-header > .title-name").append("<span class='paymentAmount'></span>");
         $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
         MF.vent.bind("popup:payTrainerPopup:save",this.formSave,this);
@@ -41,24 +43,30 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
     onClose:function(){
          MF.vent.unbind("popup:payTrainerPopup:save");
          MF.vent.unbind("popup:payTrainerPopup:cancel");
+        this._super("onClose",arguments);
+    },
+    retunToParent:function(){
+        MF.WorkflowManager.returnParentView(null,true);
     },
     filterByDate:function(e){
         var date = $(this.el).find($(".content-header #end_date")).val();
         var obj = {"endDate":date};
-        $(this.options.gridContainer).jqGrid('setGridParam',{postData:obj});
+       this.options.$gridContainer.jqGrid('setGridParam',{postData:obj});
         this.reloadGrid();
     },
     payTrainer:function(){
+        var amount = $(this.el).find(".paymentAmount").data().total.amount;
+        if(amount<=0){return;}
         jQuery.ajaxSettings.traditional = true;
         var builder = MF.Views.popupButtonBuilder.builder("payTrainerPopup");
         builder.addButton("Ok", builder.getSaveFunc());
         builder.addCancelButton();
-        var amount = $(this.el).find(".paymentAmount").data().total.amount;
         var data={trainersName:this.options.TrainersName,amount:amount};
         var formOptions = {
             id: "payTrainerPopup",
             data:data,
             template:"#payTrainerTemplate",
+            title:"Trainer Payment",
             buttons:builder.getButtons()
         };
         this.templatePopup = new MF.Views.TemplatedPopupView(formOptions);
@@ -98,7 +106,7 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
         if(!checkbox||checkbox.attr("disabled")){return;}
 
         var id = $(e.currentTarget).attr("id");
-        var data = $("#gridContainer").jqGrid('getRowData', id);
+        var data = this.options.$gridContainer.jqGrid('getRowData', id);
         var $span = $(this.el).find(".paymentAmount");
         var itemAmount = parseFloat($(data.TrainerPay).text());
 
@@ -118,9 +126,9 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
         var $span = $(this.el).find(".paymentAmount");
         $span.data().total ={amount:0,items:[]};
         if($(e.currentTarget).is(":checked")){
-            var ids = cc.gridMultiSelect.getCheckedBoxes();
+            var ids = cc.gridHelper.getCheckedBoxes(this.options.$gridContainer);
             $.each(ids,function(i,id){
-                var data = $("#gridContainer").jqGrid('getRowData', id);
+                var data = this.options.$gridContainer.jqGrid('getRowData', id);
                 var itemAmount = parseFloat($(data.TrainerPay).text());
                 if(itemAmount>0){
                     $span.data().total.amount = $span.data().total.amount + itemAmount;
@@ -132,8 +140,13 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
     }
 });
 
-
 MF.Views.TrainerPaymentListGridView = MF.Views.GridView.extend({
+    events:_.extend({
+         'click .return':'retunToParent'
+    }, MF.Views.GridView.prototype.events),
+    retunToParent:function(){
+        MF.WorkflowManager.returnParentView(null,true);
+    },
     displayItem:function(id){
         var parentId = this.$el.find("#EntityId").val();
         window.open("/Billing/PayTrainer/TrainerReceipt/"+id+"?ParentId="+parentId);
@@ -142,6 +155,7 @@ MF.Views.TrainerPaymentListGridView = MF.Views.GridView.extend({
     onClose:function(){
         MF.vent.unbind("AddUpdateItem");
         MF.vent.unbind("DisplayItem");
+        this._super("onClose",arguments);
     }
 
 });

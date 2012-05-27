@@ -46,7 +46,7 @@ MF.WorkflowManager = (function(MF, Backbone){
 
         cleanAllViews:function(){
             var currentView = MF.State.get("currentView");
-            if(currentView)currentView.close();
+            if(currentView){currentView.close();}
             var stack =  this.get("parentStack");
             while (stack.length>0){
                 stack.pop().close();

@@ -40,6 +40,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 EntityId = trainer.EntityId,
                 PayTrainerUrl = UrlContext.GetUrlForAction<PayTrainerController>(x=>x.PayTrainer(null),AreaName.Billing)
             };
+            model.headerButtons.Add("return");
             return Json(model,JsonRequestBehavior.AllowGet);
         }
 

@@ -21,8 +21,9 @@ mf.GridView = Backbone.View.extend({
         this.render();
     },
     render: function(){
-        $("#gridContainer",this.el).AsGrid(this.options.gridDef, this.options.gridOptions);
-        $(window).bind('resize', function() { cc.gridHelper.adjustSize("#gridContainer"); }).trigger('resize');
+        var $gridContainer = $("#gridContainer",this.el);
+        $gridContainer.AsGrid(this.options.gridDef, this.options.gridOptions);
+        $(window).bind('resize', function() { cc.gridHelper.adjustSize($gridContainer); }).trigger('resize');
         $(this.el).gridSearch({onClear:$.proxy(this.removeSearch,this),onSubmit:$.proxy(this.search,this)});
         return this;
     },
@@ -31,7 +32,7 @@ mf.GridView = Backbone.View.extend({
     },
     deleteItems:function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
-            var ids = cc.gridMultiSelect.getCheckedBoxes();
+            var ids = cc.gridHelper.getCheckedBoxes();
             mf.repository.ajaxGet(this.options.deleteMultipleUrl,
                 $.param({"EntityIds":ids},true),
                 $.proxy(function(){this.reloadGrid()},this));
