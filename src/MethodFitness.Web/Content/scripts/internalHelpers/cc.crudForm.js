@@ -75,13 +75,34 @@ if (typeof MF == "undefined") {
             validClass: "valid_field",
             errorClass: "invalid_field",
             ignore:"",
-            extraAreasToValidate:myOptions.extraAreasToValidate
+            extraAreasToValidate:myOptions.extraAreasToValidate,
+            highlight: function(element, errorClass, validClass) {
+                nArea.getErrorContainer().find("ul").addClass(errorClass);
+                if(element.type == "select-one"){
+                    $(element).next("div").addClass(errorClass);
+                }else if (element.type === 'radio') {
+                    this.findByName(element.name).addClass(errorClass).removeClass(validClass);
+                } else {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                }
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).removeClass(errorClass).addClass(validClass);
+                } else if(element.type == "select-one"){
+                    $(element).next("div").removeClass(errorClass).addClass(validClass);
+                }
+                else{
+                    $(element).removeClass(errorClass).addClass(validClass);
+                }
+            }
 
         });
     };
 
     $.fn.crudForm.defaults = {
-        dataType: 'json'
+        dataType: 'json',
+        beforeSubmitCallbackFunctions:[]
     };
 })(jQuery);
 
