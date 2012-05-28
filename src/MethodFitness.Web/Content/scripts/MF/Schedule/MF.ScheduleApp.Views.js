@@ -292,7 +292,8 @@ MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
         }
     },
     deleteCallback:function(result){
-        var notificationArea = new cc.NotificationArea("delete","#errorMessagesGrid",$("#errorMessagesForm",this.el), MF.vent);
+        var notificationArea = new cc.NotificationArea("delete","#errorMessagesGrid","#errorMessagesForm", MF.vent);
+        notificationArea.render(this.$el);
         MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
         MF.notificationService.addArea(notificationArea);
         MF.notificationService.resetArea(notificationArea.areaName());
@@ -300,7 +301,13 @@ MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
     },
     deleteSuccess:function(result){
         MF.WorkflowManager.returnParentView(result,true);
+    },
+    onClose:function(){
+        MF.vent.unbind("delete:"+this.id+":success",this.deleteSuccess,this);
+        MF.notificationService.removeArea("delete");
+        this._super("onClose",arguments);
     }
+
 });
 MF.Views.PaymentListView = MF.Views.GridView.extend({
     addNew:function(){

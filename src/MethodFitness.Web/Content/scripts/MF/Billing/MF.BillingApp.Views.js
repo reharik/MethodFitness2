@@ -43,6 +43,8 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
     onClose:function(){
          MF.vent.unbind("popup:payTrainerPopup:save");
          MF.vent.unbind("popup:payTrainerPopup:cancel");
+         MF.vent.unbind(this.options.notificationArea.areaName()+":"+this.id+":success",this.paymentSuccess,this);
+
         this._super("onClose",arguments);
     },
     retunToParent:function(){
@@ -88,14 +90,15 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
         MF.repository.ajaxPost(this.options.PayTrainerUrl,data,$.proxy(this.paymentCallback,this));
     },
     paymentCallback:function(result){
-        var notificationArea = new cc.NotificationArea(this.cid,"#errorMessagesGrid",$("#errorMessagesForm",this.el), MF.vent);
-        MF.vent.bind(notificationArea.areaName()+":"+this.id+":success",this.paymentSuccess,this);
+        this.options.notificationArea = new cc.NotificationArea(this.cid,"#errorMessagesGrid","#errorMessagesForm", MF.vent);
+        this.options.notificationArea.render(this.$el);
+        MF.vent.bind(this.options.notificationArea.areaName()+":"+this.id+":success",this.paymentSuccess,this);
         this.formCancel();
-        MF.notificationService.addArea(notificationArea);
-        MF.notificationService.resetArea(notificationArea.areaName());
-        MF.notificationService.processResult(result,notificationArea.areaName(),this.id);
+        MF.notificationService.addArea(this.options.notificationArea);
+        MF.notificationService.resetArea(this.options.notificationArea.areaName());
+        MF.notificationService.processResult(result,this.options.notificationArea.areaName(),this.id);
     },
-    paymentSuccess:function(){
+    paymentSuccess:function(result){
         this.reloadGrid();
         $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
         $(this.el).find(".paymentAmount").text(0);

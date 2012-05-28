@@ -51,6 +51,7 @@
 
         $(document).ready(function () {
             var loginArea = new cc.NotificationArea("loginArea","#errorMessagesGrid","#errorMessagesForm",MF.vent);
+            loginArea.render("body#signin");
             MF.notificationService = new cc.MessageNotficationService();
             MF.notificationService.addArea(loginArea);
             $('.mf_CRUD').crudForm({},"loginArea");

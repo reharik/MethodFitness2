@@ -68,8 +68,8 @@ MF.Views.View = Backbone.View.extend({
     // Handle cleanup and other closing needs for
     // the collection of views.
     close: function(){
-        if(this.options.area){
-            MF.notificationService.removeArea(this.options.area);
+        if(this.options.notificationArea){
+            MF.notificationService.removeArea(this.options.areaName);
         }
         this.unbind();
         //this.unbindAll();
@@ -105,11 +105,22 @@ MF.Views.BaseFormView = MF.Views.View.extend({
         if(extraFormOptions){
             $.extend(true, this.options, extraFormOptions);
         }
+        this.setupNotificationArea();
+        $(this.options.crudFormSelector,this.el).crudForm(this.options.crudFormOptions,this.options.areaName);
+        this.setupBeforeSubmitions();
 
-        this.options.area = this.options.area? this.options.area: new cc.NotificationArea(this.cid,"#errorMessagesGrid",$("#errorMessagesForm",this.el), MF.vent);
-        MF.vent.bind(this.options.area.areaName()+":"+this.id+":success",this.successHandler,this);
-        MF.notificationService.addArea(this.options.area);
-        $(this.options.crudFormSelector,this.el).crudForm(this.options.crudFormOptions,this.options.area.areaName());
+    },
+    setupNotificationArea:function(){
+        this.options.notificationArea = this.options.notificationArea
+                                ?this.options.notificationArea
+                                : new cc.NotificationArea(this.cid,"#errorMessagesGrid","#errorMessagesForm", MF.vent);
+
+        this.options.notificationArea.render(this.el);
+        this.options.areaName = this.options.notificationArea.areaName();
+        MF.vent.bind(this.options.areaName+":"+this.id+":success",this.successHandler,this);
+        MF.notificationService.addArea(this.options.notificationArea);
+    },
+    setupBeforeSubmitions:function(){
         if(this.options.crudFormOptions.additionBeforeSubmitFunc){
             var array = !$.isArray(this.options.crudFormOptions.additionBeforeSubmitFunc)
                 ? [this.options.crudFormOptions.additionBeforeSubmitFunc]
@@ -119,9 +130,8 @@ MF.Views.BaseFormView = MF.Views.View.extend({
             },this));
         }
     },
-
     onClose:function(){
-        MF.vent.unbind(this.options.area.areaName()+":"+this.id+":success",this.successHandler,this);
+        MF.vent.unbind(this.options.notificationArea.areaName()+":"+this.id+":success",this.successHandler,this);
     },
     saveItem:function(){
         var $form = $(this.options.crudFormSelector,this.el);
