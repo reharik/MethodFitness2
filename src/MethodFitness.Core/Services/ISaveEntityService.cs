@@ -5,7 +5,7 @@ namespace MethodFitness.Core.Services
 {
     public interface ISaveEntityService
     {
-        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager validationManager) where DOMAINMODEL : Entity;
+        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager<DOMAINMODEL> validationManager) where DOMAINMODEL : Entity;
         IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
     }
 
@@ -26,7 +26,7 @@ namespace MethodFitness.Core.Services
             return ProcessSave(model, crudManager);
         }
 
-        public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager validationManager)
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager<DOMAINMODEL> validationManager)
             where DOMAINMODEL : Entity
         {
             var report = _castleValidationRunner.Validate(model);
@@ -45,7 +45,7 @@ namespace MethodFitness.Core.Services
     // constructor injected so you screwed must use one that doesn't have it in the constructor
     public interface ISaveEntityServiceWithoutPrincipal
     {
-        IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
+        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
     }
 
     public class NullSaveEntityServiceWithoutPrincipal  : ISaveEntityServiceWithoutPrincipal
@@ -57,7 +57,7 @@ namespace MethodFitness.Core.Services
             _castleValidationRunner = castleValidationRunner;
         }
 
-        public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
         {
             throw new System.NotImplementedException();
         }
@@ -74,7 +74,7 @@ namespace MethodFitness.Core.Services
         //    _repository = container.GetInstance<Repository>("NoFiltersOrInterceptor");
         //}
 
-        public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
         {
             //var report = _castleValidationRunner.Validate(model);
             //if (report.Success)

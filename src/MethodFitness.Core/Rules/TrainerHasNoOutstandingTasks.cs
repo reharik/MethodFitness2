@@ -17,9 +17,9 @@ namespace MethodFitness.Core.Rules
             _repository = repository;
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY trainer) where ENTITY : DomainEntity
+        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY trainer) where ENTITY : DomainEntity
         {
-            var result = new ValidationReport { Success = true };
+            var result = new ValidationReport<ENTITY> { Success = true };
             var _trainer = trainer as User;
             var appointments = _repository.Query<Appointment>(x => x.Trainer == _trainer);
             if (appointments.Any())

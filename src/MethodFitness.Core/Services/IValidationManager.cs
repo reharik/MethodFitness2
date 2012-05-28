@@ -15,6 +15,7 @@ namespace MethodFitness.Core.Services
         void AddValidationReport(ValidationReport<ENTITY> validationReport);
         Notification Finish(string successMessage = "");
         bool HasFailed();
+        Notification FinishWithAction(string successMessage = "");
     }
 
     public class ValidationManager<ENTITY> : IValidationManager<ENTITY> where ENTITY : Entity
@@ -52,7 +53,7 @@ namespace MethodFitness.Core.Services
             return false;
         }
 
-        public Notification Finish<ENTITY>(Action<ENTITY> action, string successMessage = "") where ENTITY:Entity
+        public Notification FinishWithAction(string successMessage = "")
         {
             if (successMessage.IsEmpty()) successMessage = CoreLocalizationKeys.SUCCESSFUL_SAVE.ToString();
             var notification = new Notification { Success = true };
@@ -67,7 +68,7 @@ namespace MethodFitness.Core.Services
                         x.GetErrorInfos().Each(notification.Errors.Add).ToList();
                 }else
                 {
-                    action(x.entity as ENTITY);
+                    x.SuccessAction(x.entity);
                 }
             });
             if (notification.Success)

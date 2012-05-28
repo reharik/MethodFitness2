@@ -9,11 +9,12 @@ namespace MethodFitness.Core.Rules
     {
         public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity) where ENTITY : DomainEntity
         {
-            var validationManager = ObjectFactory.GetInstance<IValidationManager<ENTITY>>();
+            var repository = ObjectFactory.GetInstance<IRepository>();
+            var validationManager = new ValidationManager<ENTITY>(repository);
             return ExecuteRules(entity, validationManager);
         }
         public List<IRule> Rules { get; set; }
-        public ValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity, ValidationManager<ENTITY> validationManager) where ENTITY : DomainEntity
+        public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity, IValidationManager<ENTITY> validationManager) where ENTITY : DomainEntity
         {
             Rules.Each(x => validationManager.AddValidationReport(x.Execute(entity)));
             return validationManager;
@@ -22,7 +23,7 @@ namespace MethodFitness.Core.Rules
 
     public interface IRule
     {
-        ValidationReport Execute<ENTITY>(ENTITY entity) where ENTITY : DomainEntity;
+        ValidationReport<ENTITY> Execute<ENTITY>(ENTITY entity) where ENTITY : DomainEntity;
     }
 
 }

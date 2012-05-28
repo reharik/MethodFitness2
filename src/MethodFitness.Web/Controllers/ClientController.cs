@@ -69,12 +69,11 @@ namespace MethodFitness.Web.Controllers
             var client = _repository.Find<Client>(input.EntityId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
             var validationManager = rulesEngineBase.ExecuteRules(client);
-            if (validationManager.Success)
+            if (validationManager.GetLastValidationReport().Success)
             {
                 _repository.Delete(client);
-                _repository.UnitOfWork.Commit();
             }
-            var notification = new Notification(validationManager);
+            var notification = validationManager.Finish();
             return Json(notification, JsonRequestBehavior.AllowGet);
 
         }
@@ -82,25 +81,18 @@ namespace MethodFitness.Web.Controllers
         public ActionResult DeleteMultiple(BulkActionViewModel input)
         {
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
-            var results = new ValidationManager<Client>(_repository);
+            IValidationManager<Client> validationManager = new ValidationManager<Client>(_repository);
             input.EntityIds.Each(x =>
             {
                 var client = _repository.Find<Client>(x);
-                results = rulesEngineBase.ExecuteRules(client, results);
-                var report = results.GetLastValidationReport();
+                validationManager = rulesEngineBase.ExecuteRules(client, validationManager);
+                var report = validationManager.GetLastValidationReport();
                 if (report.Success)
                 {
-                    report.SuccessAction = a=> _repository.Delete(a);
+                    report.SuccessAction = a => _repository.Delete(a);
                 }
             });
-            if (results.Success)
-            {
-                _repository.Commit();
-            }else
-            {
-                _repository.Rollback();
-            }
-            var notification = new Notification(results);
+            var notification = validationManager.FinishWithAction();
             return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
