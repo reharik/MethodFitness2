@@ -28,6 +28,7 @@
     @Script("jqueryPlugins/jquery.validate.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.form.js").ToHtmlTag()
     @Script("internalHelpers/cc.utilities.js").ToHtmlTag()
+    @Script("internalHelpers/cc.Notifications.js").ToHtmlTag()
     @Script("internalHelpers/cc.crudForm.js").ToHtmlTag()
     @Script("externalHelpers/underscore.js").ToHtmlTag()
     @Script("externalHelpers/backbone.js").ToHtmlTag()
@@ -43,15 +44,16 @@
     
     <script type="text/javascript">
         
-        var forgotPasswordUrl =@MvcHtmlString.Create(JsonUtil.ToJson(Model.ForgotPasswordUrl));
+       var forgotPasswordUrl =@MvcHtmlString.Create(JsonUtil.ToJson(Model.ForgotPasswordUrl));
         var popupTitle = "@Model.ForgotPasswordTitle";
 		
-		mf.contentLevelControllers = {};
 		var extraFormOptions = {};
 
         $(document).ready(function () {
-            
-            $('.mf_CRUD').crudForm({});
+            var loginArea = new cc.NotificationArea("loginArea","#errorMessagesGrid","#errorMessagesForm",MF.vent);
+            MF.notificationService = new cc.MessageNotficationService();
+            MF.notificationService.addArea(loginArea);
+            $('.mf_CRUD').crudForm({},"loginArea");
             $("#save").click(function (event) {
                 $("#CRUDForm").submit();
                 event.preventDefault();

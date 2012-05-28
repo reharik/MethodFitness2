@@ -1,40 +1,6 @@
-if (typeof mf == "undefined") {
-            var mf = {};
+if (typeof MF == "undefined") {
+            var MF = {};
 }
-
-mf.crudHelpers = {
-    documentHandler: function(arr){
-        if($("#DocumentInput").val())
-        {
-            arr.push({"name":"DocumentTokenViewModel.DocumentInput","value":$("#DocumentInput").val()})
-        }
-    },
-    photoHandler: function(arr){
-        if($("#PhotoInput").val())
-        {
-            arr.push({"name":"PhotoTokenViewModel.PhotoInput","value":$("#PhotoInput").val()})
-        }
-    },
-    membershipPositionHandler: function(arr){
-        // this is to handle blank rows
-        var indx = 0;
-        $(".multirow-input-tbl tr").each(function(i,item){
-            var name = $(item).find("td [name='MembershipPosition.Name']").val();
-            var heldFrom = $(item).find("td [name='MembershipPosition.HeldFrom']").val();
-            var heldTo = $(item).find("td [name='MembershipPosition.HeldTo']").val();
-            var entityId = $(item).find("td [name='MembershipPosition.EntityID']").val()?$(item).find("td[name='MembershipPosition.EntityID']").val():0;
-            if(name){
-                var objName = "MembershipDtos["+ indx +"]";
-                indx++;
-                arr.push({"name":objName+".Name","value":name});
-                arr.push({"name":objName+".HeldFrom","value":heldFrom});
-                arr.push({"name":objName+".HeldTo","value":heldTo});
-                arr.push({"name":objName+".EntityId","value":entityId});
-            }
-        });
-    }
-};
-
     if (typeof cc == "undefined") {
         var cc = {};
     }
@@ -55,58 +21,46 @@ mf.crudHelpers = {
 
 (function($) {
 
-    $.fn.crudForm = function(options) {
+    $.fn.crudForm = function(options, _notificationAreaName) {
         return this.each(function()
         {
             var elem = $(this);
-            if (!elem.data('crudForm')) {
-              elem.data('crudForm', new CrudFunction(options, elem));
+            if (elem.data('crudForm') && elem.data('crudForm')[_.first(_.keys(options))]){
+                return elem.data('crudForm')[_.first(_.keys(options))].call(this,_.first(_.values(options)));
+            } else if(!elem.data('crudForm')) {
+                elem.data('crudForm', new CrudFunction(options, elem, _notificationAreaName));
             }
         });
     };
 
-    var CrudFunction = function(options, elem){
-        var myOptions = $.extend({}, options, $.fn.crudForm.defaults);
-        var errorContainer = myOptions.errorContainer;
-        var successContainer = myOptions.successContainer?myOptions.successContainer:myOptions.errorContainer;
-        // do not move this into crudForm.defaults.  it end up using the same one for every call.
-        var notification = myOptions.notification ? myOptions.notification : cc.utilities.messageHandling.notificationResult();
+    var CrudFunction = function(options, elem, _notificationAreaName){
+        var myOptions = $.extend({}, $.fn.crudForm.defaults, options || {});
+        // this is set in the DCI.App initialization
+        var notificationAreaName = _notificationAreaName;
         var mySubmitHandler = function(form) {
+            var currentForm = form;
             var ajaxOptions = {dataType: 'json',
                 success: function(result){
-                    notification.result(result,form)
+                    var viewId = $(currentForm).data().viewId;
+                    MF.notificationService.resetArea(notificationAreaName);
+                    MF.notificationService.processResult(result,notificationAreaName,viewId);
                 },
                 beforeSubmit:  beforSubmitCallback
             };
             $(form).ajaxSubmit(ajaxOptions);
         };
 
-        $(errorContainer).hide();
-        $(successContainer).hide();
-        if(myOptions.successHandler){
-            notification.setSuccessHandler(myOptions.successHandler)
-        }
-        notification.setErrorContainer(myOptions.errorContainer);
-        notification.setSuccessContainer(myOptions.successContainer);
-
-        if(myOptions.submitHandler){
-            mySubmitHandler=myOptions.submitHandler;
-        }
         var beforSubmitCallback = function(arr, form, options){
             var _arr = arr;
-            if(myOptions.beforeSubmitCallbackFunctions){
-                $(myOptions.beforeSubmitCallbackFunctions).each(function(i,item){
-                    if(typeof(item) === 'function') item(_arr);
-                });
-            }
+            $(myOptions.beforeSubmitCallbackFunctions).each(function(i,item){
+                if(typeof(item) === 'function') item(_arr);
+            });
         };
+        // public methods.
 
+        var nArea = MF.notificationService.retrieveArea(notificationAreaName);
         this.setBeforeSubmitFuncs = function(beforeSubmitFunc){
              var array = !$.isArray(beforeSubmitFunc) ? [beforeSubmitFunc] : beforeSubmitFunc;
-            if(!myOptions.beforeSubmitCallbackFunctions){
-                myOptions.beforeSubmitCallbackFunctions = [];
-            }
-            
             $(array).each(function(i,item){
                 if($.inArray(item,myOptions.beforeSubmitCallbackFunctions)<=0){
                     myOptions.beforeSubmitCallbackFunctions.push(item);
@@ -115,18 +69,19 @@ mf.crudHelpers = {
 
         $(elem).validate({
             submitHandler: mySubmitHandler,
-            errorContainer: $(errorContainer),
-            errorLabelContainer: $(errorContainer).find("ul"),
+            errorContainer: nArea.getErrorContainer(),
+            errorLabelContainer: nArea.getErrorContainer().find("ul"),
             wrapper: 'li',
             validClass: "valid_field",
-            errorClass: "invalid_field"
+            errorClass: "invalid_field",
+            ignore:"",
+            extraAreasToValidate:myOptions.extraAreasToValidate
 
         });
     };
 
     $.fn.crudForm.defaults = {
-        dataType: 'json',
-        errorContainer: '#errorMessagesForm'
+        dataType: 'json'
     };
 })(jQuery);
 

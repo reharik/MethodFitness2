@@ -87,16 +87,28 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
         MF.repository.ajaxPost(this.options.PayTrainerUrl,data,$.proxy(this.paymentSuccess,this));
     },
     paymentSuccess:function(result){
-        var notification = cc.utilities.messageHandling.notificationResult();
-        notification.setErrorContainer('#errorMessagesGrid');
-        notification.result(result);
-        this.formCancel();
-        if(result.Success){
+        var notificationArea = new cc.NotificationArea(this.cid,"#errorMessagesGrid",$("#errorMessagesForm",this.el), MF.vent);
+        MF.notificationService.addArea(notificationArea);
+        MF.notificationService.resetArea(notificationArea.areaName());
+        MF.notificationService.processResult(result,notificationArea.areaName(),this.id);
+        MF.vent.bind(notificationArea.areaName()+":"+this.id+":success",function(){
             this.reloadGrid();
             $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
             $(this.el).find(".paymentAmount").text(0);
             window.open(result.Variable);
-        }
+        },this);
+
+//
+//        var notification = cc.utilities.messageHandling.notificationResult();
+//        notification.setErrorContainer('#errorMessagesGrid');
+//        notification.result(result);
+//        this.formCancel();
+//        if(result.Success){
+//            this.reloadGrid();
+//            $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
+//            $(this.el).find(".paymentAmount").text(0);
+//            window.open(result.Variable);
+//        }
     },
     formCancel:function(){
         this.templatePopup.close();
