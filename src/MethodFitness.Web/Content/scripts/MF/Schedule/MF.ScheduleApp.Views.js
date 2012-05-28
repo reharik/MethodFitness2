@@ -288,10 +288,18 @@ MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
     deleteItem:function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
             var id = $("#EntityId").val();
-            MF.repository.ajaxGet(this.options.deleteUrl,
-                {'EntityId':id},
-                function(){MF.WorkflowManager.returnParentView()});
+            MF.repository.ajaxPost(this.options.deleteUrl, {'EntityId':id},$.proxy(this.deleteCallback,this));
         }
+    },
+    deleteCallback:function(result){
+        var notificationArea = new cc.NotificationArea("delete","#errorMessagesGrid",$("#errorMessagesForm",this.el), MF.vent);
+        MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
+        MF.notificationService.addArea(notificationArea);
+        MF.notificationService.resetArea(notificationArea.areaName());
+        MF.notificationService.processResult(result,notificationArea.areaName(),this.id);
+    },
+    deleteSuccess:function(result){
+        MF.WorkflowManager.returnParentView(result,true);
     }
 });
 MF.Views.PaymentListView = MF.Views.GridView.extend({

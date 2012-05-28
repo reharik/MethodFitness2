@@ -1663,9 +1663,9 @@ select.picture {
 }
 
 .artifact-field * {
-    float: left;
+    /*float: left;*/
     color: #666666;
-    clear: both;
+    /*clear: both;*/
     margin: 5px 0;
 }
 
