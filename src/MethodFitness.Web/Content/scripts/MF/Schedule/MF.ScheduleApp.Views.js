@@ -278,11 +278,20 @@ MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
 });
 MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
     events:_.extend({
-        'click .client_payment':'payment'
+        'click .client_payment':'payment',
+        'click .delete':'deleteItem'
     }, MF.Views.AjaxFormView.prototype.events),
     payment:function(){
         var id = $(this.el).find("#EntityId").val();
         MF.vent.trigger("route","paymentlist/"+id,true);
+    },
+    deleteItem:function(){
+        if (confirm("Are you sure you would like to delete this Item?")) {
+            var id = $("#EntityId").val();
+            MF.repository.ajaxGet(this.options.deleteUrl,
+                {'EntityId':id},
+                function(){MF.WorkflowManager.returnParentView()});
+        }
     }
 });
 MF.Views.PaymentListView = MF.Views.GridView.extend({

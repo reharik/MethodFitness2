@@ -68,27 +68,32 @@ namespace MethodFitness.Web.Controllers
         {
             var client = _repository.Find<Client>(input.EntityId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
-            var rulesResult = rulesEngineBase.ExecuteRules(client);
-            if (!rulesResult.Success)
+            var validationManager = rulesEngineBase.ExecuteRules(client);
+            if (validationManager.GetLastValidationReport().Success)
             {
-                Notification notification = new Notification(rulesResult);
-                return Json(notification,JsonRequestBehavior.AllowGet);
+                _repository.Delete(client);
             }
-            _repository.Delete(client);
-            _repository.UnitOfWork.Commit();
-            return Json(new Notification{Success = true}, JsonRequestBehavior.AllowGet);
+            var notification = validationManager.Finish();
+            return Json(notification, JsonRequestBehavior.AllowGet);
 
         }
 
         public ActionResult DeleteMultiple(BulkActionViewModel input)
         {
+            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
+            IValidationManager<Client> validationManager = new ValidationManager<Client>(_repository);
             input.EntityIds.Each(x =>
             {
-                var item = _repository.Find<Client>(x);
-                _repository.Delete(item);
+                var client = _repository.Find<Client>(x);
+                validationManager = rulesEngineBase.ExecuteRules(client, validationManager);
+                var report = validationManager.GetLastValidationReport();
+                if (report.Success)
+                {
+                    report.SuccessAction = a => _repository.Delete(a);
+                }
             });
-            _repository.Commit();
-            return Json(new Notification { Success = true }, JsonRequestBehavior.AllowGet);
+            var notification = validationManager.FinishWithAction();
+            return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Save(ClientViewModel input)

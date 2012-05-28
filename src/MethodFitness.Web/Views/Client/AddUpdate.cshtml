@@ -22,7 +22,10 @@
     
 }
 @section ExtraContentHeaderButtons{
-    <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+    @if (UserPermissionService.Allow("/Clients/CanDeleteClients"))
+    {
+        <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+    }
     <button class="client_payment" title="@WebLocalizationKeys.MAKE_PAYMENT"></button>
 }
 

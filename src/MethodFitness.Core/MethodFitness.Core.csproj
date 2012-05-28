@@ -294,7 +294,7 @@
     <Compile Include="Services\DateTimeUtilities.cs" />
     <Compile Include="Services\ICastleValidationRunner.cs" />
     <Compile Include="Services\IClientPaymentToSessions.cs" />
-    <Compile Include="Services\ICrudManager.cs" />
+    <Compile Include="Services\IValidationManager.cs" />
     <Compile Include="Services\IDynamicExpressionBuilder.cs" />
     <Compile Include="Services\IDynamicExpressionQuery.cs" />
     <Compile Include="Services\IEmailTemplateService.cs" />

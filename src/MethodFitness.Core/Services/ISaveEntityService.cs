@@ -5,8 +5,8 @@ namespace MethodFitness.Core.Services
 {
     public interface ISaveEntityService
     {
-        ICrudManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model, ICrudManager crudManager) where DOMAINMODEL : Entity;
-        ICrudManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
+        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager<DOMAINMODEL> validationManager) where DOMAINMODEL : Entity;
+        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
     }
 
     public class SaveEntityService : ISaveEntityService
@@ -20,13 +20,13 @@ namespace MethodFitness.Core.Services
             _castleValidationRunner = castleValidationRunner;
         }
 
-        public ICrudManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
         {
-            var crudManager = new CrudManager(_repository);
+            var crudManager = new ValidationManager<DOMAINMODEL>(_repository);
             return ProcessSave(model, crudManager);
         }
 
-        public ICrudManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model, ICrudManager crudManager)
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager<DOMAINMODEL> validationManager)
             where DOMAINMODEL : Entity
         {
             var report = _castleValidationRunner.Validate(model);
@@ -35,8 +35,8 @@ namespace MethodFitness.Core.Services
                 _repository.Save(model);
                 //report.Target = model;
             }
-            crudManager.AddCrudReport(report);
-            return crudManager;
+            validationManager.AddValidationReport(report);
+            return validationManager;
         }
     }
 
@@ -45,7 +45,7 @@ namespace MethodFitness.Core.Services
     // constructor injected so you screwed must use one that doesn't have it in the constructor
     public interface ISaveEntityServiceWithoutPrincipal
     {
-        ICrudManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
+        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
     }
 
     public class NullSaveEntityServiceWithoutPrincipal  : ISaveEntityServiceWithoutPrincipal
@@ -57,7 +57,7 @@ namespace MethodFitness.Core.Services
             _castleValidationRunner = castleValidationRunner;
         }
 
-        public ICrudManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
         {
             throw new System.NotImplementedException();
         }
@@ -74,7 +74,7 @@ namespace MethodFitness.Core.Services
         //    _repository = container.GetInstance<Repository>("NoFiltersOrInterceptor");
         //}
 
-        public ICrudManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
         {
             //var report = _castleValidationRunner.Validate(model);
             //if (report.Success)
@@ -82,9 +82,9 @@ namespace MethodFitness.Core.Services
             //    _repository.Save(model);
             //    //report.Target = model;
             //}
-            //var crudManager = new CrudManager(_repository);
-            //crudManager.AddCrudReport(report);
-            //return crudManager;
+            //var ValidationManager = new ValidationManager(_repository);
+            //ValidationManager.AddValidationReport(report);
+            //return ValidationManager;
             return null;
         }
     }
