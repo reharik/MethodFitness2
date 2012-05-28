@@ -43,8 +43,9 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
     onClose:function(){
          MF.vent.unbind("popup:payTrainerPopup:save");
          MF.vent.unbind("popup:payTrainerPopup:cancel");
-         MF.vent.unbind(this.options.notificationArea.areaName()+":"+this.id+":success",this.paymentSuccess,this);
-
+        if(this.options.notificationArea){
+            MF.vent.unbind(this.options.notificationArea.areaName()+":"+this.id+":success",this.paymentSuccess,this);
+        }
         this._super("onClose",arguments);
     },
     retunToParent:function(){
