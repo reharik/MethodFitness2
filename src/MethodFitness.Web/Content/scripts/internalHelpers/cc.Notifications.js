@@ -27,9 +27,9 @@ cc.MessageNotficationService.extend = cc.extend;
         addArea: function(area){
             this.areaCache.push(area);
         },
-        removeArea: function(_key){
-            _.reject(this.areaCache,function(item,idx,list){
-                return item.name = _key;
+        removeArea: function(areaName){
+            MF.notificationService.areaCache = _.reject(this.areaCache,function(item,idx,list){
+                return item.name === areaName;
             },this)
         },
         retrieveArea:function(areaName){
@@ -49,12 +49,10 @@ cc.MessageNotficationService.extend = cc.extend;
 
 cc.NotificationArea = function(_name,_successContainer,_errorContainer, _ventHandler){
     this.name = _name;
-    this.$errorContainer = $(_errorContainer);
-    this.$successContainer = $(_successContainer);
-    this.$successContainer.hide().find("ul").removeClass();
-    this.$errorContainer.hide().find("ul").removeClass();
+    this.errorContainer = _errorContainer;
+    this.successContainer = _successContainer;
     this.ventHandler = _ventHandler;
-    this.messageHandler = new cc.NotificationMessageHandler();
+
     this.handleData = function(result,viewId){
         if(result.Success && result.Redirect) {
             if (result.RedirectUrl) {
@@ -81,10 +79,21 @@ cc.NotificationArea = function(_name,_successContainer,_errorContainer, _ventHan
         }
         return messageType;
     };
+
 };
 cc.NotificationArea.extend = cc.extend;
 
 $.extend(cc.NotificationArea.prototype, {
+
+    render:function(formEl)
+    {
+        this.$errorContainer = $(this.errorContainer,formEl);
+        this.$successContainer = $(this.successContainer);
+        this.$successContainer.hide().find("ul").removeClass();
+        this.$errorContainer.hide().find("ul").removeClass();
+        this.messageHandler = new cc.NotificationMessageHandler();
+    },
+
     areaName: function(){return this.name},
     processResult:function(result,viewId){ return this.handleData(result,viewId); },
     getSuccessContainer:function(){ return this.$successContainer; },
@@ -95,6 +104,7 @@ $.extend(cc.NotificationArea.prototype, {
         this.messageHandler.resetHandler();
     }
 });
+
 cc.NotificationMessageHandler = function(){
     this.messages = [];
     this.hasMessages = function(){return this.messages.length>0; };

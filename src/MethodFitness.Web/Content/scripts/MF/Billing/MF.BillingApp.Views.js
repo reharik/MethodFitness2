@@ -43,6 +43,8 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
     onClose:function(){
          MF.vent.unbind("popup:payTrainerPopup:save");
          MF.vent.unbind("popup:payTrainerPopup:cancel");
+         MF.vent.unbind(this.options.notificationArea.areaName()+":"+this.id+":success",this.paymentSuccess,this);
+
         this._super("onClose",arguments);
     },
     retunToParent:function(){
@@ -58,6 +60,7 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
         var amount = $(this.el).find(".paymentAmount").data().total.amount;
         if(amount<=0){return;}
         jQuery.ajaxSettings.traditional = true;
+
         var builder = MF.Views.popupButtonBuilder.builder("payTrainerPopup");
         builder.addButton("Ok", builder.getSaveFunc());
         builder.addCancelButton();
@@ -84,19 +87,22 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
          });
         
         var data = $.param(arr);
-        MF.repository.ajaxPost(this.options.PayTrainerUrl,data,$.proxy(this.paymentSuccess,this));
+        MF.repository.ajaxPost(this.options.PayTrainerUrl,data,$.proxy(this.paymentCallback,this));
+    },
+    paymentCallback:function(result){
+        this.options.notificationArea = new cc.NotificationArea(this.cid,"#errorMessagesGrid","#errorMessagesForm", MF.vent);
+        this.options.notificationArea.render(this.$el);
+        MF.vent.bind(this.options.notificationArea.areaName()+":"+this.id+":success",this.paymentSuccess,this);
+        this.formCancel();
+        MF.notificationService.addArea(this.options.notificationArea);
+        MF.notificationService.resetArea(this.options.notificationArea.areaName());
+        MF.notificationService.processResult(result,this.options.notificationArea.areaName(),this.id);
     },
     paymentSuccess:function(result){
-        var notification = cc.utilities.messageHandling.notificationResult();
-        notification.setErrorContainer('#errorMessagesGrid');
-        notification.result(result);
-        this.formCancel();
-        if(result.Success){
-            this.reloadGrid();
-            $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
-            $(this.el).find(".paymentAmount").text(0);
-            window.open(result.Variable);
-        }
+        this.reloadGrid();
+        $(this.el).find(".paymentAmount").data().total ={amount:0,items:[]};
+        $(this.el).find(".paymentAmount").text(0);
+        window.open(result.Variable);
     },
     formCancel:function(){
         this.templatePopup.close();

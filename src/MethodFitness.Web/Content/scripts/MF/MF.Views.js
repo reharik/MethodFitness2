@@ -68,15 +68,18 @@ MF.Views.View = Backbone.View.extend({
     // Handle cleanup and other closing needs for
     // the collection of views.
     close: function(){
-      this.unbind();
-      //this.unbindAll();
-      this.remove();
+        if(this.options.notificationArea){
+            MF.notificationService.removeArea(this.options.areaName);
+        }
+        this.unbind();
+        //this.unbindAll();
+        this.remove();
 
-      this.closeChildren();
+        this.closeChildren();
 
-      if (this.onClose){
+        if (this.onClose){
         this.onClose();
-      }
+        }
     },
 
     closeChildren: function(){
@@ -102,9 +105,22 @@ MF.Views.BaseFormView = MF.Views.View.extend({
         if(extraFormOptions){
             $.extend(true, this.options, extraFormOptions);
         }
+        this.setupNotificationArea();
+        $(this.options.crudFormSelector,this.el).crudForm(this.options.crudFormOptions,this.options.areaName);
+        this.setupBeforeSubmitions();
 
-        this.options.crudFormOptions.successHandler = $.proxy(this.successHandler,this);
-        $(this.options.crudFormSelector,this.el).crudForm(this.options.crudFormOptions);
+    },
+    setupNotificationArea:function(){
+        this.options.notificationArea = this.options.notificationArea
+                                ?this.options.notificationArea
+                                : new cc.NotificationArea(this.cid,"#errorMessagesGrid","#errorMessagesForm", MF.vent);
+
+        this.options.notificationArea.render(this.el);
+        this.options.areaName = this.options.notificationArea.areaName();
+        MF.vent.bind(this.options.areaName+":"+this.id+":success",this.successHandler,this);
+        MF.notificationService.addArea(this.options.notificationArea);
+    },
+    setupBeforeSubmitions:function(){
         if(this.options.crudFormOptions.additionBeforeSubmitFunc){
             var array = !$.isArray(this.options.crudFormOptions.additionBeforeSubmitFunc)
                 ? [this.options.crudFormOptions.additionBeforeSubmitFunc]
@@ -113,27 +129,32 @@ MF.Views.BaseFormView = MF.Views.View.extend({
                 $(this.options.crudFormSelector,this.el).data('crudForm').setBeforeSubmitFuncs(item);
             },this));
         }
-        if($(".rte").size()>0){
-            $(".rte").cleditor(this.options.editorOptions);
-        }
+    },
+    onClose:function(){
+        MF.vent.unbind(this.options.notificationArea.areaName()+":"+this.id+":success",this.successHandler,this);
     },
     saveItem:function(){
-        $(this.options.crudFormSelector,this.el).submit();
+        var $form = $(this.options.crudFormSelector,this.el);
+        $form.data().viewId = this.id;
+        $form.submit();
     },
     cancel:function(){
         MF.vent.trigger("form:"+this.id+":cancel");
-        if(!this.options.noBubbleUp)
-            MF.WorkflowManager.returnParentView();
+        if(!this.options.noBubbleUp) {MF.WorkflowManager.returnParentView();}
     },
-    successHandler:function(result, form, notification){
-        var emh = cc.utilities.messageHandling.messageHandler();
-        var message = cc.utilities.messageHandling.mhMessage("success",result.Message,"");
-        emh.addMessage(message);
-        emh.showAllMessages(notification.getSuccessContainer(),true);
+    successHandler:function(result){
         MF.vent.trigger("form:"+this.id+":success",result);
-        if(!this.options.noBubbleUp)
-            MF.WorkflowManager.returnParentView(result,true);
+        if(!this.options.noBubbleUp){MF.WorkflowManager.returnParentView(result,true);}
     }
+//    successHandler:function(result, form, notification){
+//        var emh = cc.utilities.messageHandling.messageHandler();
+//        var message = cc.utilities.messageHandling.mhMessage("success",result.Message,"");
+//        emh.addMessage(message);
+//        emh.showAllMessages(notification.getSuccessContainer(),true);
+//        MF.vent.trigger("form:"+this.id+":success",result);
+//        if(!this.options.noBubbleUp)
+//            MF.WorkflowManager.returnParentView(result,true);
+//    }
 });
 
 MF.Views.FormView = MF.Views.BaseFormView.extend({
