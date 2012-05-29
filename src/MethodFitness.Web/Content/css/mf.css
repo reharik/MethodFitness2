@@ -555,7 +555,7 @@ margin: 0;
 }
 
 .gridRowStrikeThrough{
-    background: url(../images/strike.png) center center;
+    background: url(../images/strike.png) center center !important;
 }
 
 div.headerInput{
