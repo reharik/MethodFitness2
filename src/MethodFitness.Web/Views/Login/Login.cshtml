@@ -42,6 +42,7 @@
     @Script("jqueryPlugins/jquery.metadata.js").ToHtmlTag()
     @Script("externalHelpers/json2.js").ToHtmlTag()
     
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
     <script type="text/javascript">
         
        var forgotPasswordUrl =@MvcHtmlString.Create(JsonUtil.ToJson(Model.ForgotPasswordUrl));
