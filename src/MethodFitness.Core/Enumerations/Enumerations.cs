@@ -210,6 +210,15 @@ namespace MethodFitness.Core.Enumerations
         public static readonly AppointmentType Pair = new AppointmentType { IsActive = true, Value = "60", Key = "Pair" };
     }
 
+    [Serializable]
+    public class Selector : Enumeration
+    {
+        public static readonly Selector Class = new Selector { IsActive = true, Key = "Class" };
+        public static readonly Selector Id = new Selector { IsActive = true, Key = "Id"};
+        public static readonly Selector Name = new Selector { IsActive = true, Key = "Name" };
+        public static readonly Selector AnchorText = new Selector { IsActive = true, Key = "AnchorText" };
+    }
+
 
 
 }

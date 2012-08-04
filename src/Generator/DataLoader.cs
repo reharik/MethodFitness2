@@ -15,12 +15,12 @@ namespace Generator
         private Trainer _defaultUser;
         private UserRole _userRoleTrainer;
         private UserRole _userRoleAdmin;
-        private Trainer _defaultUser1;
-        private Client _client1;
-        private Client _client2;
-        private Client _client3;
-        private Client _client4;
-        private Client _client5;
+        private Administrator _defaultUser1;
+//        private Client _client1;
+//        private Client _client2;
+//        private Client _client3;
+//        private Client _client4;
+//        private Client _client5;
         private IAuthorizationRepository _authorizationRepository;
 
 
@@ -35,7 +35,7 @@ namespace Generator
             createLocations();
             createUserRoles();
             createUser();
-            CreateClients();
+            //CreateClients();
             _repository.Commit();
         }
 
@@ -71,45 +71,43 @@ namespace Generator
         private void createUser()
         {
             var salt = _securityDataService.CreateSalt();
-            var passwordHash = _securityDataService.CreatePasswordHash("123", salt);
+            var passwordHash = _securityDataService.CreatePasswordHash("6664355", salt);
             _defaultUser = new Trainer
                                {
-                                   FirstName = "Raif",
+                                   FirstName = "Amahl",
                                    LastName = "Harik",
                                    CompanyId = 1,
                                    Color = "#148509",
                                    CreateDate = DateTime.Now,
                                    ClientRateDefault = 65,
-                                   PhoneMobile = "123456789",
-                                   Email = "reharik@gmail.com"
+                                   PhoneMobile = "401.743.9669",
+                                   Email = "methodfit@gmail.com"
             
                                };
             _defaultUser.AddUserRole(_userRoleTrainer);
             _defaultUser.AddUserRole(_userRoleAdmin);
             _defaultUser.UserLoginInfo = new UserLoginInfo
                                              {
-                                                 LoginName = "Admin",
+                                                 LoginName = "aih",
                                                  Password = passwordHash,
                                                  Salt = salt,
                                                  CompanyId = 1
                                              };
             var salt1 = _securityDataService.CreateSalt();
             var passwordHash1 = _securityDataService.CreatePasswordHash("123", salt1);
-            _defaultUser1 = new Trainer
+            _defaultUser1 = new Administrator()
             {
-                FirstName = "Amahl",
-                LastName = "Harik",
+                FirstName = "Admin",
+                LastName = "Admin",
                 CompanyId = 1,
-                Color = "#c41d1d",
                 CreateDate = DateTime.Now,
-                ClientRateDefault = 65,
                 PhoneMobile = "123456789",
-                Email = "reharik@gmail.com"
+                Email = "methodfit@gmail.com"
             };
-            _defaultUser1.AddUserRole(_userRoleTrainer);
+            _defaultUser1.AddUserRole(_userRoleAdmin);
             _defaultUser1.UserLoginInfo = new UserLoginInfo
             {
-                LoginName = "Trainer",
+                LoginName = "Admin",
                 Password = passwordHash1,
                 Salt = salt1,
                 CompanyId = 1
@@ -120,86 +118,86 @@ namespace Generator
         }
         public void CreateClients()
         {
-            _client1 = new Client
-                           {
-                               Address1 = "1706 willow st",
-                               City = "Austin",
-                               State="TX",
-                               ZipCode = "78702",
-                               Email = "reharik@gmail.com",
-                               CompanyId = 1,
-                               FirstName = "Raif",
-                               LastName = "Harik",
-                               MobilePhone = "512.228.6069",
-                               StartDate = DateTime.Now,
-                               CreateDate = DateTime.Now,
-                               SessionRates = new SessionRates(true)
-                           };
-            _client2 = new Client
-            {
-                Address1 = "1706 willow st",
-                City = "Austin",
-                State = "TX",
-                ZipCode = "78702",
-                Email = "fdsafaas",
-                CompanyId = 1,
-                FirstName = "Ralf",
-                LastName = "harris",
-                MobilePhone = "512.228.6069",
-                StartDate = DateTime.Now,
-                CreateDate = DateTime.Now,
-                SessionRates = new SessionRates(true)
-            };
-            _client3 = new Client
-            {
-                Address1 = "1706 willow st",
-                City = "Austin",
-                State = "TX",
-                ZipCode = "78702",
-                Email = "Green",
-                CompanyId = 1,
-                FirstName = "Green",
-                LastName = "Jarvis",
-                MobilePhone = "512.228.6069",
-                StartDate = DateTime.Now,
-                CreateDate = DateTime.Now,
-                SessionRates = new SessionRates(true)
-            };
-            _client4 = new Client
-            {
-                Address1 = "1706 willow st",
-                City = "Austin",
-                State = "TX",
-                ZipCode = "78702",
-                Email = "Brandon",
-                CompanyId = 1,
-                FirstName = "Brandon",
-                LastName = "Mcclary",
-                MobilePhone = "512.228.6069",
-                StartDate = DateTime.Now,
-                CreateDate = DateTime.Now,
-                SessionRates = new SessionRates(true)
-            };
-            _client5 = new Client
-            {
-                Address1 = "1706 willow st",
-                City = "Austin",
-                State = "TX",
-                ZipCode = "78702",
-                Email = "schmudge",
-                CompanyId = 1,
-                FirstName = "Schmudge",
-                LastName = "Harik",
-                MobilePhone = "512.228.6069",
-                StartDate = DateTime.Now,
-                CreateDate = DateTime.Now,
-                SessionRates = new SessionRates(true)
-            };
-            _defaultUser.AddClient(_client1, _defaultUser.ClientRateDefault);
-            _defaultUser.AddClient(_client2, _defaultUser.ClientRateDefault);
-            _defaultUser.AddClient(_client3, _defaultUser.ClientRateDefault);
-            _defaultUser.AddClient(_client4, _defaultUser.ClientRateDefault);
-            _defaultUser.AddClient(_client5, _defaultUser.ClientRateDefault);
+//            _client1 = new Client
+//                           {
+//                               Address1 = "1706 willow st",
+//                               City = "Austin",
+//                               State="TX",
+//                               ZipCode = "78702",
+//                               Email = "reharik@gmail.com",
+//                               CompanyId = 1,
+//                               FirstName = "Raif",
+//                               LastName = "Harik",
+//                               MobilePhone = "512.228.6069",
+//                               StartDate = DateTime.Now,
+//                               CreateDate = DateTime.Now,
+//                               SessionRates = new SessionRates(true)
+//                           };
+//            _client2 = new Client
+//            {
+//                Address1 = "1706 willow st",
+//                City = "Austin",
+//                State = "TX",
+//                ZipCode = "78702",
+//                Email = "fdsafaas",
+//                CompanyId = 1,
+//                FirstName = "Ralf",
+//                LastName = "harris",
+//                MobilePhone = "512.228.6069",
+//                StartDate = DateTime.Now,
+//                CreateDate = DateTime.Now,
+//                SessionRates = new SessionRates(true)
+//            };
+//            _client3 = new Client
+//            {
+//                Address1 = "1706 willow st",
+//                City = "Austin",
+//                State = "TX",
+//                ZipCode = "78702",
+//                Email = "Green",
+//                CompanyId = 1,
+//                FirstName = "Green",
+//                LastName = "Jarvis",
+//                MobilePhone = "512.228.6069",
+//                StartDate = DateTime.Now,
+//                CreateDate = DateTime.Now,
+//                SessionRates = new SessionRates(true)
+//            };
+//            _client4 = new Client
+//            {
+//                Address1 = "1706 willow st",
+//                City = "Austin",
+//                State = "TX",
+//                ZipCode = "78702",
+//                Email = "Brandon",
+//                CompanyId = 1,
+//                FirstName = "Brandon",
+//                LastName = "Mcclary",
+//                MobilePhone = "512.228.6069",
+//                StartDate = DateTime.Now,
+//                CreateDate = DateTime.Now,
+//                SessionRates = new SessionRates(true)
+//            };
+//            _client5 = new Client
+//            {
+//                Address1 = "1706 willow st",
+//                City = "Austin",
+//                State = "TX",
+//                ZipCode = "78702",
+//                Email = "schmudge",
+//                CompanyId = 1,
+//                FirstName = "Schmudge",
+//                LastName = "Harik",
+//                MobilePhone = "512.228.6069",
+//                StartDate = DateTime.Now,
+//                CreateDate = DateTime.Now,
+//                SessionRates = new SessionRates(true)
+//            };
+//            _defaultUser.AddClient(_client1, _defaultUser.ClientRateDefault);
+//            _defaultUser.AddClient(_client2, _defaultUser.ClientRateDefault);
+//            _defaultUser.AddClient(_client3, _defaultUser.ClientRateDefault);
+//            _defaultUser.AddClient(_client4, _defaultUser.ClientRateDefault);
+//            _defaultUser.AddClient(_client5, _defaultUser.ClientRateDefault);
             _repository.Save(_defaultUser);
         }
     }

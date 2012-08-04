@@ -83,6 +83,10 @@ namespace MethodFitness.Core.Domain
         #endregion
     }
 
+    public class Administrator : User
+    {
+    }
+
     public class Trainer:User
     {
         public virtual string Color { get; set; }
