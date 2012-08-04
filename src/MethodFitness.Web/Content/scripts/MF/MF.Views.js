@@ -5,6 +5,46 @@
  * Time: 11:11 AM
  * To change this template use File | Settings | File Templates.
  */
+
+(function(Backbone) {
+
+  // The super method takes two parameters: a method name
+  // and an array of arguments to pass to the overridden method.
+  // This is to optimize for the common case of passing 'arguments'.
+  function _super(methodName, args) {
+
+    // Keep track of how far up the prototype chain we have traversed,
+    // in order to handle nested calls to _super.
+    this._superCallObjects || (this._superCallObjects = {});
+    var currentObject = this._superCallObjects[methodName] || this,
+        parentObject  = findSuper(methodName, currentObject);
+    this._superCallObjects[methodName] = parentObject;
+    if(parentObject[methodName]){
+        var result = parentObject[methodName].apply(this, args || []);
+    }
+    delete this._superCallObjects[methodName];
+    return result;
+  }
+
+  // Find the next object up the prototype chain that has a
+  // different implementation of the method.
+  function findSuper(methodName, childObject) {
+    var object = childObject;
+    while (object[methodName] === childObject[methodName]) {
+      object = object.constructor.__super__;
+    }
+    return object;
+  }
+
+  _.each(["Model", "Collection", "View", "Router"], function(klass) {
+    Backbone[klass].prototype._super = _super;
+  });
+
+})(Backbone);
+
+// use like this
+// this._super("testMethod",arguments);
+
 MF.Views = {};
 MF.Views.View = Backbone.View.extend({
     // Remove the child view and close it
@@ -28,15 +68,18 @@ MF.Views.View = Backbone.View.extend({
     // Handle cleanup and other closing needs for
     // the collection of views.
     close: function(){
-      this.unbind();
-      //this.unbindAll();
-      this.remove();
+        if(this.options.notificationArea){
+            MF.notificationService.removeArea(this.options.areaName);
+        }
+        this.unbind();
+        //this.unbindAll();
+        this.remove();
 
-      this.closeChildren();
+        this.closeChildren();
 
-      if (this.onClose){
+        if (this.onClose){
         this.onClose();
-      }
+        }
     },
 
     closeChildren: function(){
@@ -62,9 +105,22 @@ MF.Views.BaseFormView = MF.Views.View.extend({
         if(extraFormOptions){
             $.extend(true, this.options, extraFormOptions);
         }
+        this.setupNotificationArea();
+        $(this.options.crudFormSelector,this.el).crudForm(this.options.crudFormOptions,this.options.areaName);
+        this.setupBeforeSubmitions();
 
-        this.options.crudFormOptions.successHandler = $.proxy(this.successHandler,this);
-        $(this.options.crudFormSelector,this.el).crudForm(this.options.crudFormOptions);
+    },
+    setupNotificationArea:function(){
+        this.options.notificationArea = this.options.notificationArea
+                                ?this.options.notificationArea
+                                : new cc.NotificationArea(this.cid,"#errorMessagesGrid","#errorMessagesForm", MF.vent);
+
+        this.options.notificationArea.render(this.el);
+        this.options.areaName = this.options.notificationArea.areaName();
+        MF.vent.bind(this.options.areaName+":"+this.id+":success",this.successHandler,this);
+        MF.notificationService.addArea(this.options.notificationArea);
+    },
+    setupBeforeSubmitions:function(){
         if(this.options.crudFormOptions.additionBeforeSubmitFunc){
             var array = !$.isArray(this.options.crudFormOptions.additionBeforeSubmitFunc)
                 ? [this.options.crudFormOptions.additionBeforeSubmitFunc]
@@ -73,27 +129,32 @@ MF.Views.BaseFormView = MF.Views.View.extend({
                 $(this.options.crudFormSelector,this.el).data('crudForm').setBeforeSubmitFuncs(item);
             },this));
         }
-        if($(".rte").size()>0){
-            $(".rte").cleditor(this.options.editorOptions);
-        }
+    },
+    onClose:function(){
+        MF.vent.unbind(this.options.notificationArea.areaName()+":"+this.id+":success",this.successHandler,this);
     },
     saveItem:function(){
-        $(this.options.crudFormSelector,this.el).submit();
+        var $form = $(this.options.crudFormSelector,this.el);
+        $form.data().viewId = this.id;
+        $form.submit();
     },
     cancel:function(){
         MF.vent.trigger("form:"+this.id+":cancel");
-        if(!this.options.noBubbleUp)
-            MF.WorkflowManager.returnParentView();
+        if(!this.options.noBubbleUp) {MF.WorkflowManager.returnParentView();}
     },
-    successHandler:function(result, form, notification){
-        var emh = cc.utilities.messageHandling.messageHandler();
-        var message = cc.utilities.messageHandling.mhMessage("success",result.Message,"");
-        emh.addMessage(message);
-        emh.showAllMessages(notification.getSuccessContainer(),true);
+    successHandler:function(result){
         MF.vent.trigger("form:"+this.id+":success",result);
-        if(!this.options.noBubbleUp)
-            MF.WorkflowManager.returnParentView(result,true);
+        if(!this.options.noBubbleUp){MF.WorkflowManager.returnParentView(result,true);}
     }
+//    successHandler:function(result, form, notification){
+//        var emh = cc.utilities.messageHandling.messageHandler();
+//        var message = cc.utilities.messageHandling.mhMessage("success",result.Message,"");
+//        emh.addMessage(message);
+//        emh.showAllMessages(notification.getSuccessContainer(),true);
+//        MF.vent.trigger("form:"+this.id+":success",result);
+//        if(!this.options.noBubbleUp)
+//            MF.WorkflowManager.returnParentView(result,true);
+//    }
 });
 
 MF.Views.FormView = MF.Views.BaseFormView.extend({
@@ -144,14 +205,12 @@ MF.Views.AjaxDisplayView = MF.Views.View.extend({
         if(extraFormOptions){
             $.extend(true,this.options, extraFormOptions);
         }
-//        if(typeof this.options.runAfterRenderFunction == 'function'){
-//            this.options.runAfterRenderFunction.apply(this,[this.el]);
-//        }
-      //  $.publish("/contentLevel/display_"+this.id+"/pageLoaded",[this.options]);
         MF.vent.trigger("display:"+this.id+":pageLoaded",this.options);
     },
     cancel:function(){
-        MF.vent.trigger(this.id+":cancel",this.id);
+        MF.vent.trigger("display:"+this.id+":cancel",this.id);
+        if(!this.options.noBubbleUp)
+            MF.WorkflowManager.returnParentView();
     }
 });
 
@@ -165,7 +224,6 @@ MF.Views.GridView = MF.Views.View.extend({
         this.id=this.options.id;
     },
     render:function(){
-        if(this.onPreRender)this.onPreRender();
         MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(function(result){this.renderCallback(result)},this));
     },
     renderCallback:function(result){
@@ -173,45 +231,48 @@ MF.Views.GridView = MF.Views.View.extend({
             window.location.replace(result.RedirectUrl);
             return;
         }
-        $(this.el).html($("#gridTemplate").tmpl(result));
+        this.$el.html($("#gridTemplate").tmpl(result));
         $.extend(this.options,result);
 //        if(gridControllerOptions){
 //            $.extend(true, this.options, gridControllerOptions);
 //        }
+        var thatEl = this.$el;
         $.each(this.options.headerButtons,function(i,item){
-            $("."+item).show();
+            thatEl.find("."+item).show();
         });
 
-        var gridContainer = this.options.gridContainer;
-        $(gridContainer,this.el).AsGrid(this.options.gridDef, this.options.gridOptions);
-        $(window).bind('resize', function() { cc.gridHelper.adjustSize(gridContainer); }).trigger('resize');
+        //to avaoid having to use "this" in the window resize function
+        var $gridContainer = this._processGridName();
+        this.options.$gridContainer = $gridContainer;
+        if(this.beforeInitGrid)this.beforeInitGrid();
+        $gridContainer.AsGrid(this.options.gridDef, this.options.gridOptions);
+        $(window).bind('resize', function() { cc.gridHelper.adjustSize($gridContainer); }).trigger('resize');
         $(this.el).gridSearch({onClear:$.proxy(this.removeSearch,this),onSubmit:$.proxy(this.search,this)});
         //callback for render
         this.viewLoaded();
         //general notification of pageloaded
-        this.checkForInstructions();
         MF.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
         MF.vent.bind("AddUpdateItem",this.editItem,this);
+        MF.vent.bind("DisplayItem",this.displayItem,this);
     },
-    checkForInstructions:function(){
-        if($(".page-instructions").size()>0){
-            this.instructions =  this.instructions = new MF.Instructions({el:".page-instructions"});
-            this.instructions.render();
-            this.storeChild(this.instructions);
-        }
+    _processGridName:function(){
+        var $container = this.$el.find(this.options.gridContainer);
+        var newId = $container.attr("id")+"_"+this.cid;
+        return $container.attr("id",newId);
     },
     addNew:function(){
         MF.vent.trigger("route",this.options.addUpate,true);
         //$.publish('/contentLevel/grid_'+this.id+'/AddUpdateItem', [this.options.addUpdateUrl]);
     },
-    editItem:function(id,itemType){
-        var _itemType = itemType?itemType:"";
-        // fix this for all assets
+    editItem:function(id){
         MF.vent.trigger("route",this.options.addUpate+"/"+id,true);
+    },
+    displayItem:function(id){
+        MF.vent.trigger("route",this.options.display+"/"+id,true);
     },
     deleteItems:function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
-            var ids = cc.gridMultiSelect.getCheckedBoxes();
+            var ids = cc.gridHelper.getCheckedBoxes(this.options.$gridContainer);
             MF.repository.ajaxGet(this.options.deleteMultipleUrl,
                 $.param({"EntityIds":ids},true),
                 $.proxy(function(){this.reloadGrid()},this));
@@ -221,24 +282,25 @@ MF.Views.GridView = MF.Views.View.extend({
         var searchItem = {"field": this.options.searchField ,"data": v };
         var filter = {"group":"AND",rules:[searchItem]};
         var obj = {"filters":""  + JSON.stringify(filter) + ""};
-        $(this.options.gridContainer).jqGrid('setGridParam',{postData:obj});
+        this.options.$gridContainer.jqGrid('setGridParam',{postData:obj});
         this.reloadGrid();
     },
     removeSearch:function(){
-        delete $(this.options.gridContainer).jqGrid('getGridParam' ,'postData')["filters"];
+        delete this.options.$gridContainer.jqGrid('getGridParam' ,'postData')["filters"];
         this.reloadGrid();
         return false;
     },
     reloadGrid:function(){
         MF.vent.unbind("AddUpdateItem");
-        $(this.options.gridContainer).trigger("reloadGrid");
+        this.options.$gridContainer.trigger("reloadGrid");
         MF.vent.bind("AddUpdateItem",this.editItem,this);
     },
     callbackAction:function(){
         this.reloadGrid();
     },
     onClose:function(){
-        MF.vent.unbind("AddUpdateItem");
+        MF.vent.unbind("AddUpdateItem",this.editItem,this);
+        MF.vent.unbind("DisplayItem",this.displayItem,this); 
     }
 
 });
@@ -307,8 +369,8 @@ MF.Views.AjaxPopupDisplayModule  = MF.Views.View.extend({
         MF.vent.bind("popup:"+this.id+":cancel", this.popupCancel, this);
     },
     onClose:function(){
-         MF.vent.unbind("display:"+this.id+":pageLoaded");
-         MF.vent.unbind("popup:"+this.id+":cancel");
+         MF.vent.unbind("display:"+this.id+":pageLoaded", this.loadPopupView, this);
+         MF.vent.unbind("popup:"+this.id+":cancel", this.popupCancel, this);
     },
 
     loadPopupView:function(formOptions){
@@ -427,9 +489,9 @@ MF.Views.TokenizerModule = MF.Views.View.extend({
         MF.vent.bind("ajaxPopupFormModule:" + this.id + ":cancel", this.formCancel, this);
     },
     onClose:function(){
-         MF.vent.unbind("token:" + this.id + ":addUpdate");
-         MF.vent.unbind("ajaxPopupFormModule:" + this.id + ":success");
-        MF.vent.unbind("ajaxPopupFormModule:" + this.id + ":cancel");
+         MF.vent.unbind("token:" + this.id + ":addUpdate", this.addUpdateItem, this);
+         MF.vent.unbind("ajaxPopupFormModule:" + this.id + ":success", this.formSuccess, this);
+         MF.vent.unbind("ajaxPopupFormModule:" + this.id + ":cancel", this.formCancel, this);
     },
 //from tolkneizer
     addUpdateItem:function() {

@@ -10,18 +10,18 @@ namespace MethodFitness.Core.Domain
         private ITransaction _transaction;
         private bool _isDisposed;
         private readonly ISession _session;
-        private readonly ISessionContext _sessionContext;
+        private readonly IGetCompanyIdService _getCompanyIdService;
         private bool _isInitialized;
 
-        public UnitOfWork(ISession session, ISessionContext sessionContext)
+        public UnitOfWork(ISession session, IGetCompanyIdService getCompanyIdService)
         {
             _session = session;
-            _sessionContext = sessionContext;
+            _getCompanyIdService = getCompanyIdService;
             var enableCompanyFilter = _session.EnableFilter("CompanyConditionFilter");
             var enableDeleteFilter = _session.EnableFilter("DeletedConditionFilter");
             if (enableCompanyFilter == null) return;
 
-            enableCompanyFilter.SetParameter("CompanyId", _sessionContext.GetCompanyId());
+            enableCompanyFilter.SetParameter("CompanyId", _getCompanyIdService.Execute());
             enableDeleteFilter.SetParameter("Archived", false);
         }
         //No filters

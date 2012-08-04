@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using MethodFitness.Core.Localization;
 using FubuMVC.UI.Tags;
 using HtmlTags;
+using MethodFitness.Core.Services;
+using MethodFitness.Security.Interfaces;
+using StructureMap;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
 {
@@ -32,6 +35,9 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         private bool _noClear;
         private string _labelDisplay;
         private bool _inline;
+        private string _operation;
+        private IAuthorizationService _authorizationService;
+        private ISessionContext _sessionContext;
 
         public EditorExpression(ITagGenerator<VIEWMODEL> generator, Expression<Func<VIEWMODEL, object>> expression)
         {
@@ -46,11 +52,23 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
 
         public HtmlTag ToHtmlTag()
         {
+            if (_operation.IsNotEmpty() && !checkAuthentication())
+            {
+                return null;
+            }
             if(_inlineReverse)
             {
                 return renderInlineReverse();
             }
             return renderStandard();
+        }
+
+        private bool checkAuthentication()
+        {
+            _authorizationService = ObjectFactory.Container.GetInstance<IAuthorizationService>();
+            _sessionContext = ObjectFactory.Container.GetInstance<ISessionContext>();
+            var user = _sessionContext.GetCurrentUser();
+            return _authorizationService.IsAllowed(user, _operation);
         }
 
         private HtmlTag renderStandard()
@@ -264,7 +282,11 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             return this;
         }
 
-
+        public EditorExpression<VIEWMODEL> OperationName(string operation)
+        {
+            _operation = operation;
+            return this;
+        }
         
         #endregion
 

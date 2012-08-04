@@ -40,7 +40,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 TrainersName = trainer.FullNameFNF,
                 EntityId = trainer.EntityId
             };
-            return Json(model,JsonRequestBehavior.AllowGet);
+            model.headerButtons.Add("return");
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult TrainerPayments(GridItemsRequestModel input)

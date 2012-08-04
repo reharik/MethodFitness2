@@ -14,7 +14,6 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     render:function(){
-        if(this.onPreRender)this.onPreRender();
        MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(function(result){this.renderCallback(result)},this));
     },
     renderCallback:function(result){
@@ -80,7 +79,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
     dayClick:function(date, allDay, jsEvent, view) {
         if(new XDate(date).diffHours(new XDate())>0 && !this.options.calendarDef.CanEnterRetroactiveAppointments){
-            alert("you can't add retroactively");
+            alert("That period is closed");
             return;
         }
         var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
@@ -279,20 +278,41 @@ MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
 });
 MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
     events:_.extend({
-        'click .payment':'payment'
+        'click .client_payment':'payment',
+        'click .delete':'deleteItem'
     }, MF.Views.AjaxFormView.prototype.events),
     payment:function(){
         var id = $(this.el).find("#EntityId").val();
         MF.vent.trigger("route","paymentlist/"+id,true);
+    },
+    deleteItem:function(){
+        if (confirm("Are you sure you would like to delete this Item?")) {
+            var id = $("#EntityId").val();
+            MF.repository.ajaxPost(this.options.deleteUrl, {'EntityId':id},$.proxy(this.deleteCallback,this));
+        }
+    },
+    deleteCallback:function(result){
+        var notificationArea = new cc.NotificationArea("delete","#errorMessagesGrid","#errorMessagesForm", MF.vent);
+        notificationArea.render(this.$el);
+        MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
+        MF.notificationService.addArea(notificationArea);
+        MF.notificationService.resetArea(notificationArea.areaName());
+        MF.notificationService.processResult(result,notificationArea.areaName(),this.id);
+    },
+    deleteSuccess:function(result){
+        MF.WorkflowManager.returnParentView(result,true);
+    },
+    onClose:function(){
+        MF.vent.unbind("delete:"+this.id+":success",this.deleteSuccess,this);
+        MF.notificationService.removeArea("delete");
+        this._super("onClose",arguments);
     }
+
 });
 MF.Views.PaymentListView = MF.Views.GridView.extend({
     addNew:function(){
         var parentId = $(this.el).find("#ParentId").val();
         MF.vent.trigger("route",this.options.addUpate+"/0/"+parentId ,true);
-        //$.publish('/contentLevel/grid_'+this.id+'/AddUpdateItem', [this.options.addU+
-        //
-        // pdateUrl]);
     },
     editItem:function(id,itemType){
         var parentId = $(this.el).find("#ParentId").val();
@@ -349,8 +369,19 @@ MF.Views.TrainerFormView = MF.Views.AjaxFormView.extend({
          'click #payTrainer' : 'payTrainer'
     }, MF.Views.AjaxFormView.prototype.events),
     viewLoaded:function(){
+        this.$el.find(this.options.crudFormSelector).data().crudForm.setBeforeSubmitFuncs(this.clientRateBeforeSubmit);
         this.loadPlugins();
         this.loadTokenizers();
+    },
+    clientRateBeforeSubmit:function(arr){
+        var items =$("[name='ClientsInput']").data('selectedItems');
+        if(items&&$(items).size()>0){
+            $.each(items, function(i,item){
+            arr.push({"name":"SelectedClients["+i+"].id","value":item.id});
+            arr.push({"name":"SelectedClients["+i+"].name","value":item.name});
+            arr.push({"name":"SelectedClients["+i+"].percentage","value":item.percentage});
+            })
+        }
     },
     loadTokenizers: function(){
         var clientOptions = $.extend({el:"#clients", id:"clientToken"},this.options.clientOptions);
@@ -452,5 +483,22 @@ MF.Views.TrainerGridView = MF.Views.GridView.extend({
     },
     showPayGrid:function(id){
         MF.vent.trigger("route","paytrainerlist/"+id,true);
+    },
+    onClose:function(){
+        MF.vent.unbind("Redirect");
+        this._super("onClose",arguments);
+    }
+});
+
+MF.Views.ClientGridView = MF.Views.GridView.extend({
+    viewLoaded:function(){
+        MF.vent.bind("Redirect",this.showPayGrid,this);
+    },
+    showPayGrid:function(id){
+        MF.vent.trigger("route","paymentlist/"+id,true);
+    },
+    onClose:function(){
+        MF.vent.unbind("Redirect");
+        this._super("onClose",arguments);
     }
 });

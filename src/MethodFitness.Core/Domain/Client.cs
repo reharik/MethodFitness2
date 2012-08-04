@@ -33,7 +33,8 @@ namespace MethodFitness.Core.Domain
         public virtual string Status { get; set; }
         [ValueOf(typeof(Source))]
         public virtual string Source { get; set; }
-        [ValidateNonEmpty,ValidateSqlDateTime]
+        [TextArea]
+        public virtual string SourceOther { get; set; }
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
         public virtual string FullNameLNF
@@ -58,6 +59,9 @@ namespace MethodFitness.Core.Domain
         }
         private IList<Payment> _payments = new List<Payment>();
         public virtual IEnumerable<Payment> Payments { get { return _payments; } }
+
+
+
         public virtual void RemovePayment(Payment payment)
         {
             _payments.Remove(payment);
@@ -102,6 +106,7 @@ namespace MethodFitness.Core.Domain
             if(arrear==null)
             {
                 session.SessionUsed = false;
+                session.Trainer = null;
             }else
             {
                 //switch app and trainer over to the session since the app that origionally

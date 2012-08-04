@@ -2,17 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using KnowYourTurf.Core;
 using MethodFitness.Core;
-using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
+using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Controllers;
 using MethodFitness.Web.Models;
-using Rhino.Security.Interfaces;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {

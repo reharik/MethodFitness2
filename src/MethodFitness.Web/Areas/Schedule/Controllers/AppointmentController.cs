@@ -8,12 +8,10 @@ using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
+using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Controllers;
-using Rhino.Security.Interfaces;
-using xVal.ServerSide;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {

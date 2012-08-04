@@ -43,6 +43,7 @@ namespace MethodFitness.Core.Enumerations
         public static readonly Source WebSearch = new Source { IsActive = true, Key = "Web Search" };
         public static readonly Source PrintAd = new Source { IsActive = true, Key = "Print Ad" };
         public static readonly Source Network = new Source { IsActive = true, Key = "Network" };
+        public static readonly Source Other = new Source { IsActive = true, Key = "Other" };
     }
 
     [Serializable]
@@ -207,6 +208,15 @@ namespace MethodFitness.Core.Enumerations
         public static readonly AppointmentType Hour = new AppointmentType { IsActive = true, Key = "Hour", Value = "60", IsDefault = true };
         public static readonly AppointmentType HourAndAHalf = new AppointmentType { IsActive = true, Value = "90", Key = "Hour and a Half" };
         public static readonly AppointmentType Pair = new AppointmentType { IsActive = true, Value = "60", Key = "Pair" };
+    }
+
+    [Serializable]
+    public class Selector : Enumeration
+    {
+        public static readonly Selector Class = new Selector { IsActive = true, Key = "Class" };
+        public static readonly Selector Id = new Selector { IsActive = true, Key = "Id"};
+        public static readonly Selector Name = new Selector { IsActive = true, Key = "Name" };
+        public static readonly Selector AnchorText = new Selector { IsActive = true, Key = "AnchorText" };
     }
 
 

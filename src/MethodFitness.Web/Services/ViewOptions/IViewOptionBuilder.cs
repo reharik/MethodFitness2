@@ -7,7 +7,7 @@ using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Web.Services.ViewOptions
 {
@@ -16,6 +16,7 @@ namespace MethodFitness.Web.Services.ViewOptions
         IList<ViewOption> Items { get; set; }
         IViewOptionBuilder UrlForList<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
         IViewOptionBuilder UrlForForm<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
+        IViewOptionBuilder UrlForDisplay<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
         IViewOptionBuilder Url<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName=null) where CONTROLLER : Controller;
         IViewOptionBuilder RouteToken(string route);
         IViewOptionBuilder ViewName(string viewName);
@@ -64,6 +65,7 @@ namespace MethodFitness.Web.Services.ViewOptions
             currentItem.viewName = "GridView";
             currentItem.route = itemName;
             currentItem.addUpate = itemName.Replace("list", "");
+            currentItem.display = itemName.Replace("list", "display");
             return this;
         }
 
@@ -73,6 +75,17 @@ namespace MethodFitness.Web.Services.ViewOptions
             var itemName = typeof(CONTROLLER).Name.Replace("Controller", "").ToLowerInvariant();
             currentItem.id = itemName;
             currentItem.viewName = "AjaxFormView";
+            currentItem.route = itemName;
+            currentItem.isChild = true;
+            return this;
+        }
+
+        public IViewOptionBuilder UrlForDisplay<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
+        {
+            currentItem.url = UrlContext.GetUrlForAction(action, areaName);
+            var itemName = typeof(CONTROLLER).Name.Replace("Controller", "").ToLowerInvariant()+"display";
+            currentItem.id = itemName;
+            currentItem.viewName = "AjaxDisplayView";
             currentItem.route = itemName;
             currentItem.isChild = true;
             return this;

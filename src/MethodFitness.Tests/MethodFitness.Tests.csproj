@@ -89,9 +89,6 @@
       <HintPath>..\..\lib\Rhino.Mocks.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rhino.Security">
-      <HintPath>..\..\lib\Rhino.Security.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap.dll</HintPath>
     </Reference>

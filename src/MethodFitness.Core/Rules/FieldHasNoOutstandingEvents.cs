@@ -12,9 +12,9 @@ namespace MethodFitness.Core.Rules
             _systemClock = systemClock;
         }
 
-        public RuleResult Execute<ENTITY>(ENTITY field) where ENTITY : DomainEntity
+        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY field) where ENTITY : DomainEntity
         {
-            var result = new RuleResult {Success = true};
+            var result = new ValidationReport<ENTITY> { Success = true };
 //            var count = 0;
 //            var _field = field as Field;
 //            _field.GetEvents().Each(x => { if (x .StartTime > _systemClock.Now) count++; });

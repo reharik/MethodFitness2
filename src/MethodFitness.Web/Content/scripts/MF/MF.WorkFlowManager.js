@@ -27,6 +27,7 @@ MF.WorkflowManager = (function(MF, Backbone){
             var stack =  this.get("parentStack");
             var parent = stack.pop();
             MF.State.get("currentView").close();
+            if(!parent){return;}
             if(triggerCallback&&parent.callbackAction){
                 parent.callbackAction(result);
             }
@@ -45,7 +46,7 @@ MF.WorkflowManager = (function(MF, Backbone){
 
         cleanAllViews:function(){
             var currentView = MF.State.get("currentView");
-            if(currentView)currentView.close();
+            if(currentView){currentView.close();}
             var stack =  this.get("parentStack");
             while (stack.length>0){
                 stack.pop().close();

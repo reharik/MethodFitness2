@@ -39,7 +39,7 @@
     @Script("jqueryPlugins/jquery.cleditor.min.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.ui.timepicker-0.0.8.js").ToHtmlTag()
      @Script("jqueryPlugins/grid.locale-en.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.jqGrid.min.js").ToHtmlTag()
+    @Script("jqueryPlugins/jquery.jqGrid.src.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery-tmpl.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.miniColors.js").ToHtmlTag()
 
@@ -76,6 +76,7 @@
     @Script("internalHelpers/jquery.mf.calendar.js").ToHtmlTag()
 
     @Script("internalHelpers/cc.utilities.js").ToHtmlTag()
+    @Script("internalHelpers/cc.Notifications.js").ToHtmlTag()
     @Script("internalHelpers/cc.crudForm.js").ToHtmlTag()
     @Script("internalHelpers/mf.mediaHandler.js").ToHtmlTag()
     @Script("externalHelpers/json2.js").ToHtmlTag()
@@ -83,7 +84,7 @@
     @Script("mf.baseClass.js").ToHtmlTag()
     @Script("mf.home.js").ToHtmlTag()
     
-
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
     @RenderSection("HeaderScripts", false)
 
 
@@ -127,6 +128,7 @@
             <input class="search" /> 
             <button style="display:none" id="new" class="new" title="@WebLocalizationKeys.NEW"></button>
             <button style="display:none" class="delete" title="@WebLocalizationKeys.DELETE_ITEMS"></button>
+            <button style="display:none" class="return" title="@WebLocalizationKeys.RETURN"></button>
             <span class="title-name">${Title}</span>
         </div>
         <div id="contentArea" class="content-inner">
@@ -149,6 +151,14 @@
             <div class="fieldRow">
                 Are you sure you would like to pay $${amount} to ${trainersName}?
             </div>
+        </div>
+    </script>
+    
+    <script id="payTrainerSearchTemplate" type="text/x-jQuery-tmpl">
+        <div id="filterArea">
+            <div class="headerInput">@WebLocalizationKeys.END_DATE
+            <input type="text" id="end_date" class="datePicker"/></div>
+            <button id="search" class="filter" title="@WebLocalizationKeys.FILTER"></button>
         </div>
     </script>
 </html>

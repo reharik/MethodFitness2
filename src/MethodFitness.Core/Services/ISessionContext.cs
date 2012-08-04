@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using MethodFitness.Core.Config;
+using MethodFitness.Core.Domain;
 
 namespace MethodFitness.Core.Services
 {
@@ -14,10 +15,23 @@ namespace MethodFitness.Core.Services
         void AddUpdateSessionItem(SessionItem item);
         void RemoveSessionItem(Guid sessionKey);
         void RemoveSessionItem(string sessionKey);
+        User GetCurrentUser();
     }
 
     public class SessionContext : ISessionContext
     {
+        private readonly IRepository _repository;
+
+        public SessionContext(IRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public User GetCurrentUser()
+        {
+            return _repository.Find<User>(GetUserEntityId());
+        }
+
         public int GetCompanyId()
         {
             var httpContext = HttpContext.Current;
@@ -108,6 +122,12 @@ namespace MethodFitness.Core.Services
         {
             throw new NotImplementedException();
         }
+
+        public User GetCurrentUser()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 
 

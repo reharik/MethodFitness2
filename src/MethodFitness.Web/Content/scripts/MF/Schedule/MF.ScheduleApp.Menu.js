@@ -36,7 +36,7 @@ MF.ScheduleApp.Menu = (function(MF, Backbone, $){
             MF.vent.trigger("route",name,true);
         },
         onClose:function(){
-            MF.vent.unbind("menuItem");
+            MF.vent.unbind("menuItem", this.menuItemClick,this);
         }
     });
 

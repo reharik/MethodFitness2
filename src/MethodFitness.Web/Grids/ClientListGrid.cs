@@ -1,6 +1,7 @@
 ﻿using MethodFitness.Core.Domain;
 using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Controllers;
 
@@ -26,6 +27,8 @@ namespace MethodFitness.Web.Grids
             GridBuilder.DisplayFor(x => x.FirstName);
             GridBuilder.DisplayFor(x => x.Email);
             GridBuilder.DisplayFor(x => x.MobilePhone);
+            GridBuilder.ImageButtonColumn().ForAction<PaymentListController>(x => x.ItemList(null))
+                .ToPerformAction(ColumnAction.Redirect).ImageName("client_payment.png");
             return this;
         }
     }

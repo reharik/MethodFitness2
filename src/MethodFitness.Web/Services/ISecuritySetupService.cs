@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using KnowYourTurf.Core.Services;
-using KnowYourTurf.Web.Config;
+using MethodFitness.Core.Services;
+using MethodFitness.Security.Interfaces;
+using MethodFitness.Web.Config;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Web.Controllers;
-using Rhino.Security.Interfaces;
 using StructureMap;
 
 namespace MethodFitness.Web.Services
@@ -58,8 +58,8 @@ namespace MethodFitness.Web.Services
 
         private void CreateKYTAdminOperation()
         {
-            _authorizationRepository.CreateOperation("/AdminOrGreater");
-            _authorizationRepository.CreateOperation("/MFAdmin");
+            createOperation("/AdminOrGreater");
+            createOperation("/MFAdmin");
         }
 
         private void CreateOperationsForAllControllers()
@@ -77,17 +77,19 @@ namespace MethodFitness.Web.Services
                 if (!Operations.Contains(operation))
                 {
                     Operations.Add(operation);
-                    if (_authorizationRepository.GetOperationByName(operation) == null)
-                        _authorizationRepository.CreateOperation(operation);
+                    createOperation(operation);
                 }
                 //}
             }
         }
+        private void createOperation(string operation)
+        {
+            if (_authorizationRepository.GetOperationByName(operation) == null)
+                _authorizationRepository.CreateOperation(operation);
+        }
 
         public void CreateOperationsForAllMenuItems()
         {
-
-
             var menuConfig = _container.GetAllInstances<IMenuConfig>();
             menuConfig.Each(x =>
             {
@@ -98,8 +100,7 @@ namespace MethodFitness.Web.Services
                     if (!Operations.Contains(operation))
                     {
                         Operations.Add(operation);
-                        if (_authorizationRepository.GetOperationByName(operation) == null)
-                            _authorizationRepository.CreateOperation(operation);
+                        createOperation(operation);
                     }
                 });
             });
@@ -107,22 +108,27 @@ namespace MethodFitness.Web.Services
 
         public void CreateMiscellaneousOperations()
         {
-            _authorizationRepository.CreateOperation("/Calendar/CanSeeOthersAppointments");
-            _authorizationRepository.CreateOperation("/Calendar/CanEditOtherAppointments");
-            _authorizationRepository.CreateOperation("/Calendar/CanEnterRetroactiveAppointments");
-            _authorizationRepository.CreateOperation("/Calendar/CanEditPastAppointments");
-            _authorizationRepository.CreateOperation("/Calendar/SetAppointmentForOthers");
-            _authorizationRepository.CreateOperation("/Calendar/CanDeleteRetroactiveAppointments");
-            _authorizationRepository.CreateOperation("/Clients/CanScheduleAllClients");
+           createOperation("/Calendar/CanSeeOthersAppointments");
+           createOperation("/Calendar/CanEditOtherAppointments");
+           createOperation("/Calendar/CanEnterRetroactiveAppointments");
+           createOperation("/Calendar/CanEditPastAppointments");
+           createOperation("/Calendar/SetAppointmentForOthers");
+           createOperation("/Calendar/CanDeleteRetroactiveAppointments");
+           createOperation("/Clients/CanScheduleAllClients");
+           createOperation("/Clients/CanDeleteClients");
 
-            _authorizationRepository.CreateOperation("/Payment/Display");
-            _authorizationRepository.CreateOperation("/Payment/AddUpdate");
+           createOperation("/TrainerPayment/Display");
+           createOperation("/TrainerPayment/Active");
+           createOperation("/Payment/Display");
+           createOperation("/Payment/AddUpdate");
+           createOperation("/Billing/ChangeClientRates");
 
         }
 
         public void AssociateAllUsersWithThierTypeGroup()
         {
-            var admins = _repository.Query<User>(x => x.UserRoles.Any(y=>y.Name == SecurityUserGroups.Administrator.ToString()));
+            _repository.DisableFilter("CompanyConditionFilter");
+            var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
             admins.Each(x =>
                 _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
             var employees = _repository.FindAll<User>();

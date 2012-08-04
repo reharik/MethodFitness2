@@ -16,13 +16,6 @@ namespace MethodFitness.Core.Domain.Tools
         {
         }
 
-        public Notification(RulesResult rulesResult)
-        {
-            Success = rulesResult.Success;
-            if (!Success && rulesResult.RuleResults.Count >= 1) Errors = new List<ErrorInfo>();
-            rulesResult.RuleResults.Each(x => Errors.Add(new ErrorInfo(CoreLocalizationKeys.BUISNESS_RULE.ToString(), x.Message)));
-        }
-
         public Notification(Notification report)
         {
             Message = report.Message;

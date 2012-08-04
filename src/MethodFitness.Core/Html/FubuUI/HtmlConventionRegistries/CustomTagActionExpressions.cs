@@ -9,7 +9,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
         public static HtmlTag BuildTextbox2(ElementRequest request)
         {
             var date = DateTime.Parse(request.StringValue()).ToShortDateString();
-            return new TextboxTag().Attr("value", date).AddClass("mf_datePicker");
+            return new TextboxTag().Attr("value", date).AddClass("datePicker");
         }
 
     }

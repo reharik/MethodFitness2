@@ -127,6 +127,7 @@ namespace MethodFitness.Web
         public static readonly StringToken TIME_SHEET = new WebLocalizationKeys("TIME_SHEET", "Time Sheet");
         public static readonly StringToken VIEW_REPORT = new WebLocalizationKeys("VIEW_REPORT", "View Report");
 
+        public static readonly StringToken OTHER = new WebLocalizationKeys("OTHER", "Other");
         public static readonly StringToken PAYMENTS = new WebLocalizationKeys("PAYMENTS", "Payments");
         public static readonly StringToken PAYMENT_INFORMATION = new WebLocalizationKeys("PAYMENT_INFORMATION", "Payment Information");
         public static readonly StringToken MAKE_PAYMENT = new WebLocalizationKeys("MAKE_PAYMENT", "Make Payment");
@@ -145,6 +146,10 @@ namespace MethodFitness.Web
         public static readonly StringToken TRAINER_PAYMENTS = new WebLocalizationKeys("TRAINER_PAYMENTS", "Trainer Payments");
         public static readonly StringToken TOTAL = new WebLocalizationKeys("TOTAL", "Total:");
         public static readonly StringToken PAY_TRAINER = new WebLocalizationKeys("PAY_TRAINER", "Pay Trainer");
+        public static readonly StringToken SOURCE_NOTES = new WebLocalizationKeys("SOURCE_NOTES", "Source Notes");
+
+        public static readonly StringToken END_DATE = new WebLocalizationKeys("END_DATE", "End Date");
+        public static readonly StringToken FILTER = new WebLocalizationKeys("FILTER", "Filter");
 
     }
 }

@@ -6,8 +6,8 @@ using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Localization;
+using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Areas.Schedule.Controllers;
-using Rhino.Security.Interfaces;
 using xVal.ServerSide;
 
 namespace MethodFitness.Core.Domain

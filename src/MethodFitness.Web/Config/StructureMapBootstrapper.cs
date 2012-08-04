@@ -44,7 +44,6 @@ namespace MethodFitness.Web.Config
             {
                 x.AddRegistry(new MFTestRegistry());
             });
-            ObjectFactory.AssertConfigurationIsValid();
         }
 
 

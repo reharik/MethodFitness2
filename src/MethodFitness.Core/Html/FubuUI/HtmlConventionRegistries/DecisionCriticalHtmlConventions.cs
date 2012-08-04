@@ -20,7 +20,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
             Editors.Builder<SelectFromIEnumerableBuilder>();
             Editors.Builder<SelectFromILookupTypeBuilder>();
             Editors.Builder<GroupSelectedBuilder>();
-            Editors.Builder<RadioButtonListBuilder>();
+           // Editors.Builder<RadioButtonListBuilder>();
             Editors.Builder<TextAreaBuilder>();
             Editors.Builder<DatePickerBuilder>();
             Editors.Builder<TimePickerBuilder>();

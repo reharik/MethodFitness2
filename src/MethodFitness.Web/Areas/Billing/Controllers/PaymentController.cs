@@ -86,26 +86,31 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var payment = _repository.Find<Payment>(input.EntityId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
             var rulesResult = rulesEngineBase.ExecuteRules(payment);
-            if (!rulesResult.Success)
+            if (rulesResult.GetLastValidationReport().Success)
             {
-                Notification notification = new Notification(rulesResult);
-                return Json(notification,JsonRequestBehavior.AllowGet);
+                _repository.Delete(payment);
             }
-            _repository.Delete(payment);
-            _repository.UnitOfWork.Commit();
-            return Json(new Notification{Success = true}, JsonRequestBehavior.AllowGet);
+            var notification = rulesResult.FinishWithAction();
+            return Json(notification, JsonRequestBehavior.AllowGet);
 
         }
 
         public ActionResult DeleteMultiple(BulkActionViewModel input)
         {
+            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
+            IValidationManager<Payment> validationManager = new ValidationManager<Payment>(_repository);
             input.EntityIds.Each(x =>
             {
-                var item = _repository.Find<Payment>(x);
-                _repository.Delete(item);
+                var payment = _repository.Find<Payment>(input.EntityId);
+                validationManager = rulesEngineBase.ExecuteRules(payment, validationManager);
+                var report = validationManager.GetLastValidationReport();
+                if (report.Success)
+                {
+                    report.SuccessAction = a => _repository.Delete(a);
+                }
             });
-            _repository.Commit();
-            return Json(new Notification { Success = true }, JsonRequestBehavior.AllowGet);
+            var notification = validationManager.FinishWithAction();
+            return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Save(PaymentViewModel input)

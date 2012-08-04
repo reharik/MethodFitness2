@@ -5,7 +5,7 @@ using MethodFitness.Core.Domain;
 using MethodFitness.Core.Localization;
 using FubuMVC.Core.Util;
 using HtmlTags;
-using Rhino.Security.Interfaces;
+using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Core.Html.Grid
 {
@@ -15,7 +15,7 @@ namespace MethodFitness.Core.Html.Grid
         IDictionary<string, string> Properties { get; set; }
         string Operation { get; set; }
         int ColumnIndex { get; set; }
-        HtmlTag BuildColumn(object item, User user, IAuthorizationService _authorizationService);
+        ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService);
     }
 
     public class ColumnBase<ENTITY> : IGridColumn, IEquatable<ColumnBase<ENTITY>> where ENTITY : IGridEnabledClass
@@ -34,15 +34,15 @@ namespace MethodFitness.Core.Html.Grid
 
         public int ColumnIndex { get; set; }
 
-        public virtual HtmlTag BuildColumn(object item, User user, IAuthorizationService _authorizationService) 
+        public virtual ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService) 
         {
             return FormatValue((ENTITY)item, user, _authorizationService);
         }
 
-        protected HtmlTag FormatValue(ENTITY item, User user, IAuthorizationService _authorizationService)
+        protected ColumnValueDto FormatValue(ENTITY item, User user, IAuthorizationService _authorizationService)
         {
             bool isAllowed = Operation.IsEmpty() || _authorizationService.IsAllowed(user, Operation);
-            if (!isAllowed) return null;
+            if (!isAllowed) return new ColumnValueDto {Authorized = false};
             var propertyValue = propertyAccessor.GetValue(item);
             var value = propertyValue;
             if (propertyValue != null)
@@ -57,7 +57,12 @@ namespace MethodFitness.Core.Html.Grid
                 }
                 
             }
-            return value == null ? null : new HtmlTag("span").Text(value.ToString());
+            var dto = new ColumnValueDto
+                          {
+                              Authorized = true,
+                              HtmlTag = value == null ? null : new HtmlTag("span").Text(value.ToString())
+                          };
+            return dto;
         }
 
         public ColumnBase<ENTITY> HideHeader()
@@ -156,6 +161,12 @@ namespace MethodFitness.Core.Html.Grid
         }
 
         #endregion
+    }
+
+    public class ColumnValueDto
+    {
+        public HtmlTag HtmlTag { get; set; }
+        public bool Authorized { get; set; }
     }
 
     public enum ColumnAction

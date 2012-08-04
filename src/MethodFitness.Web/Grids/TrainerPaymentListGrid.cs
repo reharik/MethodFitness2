@@ -24,7 +24,7 @@ namespace MethodFitness.Web.Grids
                 .ForAction<PaymentController>(x => x.Display(null), AreaName.Billing)
                 .ToPerformAction(ColumnAction.DisplayItem)
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
-                .DefaultSortColumn().SecurityOperation("/Payment/Display");
+                .DefaultSortColumn().SecurityOperation("/TrainerPayment/Display");
             GridBuilder.DisplayFor(x => x.Total);
             return this;
         }

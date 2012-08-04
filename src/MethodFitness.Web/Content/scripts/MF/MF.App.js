@@ -30,7 +30,7 @@ MF.addInitializer(function(){
     }, "Please enter a valid number.");
 
     // the events delegate doesn't seem to be picking up focusin
-    $(".MF_datePicker").live('focusin', function() {
+    $(".datePicker").live('focusin', function() {
         var $this = $(this);
         $this.datepicker({ changeYear: true, changeMonth: true });
     });
@@ -38,12 +38,9 @@ MF.addInitializer(function(){
     MF.vent.bind("route",function(route,triggerRoute){
         MF.Routing.showRoute(route,triggerRoute);
     });
-});
 
-MF.bind("initialize:before", function(){
-    MF.ScheduleApp.router = new MF.Routing.ScheduleApp.Router({
-            controller: MF.Controller
-        });
+    MF.notificationService = new cc.MessageNotficationService();
+
 });
 
 MF.bind("initialize:after", function(){

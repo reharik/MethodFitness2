@@ -1,7 +1,6 @@
-﻿using MethodFitness.Core.Domain;
-using Rhino.Security.Interfaces;
+﻿using MethodFitness.Security.Interfaces;
 
-namespace KnowYourTurf.Core.Services
+namespace MethodFitness.Core.Services
 {
     public interface IMFPermissionsService
     {
@@ -27,7 +26,7 @@ namespace KnowYourTurf.Core.Services
             foreach (var operation in operations)
             {
                 //this is a fucking hack obviously
-                if (operation.Name != "/MFAdmin" && operation.Name != "/Payment/Display")
+                if (operation.Name != "/MFAdmin" && operation.Name != "/Payment/Display" & operation.Name != "/TrainerPayment/Display")
                     _permissionsBuilderService
                         .Allow(operation)
                         .For(type)
@@ -35,6 +34,7 @@ namespace KnowYourTurf.Core.Services
                         .Level(10)
                         .Save();
             }
+            _permissionsBuilderService.Deny("/Payment/Display").For(type).OnEverything().Level(11).Save();
         }
 
         public void GrantDefaultTrainersPermissions()
@@ -46,6 +46,7 @@ namespace KnowYourTurf.Core.Services
             _permissionsBuilderService.Allow("/MenuItem/Clients").For("Trainer").OnEverything().Level(1).Save();
 
             _permissionsBuilderService.Allow("/Payment/Display").For("Trainer").OnEverything().Level(1).Save();
+            _permissionsBuilderService.Allow("/TrainerPayment/Display").For("Trainer").OnEverything().Level(1).Save();
         }
 
     }
