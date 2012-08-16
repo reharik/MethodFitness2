@@ -49,7 +49,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.StartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.StartTime;
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserEntityId();
-            var trainer = _repository.Find<Trainer>(userEntityId);
+            dynamic trainer = _repository.Find<User>(userEntityId);
             IEnumerable<Client> clients;
             if(!_authorizationService.IsAllowed(trainer,"/Clients/CanScheduleAllClients"))
             {
@@ -58,7 +58,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             {
                 clients = _repository.FindAll<Client>();
             }
-            var availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
+            var availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
             var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF });
             var model = new AppointmentViewModel{
                             

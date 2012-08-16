@@ -121,8 +121,11 @@ namespace MethodFitness.Web.Controllers
         private void associateWithUser(Client client)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
-            var trainer = _repository.Find<Trainer>(userEntityId);
-            trainer.AddClient(client,trainer.ClientRateDefault);
+            var trainer = _repository.Find<User>(userEntityId);
+            if(trainer is Trainer)
+            {
+                ((Trainer)trainer).AddClient(client, ((Trainer)trainer).ClientRateDefault);
+            }
             _saveEntityService.ProcessSave(trainer);
         }
 

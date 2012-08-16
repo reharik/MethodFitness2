@@ -22,5 +22,7 @@ namespace MethodFitness.Core
         public string deleteMultipleUrl { get; set; }
         public GridDefinition gridDef { get; set; }
         public List<string> headerButtons { get; set; }
+
+        public string searchField { get; set; }
     }
 }

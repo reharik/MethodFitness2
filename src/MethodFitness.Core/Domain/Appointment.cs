@@ -81,9 +81,7 @@ namespace MethodFitness.Core.Domain
         {
             Clients.Each(x =>
             {
-                var sessions =
-                    x.Sessions.Where(
-                        s => s.Appointment == null && s.AppointmentType == Length);
+                var sessions = x.Sessions.Where(s => s.Appointment == null && s.AppointmentType == Length);
                 if (sessions.Any())
                 {
                     var session = sessions.OrderBy(s => s.CreateDate).First();
@@ -100,7 +98,6 @@ namespace MethodFitness.Core.Domain
                         InArrears = true,
                         AppointmentType = Length,
                         SessionUsed = true
-
                     };
                     x.AddSession(session);
                     AddSession(session);
