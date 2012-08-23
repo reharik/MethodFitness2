@@ -197,17 +197,16 @@ namespace MethodFitness.Core.Enumerations
         public static readonly AppointmentLength Empty = new AppointmentLength { IsActive = false, Key = "" };
         public static readonly AppointmentLength HalfHour = new AppointmentLength { IsActive = true, Key = "Half Hour"};
         public static readonly AppointmentLength Hour = new AppointmentLength { IsActive = true, Key = "Hour",IsDefault = true};
-        public static readonly AppointmentLength HourAndAHalf = new AppointmentLength { IsActive = true, Key = "Hour and a Half" };
+        public static readonly AppointmentLength Pair = new AppointmentLength { IsActive = true, Key = "Pair" };
     }
 
     [Serializable]
     public class AppointmentType : Enumeration
     {
         public static readonly AppointmentType Empty = new AppointmentType { IsActive = false, Key = "" };
-        public static readonly AppointmentType HalfHour = new AppointmentType { IsActive = true, Key = "Half Hour", Value = "30" };
-        public static readonly AppointmentType Hour = new AppointmentType { IsActive = true, Key = "Hour", Value = "60", IsDefault = true };
-        public static readonly AppointmentType HourAndAHalf = new AppointmentType { IsActive = true, Value = "90", Key = "Hour and a Half" };
-        public static readonly AppointmentType Pair = new AppointmentType { IsActive = true, Value = "60", Key = "Pair" };
+        public static readonly AppointmentType HalfHour = new AppointmentType { IsActive = true, Key = "Half Hour", Value = "30", OnlyUseKeyForSelector=true };
+        public static readonly AppointmentType Hour = new AppointmentType { IsActive = true, Key = "Hour", Value = "60", IsDefault = true, OnlyUseKeyForSelector = true };
+        public static readonly AppointmentType Pair = new AppointmentType { IsActive = true, Value = "60", Key = "Pair", OnlyUseKeyForSelector = true };
     }
 
     [Serializable]

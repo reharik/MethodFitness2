@@ -39,11 +39,12 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var client = input.ParentId > 0 ? _repository.Find<Client>(input.ParentId) : payment.Client;
             var sessionRatesDto = new SessionRatesDto
                                       {
-                                          FullHour = client.SessionRates.FullHour,
-                                          HalfHour = client.SessionRates.HalfHour,
-                                          FullHourTenPack = client.SessionRates.FullHourTenPack,
-                                          HalfHourTenPack = client.SessionRates.HalfHourTenPack,
-                                          Pair = client.SessionRates.Pair,
+                                          FullHour = client.SessionRates.FullHour > 0 ? client.SessionRates.FullHour : client.SessionRates.ResetFullHourRate(),
+                                          HalfHour = client.SessionRates.HalfHour > 0 ? client.SessionRates.HalfHour : client.SessionRates.ResetHalfHourRate(),
+                                          FullHourTenPack = client.SessionRates.FullHourTenPack > 0 ? client.SessionRates.FullHourTenPack : client.SessionRates.ResetFullHourTenPackRate(),
+                                          HalfHourTenPack = client.SessionRates.HalfHourTenPack > 0 ? client.SessionRates.HalfHourTenPack : client.SessionRates.ResetHalfHourTenPackRate(),
+                                          Pair = client.SessionRates.Pair > 0 ? client.SessionRates.Pair : client.SessionRates.ResetPairRate(),
+                                          PairTenPack = client.SessionRates.PairTenPack > 0 ? client.SessionRates.PairTenPack : client.SessionRates.ResetPairTenPackRate(),
                                       };
             //hijacking sessionratesdto since I need exact same object just different name
             var clientSessionsDto = new SessionRatesDto
@@ -148,6 +149,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             payment.HalfHoursPrice = paymentModel.HalfHoursPrice;
             payment.Pairs = paymentModel.Pairs;
             payment.PairsPrice = paymentModel.PairsPrice;
+            payment.PairsTenPack = paymentModel.PairsTenPack;
+            payment.PairsTenPackPrice = paymentModel.PairsTenPackPrice;
             payment.PaymentTotal= paymentModel.PaymentTotal;
             return payment;
         }
@@ -164,6 +167,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public double HalfHourTenPack { get; set; }
 
         public double Pair { get; set; }
+
+        public double PairTenPack { get; set; }
     }
 
     public class PaymentViewModel:ViewModel

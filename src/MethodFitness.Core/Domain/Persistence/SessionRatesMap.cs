@@ -11,6 +11,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.FullHourTenPack);
             Map(x => x.HalfHourTenPack);
             Map(x => x.Pair);
+            Map(x => x.PairTenPack);
         } 
     }
 }

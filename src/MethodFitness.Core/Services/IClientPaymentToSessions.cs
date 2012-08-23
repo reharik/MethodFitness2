@@ -35,6 +35,10 @@ namespace MethodFitness.Core.Services
             {
                 PairSessions(client, payment);
             }
+            if (payment.PairsTenPack > 0)
+            {
+                PairTenPackSessions(client, payment);
+            }
             return client;
         }
 
@@ -60,6 +64,37 @@ namespace MethodFitness.Core.Services
                                       PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
                                   };
                 client.AddSession(session);
+            }
+        }
+
+        private static void PairTenPackSessions(Client client, Payment payment)
+        {
+            var inArrears = client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears);
+            var price = payment.PairsTenPackPrice/10;
+            for (int i = 0; i < payment.PairsTenPack; i++)
+            {
+                for (int x = 0; x < 10; x++)
+                {
+                    if (inArrears>0)
+                    {
+                        var arrear = client.Sessions.OrderBy(s => s.Appointment.Date).First(s => s.AppointmentType == AppointmentType.Pair.ToString() && s.InArrears);
+                        arrear.InArrears = false;
+                        arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
+                        arrear.Cost = price;
+                        inArrears--;
+                    }
+                    else
+                    {
+                        var session = new Session
+                                          {
+                                              Client = client,
+                                              Cost = price,
+                                              AppointmentType = AppointmentType.Pair.ToString(),
+                                              PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
+                                          };
+                        client.AddSession(session);
+                    }
+                }
             }
         }
 
