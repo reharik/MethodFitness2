@@ -35,10 +35,16 @@ namespace MethodFitness.Web.Controllers
             if (input.EntityId > 0)
             {
                 client = _repository.Find<Client>(input.EntityId);
+                client.SessionRates.FullHour = client.SessionRates.FullHour > 0 ? client.SessionRates.FullHour : client.SessionRates.ResetFullHourRate();
+                client.SessionRates.HalfHour = client.SessionRates.HalfHour > 0 ? client.SessionRates.HalfHour : client.SessionRates.ResetHalfHourRate();
+                client.SessionRates.FullHourTenPack = client.SessionRates.FullHourTenPack > 0 ? client.SessionRates.FullHourTenPack : client.SessionRates.ResetFullHourTenPackRate();
+                client.SessionRates.HalfHourTenPack = client.SessionRates.HalfHourTenPack > 0 ? client.SessionRates.HalfHourTenPack : client.SessionRates.ResetHalfHourTenPackRate();
+                client.SessionRates.Pair = client.SessionRates.Pair > 0 ? client.SessionRates.Pair : client.SessionRates.ResetPairRate();
+                client.SessionRates.PairTenPack = client.SessionRates.PairTenPack > 0 ? client.SessionRates.PairTenPack : client.SessionRates.ResetPairTenPackRate();
             }
             else
             {
-                client = new Client {StartDate = DateTime.Now, SessionRates = new SessionRates(true)};
+                client = new Client { StartDate = DateTime.Now, SessionRates = new SessionRates(true) };
             }
             //hijacking sessionratesdto since I need exact same object just different name
             var clientSessionsDto = new SessionRatesDto
@@ -121,8 +127,11 @@ namespace MethodFitness.Web.Controllers
         private void associateWithUser(Client client)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
-            var trainer = _repository.Find<Trainer>(userEntityId);
-            trainer.AddClient(client,trainer.ClientRateDefault);
+            var trainer = _repository.Find<User>(userEntityId);
+            if(trainer is Trainer)
+            {
+                ((Trainer)trainer).AddClient(client, ((Trainer)trainer).ClientRateDefault);
+            }
             _saveEntityService.ProcessSave(trainer);
         }
 
@@ -152,6 +161,7 @@ namespace MethodFitness.Web.Controllers
                 client.SessionRates.FullHourTenPack = clientModel.SessionRates.FullHourTenPack;
                 client.SessionRates.HalfHourTenPack = clientModel.SessionRates.HalfHourTenPack;
                 client.SessionRates.Pair = clientModel.SessionRates.Pair;
+                client.SessionRates.PairTenPack = clientModel.SessionRates.PairTenPack;
             }
             return client;
         }

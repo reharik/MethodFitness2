@@ -18,6 +18,7 @@ if (typeof cc.grid == 'undefined') {
             colNames: cc.grid.columnService.columnNames(gridDefinition),
             colModel: cc.grid.columnService.columnModel(gridDefinition),
             rowNum: 100,
+            scroll:true,
             multiselect: true,
             scrollOffset:0,
             altRows:true,

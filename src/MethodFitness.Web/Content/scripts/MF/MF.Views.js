@@ -137,6 +137,7 @@ MF.Views.BaseFormView = MF.Views.View.extend({
         var $form = $(this.options.crudFormSelector,this.el);
         $form.data().viewId = this.id;
         $form.submit();
+        debug.log("viewId:" +this.id + " time:"+new Date().getTime() );
     },
     cancel:function(){
         MF.vent.trigger("form:"+this.id+":cancel");
@@ -220,8 +221,9 @@ MF.Views.GridView = MF.Views.View.extend({
         'click .delete' : 'deleteItems'
     },
     initialize: function(){
-        this.options = $.extend({},MF.gridDefaults,this.options);
-        this.id=this.options.id;
+        this.options = $.extend({},this.options);
+
+        this.options.gridContainer = "#gridContainer";
     },
     render:function(){
         MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(function(result){this.renderCallback(result)},this));
@@ -233,6 +235,9 @@ MF.Views.GridView = MF.Views.View.extend({
         }
         this.$el.html($("#gridTemplate").tmpl(result));
         $.extend(this.options,result);
+        if(!this.options.searchField){
+            this.options.searchField = "Name";
+        }
 //        if(gridControllerOptions){
 //            $.extend(true, this.options, gridControllerOptions);
 //        }

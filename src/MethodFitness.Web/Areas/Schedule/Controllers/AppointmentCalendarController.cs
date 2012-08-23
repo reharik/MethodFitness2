@@ -39,7 +39,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public ActionResult AppointmentCalendar(CalendarViewModel input)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
-            var user = _repository.Find<Trainer>(userEntityId);
+            var user = _repository.Find<User>(userEntityId);
             var locations = _selectListItemService.CreateList<Location>(x=>x.Name,x=>x.EntityId,false).ToList();
             locations.Insert(0,new SelectListItem{Text=WebLocalizationKeys.ALL.ToString(),Value = "0"});
             var trainersDto = new List<TrainerLegendDto>();

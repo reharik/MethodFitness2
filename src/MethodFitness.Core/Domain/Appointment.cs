@@ -26,8 +26,8 @@ namespace MethodFitness.Core.Domain
         public virtual Trainer Trainer { get; set; }
         [TextArea]
         public virtual string Notes { get; set; }
-        [ValueOf(typeof(AppointmentLength))]
-        public virtual string Length { get; set; }
+        [ValueOf(typeof(AppointmentType))]
+        public virtual string AppointmentType { get; set; }
         public virtual bool Completed { get; set; }
         
         #region Collections
@@ -81,9 +81,7 @@ namespace MethodFitness.Core.Domain
         {
             Clients.Each(x =>
             {
-                var sessions =
-                    x.Sessions.Where(
-                        s => s.Appointment == null && s.AppointmentType == Length);
+                var sessions = x.Sessions.Where(s => s.Appointment == null && s.AppointmentType == AppointmentType);
                 if (sessions.Any())
                 {
                     var session = sessions.OrderBy(s => s.CreateDate).First();
@@ -98,9 +96,8 @@ namespace MethodFitness.Core.Domain
                         Appointment = this,
                         Trainer = Trainer,
                         InArrears = true,
-                        AppointmentType = Length,
+                        AppointmentType = AppointmentType,
                         SessionUsed = true
-
                     };
                     x.AddSession(session);
                     AddSession(session);
@@ -125,7 +122,7 @@ namespace MethodFitness.Core.Domain
                                       Location = Location,
                                       Trainer = Trainer,
                                       Notes = Notes,
-                                      Length = Length,
+                                      AppointmentType = AppointmentType,
                                   };
             _clients.Each(appointment.AddClient);
             return appointment;

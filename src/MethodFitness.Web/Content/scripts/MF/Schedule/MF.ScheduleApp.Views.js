@@ -341,12 +341,16 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
         $("#pair").change($.proxy(function(e){
             this.calculateTotal("Pair","#pairTotal",e.target);
         },this));
+         $("#pairTenPack").change($.proxy(function(e){
+            this.calculateTotal("PairTenPack","#pairTenPackTotal",e.target);
+        },this));
 
         this.calculateTotal("FullHour","#fullHourTotal","#fullHour");
         this.calculateTotal("HalfHour","#halfHourTotal","#halfHour");
         this.calculateTotal("FullHourTenPack","#fullHourTenPackTotal","#fullHourTenPack");
         this.calculateTotal("HalfHourTenPack","#halfHourTenPackTotal","#halfHourTenPack");
         this.calculateTotal("Pair","#pairTotal","#pair");
+        this.calculateTotal("PairTenPack","#pairTenPackTotal","#pairTenPack");
 
     },
     calculateTotal:function(type, totalSelector, numberSelector){
@@ -357,7 +361,8 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
             + parseInt($("#halfHourTotal").text().substring(1))
             + parseInt($("#fullHourTenPackTotal").text().substring(1))
             + parseInt($("#halfHourTenPackTotal").text().substring(1))
-            + parseInt($("#pairTotal").text().substring(1));
+            + parseInt($("#pairTotal").text().substring(1))
+            + parseInt($("#pairTenPackTotal").text().substring(1));
         $("#total").val(total);
 
     }

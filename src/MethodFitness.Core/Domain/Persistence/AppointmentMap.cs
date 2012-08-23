@@ -10,7 +10,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.Date);
             Map(x => x.StartTime);
             Map(x => x.EndTime);
-            Map(x => x.Length);
+            Map(x => x.AppointmentType);
             Map(x => x.Completed);
             References(x => x.Location);
             References(x => x.Trainer);
