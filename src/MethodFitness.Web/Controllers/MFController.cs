@@ -40,20 +40,20 @@ namespace MethodFitness.Web.Controllers
             }
         }
 
-        public ActionResult ConvertToPDF(string viewName, object model, bool inline=false)
-        {
-            var v = new SautinSoft.PdfVision();
-            v.PageStyle.PageSize.A4();
-
-            string html = RenderViewToString(viewName, model);
-
-            var pdfBytes = v.ConvertHtmlStringToPDFStream(html);
-            //if(inline)
-            //{
-                Response.AppendHeader("Content-Disposition", "inline");
-            //}
-            return File(pdfBytes, "application/pdf", "Portfolio.pdf");
-        }
+//        public ActionResult ConvertToPDF(string viewName, object model, bool inline=false)
+//        {
+////            var v = new SautinSoft.PdfVision();
+////            v.PageStyle.PageSize.A4();
+////
+////            string html = RenderViewToString(viewName, model);
+////
+////            var pdfBytes = v.ConvertHtmlStringToPDFStream(html);
+////            //if(inline)
+////            //{
+////                Response.AppendHeader("Content-Disposition", "inline");
+////            //}
+////            return File(pdfBytes, "application/pdf", "Portfolio.pdf");
+//        }
 
       
     }

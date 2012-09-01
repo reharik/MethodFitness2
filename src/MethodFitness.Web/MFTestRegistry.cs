@@ -1,5 +1,5 @@
 using Alpinely.TownCrier;
-using AuthorizeNet;
+
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
@@ -31,12 +31,10 @@ namespace MethodFitness.Web.Config
                          x.TheCallingAssembly();
                          x.AssemblyContainingType(typeof (CoreLocalizationKeys));
                          x.AssemblyContainingType(typeof (MergedEmailFactory));
-                         x.AssemblyContainingType(typeof(Gateway));
+                         
                          x.WithDefaultConventions();
                      });
-            For<IGateway>().Use<Gateway>().Ctor<string>("apiLogin").EqualToAppSetting("Authorize.Net_apiLogin")
-                .Ctor<string>("transactionKey").EqualToAppSetting("Authorize.Net_TransactionKey")
-                .Ctor<bool>("testMode").EqualToAppSetting("Authorize.Net_testMode");
+           
 
             For<HtmlConventionRegistry>().Add<MethodFitnessHtmlConventions>();
             For<IServiceLocator>().Singleton().Use(new StructureMapServiceLocator());
