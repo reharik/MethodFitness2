@@ -153,6 +153,7 @@
     <Compile Include="Config\FilterDefinitions.cs" />
     <Compile Include="Config\ManyToManyTableNameConvention.cs" />
     <Compile Include="Config\ForeignKeyConstraintNameConvention.cs" />
+    <Compile Include="Config\MsSqlAzureDialect.cs" />
     <Compile Include="Config\StructuremapGridConvention.cs" />
     <Compile Include="Config\TextAreaConvention.cs" />
     <Compile Include="CoreViewModelAndDTOs\OrderDetailsDto.cs" />
@@ -294,7 +295,7 @@
     <Compile Include="Services\DateTimeUtilities.cs" />
     <Compile Include="Services\ICastleValidationRunner.cs" />
     <Compile Include="Services\IClientPaymentToSessions.cs" />
-    <Compile Include="Services\ICrudManager.cs" />
+    <Compile Include="Services\IValidationManager.cs" />
     <Compile Include="Services\IDynamicExpressionBuilder.cs" />
     <Compile Include="Services\IDynamicExpressionQuery.cs" />
     <Compile Include="Services\IEmailTemplateService.cs" />

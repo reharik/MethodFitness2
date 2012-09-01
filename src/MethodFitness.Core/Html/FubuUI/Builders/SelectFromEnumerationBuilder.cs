@@ -29,7 +29,7 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
                 foreach (Enumeration option in enumerations)
                 {
                     x.Option(option.Key,
-                             option.Value.IsEmpty() ? option.Key : option.Value);
+                             option.Value.IsEmpty() || option.OnlyUseKeyForSelector ? option.Key : option.Value);
                 }
                 if (value != null && value.ToString().IsNotEmpty())
                 {

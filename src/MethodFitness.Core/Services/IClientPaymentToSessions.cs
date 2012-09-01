@@ -35,6 +35,10 @@ namespace MethodFitness.Core.Services
             {
                 PairSessions(client, payment);
             }
+            if (payment.PairsTenPack > 0)
+            {
+                PairTenPackSessions(client, payment);
+            }
             return client;
         }
 
@@ -63,20 +67,52 @@ namespace MethodFitness.Core.Services
             }
         }
 
+        private static void PairTenPackSessions(Client client, Payment payment)
+        {
+            var inArrears = client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears);
+            var price = payment.PairsTenPackPrice/10;
+            for (int i = 0; i < payment.PairsTenPack; i++)
+            {
+                for (int x = 0; x < 10; x++)
+                {
+                    if (inArrears>0)
+                    {
+                        var arrear = client.Sessions.OrderBy(s => s.Appointment.Date).First(s => s.AppointmentType == AppointmentType.Pair.ToString() && s.InArrears);
+                        arrear.InArrears = false;
+                        arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
+                        arrear.Cost = price;
+                        inArrears--;
+                    }
+                    else
+                    {
+                        var session = new Session
+                                          {
+                                              Client = client,
+                                              Cost = price,
+                                              AppointmentType = AppointmentType.Pair.ToString(),
+                                              PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
+                                          };
+                        client.AddSession(session);
+                    }
+                }
+            }
+        }
+
         private static void HalfHourTenPackSessions(Client client, Payment payment)
         {
-            var inArrears = client.Sessions.Any(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears);
+            var inArrears = client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears);
             var price = payment.HalfHourTenPacksPrice/10;
             for (int i = 0; i < payment.HalfHourTenPacks; i++)
             {
                 for (int x = 0; x < 10; x++)
                 {
-                    if (inArrears)
+                    if (inArrears>0)
                     {
                         var arrear = client.Sessions.OrderBy(s => s.Appointment.Date).First(s => s.AppointmentType == AppointmentType.HalfHour.ToString() && s.InArrears);
                         arrear.InArrears = false;
                         arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
                         arrear.Cost = price;
+                        inArrears--;
                     }
                     else
                     {
@@ -95,18 +131,19 @@ namespace MethodFitness.Core.Services
 
         private static void FullHourTenPackSessions(Client client, Payment payment)
         {
-            var inArrears = client.Sessions.Any(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears);
+            var inArrears = client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears);
             var price = payment.FullHourTenPacksPrice/10;
             for (int i = 0; i < payment.FullHourTenPacks; i++)
             {
                 for (int x = 0; x < 10; x++)
                 {
-                    if (inArrears)
+                    if (inArrears>0)
                     {
                         var arrear = client.Sessions.First(s => s.AppointmentType == AppointmentType.Hour.ToString() && s.InArrears);
                         arrear.InArrears = false;
                         arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
                         arrear.Cost = price;
+                        inArrears--;
                     }
                     else
                     {
@@ -126,8 +163,7 @@ namespace MethodFitness.Core.Services
         private static void HalfHourSessions(Client client, Payment payment)
         {
             var sessions = payment.HalfHours;
-            client.Sessions
-                .Where(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears).OrderBy(x => x.Appointment.Date)
+            client.Sessions.Where(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears).OrderBy(x => x.Appointment.Date)
                 .Each(x =>
                 {
                     x.InArrears = false;

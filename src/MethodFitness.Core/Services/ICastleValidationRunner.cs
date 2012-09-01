@@ -11,7 +11,7 @@ namespace MethodFitness.Core.Services
     public interface ICastleValidationRunner
     {
         IEnumerable<ErrorInfo> GetErrors<ENTITY>(ENTITY entity) where ENTITY : Entity;
-        CrudReport Validate<ENTITY>(ENTITY entity) where ENTITY : Entity;
+        ValidationReport<ENTITY> Validate<ENTITY>(ENTITY entity) where ENTITY : Entity;
     }
 
     public class DummyCastleValidationRunnerSuccess : ICastleValidationRunner
@@ -23,9 +23,9 @@ namespace MethodFitness.Core.Services
             throw new NotImplementedException();
         }
 
-        public CrudReport Validate<ENTITY>(ENTITY entity) where ENTITY : Entity
+        public ValidationReport<ENTITY> Validate<ENTITY>(ENTITY entity) where ENTITY : Entity
         {
-            var crudReport = new CrudReport { Success = true };
+            var crudReport = new ValidationReport<ENTITY> { Success = true };
             return crudReport;
         }
 
@@ -41,9 +41,9 @@ namespace MethodFitness.Core.Services
             throw new NotImplementedException();
         }
 
-        public CrudReport Validate<ENTITY>(ENTITY entity) where ENTITY : Entity
+        public ValidationReport<ENTITY> Validate<ENTITY>(ENTITY entity) where ENTITY : Entity
         {
-            var crudReport = new CrudReport { Success = false};
+            var crudReport = new ValidationReport<ENTITY> { Success = false };
             crudReport.AddErrorInfo(new ErrorInfo("test", "test error"));
             return crudReport;
         }
@@ -63,16 +63,16 @@ namespace MethodFitness.Core.Services
             {
                 var errorSummary = runner.GetErrorSummary(entity);
                 var errorInfos = errorSummary.InvalidProperties.SelectMany(
-                    prop => errorSummary.GetErrorsForProperty(prop),
+                    errorSummary.GetErrorsForProperty,
                     (prop, err) => new ErrorInfo(prop, err));
                 result.AddRange(errorInfos);
             }
             return result;
         }
 
-        public CrudReport Validate<ENTITY>(ENTITY entity) where ENTITY : Entity
+        public ValidationReport<ENTITY> Validate<ENTITY>(ENTITY entity) where ENTITY : Entity
         {
-            var crudReport = new CrudReport();
+            var crudReport = new ValidationReport<ENTITY>();
             var runner = new ValidatorRunner(registry);
             if (runner.IsValid(entity))
             {

@@ -1,4 +1,7 @@
-﻿.raif{ width:300px; height:300px;}
+﻿.raif {
+	width: 300px;
+	height: 300px;
+}
 .shortWidth {
 	width: 100px !important;
 }
@@ -122,35 +125,31 @@ div.fieldRow .checkbox .editor_label label {
 	width: auto !important;
 }
 
-div.fieldRow div.full-row
-{
-	width: 329px;
-}
 
 div.fieldRow div.one-third {
 	margin-right: 8px;
-	width: 100.5px;
+	width: 30%;
 	float: left;
 }
 div.fieldRow div.half {
 	float: left;
 	margin-right: 8px;
-	width: 157px;
+	width: 47%;
 }
 div.fieldRow div.two-thirds {
 	margin-right: 8px;
-	width: 218px;
+	width: 62%;
 	float: left;
 }
 div.fieldRow div.one-quarter {
 	margin-right: 8px;
-	width: 79px;
+	width: 23%;
 	float: left;
 }
 div.fieldRow div.three-quarters {
 	float: left;
 	margin-right: 8px;
-	width: 234px;
+	width: 71%;
 }
 div.fieldRow div.first {
 	margin-left: 0;
@@ -313,8 +312,8 @@ form button.cancel:active {
 	/*margin: 8px 0 8px 8px !important;*/
 }
 
-.editor_input{
-	width: 97%;
+.editor_input input, select{
+	color:#666666;
 }
 
 .checkbox .editor_input
@@ -322,19 +321,19 @@ form button.cancel:active {
 	display:inline
 }
 
-div.fieldRow div.one-five {
-	width: 61px;
-	float: left;
-	margin-left: 2%;
-}
-div.fieldRow div.two-five {
-	width: 122px;
-	float: left;
-}
-div.fieldRow div.three-five {
-	width: 183px;
-	float: left;
-}
+/*div.fieldRow div.one-five {*/
+	/*width: 61px;*/
+	/*float: left;*/
+	/*margin-left: 2%;*/
+/*}*/
+/*div.fieldRow div.two-five {*/
+	/*width: 122px;*/
+	/*float: left;*/
+/*}*/
+/*div.fieldRow div.three-five {*/
+	/*width: 183px;*/
+	/*float: left;*/
+/*}*/
 div.fieldRow div.mid {
 	margin: 0;
 }
@@ -483,6 +482,34 @@ div.bordered-box{
 	text-align: center;
 }
 
+.pointer{
+    cursor: pointer;
+}
+
+.hundredPercentWide{
+    width:100%
+}
+.standAloneLabel{
+    font-size: 12px;
+    	color: #666666;
+    	padding: 3px 0;
+    	clear: both;
+}
+
+
+.detailsLabelForCommitteeRole{
+    color: #666666;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+    padding: 0 0;
+    clear: both;
+    float: right;
+}
+.detailsLabelRootForCommitteeRole{
+    height: 40px;
+    top:1%;
+}
 /************************/
 .calendarContainer {
     float: left;
@@ -528,7 +555,7 @@ margin: 0;
 }
 
 .gridRowStrikeThrough{
-    background: url(../images/strike.png) center center;
+    background: url(../images/strike.png) center center !important;
 }
 
 div.headerInput{

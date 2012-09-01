@@ -4,6 +4,8 @@ namespace MethodFitness.Core.Domain
 {
     public class Payment:DomainEntity
     {
+        public virtual Guid PaymentBatchId { get; set; }
+        public virtual Client Client { get; set; }
         public virtual int FullHours { get; set; }
         public virtual double FullHoursPrice { get; set; }
         public virtual int HalfHours { get; set; }
@@ -15,7 +17,7 @@ namespace MethodFitness.Core.Domain
         public virtual int Pairs { get; set; }
         public virtual double PairsPrice { get; set; }
         public virtual double PaymentTotal { get; set; }
-        public virtual Guid PaymentBatchId { get; set; }
-        public virtual Client Client { get; set; }
+        public virtual int PairsTenPack { get; set; }
+        public virtual double PairsTenPackPrice { get; set; }
     }
 }

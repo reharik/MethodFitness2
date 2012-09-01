@@ -19,9 +19,9 @@ namespace Generator.Commands
 
         public void Execute(string[] args)
         {
-            ObjectFactory.Configure(x => x.For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory()));
+//            ObjectFactory.Configure(x => x.For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory()));
             var sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
-            SqlServerHelper.DeleteReaddDb(sessionFactory);
+//            SqlServerHelper.DeleteReaddDb(sessionFactory);
 
             ObjectFactory.Configure(x => x.For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactoryAndGenerateSchema()));
             sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();

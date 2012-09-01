@@ -278,12 +278,36 @@ MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
 });
 MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
     events:_.extend({
-        'click .client_payment':'payment'
+        'click .client_payment':'payment',
+        'click .delete':'deleteItem'
     }, MF.Views.AjaxFormView.prototype.events),
     payment:function(){
         var id = $(this.el).find("#EntityId").val();
         MF.vent.trigger("route","paymentlist/"+id,true);
+    },
+    deleteItem:function(){
+        if (confirm("Are you sure you would like to delete this Item?")) {
+            var id = $("#EntityId").val();
+            MF.repository.ajaxPost(this.options.deleteUrl, {'EntityId':id},$.proxy(this.deleteCallback,this));
+        }
+    },
+    deleteCallback:function(result){
+        var notificationArea = new cc.NotificationArea("delete","#errorMessagesGrid","#errorMessagesForm", MF.vent);
+        notificationArea.render(this.$el);
+        MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
+        MF.notificationService.addArea(notificationArea);
+        MF.notificationService.resetArea(notificationArea.areaName());
+        MF.notificationService.processResult(result,notificationArea.areaName(),this.id);
+    },
+    deleteSuccess:function(result){
+        MF.WorkflowManager.returnParentView(result,true);
+    },
+    onClose:function(){
+        MF.vent.unbind("delete:"+this.id+":success",this.deleteSuccess,this);
+        MF.notificationService.removeArea("delete");
+        this._super("onClose",arguments);
     }
+
 });
 MF.Views.PaymentListView = MF.Views.GridView.extend({
     addNew:function(){
@@ -317,12 +341,16 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
         $("#pair").change($.proxy(function(e){
             this.calculateTotal("Pair","#pairTotal",e.target);
         },this));
+         $("#pairTenPack").change($.proxy(function(e){
+            this.calculateTotal("PairTenPack","#pairTenPackTotal",e.target);
+        },this));
 
         this.calculateTotal("FullHour","#fullHourTotal","#fullHour");
         this.calculateTotal("HalfHour","#halfHourTotal","#halfHour");
         this.calculateTotal("FullHourTenPack","#fullHourTenPackTotal","#fullHourTenPack");
         this.calculateTotal("HalfHourTenPack","#halfHourTenPackTotal","#halfHourTenPack");
         this.calculateTotal("Pair","#pairTotal","#pair");
+        this.calculateTotal("PairTenPack","#pairTenPackTotal","#pairTenPack");
 
     },
     calculateTotal:function(type, totalSelector, numberSelector){
@@ -333,7 +361,8 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
             + parseInt($("#halfHourTotal").text().substring(1))
             + parseInt($("#fullHourTenPackTotal").text().substring(1))
             + parseInt($("#halfHourTenPackTotal").text().substring(1))
-            + parseInt($("#pairTotal").text().substring(1));
+            + parseInt($("#pairTotal").text().substring(1))
+            + parseInt($("#pairTenPackTotal").text().substring(1));
         $("#total").val(total);
 
     }

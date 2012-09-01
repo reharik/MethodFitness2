@@ -49,7 +49,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.StartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.StartTime;
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserEntityId();
-            var trainer = _repository.Find<Trainer>(userEntityId);
+            dynamic trainer = _repository.Find<User>(userEntityId);
             IEnumerable<Client> clients;
             if(!_authorizationService.IsAllowed(trainer,"/Clients/CanScheduleAllClients"))
             {
@@ -58,7 +58,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             {
                 clients = _repository.FindAll<Client>();
             }
-            var availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
+            var availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
             var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF });
             var model = new AppointmentViewModel{
                             
@@ -81,7 +81,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public void handelTime(AppointmentViewModel model, DateTime startTime)
         {
             getStartTime(model,startTime);
-            model.Appointment.EndTime = getEndTime(model.Appointment.Length, startTime);
+            model.Appointment.EndTime = getEndTime(model.Appointment.AppointmentType, startTime);
         }
 
         private void getStartTime(AppointmentViewModel model, DateTime startTime)
@@ -97,9 +97,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 case "Half Hour":
                     return startTime.AddMinutes(30);
                 case "Hour":
+                case "Pair":
                     return startTime.AddMinutes(60);
-                case "Hour And A Half":
-                    return startTime.AddMinutes(90);
             }
             return startTime.AddMinutes(60);
         }
@@ -176,8 +175,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var appointmentModel = model.Appointment;
             appointment.Date = appointmentModel.Date;
             appointment.StartTime = DateTime.Parse(appointmentModel.Date.Value.ToShortDateString() + " " + model.sHour+":"+model.sMinutes+" "+model.sAMPM);
-            appointment.EndTime = getEndTime(model.Appointment.Length, appointment.StartTime.Value);
-            appointment.Length =model.Appointment.Length;
+            appointment.EndTime = getEndTime(model.Appointment.AppointmentType, appointment.StartTime.Value);
+            appointment.AppointmentType = model.Appointment.AppointmentType;
             var trainer = _repository.Find<Trainer>(appointmentModel.Trainer.EntityId);
             var location = _repository.Find<Location>(appointmentModel.Location.EntityId);
             appointment.Trainer = trainer;

@@ -38,6 +38,9 @@ MF.addInitializer(function(){
     MF.vent.bind("route",function(route,triggerRoute){
         MF.Routing.showRoute(route,triggerRoute);
     });
+
+    MF.notificationService = new cc.MessageNotficationService();
+
 });
 
 MF.bind("initialize:after", function(){

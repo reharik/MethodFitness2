@@ -22,7 +22,7 @@ namespace MethodFitness.Core.Domain.Persistence
             References(x => x.UserLoginInfo);
             HasManyToMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
             DiscriminateSubClassesOnColumn("type");
-        } 
+        }
 
         public class UserLoginInfoMap : DomainEntityMap<UserLoginInfo>
         {
@@ -48,6 +48,13 @@ namespace MethodFitness.Core.Domain.Persistence
                 HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
                 HasMany(x => x.TrainerClientRates).Access.CamelCaseField(Prefix.Underscore);
                 HasMany(x => x.TrainerPayments).Access.CamelCaseField(Prefix.Underscore);
+            }
+        }
+
+        public class AdministratorMap : SubclassMap<Administrator>
+        {
+            public AdministratorMap()
+            {
             }
         }
     }

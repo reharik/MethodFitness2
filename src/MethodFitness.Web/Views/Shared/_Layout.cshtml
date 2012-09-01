@@ -67,6 +67,7 @@
     @Script("MF/Billing/MF.BillingApp.Views.js").ToHtmlTag()
     
     @Script("externalHelpers/superfish.js").ToHtmlTag()
+    @Script("externalHelpers/ba-debug.js").ToHtmlTag()
     @Script("internalHelpers/cc.ccMenu.js").ToHtmlTag()
     @Script("internalHelpers/jquery.cc.grid.js").ToHtmlTag()
     @Script("internalHelpers/cc.grid.columnService.js").ToHtmlTag()
@@ -76,6 +77,7 @@
     @Script("internalHelpers/jquery.mf.calendar.js").ToHtmlTag()
 
     @Script("internalHelpers/cc.utilities.js").ToHtmlTag()
+    @Script("internalHelpers/cc.Notifications.js").ToHtmlTag()
     @Script("internalHelpers/cc.crudForm.js").ToHtmlTag()
     @Script("internalHelpers/mf.mediaHandler.js").ToHtmlTag()
     @Script("externalHelpers/json2.js").ToHtmlTag()
@@ -83,7 +85,7 @@
     @Script("mf.baseClass.js").ToHtmlTag()
     @Script("mf.home.js").ToHtmlTag()
     
-
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
     @RenderSection("HeaderScripts", false)
 
 

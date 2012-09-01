@@ -12,6 +12,7 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Security.Interfaces;
+using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
 using StructureMap;
 using xVal.ServerSide;
 
@@ -96,16 +97,32 @@ namespace MethodFitness.Web.Controllers
         {
             var trainer = _repository.Find<User>(input.EntityId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteTrainerRules");
-            var rulesResult = rulesEngineBase.ExecuteRules(trainer);
-            if (!rulesResult.Success)
+            var validationManager = rulesEngineBase.ExecuteRules(trainer);
+            if (validationManager.GetLastValidationReport().Success)
             {
-                Notification notification = new Notification(rulesResult);
-                return Json(notification, JsonRequestBehavior.AllowGet);
+                _repository.Delete(trainer);
             }
-            _repository.Delete(trainer);
-            _repository.UnitOfWork.Commit();
-            return Json(new Notification{Success = true}, JsonRequestBehavior.AllowGet);
+            var notification = validationManager.FinishWithAction();
+            return Json(notification, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult DeleteMultiple(BulkActionViewModel input)
+        {
+            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteTrainerRules");
+            IValidationManager<User> validationManager = new ValidationManager<User>(_repository);
+            input.EntityIds.Each(x =>
+            {
+                var item = _repository.Find<User>(x);
+                validationManager = rulesEngineBase.ExecuteRules(item, validationManager);
+                var report = validationManager.GetLastValidationReport();
+                if (report.Success)
+                {
+                    report.SuccessAction = a => _repository.Delete(a);
+                }
+            });
+            var notification = validationManager.FinishWithAction();
+            return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Save(TrainerViewModel input)

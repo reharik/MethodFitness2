@@ -39,7 +39,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 deleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
                // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
                 gridDef = _clientListGrid.GetGridDefinition(url),
-                Title = WebLocalizationKeys.CLIENTS.ToString() 
+                Title = WebLocalizationKeys.CLIENTS.ToString(),
+                searchField = "LastName"
             };
             model.headerButtons.Add("new");
             return Json(model, JsonRequestBehavior.AllowGet);
@@ -48,14 +49,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public JsonResult Clients(GridItemsRequestModel input)
         {
             var userEntityId = _sessionContext.GetUserEntityId();
-            var trainer = _repository.Find<Trainer>(userEntityId);
+            var trainer = _repository.Find<User>(userEntityId);
             IQueryable<Client> items;
             if (trainer.UserRoles.Any(x => x.Name == "Administrator"))
             {
                 items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
             }else
             {
-                items = _dynamicExpressionQuery.PerformQueryWithItems(trainer.Clients, input.filters);
+                items = _dynamicExpressionQuery.PerformQueryWithItems(((Trainer)trainer).Clients, input.filters);
             }
             var gridItemsViewModel = _clientListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);

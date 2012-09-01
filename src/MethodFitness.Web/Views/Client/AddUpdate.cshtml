@@ -22,7 +22,10 @@
     
 }
 @section ExtraContentHeaderButtons{
-    <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+    @if (UserPermissionService.Allow("/Clients/CanDeleteClients"))
+    {
+        <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+    }
     <button class="client_payment" title="@WebLocalizationKeys.MAKE_PAYMENT"></button>
 }
 
@@ -92,6 +95,9 @@
                 </div>
                 <div class="fieldRow">
                     @Html.SubmissionFor(x => x.Item.SessionRates.Pair).AddClassToRoot("half first").ToHtmlTag()
+                </div>
+                <div class="fieldRow">
+                    @Html.SubmissionFor(x => x.Item.SessionRates.PairTenPack).AddClassToRoot("half first").ToHtmlTag()
                 </div>
             </div>
         }

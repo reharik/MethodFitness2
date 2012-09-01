@@ -115,6 +115,7 @@ namespace MethodFitness.Web.Services
            createOperation("/Calendar/SetAppointmentForOthers");
            createOperation("/Calendar/CanDeleteRetroactiveAppointments");
            createOperation("/Clients/CanScheduleAllClients");
+           createOperation("/Clients/CanDeleteClients");
 
            createOperation("/TrainerPayment/Display");
            createOperation("/TrainerPayment/Active");

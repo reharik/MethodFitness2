@@ -71,6 +71,15 @@
             </div>
         </div>
     </div>
+    <div class="fieldRow">
+        @Html.SubmissionFor(x => x.Item.PairsTenPack).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pairTenPack").ToHtmlTag()
+        <div class="view_root">
+            <div class="view_label"></div>
+            <div class="view_input">
+                <span id="pairTenPackTotal">$0</span>
+            </div>
+        </div>
+    </div>
     <hr/>
     <div class="fieldRow">
         @Html.SubmissionFor(x => x.Item.PaymentTotal).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").InputId("total").ToHtmlTag()

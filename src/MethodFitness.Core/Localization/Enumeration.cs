@@ -12,6 +12,7 @@ namespace MethodFitness.Core.Localization
         public string Value { get; set; }
         public bool IsActive { get; set; }
         public bool IsDefault { get; set; }
+        public bool OnlyUseKeyForSelector { get; set; }
 
         #region IEquatable<LocalizedEnum> Members
         public bool Equals(Enumeration obj)
