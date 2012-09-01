@@ -5,11 +5,11 @@
  * Time: 9:53 AM
  * To change this template use File | Settings | File Templates.
  */
-KYT.mixins = {};
+MF.mixins = {};
 
-KYT.mixin = function(target, mixin, preserveRender){
+MF.mixin = function(target, mixin, preserveRender){
 
-    var mixinObj = KYT.mixins[mixin];
+    var mixinObj = MF.mixins[mixin];
     for (var prop in mixinObj) {
         if(prop=="render"){
             if(preserveRender!=true){
@@ -21,7 +21,7 @@ KYT.mixin = function(target, mixin, preserveRender){
     }
 };
 
-KYT.mixins.modelAndElementsMixin = {
+MF.mixins.modelAndElementsMixin = {
     bindModelAndElements:function(arrayOfIgnoreItems){
         // make sure to apply ids prior to ko mapping.
         var that = this;
@@ -41,7 +41,7 @@ KYT.mixins.modelAndElementsMixin = {
             that.mappingOptions.ignore.push(item);});
         this.mappingOptions.ignore.push("_availableItems");
         this.mappingOptions.ignore.push("_resultsItems");
-        KYT.vent.trigger("model:"+this.id+"modelLoaded");
+        MF.vent.trigger("model:"+this.id+"modelLoaded");
     },
     extendModel:function(){
         this.model._createdText = ko.computed(function() {
@@ -58,7 +58,7 @@ KYT.mixins.modelAndElementsMixin = {
         },this);
     },
     addIdsToModel:function(){
-        var rel = KYT.State.get("Relationships");
+        var rel = MF.State.get("Relationships");
         if(!rel){return;}
         this.model.EntityId(rel.entityId);
         this.model.ParentId(rel.parentId);
@@ -67,7 +67,7 @@ KYT.mixins.modelAndElementsMixin = {
     }
 };
 
-KYT.mixins.formMixin = {
+MF.mixins.formMixin = {
     events:{
         'click #save' : 'saveItem',
         'click #cancel' : 'cancel'
@@ -90,75 +90,75 @@ KYT.mixins.formMixin = {
         }
         else{
             data = JSON.stringify(ko.mapping.toJS(this.model,this.mappingOptions));
-            var promise = KYT.repository.ajaxPostModel(this.model._saveUrl(),data);
+            var promise = MF.repository.ajaxPostModel(this.model._saveUrl(),data);
             promise.done($.proxy(this.successHandler,this));
         }
     },
     cancel:function(){
-        KYT.vent.trigger("form:"+this.id+":cancel");
-        if(!this.options.noBubbleUp) {KYT.WorkflowManager.returnParentView();}
+        MF.vent.trigger("form:"+this.id+":cancel");
+        if(!this.options.noBubbleUp) {MF.WorkflowManager.returnParentView();}
     },
     successHandler:function(_result){
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
         if(!CC.notification.handleResult(result,this.cid)){
             return;
         }
-        KYT.vent.trigger("form:"+this.id+":success",result);
-        if(!this.options.noBubbleUp){KYT.WorkflowManager.returnParentView(result,true);}
+        MF.vent.trigger("form:"+this.id+":success",result);
+        if(!this.options.noBubbleUp){MF.WorkflowManager.returnParentView(result,true);}
     }
 };
 
-KYT.mixins.displayMixin = {
+MF.mixins.displayMixin = {
     events:{
         'click #cancel' : 'cancel'
     },
     cancel:function(){
-        KYT.vent.trigger("display:"+this.id+":cancel");
-        if(!this.options.noBubbleUp) {KYT.WorkflowManager.returnParentView();}
+        MF.vent.trigger("display:"+this.id+":cancel");
+        if(!this.options.noBubbleUp) {MF.WorkflowManager.returnParentView();}
     }
 };
 
 
-KYT.mixins.ajaxDisplayMixin = {
+MF.mixins.ajaxDisplayMixin = {
     render:function(){
-        $.when(KYT.loadTemplateAndModel(this))
+        $.when(MF.loadTemplateAndModel(this))
          .done($.proxy(this.renderCallback,this));
     },
     renderCallback:function(){
         this.bindModelAndElements();
         this.viewLoaded();
-        KYT.vent.trigger("display:"+this.id+":pageLoaded",this.options);
+        MF.vent.trigger("display:"+this.id+":pageLoaded",this.options);
     }
 };
 
-KYT.mixins.ajaxFormMixin = {
+MF.mixins.ajaxFormMixin = {
     render:function(){
-        $.when(KYT.loadTemplateAndModel(this))
+        $.when(MF.loadTemplateAndModel(this))
          .done($.proxy(this.renderCallback,this));
     },
     renderCallback:function(){
         this.bindModelAndElements();
         this.viewLoaded();
-        KYT.vent.trigger("form:"+this.id+":pageLoaded",this.options);
+        MF.vent.trigger("form:"+this.id+":pageLoaded",this.options);
     }
 };
 
-KYT.mixins.ajaxGridMixin = {
+MF.mixins.ajaxGridMixin = {
     render:function(){
-        KYT.repository.ajaxGet(this.options.url, this.options.data)
+        MF.repository.ajaxGet(this.options.url, this.options.data)
             .done($.proxy(this.renderCallback,this));
     },
     renderCallback:function(result){
         $(this.el).html($("#gridTemplate").tmpl(result));
-        $.extend(this.options,result,KYT.gridDefaults);
+        $.extend(this.options,result,MF.gridDefaults);
         this.setupGrid();
         this.viewLoaded();
-        KYT.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
+        MF.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
 
     }
 };
 
-KYT.mixins.setupGridMixin = {
+MF.mixins.setupGridMixin = {
     setupGrid: function() {
         $.each(this.options.headerButtons, $.proxy(function(i, item) {
             $(this.el).find("." + item).show();
@@ -176,47 +176,47 @@ KYT.mixins.setupGridMixin = {
     }
 };
 
-KYT.mixins.defaultGridEventsMixin = {
+MF.mixins.defaultGridEventsMixin = {
     events: {
         'click .new': 'addNew',
         'click .delete': 'deleteItems'
     },
     setupBindings: function () {
-        KYT.vent.bind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
-        KYT.vent.bind(this.options.gridId + ":DisplayItem", this.displayItem, this);
+        MF.vent.bind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
+        MF.vent.bind(this.options.gridId + ":DisplayItem", this.displayItem, this);
         if ($.isFunction(this._setupBindings)) {
             this._setupBindings();
         }
     },
     unbindBindings: function () {
-        KYT.vent.unbind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
-        KYT.vent.unbind(this.options.gridId + ":DisplayItem", this.displayItem, this);
+        MF.vent.unbind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
+        MF.vent.unbind(this.options.gridId + ":DisplayItem", this.displayItem, this);
         if ($.isFunction(this._unbindBindings)) {
             this._unbindBindings();
         }
     },
     addNew: function () {
-        KYT.vent.trigger("route", KYT.generateRoute(this.options.addUpdate), true);
+        MF.vent.trigger("route", MF.generateRoute(this.options.addUpdate), true);
     },
     editItem: function (id) {
-        KYT.vent.trigger("route", KYT.generateRoute(this.options.addUpdate, id), true);
+        MF.vent.trigger("route", MF.generateRoute(this.options.addUpdate, id), true);
     },
     displayItem: function (id) {
-        KYT.vent.trigger("route", KYT.generateRoute(this.options.display, id), true);
+        MF.vent.trigger("route", MF.generateRoute(this.options.display, id), true);
     },
     deleteItems: function () {
         if (confirm("Are you sure you would like to delete this Item?")) {
             var ids = cc.gridMultiSelect.getCheckedBoxes(this.options.gridId);
-            KYT.repository.ajaxGet(this.options.deleteMultipleUrl, $.param({ "EntityIds": ids }, true))
+            MF.repository.ajaxGet(this.options.deleteMultipleUrl, $.param({ "EntityIds": ids }, true))
                 .done($.proxy(function () { this.reloadGrid() }, this));
         }
     },
     reloadGrid: function () {
-        KYT.vent.unbind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
-        KYT.vent.unbind(this.options.gridId + ":DisplayItem", this.displayItem, this);
+        MF.vent.unbind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
+        MF.vent.unbind(this.options.gridId + ":DisplayItem", this.displayItem, this);
         $("#" + this.options.gridId).trigger("reloadGrid");
-        KYT.vent.bind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
-        KYT.vent.bind(this.options.gridId + ":DisplayItem", this.displayItem, this);
+        MF.vent.bind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
+        MF.vent.bind(this.options.gridId + ":DisplayItem", this.displayItem, this);
     },
     // used by children to update parent grid
     callbackAction: function () {
@@ -224,7 +224,7 @@ KYT.mixins.defaultGridEventsMixin = {
     }
 };
 
-KYT.mixins.setupGridSearchMixin = {
+MF.mixins.setupGridSearchMixin = {
     search:function(v){
         var searchItem = {"field": this.options.searchField ,"data": v };
         var filter = {"group":"AND",rules:[searchItem]};

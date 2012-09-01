@@ -6,6 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 
+MF.Views = {};
+// use like this
+// this._super("testMethod",arguments);
+
 (function(Backbone) {
 
   // The super method takes two parameters: a method name
@@ -40,12 +44,9 @@
     Backbone[klass].prototype._super = _super;
   });
 
+
 })(Backbone);
 
-// use like this
-// this._super("testMethod",arguments);
-
-MF.Views = {};
 MF.Views.View = Backbone.View.extend({
     // Remove the child view and close it
     removeChildView: function(item){
@@ -68,18 +69,18 @@ MF.Views.View = Backbone.View.extend({
     // Handle cleanup and other closing needs for
     // the collection of views.
     close: function(){
-        if(this.options.notificationArea){
-            MF.notificationService.removeArea(this.options.areaName);
-        }
-        this.unbind();
-        //this.unbindAll();
-        this.remove();
+      this.unbind();
+      //this.unbindAll();
+      if(this.elementsViewmodel){
+        this.elementsViewmodel.destroy();
+      }
+      this.remove();
 
-        this.closeChildren();
+      this.closeChildren();
 
-        if (this.onClose){
+      if (this.onClose){
         this.onClose();
-        }
+      }
     },
 
     closeChildren: function(){
@@ -88,226 +89,55 @@ MF.Views.View = Backbone.View.extend({
           childView.close();
         });
       }
+    },
+
+    viewLoaded:function(){
     }
   });
 
-MF.Views.BaseFormView = MF.Views.View.extend({
-    events:{
-        'click #save' : 'saveItem',
-        'click .cancel' : 'cancel'
-    },
 
+MF.Views.FormView = MF.Views.View.extend({
     initialize: function(){
-       this.options = $.extend({},MF.formDefaults,this.options);
-        this.$el = $(this.el);
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "modelAndElementsMixin");
     },
-    config:function(){
-        if(extraFormOptions){
-            $.extend(true, this.options, extraFormOptions);
-        }
-        this.setupNotificationArea();
-        $(this.options.crudFormSelector,this.el).crudForm(this.options.crudFormOptions,this.options.areaName);
-        this.setupBeforeSubmitions();
-
-    },
-    setupNotificationArea:function(){
-        this.options.notificationArea = this.options.notificationArea
-                                ?this.options.notificationArea
-                                : new cc.NotificationArea(this.cid,"#errorMessagesGrid","#errorMessagesForm", MF.vent);
-
-        this.options.notificationArea.render(this.el);
-        this.options.areaName = this.options.notificationArea.areaName();
-        MF.vent.bind(this.options.areaName+":"+this.id+":success",this.successHandler,this);
-        MF.notificationService.addArea(this.options.notificationArea);
-    },
-    setupBeforeSubmitions:function(){
-        if(this.options.crudFormOptions.additionBeforeSubmitFunc){
-            var array = !$.isArray(this.options.crudFormOptions.additionBeforeSubmitFunc)
-                ? [this.options.crudFormOptions.additionBeforeSubmitFunc]
-                : this.options.crudFormOptions.additionBeforeSubmitFunc;
-            $(array).each($.proxy(function(i,item){
-                $(this.options.crudFormSelector,this.el).data('crudForm').setBeforeSubmitFuncs(item);
-            },this));
-        }
-    },
-    onClose:function(){
-        MF.vent.unbind(this.options.notificationArea.areaName()+":"+this.id+":success",this.successHandler,this);
-    },
-    saveItem:function(){
-        var $form = $(this.options.crudFormSelector,this.el);
-        $form.data().viewId = this.id;
-        $form.submit();
-        debug.log("viewId:" +this.id + " time:"+new Date().getTime() );
-    },
-    cancel:function(){
-        MF.vent.trigger("form:"+this.id+":cancel");
-        if(!this.options.noBubbleUp) {MF.WorkflowManager.returnParentView();}
-    },
-    successHandler:function(result){
-        MF.vent.trigger("form:"+this.id+":success",result);
-        if(!this.options.noBubbleUp){MF.WorkflowManager.returnParentView(result,true);}
-    }
-//    successHandler:function(result, form, notification){
-//        var emh = cc.utilities.messageHandling.messageHandler();
-//        var message = cc.utilities.messageHandling.mhMessage("success",result.Message,"");
-//        emh.addMessage(message);
-//        emh.showAllMessages(notification.getSuccessContainer(),true);
-//        MF.vent.trigger("form:"+this.id+":success",result);
-//        if(!this.options.noBubbleUp)
-//            MF.WorkflowManager.returnParentView(result,true);
-//    }
-});
-
-MF.Views.FormView = MF.Views.BaseFormView.extend({
     render: function(){
-        this.config();
+        this.bindModelAndElements();
         this.viewLoaded();
         MF.vent.trigger("form:"+this.id+":pageLoaded",this.options);
         return this;
     }
 });
 
-MF.Views.AjaxFormView = MF.Views.BaseFormView.extend({
-    render:function(){
-        MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(function(result){this.renderCallback(result)},this));
-    },
-    renderCallback:function(result){
-        if(result.LoggedOut){
-            window.location.replace(result.RedirectUrl);
-            return;
-        }
-        $(this.el).html(result);
-        this.config();
-        //callback for render
-        this.viewLoaded();
-        //general notification of pageloaded
-        MF.vent.trigger("form:"+this.id+":pageLoaded",this.options);
-        $(this.el).find("form :input:visible:enabled:first").focus();
+MF.Views.AjaxFormView = MF.Views.View.extend({
+    initialize: function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
     }
 });
 
 MF.Views.AjaxDisplayView = MF.Views.View.extend({
-    events:{
-        'click .cancel' : 'cancel'
-    },
-    initialize: function(){
-        this.options = $.extend({},MF.displayDefaults,this.options);
-         this.$el = $(this.el);
-    },
-    render:function(){
-        MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(this.renderCallback,this));
-    },
-    renderCallback:function(result){
-        if(result.LoggedOut){
-            window.location.replace(result.RedirectUrl);
-            return;
-        }
-        $(this.el).html(result);
-        if(extraFormOptions){
-            $.extend(true,this.options, extraFormOptions);
-        }
-        MF.vent.trigger("display:"+this.id+":pageLoaded",this.options);
-    },
-    cancel:function(){
-        MF.vent.trigger("display:"+this.id+":cancel",this.id);
-        if(!this.options.noBubbleUp)
-            MF.WorkflowManager.returnParentView();
+    initialize:function(){
+        MF.mixin(this, "displayMixin");
+        MF.mixin(this, "ajaxDisplayMixin");
+        MF.mixin(this, "modelAndElementsMixin");
     }
 });
 
 MF.Views.GridView = MF.Views.View.extend({
-    events:{
-        'click .new' : 'addNew',
-        'click .delete' : 'deleteItems'
-    },
     initialize: function(){
-        this.options = $.extend({},this.options);
-
-        this.options.gridContainer = "#gridContainer";
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
     },
-    render:function(){
-        MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(function(result){this.renderCallback(result)},this));
-    },
-    renderCallback:function(result){
-        if(result.LoggedOut){
-            window.location.replace(result.RedirectUrl);
-            return;
-        }
-        this.$el.html($("#gridTemplate").tmpl(result));
-        $.extend(this.options,result);
-        if(!this.options.searchField){
-            this.options.searchField = "Name";
-        }
-//        if(gridControllerOptions){
-//            $.extend(true, this.options, gridControllerOptions);
-//        }
-        var thatEl = this.$el;
-        $.each(this.options.headerButtons,function(i,item){
-            thatEl.find("."+item).show();
-        });
-
-        //to avaoid having to use "this" in the window resize function
-        var $gridContainer = this._processGridName();
-        this.options.$gridContainer = $gridContainer;
-        if(this.beforeInitGrid)this.beforeInitGrid();
-        $gridContainer.AsGrid(this.options.gridDef, this.options.gridOptions);
-        $(window).bind('resize', function() { cc.gridHelper.adjustSize($gridContainer); }).trigger('resize');
-        $(this.el).gridSearch({onClear:$.proxy(this.removeSearch,this),onSubmit:$.proxy(this.search,this)});
-        //callback for render
-        this.viewLoaded();
-        //general notification of pageloaded
-        MF.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
-        MF.vent.bind("AddUpdateItem",this.editItem,this);
-        MF.vent.bind("DisplayItem",this.displayItem,this);
-    },
-    _processGridName:function(){
-        var $container = this.$el.find(this.options.gridContainer);
-        var newId = $container.attr("id")+"_"+this.cid;
-        return $container.attr("id",newId);
-    },
-    addNew:function(){
-        MF.vent.trigger("route",this.options.addUpate,true);
-        //$.publish('/contentLevel/grid_'+this.id+'/AddUpdateItem', [this.options.addUpdateUrl]);
-    },
-    editItem:function(id){
-        MF.vent.trigger("route",this.options.addUpate+"/"+id,true);
-    },
-    displayItem:function(id){
-        MF.vent.trigger("route",this.options.display+"/"+id,true);
-    },
-    deleteItems:function(){
-        if (confirm("Are you sure you would like to delete this Item?")) {
-            var ids = cc.gridHelper.getCheckedBoxes(this.options.$gridContainer);
-            MF.repository.ajaxGet(this.options.deleteMultipleUrl,
-                $.param({"EntityIds":ids},true),
-                $.proxy(function(){this.reloadGrid()},this));
-        }
-    },
-    search:function(v){
-        var searchItem = {"field": this.options.searchField ,"data": v };
-        var filter = {"group":"AND",rules:[searchItem]};
-        var obj = {"filters":""  + JSON.stringify(filter) + ""};
-        this.options.$gridContainer.jqGrid('setGridParam',{postData:obj});
-        this.reloadGrid();
-    },
-    removeSearch:function(){
-        delete this.options.$gridContainer.jqGrid('getGridParam' ,'postData')["filters"];
-        this.reloadGrid();
-        return false;
-    },
-    reloadGrid:function(){
-        MF.vent.unbind("AddUpdateItem");
-        this.options.$gridContainer.trigger("reloadGrid");
-        MF.vent.bind("AddUpdateItem",this.editItem,this);
-    },
-    callbackAction:function(){
-        this.reloadGrid();
+    viewLoaded:function(){
+        this.setupBindings();
     },
     onClose:function(){
-        MF.vent.unbind("AddUpdateItem",this.editItem,this);
-        MF.vent.unbind("DisplayItem",this.displayItem,this); 
+        this.unbindBindings();
     }
-
 });
 
 MF.Views.AjaxPopupFormModule  = MF.Views.View.extend({
@@ -317,13 +147,14 @@ MF.Views.AjaxPopupFormModule  = MF.Views.View.extend({
 
     render: function(){
         this.options.noBubbleUp=true;
-        this.popupForm = this.options.view ? new MF.Views[this.options.view](this.options) :  new MF.Views.AjaxFormView(this.options);
+        this.options.isPopup=true;
+        this.popupForm = this.options.view && MF.Views[this.options.view] ? new MF.Views[this.options.view](this.options) : new MF.Views.AjaxFormView(this.options);
         this.popupForm.render();
         this.storeChild(this.popupForm);
         $(this.el).append(this.popupForm.el);
     },
     registerSubscriptions: function(){
-        MF.vent.bind("form:"+this.id+":pageLoaded", this.loadPopupView, this);
+       MF.vent.bind("form:"+this.id+":pageLoaded", this.loadPopupView, this);
         MF.vent.bind("popup:"+this.id+":cancel", this.popupCancel, this);
         MF.vent.bind("popup:"+this.id+":save", this.formSave, this);
         MF.vent.bind("form:"+this.id+":success", this.formSuccess, this);
@@ -363,7 +194,9 @@ MF.Views.AjaxPopupDisplayModule  = MF.Views.View.extend({
         this.registerSubscriptions();
     },
     render: function(){
-        this.popupDisplay = this.options.view ? new this.options.view(this.options) : new MF.Views.AjaxDisplayView(this.options);
+        this.options.noBubbleUp=true;
+        this.options.isPopup=true;
+        this.popupDisplay = this.options.view && MF.Views[this.options.view] ? new MF.Views[this.options.view](this.options) : new MF.Views.AjaxDisplayView(this.options);
         this.popupDisplay.render();
         this.storeChild(this.popupDisplay);
         $(this.el).append(this.popupDisplay.el);
@@ -374,8 +207,8 @@ MF.Views.AjaxPopupDisplayModule  = MF.Views.View.extend({
         MF.vent.bind("popup:"+this.id+":cancel", this.popupCancel, this);
     },
     onClose:function(){
-         MF.vent.unbind("display:"+this.id+":pageLoaded", this.loadPopupView, this);
-         MF.vent.unbind("popup:"+this.id+":cancel", this.popupCancel, this);
+         MF.vent.unbind("display:"+this.id+":pageLoaded");
+         MF.vent.unbind("popup:"+this.id+":cancel");
     },
 
     loadPopupView:function(formOptions){
@@ -425,7 +258,7 @@ MF.Views.PopupView = MF.Views.View.extend({
 MF.Views.TemplatedPopupView = MF.Views.View.extend({
 
     initialize: function(){
-        this.options = $.extend({},mf.popupDefaults,this.options);
+        this.options = $.extend({},MF.opupDefaults,this.options);
     },
     render:function(){
         $(this.el).append($(this.options.template).tmpl(this.options.data));
@@ -494,9 +327,9 @@ MF.Views.TokenizerModule = MF.Views.View.extend({
         MF.vent.bind("ajaxPopupFormModule:" + this.id + ":cancel", this.formCancel, this);
     },
     onClose:function(){
-         MF.vent.unbind("token:" + this.id + ":addUpdate", this.addUpdateItem, this);
-         MF.vent.unbind("ajaxPopupFormModule:" + this.id + ":success", this.formSuccess, this);
-         MF.vent.unbind("ajaxPopupFormModule:" + this.id + ":cancel", this.formCancel, this);
+         MF.vent.unbind("token:" + this.id + ":addUpdate");
+         MF.vent.unbind("ajaxPopupFormModule:" + this.id + ":success");
+        MF.vent.unbind("ajaxPopupFormModule:" + this.id + ":cancel");
     },
 //from tolkneizer
     addUpdateItem:function() {
@@ -527,8 +360,10 @@ MF.Views.TokenView = MF.Views.View.extend({
     events:{
         'click #addNew' : 'addNew'
     },
-    initialize: function(){
+    initialize:function(){
         this.options = $.extend({},MF.tokenDefaults,this.options);
+    },
+    render: function(){
 
         if(!this.options.availableItems || this.options.availableItems.length==0) {
             $("#noAssets",this.el).show();
@@ -570,7 +405,7 @@ MF.Views.TokenView = MF.Views.View.extend({
 });
 
 MF.Views.EditableTokenView = MF.Views.TokenView.extend({
-     events:_.extend({
+    events:_.extend({
         'click .tokenEditor' : 'tokenEditor'
     }, MF.Views.TokenView.prototype.events),
     internalTokenMarkup: function(item) {
@@ -595,6 +430,31 @@ MF.Views.EditableTokenView = MF.Views.TokenView.extend({
 });
 
 
+MF.Views.NotificationView = MF.Views.View.extend({
+    events:_.extend({
+        "click #trapezoid":"toggle"
+    }, MF.Views.View.prototype.events),
+    render: function(){
+        var $trap = $("<div>").attr("id","trapezoid");
+        $trap.text("vaslasdflasdf");
+      //  $trap.hide();
+        this.$el.html($trap);
+        $("#main-content").prepend(this.$el);
+        this.viewLoaded();
+        MF.vent.trigger("form:"+this.id+":pageLoaded",this.options);
+        return this;
+    },
+    toggle:function(){
+        $("#trapezoid").hide("blind",{},2000).delay(800).show("blind",{},2000);
+    },
+    show:function(){
+        $("#trapezoid").show("blind",{},2000);
+    },
+    hide:function(){
+        $("#trapezoid").hide("blind",{},2000);
+    }
+});
+
 MF.tokenDefaults = {
     availableItems:[],
     selectedItems: [],
@@ -608,25 +468,7 @@ MF.popupDefaults = {
 
 MF.gridDefaults = {
     searchField:"Name",
-    gridContainer: "#gridContainer",
     showSearch:true,
     id:""
 };
 
-MF.formDefaults = {
-    id:"",
-    data:{},
-    crudFormSelector:"#CRUDForm",
-    crudFormOptions:{
-        errorContainer:"#errorMessagesForm",
-        successContainer:"#errorMessagesGrid",
-        additionBeforeSubmitFunc:null
-    },
-    runAfterRenderFunction: null
-};
-
-MF.displayDefaults = {
-    id:"",
-    data:{},
-    runAfterRenderFunction: null
-};
