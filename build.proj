@@ -16,9 +16,9 @@
 
   <Target Name="Build" DependsOnTargets="_build;_unitTests" />
   <!--  <Target Name="Stage" DependsOnTargets="_build;_minifyJSandCss;_outputWebFiles;" />-->
-  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />
+  <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToQA;" />
 
- <Target Name="_outputWebFiles" >
+ <Target Name="_pushToQA" >
     <ItemGroup>
       <WebFiles Include="src\MethodFitness.Web\**\*.*;"
                 Exclude="src\MethodFitness.Web\obj\**;
@@ -41,12 +41,16 @@
       <Output TaskParameter="Minute" PropertyName="Minute" />
     </Time>
 
-    <PropertyGroup>
-      <OutputDirectory>c:\development\BuildFiles\MethodFitness\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute)</OutputDirectory>
-    </PropertyGroup>
+   <PropertyGroup>
+     <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
+   </PropertyGroup>
 
-    <MakeDir Directories="$(OutputDirectory)"  />
-    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
+   <MakeDir Directories="$(OutputDirectory)"  />
+   <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
+   <Zip Files="@(WebFiles)"
+     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
+     ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
+     ZipLevel="9" />
   </Target>
 
   <Target Name="myTemp" >

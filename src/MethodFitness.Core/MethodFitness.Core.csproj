@@ -153,6 +153,7 @@
     <Compile Include="Config\FilterDefinitions.cs" />
     <Compile Include="Config\ManyToManyTableNameConvention.cs" />
     <Compile Include="Config\ForeignKeyConstraintNameConvention.cs" />
+    <Compile Include="Config\MsSqlAzureDialect.cs" />
     <Compile Include="Config\StructuremapGridConvention.cs" />
     <Compile Include="Config\TextAreaConvention.cs" />
     <Compile Include="CoreViewModelAndDTOs\OrderDetailsDto.cs" />

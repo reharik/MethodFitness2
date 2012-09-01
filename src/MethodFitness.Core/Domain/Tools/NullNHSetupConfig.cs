@@ -21,6 +21,11 @@ namespace MethodFitness.Core.Domain.Tools
         {
             return;
         }
+
+        public void ClusteredIndexOnManyToMany(Configuration configuration)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
