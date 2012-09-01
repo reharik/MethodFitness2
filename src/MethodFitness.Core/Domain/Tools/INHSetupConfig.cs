@@ -47,7 +47,7 @@ namespace MethodFitness.Core.Domain.Tools
         {
             configuration.CollectionMappings.Where(x => !x.IsOneToMany).Each(x =>
             {
-                const string columnFormat = "{0}_id";
+                const string columnFormat = "{0}Id";
                 var leftColumn = new Column(string.Format(
                     columnFormat,
                     x.Owner.MappedClass.Name));
