@@ -16,7 +16,7 @@ namespace MethodFitness.Core.Rules
         public List<IRule> Rules { get; set; }
         public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity, IValidationManager<ENTITY> validationManager) where ENTITY : DomainEntity
         {
-            Rules.Each(x => validationManager.AddValidationReport(x.Execute(entity)));
+            Rules.ForEachItem(x => validationManager.AddValidationReport(x.Execute(entity)));
             return validationManager;
         }
     }

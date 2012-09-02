@@ -14,7 +14,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     render:function(){
-       MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(function(result){this.renderCallback(result)},this));
+       MF.repository.ajaxGet(this.options.url, this.options.data).done($.proxy(this.renderCallback,this));
     },
     renderCallback:function(result){
         if(result.LoggedOut){
@@ -67,7 +67,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "ScheduledDate":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")};
-        MF.repository.ajaxGet(this.options.EventChangedUrl,data, $.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
+        MF.repository.ajaxGet(this.options.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     eventResize:function( event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
         var data = {"EntityId":event.EntityId,
@@ -75,7 +75,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")
         };
-        MF.repository.ajaxGet(this.options.EventChangedUrl,data,$.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
+        MF.repository.ajaxGet(this.options.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
         if(new XDate(date).diffHours(new XDate())>0 && !this.options.calendarDef.CanEnterRetroactiveAppointments){
@@ -140,7 +140,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
     deleteItem: function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
             var entityId = $("#EntityId").val();
-            MF.repository.ajaxGet(this.options.calendarDef.DeleteUrl,{"EntityId":entityId}, $.proxy(function(result){
+            MF.repository.ajaxGet(this.options.calendarDef.DeleteUrl,{"EntityId":entityId}).done($.proxy(function(result){
                 this.ajaxPopupDisplay.close();
                 if(!result.Success){
                     alert(result.Message);
@@ -276,38 +276,51 @@ MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
         this.storeChild(this.tokenView);
     }
 });
-MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
-    events:_.extend({
+MF.Views.ClientFormView = MF.Views.View.extend({
+     events:_.extend({
         'click .client_payment':'payment',
-        'click .delete':'deleteItem'
-    }, MF.Views.AjaxFormView.prototype.events),
+        'click .delete':'deleteItem',
+        'click #save' : 'saveItem',
+        'click #cancel' : 'cancel'
+    }),
+    initialize:function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+    },
+    viewLoaded:function(){
+        this._setupBindings();
+    },
+     _setupBindings:function(){
+         MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
+    },
+    _unbindBindings:function(){
+        MF.vent.unbind("delete:"+this.id+":success",this.deleteSuccess,this);
+    },
     payment:function(){
-        var id = $(this.el).find("#EntityId").val();
-        MF.vent.trigger("route","paymentlist/"+id,true);
+        var id =this.model.EntityId();
+        MF.vent.trigger("route",MF.generateRoute("paymentlist",id,true));
     },
     deleteItem:function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
-            var id = $("#EntityId").val();
-            MF.repository.ajaxPost(this.options.deleteUrl, {'EntityId':id},$.proxy(this.deleteCallback,this));
+            var id =this.model.EntityId();
+            MF.repository.ajaxPost(this.model._deleteUrl, {'EntityId':id},$.proxy(this.deleteCallback,this));
         }
     },
-    deleteCallback:function(result){
-        var notificationArea = new cc.NotificationArea("delete","#errorMessagesGrid","#errorMessagesForm", MF.vent);
-        notificationArea.render(this.$el);
-        MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
-        MF.notificationService.addArea(notificationArea);
-        MF.notificationService.resetArea(notificationArea.areaName());
-        MF.notificationService.processResult(result,notificationArea.areaName(),this.id);
+    deleteCallback:function(_result){
+        var result = typeof _result =="string" ? JSON.parse(_result) : _result;
+        if(!CC.notification.handleResult(result,this.cid)){
+            return;
+        }
+        MF.vent.trigger("delete:"+this.id+":success",result);
     },
     deleteSuccess:function(result){
         MF.WorkflowManager.returnParentView(result,true);
     },
     onClose:function(){
-        MF.vent.unbind("delete:"+this.id+":success",this.deleteSuccess,this);
-        MF.notificationService.removeArea("delete");
+        this._unbindBindings();
         this._super("onClose",arguments);
     }
-
 });
 MF.Views.PaymentListView = MF.Views.GridView.extend({
     addNew:function(){
@@ -495,15 +508,22 @@ MF.Views.TrainerGridView = MF.Views.GridView.extend({
     }
 });
 
-MF.Views.ClientGridView = MF.Views.GridView.extend({
-    viewLoaded:function(){
-        MF.vent.bind("Redirect",this.showPayGrid,this);
+MF.Views.ClientGridView = MF.Views.View.extend({
+    initialize:function(){
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
     },
-    showPayGrid:function(id){
-        MF.vent.trigger("route","paymentlist/"+id,true);
+    viewLoaded:function(){
+         MF.vent.bind(this.options.gridId+":Redirect",this.showPayGrid,this);
+        this.setupBindings();
     },
     onClose:function(){
-        MF.vent.unbind("Redirect");
-        this._super("onClose",arguments);
+        MF.vent.unbind(this.options.gridId+":Redirect",this.showPayGrid,this);
+        this.unbindBindings();
+    },
+    showPayGrid:function(id){
+        MF.vent.trigger("route",MF.generateRoute("paymentlist",id),true);
     }
 });

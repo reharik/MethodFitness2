@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using FubuMVC.Core;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
-using KnowYourTurf.Core.Html.FubuUI.HtmlConventionRegistries;
+using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;
 
-namespace KnowYourTurf.Core.Html.FubuUI.Builders
+namespace MethodFitness.Core.Html.FubuUI.Builders
 {
     public class ListDisplayBuilder2 : ElementBuilder
     {
@@ -16,7 +16,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
         public override HtmlTag Build(ElementRequest request)
         {
-            HtmlTag root = new HtmlTag("div").Attr("data-bind", "foreach: "+ KnowYourTurfHtmlConventions.DeriveElementName(request));
+            HtmlTag root = new HtmlTag("div").Attr("data-bind", "foreach: "+ MethodFitnessHtmlConventions2.DeriveElementName(request));
             var child = new HtmlTag("div").Attr("data-bind", "text: $data" );
             root.Append(child);
             return root;

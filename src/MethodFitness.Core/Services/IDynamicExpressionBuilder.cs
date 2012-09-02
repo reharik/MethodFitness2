@@ -60,7 +60,7 @@ namespace MethodFitness.Core.Services
         private Expression createBinaryExpressionsForRules(IEnumerable<FilterItem> filterItems, ParameterExpression pe, Expression pb = null, bool isNullCheck=false)
         {
             Expression predicateBody = pb;
-            filterItems.Each(item =>
+            filterItems.ForEachItem(item =>
                                  { if(item.data.IsNotEmpty()||item.listOfIds!=null )
                                     {
                                          MemberExpression left = createMemberExpressionForProperty(pe, item.field);

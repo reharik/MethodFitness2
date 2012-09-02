@@ -21,12 +21,10 @@ namespace MethodFitness.Web.Grids
         protected override Grid<Payment> BuildGrid()
         {
             GridBuilder.LinkColumnFor(x => x.CreateDate)
-                .ForAction<PaymentController>(x => x.AddUpdate(null),AreaName.Billing)
                 .ToPerformAction(ColumnAction.AddUpdateItem)
                 .ToolTip(WebLocalizationKeys.EDIT_ITEM)
                 .DefaultSortColumn().SecurityOperation("/Payment/AddUpdate");
             GridBuilder.LinkColumnFor(x => x.CreateDate)
-                .ForAction<PaymentController>(x => x.Display(null), AreaName.Billing)
                 .ToPerformAction(ColumnAction.DisplayItem)
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
                 .DefaultSortColumn().SecurityOperation("/Payment/Display");

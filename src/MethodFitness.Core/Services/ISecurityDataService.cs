@@ -31,7 +31,7 @@ namespace MethodFitness.Core.Services
             //return user;
             var users = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username.ToLowerInvariant() );// && u.UserLoginInfo.Password == password).FirstOrDefault();
             User ValidUser = null;
-            users.Each(x =>
+            users.ForEachItem(x =>
             {
                 var passwordHash = CreatePasswordHash(password, x.UserLoginInfo.Salt);
                 if (x.UserLoginInfo.Password == passwordHash)

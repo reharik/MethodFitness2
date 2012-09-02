@@ -79,7 +79,7 @@ namespace MethodFitness.Core.Domain
         }
         public virtual void SetSessionsForClients()
         {
-            Clients.Each(x =>
+            Clients.ForEachItem(x =>
             {
                 var sessions = x.Sessions.Where(s => s.Appointment == null && s.AppointmentType == AppointmentType);
                 if (sessions.Any())
@@ -108,7 +108,7 @@ namespace MethodFitness.Core.Domain
 
         public virtual void RestoreSessionsToClientWhenDeleted()
         {
-            Sessions.Each(x => x.Client.RestoreSession(x));
+            Sessions.ForEachItem(x => x.Client.RestoreSession(x));
         }
 
         public override Entity CloneSelf()
@@ -124,7 +124,7 @@ namespace MethodFitness.Core.Domain
                                       Notes = Notes,
                                       AppointmentType = AppointmentType,
                                   };
-            _clients.Each(appointment.AddClient);
+            _clients.ForEachItem(appointment.AddClient);
             return appointment;
         }
     }

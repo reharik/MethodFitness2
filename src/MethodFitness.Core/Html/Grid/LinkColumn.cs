@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using MethodFitness.Core.Domain;
-using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Localization;
+using MethodFitness.Security.Interfaces;
 using FubuMVC.Core.Util;
 using HtmlTags;
-using MethodFitness.Security.Interfaces;
+using MethodFitness.Core.Domain;
+using MethodFitness.Core.Localization;
 
 namespace MethodFitness.Core.Html.Grid
 {
@@ -23,29 +22,50 @@ namespace MethodFitness.Core.Html.Grid
         }
 
         private string _action;
+        private string _gridName;
+        private List<TriggerValueDto<ENTITY>> _returnValueWithTriggerList;
+        private string _id;
 
-        public LinkColumn(Expression<Func<ENTITY, object>> expression)
+        public LinkColumn(Expression<Func<ENTITY, object>> expression, string gridName = "")
         {
+            _id = "gridContainer";
+
+            _gridName = gridName;
             _divCssClasses = new List<string>();
-            propertyAccessor = ReflectionHelper.GetAccessor(expression); 
+            propertyAccessor = ReflectionHelper.GetAccessor(expression);
             var name = LocalizationManager.GetLocalString(expression);
             if (propertyAccessor is PropertyChain)
             {
                 name = ((PropertyChain)(propertyAccessor)).Names.Aggregate((current, next) => current + "." + next);
             }
             Properties[GridColumnProperties.name.ToString()] = name;
-            
+
             var headerText = LocalizationManager.GetHeader(expression).HeaderText;
-            if(headerText == "Name")
+            if (headerText == "Name")
             {
-                headerText = typeof (ENTITY).Name.ToSeperateWordsFromPascalCase() + " " + headerText;
+                headerText = typeof(ENTITY).Name.ToSeperateWordsFromPascalCase() + " " + headerText;
             }
             Properties[GridColumnProperties.header.ToString()] = headerText;
         }
-
-        public LinkColumn<ENTITY> ForAction<CONTROLLER>(Expression<Func<CONTROLLER, object>> expression, AreaName area = null) where CONTROLLER : Controller
+        //used for getting controller from a field value like "InstantiatingType"
+        public LinkColumn<ENTITY> ForAction(Expression<Func<ENTITY, object>> expression, string actionName)
         {
-            var urlForAction = UrlContext.GetUrlForAction(expression,area);
+            var controllerName = ReflectionHelper.GetAccessor(expression).FieldName + "Controller";
+            var urlForAction = UrlContext.GetUrlForAction(controllerName, actionName);
+            _actionUrl = urlForAction;
+            return this;
+        }
+
+        public LinkColumn<ENTITY> ForAction<CONTROLLER>(Expression<Func<CONTROLLER, object>> expression) where CONTROLLER : Controller
+        {
+            var urlForAction = UrlContext.GetUrlForAction(expression);
+            _actionUrl = urlForAction;
+            return this;
+        }
+
+        public LinkColumn<ENTITY> ForAction(string controllerName, string actionName)
+        {
+            var urlForAction = UrlContext.GetUrlForAction(controllerName, actionName);
             _actionUrl = urlForAction;
             return this;
         }
@@ -68,19 +88,24 @@ namespace MethodFitness.Core.Html.Grid
             return this;
         }
 
-        public override ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService)
+        public override string BuildColumn(object item, User user, IAuthorizationService _authorizationService, string gridName = "")
         {
+            // if a name is given in the controller it overrides the name given in the grid declaration
+            if (gridName.IsNotEmpty()) _gridName = gridName;
             var _item = (ENTITY)item;
-            var valueDto = FormatValue(_item, user, _authorizationService);
-            if (valueDto.HtmlTag == null || valueDto.HtmlTag.Text().IsEmpty()) return valueDto;
-            addToolTipAndClasses(valueDto.HtmlTag);
-            var anchor = buildAnchor(_item);
+            var value = FormatValue(_item, user, _authorizationService);
+            if (value.IsEmpty()) return null;
+            var span = new HtmlTag("span").Text(value);
+            addToolTipAndClasses(span);
+            var anchor = buildAnchor(_item, _returnValueWithTriggerList);
+            anchor.AddClasses(new[] { "linkColumn", _action });
+
             var div = BuildDiv();
-            div.Children.Add(valueDto.HtmlTag);
+            div.Children.Add(span);
             anchor.Children.Add(div);
-            valueDto.HtmlTag = anchor;
-            return valueDto;
+            return anchor.ToString();
         }
+
 
         protected DivTag BuildDiv()
         {
@@ -96,18 +121,54 @@ namespace MethodFitness.Core.Html.Grid
             span.AddClasses(_divCssClasses);
         }
 
-        private HtmlTag buildAnchor(ENTITY item)
+        private HtmlTag buildAnchor(ENTITY item, List<TriggerValueDto<ENTITY>> expressions = null)
         {
             var anchor = new HtmlTag("a");
-            anchor.Attr("onclick", "MF.vent.trigger('" + _action + "'," + item.EntityId + ")");
-
+            var extraValues = getCSVofExtraValues(item, expressions);
+            var id = _id.IsNotEmpty() ? _id + ":" : "";
+            anchor.Attr("onclick", "MF.vent.trigger('" + id + _action + "'," + item.EntityId + extraValues + ")");
             return anchor;
         }
+        private string getCSVofExtraValues(ENTITY item, IEnumerable<TriggerValueDto<ENTITY>> expressions)
+        {
+            if (expressions == null) return string.Empty;
+            var values = new List<string>();
+            expressions.ForEachItem(x => values.Add(getExtraValue(item, x)));
+            return "," + values.Aggregate((s1, s2) => s1 + "," + s2);
+        }
 
+        private string getExtraValue(ENTITY item, TriggerValueDto<ENTITY> expression)
+        {
+            if (expression == null) return string.Empty;
+            var propertyValue = ReflectionHelper.GetAccessor(expression.Expression).GetValue(item);
+            if (expression.Formatter != null)
+            {
+                propertyValue = expression.Formatter(propertyValue as string);
+            }
+            return propertyValue != null ? "'" + propertyValue + "'" : string.Empty;
+        }
         public ColumnBase<ENTITY> AddClassToSpan(string cssClass)
         {
             _divCssClasses.Add(cssClass);
             return this;
         }
+
+        public ColumnBase<ENTITY> WithId(string id)
+        {
+            _id = id;
+            return this;
+        }
+
+        public LinkColumn<ENTITY> ReturnValueWithTrigger(Expression<Func<ENTITY, object>> expression, Func<string, string> stringFormat = null)
+        {
+            if (_returnValueWithTriggerList == null) _returnValueWithTriggerList = new List<TriggerValueDto<ENTITY>>();
+            _returnValueWithTriggerList.Add(new TriggerValueDto<ENTITY> { Expression = expression, Formatter = stringFormat });
+            return this;
+        }
+    }
+    public class TriggerValueDto<ENTITY> where ENTITY : IGridEnabledClass
+    {
+        public Expression<Func<ENTITY, object>> Expression { get; set; }
+        public Func<string, string> Formatter { get; set; }
     }
 }

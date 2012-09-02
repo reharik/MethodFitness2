@@ -47,7 +47,7 @@ namespace MethodFitness.Web.Services
         {
             CreateUserGroups();
             AssociateAllUsersWithThierTypeGroup();
-            CreateKYTAdminOperation();
+            CreateMFAdminOperation();
             CreateOperationsForAllControllers();
             CreateOperationsForAllMenuItems();
             CreateMiscellaneousOperations();
@@ -56,7 +56,7 @@ namespace MethodFitness.Web.Services
             _repository.UnitOfWork.Commit();
         }
 
-        private void CreateKYTAdminOperation()
+        private void CreateMFAdminOperation()
         {
             createOperation("/AdminOrGreater");
             createOperation("/MFAdmin");
@@ -91,10 +91,10 @@ namespace MethodFitness.Web.Services
         public void CreateOperationsForAllMenuItems()
         {
             var menuConfig = _container.GetAllInstances<IMenuConfig>();
-            menuConfig.Each(x =>
+            menuConfig.ForEachItem(x =>
             {
                 var menuItems = x.Build(true);
-                menuItems.Each(m =>
+                BasicExtentions.ForEachItem(menuItems, m =>
                 {
                     var operation = "/MenuItem/" + m.Text.RemoveWhiteSpace();
                     if (!Operations.Contains(operation))
@@ -129,10 +129,10 @@ namespace MethodFitness.Web.Services
         {
             _repository.DisableFilter("CompanyConditionFilter");
             var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
-            admins.Each(x =>
+            admins.ForEachItem(x =>
                 _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
             var employees = _repository.FindAll<User>();
-            employees.Each(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
+            employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
         }
 
         public void CreateUserGroups()

@@ -63,9 +63,9 @@ namespace Generator
 
             // TODO: should probably have a transaction around this
 
-            localizedTextItems.Each(x=> repository.Save(x));
-            localizedPropItems.Each(x => repository.Save(x));
-            localizedValueItems.Each(x => repository.Save(x));
+            localizedTextItems.ForEachItem(x=> repository.Save(x));
+            localizedPropItems.ForEachItem(x => repository.Save(x));
+            localizedValueItems.ForEachItem(x => repository.Save(x));
         }
 
         public void DumpStrings(IRepository repository)
@@ -83,9 +83,9 @@ namespace Generator
             var propItems = ReadFromXml<LocalizedProperty>(_propXmlFileName).Where(l => l.Culture.Equals(fromCulture, comparer)).ToArray();
             var valObjItems = ReadFromXml<LocalizedEnumeration>(_valueObjXmlFileName).Where(l => l.Culture.Equals(fromCulture, comparer)).ToArray();
 
-            textItems.Each(l => l.Culture = toCulture);
-            propItems.Each(l => l.Culture = toCulture);
-            valObjItems.Each(l => l.Culture = toCulture);
+            textItems.ForEachItem(l => l.Culture = toCulture);
+            propItems.ForEachItem(l => l.Culture = toCulture);
+            valObjItems.ForEachItem(l => l.Culture = toCulture);
 
             Console.WriteLine("Translating localized text strings from '{0}' to '{1}' ({2}): ",
                               fromCulture, toCulture, textItems.Count());
@@ -114,9 +114,9 @@ namespace Generator
                 toCulture,
                 l => l.Text);
 
-            textItems.Each(l => repository.Save(l));
-            propItems.Each(l => repository.Save(l));
-            valObjItems.Each(l => repository.Save(l));
+            textItems.ForEachItem(l => repository.Save(l));
+            propItems.ForEachItem(l => repository.Save(l));
+            valObjItems.ForEachItem(l => repository.Save(l));
         }
 
         private static T[] ReadFromXml<T>(string xmlFileName)
@@ -137,14 +137,14 @@ namespace Generator
                 items = xmlSerializer.Deserialize(reader) as T[];
             }
 
-            items.Each(l => l.EntityId = 0);
+            items.ForEachItem(l => l.EntityId = 0);
             return items;
         }
 
         private static void DumpToXml<T>(IEnumerable<T> items, string xmlFileName)
             where T : DomainEntity
         {
-            items.Each(l => l.EntityId = 0);
+            items.ForEachItem(l => l.EntityId = 0);
 
             var xmlSerializer = new XmlSerializer(typeof(T[]));
 
@@ -206,7 +206,7 @@ namespace Generator
 
         public void DeleteAll(IEnumerable<object> items, IRepository repository)
         {
-            items.Each(repository.HardDelete);
+            items.ForEachItem(repository.HardDelete);
         }
 
 
@@ -227,7 +227,7 @@ namespace Generator
                 IDbConnection connection = session.Connection;
                 using (IDbCommand command = connection.CreateCommand())
                 {
-                    commands.Each(text =>
+                    commands.ForEachItem(text =>
                     {
                         command.CommandText = text;
                         command.ExecuteNonQuery();
@@ -262,7 +262,7 @@ namespace Generator
             repo.Query<LocalizedText>(l => l.Culture == "en-US" && l.Text.StartsWith("en-US_")).ToList().Cast<ILocalizedItem>()
                    .Concat(repo.Query<LocalizedProperty>(l => l.Culture == "en-US" && l.Text.StartsWith("en-US_")).ToList().Cast<ILocalizedItem>())
                    .Concat(repo.Query<LocalizedEnumeration>(l => l.Culture == "en-US" && l.Text.StartsWith("en-US_")).ToList().Cast<ILocalizedItem>())
-                   .Each(l => PromptForString(l, repo, inReader, outWriter));
+                   .ForEachItem(l => PromptForString(l, repo, inReader, outWriter));
         }
 
         public void PromptForString(ILocalizedItem item, IRepository repository, TextReader inReader, TextWriter outWriter)

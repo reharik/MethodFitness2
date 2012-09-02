@@ -1,4 +1,4 @@
-/*
+﻿/*
 * This file has been commented to support Visual Studio Intellisense.
 * You should not use this file at runtime inside the browser--it is only
 * intended to be used only for design-time IntelliSense.  Please use the
@@ -45,7 +45,7 @@ $.extend($.fn, {
 		/// <summary>
 		/// Validates the selected form. This method sets up event handlers for submit, focus,
 		/// keyup, blur and click to trigger validation of the entire form or individual
-		/// elements. Each one can be disabled, see the onxxx options (onsubmit, onfocusout,
+		/// elements. ForEachItem one can be disabled, see the onxxx options (onsubmit, onfocusout,
 		/// onkeyup, onclick). focusInvalid focuses elements when submitting a invalid form.
 		/// </summary>
 		/// <param name="options" type="Options">

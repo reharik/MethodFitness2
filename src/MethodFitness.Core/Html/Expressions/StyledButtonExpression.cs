@@ -58,8 +58,8 @@ namespace MethodFitness.Core.Html.Expressions
 
         private void addClassesAndAttributesToRoot(HtmlTag root)
         {
-            HtmlAttributes.Each(x => root.Attr(x.Key, x.Value));
-            CssClasses.Each(x => root.AddClass(x));
+            HtmlAttributes.ForEachItem(x => root.Attr(x.Key, x.Value));
+            CssClasses.ForEachItem(x => root.AddClass(x));
         }
 
         private void createHiddenSubmit(HtmlTag firstSpan)

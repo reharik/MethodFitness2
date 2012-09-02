@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using FubuMVC.Core.Util;
 using MethodFitness.Core.Domain;
+using MethodFitness.Core.Localization;
 
 namespace MethodFitness.Core.Services
 {
@@ -27,7 +28,7 @@ namespace MethodFitness.Core.Services
                                                         bool addSelectItem)
             where ENTITY : Entity;
 
-        IEnumerable<SelectListItem> CreateList<ENUM>();
+        IEnumerable<SelectListItem> CreateList<ENUM>(bool addSelectItem = false) where ENUM : Enumeration, new();
 
         IEnumerable<SelectListItem> SetSelectedItemByValue(IEnumerable<SelectListItem> entityList,
                                                                    string value);
@@ -68,7 +69,7 @@ namespace MethodFitness.Core.Services
             {
                 items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
             }
-            entityList.Each( x =>
+            entityList.ForEachItem( x =>
                                  {
                                      if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
                                      {
@@ -88,10 +89,17 @@ namespace MethodFitness.Core.Services
             return CreateList(enumerable, text, value, addSelectItem);
         }
 
-        public IEnumerable<SelectListItem> CreateList<ENUM>()
+        public IEnumerable<SelectListItem> CreateList<ENUM>(bool addSelectItem = false) where ENUM : Enumeration, new()
         {
-            return (Enum.GetValues(typeof(ENUM)).Cast<ENUM>().Select(
-                enu => new SelectListItem() { Text = enu.ToString(), Value = enu.ToString() })).ToList();
+            IEnumerable<Enumeration> enumerations = Enumeration.GetAllActive<ENUM>();
+            if (enumerations == null) return null;
+            enumerations = enumerations.OrderBy(item => item.Key);
+            var items = enumerations.Select(x => new SelectListItem { Text = x.Key, Value = x.Value.IsEmpty() ? x.Key : x.Value }).ToList();
+            if (addSelectItem)
+            {
+                items.Insert(0, new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
+            }
+            return items;
         }
 
         public IEnumerable<SelectListItem> SetSelectedItemByValue(IEnumerable<SelectListItem> entityList, string value)
@@ -117,7 +125,7 @@ namespace MethodFitness.Core.Services
             {
                 items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
             }
-            entityList.Each(x =>
+            entityList.ForEachItem(x =>
             {
                 if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
                 {
@@ -147,7 +155,7 @@ namespace MethodFitness.Core.Services
             {
                 items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
             }
-            entityList.Each(x =>
+            entityList.ForEachItem(x =>
             {
                 if (text1Accessor.GetValue(x) != null && text2Accessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
                 {

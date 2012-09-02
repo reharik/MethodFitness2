@@ -21,7 +21,6 @@ namespace MethodFitness.Web.Grids
         protected override Grid<TrainerPayment> BuildGrid()
         {
             GridBuilder.LinkColumnFor(x => x.CreateDate)
-                .ForAction<PaymentController>(x => x.Display(null), AreaName.Billing)
                 .ToPerformAction(ColumnAction.DisplayItem)
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
                 .DefaultSortColumn().SecurityOperation("/TrainerPayment/Display");

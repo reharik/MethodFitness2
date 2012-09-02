@@ -35,7 +35,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var model = new TrainersPaymentListViewModel()
             {
                 gridDef = _grid.GetGridDefinition(url),
-                Title = trainer.FullNameFNF+"'s " + WebLocalizationKeys.PAYMENT_AMOUNT,
+                _Title = trainer.FullNameFNF+"'s " + WebLocalizationKeys.PAYMENT_AMOUNT,
                 TrainersName = trainer.FullNameFNF,
                 EntityId = trainer.EntityId,
                 PayTrainerUrl = UrlContext.GetUrlForAction<PayTrainerController>(x=>x.PayTrainer(null),AreaName.Billing)

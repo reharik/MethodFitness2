@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using FubuMVC.Core.Util;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
-using KnowYourTurf.Core.CoreViewModels;
-using KnowYourTurf.Core.Html.FubuUI.HtmlConventionRegistries;
-using KnowYourTurf.Core.Html.FubuUI.Tags;
-using KnowYourTurf.Core.Localization;
-using KnowYourTurf.Web.Controllers;
+using MethodFitness.Core.CoreViewModelAndDTOs;
+using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;
+using MethodFitness.Core.Html.FubuUI.Tags;
 
-namespace KnowYourTurf.Core.Html.FubuUI.Builders
+namespace MethodFitness.Core.Html.FubuUI.Builders
 {
     public class TextboxBuilder2 : ElementBuilder
     {
@@ -20,7 +17,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
         public override HtmlTag Build(ElementRequest request)
         {
-            return new TextboxTag().Attr("data-bind", "value:" + KnowYourTurfHtmlConventions.DeriveElementName(request));
+            return new TextboxTag().Attr("data-bind", "value:" + MethodFitnessHtmlConventions2.DeriveElementName(request));
         }
     }
 
@@ -35,7 +32,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
         public override HtmlTag Build(ElementRequest request)
         {
-            return new TextboxTag().Attr("data-bind", "dateString:" + KnowYourTurfHtmlConventions.DeriveElementName(request)).AddClass("datePicker");
+            return new TextboxTag().Attr("data-bind", "dateString:" + MethodFitnessHtmlConventions2.DeriveElementName(request)).AddClass("datePicker");
         }
     }
 
@@ -50,7 +47,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
         public override HtmlTag Build(ElementRequest request)
         {
-            return new TextboxTag().Attr("data-bind", "timeString:" + KnowYourTurfHtmlConventions.DeriveElementName(request)).AddClass("timePicker");
+            return new TextboxTag().Attr("data-bind", "timeString:" + MethodFitnessHtmlConventions2.DeriveElementName(request)).AddClass("timePicker");
         }
     }
 
@@ -65,7 +62,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
         public override HtmlTag Build(ElementRequest request)
         {
             return new HtmlTag("img").Attr("data-bind",
-                " attr: { src: " + KnowYourTurfHtmlConventions.DeriveElementName(request) + " }")
+                " attr: { src: " + MethodFitnessHtmlConventions2.DeriveElementName(request) + " }")
                 .Attr("alt", request.Accessor.FieldName);
         }
     }
@@ -80,7 +77,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
         public override HtmlTag Build(ElementRequest request)
         {
             return new CheckboxTag(false).Attr("data-bind",
-                                          "checked:" + KnowYourTurfHtmlConventions.DeriveElementName(request));
+                                          "checked:" + MethodFitnessHtmlConventions2.DeriveElementName(request));
         }
     }
 
@@ -93,7 +90,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
         public override HtmlTag Build(ElementRequest request)
         {
-            return new PasswordTag().Attr("data-bind", "value:" + KnowYourTurfHtmlConventions.DeriveElementName(request));
+            return new PasswordTag().Attr("data-bind", "value:" + MethodFitnessHtmlConventions2.DeriveElementName(request));
         }
     }
 
@@ -107,8 +104,8 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
         public override HtmlTag Build(ElementRequest request)
         {
             HtmlTag root = new HtmlTag("a");
-            root.Attr("data-bind", "attr: { href: mailto:" + KnowYourTurfHtmlConventions.DeriveElementName(request)+"}");
-            root.Children.Add(new HtmlTag("span").Attr("data-bind", "text:" + KnowYourTurfHtmlConventions.DeriveElementName(request)));
+            root.Attr("data-bind", "attr: { href: mailto:" + MethodFitnessHtmlConventions2.DeriveElementName(request)+"}");
+            root.Children.Add(new HtmlTag("span").Attr("data-bind", "text:" + MethodFitnessHtmlConventions2.DeriveElementName(request)));
             return root;
         }
     }
@@ -122,25 +119,25 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
         public override HtmlTag Build(ElementRequest request)
         {
-            return new TextboxTag().Id(request.Accessor.Name).AddClass("multiSelect").Attr("data-bind", "MultiSelect:" + KnowYourTurfHtmlConventions.DeriveElementName(request));
+            return new TextboxTag().Id(request.Accessor.Name).AddClass("multiSelect").Attr("data-bind", "MultiSelect:" + MethodFitnessHtmlConventions2.DeriveElementName(request));
         }
     }
 
-    public class PictureGallery : ElementBuilder
-    {
-        protected  override  bool matches(AccessorDef def)
-        {
-            return def.Accessor.PropertyType == typeof(IEnumerable<PhotoDto>);
-        }
-        public override HtmlTag Build(ElementRequest request)
-        {
-            var ul = new HtmlTag("ul").Attr("data-bind", "foreach:" + KnowYourTurfHtmlConventions.DeriveElementName(request));
-            var li = new HtmlTag("li");
-            li.Children.Add(new HtmlTag("image").Attr("data-bind", "attr:{src:FileUrl}"));
-            ul.Children.Add(li);
-            return ul;
-        }
-    }
+//    public class PictureGallery : ElementBuilder
+//    {
+//        protected  override  bool matches(AccessorDef def)
+//        {
+//            return def.Accessor.PropertyType == typeof(IEnumerable<PhotoDto>);
+//        }
+//        public override HtmlTag Build(ElementRequest request)
+//        {
+//            var ul = new HtmlTag("ul").Attr("data-bind", "foreach:" + MethodFitnessHtmlConventions2.DeriveElementName(request));
+//            var li = new HtmlTag("li");
+//            li.Children.Add(new HtmlTag("image").Attr("data-bind", "attr:{src:FileUrl}"));
+//            ul.Children.Add(li);
+//            return ul;
+//        }
+//    }
 
     public class FileUploader : ElementBuilder
     {
@@ -153,7 +150,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
         {
             var container = new HtmlTag("div").AddClass("imageInputContainer");
             var imageContainer = new HtmlTag("div").AddClass("imageContainer");
-            var name = KnowYourTurfHtmlConventions.DeriveElementName(request);
+            var name = MethodFitnessHtmlConventions2.DeriveElementName(request);
             var thumb = new HtmlTag("img").Attr("data-bind", "attr: { src: " + name + " }").Attr("alt", request.Accessor.FieldName);
             var delete = new HtmlTag("input").Attr("type", "button").AddClass("deleteImage").Attr("value", "     Delete");
 

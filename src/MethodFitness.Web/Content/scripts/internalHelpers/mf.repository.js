@@ -16,7 +16,7 @@ MF.repository= (function(){
             window.location.replace(result.RedirectUrl);
             return null;
         }
-        clearTimeout(KYT.throbberTimeout);
+        clearTimeout(MF.throbberTimeout);
         MF.showThrob=false;
         $("#ajaxLoading").hide();
         return result;

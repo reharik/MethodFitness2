@@ -62,7 +62,7 @@ namespace Generator
 
             var maxLength = commands.Max(c=>c.toCanonicalCommandName().Length);
 
-            commands.Each(
+            commands.ForEachItem(
                 c =>
                 Console.WriteLine("    {0, " + (maxLength + 1) + "} -> {1}", c.toCanonicalCommandName(), c.Description));
 

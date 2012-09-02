@@ -20,7 +20,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var model = new TrainerPaymentViewModel
             {
                 Item = trainerPayment,
-                Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
+                _Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
             };
             return View(model);
         }

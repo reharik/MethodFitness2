@@ -32,7 +32,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             {
                 addUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
                 gridDef = _paymentListGrid.GetGridDefinition(url),
-                Title = WebLocalizationKeys.PAYMENTS.ToString(),
+                _Title = WebLocalizationKeys.PAYMENTS.ToString(),
                 ParentId = input.EntityId
             };
             model.headerButtons.Add("new");

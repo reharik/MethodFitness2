@@ -9,7 +9,7 @@
 MF.Controller = (function(MF, Backbone){
     var Controller = {};
 
-       Controller.showViews=function(splat,entityId, parentId){
+       Controller.showViews=function(splat,entityId, parentId,rootId,_var) {
            var routeToken = _.find(MF.routeTokens,function(item){
                return item.route == splat;
            });
@@ -42,10 +42,10 @@ MF.Controller = (function(MF, Backbone){
             }
             });
             var item;
-            if(routeToken.itemName && KYT.Views[routeToken.itemName]){
-              item = new KYT.Views[routeToken.itemName](viewOptions);
+            if(routeToken.itemName && MF.Views[routeToken.itemName]){
+              item = new MF.Views[routeToken.itemName](viewOptions);
             }else{
-              item = new KYT.Views[routeToken.viewName](viewOptions);
+              item = new MF.Views[routeToken.viewName](viewOptions);
             }
 
 

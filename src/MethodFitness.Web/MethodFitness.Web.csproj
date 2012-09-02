@@ -44,6 +44,7 @@
     <Reference Include="AuthorizeNet">
       <HintPath>..\..\lib\AuthorizeNet.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL" />
     <Reference Include="Castle.Components.Validator, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -213,6 +214,7 @@
     </Compile>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
+    <Compile Include="Config\AutomapperBootstrapper.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
     <Compile Include="Grids\TrainerPaymentListGrid.cs" />

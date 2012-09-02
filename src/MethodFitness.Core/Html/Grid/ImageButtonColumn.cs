@@ -17,9 +17,15 @@ namespace MethodFitness.Core.Html.Grid
             set { _actionUrl = value; }
         }
         private string _action;
-        public ImageButtonColumn<ENTITY> ForAction<CONTROLLER>(Expression<Func<CONTROLLER, object>> expression, AreaName area = null) where CONTROLLER : Controller
+        private string _jsonData;
+        private string _gridName;
+        private string _id;
+
+        public ImageButtonColumn<ENTITY> ForAction<CONTROLLER>(Expression<Func<CONTROLLER, object>> expression, string gridName = "") where CONTROLLER : Controller
         {
-            var actionUrl = UrlContext.GetUrlForAction(expression,area);
+            _id = "gridContainer";
+            _gridName = gridName;
+            var actionUrl = UrlContext.GetUrlForAction(expression);
             _actionUrl = actionUrl;
             return this;
         }
@@ -30,28 +36,45 @@ namespace MethodFitness.Core.Html.Grid
             return this;
         }
 
-        public override ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService)
+        public override string BuildColumn(object item, User user, IAuthorizationService _authorizationService, string gridName = "")
         {
-            var _item = (ENTITY) item;
-            var valueDto = FormatValue(_item, user, _authorizationService);
-            if (valueDto.HtmlTag.Text().IsEmpty()) return valueDto;
+            // if a name is given in the controller it overrides the name given in the grid declaration
+            if (gridName.IsNotEmpty()) _gridName = gridName;
+            var _item = (ENTITY)item;
+            var value = FormatValue(_item, user, _authorizationService);
+            if (value.IsEmpty()) return null;
             var divTag = BuildDiv();
+            divTag.AddClasses(new[] { "imageButtonColumn", _action });
             var anchor = buildAnchor(_item);
             var image = BuildImage();
             divTag.Children.Add(image);
             anchor.Children.Add(divTag);
-            valueDto.HtmlTag = anchor;
-            return valueDto;
+            return anchor.ToString();
         }
 
         private HtmlTag buildAnchor(ENTITY item)
         {
             var anchor = new HtmlTag("a");
-            anchor.Attr("onclick", "MF.vent.trigger('" + _action + "'," + item.EntityId + ")");
+            var id = _id.IsNotEmpty() ? _id + ":" : "";
+            string data = string.Empty;
+            if (_jsonData.IsNotEmpty())
+            {
+                data = "," + _jsonData;
+            }
+            anchor.Attr("onclick", "MF.vent.trigger('" + id + _action + "'," + item.EntityId + data + ")");
 
-//            anchor.Attr("onclick",
-//                        "$.publish('/contentLevel/grid/" + _action + "',['" + _actionUrl + "/" + item.EntityId + "']);");
             return anchor;
+        }
+
+        public void AddDataToEvent(string jsonObject)
+        {
+            _jsonData = jsonObject;
+        }
+
+        public ImageButtonColumn<ENTITY> WithId(string id)
+        {
+            _id = id;
+            return this;
         }
     }
 }

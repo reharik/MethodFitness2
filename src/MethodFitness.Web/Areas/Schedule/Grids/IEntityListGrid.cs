@@ -9,7 +9,7 @@ namespace MethodFitness.Web.Areas.Schedule.Grids
 {
     public interface IEntityListGrid<ENTITY> where ENTITY : IGridEnabledClass
     {
-        void AddColumnModifications(Action<HtmlTag, ENTITY> modification);
+        void AddColumnModifications(Action<IGridColumn, ENTITY> modification);
         GridDefinition GetGridDefinition(string url);
         GridItemsViewModel GetGridItemsViewModel(PageSortFilter pageSortFilter, IQueryable<ENTITY> items);
     }

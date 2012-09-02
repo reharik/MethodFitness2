@@ -46,7 +46,7 @@ namespace MethodFitness.Core.Config
                     }
                     if ("ChangedBy".Equals(propertyNames[i]))
                     {
-                        state[i] = getSettingsFromPrincipal.GetUserEntityId();
+                        state[i] = getSettingsFromPrincipal.GetUserId();
                     }
                     if ("CompanyId".Equals(propertyNames[i]))
                     {
@@ -71,7 +71,7 @@ namespace MethodFitness.Core.Config
                     }
                     if ("ChangedBy".Equals(propertyNames[i]))
                     {
-                        state[i] = getSettingsFromPrincipal.GetUserEntityId();
+                        state[i] = getSettingsFromPrincipal.GetUserId();
                     }
                 }
                 return true;

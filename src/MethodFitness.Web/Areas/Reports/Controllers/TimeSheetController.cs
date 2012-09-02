@@ -31,7 +31,7 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
                                 TrainerList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId,false),
                                 StartDate = startDate,
                                 EndDate = startDate.AddDays(6),
-                                Title = WebLocalizationKeys.TIME_SHEET.ToString(),
+                                _Title = WebLocalizationKeys.TIME_SHEET.ToString(),
                                 ReportUrl = "/Areas/Reports/Reports/TimeSheet.aspx"
                             };
             return View(model);

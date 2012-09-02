@@ -39,7 +39,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 deleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
                // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
                 gridDef = _clientListGrid.GetGridDefinition(url),
-                Title = WebLocalizationKeys.CLIENTS.ToString(),
+                _Title = WebLocalizationKeys.CLIENTS.ToString(),
                 searchField = "LastName"
             };
             model.headerButtons.Add("new");
@@ -48,7 +48,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public JsonResult Clients(GridItemsRequestModel input)
         {
-            var userEntityId = _sessionContext.GetUserEntityId();
+            var userEntityId = _sessionContext.GetUserId();
             var trainer = _repository.Find<User>(userEntityId);
             IQueryable<Client> items;
             if (trainer.UserRoles.Any(x => x.Name == "Administrator"))

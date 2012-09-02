@@ -36,7 +36,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var model = new TrainersPaymentListViewModel()
             {
                 gridDef = _grid.GetGridDefinition(url),
-                Title = trainer.FullNameFNF+"'s " + WebLocalizationKeys.PAYMENTS,
+                _Title = trainer.FullNameFNF+"'s " + WebLocalizationKeys.PAYMENTS,
                 TrainersName = trainer.FullNameFNF,
                 EntityId = trainer.EntityId
             };

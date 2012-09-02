@@ -47,7 +47,7 @@ namespace MethodFitness.Core.Services
             var sessions = payment.Pairs;
             client.Sessions
                 .Where(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears).OrderBy(x=>x.Appointment.Date)
-                .Each(x =>
+                .ForEachItem(x =>
                           {
                               x.InArrears = false;
                               x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
@@ -164,7 +164,7 @@ namespace MethodFitness.Core.Services
         {
             var sessions = payment.HalfHours;
             client.Sessions.Where(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears).OrderBy(x => x.Appointment.Date)
-                .Each(x =>
+                .ForEachItem(x =>
                 {
                     x.InArrears = false;
                     x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
@@ -189,7 +189,7 @@ namespace MethodFitness.Core.Services
             var sessions = payment.FullHours;
             client.Sessions
                 .Where(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears).OrderBy(x => x.Appointment.Date)
-                .Each(x =>
+                .ForEachItem(x =>
                 {
                     if (sessions > 0)
                     {

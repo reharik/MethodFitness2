@@ -1,9 +1,9 @@
 using System;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
-using KnowYourTurf.Core.Html.FubuUI.HtmlConventionRegistries;
+using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;
 
-namespace KnowYourTurf.Core.Html.FubuUI.Builders
+namespace MethodFitness.Core.Html.FubuUI.Builders
 {
     public class DateDisplayBuilder2 : ElementBuilder
     {
@@ -16,7 +16,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
         public override HtmlTag Build(ElementRequest request)
         {
-            return new HtmlTag("span").Attr("data-bind", "dateString:" + KnowYourTurfHtmlConventions.DeriveElementName(request));
+            return new HtmlTag("span").Attr("data-bind", "dateString:" + MethodFitnessHtmlConventions2.DeriveElementName(request));
         }
     }
 
@@ -31,7 +31,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
         public override HtmlTag Build(ElementRequest request)
         {
-            return new HtmlTag("span").Attr("data-bind", "timeString:" + KnowYourTurfHtmlConventions.DeriveElementName(request));
+            return new HtmlTag("span").Attr("data-bind", "timeString:" + MethodFitnessHtmlConventions2.DeriveElementName(request));
         }
     }
 }

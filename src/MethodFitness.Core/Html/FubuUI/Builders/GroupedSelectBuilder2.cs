@@ -1,10 +1,10 @@
 using System;
 using FubuMVC.UI.Configuration;
 using HtmlTags;
-using KnowYourTurf.Core.CoreViewModels;
-using KnowYourTurf.Core.Html.FubuUI.HtmlConventionRegistries;
+using MethodFitness.Core.CoreViewModelAndDTOs;
+using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;
 
-namespace KnowYourTurf.Core.Html.FubuUI.Builders
+namespace MethodFitness.Core.Html.FubuUI.Builders
 {
     public class GroupSelectedBuilder2 : ElementBuilder
     {
@@ -21,7 +21,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
         {
             Action<SelectTag> action = x =>
                                            {
-                                               var elementName = KnowYourTurfHtmlConventions.DeriveElementName(request);
+                                               var elementName = MethodFitnessHtmlConventions2.DeriveElementName(request);
                                                x.Attr("data-bind", "groupedSelect:_" + elementName + "List," +
                                                                     "optionsText:'Text'," +
                                                                     "optionsValue:'Value'," +
@@ -30,7 +30,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.Builders
 
 
 
-//                                               var elementName = KnowYourTurfHtmlConventions.DeriveElementName(request);
+//                                               var elementName = MethodFitnessHtmlConventions.DeriveElementName(request);
 //                                               x.Attr("data-bind", "foreach: _" + elementName + "List.Groups, value:" + elementName);
 //                                               var optGroup = new HtmlTag("optgroup").Attr("data-bind","attr: {label: Label}, foreach: Children");
 //                                               var opt = new HtmlTag("option").Attr("data-bind","text: Text, value: Value");

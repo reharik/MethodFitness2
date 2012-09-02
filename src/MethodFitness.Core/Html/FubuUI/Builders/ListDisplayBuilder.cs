@@ -17,7 +17,7 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
             HtmlTag root = new HtmlTag("div");
             var selectListItems = request.RawValue as IEnumerable<string>;
             if (selectListItems == null) return root;
-            selectListItems.Each(item=>
+            selectListItems.ForEachItem(item=>
                                      {
                                          root.Append(new HtmlTag("span").Text(item));
                                          root.Append(new HtmlTag("br"));

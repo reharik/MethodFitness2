@@ -155,6 +155,7 @@
     <Compile Include="Config\ForeignKeyConstraintNameConvention.cs" />
     <Compile Include="Config\StructuremapGridConvention.cs" />
     <Compile Include="Config\TextAreaConvention.cs" />
+    <Compile Include="CoreViewModelAndDTOs\GroupSelectViewModel.cs" />
     <Compile Include="CoreViewModelAndDTOs\OrderDetailsDto.cs" />
     <Compile Include="CoreViewModelAndDTOs\PaymentDetailsDto.cs" />
     <Compile Include="CoreViewModelAndDTOs\TokenInputDto.cs" />
@@ -229,7 +230,12 @@
     <Compile Include="Html\Expressions\StyledButtonExpression.cs" />
     <Compile Include="Html\Expressions\SubmitButtonExpression.cs" />
     <Compile Include="Html\Expressions\ValueObjectSelector.cs" />
+    <Compile Include="Html\FubuUI\Builders\DatePickerBuilder2.cs" />
+    <Compile Include="Html\FubuUI\Builders\DateTimeDisplayBuilder2.cs" />
+    <Compile Include="Html\FubuUI\Builders\GroupedSelectBuilder2.cs" />
     <Compile Include="Html\FubuUI\Builders\ImageFileDisplayBuilder.cs" />
+    <Compile Include="Html\FubuUI\Builders\ListDisplayBuilder2.cs" />
+    <Compile Include="Html\FubuUI\Builders\SelectFromEnumerationBuilder2.cs" />
     <Compile Include="Html\FubuUI\Builders\SelectFromLookupTypeBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\LinkDisplayBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\DatePickerBuilder.cs" />
@@ -239,11 +245,13 @@
     <Compile Include="Html\FubuUI\Builders\SelectFromEnumerationBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\SelectFromIEnumerableBuilder.cs" />
     <Compile Include="Html\FubuUI\Builders\TextAreaBuilder.cs" />
+    <Compile Include="Html\FubuUI\Builders\TextAreaBuilder2.cs" />
     <Compile Include="Html\FubuUI\Builders\ValidationModifier.cs" />
     <Compile Include="Html\FubuUI\FubuUIHtmlExtensions.cs" />
     <Compile Include="Html\FubuUI\HtmlConventionRegistries\CustomTagActionExpressions.cs" />
     <Compile Include="Html\FubuUI\HtmlConventionRegistries\DecisionCriticalElementNamingConvention.cs" />
     <Compile Include="Html\FubuUI\HtmlConventionRegistries\DecisionCriticalHtmlConventions.cs" />
+    <Compile Include="Html\FubuUI\HtmlConventionRegistries\MethodFitnessHtmlConventions.cs" />
     <Compile Include="Html\FubuUI\HtmlExpressions\ViewDisplayAddressExpression.cs" />
     <Compile Include="Html\FubuUI\HtmlExpressions\ViewDisplayCityStateExpression.cs" />
     <Compile Include="Html\FubuUI\HtmlExpressions\ViewDisplayDateRangeExpression.cs" />

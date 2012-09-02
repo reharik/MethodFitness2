@@ -22,7 +22,7 @@ namespace MethodFitness.Core.Localization
                 throw new InvalidOperationException("Cannot have more than one default value for {0}".ToFormat(typeof(T).Name));
             }
             var currentList = _cache.Retrieve(enumeration);
-            Enumeration.GetAll<T>().Each(x =>
+            Enumeration.GetAll<T>().ForEachItem(x =>
             {
                 if (!currentList.Contains(x)) currentList.Add(x);
             });
@@ -35,7 +35,7 @@ namespace MethodFitness.Core.Localization
 
         public static void ForEachValue(Action<Enumeration> action)
         {
-            _cache.Each(list => list.Each(action));
+            _cache.Each(list => list.ForEachItem(action));
         }
 
         public static T Find<T>(string key) where T : Enumeration, new()

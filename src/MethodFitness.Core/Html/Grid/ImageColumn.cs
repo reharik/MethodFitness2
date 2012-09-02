@@ -13,11 +13,11 @@ namespace MethodFitness.Core.Html.Grid
         public ImageColumn()
         {
             _divCssClasses = new List<string>();
-            propertyAccessor = ReflectionHelper.GetAccessor<ENTITY>(x=>x.EntityId);
+            propertyAccessor = ReflectionHelper.GetAccessor<ENTITY>(x => x.EntityId);
             Properties[GridColumnProperties.sortable.ToString()] = "false";
             Properties[GridColumnProperties.width.ToString()] = "20";
         }
-        
+
         public ColumnBase<ENTITY> ImageName(string imageName)
         {
             _imageName = imageName;
@@ -30,24 +30,23 @@ namespace MethodFitness.Core.Html.Grid
             Properties[GridColumnProperties.width.ToString()] = width;
             return this;
         }
-        public override ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService)
+        public override string BuildColumn(object item, User user, IAuthorizationService _authorizationService, string gridName = "")
         {
             var _item = (ENTITY)item;
-            var valueDto = FormatValue(_item, user, _authorizationService);
-            if (valueDto.HtmlTag.Text().IsEmpty()) return valueDto;
+            var value = FormatValue(_item, user, _authorizationService);
+            if (value.IsEmpty()) return null;
             var divTag = BuildDiv();
+            divTag.AddClasses(new[] { "imageColumn" });
             var image = BuildImage();
             divTag.Children.Add(image);
-            valueDto.HtmlTag = divTag;
-            return valueDto;
+            return divTag.ToString();
         }
 
-        protected HtmlTag 
-            BuildImage(bool header = false)
+        protected HtmlTag BuildImage(bool header = false)
         {
             var img = new HtmlTag("img");
-            img.Attr("src", "/content/images/" + _imageName);
-            if(header)
+            img.Attr("src", SiteConfig.Settings().ImagesPath + _imageName);
+            if (header)
             {
                 img.Style("cursor", "hand");
             }

@@ -88,7 +88,7 @@ MF.Views.PayTrainerGridView = MF.Views.GridView.extend({
          });
         
         var data = $.param(arr);
-        MF.repository.ajaxPost(this.options.PayTrainerUrl,data,$.proxy(this.paymentCallback,this));
+        MF.repository.ajaxPost(this.options.PayTrainerUrl,data).done($.proxy(this.paymentCallback,this));
     },
     paymentCallback:function(result){
         this.options.notificationArea = new cc.NotificationArea(this.cid,"#errorMessagesGrid","#errorMessagesForm", MF.vent);

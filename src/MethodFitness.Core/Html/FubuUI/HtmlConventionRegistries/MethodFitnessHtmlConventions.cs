@@ -1,19 +1,15 @@
 using System;
 using System.Linq;
-using KnowYourTurf.Core.Domain;
-using KnowYourTurf.Core.Html.FubuUI.Builders;
-using KnowYourTurf.Core.Html.FubuUI.Tags;
+using MethodFitness.Core.Html.FubuUI.Builders;
 using FubuMVC.UI;
 using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
 using HtmlTags;
-using KnowYourTurf.Core;
 
-namespace KnowYourTurf.Core.Html.FubuUI.HtmlConventionRegistries
+namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
 {
-    public class KnowYourTurfHtmlConventions2 : HtmlConventionRegistry
+    public class MethodFitnessHtmlConventions2 : HtmlConventionRegistry
     {
-        public KnowYourTurfHtmlConventions2()
+        public MethodFitnessHtmlConventions2()
         {
             Editors.Builder<SelectFromEnumerationBuilder2>();
             Editors.Builder<SelectFromIEnumerableBuilder2>();
@@ -24,7 +20,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.HtmlConventionRegistries
             Editors.Builder<CheckboxBuilder2>();
             Editors.Builder<PasswordBuilder2>();
             Editors.Builder<MultiSelectBuilder2>();
-            Editors.Builder<PictureGallery>();
+//            Editors.Builder<PictureGallery>();
             Editors.Builder<FileUploader>();
             // default builder
             Editors.Builder<TextboxBuilder2>();
@@ -39,7 +35,7 @@ namespace KnowYourTurf.Core.Html.FubuUI.HtmlConventionRegistries
             Displays.Always.BuildBy(req =>
                                         {
                                             var placeHolder = new HtmlTag("span").Text(" ");
-                                                placeHolder.Children.Add(new HtmlTag("span").Attr("data-bind", "text:" + KnowYourTurfHtmlConventions.DeriveElementName(req)));
+                                            placeHolder.Children.Add(new HtmlTag("span").Attr("data-bind", "text:" + DeriveElementName(req)));
                                             return placeHolder;
                                         });
             Labels.Always.BuildBy(req =>

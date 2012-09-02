@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MethodFitness.Security.Interfaces;
+using FubuMVC.Core.Util;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Localization;
-using FubuMVC.Core.Util;
-using HtmlTags;
-using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Core.Html.Grid
 {
@@ -15,7 +14,7 @@ namespace MethodFitness.Core.Html.Grid
         IDictionary<string, string> Properties { get; set; }
         string Operation { get; set; }
         int ColumnIndex { get; set; }
-        ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService);
+        string BuildColumn(object item, User user, IAuthorizationService _authorizationService, string gridName = "");
     }
 
     public class ColumnBase<ENTITY> : IGridColumn, IEquatable<ColumnBase<ENTITY>> where ENTITY : IGridEnabledClass
@@ -34,36 +33,31 @@ namespace MethodFitness.Core.Html.Grid
 
         public int ColumnIndex { get; set; }
 
-        public virtual ColumnValueDto BuildColumn(object item, User user, IAuthorizationService _authorizationService) 
+        public virtual string BuildColumn(object item, User user, IAuthorizationService _authorizationService, string gridName)
         {
             return FormatValue((ENTITY)item, user, _authorizationService);
         }
 
-        protected ColumnValueDto FormatValue(ENTITY item, User user, IAuthorizationService _authorizationService)
+        protected string FormatValue(ENTITY item, User user, IAuthorizationService _authorizationService)
         {
-            bool isAllowed = Operation.IsEmpty() || _authorizationService.IsAllowed(user, Operation);
-            if (!isAllowed) return new ColumnValueDto {Authorized = false};
+            bool isAllowed = !Operation.IsNotEmpty() || _authorizationService.IsAllowed(user, Operation);
+            if (!isAllowed) return null;
             var propertyValue = propertyAccessor.GetValue(item);
             var value = propertyValue;
             if (propertyValue != null)
             {
                 var instanceOfEnum = propertyAccessor.GetLocalizedEnum(propertyValue.ToString());
                 value = instanceOfEnum != null ? instanceOfEnum.Key : propertyValue;
-                if (value.GetType() == typeof (DateTime) || value.GetType() == typeof (DateTime?))
+                if (value.GetType() == typeof(DateTime) || value.GetType() == typeof(DateTime?))
                 {
                     value = propertyAccessor.Name.ToLowerInvariant().Contains("time")
-                                ? ((DateTime) value).ToShortTimeString()
-                                : ((DateTime) value).ToShortDateString();
+                                ? ((DateTime)value).ToShortTimeString()
+                                : ((DateTime)value).ToShortDateString();
                 }
-                
             }
-            var dto = new ColumnValueDto
-                          {
-                              Authorized = true,
-                              HtmlTag = value == null ? null : new HtmlTag("span").Text(value.ToString())
-                          };
-            return dto;
+            return value == null ? null : value.ToString();
         }
+
 
         public ColumnBase<ENTITY> HideHeader()
         {
@@ -87,7 +81,7 @@ namespace MethodFitness.Core.Html.Grid
         public ColumnBase<ENTITY> Align(GridColumnAlign align)
         {
             Properties[GridColumnProperties.align.ToString()] = align.ToString().ToLowerInvariant();
-            return this;            
+            return this;
         }
 
         public ColumnBase<ENTITY> ToolTip(StringToken toolTip)
@@ -99,7 +93,7 @@ namespace MethodFitness.Core.Html.Grid
         public ColumnBase<ENTITY> Width(int width)
         {
             Properties[GridColumnProperties.width.ToString()] = width.ToString();
-            return this;            
+            return this;
         }
 
         public ColumnBase<ENTITY> IsSortable(bool isSortable)
@@ -116,8 +110,8 @@ namespace MethodFitness.Core.Html.Grid
 
         public ColumnBase<ENTITY> DefaultSortColumn()
         {
-            string fullname=propertyAccessor.Name;
-            if(propertyAccessor is PropertyChain)
+            string fullname = propertyAccessor.Name;
+            if (propertyAccessor is PropertyChain)
             {
                 fullname = propertyAccessor.Names.Aggregate((current, next) => current + "." + next);
             }
@@ -163,12 +157,6 @@ namespace MethodFitness.Core.Html.Grid
         #endregion
     }
 
-    public class ColumnValueDto
-    {
-        public HtmlTag HtmlTag { get; set; }
-        public bool Authorized { get; set; }
-    }
-
     public enum ColumnAction
     {
         DisplayItem,
@@ -177,6 +165,10 @@ namespace MethodFitness.Core.Html.Grid
         DeleteItem,
         Preview,
         Login,
-        ChargeVoid
+        ChargeVoid,
+        Delete,
+        Edit,
+        Display,
+        Other
     }
 }

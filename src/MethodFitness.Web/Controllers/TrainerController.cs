@@ -48,36 +48,36 @@ namespace MethodFitness.Web.Controllers
         public ActionResult AddUpdate(ViewModel input)
         {
             Trainer trainer;
-            if (input.EntityId > 0)
-            {
-                trainer = _repository.Find<Trainer>(input.EntityId);
-            }
-            else
-            {
-                trainer = new Trainer();
-                trainer.ClientRateDefault = Int32.Parse(SiteConfig.Settings().TrainerClientRateDefault);
-            }
-            var clients = _repository.FindAll<Client>();
-            var availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId, name = x.FullNameLNF, percentage = trainer.ClientRateDefault});
-            var selectedClients = trainer.Clients.Any()
-                ? trainer.Clients.Select(x => new TCRTokenInputDto { id = x.EntityId, name = x.FullNameLNF, percentage = trainer.TrainerClientRates.FirstOrDefault(c=>c.Client==x).Percent})
-                : null;
-            var userRoles = _repository.FindAll<UserRole>();
-            var availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name});
-            var selectedUserRoles = trainer.UserRoles.Any()
-                ? trainer.UserRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name })
-                : null;
-
-            var model = new TrainerViewModel
-            {
-                Item = trainer,
-                DeleteUrl = UrlContext.GetUrlForAction<TrainerController>(x=>x.Delete(null)),
-                AvailableItems = availableUserRoles,
-                SelectedItems = selectedUserRoles,
-                AvailableClients = availableClients,
-                SelectedClients = selectedClients,
-                Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
-            };
+//            if (input.EntityId > 0)
+//            {
+//                trainer = _repository.Find<Trainer>(input.EntityId);
+//            }
+//            else
+//            {
+//                trainer = new Trainer();
+//                trainer.ClientRateDefault = Int32.Parse(SiteConfig.Settings().TrainerClientRateDefault);
+//            }
+//            var clients = _repository.FindAll<Client>();
+//            var availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId, name = x.FullNameLNF, percentage = trainer.ClientRateDefault});
+//            var selectedClients = trainer.Clients.Any()
+//                ? trainer.Clients.Select(x => new TCRTokenInputDto { id = x.EntityId, name = x.FullNameLNF, percentage = trainer.TrainerClientRates.FirstOrDefault(c=>c.Client==x).Percent})
+//                : null;
+//            var userRoles = _repository.FindAll<UserRole>();
+//            var availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name});
+//            var selectedUserRoles = trainer.UserRoles.Any()
+//                ? trainer.UserRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name })
+//                : null;
+//
+            var model = new TrainerViewModel();
+//            {
+//                Item = trainer,
+//                DeleteUrl = UrlContext.GetUrlForAction<TrainerController>(x=>x.Delete(null)),
+//                AvailableItems = availableUserRoles,
+//                SelectedItems = selectedUserRoles,
+//                AvailableClients = availableClients,
+//                SelectedClients = selectedClients,
+//                _Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
+//            };
             return PartialView("TrainerAddUpdate", model);
         }
 
@@ -88,7 +88,7 @@ namespace MethodFitness.Web.Controllers
             {
                 Item = trainer,
                 addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId,
-                Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
+                _Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
             };
             return PartialView("TrainerView", model);
         }
@@ -111,7 +111,7 @@ namespace MethodFitness.Web.Controllers
         {
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteTrainerRules");
             IValidationManager<User> validationManager = new ValidationManager<User>(_repository);
-            input.EntityIds.Each(x =>
+            input.EntityIds.ForEachItem(x =>
             {
                 var item = _repository.Find<User>(x);
                 validationManager = rulesEngineBase.ExecuteRules(item, validationManager);
@@ -255,25 +255,25 @@ namespace MethodFitness.Web.Controllers
         }
         private User updateClientInfo(TrainerViewModel model, Trainer trainer)
         {
-            var remove = new List<Client>();
-            if (model.SelectedClients == null)
-            {
-                trainer.Clients.Each(remove.Add);
-                remove.Each(trainer.RemoveClient);
-            }
-            else
-            {
-                model.SelectedClients.Each(x =>
-                                               {
-                                                   var client = _repository.Find<Client>(x.id);
-                                                   trainer.AddClient(client, x.percentage);
-                                               });
-                trainer.Clients.Each(x =>
-                                         {
-                                             if (!model.SelectedClients.Any(c => c.id == x.EntityId))
-                                                 trainer.RemoveClient(x);
-                                         });
-            }
+//            var remove = new List<Client>();
+//            if (model.SelectedClients == null)
+//            {
+//                trainer.Clients.ForEachItem(remove.Add);
+//                remove.ForEachItem(trainer.RemoveClient);
+//            }
+//            else
+//            {
+//                model.SelectedClients.ForEachItem(x =>
+//                                               {
+//                                                   var client = _repository.Find<Client>(x.id);
+//                                                   trainer.AddClient(client, x.percentage);
+//                                               });
+//                trainer.Clients.ForEachItem(x =>
+//                                         {
+//                                             if (!model.SelectedClients.Any(c => c.id == x.EntityId))
+//                                                 trainer.RemoveClient(x);
+//                                         });
+//            }
             return trainer;
         }
     }

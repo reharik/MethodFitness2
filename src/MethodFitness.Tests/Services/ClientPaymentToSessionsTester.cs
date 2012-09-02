@@ -50,14 +50,14 @@ namespace MethodFitness.Tests.Services
         [Test]
         public void should_set_all_hour_sessions_to_correct_price()
         {
-            _result.Sessions.Where(x => x.AppointmentType == AppointmentType.Hour.ToString()).Each(
+            _result.Sessions.Where(x => x.AppointmentType == AppointmentType.Hour.ToString()).ForEachItem(
                 x => x.Cost.ShouldEqual(2));
         }
 
         [Test]
         public void should_set_all_half_hour_sessions_to_correct_price()
         {
-            _result.Sessions.Where(x => x.AppointmentType == AppointmentType.HalfHour.ToString()).Each(
+            _result.Sessions.Where(x => x.AppointmentType == AppointmentType.HalfHour.ToString()).ForEachItem(
                 x => x.Cost.ShouldEqual(2));
         }
 

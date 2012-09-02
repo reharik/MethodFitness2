@@ -161,7 +161,7 @@ namespace MethodFitness.Core.Domain
                 Trainer = this,
                 Total = input.amount
             };
-            input.items.Each(x =>
+            input.items.ForEachItem(x =>
             {
                 var session = Sessions.First(y => y.EntityId == x.id);
                 session.TrainerPaid = true;

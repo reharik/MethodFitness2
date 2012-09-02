@@ -64,7 +64,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 Item = payment,
                 SessionRateDto = sessionRatesDto,
                 SessionsAvailable = clientSessionsDto,
-                Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
+                _Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
                 DeleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null)),
                 ParentId = client.EntityId
             };
@@ -77,7 +77,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var model = new PaymentViewModel
             {
                 Item = payment,
-                Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
+                _Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
             };
             return View(model);
         }
@@ -100,7 +100,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         {
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
             IValidationManager<Payment> validationManager = new ValidationManager<Payment>(_repository);
-            input.EntityIds.Each(x =>
+            input.EntityIds.ForEachItem(x =>
             {
                 var payment = _repository.Find<Payment>(input.EntityId);
                 validationManager = rulesEngineBase.ExecuteRules(payment, validationManager);

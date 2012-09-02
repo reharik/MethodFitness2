@@ -37,7 +37,7 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
                 repository.EnableFilter("CompanyConditionFilter", "CompanyId", getIdsFromPrincipal.GetCompanyId());
                 //if (selectListItems == null) return;
 
-                selectListItems.Each(option => x.Option(option.Text, option.Value.IsNotEmpty() ? option.Value : ""));
+                selectListItems.ForEachItem(option => x.Option(option.Text, option.Value.IsNotEmpty() ? option.Value : ""));
 
                 if (value != null && value.ToString().IsNotEmpty())
                 {
