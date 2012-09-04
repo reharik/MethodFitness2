@@ -12,7 +12,7 @@ namespace MethodFitness.Core.Rules
             _systemClock = systemClock;
         }
 
-        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY field) where ENTITY : DomainEntity
+        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY field) where ENTITY : class
         {
             var result = new ValidationReport<ENTITY> { Success = true };
 //            var count = 0;

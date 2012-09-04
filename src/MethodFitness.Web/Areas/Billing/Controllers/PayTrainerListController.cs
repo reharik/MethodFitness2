@@ -51,7 +51,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var trainer = _repository.Find<Trainer>(input.ParentId);
             var sessions = trainer.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-            var items = _dynamicExpressionQuery.PerformQueryWithItems(sessions,input.filters, x=>x.Appointment.Date<=endDate);
+            var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);
             var sessionPaymentDtos = items.Select(x => new SessionPaymentDto
                                                            {
                                                                AppointmentDate = x.Appointment.Date,

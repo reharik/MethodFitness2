@@ -2,7 +2,7 @@ using MethodFitness.Core.Domain;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
-    public class Location:DomainEntity
+    public class Location : DomainEntity, IPersistableObject
     {
         public virtual string Name { get; set; }
         public virtual string Address1 { get; set; }

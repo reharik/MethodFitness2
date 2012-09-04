@@ -12,32 +12,31 @@ namespace MethodFitness.Core.Domain
         ISession CurrentSession();
 
         void Save<ENTITY>(ENTITY entity)
-            where ENTITY : Entity;
+            where ENTITY : IPersistableObject;
 
         ENTITY Load<ENTITY>(int id)
-            where ENTITY : Entity;
+            where ENTITY : IPersistableObject;
 
         IQueryable<ENTITY> Query<ENTITY>()
-            where ENTITY : Entity;
+            where ENTITY : IPersistableObject;
 
         IQueryable<T> Query<T>(Expression<Func<T, bool>> where);
 
         T FindBy<T>(Expression<Func<T, bool>> where);
 
-        T Find<T>(int id) where T : Entity;
+        T Find<T>(int id) where T : IPersistableObject;
 
-        IEnumerable<T> FindAll<T>() where T : Entity;
+        IEnumerable<T> FindAll<T>() where T : IPersistableObject;
 
-        void Delete<ENTITY>(ENTITY entity) where ENTITY : Entity;
+        void Delete<ENTITY>(ENTITY entity) where ENTITY : IPersistableObject;
 
         void HardDelete(object target);
 
-        IQueryOver<ENTITY> QueryOver<ENTITY>() where ENTITY : Entity;
 
         void Commit();
         void Rollback();
         void Initialize();
-        IList<ENTITY> ExecuteCriteria<ENTITY>(DetachedCriteria criteria) where ENTITY : Entity;
+        IList<ENTITY> ExecuteCriteria<ENTITY>(DetachedCriteria criteria) where ENTITY : IPersistableObject;
 
         IList<T> GetNamedQuery<T>(string sprocName);
         void DisableFilter(string FilterName);

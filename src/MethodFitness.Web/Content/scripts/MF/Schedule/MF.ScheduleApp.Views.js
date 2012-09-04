@@ -14,24 +14,21 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     render:function(){
-       MF.repository.ajaxGet(this.options.url, this.options.data).done($.proxy(this.renderCallback,this));
+         $.when(MF.loadTemplateAndModel(this))
+         .done($.proxy(this.renderCallback,this));
+//       MF.repository.ajaxGet(this.options.url, this.options.data).done($.proxy(this.renderCallback,this));
     },
-    renderCallback:function(result){
-        if(result.LoggedOut){
-            window.location.replace(result.RedirectUrl);
-            return;
-        }
-        $(this.el).html(result);
-        if(extraFormOptions){
-            $.extend(true, this.options, extraFormOptions);
-        }
-
-        var calContainer = this.options.calendarDef.calendarContainer;
-        this.options.calendarDef.id=this.id;
-        $(calContainer,this.el).asCalendar(this.options.calendarDef);
+    renderCallback:function(){
+        this.model = this.rawModel;
+        this.model.id=this.id;
+        $("#calendar",this.el).asCalendar(this.model);
         //callback for render
         this.viewLoaded();
         //general notification of pageloaded
+        MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
+        this.calendarBindings();
+    },
+    calendarBindings:function(){
         MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
         MF.vent.bind("calendar:"+this.id+":eventDrop",this.eventDrop,this);
         MF.vent.bind("calendar:"+this.id+":eventResize",this.eventResize,this);
@@ -78,18 +75,18 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.repository.ajaxGet(this.options.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
-        if(new XDate(date).diffHours(new XDate())>0 && !this.options.calendarDef.CanEnterRetroactiveAppointments){
+        if(new XDate(date).diffHours(new XDate())>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
             alert("That period is closed");
             return;
         }
         var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
-        this.editEvent(this.options.calendarDef.AddEditUrl,data);
+        this.editEvent(this.model.CalendarDefinition.AddEditUrl,data);
     },
     eventClick:function(calEvent, jsEvent, view) {
-        if(calEvent.trainerId!= this.options.calendarDef.TrainerId && !this.options.calendarDef.CanSeeOthersAppointments){
+        if(calEvent.trainerId!= this.model.CalendarDefinition.TrainerId && !this.model.CalendarDefinition.CanSeeOthersAppointments){
             return;
         }
-        this.options.calendarDef.canEdit = new XDate(calEvent.start).diffHours(new XDate())<0 || this.options.calendarDef.CanEditPastAppointments;
+        this.model.CalendarDefinition.canEdit = new XDate(calEvent.start).diffHours(new XDate())<0 || this.model.CalendarDefinition.CanEditPastAppointments;
         var data = {"EntityId": calEvent.EntityId};
         var builder = MF.Views.popupButtonBuilder.builder("displayModule");
         builder.addButton("Delete", $.proxy(this.deleteItem,this));
@@ -99,7 +96,11 @@ MF.Views.CalendarView = MF.Views.View.extend({
 
         var formOptions = {
             id: "displayModule",
-            url: this.options.calendarDef.DisplayUrl,
+            route: this.model.DisplayRoute,
+            templateUrl: this.model.DisplayUrl+"_Template?Popup=true",
+            view: this.options.subViewName?"Display" + this.options.subViewName:"",
+            AddUpdateUrl: this.model.AddUpdateUrl,
+            url: this.model.CalendarDefinition.DisplayUrl,
             data:data,
             buttons:builder.getButtons()
         };
@@ -111,8 +112,10 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
     editEvent:function(url, data){
         var formOptions = {
-            id: "editModule",
+           id: "editModule",
+            route: this.model.AddUpdateRoute,
             url: url,
+            templateUrl: url+"_Template?Popup=true",
             data:data,
             view:"AppointmentView",
             buttons: MF.Views.popupButtonBuilder.builder("editModule").standardEditButons()
@@ -133,14 +136,14 @@ MF.Views.CalendarView = MF.Views.View.extend({
     copyItem:function(){
         var entityId = $("#EntityId",this.ajaxPopupDisplay.el).val();
         var data = {"EntityId":entityId,"Copy":true};
-        this.editEvent(this.options.calendarDef.AddEditUrl,data);
+        this.editEvent(this.model.CalendarDefinition.AddEditUrl,data);
         this.ajaxPopupDisplay.close();
     },
 
     deleteItem: function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
             var entityId = $("#EntityId").val();
-            MF.repository.ajaxGet(this.options.calendarDef.DeleteUrl,{"EntityId":entityId}).done($.proxy(function(result){
+            MF.repository.ajaxGet(this.model.CalendarDefinition.DeleteUrl,{"EntityId":entityId}).done($.proxy(function(result){
                 this.ajaxPopupDisplay.close();
                 if(!result.Success){
                     alert(result.Message);
@@ -151,13 +154,13 @@ MF.Views.CalendarView = MF.Views.View.extend({
         }
     },
     displayEdit:function(event){
-        if(!this.options.calendarDef.canEdit){
+        if(!this.model.CalendarDefinition.canEdit){
              alert("you can't edit retroactively");
             return;
         }
         var id = $("#EntityId",this.ajaxPopupDisplay.el).val();
         this.ajaxPopupDisplay.close();
-        this.editEvent(this.options.calendarDef.AddEditUrl+"/"+id);
+        this.editEvent(this.model.CalendarDefinition.AddEditUrl+"/"+id);
     },
 
 
@@ -174,15 +177,15 @@ MF.Views.CalendarView = MF.Views.View.extend({
         }else{
             ids="0";
         }
-        this.replaceSource({url : this.options.calendarDef.Url, data:{Loc:locId, TrainerIds:ids} });
+        this.replaceSource({url : this.model.CalendarDefinition.Url, data:{Loc:locId, TrainerIds:ids} });
         this.reload();
     },
     reload:function(){
-        $(this.options.calendarDef.calendarContainer,this.el).fullCalendar( 'refetchEvents' )
+        $(this.model.CalendarDefinition.calendarContainer,this.el).fullCalendar( 'refetchEvents' )
     },
 
     replaceSource:function(source){
-        $(this.options.calendarDef.calendarContainer,this.el).fullCalendar( 'replaceEventSource', source )
+        $(this.model.CalendarDefinition.calendarContainer,this.el).fullCalendar( 'replaceEventSource', source )
     },
     legendLabelClick:function(e){
         $(e.target).toggleClass("showing");
@@ -216,17 +219,27 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.ajaxPopupDisplay.close();
     }
 });
-MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
-    events:_.extend({
+MF.Views.AppointmentView = MF.Views.View.extend({
+    initialize: function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+    },
+    events:{
         'change [name="Appointment.Length"]':'handleTimeChange',
         'change [name="sHour"]':'handleTimeChange',
         'change [name="sMinutes"]':'handleTimeChange',
-        'change [name="sAMPM"]':'handleTimeChange'
-
-    }, MF.Views.AjaxFormView.prototype.events),
-
-    viewLoaded:function(){
-        this.loadTokenizers();
+        'change [name="sAMPM"]':'handleTimeChange',
+        'click #save' : 'saveItem',
+        'click #cancel' : 'cancel'
+    },
+    renderElements:function(){
+        var collection = this.elementsViewmodel.collection;
+        var startTimeElement = collection["StartTime"];
+        startTimeElement.timeDefaults.stepMinute = 15;
+        for(var item in collection){
+            collection[item].render();
+        }
     },
     handleTimeChange:function(){
         var startTime = this.getStartTime();
@@ -266,14 +279,6 @@ MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
             hour = new Number(hour)+12;
         }
         return new XDate().setHours(hour).setMinutes(min);
-    },
-
-    loadTokenizers: function(){
-        var options = $.extend({},this.options,{el:"#clients"});
-
-        this.tokenView = new MF.Views.TokenView(options);
-        this.tokenView.render();
-        this.storeChild(this.tokenView);
     }
 });
 MF.Views.ClientFormView = MF.Views.View.extend({
@@ -299,7 +304,7 @@ MF.Views.ClientFormView = MF.Views.View.extend({
     },
     payment:function(){
         var id =this.model.EntityId();
-        MF.vent.trigger("route",MF.generateRoute("paymentlist",id,true));
+        MF.vent.trigger("route",MF.generateRoute("paymentlist",id),true);
     },
     deleteItem:function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
@@ -322,22 +327,35 @@ MF.Views.ClientFormView = MF.Views.View.extend({
         this._super("onClose",arguments);
     }
 });
-MF.Views.PaymentListView = MF.Views.GridView.extend({
-    addNew:function(){
-        var parentId = $(this.el).find("#ParentId").val();
-        MF.vent.trigger("route",this.options.addUpate+"/0/"+parentId ,true);
+MF.Views.PaymentListView = MF.Views.View.extend({
+    initialize:function(){
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
     },
-    editItem:function(id,itemType){
-        var parentId = $(this.el).find("#ParentId").val();
-        var _itemType = itemType?itemType:"";
-        // fix this for all assets
-        MF.vent.trigger("route",this.options.addUpate+"/"+id+"/"+parentId,true);
+    addNew:function(){
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,0,parentId) ,true);
+    },
+    editItem:function(id){
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,id,parentId),true);
+    },
+    viewLoaded:function(){
+        this.setupBindings();
+    },
+    onClose:function(){
+        this.unbindBindings();
     }
 });
 
-MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
-    events:_.extend({
-    },MF.Views.AjaxFormView.prototype.events),
+MF.Views.PaymentFormView = MF.Views.View.extend({
+    initialize: function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+    },
     viewLoaded:function(){
         $("#fullHour").change($.proxy(function(e){
             this.calculateTotal("FullHour","#fullHourTotal",e.target);
@@ -368,7 +386,7 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
     },
     calculateTotal:function(type, totalSelector, numberSelector){
         var number = $(numberSelector).val();
-        var itemTotal = (this.options.sessionRates[type] * number);
+        var itemTotal = (this.model._sessionRateDto[type]() * number);
         $(totalSelector).text("$" + itemTotal);
         var total = parseInt($("#fullHourTotal").text().substring(1))
             + parseInt($("#halfHourTotal").text().substring(1))
@@ -377,7 +395,6 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
             + parseInt($("#pairTotal").text().substring(1))
             + parseInt($("#pairTenPackTotal").text().substring(1));
         $("#total").val(total);
-
     }
 });
 

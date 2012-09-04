@@ -2,7 +2,7 @@ using System;
 
 namespace MethodFitness.Core.Domain
 {
-    public interface ILocalizedItem 
+    public interface ILocalizedItem : IPersistableObject
     {
         string Name { get; }
         string Culture { get; }

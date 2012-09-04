@@ -8,7 +8,7 @@ using MethodFitness.Core.Localization;
 
 namespace MethodFitness.Core.Domain
 {
-    public class Client:DomainEntity
+    public class Client : DomainEntity, IPersistableObject
     {
         [ValidateNonEmpty]
         public virtual string FirstName { get; set; }

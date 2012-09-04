@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using Castle.Components.Validator;
 using MethodFitness.Core;
 using MethodFitness.Core.CoreViewModelAndDTOs;
@@ -42,6 +43,11 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _authorizationService = authorizationService;
         }
 
+        public ActionResult AddUpdate_Template(AddEditAppointmentViewModel input)
+        {
+            return View("AddUpdate", new AppointmentViewModel());
+        }
+
         public ActionResult AddUpdate(AddEditAppointmentViewModel input)
         {
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
@@ -58,38 +64,25 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             {
                 clients = _repository.FindAll<Client>();
             }
-//            var availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF});
-//            var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId, name = x.FullNameLNF });
-            var model = new AppointmentViewModel {};
-//                            
-//                                AvailableItems = availableClients,
-//                                SelectedItems = selectedClients,
-//                                LocationList = locations,
-//                                Appointment = appointment,
-//                                Copy = input.Copy,
-//                                _Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString()
-//                            };
-//            if(input.Copy)
-//            {
-//                model.Appointment = (Appointment) appointment.CloneSelf();
-//            }
-//            handelTime(model, appointment.StartTime.Value);
-//            handleTrainer(model);
-            return PartialView("AddUpdate", model);
+            var _availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF});
+            var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
+
+            if (input.Copy)
+            {
+                appointment = (Appointment)appointment.CloneSelf();
+            }
+
+            var model = Mapper.Map<Appointment, AppointmentViewModel>(appointment);
+            model.ClientsDtos = new TokenInputViewModel { _availableItems = _availableClients, selectedItems = selectedClients };
+            model._LocationEntityIdList = locations;
+            model.Copy = input.Copy;
+            model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
+            model._AppointmentTypeList = _selectListItemService.CreateList<AppointmentType>();
+            model.EndTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
+            handleTrainer(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        public void handelTime(AppointmentViewModel model, DateTime startTime)
-        {
-            getStartTime(model,startTime);
-            model.Appointment.EndTime = getEndTime(model.Appointment.AppointmentType, startTime);
-        }
-
-        private void getStartTime(AppointmentViewModel model, DateTime startTime)
-        {
-            model.sHour = startTime.Hour <= 12 ? startTime.Hour.ToString() : (startTime.Hour - 12).ToString();
-            model.sMinutes = startTime.Minute.ToString();
-            model.sAMPM = startTime.Hour >= 12 ? "PM" : "AM";
-        }
         private DateTime getEndTime(string length, DateTime startTime)
         {
             switch (length)
@@ -108,24 +101,21 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             if (_userPermissionService.IsAllowed("/Calendar/SetAppointmentForOthers"))
             {
                 var trainers = _repository.Query<Trainer>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
-                model.TrainerList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true);
+                model._TrainerEntityIdList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true);
             }else
             {
                 var userId = _sessionContext.GetUserId();
                 var trainer = _repository.Find<Trainer>(userId);
-                model.TrainerName = trainer.FullNameFNF;
-                model.Appointment.Trainer = trainer;
+                model.TrainerFullNameFNF = trainer.FullNameFNF;
+                model.TrainerEntityId = trainer.EntityId;
             }
         }
 
         public ActionResult Display(ViewModel input)
         {
-            var _event = _repository.Find<Appointment>(input.EntityId);
-            var model = new AppointmentViewModel
-            {
-                Appointment = _event,
-                _Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString()
-            };
+            var appointment = _repository.Find<Appointment>(input.EntityId);
+            var model = Mapper.Map<Appointment, AppointmentViewModel>(appointment);
+            model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
             return PartialView(model);
         }
 
@@ -150,7 +140,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public ActionResult Save(AppointmentViewModel input)
         {
-            var appointment = input.Appointment.EntityId > 0 ? _repository.Find<Appointment>(input.Appointment.EntityId) : new Appointment();
+            var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             mapToDomain(input, appointment);
@@ -172,45 +162,44 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)
         {
-            var appointmentModel = model.Appointment;
-            appointment.Date = appointmentModel.Date;
-            appointment.StartTime = DateTime.Parse(appointmentModel.Date.Value.ToShortDateString() + " " + model.sHour+":"+model.sMinutes+" "+model.sAMPM);
-            appointment.EndTime = getEndTime(model.Appointment.AppointmentType, appointment.StartTime.Value);
-            appointment.AppointmentType = model.Appointment.AppointmentType;
-            var trainer = _repository.Find<Trainer>(appointmentModel.Trainer.EntityId);
-            var location = _repository.Find<Location>(appointmentModel.Location.EntityId);
+            appointment.Date = model.Date;
+            appointment.StartTime = model.StartTime;
+            appointment.EndTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
+            appointment.AppointmentType = model.AppointmentType;
+            var trainer = _repository.Find<Trainer>(model.TrainerEntityId);
+            var location = _repository.Find<Location>(model.LocationEntityId);
             appointment.Trainer = trainer;
             appointment.Location = location;
-            appointment.Notes = appointmentModel.Notes;
-            _updateCollectionService.UpdateFromCSV(appointment.Clients, model.ClientInput, appointment.AddClient, appointment.RemoveClient);
+            appointment.Notes = model.Notes;
+            _updateCollectionService.Update(appointment.Clients, model.ClientsDtos, appointment.AddClient, appointment.RemoveClient);
+
+            
         }
     }
 
     public class AppointmentViewModel : ViewModel
     {
-        public Appointment Appointment { get; set; }
         [ValidateNonEmpty]
         public bool Copy { get; set; }
-        public string ClientInput { get; set; }
-        public IEnumerable<TokenInputDto> AvailableItems { get; set; }
-        public IEnumerable<TokenInputDto> SelectedItems { get; set; }
-        public IEnumerable<SelectListItem> LocationList { get; set; }
-        public IEnumerable<SelectListItem> TrainerList { get; set; }
-        [ValueOf(typeof(Hours))]
-        public string sHour { get; set; }
-        [ValueOf(typeof(Minutes))]
-        public string sMinutes { get; set; }
-        [ValueOf(typeof(AMPM))]
-        public string sAMPM { get; set; }
-        [ValueOf(typeof(Hours))]
-        public string eHour { get; set; }
-        [ValueOf(typeof(Minutes))]
-        public string eMinutes { get; set; }
-        [ValueOf(typeof(AMPM))]
-        public string eAMPM { get; set; }
+        public TokenInputViewModel ClientsDtos { get; set; }
+        public IEnumerable<SelectListItem> _LocationEntityIdList { get; set; }
+        public IEnumerable<SelectListItem> _TrainerEntityIdList { get; set; }
+        public IEnumerable<SelectListItem> _sHourList { get; set; }
+        public IEnumerable<SelectListItem> _sMinutesList { get; set; }
+        public IEnumerable<SelectListItem> _sAMPMList { get; set; }
+        public IEnumerable<SelectListItem> _AppointmentTypeList { get; set; }
 
-
-        public string TrainerName { get; set; }
+        public DateTime StartTime { get; set; }
+        public string TrainerFullNameFNF { get; set; }
+        public int LocationEntityId { get; set; }
+        public int TrainerEntityId { get; set; }
+        public string AppointmentType { get; set; }
+        [ValidateNonEmpty]
+        public DateTime Date { get; set; }
+        [ValidateNonEmpty]
+        public DateTime EndTime { get; set; }
+        public string Notes { get; set; }
+       
     }
 
     public class AddEditAppointmentViewModel : ViewModel

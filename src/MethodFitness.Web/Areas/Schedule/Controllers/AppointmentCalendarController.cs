@@ -36,6 +36,11 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _selectListItemService = selectListItemService;
         }
 
+        public ActionResult AppointmentCalendar_Template(CalendarViewModel input)
+        {
+            return View("AppointmentCalendar", new CalendarViewModel());
+        }
+
         public ActionResult AppointmentCalendar(CalendarViewModel input)
         {
             var userEntityId = _sessionContext.GetUserId();
@@ -62,6 +67,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     AddEditUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.AddUpdate(null), AreaName.Schedule),
                     DisplayUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Display(null), AreaName.Schedule),
                     DeleteUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Delete(null), AreaName.Schedule),
+                    AddUpdateRoute = "event",
+                    DisplayRoute = "eventdisplay",
                     EventChangedUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.EventChanged(null), AreaName.Schedule),
                     CanEditPastAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEditPastAppointments"),
                     CanEnterRetroactiveAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"),
@@ -69,7 +76,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     TrainerId = user.EntityId
                 }
             };
-            return View(model);
+            return Json(model,JsonRequestBehavior.AllowGet);
         }
         public string processTrainerName(User trainer)
         {

@@ -172,6 +172,7 @@
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\Client.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
+    <Compile Include="Domain\IPersistableObject.cs" />
     <Compile Include="Domain\LocalizedEnumeration.cs" />
     <Compile Include="Domain\LocalizedProperty.cs" />
     <Compile Include="Domain\LocalizedText.cs" />

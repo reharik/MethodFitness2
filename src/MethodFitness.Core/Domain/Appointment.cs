@@ -12,7 +12,7 @@ using xVal.ServerSide;
 
 namespace MethodFitness.Core.Domain
 {
-    public class Appointment:DomainEntity
+    public class Appointment : DomainEntity, IPersistableObject
     {
         [ValidateNonEmpty]
         public virtual DateTime? Date { get; set; }

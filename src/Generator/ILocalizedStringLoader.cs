@@ -269,7 +269,7 @@ namespace Generator
         {
             outWriter.Write("[{0}] FriendlyName: {1} (Current: {2}): ", item.GetType().Name, item.Name, item.Text);
             item.Text = inReader.ReadLine();
-            repository.Save((DomainEntity)item);
+            repository.Save(item);
         }
     }
 }

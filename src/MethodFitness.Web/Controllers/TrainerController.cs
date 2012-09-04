@@ -248,8 +248,8 @@ namespace MethodFitness.Web.Controllers
             trainer.Color = trainerModel.Color.IsNotEmpty()?trainerModel.Color:"#3366CC";
             if (trainer.UserLoginInfo==null) trainer.UserLoginInfo = new UserLoginInfo();
             trainer.UserLoginInfo.LoginName = trainerModel.UserLoginInfo.LoginName;
-
-            _updateCollectionService.UpdateFromCSV(trainer.UserRoles, model.UserRolesInput, trainer.AddUserRole, trainer.RemoveUserRole);
+            ///TODO Must implement
+         ///   _updateCollectionService.UpdateFromCSV(trainer.UserRoles, model.UserRolesInput, trainer.AddUserRole, trainer.RemoveUserRole);
             updateClientInfo(model, trainer);
             return trainer;
         }

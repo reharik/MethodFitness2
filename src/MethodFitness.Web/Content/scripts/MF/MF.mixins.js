@@ -15,7 +15,7 @@ MF.mixin = function(target, mixin, preserveRender){
             if(preserveRender!=true){
                 target[prop] = mixinObj[prop];
             }
-        }else if(!target[prop] && mixinObj.hasOwnProperty(prop)){
+        } else if(target[prop]==null && mixinObj.hasOwnProperty(prop)){
             target[prop] = mixinObj[prop];
         }
     }
@@ -39,9 +39,16 @@ MF.mixins.modelAndElementsMixin = {
         });
         _.each(ignore,function(item){
             that.mappingOptions.ignore.push(item);});
+        this.renderElements();
         this.mappingOptions.ignore.push("_availableItems");
         this.mappingOptions.ignore.push("_resultsItems");
         MF.vent.trigger("model:"+this.id+"modelLoaded");
+    },
+    renderElements:function(){
+        var collection = this.elementsViewmodel.collection;
+        for(var item in collection){
+            collection[item].render();
+        }
     },
     extendModel:function(){
         this.model._createdText = ko.computed(function() {

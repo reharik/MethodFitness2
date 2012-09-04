@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using FubuMVC.Core.Util;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Localization;
 
@@ -11,40 +12,39 @@ namespace MethodFitness.Core.Services
 {
     public interface ISelectListItemService
     {
-        IEnumerable<SelectListItem> CreateList<ENTITY>(IEnumerable<ENTITY> entityList, 
-                                                                       Expression<Func<ENTITY, object>> text, 
-                                                                       Expression<Func<ENTITY, object>> value,
-                                                                       bool addSelectItem)
-            where ENTITY : Entity;
-
-        IEnumerable<SelectListItem> CreateLookupList<ENTITY>(IEnumerable<ENTITY> entityList,
-                                                                       Expression<Func<ENTITY, object>> text,
-                                                                       Expression<Func<ENTITY, object>> value,
-                                                                       bool addSelectItem)
-            where ENTITY : ILookupType;
+        IEnumerable<SelectListItem> CreateList<ENTITY>(IEnumerable<ENTITY> entityList,
+                                                       Expression<Func<ENTITY, object>> text,
+                                                       Expression<Func<ENTITY, object>> value, bool addSelectItem);
 
         IEnumerable<SelectListItem> CreateList<ENTITY>(Expression<Func<ENTITY, object>> text,
-                                                        Expression<Func<ENTITY, object>> value, 
-                                                        bool addSelectItem)
-            where ENTITY : Entity;
+                                                       Expression<Func<ENTITY, object>> value, bool addSelectItem,
+                                                       bool softDelete = false)
+            where ENTITY : IPersistableObject;
 
         IEnumerable<SelectListItem> CreateList<ENUM>(bool addSelectItem = false) where ENUM : Enumeration, new();
 
         IEnumerable<SelectListItem> SetSelectedItemByValue(IEnumerable<SelectListItem> entityList,
-                                                                   string value);
+                                                           string value);
 
         IEnumerable<SelectListItem> CreateListWithConcatinatedText<ENTITY>(IEnumerable<ENTITY> entityList,
-                                                                                           Expression<Func<ENTITY, object>> text1,
-                                                                                           Expression<Func<ENTITY, object>> text2,
-                                                                                           string seperator,
-                                                                                           Expression<Func<ENTITY, object>> value, bool addSelectItem)
-            where ENTITY : Entity;
+                                                                           Expression<Func<ENTITY, object>> text1,
+                                                                           Expression<Func<ENTITY, object>> text2,
+                                                                           string seperator,
+                                                                           Expression<Func<ENTITY, object>> value,
+                                                                           bool addSelectItem);
 
         IEnumerable<SelectListItem> CreateListWithConcatinatedText<ENTITY>(Expression<Func<ENTITY, object>> text1,
-                                                                            Expression<Func<ENTITY, object>> text2,
-                                                                            string seperator,
-                                                                            Expression<Func<ENTITY, object>> value,
-                                                                            bool addSelectItem) where ENTITY : Entity;
+                                                                           Expression<Func<ENTITY, object>> text2,
+                                                                           string seperator,
+                                                                           Expression<Func<ENTITY, object>> value,
+                                                                           bool addSelectItem)
+            where ENTITY : IPersistableObject;
+
+        IEnumerable<SelectListItem> CreateLookupList<ENTITY>(IEnumerable<ENTITY> entityList,
+                                                             Expression<Func<ENTITY, object>> text,
+                                                             Expression<Func<ENTITY, object>> value,
+                                                             bool addSelectItem)
+            where ENTITY : ILookupType;
     }
 
     public class SelectListItemService : ISelectListItemService
@@ -56,10 +56,9 @@ namespace MethodFitness.Core.Services
             _repository = repository;
         }
 
-        public IEnumerable<SelectListItem> CreateList<ENTITY>(IEnumerable<ENTITY> entityList, 
+        public IEnumerable<SelectListItem> CreateList<ENTITY>(IEnumerable<ENTITY> entityList,
                                                               Expression<Func<ENTITY, object>> text,
                                                               Expression<Func<ENTITY, object>> value, bool addSelectItem)
-            where ENTITY : Entity
         {
 
             IList<SelectListItem> items = new List<SelectListItem>();
@@ -67,23 +66,66 @@ namespace MethodFitness.Core.Services
             Accessor valueAccessor = value.ToAccessor();
             if (addSelectItem)
             {
-                items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
+                items.Add(new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
             }
-            entityList.ForEachItem( x =>
-                                 {
-                                     if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
-                                     {
-                                         items.Add(new SelectListItem
-                                                       {
-                                                           Text = textAccessor.GetValue(x).ToString(),
-                                                           Value = valueAccessor.GetValue(x).ToString()
-                                                       });
-                                     }
-                                 });
-            return items;
+            entityList.ForEachItem(x =>
+                                       {
+                                           if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
+                                           {
+                                               items.Add(new SelectListItem
+                                                             {
+                                                                 Text = textAccessor.GetValue(x).ToString(),
+                                                                 Value = valueAccessor.GetValue(x).ToString()
+                                                             });
+                                           }
+                                       });
+            return items.OrderBy(x => x.Text);
         }
 
-        public IEnumerable<SelectListItem> CreateList<ENTITY>(Expression<Func<ENTITY, object>> text, Expression<Func<ENTITY, object>> value, bool addSelectItem) where ENTITY : Entity
+        public IEnumerable<SelectListItem> CreateListWithConcatinatedText<ENTITY>(IEnumerable<ENTITY> entityList,
+                                                                                  Expression<Func<ENTITY, object>> text1,
+                                                                                  Expression<Func<ENTITY, object>> text2,
+                                                                                  string seperator,
+                                                                                  Expression<Func<ENTITY, object>> value,
+                                                                                  bool addSelectItem)
+        {
+
+            IList<SelectListItem> items = new List<SelectListItem>();
+            Accessor text1Accessor = text1.ToAccessor();
+            Accessor text2Accessor = text2.ToAccessor();
+            Accessor valueAccessor = value.ToAccessor();
+            if (addSelectItem)
+            {
+                items.Add(new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
+            }
+            entityList.ForEachItem(x =>
+                                       {
+                                           if (text1Accessor.GetValue(x) != null && text2Accessor.GetValue(x) != null &&
+                                               valueAccessor.GetValue(x) != null)
+                                           {
+                                               items.Add(new SelectListItem
+                                                             {
+                                                                 Text =
+                                                                     text1Accessor.GetValue(x).ToString() + seperator +
+                                                                     text2Accessor.GetValue(x),
+                                                                 Value = valueAccessor.GetValue(x).ToString()
+                                                             });
+                                           }
+                                       });
+            return items.OrderBy(x => x.Text);
+        }
+
+        public IEnumerable<SelectListItem> CreateListWithConcatinatedText<ENTITY>(
+            Expression<Func<ENTITY, object>> text1, Expression<Func<ENTITY, object>> text2, string seperator,
+            Expression<Func<ENTITY, object>> value, bool addSelectItem) where ENTITY : IPersistableObject
+        {
+            var enumerable = _repository.FindAll<ENTITY>();
+            return CreateListWithConcatinatedText(enumerable, text1, text2, seperator, value, addSelectItem);
+        }
+
+        public IEnumerable<SelectListItem> CreateList<ENTITY>(Expression<Func<ENTITY, object>> text,
+                                                              Expression<Func<ENTITY, object>> value, bool addSelectItem,
+                                                              bool softDelete = false) where ENTITY : IPersistableObject
         {
             var enumerable = _repository.FindAll<ENTITY>();
             return CreateList(enumerable, text, value, addSelectItem);
@@ -94,10 +136,12 @@ namespace MethodFitness.Core.Services
             IEnumerable<Enumeration> enumerations = Enumeration.GetAllActive<ENUM>();
             if (enumerations == null) return null;
             enumerations = enumerations.OrderBy(item => item.Key);
-            var items = enumerations.Select(x => new SelectListItem { Text = x.Key, Value = x.Value.IsEmpty() ? x.Key : x.Value }).ToList();
+            var items =
+                enumerations.Select(x => new SelectListItem {Text = x.Key, Value = x.Value.IsEmpty() ? x.Key : x.Value})
+                    .ToList();
             if (addSelectItem)
             {
-                items.Insert(0, new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
+                items.Insert(0, new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
             }
             return items;
         }
@@ -113,9 +157,10 @@ namespace MethodFitness.Core.Services
         }
 
         public IEnumerable<SelectListItem> CreateLookupList<ENTITY>(IEnumerable<ENTITY> entityList,
-                                                                     Expression<Func<ENTITY, object>> text,
-                                                                     Expression<Func<ENTITY, object>> value, bool addSelectItem)
-                   where ENTITY : ILookupType
+                                                                    Expression<Func<ENTITY, object>> text,
+                                                                    Expression<Func<ENTITY, object>> value,
+                                                                    bool addSelectItem)
+            where ENTITY : ILookupType
         {
 
             IList<SelectListItem> items = new List<SelectListItem>();
@@ -123,61 +168,20 @@ namespace MethodFitness.Core.Services
             Accessor valueAccessor = value.ToAccessor();
             if (addSelectItem)
             {
-                items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
+                items.Add(new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
             }
             entityList.ForEachItem(x =>
-            {
-                if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
-                {
-                    items.Add(new SelectListItem
-                    {
-                        Text = textAccessor.GetValue(x).ToString(),
-                        Value = valueAccessor.GetValue(x).ToString()
-                    });
-                }
-            });
+                                       {
+                                           if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
+                                           {
+                                               items.Add(new SelectListItem
+                                                             {
+                                                                 Text = textAccessor.GetValue(x).ToString(),
+                                                                 Value = valueAccessor.GetValue(x).ToString()
+                                                             });
+                                           }
+                                       });
             return items;
         }
-
-        public IEnumerable<SelectListItem> CreateListWithConcatinatedText<ENTITY>(IEnumerable<ENTITY> entityList,
-                                                              Expression<Func<ENTITY, object>> text1,
-                                                              Expression<Func<ENTITY, object>> text2,
-                                                              string seperator,
-                                                              Expression<Func<ENTITY, object>> value, bool addSelectItem)
-            where ENTITY : Entity
-        {
-
-            IList<SelectListItem> items = new List<SelectListItem>();
-            Accessor text1Accessor = text1.ToAccessor();
-            Accessor text2Accessor = text2.ToAccessor();
-            Accessor valueAccessor = value.ToAccessor();
-            if (addSelectItem)
-            {
-                items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
-            }
-            entityList.ForEachItem(x =>
-            {
-                if (text1Accessor.GetValue(x) != null && text2Accessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
-                {
-                    items.Add(new SelectListItem
-                    {
-                        Text = text1Accessor.GetValue(x).ToString()+seperator+text2Accessor.GetValue(x),
-                        Value = valueAccessor.GetValue(x).ToString()
-                    });
-                }
-            });
-            return items;
-        }
-
-        public IEnumerable<SelectListItem> CreateListWithConcatinatedText<ENTITY>(Expression<Func<ENTITY, object>> text1,
-                                                                                    Expression<Func<ENTITY, object>> text2,
-                                                                                    string seperator, Expression<Func<ENTITY, object>> value,
-                                                                                    bool addSelectItem) where ENTITY : Entity
-        {
-            var enumerable = _repository.FindAll<ENTITY>();
-            return CreateListWithConcatinatedText(enumerable, text1, text2, seperator, value, addSelectItem);
-        }
-
-        
     }
 }

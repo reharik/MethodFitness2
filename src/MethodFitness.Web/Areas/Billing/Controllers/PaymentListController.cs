@@ -42,7 +42,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult Payments(GridItemsRequestModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
-            var items = _dynamicExpressionQuery.PerformQueryWithItems(client.Payments, input.filters);
+            var items = _dynamicExpressionQuery.PerformQuery(client.Payments, input.filters);
             var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
         }

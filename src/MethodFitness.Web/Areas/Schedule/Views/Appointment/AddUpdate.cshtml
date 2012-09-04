@@ -1,80 +1,49 @@
-﻿@using HtmlTags
-@using MethodFitness.Core.Enumerations
-@using MethodFitness.Core.Html.Expressions
+﻿@using MethodFitness.Core.Enumerations
 @using MethodFitness.Core.Html.FubuUI
 @using MethodFitness.Core.Services
 @using MethodFitness.Web
 @using MethodFitness.Web.Areas.Schedule.Controllers
-@using MethodFitness.Web.Controllers
 @model AppointmentViewModel
 @{
     Layout = "~/Views/Shared/_popupLayout.cshtml";
 }
 
-<script>
-    var isCopy = '@Model.Copy';
-     extraFormOptions.availableItems= @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableItems));
-        extraFormOptions.selectedItems= @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedItems));
-    extraFormOptions.runAfterRenderFunction = function () {
-        if (isCopy == "True") {
-            $("#Appointment_EntityId").val(0);
-        }
-    };
-</script>
-
-<div id="errorMessagesForm" class="mf_ErrorMessages errorMessages"><ul></ul></div>
-@MvcHtmlString.Create(FormFor<AppointmentController>(x => x.Save(null), AreaName.Schedule).AddClass("CRUD").ElementId("CRUDForm").ToString())
-    @Html.SubmissionFor(x => x.Appointment.EntityId).HideRoot().ToHtmlTag()
     <div class="col left">
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.Location).ToHtmlTag()
+            @Html.SubmissionFor(x => x.LocationEntityId).ToHtmlTag()
         </div>
         <div class="fieldRow">
             @if (@UserPermissionService.Allow("/Calendar/SetAppointmentForOthers"))
             {
-                @Html.SubmissionFor(x => x.Appointment.Trainer).ToHtmlTag()
+                @Html.SubmissionFor(x => x.TrainerEntityId).ToHtmlTag()
             }
             else
             {
-                @Html.ViewFor(x => x.TrainerName).ToHtmlTag()
-                @Html.SubmissionFor(x => x.Appointment.Trainer.EntityId).HideRoot().ToHtmlTag()
+                @Html.ViewFor(x => x.TrainerFullNameFNF).ToHtmlTag()
+                @Html.SubmissionFor(x => x.TrainerEntityId).HideRoot().ToHtmlTag()
             }
         </div>
-    </div>
-    <div class="col full clear">
-
         <div class="fieldRow artifact-field">
-            <div id="clients">
-                <label class="section">@WebLocalizationKeys.CLIENTS</label>
-                <div id="clients" class="dci_assetSection">
-                    <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE.ToString()</div>
-                    <input type="text" name="ClientInput" id="Input" class="artifact nolabels"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col left">
-        
-        <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.AppointmentType).ToHtmlTag()
+                @Html.SubmissionFor(x => x.ClientsDtos).ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.Date).ToHtmlTag()
+            @Html.SubmissionFor(x => x.AppointmentType).ToHtmlTag()
+        </div>
+        <div class="fieldRow">
+            @Html.SubmissionFor(x => x.Date).ToHtmlTag()
         </div>
         <h5>@WebLocalizationKeys.STARTTIME</h5>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.sHour).AddClassToRoot("first one-five").LabelDisplay(WebLocalizationKeys.HOUR).ToHtmlTag()
-            @Html.SubmissionFor(x => x.sMinutes).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.MINUTES).ToHtmlTag()
-            @Html.SubmissionFor(x => x.sAMPM).AddClassToRoot("one-five").LabelDisplay(WebLocalizationKeys.AMPM).ToHtmlTag()
+            @Html.SubmissionFor(x => x.StartTime).ToHtmlTag()
         </div>
         <h5>
             @WebLocalizationKeys.ENDTIME
         </h5>
         <div class="fieldRow">
-           <span id="endTime">@Model.Appointment.EndTime.Value.ToShortTimeString()</span>
+           <span id="endTime">@Model.EndTime.ToShortTimeString()</span>
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.Appointment.Notes).ToHtmlTag()
+            @Html.SubmissionFor(x => x.Notes).ToHtmlTag()
         </div>
     </div>
 

@@ -47,7 +47,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult TrainerPayments(GridItemsRequestModel input)
         {
             var trainer = _repository.Find<Trainer>(input.ParentId);
-            var items = _dynamicExpressionQuery.PerformQueryWithItems(trainer.TrainerPayments,input.filters);
+            var items = _dynamicExpressionQuery.PerformQuery(trainer.TrainerPayments,input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
         }

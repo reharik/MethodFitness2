@@ -1,10 +1,7 @@
 ﻿using MethodFitness.Core.Domain;
-using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Services;
-using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Schedule.Grids;
-using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Grids
 {

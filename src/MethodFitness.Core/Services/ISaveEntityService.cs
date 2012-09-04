@@ -5,8 +5,8 @@ namespace MethodFitness.Core.Services
 {
     public interface ISaveEntityService
     {
-        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager<DOMAINMODEL> validationManager) where DOMAINMODEL : Entity;
-        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
+        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager<DOMAINMODEL> validationManager) where DOMAINMODEL : IPersistableObject;
+        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject;
     }
 
     public class SaveEntityService : ISaveEntityService
@@ -20,14 +20,14 @@ namespace MethodFitness.Core.Services
             _castleValidationRunner = castleValidationRunner;
         }
 
-        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject
         {
             var crudManager = new ValidationManager<DOMAINMODEL>(_repository);
             return ProcessSave(model, crudManager);
         }
 
         public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager<DOMAINMODEL> validationManager)
-            where DOMAINMODEL : Entity
+            where DOMAINMODEL : IPersistableObject
         {
             var report = _castleValidationRunner.Validate(model);
             if (report.Success)
@@ -45,7 +45,7 @@ namespace MethodFitness.Core.Services
     // constructor injected so you screwed must use one that doesn't have it in the constructor
     public interface ISaveEntityServiceWithoutPrincipal
     {
-        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
+        IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject;
     }
 
     public class NullSaveEntityServiceWithoutPrincipal  : ISaveEntityServiceWithoutPrincipal
@@ -57,7 +57,7 @@ namespace MethodFitness.Core.Services
             _castleValidationRunner = castleValidationRunner;
         }
 
-        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject
         {
             throw new System.NotImplementedException();
         }
@@ -74,7 +74,7 @@ namespace MethodFitness.Core.Services
         //    _repository = container.GetInstance<Repository>("NoFiltersOrInterceptor");
         //}
 
-        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
+        public IValidationManager<DOMAINMODEL> ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject
         {
             //var report = _castleValidationRunner.Validate(model);
             //if (report.Success)

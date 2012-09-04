@@ -9,80 +9,36 @@
     Layout = "~/Views/Shared/_FormLayout.cshtml";
 }
 
-@section HeaderJavascript{
-    extraFormOptions.sessionRates = @MvcHtmlString.Create(JsonUtil.ToJson(@Model.SessionRateDto));
-}
-
-<div id="errorMessagesForm" class="mf_ErrorMessages errorMessages"><ul></ul></div>
-@MvcHtmlString.Create(FormFor<PaymentController>(x => x.Save(null), AreaName.Billing).AddClass("CRUD").ElementId("CRUDForm").ToString())
-    <input type="hidden" name="EntityId" value="@Model.EntityId"/>
-    <input type="hidden" name="ParentId" value="@Model.ParentId"/>
-    <input type="hidden" name="Item.FullHoursPrice" value="@Model.SessionRateDto.FullHour"/>
-    <input type="hidden" name="Item.FullHourTenPacksPrice" value="@Model.SessionRateDto.FullHourTenPack"/>
-    <input type="hidden" name="Item.HalfHoursPrice" value="@Model.SessionRateDto.HalfHour"/>
-    <input type="hidden" name="Item.HalfHourTenPacksPrice" value="@Model.SessionRateDto.HalfHourTenPack"/>
-    <input type="hidden" name="Item.PairsPrice" value="@Model.SessionRateDto.Pair"/>
-    
 <div class="col left">
     <div class="fieldRow">
         <h4>@WebLocalizationKeys.CLIENT_PURCHASE</h4>
     </div><div class="fieldRow">
-        @Html.SubmissionFor(x => x.Item.FullHours).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
-        <div class="view_root">
-            <div class="view_label"></div>
-            <div class="view_input">
-                <span id="fullHourTotal">$0</span>
-            </div>
-        </div>
+        @Html.SubmissionFor(x => x.FullHours).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
+        @Html.ViewFor(x => x.PairsTenPackPrice).HideLabel().InputId("fullHourTotal").ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.SubmissionFor(x => x.Item.HalfHours).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
-        <div class="view_root">
-            <div class="view_label"></div>
-            <div class="view_input">
-                <span id="halfHourTotal">$0</span>
-            </div>
-        </div>
+        @Html.SubmissionFor(x => x.HalfHours).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
+        @Html.ViewFor(x => x.PairsTenPackPrice).HideLabel().InputId("halfHourTotal").ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.SubmissionFor(x => x.Item.FullHourTenPacks).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHourTenPack").ToHtmlTag()
-        <div class="view_root">
-            <div class="view_label"></div>
-            <div class="view_input">
-                <span id="fullHourTenPackTotal">$0</span>
-            </div>
-        </div>
+        @Html.SubmissionFor(x => x.FullHourTenPacks).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHourTenPack").ToHtmlTag()
+        @Html.ViewFor(x => x.PairsTenPackPrice).HideLabel().InputId("fullHourTenPackTotal").ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.SubmissionFor(x => x.Item.HalfHourTenPacks).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHourTenPack").ToHtmlTag()
-        <div class="view_root">
-            <div class="view_label"></div>
-            <div class="view_input">
-                <span id="halfHourTenPackTotal">$0</span>
-            </div>
-        </div>
+        @Html.SubmissionFor(x => x.HalfHourTenPacks).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHourTenPack").ToHtmlTag()
+        @Html.ViewFor(x => x.PairsTenPackPrice).HideLabel().InputId("halfHourTenPackTotal").ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.SubmissionFor(x => x.Item.Pairs).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
-        <div class="view_root">
-            <div class="view_label"></div>
-            <div class="view_input">
-                <span id="pairTotal">$0</span>
-            </div>
-        </div>
+        @Html.SubmissionFor(x => x.Pairs).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
+        @Html.ViewFor(x => x.PairsTenPackPrice).HideLabel().InputId("pairTotal").ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.SubmissionFor(x => x.Item.PairsTenPack).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pairTenPack").ToHtmlTag()
-        <div class="view_root">
-            <div class="view_label"></div>
-            <div class="view_input">
-                <span id="pairTenPackTotal">$0</span>
-            </div>
-        </div>
+        @Html.SubmissionFor(x => x.PairsTenPack).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pairTenPack").ToHtmlTag()
+        @Html.ViewFor(x => x.PairsTenPackPrice).HideLabel().InputId("pairTenPackTotal").ToHtmlTag()
     </div>
-    <hr/>
+    <hr class="hrClear"/>
     <div class="fieldRow">
-        @Html.SubmissionFor(x => x.Item.PaymentTotal).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").InputId("total").ToHtmlTag()
+        @Html.SubmissionFor(x => x.PaymentTotal).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").InputId("total").ToHtmlTag()
     </div>
 </div>
 <div class="col right">
@@ -90,12 +46,12 @@
         <h4>@WebLocalizationKeys.CURRENT_CLIENT_INVENTORY</h4>
     </div>
     <div class="fieldRow">
-        @Html.ViewFor(x => x.SessionsAvailable.FullHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
+        @Html.ViewFor(x => x._sessionsAvailable.FullHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.ViewFor(x => x.SessionsAvailable.HalfHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
+        @Html.ViewFor(x => x._sessionsAvailable.HalfHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.ViewFor(x => x.SessionsAvailable.Pair).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
+        @Html.ViewFor(x => x._sessionsAvailable.Pair).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
     </div>
 </div>

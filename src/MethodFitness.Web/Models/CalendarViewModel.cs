@@ -49,6 +49,10 @@ namespace MethodFitness.Web.Models
         public bool CanSeeOthersAppointments { get; set; }
 
         public int TrainerId { get; set; }
+
+        public string AddUpdateRoute { get; set; }
+
+        public string DisplayRoute { get; set; }
     }
 
     public class CalendarEvent

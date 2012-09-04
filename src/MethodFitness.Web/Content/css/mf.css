@@ -614,3 +614,7 @@ div.headerInput input{
     height: 25px !important;
     vertical-align: bottom;
 }
+
+.hrClear{
+    clear:left;
+}

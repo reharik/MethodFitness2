@@ -6,7 +6,6 @@ using AutoMapper;
 using Castle.Components.Validator;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
@@ -15,7 +14,6 @@ using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 using StructureMap;
 
 namespace MethodFitness.Web.Controllers

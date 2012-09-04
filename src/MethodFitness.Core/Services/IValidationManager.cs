@@ -7,7 +7,7 @@ using xVal.ServerSide;
 
 namespace MethodFitness.Core.Services
 {
-    public interface IValidationManager<ENTITY> where ENTITY:Entity
+    public interface IValidationManager<ENTITY> 
     {
         IEnumerable<ValidationReport<ENTITY>> GetValidationReports();
         ValidationReport<ENTITY> GetLastValidationReport();
@@ -18,7 +18,7 @@ namespace MethodFitness.Core.Services
         Notification FinishWithAction(string successMessage = "");
     }
 
-    public class ValidationManager<ENTITY> : IValidationManager<ENTITY> where ENTITY : Entity
+    public class ValidationManager<ENTITY> : IValidationManager<ENTITY> 
     {
         private readonly IRepository _repository;
 
@@ -107,7 +107,7 @@ namespace MethodFitness.Core.Services
         }
     }
 
-    public class ValidationReport<ENTITY> where ENTITY:Entity
+    public class ValidationReport<ENTITY> 
     {
         public ENTITY entity { get; set; }
         public Action<ENTITY> SuccessAction { get; set; }

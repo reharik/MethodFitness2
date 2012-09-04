@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
@@ -33,10 +34,16 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             _clientPaymentToSessions = clientPaymentToSessions;
         }
 
+        public ActionResult AddUpdate_Template(ViewModel input)
+        {
+            return View("AddUpdate", new PaymentViewModel());
+        }
+
         public ActionResult AddUpdate(ViewModel input)
         {
-            var payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
-            var client = input.ParentId > 0 ? _repository.Find<Client>(input.ParentId) : payment.Client;
+//            var payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
+            var client = _repository.Find<Client>(input.ParentId);
+            var payment = input.EntityId>0 ?client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId):new Payment();
             var sessionRatesDto = new SessionRatesDto
                                       {
                                           FullHour = client.SessionRates.FullHour > 0 ? client.SessionRates.FullHour : client.SessionRates.ResetFullHourRate(),
@@ -59,59 +66,62 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                                 ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears)
                                                 : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && !x.SessionUsed),
                                         };
-            var model = new PaymentViewModel
-            {
-                Item = payment,
-                SessionRateDto = sessionRatesDto,
-                SessionsAvailable = clientSessionsDto,
-                _Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
-                DeleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null)),
-                ParentId = client.EntityId
-            };
-            return View(model);
+            var model = Mapper.Map<Payment,PaymentViewModel>(payment);
+            model._sessionRateDto = sessionRatesDto;
+            model._sessionsAvailable = clientSessionsDto;
+            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
+            model._deleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null));
+            model.ParentId = client.EntityId;
+            model._saveUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.Save(null));
+            return Json(model,JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Display_Template(ViewModel input)
+        {
+            return View("Display", new PaymentViewModel());
         }
 
         public ActionResult Display(ViewModel input)
         {
-            var payment =  _repository.Find<Payment>(input.EntityId);
-            var model = new PaymentViewModel
-            {
-                Item = payment,
-                _Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString(),
-            };
-            return View(model);
+//            var payment =  _repository.Find<Payment>(input.EntityId);
+//            var model = Mapper.Map<Payment, PaymentViewModel>(payment);
+//            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
+//            return Json(model,JsonRequestBehavior.AllowGet);
+            return null;
         }
 
         public ActionResult Delete(ViewModel input)
         {
-            var payment = _repository.Find<Payment>(input.EntityId);
-            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
-            var rulesResult = rulesEngineBase.ExecuteRules(payment);
-            if (rulesResult.GetLastValidationReport().Success)
-            {
-                _repository.Delete(payment);
-            }
-            var notification = rulesResult.FinishWithAction();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+//            var payment = _repository.Find<Payment>(input.EntityId);
+//            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
+//            var rulesResult = rulesEngineBase.ExecuteRules(payment);
+//            if (rulesResult.GetLastValidationReport().Success)
+//            {
+//                _repository.Delete(payment);
+//            }
+//            var notification = rulesResult.FinishWithAction();
+//            return Json(notification, JsonRequestBehavior.AllowGet);
+            return null;
 
         }
 
         public ActionResult DeleteMultiple(BulkActionViewModel input)
         {
-            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
-            IValidationManager<Payment> validationManager = new ValidationManager<Payment>(_repository);
-            input.EntityIds.ForEachItem(x =>
-            {
-                var payment = _repository.Find<Payment>(input.EntityId);
-                validationManager = rulesEngineBase.ExecuteRules(payment, validationManager);
-                var report = validationManager.GetLastValidationReport();
-                if (report.Success)
-                {
-                    report.SuccessAction = a => _repository.Delete(a);
-                }
-            });
-            var notification = validationManager.FinishWithAction();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+//            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
+//            IValidationManager<Payment> validationManager = new ValidationManager<Payment>(_repository);
+//            input.EntityIds.ForEachItem(x =>
+//            {
+//                var payment = _repository.Find<Payment>(input.EntityId);
+//                validationManager = rulesEngineBase.ExecuteRules(payment, validationManager);
+//                var report = validationManager.GetLastValidationReport();
+//                if (report.Success)
+//                {
+//                    report.SuccessAction = a => _repository.Delete(a);
+//                }
+//            });
+//            var notification = validationManager.FinishWithAction();
+//            return Json(notification, JsonRequestBehavior.AllowGet);
+            return null;
         }
 
         public ActionResult Save(PaymentViewModel input)
@@ -138,20 +148,19 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         private Payment mapToDomain(PaymentViewModel model, Payment payment)
         {
-            var paymentModel = model.Item;
-            payment.FullHourTenPacks = paymentModel.FullHourTenPacks;
-            payment.FullHourTenPacksPrice = paymentModel.FullHourTenPacksPrice;
-            payment.FullHours = paymentModel.FullHours;
-            payment.FullHoursPrice = paymentModel.FullHoursPrice;
-            payment.HalfHourTenPacks = paymentModel.HalfHourTenPacks;
-            payment.HalfHourTenPacksPrice = paymentModel.HalfHourTenPacksPrice;
-            payment.HalfHours = paymentModel.HalfHours;
-            payment.HalfHoursPrice = paymentModel.HalfHoursPrice;
-            payment.Pairs = paymentModel.Pairs;
-            payment.PairsPrice = paymentModel.PairsPrice;
-            payment.PairsTenPack = paymentModel.PairsTenPack;
-            payment.PairsTenPackPrice = paymentModel.PairsTenPackPrice;
-            payment.PaymentTotal= paymentModel.PaymentTotal;
+            payment.FullHourTenPacks = model.FullHourTenPacks;
+            payment.FullHourTenPacksPrice = model.FullHourTenPacksPrice;
+            payment.FullHours = model.FullHours;
+            payment.FullHoursPrice = model.FullHoursPrice;
+            payment.HalfHourTenPacks = model.HalfHourTenPacks;
+            payment.HalfHourTenPacksPrice = model.HalfHourTenPacksPrice;
+            payment.HalfHours = model.HalfHours;
+            payment.HalfHoursPrice = model.HalfHoursPrice;
+            payment.Pairs = model.Pairs;
+            payment.PairsPrice = model.PairsPrice;
+            payment.PairsTenPack = model.PairsTenPack;
+            payment.PairsTenPackPrice = model.PairsTenPackPrice;
+            payment.PaymentTotal = model.PaymentTotal;
             return payment;
         }
     }
@@ -173,10 +182,29 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
     public class PaymentViewModel:ViewModel
     {
-        public Payment Item { get; set; }
-        public string DeleteUrl { get; set; }
+        public string _deleteUrl { get; set; }
         public double Total { get; set; }
-        public SessionRatesDto SessionRateDto { get; set; }
-        public SessionRatesDto SessionsAvailable { get; set; }
+        public SessionRatesDto _sessionRateDto { get; set; }
+        public SessionRatesDto _sessionsAvailable { get; set; }
+
+        public int FullHours { get; set; }
+        public int HalfHours { get; set; }
+        public int FullHourTenPacks { get; set; }
+        public int HalfHourTenPacks { get; set; }
+        public int Pairs { get; set; }
+        public int PairsTenPack { get; set; }
+        public double PaymentTotal { get; set; }
+
+        public double FullHourTenPacksPrice { get; set; }
+
+        public double FullHoursPrice { get; set; }
+
+        public double HalfHourTenPacksPrice { get; set; }
+
+        public double HalfHoursPrice { get; set; }
+
+        public double PairsPrice { get; set; }
+
+        public double PairsTenPackPrice { get; set; }
     }
 }
