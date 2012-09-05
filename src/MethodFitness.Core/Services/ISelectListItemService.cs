@@ -21,7 +21,7 @@ namespace MethodFitness.Core.Services
                                                        bool softDelete = false)
             where ENTITY : IPersistableObject;
 
-        IEnumerable<SelectListItem> CreateList<ENUM>(bool addSelectItem = false) where ENUM : Enumeration, new();
+        IEnumerable<SelectListItem> CreateList<ENUM>(bool onlyKey = false, bool addSelectItem = false) where ENUM : Enumeration, new();
 
         IEnumerable<SelectListItem> SetSelectedItemByValue(IEnumerable<SelectListItem> entityList,
                                                            string value);
@@ -131,13 +131,13 @@ namespace MethodFitness.Core.Services
             return CreateList(enumerable, text, value, addSelectItem);
         }
 
-        public IEnumerable<SelectListItem> CreateList<ENUM>(bool addSelectItem = false) where ENUM : Enumeration, new()
+        public IEnumerable<SelectListItem> CreateList<ENUM>(bool onlyKey = false, bool addSelectItem = false) where ENUM : Enumeration, new()
         {
             IEnumerable<Enumeration> enumerations = Enumeration.GetAllActive<ENUM>();
             if (enumerations == null) return null;
             enumerations = enumerations.OrderBy(item => item.Key);
             var items =
-                enumerations.Select(x => new SelectListItem {Text = x.Key, Value = x.Value.IsEmpty() ? x.Key : x.Value})
+                enumerations.Select(x => new SelectListItem {Text = x.Key, Value = onlyKey || x.Value.IsEmpty() ? x.Key : x.Value})
                     .ToList();
             if (addSelectItem)
             {

@@ -11,8 +11,6 @@ if (typeof CC == "undefined") {
 }
 CC.Elements={};
 
-
-
 CC.Elements.Element = function($container){
      this.$container = $container;
      this.trimFieldName = function(){
@@ -72,15 +70,21 @@ CC.Elements.DateTextbox = CC.Elements.Element.extend({
         this.type = "datetextbox";
         this.$label = this.$container.find("label");
         this.$input.on("change",function(){that.validate();});
-        this.$input.scroller(this.dateTimeDefaults);
+        this.$input.scroller(this.dateTimeDefaults());
     },
-    dateTimeDefaults : {
-        preset: 'date',
-        theme: 'default',
-        display: 'modal',
-        mode: 'scroller',
-        dateOrder: 'mmddyyyy'//,
-//        headerPreText:this.$label.is(":visible")?this.friendlyName+" ":''
+    dateTimeDefaults : function(){
+        var headerText = this.$label.is(":visible")?this.friendlyName+" ":'';
+        return {
+            preset: 'date',
+            theme: 'default',
+            display: 'modal',
+            mode: 'scroller',
+            dateOrder: 'mmddyyyy',
+            headerPreText:headerText,
+            onClose:function(valText,inst){
+                MF.vent.trigger(this.name+":dateBox:close",[valText,inst]);
+            }
+        }
     },
     destroy:function(){
         this.$input.off("change");
@@ -94,15 +98,21 @@ CC.Elements.TimeTextbox = CC.Elements.Element.extend({
         this.type = "timetextbox";
         this.$label = this.$container.find("label");
         this.$input.on("change",function(){that.validate();});
-        this.$input.scroller(this.timeDefaults);
+        this.$input.scroller(this.timeDefaults());
     },
-    timeDefaults: {
-        preset: 'time',
-        theme: 'default',
-        display: 'modal',
-        mode: 'scroller',
-        dateOrder: 'hh:mm',
-//        headerPreText:this.$label.is(":visible")?this.$label.text()+" ":''
+    timeDefaults: function(){
+        var headerPreText = this.$label.is(":visible")?this.$label.text()+" ":'';
+        return {
+            preset: 'time',
+            theme: 'default',
+            display: 'modal',
+            mode: 'scroller',
+            dateOrder: 'hh:mm',
+            headerPreText:headerPreText,
+            onClose:function(valText,inst){
+                MF.vent.trigger(this.name+":timeBox:close",[valText,inst]);
+            }
+        }
     },
     destroy:function(){
         this.$input.off("change");
@@ -195,6 +205,11 @@ CC.Elements.PictureGallery= CC.Elements.Element.extend({
 });
 
 CC.Elements.Select = CC.Elements.Element.extend({
+    init:function(){
+        this._super("init",arguments);
+        this.$input = this.$container.find("select");
+        this.name = this.$input.attr('name');
+    },
     render:function(){
         this.type = "select";
         this.$input = this.$container.find("select");

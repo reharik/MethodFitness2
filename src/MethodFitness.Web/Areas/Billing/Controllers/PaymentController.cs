@@ -83,45 +83,50 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult Display(ViewModel input)
         {
-//            var payment =  _repository.Find<Payment>(input.EntityId);
-//            var model = Mapper.Map<Payment, PaymentViewModel>(payment);
-//            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
-//            return Json(model,JsonRequestBehavior.AllowGet);
-            return null;
+            var client = _repository.Find<Client>(input.ParentId);
+            var payment =  client.Payments.FirstOrDefault(x=>x.EntityId == input.EntityId);
+            var model = Mapper.Map<Payment, PaymentViewModel>(payment);
+            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
+            return Json(model,JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Delete(ViewModel input)
         {
-//            var payment = _repository.Find<Payment>(input.EntityId);
-//            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
-//            var rulesResult = rulesEngineBase.ExecuteRules(payment);
-//            if (rulesResult.GetLastValidationReport().Success)
-//            {
-//                _repository.Delete(payment);
-//            }
-//            var notification = rulesResult.FinishWithAction();
-//            return Json(notification, JsonRequestBehavior.AllowGet);
-            return null;
-
+            var client = _repository.Find<Client>(input.ParentId);
+            var payment = client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId);
+            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
+            var rulesResult = rulesEngineBase.ExecuteRules(payment);
+            if (rulesResult.GetLastValidationReport().Success)
+            {
+                client.RemovePayment(payment);
+                payment.Client = null;
+                _saveEntityService.ProcessSave(client);
+                var saveClientNotification = rulesResult.Finish();
+                return Json(saveClientNotification, JsonRequestBehavior.AllowGet);
+            }
+            var notification = rulesResult.Finish();
+            return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DeleteMultiple(BulkActionViewModel input)
         {
-//            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
-//            IValidationManager<Payment> validationManager = new ValidationManager<Payment>(_repository);
-//            input.EntityIds.ForEachItem(x =>
-//            {
-//                var payment = _repository.Find<Payment>(input.EntityId);
-//                validationManager = rulesEngineBase.ExecuteRules(payment, validationManager);
-//                var report = validationManager.GetLastValidationReport();
-//                if (report.Success)
-//                {
-//                    report.SuccessAction = a => _repository.Delete(a);
-//                }
-//            });
-//            var notification = validationManager.FinishWithAction();
-//            return Json(notification, JsonRequestBehavior.AllowGet);
-            return null;
+            var client = _repository.Find<Client>(input.ParentId);
+            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
+            IValidationManager<Payment> validationManager = new ValidationManager<Payment>(_repository);
+            input.EntityIds.ForEachItem(x =>
+            {
+                var payment = client.Payments.FirstOrDefault(i => i.EntityId == x);
+                validationManager = rulesEngineBase.ExecuteRules(payment, validationManager);
+                var report = validationManager.GetLastValidationReport();
+                if (report.Success)
+                {
+                    client.RemovePayment(payment);
+                    payment.Client = null;
+                }
+            });
+            _saveEntityService.ProcessSave(client);
+            var notification = validationManager.Finish();
+            return Json(notification, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Save(PaymentViewModel input)
@@ -168,15 +173,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
     public class SessionRatesDto
     {
         public double FullHour { get; set; }
-
         public double HalfHour { get; set; }
-
         public double FullHourTenPack { get; set; }
-
         public double HalfHourTenPack { get; set; }
-
         public double Pair { get; set; }
-
         public double PairTenPack { get; set; }
     }
 

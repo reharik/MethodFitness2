@@ -21,7 +21,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
     renderCallback:function(){
         this.model = this.rawModel;
         this.model.id=this.id;
-        $("#calendar",this.el).asCalendar(this.model);
+        $("#calendar",this.el).asCalendar(this.model.CalendarDefinition);
         //callback for render
         this.viewLoaded();
         //general notification of pageloaded
@@ -52,10 +52,10 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.vent.unbind("popup:displayModule:edit");
     },
     setupLegend:function(){
-         if(this.options.trainers.length<=0){
+         if(this.model.Trainers.length<=0){
             $("#legend").hide();
         }
-        $( "#legendTemplate" ).tmpl( this.options.trainers ).appendTo( "#legendItems" );
+        $( "#legendTemplate" ).tmpl( this.model.Trainers ).appendTo( "#legendItems" );
         $(".legendHeader").addClass("showing");
         $(".legendLabel").each(function(i,item){ $(item).addClass("showing"); });
     },
@@ -226,12 +226,17 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         MF.mixin(this, "modelAndElementsMixin");
     },
     events:{
-        'change [name="Appointment.Length"]':'handleTimeChange',
-        'change [name="sHour"]':'handleTimeChange',
-        'change [name="sMinutes"]':'handleTimeChange',
-        'change [name="sAMPM"]':'handleTimeChange',
+        'change [name="AppointmentType"]':'handleTimeChange',
         'click #save' : 'saveItem',
         'click #cancel' : 'cancel'
+    },
+    viewLoaded:function(){
+        var startDate = new XDate(new Date("1/5/1972 "+this.model.StartTime()));
+        this.setEndTime(startDate);
+        MF.vent.bind("StartTime:timeBox:close",this.handleTimeChange,this);
+    },
+    onClose:function(){
+        MF.vent.unbind("StartTime:timeBox:close",this.handleTimeChange,this);
     },
     renderElements:function(){
         var collection = this.elementsViewmodel.collection;
@@ -241,45 +246,40 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             collection[item].render();
         }
     },
-    handleTimeChange:function(){
-        var startTime = this.getStartTime();
-        var endTimeString = this.getEndTimeString(startTime);
-        $("#endTime").text(endTimeString);
+    handleTimeChange:function(valArray) {
+        var scroller = $('[name="StartTime"]').scroller('getInst');
+        if (!scroller) {return;}
+        var date = $('[name="Date"]').val();
+        var timeValues;
+        timeValues = scroller.values;
+        var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1]);
+        this.setEndTime(startTime);
     },
-    getEndTimeString:function(startTime){
-        var min;
-        switch($("[name='Appointment.Length']").val()){
+    setEndTime:function(startTime){
+        var aptMin;
+        switch($("[name='AppointmentType']").val()){
             case "Hour":
-                min = 60;
+            case "Pair":
+                aptMin = 60;
                 break;
             case "Half Hour":
-                min = 30;
-                break;
-            case "Hour and a Half":
-                min = 90;
+                aptMin = 30;
                 break;
         }
-        var endTime = startTime.addMinutes(min);
+        var endTime = startTime.addMinutes(aptMin);
         var endHour = endTime.getHours();
             var amPm = "AM";
             if(endHour>12){
                 endHour-=12;
                 amPm="PM";
             }
-            var min = endTime.getMinutes().toString();
-            if(min == "0"){
-                min="00";
+            var endMin = endTime.getMinutes().toString();
+            if(endMin.length == 1){
+                endMin="0"+endMin;
             }
-            return endHour+":"+min+" "+amPm;
-    },
-    getStartTime:function(){
-        var hour = $("[name='sHour']").val();
-        var min = $("[name='sMinutes']").val();
-        if($("[name='sAMPM']").val()=="PM"){
-            hour = new Number(hour)+12;
-        }
-        return new XDate().setHours(hour).setMinutes(min);
+            $("#endTime").text(endHour+":"+endMin+" "+amPm);
     }
+
 });
 MF.Views.ClientFormView = MF.Views.View.extend({
      events:_.extend({
