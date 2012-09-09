@@ -7,23 +7,23 @@ namespace MethodFitness.Core.Rules
 {
     public abstract class RulesEngineBase
     {
-        public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity) where ENTITY : DomainEntity
+        public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity) where ENTITY : class
         {
             var repository = ObjectFactory.GetInstance<IRepository>();
             var validationManager = new ValidationManager<ENTITY>(repository);
             return ExecuteRules(entity, validationManager);
         }
         public List<IRule> Rules { get; set; }
-        public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity, IValidationManager<ENTITY> validationManager) where ENTITY : DomainEntity
+        public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity, IValidationManager<ENTITY> validationManager) where ENTITY : class
         {
-            Rules.Each(x => validationManager.AddValidationReport(x.Execute(entity)));
+            Rules.ForEachItem(x => validationManager.AddValidationReport(x.Execute(entity)));
             return validationManager;
         }
     }
 
     public interface IRule
     {
-        ValidationReport<ENTITY> Execute<ENTITY>(ENTITY entity) where ENTITY : DomainEntity;
+        ValidationReport<ENTITY> Execute<ENTITY>(ENTITY entity) where ENTITY : class;
     }
 
 }

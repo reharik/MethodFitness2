@@ -364,7 +364,7 @@ ko.utils = new (function () {
 })();
 
 ko.exportSymbol('ko.utils', ko.utils);
-ko.exportSymbol('ko.utils.arrayForEach', ko.utils.arrayForEach);
+ko.exportSymbol('ko.utils.arrayForForEachItem', ko.utils.arrayForEach);
 ko.exportSymbol('ko.utils.arrayFirst', ko.utils.arrayFirst);
 ko.exportSymbol('ko.utils.arrayFilter', ko.utils.arrayFilter);
 ko.exportSymbol('ko.utils.arrayGetDistinctValues', ko.utils.arrayGetDistinctValues);
@@ -716,7 +716,7 @@ ko.subscribable['fn'] = {
 
     notifySubscribers: function (valueToNotify) {
         ko.utils.arrayForEach(this._subscriptions.slice(0), function (subscription) {
-            // In case a subscription was disposed during the arrayForEach cycle, check
+            // In case a subscription was disposed during the arrayForForEachItem cycle, check
             // for isDisposed on each subscription before invoking its callback
             if (subscription && (subscription.isDisposed !== true))
                 subscription.callback(valueToNotify);
@@ -1608,7 +1608,7 @@ ko.exportSymbol('ko.bindingProvider', ko.bindingProvider);(function () {
         // Pre-process any anonymous template bounded by comment nodes
         ko.virtualElements.extractAnonymousTemplateIfVirtualElement(node);
 
-        // Each time the dependentObservable is evaluated (after data changes),
+        // ForEachItem time the dependentObservable is evaluated (after data changes),
         // the binding attribute is reparsed so that it can pick out the correct
         // model properties in the context of the changed data.
         // DOM event callbacks need to be able to access this changed data,

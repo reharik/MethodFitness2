@@ -32,7 +32,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             {
                 addUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
                 gridDef = _paymentListGrid.GetGridDefinition(url),
-                Title = WebLocalizationKeys.PAYMENTS.ToString(),
+                _Title = WebLocalizationKeys.PAYMENTS.ToString(),
                 ParentId = input.EntityId
             };
             model.headerButtons.Add("new");
@@ -42,7 +42,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult Payments(GridItemsRequestModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
-            var items = _dynamicExpressionQuery.PerformQueryWithItems(client.Payments, input.filters);
+            var items = _dynamicExpressionQuery.PerformQuery(client.Payments, input.filters);
             var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
             return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
         }

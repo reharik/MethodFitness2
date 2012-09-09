@@ -20,7 +20,7 @@
 		// topic: String
 		//		The channel to publish on
 		// args: Array?
-		//		The data to publish. Each array item is converted into an ordered
+		//		The data to publish. ForEachItem array item is converted into an ordered
 		//		arguments on the subscribed functions.
 		//
 		// example:

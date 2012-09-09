@@ -8,7 +8,7 @@ namespace MethodFitness.Core.Services
     public interface ISessionContext
     {
         int GetCompanyId();
-        int GetUserEntityId();
+        int GetUserId();
         object RetrieveSessionObject(Guid sessionKey);
         object RetrieveSessionObject(string sessionKey);
         SessionItem RetrieveSessionItem(string sessionKey);
@@ -29,7 +29,7 @@ namespace MethodFitness.Core.Services
 
         public User GetCurrentUser()
         {
-            return _repository.Find<User>(GetUserEntityId());
+            return _repository.Find<User>(GetUserId());
         }
 
         public int GetCompanyId()
@@ -39,7 +39,7 @@ namespace MethodFitness.Core.Services
             return customPrincipal != null ? customPrincipal.CompanyId : 0;
         }
 
-        public int GetUserEntityId()
+        public int GetUserId()
         {
             var httpContext = HttpContext.Current;
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
@@ -88,7 +88,7 @@ namespace MethodFitness.Core.Services
             return 1;
         }
 
-        public int GetUserEntityId()
+        public int GetUserId()
         {
             return 1;
         }

@@ -11,7 +11,7 @@ namespace MethodFitness.Core.Html.Grid
 {
     public interface IGrid<T> where T : IGridEnabledClass
     {
-        void AddColumnModifications(Action<HtmlTag, T> modification);
+        void AddColumnModifications(Action<IGridColumn, T> modification);
         GridDefinition GetGridDefinition(string url);
         GridItemsViewModel GetGridItemsViewModel(PageSortFilter pageSortFilter, IQueryable<T> items);
     }
@@ -21,7 +21,7 @@ namespace MethodFitness.Core.Html.Grid
         protected readonly IGridBuilder<T> GridBuilder;
         private readonly ISessionContext _sessionContext;
         private readonly IRepository _repository;
-        private IList<Action<HtmlTag, T>> _modifications;
+        private IList<Action<IGridColumn, T>> _modifications;
 
         protected Grid(IGridBuilder<T> gridBuilder,
             ISessionContext sessionContext,
@@ -30,7 +30,7 @@ namespace MethodFitness.Core.Html.Grid
             GridBuilder = gridBuilder;
             _sessionContext = sessionContext;
             _repository = repository;
-            _modifications = new List<Action<HtmlTag, T>>();
+            _modifications = new List<Action<IGridColumn, T>>();
         }
 
         private IList<IDictionary<string, string>> GetGridColumns(User user)
@@ -49,18 +49,19 @@ namespace MethodFitness.Core.Html.Grid
         public string GetDefaultSortColumnName()
         {
             var column = GridBuilder.columns.FirstOrDefault(
-                x => x.Properties.Any(y=>y.Key == GridColumnProperties.sortColumn.ToString()));
-            return column==null?string.Empty:column.Properties[GridColumnProperties.header.ToString()];
+                x => x.Properties.Any(y => y.Key == GridColumnProperties.sortColumn.ToString()));
+            return column == null ? string.Empty : column.Properties[GridColumnProperties.header.ToString()];
         }
 
-        public void AddColumnModifications(Action<HtmlTag, T> modification)
+        public void AddColumnModifications(Action<IGridColumn, T> modification)
         {
             _modifications.Add(modification);
         }
 
+
         public GridDefinition GetGridDefinition(string url)
         {
-            var userId = _sessionContext.GetUserEntityId();
+            var userId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userId);
             return new GridDefinition
             {
@@ -71,7 +72,7 @@ namespace MethodFitness.Core.Html.Grid
 
         public GridItemsViewModel GetGridItemsViewModel(PageSortFilter pageSortFilter, IQueryable<T> items)
         {
-            var userId = _sessionContext.GetUserEntityId();
+            var userId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userId);
             var pager = new Pager<T>();
             var pageAndSort = pager.PageAndSort(items, pageSortFilter);
@@ -86,7 +87,7 @@ namespace MethodFitness.Core.Html.Grid
         }
 
         protected virtual Grid<T> BuildGrid()
-        { 
+        {
             return this;
         }
     }
@@ -98,7 +99,7 @@ namespace MethodFitness.Core.Html.Grid
 
     public class GridRow
     {
-        public long id { get; set; }
+        public int id { get; set; }
         public string[] cell { get; set; }
     }
 }

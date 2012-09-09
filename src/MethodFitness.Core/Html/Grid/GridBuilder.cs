@@ -11,13 +11,13 @@ namespace MethodFitness.Core.Html.Grid
     {
         List<IGridColumn> columns { get; }
         IList<IDictionary<string, string>> ToGridColumns(User user);
-        string[] ToGridRow(ENTITY item, User user, IEnumerable<Action<HtmlTag, ENTITY>> modifications);
+        string[] ToGridRow(ENTITY item, User user, IEnumerable<Action<IGridColumn, ENTITY>> modifications, string gridName = "");
 
         DisplayColumn<ENTITY> DisplayFor(Expression<Func<ENTITY, object>> expression);
         HiddenColumn<ENTITY> HideColumnFor(Expression<Func<ENTITY, object>> expression);
         ImageColumn<ENTITY> ImageColumn();
         ImageButtonColumn<ENTITY> ImageButtonColumn();
-        LinkColumn<ENTITY> LinkColumnFor(Expression<Func<ENTITY, object>> expression);
+        LinkColumn<ENTITY> LinkColumnFor(Expression<Func<ENTITY, object>> expression, string gridName = "");
         GroupingColumn<ENTITY> GroupingColumnFor(Expression<Func<ENTITY, object>> expression);
     }
 
@@ -36,16 +36,17 @@ namespace MethodFitness.Core.Html.Grid
             get { return _columns; }
         }
 
-        public string[] ToGridRow(ENTITY item, User user, IEnumerable<Action<HtmlTag, ENTITY>> modifications)
+        public string[] ToGridRow(ENTITY item, User user, IEnumerable<Action<IGridColumn, ENTITY>> modifications, string gridName = "")
         {
             var cellValues = new List<string>();
             foreach (var column in columns)
             {
-                var value = column.BuildColumn(item, user, _authorizationService);
-                modifications.Each(x => x.Invoke(value.HtmlTag, item));
-                if (value.Authorized)
+                bool isAllowed = !column.Operation.IsNotEmpty() || _authorizationService.IsAllowed(user, column.Operation);
+                if (isAllowed)
                 {
-                    cellValues.Add(value.HtmlTag == null ? string.Empty : value.HtmlTag.ToPrettyString());
+                    modifications.ForEachItem(x => x.Invoke(column, item));
+                    string value = column.BuildColumn(item, gridName);
+                    cellValues.Add(value ?? string.Empty);
                 }
             }
             return cellValues.ToArray();
@@ -83,9 +84,9 @@ namespace MethodFitness.Core.Html.Grid
             return AddColumn(new ImageButtonColumn<ENTITY>());
         }
 
-        public LinkColumn<ENTITY> LinkColumnFor(Expression<Func<ENTITY, object>> expression)
+        public LinkColumn<ENTITY> LinkColumnFor(Expression<Func<ENTITY, object>> expression, string gridName = "")
         {
-            return AddColumn(new LinkColumn<ENTITY>(expression));
+            return AddColumn(new LinkColumn<ENTITY>(expression, gridName));
         }
 
         public GroupingColumn<ENTITY> GroupingColumnFor(Expression<Func<ENTITY, object>> expression)

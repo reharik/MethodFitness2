@@ -67,7 +67,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             }
             if (cssClass.Contains(" "))
             {
-                cssClass.Split(' ').Each(_labelRootClasses.Add);
+                cssClass.Split(' ').ForEachItem(_labelRootClasses.Add);
             }
             else
             {
@@ -84,7 +84,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             }
             if (cssClass.Contains(" "))
             {
-                cssClass.Split(' ').Each(_labelClasses.Add);
+                cssClass.Split(' ').ForEachItem(_labelClasses.Add);
             }
             else
             {

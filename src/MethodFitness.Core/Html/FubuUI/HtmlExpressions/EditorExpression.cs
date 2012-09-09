@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using MethodFitness.Core.Html.FubuUI.Tags;
+using MethodFitness.Security.Interfaces;
 using MethodFitness.Core.Localization;
 using FubuMVC.UI.Tags;
 using HtmlTags;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 using StructureMap;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
@@ -19,7 +20,6 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         private HtmlTag _htmlRoot;
         private bool _inlineReverse;
         private IEnumerable<SelectListItem> _dropdownWithItems;
-        private List<string> _rootClasses; 
         private string _labelRootClass;
         private string _labelClass;
         private string _inputRootClass;
@@ -27,17 +27,20 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         private bool _hideRoot;
         private bool _hideInput;
         private bool _hideLabel;
-        private bool _colonAfterLabel;
         private string _labelId;
         private string _inputId;
         private string _rootId;
         private bool _dropdown;
         private bool _noClear;
         private string _labelDisplay;
+        private string _radioButtonGroupName;
+        private bool _radioButton;
         private bool _inline;
         private string _operation;
         private IAuthorizationService _authorizationService;
         private ISessionContext _sessionContext;
+        private string _elType;
+        private List<string> _rootClasses;
 
         public EditorExpression(ITagGenerator<VIEWMODEL> generator, Expression<Func<VIEWMODEL, object>> expression)
         {
@@ -47,8 +50,8 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
 
         public override string ToString()
         {
-            return ToHtmlTag().ToString();
-        } 
+            return ToHtmlTag() != null ? ToHtmlTag().ToString() : "";
+        }
 
         public HtmlTag ToHtmlTag()
         {
@@ -56,7 +59,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             {
                 return null;
             }
-            if(_inlineReverse)
+            if (_inlineReverse)
             {
                 return renderInlineReverse();
             }
@@ -74,14 +77,14 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         private HtmlTag renderStandard()
         {
             _htmlRoot = new HtmlTag("div");
-            _htmlRoot.AddClass("editor_root");
+            _htmlRoot.AddClass(_noClear ? "editor_root_no_clear" : "editor_root");
             if (_rootId.IsNotEmpty()) _htmlRoot.Id(_rootId);
-            if (_rootClasses!=null && _rootClasses.Any()) _htmlRoot.AddClasses(_rootClasses);
+            if (_rootClasses != null && _rootClasses.Any()) _htmlRoot.AddClasses(_rootClasses);
             EditorLabelExpression<VIEWMODEL> labelBuilder = new EditorLabelExpression<VIEWMODEL>(_generator, _expression);
             IEditorInputExpression<VIEWMODEL> inputBuilder;
             if (_dropdown)
             {
-                inputBuilder = new DropdownInputExpression<VIEWMODEL>(_generator, _expression,_dropdownWithItems);
+                inputBuilder = new DropdownInputExpression<VIEWMODEL>(_generator, _expression, _dropdownWithItems);
             }
             else
             {
@@ -90,46 +93,101 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             addInternalCssClasses(labelBuilder, inputBuilder);
             hideElements(_htmlRoot, labelBuilder, inputBuilder);
             addIds(labelBuilder, inputBuilder);
-            addCustomLabel(labelBuilder, inputBuilder);
-            labelBuilder.InLine(_inline);
+            addCustomLabel(labelBuilder);
             HtmlTag input = inputBuilder.ToHtmlTag();
             HtmlTag label = labelBuilder.ToHtmlTag();
-            _htmlRoot.Append(label);
-            _htmlRoot.Append(input);
+            _htmlRoot.Children.Add(label);
+            _htmlRoot.Children.Add(input);
+            addFlagToHtmlRoot(input.FirstChild());
             return _htmlRoot;
         }
-        
-        private void addCustomLabel(EditorLabelExpression<VIEWMODEL> label, IEditorInputExpression<VIEWMODEL> input)
+
+        private void addFlagToHtmlRoot(HtmlTag input)
         {
-            if (_labelDisplay.IsNotEmpty())
+            if (_elType.IsNotEmpty())
             {
-                input.CustomLabel(_labelDisplay);
-                label.CustomLabel(_labelDisplay);
+                _htmlRoot.Attr("eltype", _elType);
+                return;
             }
-            if (_colonAfterLabel) label.ShowColonAfterLabel();
+            if (input is TextboxTag)
+            {
+                if (input.HasClass("number"))
+                {
+                    _htmlRoot.Attr("eltype", "NumberTextbox");
+                    return;
+                }
+                if (input.HasClass("datePicker"))
+                {
+                    _htmlRoot.Attr("eltype", "DateTextbox");
+                    return;
+                }
+                if (input.HasClass("timePicker"))
+                {
+                    _htmlRoot.Attr("eltype", "TimeTextbox");
+                    return;
+                }
+                _htmlRoot.Attr("eltype", "Textbox");
+                return;
+            }
+            if (input is PasswordTag)
+            {
+                _htmlRoot.Attr("eltype", "Password");
+                return;
+            }
+            if (input is SelectTag)
+            {
+                _htmlRoot.Attr("eltype", "Select");
+                return;
+            }
+            if (input is CheckboxTag)
+            {
+                _htmlRoot.Attr("eltype", "Checkbox");
+                return;
+            }
+            if (input.TagName() == "textarea")
+            {
+                _htmlRoot.Attr("eltype", "Textarea");
+                return;
+            }
+            if (input.TagName() == "ul")
+            {
+                _htmlRoot.Attr("eltype", "PictureGallery");
+                return;
+            }
+            if (input.HasClass("imageInputContainer"))
+            {
+                _htmlRoot.Attr("eltype", "FileSubmission");
+                return;
+            }
+
+        }
+
+        private void addCustomLabel(EditorLabelExpression<VIEWMODEL> label)
+        {
+            if (_labelDisplay.IsNotEmpty()) label.CustomLabel(_labelDisplay);
         }
 
         private void addIds(EditorLabelExpression<VIEWMODEL> label, IEditorInputExpression<VIEWMODEL> input)
         {
-            if(_inputId.IsNotEmpty()) input.ElementId(_inputId);
+            if (_inputId.IsNotEmpty()) input.ElementId(_inputId);
             if (_labelId.IsNotEmpty()) label.ElementId(_labelId);
         }
 
         private HtmlTag renderInlineReverse()
         {
-            _htmlRoot = new HtmlTag("div").AddClass("editor_root");
+            _htmlRoot = new HtmlTag("div").AddClass("MF_editor_root");
             if (_rootId.IsNotEmpty()) _htmlRoot.Id(_rootId);
-            if (_rootClasses!=null && _rootClasses.Any()) _htmlRoot.AddClasses(_rootClasses);
+            if (_rootClasses != null && _rootClasses.Any()) _htmlRoot.AddClasses(_rootClasses);
             EditorLabelExpression<VIEWMODEL> labelBuilder = new EditorLabelExpression<VIEWMODEL>(_generator, _expression);
             EditorInputExpression<VIEWMODEL> inputBuilder = new EditorInputExpression<VIEWMODEL>(_generator, _expression);
             addInternalCssClasses(labelBuilder, inputBuilder);
             hideElements(_htmlRoot, labelBuilder, inputBuilder);
             addIds(labelBuilder, inputBuilder);
-            addCustomLabel(labelBuilder, inputBuilder);
+            addCustomLabel(labelBuilder);
             HtmlTag label = labelBuilder.LeadingColon().ToHtmlTag();
             HtmlTag input = inputBuilder.ToHtmlTag();
-            _htmlRoot.Append(input);
-            _htmlRoot.Append(label);
+            _htmlRoot.Children.Add(input);
+            _htmlRoot.Children.Add(label);
             return _htmlRoot;
         }
 
@@ -153,11 +211,14 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         public EditorExpression<VIEWMODEL> RadioButton()
         {
             _inlineReverse = true;
+            _radioButton = true;
             return this;
         }
         public EditorExpression<VIEWMODEL> RadioButton(string groupName)
         {
             _inlineReverse = true;
+            _radioButtonGroupName = groupName;
+            _radioButton = true;
             return this;
         }
 
@@ -172,7 +233,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             _labelDisplay = display;
             return this;
         }
-        
+
         public EditorExpression<VIEWMODEL> NoClear()
         {
             _noClear = true;
@@ -191,29 +252,21 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             return this;
         }
 
-        public EditorExpression<VIEWMODEL> ShowColonAfterLabel()
-        {
-            _colonAfterLabel= true;
-            return this;
-        }
-
-
         public EditorExpression<VIEWMODEL> FillWith(IEnumerable<SelectListItem> enumerable)
         {
             _dropdown = true;
             _dropdownWithItems = enumerable;
             return this;
         }
-
         public EditorExpression<VIEWMODEL> AddClassToRoot(string cssClass)
         {
-            if(_rootClasses==null)
+            if (_rootClasses == null)
             {
                 _rootClasses = new List<string>();
             }
             if (cssClass.Contains(" "))
             {
-                cssClass.Split(' ').Each(_rootClasses.Add);
+                cssClass.Split(' ').ForEachItem(_rootClasses.Add);
             }
             else
             {
@@ -221,7 +274,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             }
             return this;
         }
-
+       
         public EditorExpression<VIEWMODEL> AddClassToLabelRoot(string cssClass)
         {
             _labelRootClass = cssClass;
@@ -257,7 +310,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             _hideLabel = true;
             return this;
         }
-        
+
         public EditorExpression<VIEWMODEL> HideInput()
         {
             _hideInput = true;
@@ -287,7 +340,13 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             _operation = operation;
             return this;
         }
-        
+
+        public EditorExpression<VIEWMODEL> ElType(string elType)
+        {
+            _elType = elType;
+            return this;
+        }
+
         #endregion
 
     }

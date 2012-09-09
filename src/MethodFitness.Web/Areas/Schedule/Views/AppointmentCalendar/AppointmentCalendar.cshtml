@@ -4,26 +4,13 @@
 @using MethodFitness.Core.Html.FubuUI
 @using MethodFitness.Web
 @using MethodFitness.Web.Models
-<script>
-    
-    var calendarDef=  @MvcHtmlString.Create(JsonUtil.ToJson(Model.CalendarDefinition));
-    calendarDef.calendarContainer="#calendar";
-    extraFormOptions = {
-        calendarDef: calendarDef,
-        trainers: @MvcHtmlString.Create(JsonUtil.ToJson(Model.Trainers))
-    };
-    $(document).ready(function(){
-        //new mf.AppointmentCalendarController(options);
-        });
 
-</script>
 
 <div class="content-header">
-    @Html.SubmissionFor(x=>x.Location).HideLabel().ToHtmlTag()
-    <span class="title-name">@Model.Title</span>
+    @Html.SubmissionFor(x => x.Location).HideLabel().AddClassToRoot("narrow").ToHtmlTag()
+    <span class="title-name">@Model._Title</span>
 </div>
 <div id="contentArea" class="content-inner">
-    <div id="errorMessagesCalendar" class="dci_ErrorMessages errorMessages"><ul></ul></div>
     <div id="legend" class="legend">
         <span class="legendHeader">@WebLocalizationKeys.TRAINERS</span>
         <ul id="legendItems"></ul>

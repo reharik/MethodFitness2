@@ -17,7 +17,7 @@ namespace MethodFitness.Core.Rules
             _repository = repository;
         }
 
-        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY client) where ENTITY : DomainEntity
+        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY client) where ENTITY : class
         {
             var _client = client as Client;
             var result = new ValidationReport<ENTITY> { Success = true,entity = _client as ENTITY};

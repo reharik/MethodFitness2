@@ -138,7 +138,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             }
             if (cssClass.Contains(" "))
             {
-                cssClass.Split(' ').Each(_rootClasses.Add);
+                cssClass.Split(' ').ForEachItem(_rootClasses.Add);
             }
             else
             {

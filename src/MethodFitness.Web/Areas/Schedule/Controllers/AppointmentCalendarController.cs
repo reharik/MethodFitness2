@@ -36,9 +36,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _selectListItemService = selectListItemService;
         }
 
+        public ActionResult AppointmentCalendar_Template(CalendarViewModel input)
+        {
+            return View("AppointmentCalendar", new CalendarViewModel());
+        }
+
         public ActionResult AppointmentCalendar(CalendarViewModel input)
         {
-            var userEntityId = _sessionContext.GetUserEntityId();
+            var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             var locations = _selectListItemService.CreateList<Location>(x=>x.Name,x=>x.EntityId,false).ToList();
             locations.Insert(0,new SelectListItem{Text=WebLocalizationKeys.ALL.ToString(),Value = "0"});
@@ -54,14 +59,16 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var model = new CalendarViewModel
             {
                 Trainers = trainersDto,
-                LocationList = locations,
+                _LocationList = locations,
                 CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
                 CalendarDefinition = new CalendarDefinition
                 {
                     Url = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.Events(null), AreaName.Schedule),
-                    AddEditUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.AddUpdate(null), AreaName.Schedule),
+                    AddUpdateUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.AddUpdate(null), AreaName.Schedule),
                     DisplayUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Display(null), AreaName.Schedule),
                     DeleteUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Delete(null), AreaName.Schedule),
+                    AddUpdateRoute = "event",
+                    DisplayRoute = "eventdisplay",
                     EventChangedUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.EventChanged(null), AreaName.Schedule),
                     CanEditPastAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEditPastAppointments"),
                     CanEnterRetroactiveAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"),
@@ -69,7 +76,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     TrainerId = user.EntityId
                 }
             };
-            return View(model);
+            return Json(model,JsonRequestBehavior.AllowGet);
         }
         public string processTrainerName(User trainer)
         {
@@ -87,7 +94,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.Date = input.ScheduledDate;
             appointment.EndTime = input.EndTime;
             appointment.StartTime = input.StartTime;
-            var userEntityId = _sessionContext.GetUserEntityId();
+            var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             var notification = new Notification { Success = true };
             notification = appointment.CheckPermissions(user, _authorizationService, notification);
@@ -103,7 +110,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         public JsonResult Events(GetEventsViewModel input)
         {
-            var userEntityId = _sessionContext.GetUserEntityId();
+            var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             var canSeeOthers = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOtherAppointments");
             var events = new List<CalendarEvent>();
@@ -119,7 +126,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
                 appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId));
             }
-            appointments.Each(x => GetValue(x, events, user, canSeeOthers));
+            appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
             return Json(events, JsonRequestBehavior.AllowGet);
         }
 

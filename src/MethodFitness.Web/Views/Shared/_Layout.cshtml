@@ -22,7 +22,9 @@
     @CSS("main.css").ToHtmlTag()
     @CSS("token-input.css").ToHtmlTag()
     @CSS("fg.menu.css").ToHtmlTag()
-    @CSS("jquery.cleditor.css").ToHtmlTag()
+   @CSS("select2.css").ToHtmlTag()
+    @CSS("fileInputEnhanced.css").ToHtmlTag()
+    @CSS("mobiscroll.core-2.0.1.css").ToHtmlTag()
 
     @CSS("mf.css").ToHtmlTag()
 
@@ -30,34 +32,33 @@
 
     @Script("jqueryPlugins/jquery-1.7.1.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.transform-0.9.3.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery-ui-1.8.16.custom.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.validate.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.form.2.83.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.tokeninput.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.ie-select-style.pack.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.pubsub.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.cleditor.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.ui.timepicker-0.0.8.js").ToHtmlTag()
-     @Script("jqueryPlugins/grid.locale-en.js").ToHtmlTag()
+    @Script("jqueryPlugins/jquery-ui-1.8.22.custom.min.js").ToHtmlTag()
+    @Script("jqueryPlugins/cc.tokeninput2.js").ToHtmlTag()
+
+    @Script("jqueryPlugins/grid.locale-en.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.jqGrid.src.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery-tmpl.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.miniColors.js").ToHtmlTag()
+    @Script("jqueryPlugins/jquery.fileinput.js").ToHtmlTag()
+    @Script("jqueryPlugins/mobiscroll.core-2.0.1.js").ToHtmlTag()
+    @Script("jqueryPlugins/mobiscroll.datetime-2.0.1.js").ToHtmlTag()
+    @Script("externalHelpers/select2.js").ToHtmlTag()
 
-    @Script("externalHelpers/modernizr-2.0.min.js").ToHtmlTag()
-    @Script("externalHelpers/respond.min.js").ToHtmlTag()
     @Script("externalHelpers/fullcalendar.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.metadata.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.address-1.4.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.Jcrop.js").ToHtmlTag()
     @Script("externalHelpers/underscore.js").ToHtmlTag()
     @Script("externalHelpers/backbone.js").ToHtmlTag()
     @Script("externalHelpers/backbone.marionette.js").ToHtmlTag()
+    @Script("externalHelpers/knockout-2.1.0.debug.js").ToHtmlTag()    
+    @Script("externalHelpers/knockout.mapping-lastest.debug.js").ToHtmlTag()    
+
     @Script("MF/MF.App.js").ToHtmlTag()
     @Script("MF/MF.Controller.js").ToHtmlTag()
+    @Script("MF/MF.Mixins.js").ToHtmlTag()
     @Script("MF/MF.Header.js").ToHtmlTag()
     @Script("MF/MF.Views.js").ToHtmlTag()
     @Script("MF/MF.Routing.js").ToHtmlTag()
     @Script("MF/MF.State.js").ToHtmlTag()
+    @Script("MF/MF.Services.js").ToHtmlTag()
     @Script("MF/MF.WorkflowManager.js").ToHtmlTag()
     @Script("MF/Schedule/MF.ScheduleApp.js").ToHtmlTag()
     @Script("MF/Schedule/MF.ScheduleApp.Menu.js").ToHtmlTag()
@@ -65,6 +66,14 @@
     @Script("MF/Schedule/MF.ScheduleApp.Views.js").ToHtmlTag()
     @Script("MF/Billing/MF.BillingApp.Routing.js").ToHtmlTag()
     @Script("MF/Billing/MF.BillingApp.Views.js").ToHtmlTag()
+    
+    @Script("MF/CC.ModelBinding/CC.CustomBindings.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.Elements.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.NotificationService.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ModelService.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ValidationRules.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ValidationRunner.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.AjaxFileUpload.js").ToHtmlTag()
     
     @Script("externalHelpers/superfish.js").ToHtmlTag()
     @Script("externalHelpers/ba-debug.js").ToHtmlTag()
@@ -77,27 +86,15 @@
     @Script("internalHelpers/jquery.mf.calendar.js").ToHtmlTag()
 
     @Script("internalHelpers/cc.utilities.js").ToHtmlTag()
-    @Script("internalHelpers/cc.Notifications.js").ToHtmlTag()
-    @Script("internalHelpers/cc.crudForm.js").ToHtmlTag()
-    @Script("internalHelpers/mf.mediaHandler.js").ToHtmlTag()
     @Script("externalHelpers/json2.js").ToHtmlTag()
     @Script("externalHelpers/xdate.js").ToHtmlTag()
-    @Script("mf.baseClass.js").ToHtmlTag()
-    @Script("mf.home.js").ToHtmlTag()
     
     <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
     @RenderSection("HeaderScripts", false)
 
 
      <script type="text/javascript">
-        var entityId = @Model.EntityId ;
-        var parentId = @Model.ParentId ;
-        var rootId = @Model.RootId ;
-        var mfCurrentLocaton;
-        var extraFormOptions = {};
-        extraFormOptions.crudFormOptions = { };
         MF.routeTokens = @MvcHtmlString.Create(JsonUtil.ToJson(@Model.SerializedRoutes));
-        
         @RenderSection("HeaderJavascript", false)
 
         </script>
@@ -112,6 +109,11 @@
             </div>
             <div id="main-content">
                 <div class="content-outer" >
+                    <div id="messageContainer">
+                        <ul data-bind="foreach:{data:messages, beforeRemove: fadeOut}">
+                            <li data-bind="text:message, css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
+                        </ul>
+                    </div>
                     <div id="contentInner">
                         @RenderBody()
                     </div>
@@ -130,7 +132,7 @@
             <button style="display:none" id="new" class="new" title="@WebLocalizationKeys.NEW"></button>
             <button style="display:none" class="delete" title="@WebLocalizationKeys.DELETE_ITEMS"></button>
             <button style="display:none" class="return" title="@WebLocalizationKeys.RETURN"></button>
-            <span class="title-name">${Title}</span>
+            <span class="title-name">${_Title}</span>
         </div>
         <div id="contentArea" class="content-inner">
             <div id="validation-container-wrapper">
@@ -157,9 +159,12 @@
     
     <script id="payTrainerSearchTemplate" type="text/x-jQuery-tmpl">
         <div id="filterArea">
-            <div class="headerInput">@WebLocalizationKeys.END_DATE
-            <input type="text" id="end_date" class="datePicker"/></div>
+            <div class="headerInput">
+                @WebLocalizationKeys.END_DATE
+                <input type="text" data-bind="value:EndDate" name="EndDate" class="datePicker" >
+            </div>
             <button id="search" class="filter" title="@WebLocalizationKeys.FILTER"></button>
+            <button id='payTrainerButton' class='dollar_sign' ></button>
         </div>
     </script>
 </html>

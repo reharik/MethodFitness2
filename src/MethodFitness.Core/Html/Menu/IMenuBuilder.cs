@@ -147,9 +147,9 @@ namespace MethodFitness.Core.Html.Menu
         private IList<MenuItem> modifyListForPermissions()
         {
             var permittedItems = new List<MenuItem>();
-            var userId = _sessionContext.GetUserEntityId();
+            var userId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userId);
-            _items.Each(x =>
+            _items.ForEachItem(x =>
             {
                 var operationName = "/MenuItem/" + x.Text.RemoveWhiteSpace();
                 if (_authorizationService.IsAllowed(user, operationName))
@@ -181,7 +181,7 @@ namespace MethodFitness.Core.Html.Menu
         {
             var result = new List<MenuItem>();
             getLinksOnly(_items,result);
-            result.Each(x=>Debug.WriteLine(x.Text + "--" +x.Url));
+            result.ForEachItem(x=>Debug.WriteLine(x.Text + "--" +x.Url));
             var jss = new JavaScriptSerializer();
             var json = jss.Serialize(result);
             return json;

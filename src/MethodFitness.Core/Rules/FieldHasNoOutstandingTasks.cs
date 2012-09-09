@@ -9,7 +9,7 @@ namespace MethodFitness.Core.Rules
         {
         }
 
-        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY field) where ENTITY : DomainEntity
+        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY field) where ENTITY : class
         {
             var result = new ValidationReport<ENTITY> { Success = true };
 //            var _field = field as Field;

@@ -8,7 +8,8 @@ body {
     font-size: 14px;
 }
 
-ul { margin: 12px 12px 12px 18px; }
+/*really?*/
+/*ul { margin: 12px 12px 12px 18px; }*/
 
 hr {
     margin: 16px 0;
@@ -1748,7 +1749,6 @@ span.artifact_item {
     border-radius: 5px;
 }
 
-
 ul.token-input-list li{
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -1764,9 +1764,8 @@ li.token-input-selected-token span.token-input-delete-token {
 }
 
 div.token-input-dropdown li {
-	margin-left: 5px !important;
+	margin-left: 0 !important;
 	padding-left: 5px !important;
-	width: 100%;
 }
 
 
@@ -1781,7 +1780,6 @@ ul li.token-input-input-token {
 .empty ul.token-input-list {
     display:none;
 }
-
 .nobuttons ul {
     margin-top: 0;
 }

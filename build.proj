@@ -16,8 +16,9 @@
 
   <Target Name="Build" DependsOnTargets="_build;_unitTests" />
   <!--  <Target Name="Stage" DependsOnTargets="_build;_minifyJSandCss;_outputWebFiles;" />-->
+<!--  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />-->
   <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToQA;" />
-
+  
  <Target Name="_pushToQA" >
     <ItemGroup>
       <WebFiles Include="src\MethodFitness.Web\**\*.*;"
@@ -51,7 +52,7 @@
      WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
      ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
      ZipLevel="9" />
-  </Target>
+ </Target>
 
   <Target Name="myTemp" >
     <Message Text="Current Date and Time: $(Month).$(Day).$(Year)-$(Hour).$(Minute)" />

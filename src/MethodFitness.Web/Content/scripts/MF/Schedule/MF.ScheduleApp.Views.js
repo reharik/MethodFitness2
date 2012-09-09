@@ -7,31 +7,36 @@
  */
 
 MF.Views.CalendarView = MF.Views.View.extend({
+    initialize: function(){
+        MF.mixin(this, "modelAndElementsMixin");
+    },
     events:{
         'change [name=Location]' : 'resetCalendar',
         'click .legendLabel' : 'legendLabelClick',
         'click .legendHeader' : 'legendHeaderClick'
     },
-
     render:function(){
-       MF.repository.ajaxGet(this.options.url, this.options.data, $.proxy(function(result){this.renderCallback(result)},this));
+         $.when(MF.loadTemplateAndModel(this))
+         .done($.proxy(this.renderCallback,this));
+//       MF.repository.ajaxGet(this.options.url, this.options.data).done($.proxy(this.renderCallback,this));
     },
-    renderCallback:function(result){
-        if(result.LoggedOut){
-            window.location.replace(result.RedirectUrl);
-            return;
-        }
-        $(this.el).html(result);
-        if(extraFormOptions){
-            $.extend(true, this.options, extraFormOptions);
-        }
-
-        var calContainer = this.options.calendarDef.calendarContainer;
-        this.options.calendarDef.id=this.id;
-        $(calContainer,this.el).asCalendar(this.options.calendarDef);
+    renderCallback:function(){
+        this.model = this.rawModel;
+        this.model.id= this.model.CalendarDefinition.id = this.id;
+        this.setupLegend();
+        $("#calendar",this.el).asCalendar(this.model.CalendarDefinition);
+        this.bindSpecificModelAndElements({Location:this.model.Location,
+            _LocationList:this.model._LocationList,
+            _Title:this.model._Title,
+            EntityId:0
+        });
         //callback for render
         this.viewLoaded();
         //general notification of pageloaded
+        MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
+        this.calendarBindings();
+    },
+    calendarBindings:function(){
         MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
         MF.vent.bind("calendar:"+this.id+":eventDrop",this.eventDrop,this);
         MF.vent.bind("calendar:"+this.id+":eventResize",this.eventResize,this);
@@ -42,7 +47,6 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.vent.bind("ajaxPopupDisplayModule:displayModule:cancel",this.displayCancel,this);
         MF.vent.bind("popup:displayModule:edit",this.displayEdit,this);
 
-        this.setupLegend();
     },
     onClose:function(){
         MF.vent.unbind("calendar:"+this.id+":eventDrop");
@@ -55,10 +59,10 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.vent.unbind("popup:displayModule:edit");
     },
     setupLegend:function(){
-         if(this.options.trainers.length<=0){
+         if(this.model.Trainers.length<=0){
             $("#legend").hide();
         }
-        $( "#legendTemplate" ).tmpl( this.options.trainers ).appendTo( "#legendItems" );
+        $( "#legendTemplate" ).tmpl( this.model.Trainers ).appendTo( "#legendItems" );
         $(".legendHeader").addClass("showing");
         $(".legendLabel").each(function(i,item){ $(item).addClass("showing"); });
     },
@@ -67,7 +71,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "ScheduledDate":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")};
-        MF.repository.ajaxGet(this.options.EventChangedUrl,data, $.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
+        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     eventResize:function( event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
         var data = {"EntityId":event.EntityId,
@@ -75,21 +79,22 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")
         };
-        MF.repository.ajaxGet(this.options.EventChangedUrl,data,$.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
+        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
-        if(new XDate(date).diffHours(new XDate())>0 && !this.options.calendarDef.CanEnterRetroactiveAppointments){
+        if(new XDate(date).diffHours(new XDate())>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
             alert("That period is closed");
             return;
         }
         var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
-        this.editEvent(this.options.calendarDef.AddEditUrl,data);
+        this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
     },
     eventClick:function(calEvent, jsEvent, view) {
-        if(calEvent.trainerId!= this.options.calendarDef.TrainerId && !this.options.calendarDef.CanSeeOthersAppointments){
+        if(calEvent.trainerId!= this.model.CalendarDefinition.TrainerId && !this.model.CalendarDefinition.CanSeeOthersAppointments){
             return;
         }
-        this.options.calendarDef.canEdit = new XDate(calEvent.start).diffHours(new XDate())<0 || this.options.calendarDef.CanEditPastAppointments;
+        this.model.CalendarDefinition.canEdit = new XDate(calEvent.start).diffHours(new XDate())<0 || this.model.CalendarDefinition.CanEditPastAppointments;
+        this.currentEventId = calEvent.EntityId;
         var data = {"EntityId": calEvent.EntityId};
         var builder = MF.Views.popupButtonBuilder.builder("displayModule");
         builder.addButton("Delete", $.proxy(this.deleteItem,this));
@@ -99,7 +104,11 @@ MF.Views.CalendarView = MF.Views.View.extend({
 
         var formOptions = {
             id: "displayModule",
-            url: this.options.calendarDef.DisplayUrl,
+            route: this.model.CalendarDefinition.DisplayRoute,
+            templateUrl: this.model.CalendarDefinition.DisplayUrl+"_Template?Popup=true",
+            view: this.options.subViewName?"Display" + this.options.subViewName:"",
+            AddUpdateUrl: this.model.CalendarDefinition.AddUpdateUrl,
+            url: this.model.CalendarDefinition.DisplayUrl,
             data:data,
             buttons:builder.getButtons()
         };
@@ -111,8 +120,10 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
     editEvent:function(url, data){
         var formOptions = {
-            id: "editModule",
+           id: "editModule",
+            route: this.model.CalendarDefinition.AddUpdateRoute,
             url: url,
+            templateUrl: url+"_Template?Popup=true",
             data:data,
             view:"AppointmentView",
             buttons: MF.Views.popupButtonBuilder.builder("editModule").standardEditButons()
@@ -131,16 +142,14 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     copyItem:function(){
-        var entityId = $("#EntityId",this.ajaxPopupDisplay.el).val();
-        var data = {"EntityId":entityId,"Copy":true};
-        this.editEvent(this.options.calendarDef.AddEditUrl,data);
+        var data = {"EntityId":this.currentEventId,"Copy":true};
+        this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
         this.ajaxPopupDisplay.close();
     },
 
     deleteItem: function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
-            var entityId = $("#EntityId").val();
-            MF.repository.ajaxGet(this.options.calendarDef.DeleteUrl,{"EntityId":entityId}, $.proxy(function(result){
+            MF.repository.ajaxGet(this.model.CalendarDefinition.DeleteUrl,{"EntityId":this.currentEventId}).done($.proxy(function(result){
                 this.ajaxPopupDisplay.close();
                 if(!result.Success){
                     alert(result.Message);
@@ -151,18 +160,16 @@ MF.Views.CalendarView = MF.Views.View.extend({
         }
     },
     displayEdit:function(event){
-        if(!this.options.calendarDef.canEdit){
+        if(!this.model.CalendarDefinition.canEdit){
              alert("you can't edit retroactively");
             return;
         }
-        var id = $("#EntityId",this.ajaxPopupDisplay.el).val();
         this.ajaxPopupDisplay.close();
-        this.editEvent(this.options.calendarDef.AddEditUrl+"/"+id);
+        this.editEvent(this.model.CalendarDefinition.AddUpdateUrl, {EntityId:this.currentEventId});
     },
 
-
     resetCalendar:function(){
-        var locId = $("[name=Location]").val();
+        var locId = this.viewModel.Location();
         var ids="";
         $(".legendLabel").each(function(i,item){
             if($(item).hasClass("showing")){
@@ -174,15 +181,15 @@ MF.Views.CalendarView = MF.Views.View.extend({
         }else{
             ids="0";
         }
-        this.replaceSource({url : this.options.calendarDef.Url, data:{Loc:locId, TrainerIds:ids} });
+        this.replaceSource({url : this.model.CalendarDefinition.Url, data:{Loc:locId, TrainerIds:ids} });
         this.reload();
     },
     reload:function(){
-        $(this.options.calendarDef.calendarContainer,this.el).fullCalendar( 'refetchEvents' )
+        $("#calendar",this.el).fullCalendar( 'refetchEvents' )
     },
 
     replaceSource:function(source){
-        $(this.options.calendarDef.calendarContainer,this.el).fullCalendar( 'replaceEventSource', source )
+        $("#calendar",this.el).fullCalendar( 'replaceEventSource', source )
     },
     legendLabelClick:function(e){
         $(e.target).toggleClass("showing");
@@ -207,7 +214,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 
     formSuccess:function(){
         this.formCancel();
-        this.reload();
+        this.resetCalendar();
     },
     formCancel:function(){
         this.ajaxPopupFormModule.close();
@@ -216,115 +223,149 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.ajaxPopupDisplay.close();
     }
 });
-MF.Views.AppointmentView = MF.Views.AjaxFormView.extend({
-    events:_.extend({
-        'change [name="Appointment.Length"]':'handleTimeChange',
-        'change [name="sHour"]':'handleTimeChange',
-        'change [name="sMinutes"]':'handleTimeChange',
-        'change [name="sAMPM"]':'handleTimeChange'
-
-    }, MF.Views.AjaxFormView.prototype.events),
-
+MF.Views.AppointmentView = MF.Views.View.extend({
+    initialize: function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+    },
+    events:{
+        'change [name="AppointmentType"]':'handleTimeChange',
+        'click #save' : 'saveItem',
+        'click #cancel' : 'cancel'
+    },
     viewLoaded:function(){
-        this.loadTokenizers();
+        // this is strange, how is starttime a string when viewmodel is a date
+        this.model.StartTimeString = ko.observable(this.model.StartTime());
+        var startDate = new XDate(new Date("1/5/1972 "+this.model.StartTime()));
+        this.setEndTime(startDate);
+        MF.vent.bind("StartTime:timeBox:close",this.handleTimeChange,this);
     },
-    handleTimeChange:function(){
-        var startTime = this.getStartTime();
-        var endTimeString = this.getEndTimeString(startTime);
-        $("#endTime").text(endTimeString);
+    onClose:function(){
+        MF.vent.unbind("StartTime:timeBox:close",this.handleTimeChange,this);
     },
-    getEndTimeString:function(startTime){
-        var min;
-        switch($("[name='Appointment.Length']").val()){
+    renderElements:function(){
+        var collection = this.elementsViewmodel.collection;
+        var startTimeElement = collection["StartTime"];
+        startTimeElement.timeDefaults.stepMinute = 15;
+        for(var item in collection){
+            collection[item].render();
+        }
+    },
+    handleTimeChange:function(valArray) {
+        var scroller = $('[name="StartTime"]').scroller('getInst');
+        if (!scroller) {return;}
+        var date = $('[name="Date"]').val();
+        var timeValues;
+        timeValues = scroller.values;
+        var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1]);
+        this.model.StartTimeString = ko.observable(startTime.toString("hh:mm TT"));
+        this.setEndTime(startTime);
+    },
+    setEndTime:function(startTime){
+        var aptMin;
+        switch($("[name='AppointmentType']").val()){
             case "Hour":
-                min = 60;
+            case "Pair":
+                aptMin = 60;
                 break;
             case "Half Hour":
-                min = 30;
-                break;
-            case "Hour and a Half":
-                min = 90;
+                aptMin = 30;
                 break;
         }
-        var endTime = startTime.addMinutes(min);
+        var endTime = startTime.addMinutes(aptMin);
         var endHour = endTime.getHours();
             var amPm = "AM";
             if(endHour>12){
                 endHour-=12;
                 amPm="PM";
             }
-            var min = endTime.getMinutes().toString();
-            if(min == "0"){
-                min="00";
+            var endMin = endTime.getMinutes().toString();
+            if(endMin.length == 1){
+                endMin="0"+endMin;
             }
-            return endHour+":"+min+" "+amPm;
-    },
-    getStartTime:function(){
-        var hour = $("[name='sHour']").val();
-        var min = $("[name='sMinutes']").val();
-        if($("[name='sAMPM']").val()=="PM"){
-            hour = new Number(hour)+12;
-        }
-        return new XDate().setHours(hour).setMinutes(min);
-    },
+            $("#endTime").text(endHour+":"+endMin+" "+amPm);
+            this.model.EndTimeString = ko.observable(endHour+":"+endMin+" "+amPm);
 
-    loadTokenizers: function(){
-        var options = $.extend({},this.options,{el:"#clients"});
-
-        this.tokenView = new MF.Views.TokenView(options);
-        this.tokenView.render();
-        this.storeChild(this.tokenView);
     }
+
 });
-MF.Views.ClientFormView = MF.Views.AjaxFormView.extend({
-    events:_.extend({
+MF.Views.ClientFormView = MF.Views.View.extend({
+     events:_.extend({
         'click .client_payment':'payment',
-        'click .delete':'deleteItem'
-    }, MF.Views.AjaxFormView.prototype.events),
+        'click .delete':'deleteItem',
+        'click #save' : 'saveItem',
+        'click #cancel' : 'cancel'
+    }),
+    initialize:function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+    },
+    viewLoaded:function(){
+        this._setupBindings();
+    },
+     _setupBindings:function(){
+         MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
+    },
+    _unbindBindings:function(){
+        MF.vent.unbind("delete:"+this.id+":success",this.deleteSuccess,this);
+    },
     payment:function(){
-        var id = $(this.el).find("#EntityId").val();
-        MF.vent.trigger("route","paymentlist/"+id,true);
+        var id =this.model.EntityId();
+        MF.vent.trigger("route",MF.generateRoute("paymentlist",id),true);
     },
     deleteItem:function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
-            var id = $("#EntityId").val();
-            MF.repository.ajaxPost(this.options.deleteUrl, {'EntityId':id},$.proxy(this.deleteCallback,this));
+            var id =this.model.EntityId();
+            MF.repository.ajaxPost(this.model._deleteUrl, {'EntityId':id},$.proxy(this.deleteCallback,this));
         }
     },
-    deleteCallback:function(result){
-        var notificationArea = new cc.NotificationArea("delete","#errorMessagesGrid","#errorMessagesForm", MF.vent);
-        notificationArea.render(this.$el);
-        MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
-        MF.notificationService.addArea(notificationArea);
-        MF.notificationService.resetArea(notificationArea.areaName());
-        MF.notificationService.processResult(result,notificationArea.areaName(),this.id);
+    deleteCallback:function(_result){
+        var result = typeof _result =="string" ? JSON.parse(_result) : _result;
+        if(!CC.notification.handleResult(result,this.cid)){
+            return;
+        }
+        MF.vent.trigger("delete:"+this.id+":success",result);
     },
     deleteSuccess:function(result){
         MF.WorkflowManager.returnParentView(result,true);
     },
     onClose:function(){
-        MF.vent.unbind("delete:"+this.id+":success",this.deleteSuccess,this);
-        MF.notificationService.removeArea("delete");
+        this._unbindBindings();
         this._super("onClose",arguments);
     }
-
 });
-MF.Views.PaymentListView = MF.Views.GridView.extend({
-    addNew:function(){
-        var parentId = $(this.el).find("#ParentId").val();
-        MF.vent.trigger("route",this.options.addUpate+"/0/"+parentId ,true);
+MF.Views.PaymentListView = MF.Views.View.extend({
+    initialize:function(){
+        this.options.gridOptions ={multiselect:false};
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
     },
-    editItem:function(id,itemType){
-        var parentId = $(this.el).find("#ParentId").val();
-        var _itemType = itemType?itemType:"";
-        // fix this for all assets
-        MF.vent.trigger("route",this.options.addUpate+"/"+id+"/"+parentId,true);
+    addNew:function(){
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,0,parentId) ,true);
+    },
+    editItem:function(id){
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,id,parentId),true);
+    },
+    viewLoaded:function(){
+        this.setupBindings();
+    },
+    onClose:function(){
+        this.unbindBindings();
     }
 });
 
-MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
-    events:_.extend({
-    },MF.Views.AjaxFormView.prototype.events),
+MF.Views.PaymentFormView = MF.Views.View.extend({
+    initialize: function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+    },
     viewLoaded:function(){
         $("#fullHour").change($.proxy(function(e){
             this.calculateTotal("FullHour","#fullHourTotal",e.target);
@@ -355,7 +396,7 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
     },
     calculateTotal:function(type, totalSelector, numberSelector){
         var number = $(numberSelector).val();
-        var itemTotal = (this.options.sessionRates[type] * number);
+        var itemTotal = (this.model._sessionRateDto[type]() * number);
         $(totalSelector).text("$" + itemTotal);
         var total = parseInt($("#fullHourTotal").text().substring(1))
             + parseInt($("#halfHourTotal").text().substring(1))
@@ -364,51 +405,31 @@ MF.Views.PaymentFormView = MF.Views.AjaxFormView.extend({
             + parseInt($("#pairTotal").text().substring(1))
             + parseInt($("#pairTenPackTotal").text().substring(1));
         $("#total").val(total);
-
     }
 });
 
-MF.Views.TrainerFormView = MF.Views.AjaxFormView.extend({
-     events:_.extend({
+MF.Views.TrainerFormView = MF.Views.View.extend({
+     initialize: function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+    },
+     events:{
         'click #trainerPayments' : 'trainerPayments',
-         'click #payTrainer' : 'payTrainer'
-    }, MF.Views.AjaxFormView.prototype.events),
+         'click #payTrainer' : 'payTrainer',
+         'click #save' : 'saveItem',
+        'click #cancel' : 'cancel'
+    },
     viewLoaded:function(){
-        this.$el.find(this.options.crudFormSelector).data().crudForm.setBeforeSubmitFuncs(this.clientRateBeforeSubmit);
-        this.loadPlugins();
-        this.loadTokenizers();
-    },
-    clientRateBeforeSubmit:function(arr){
-        var items =$("[name='ClientsInput']").data('selectedItems');
-        if(items&&$(items).size()>0){
-            $.each(items, function(i,item){
-            arr.push({"name":"SelectedClients["+i+"].id","value":item.id});
-            arr.push({"name":"SelectedClients["+i+"].name","value":item.name});
-            arr.push({"name":"SelectedClients["+i+"].percentage","value":item.percentage});
-            })
-        }
-    },
-    loadTokenizers: function(){
-        var clientOptions = $.extend({el:"#clients", id:"clientToken"},this.options.clientOptions);
-        var userRoleOptions = $.extend({el:"#userRoles"},this.options.userRolesOptions);
-        this.clientsView = new MF.Views.TrainerEditableTokenView(clientOptions);
-        this.clientsView.render();
-        this.storeChild(this.clientsView);
-
-        this.userRolesView = new MF.Views.TokenView(userRoleOptions);
-        this.userRolesView.render();
-        this.storeChild(this.userRolesView);
-    },
-    loadPlugins:function(){
-        $('#color',"#detailArea").miniColors();
+        $('#color',this.el).miniColors();
     },
     trainerPayments:function(){
-        var id = $(this.el).find("#EntityId").val();
-        MF.vent.trigger("route","trainerpaymentlist/"+id,true);
+        var rel = MF.State.get("Relationships");
+        MF.vent.trigger("route","trainerpaymentlist/"+rel.entityId,true);
     },
     payTrainer:function(){
-        var id = $(this.el).find("#EntityId").val();
-        MF.vent.trigger("route","paytrainerlist/"+id,true);
+        var rel = MF.State.get("Relationships");
+        MF.vent.trigger("route","paytrainerlist/"+rel.entityId,true);
     }
 });
 
@@ -482,28 +503,55 @@ MF.Views.TrainerEditableTokenView = MF.Views.EditableTokenView.extend({
 
 });
 
-MF.Views.TrainerGridView = MF.Views.GridView.extend({
+MF.Views.TrainerGridView = MF.Views.View.extend({
+    initialize:function(){
+        this.options.gridOptions ={multiselect:false};
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
+    },
+    addNew:function(){
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,0,parentId) ,true);
+    },
+    editItem:function(id){
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,id,parentId),true);
+    },
     viewLoaded:function(){
-        MF.vent.bind("Redirect",this.showPayGrid,this);
+        this.setupBindings();
+    },
+    _setupBindings:function(){
+         MF.vent.bind("Redirect",this.showPayGrid,this);
+    },
+    _unbindBindings:function(){
+         MF.vent.bind("Redirect",this.showPayGrid,this);
     },
     showPayGrid:function(id){
         MF.vent.trigger("route","paytrainerlist/"+id,true);
     },
     onClose:function(){
-        MF.vent.unbind("Redirect");
-        this._super("onClose",arguments);
+        this.unbindBindings();
     }
 });
 
-MF.Views.ClientGridView = MF.Views.GridView.extend({
-    viewLoaded:function(){
-        MF.vent.bind("Redirect",this.showPayGrid,this);
+MF.Views.ClientGridView = MF.Views.View.extend({
+    initialize:function(){
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
     },
-    showPayGrid:function(id){
-        MF.vent.trigger("route","paymentlist/"+id,true);
+    viewLoaded:function(){
+         MF.vent.bind(this.options.gridId+":Redirect",this.showPayGrid,this);
+        this.setupBindings();
     },
     onClose:function(){
-        MF.vent.unbind("Redirect");
-        this._super("onClose",arguments);
+        MF.vent.unbind(this.options.gridId+":Redirect",this.showPayGrid,this);
+        this.unbindBindings();
+    },
+    showPayGrid:function(id){
+        MF.vent.trigger("route",MF.generateRoute("paymentlist",id),true);
     }
 });

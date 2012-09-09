@@ -40,7 +40,7 @@ namespace MethodFitness.Core.Html.Expressions
         {
             if (CssClasses.Count > 0)
             {
-                CssClasses.Each(name => builder.AppendFormat("{0}", name));
+                CssClasses.ForEachItem(name => builder.AppendFormat("{0}", name));
 
                 attributes.Add("class", string.Join(" ", CssClasses.ToArray()));
 
@@ -59,7 +59,7 @@ namespace MethodFitness.Core.Html.Expressions
 
             var builder = new StringBuilder();
 
-            attributes.Each(pair => builder.AppendFormat(
+            attributes.ForEachItem(pair => builder.AppendFormat(
                                         CultureInfo.InvariantCulture, " {0}=\"{1}\"",
                                         pair.Key,
                                         HttpUtility.HtmlAttributeEncode(pair.Value)));
@@ -100,7 +100,7 @@ namespace MethodFitness.Core.Html.Expressions
 
         protected void renderCustomAttributes(HtmlTextWriter html)
         {
-            GetAllHtmlAttributes().Each(a => html.AddAttribute(a.Key, a.Value));
+            GetAllHtmlAttributes().ForEachItem(a => html.AddAttribute(a.Key, a.Value));
         }
 
         protected virtual void beforeStartingMainTag(HtmlTextWriter html)

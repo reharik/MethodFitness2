@@ -7,7 +7,7 @@ using xVal.ServerSide;
 
 namespace MethodFitness.Core.Services
 {
-    public interface IValidationManager<ENTITY> where ENTITY:Entity
+    public interface IValidationManager<ENTITY> 
     {
         IEnumerable<ValidationReport<ENTITY>> GetValidationReports();
         ValidationReport<ENTITY> GetLastValidationReport();
@@ -18,7 +18,7 @@ namespace MethodFitness.Core.Services
         Notification FinishWithAction(string successMessage = "");
     }
 
-    public class ValidationManager<ENTITY> : IValidationManager<ENTITY> where ENTITY : Entity
+    public class ValidationManager<ENTITY> : IValidationManager<ENTITY> 
     {
         private readonly IRepository _repository;
 
@@ -57,7 +57,7 @@ namespace MethodFitness.Core.Services
         {
             if (successMessage.IsEmpty()) successMessage = CoreLocalizationKeys.SUCCESSFUL_SAVE.ToString();
             var notification = new Notification { Success = true };
-            GetValidationReports().Each(x =>
+            GetValidationReports().ForEachItem(x =>
             {
                 if (!x.Success)
                 {
@@ -65,7 +65,7 @@ namespace MethodFitness.Core.Services
                     if (notification.Errors == null)
                         notification.Errors = x.GetErrorInfos().ToList();
                     else
-                        x.GetErrorInfos().Each(notification.Errors.Add).ToList();
+                        BasicExtentions.ForEachItem(x.GetErrorInfos(), notification.Errors.Add).ToList();
                 }else
                 {
                     x.SuccessAction(x.entity);
@@ -85,7 +85,7 @@ namespace MethodFitness.Core.Services
         {
             if (successMessage.IsEmpty()) successMessage = CoreLocalizationKeys.SUCCESSFUL_SAVE.ToString();
             var notification = new Notification { Success = true };
-            GetValidationReports().Each(x =>
+            GetValidationReports().ForEachItem(x =>
             {
                 if (!x.Success)
                 {
@@ -93,7 +93,7 @@ namespace MethodFitness.Core.Services
                     if (notification.Errors == null)
                         notification.Errors = x.GetErrorInfos().ToList();
                     else
-                        x.GetErrorInfos().Each(notification.Errors.Add).ToList();
+                        BasicExtentions.ForEachItem(x.GetErrorInfos(), notification.Errors.Add).ToList();
                 }
             });
             if (notification.Success)
@@ -107,7 +107,7 @@ namespace MethodFitness.Core.Services
         }
     }
 
-    public class ValidationReport<ENTITY> where ENTITY:Entity
+    public class ValidationReport<ENTITY> 
     {
         public ENTITY entity { get; set; }
         public Action<ENTITY> SuccessAction { get; set; }

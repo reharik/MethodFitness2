@@ -24,7 +24,7 @@ namespace MethodFitness.Core.Services
 
         public bool IsAllowed(string operationName)
         {
-            var userEntityId = _sessionContext.GetUserEntityId();
+            var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             return _authorizationService.IsAllowed(user, operationName);
         }
@@ -32,7 +32,7 @@ namespace MethodFitness.Core.Services
         public static bool Allow(string operationName)
         {
             var sessionContext = ObjectFactory.Container.GetInstance<SessionContext>();
-            var userEntityId = sessionContext.GetUserEntityId();
+            var userEntityId = sessionContext.GetUserId();
             var repository = ObjectFactory.Container.GetInstance<IRepository>();
             var user = repository.Find<User>(userEntityId);
             var authorizationService = ObjectFactory.Container.GetInstance<IAuthorizationService>();

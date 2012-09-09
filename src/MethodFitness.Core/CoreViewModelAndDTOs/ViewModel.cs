@@ -8,8 +8,10 @@ namespace MethodFitness.Core
         public int EntityId { get; set; }
         public int ParentId { get; set; }
         public int RootId { get; set; }
-        public string Title { get; set; }
+        public string _Title { get; set; }
         public string addUpdateUrl { get; set; }
+        public string _saveUrl { get; set; }
+        public string DateCreated { get; set; }
     }
 
     public class ListViewModel :ViewModel

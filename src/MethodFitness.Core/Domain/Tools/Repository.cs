@@ -58,17 +58,17 @@ namespace MethodFitness.Core.Domain
             return _unitOfWork.CurrentSession;
         }
 
-        public void Save<ENTITY>(ENTITY entity) where ENTITY : Entity
+        public void Save<ENTITY>(ENTITY entity) where ENTITY : IPersistableObject
         {
             _unitOfWork.CurrentSession.SaveOrUpdate(entity);
         }
 
-        public IEnumerable<T> FindAll<T>() where T : Entity
+        public IEnumerable<T> FindAll<T>() where T : IPersistableObject
         {
             return _unitOfWork.CurrentSession.Query<T>();
         }
 
-        public void Delete<ENTITY>(ENTITY entity) where ENTITY : Entity
+        public void Delete<ENTITY>(ENTITY entity) where ENTITY : IPersistableObject
         {
             entity.Archived = true;
             _unitOfWork.CurrentSession.SaveOrUpdate(entity);
@@ -79,12 +79,12 @@ namespace MethodFitness.Core.Domain
             _unitOfWork.CurrentSession.Delete(target);
         }
 
-        public ENTITY Load<ENTITY>(int id) where ENTITY : Entity
+        public ENTITY Load<ENTITY>(int id) where ENTITY : IPersistableObject
         {
             return _unitOfWork.CurrentSession.Load<ENTITY>(id);
         }
 
-        public IQueryable<ENTITY> Query<ENTITY>() where ENTITY : Entity
+        public IQueryable<ENTITY> Query<ENTITY>() where ENTITY : IPersistableObject
         {
             return _unitOfWork.CurrentSession.Query<ENTITY>();
         }
@@ -99,12 +99,12 @@ namespace MethodFitness.Core.Domain
             return _unitOfWork.CurrentSession.Query<T>().FirstOrDefault(where);
         }
 
-        public T Find<T>(int id) where T : Entity
+        public T Find<T>(int id) where T : IPersistableObject
         {
             return _unitOfWork.CurrentSession.Get<T>(id);
         }
 
-        public IList<ENTITY> ExecuteCriteria<ENTITY>(DetachedCriteria criteria) where ENTITY : Entity
+        public IList<ENTITY> ExecuteCriteria<ENTITY>(DetachedCriteria criteria) where ENTITY : IPersistableObject
         {
             ICriteria executableCriteria = criteria.GetExecutableCriteria(_unitOfWork.CurrentSession);
             return executableCriteria.List<ENTITY>();
@@ -113,11 +113,6 @@ namespace MethodFitness.Core.Domain
         public IList<T> GetNamedQuery<T>(string sprocName)
         {
             return _unitOfWork.CurrentSession.GetNamedQuery(sprocName).List<T>();
-        }
-
-        public IQueryOver<ENTITY> QueryOver<ENTITY>() where ENTITY : Entity
-        {
-            return _unitOfWork.CurrentSession.QueryOver<ENTITY>();
         }
 
         public void Initialize()

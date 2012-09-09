@@ -7,18 +7,19 @@ using System.Reflection;
 using System.Web.Script.Serialization;
 using MethodFitness.Core.Domain;
 using FubuMVC.Core.Util;
+using MethodFitness.Core.Html.Grid;
 
 namespace MethodFitness.Core.Services
 {
     public interface IDynamicExpressionBuilder
     {
-        Expression<Func<ENTITY, bool>> Build<ENTITY>(string json, bool isNullCheck = false) where ENTITY : Entity;
-        Expression<Func<ENTITY, bool>> Build<ENTITY>(JqGridFilter filter, bool isNullCheck = false) where ENTITY : Entity;
+        Expression<Func<ENTITY, bool>> Build<ENTITY>(string json, bool isNullCheck = false);
+        Expression<Func<ENTITY, bool>> Build<ENTITY>(JqGridFilter filter, bool isNullCheck = false);
     }
 
     public class DynamicExpressionBuilder : IDynamicExpressionBuilder
     {
-        public Expression<Func<ENTITY, bool>> Build<ENTITY>(string json, bool isNullCheck = false) where ENTITY : Entity
+        public Expression<Func<ENTITY, bool>> Build<ENTITY>(string json, bool isNullCheck = false)
         {
             if (json.IsEmpty()) return null;
             var jqGridFilter = DeserializeJson(json);
@@ -32,7 +33,7 @@ namespace MethodFitness.Core.Services
             JqGridFilter filter = jss.Deserialize<JqGridFilter>(json);
             return filter;
         }
-        public Expression<Func<ENTITY, bool>> Build<ENTITY>(JqGridFilter filter, bool isNullCheck = false) where ENTITY : Entity 
+        public Expression<Func<ENTITY, bool>> Build<ENTITY>(JqGridFilter filter, bool isNullCheck = false)
         {
             ParameterExpression pe = Expression.Parameter(typeof(ENTITY), "x");
             if (filter.groupOp == "NONE") return null;
@@ -60,7 +61,7 @@ namespace MethodFitness.Core.Services
         private Expression createBinaryExpressionsForRules(IEnumerable<FilterItem> filterItems, ParameterExpression pe, Expression pb = null, bool isNullCheck=false)
         {
             Expression predicateBody = pb;
-            filterItems.Each(item =>
+            filterItems.ForEachItem(item =>
                                  { if(item.data.IsNotEmpty()||item.listOfIds!=null )
                                     {
                                          MemberExpression left = createMemberExpressionForProperty(pe, item.field);

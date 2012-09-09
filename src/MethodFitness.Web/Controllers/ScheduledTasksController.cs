@@ -19,9 +19,9 @@ namespace MethodFitness.Web.Controllers
         public ActionResult ProcessAppointments()
         {
             var appointments = _repository.Query<Appointment>(x => x.EndTime > DateTime.Now.AddDays(-1) && x.EndTime <= DateTime.Now);
-            appointments.Each(x =>
+            appointments.ForEachItem(x =>
                                   {
-                                      x.Sessions.Each(s =>
+                                      x.Sessions.ForEachItem(s =>
                                                           {
                                                               s.SessionUsed = true;
                                                               s.Trainer = x.Trainer;
