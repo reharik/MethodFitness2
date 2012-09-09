@@ -66,6 +66,19 @@ div.col {
 	padding: 10px 20px;
 	display: block;
 }
+
+div.puCol {
+	width: 200px;
+	padding: 10px 20px;
+	display: block;
+}
+
+div.puColFull {
+    width: 500px;
+    padding: 10px 20px;
+	display: block;
+}
+
 div.dashboardCol {
 	width: 400px;
 	padding: 10px 20px;
@@ -141,7 +154,7 @@ div.fieldRow div.two-thirds {
 	width: 62%;
 	float: left;
 }
-div.fieldRow div.one-quarter {
+div.one-quarter {
 	margin-right: 8px;
 	width: 23%;
 	float: left;
@@ -387,6 +400,7 @@ div.footer div.col {
 /*Directly below was used to adjust the margins for the picture preview icon.*/
 .view_label, .view_display{
 	 margin: 8px 0 0 8px;
+    float: left;
 }
 
 .create_port{
@@ -574,7 +588,7 @@ div.headerInput input{
     text-align: center;
 }
 
-#messageContainer ul {
+#messageContainer ul, ul {
     list-style: none;
 }
 
@@ -617,4 +631,8 @@ div.headerInput input{
 
 .hrClear{
     clear:left;
+}
+
+.narrow{
+    width:20%;
 }

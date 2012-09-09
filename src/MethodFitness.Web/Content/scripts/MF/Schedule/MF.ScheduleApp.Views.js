@@ -7,12 +7,14 @@
  */
 
 MF.Views.CalendarView = MF.Views.View.extend({
+    initialize: function(){
+        MF.mixin(this, "modelAndElementsMixin");
+    },
     events:{
         'change [name=Location]' : 'resetCalendar',
         'click .legendLabel' : 'legendLabelClick',
         'click .legendHeader' : 'legendHeaderClick'
     },
-
     render:function(){
          $.when(MF.loadTemplateAndModel(this))
          .done($.proxy(this.renderCallback,this));
@@ -20,8 +22,14 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
     renderCallback:function(){
         this.model = this.rawModel;
-        this.model.id=this.id;
+        this.model.id= this.model.CalendarDefinition.id = this.id;
+        this.setupLegend();
         $("#calendar",this.el).asCalendar(this.model.CalendarDefinition);
+        this.bindSpecificModelAndElements({Location:this.model.Location,
+            _LocationList:this.model._LocationList,
+            _Title:this.model._Title,
+            EntityId:0
+        });
         //callback for render
         this.viewLoaded();
         //general notification of pageloaded
@@ -39,7 +47,6 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.vent.bind("ajaxPopupDisplayModule:displayModule:cancel",this.displayCancel,this);
         MF.vent.bind("popup:displayModule:edit",this.displayEdit,this);
 
-        this.setupLegend();
     },
     onClose:function(){
         MF.vent.unbind("calendar:"+this.id+":eventDrop");
@@ -64,7 +71,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "ScheduledDate":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")};
-        MF.repository.ajaxGet(this.options.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
+        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     eventResize:function( event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
         var data = {"EntityId":event.EntityId,
@@ -72,7 +79,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")
         };
-        MF.repository.ajaxGet(this.options.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
+        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
         if(new XDate(date).diffHours(new XDate())>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
@@ -80,13 +87,14 @@ MF.Views.CalendarView = MF.Views.View.extend({
             return;
         }
         var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
-        this.editEvent(this.model.CalendarDefinition.AddEditUrl,data);
+        this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
     },
     eventClick:function(calEvent, jsEvent, view) {
         if(calEvent.trainerId!= this.model.CalendarDefinition.TrainerId && !this.model.CalendarDefinition.CanSeeOthersAppointments){
             return;
         }
         this.model.CalendarDefinition.canEdit = new XDate(calEvent.start).diffHours(new XDate())<0 || this.model.CalendarDefinition.CanEditPastAppointments;
+        this.currentEventId = calEvent.EntityId;
         var data = {"EntityId": calEvent.EntityId};
         var builder = MF.Views.popupButtonBuilder.builder("displayModule");
         builder.addButton("Delete", $.proxy(this.deleteItem,this));
@@ -96,10 +104,10 @@ MF.Views.CalendarView = MF.Views.View.extend({
 
         var formOptions = {
             id: "displayModule",
-            route: this.model.DisplayRoute,
-            templateUrl: this.model.DisplayUrl+"_Template?Popup=true",
+            route: this.model.CalendarDefinition.DisplayRoute,
+            templateUrl: this.model.CalendarDefinition.DisplayUrl+"_Template?Popup=true",
             view: this.options.subViewName?"Display" + this.options.subViewName:"",
-            AddUpdateUrl: this.model.AddUpdateUrl,
+            AddUpdateUrl: this.model.CalendarDefinition.AddUpdateUrl,
             url: this.model.CalendarDefinition.DisplayUrl,
             data:data,
             buttons:builder.getButtons()
@@ -113,7 +121,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
     editEvent:function(url, data){
         var formOptions = {
            id: "editModule",
-            route: this.model.AddUpdateRoute,
+            route: this.model.CalendarDefinition.AddUpdateRoute,
             url: url,
             templateUrl: url+"_Template?Popup=true",
             data:data,
@@ -134,16 +142,14 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     copyItem:function(){
-        var entityId = $("#EntityId",this.ajaxPopupDisplay.el).val();
-        var data = {"EntityId":entityId,"Copy":true};
-        this.editEvent(this.model.CalendarDefinition.AddEditUrl,data);
+        var data = {"EntityId":this.currentEventId,"Copy":true};
+        this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
         this.ajaxPopupDisplay.close();
     },
 
     deleteItem: function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
-            var entityId = $("#EntityId").val();
-            MF.repository.ajaxGet(this.model.CalendarDefinition.DeleteUrl,{"EntityId":entityId}).done($.proxy(function(result){
+            MF.repository.ajaxGet(this.model.CalendarDefinition.DeleteUrl,{"EntityId":this.currentEventId}).done($.proxy(function(result){
                 this.ajaxPopupDisplay.close();
                 if(!result.Success){
                     alert(result.Message);
@@ -158,14 +164,12 @@ MF.Views.CalendarView = MF.Views.View.extend({
              alert("you can't edit retroactively");
             return;
         }
-        var id = $("#EntityId",this.ajaxPopupDisplay.el).val();
         this.ajaxPopupDisplay.close();
-        this.editEvent(this.model.CalendarDefinition.AddEditUrl+"/"+id);
+        this.editEvent(this.model.CalendarDefinition.AddUpdateUrl, {EntityId:this.currentEventId});
     },
 
-
     resetCalendar:function(){
-        var locId = $("[name=Location]").val();
+        var locId = this.viewModel.Location();
         var ids="";
         $(".legendLabel").each(function(i,item){
             if($(item).hasClass("showing")){
@@ -181,11 +185,11 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.reload();
     },
     reload:function(){
-        $(this.model.CalendarDefinition.calendarContainer,this.el).fullCalendar( 'refetchEvents' )
+        $("#calendar",this.el).fullCalendar( 'refetchEvents' )
     },
 
     replaceSource:function(source){
-        $(this.model.CalendarDefinition.calendarContainer,this.el).fullCalendar( 'replaceEventSource', source )
+        $("#calendar",this.el).fullCalendar( 'replaceEventSource', source )
     },
     legendLabelClick:function(e){
         $(e.target).toggleClass("showing");
@@ -210,7 +214,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 
     formSuccess:function(){
         this.formCancel();
-        this.reload();
+        this.resetCalendar();
     },
     formCancel:function(){
         this.ajaxPopupFormModule.close();
@@ -231,6 +235,8 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         'click #cancel' : 'cancel'
     },
     viewLoaded:function(){
+        // this is strange, how is starttime a string when viewmodel is a date
+        this.model.StartTimeString = ko.observable(this.model.StartTime());
         var startDate = new XDate(new Date("1/5/1972 "+this.model.StartTime()));
         this.setEndTime(startDate);
         MF.vent.bind("StartTime:timeBox:close",this.handleTimeChange,this);
@@ -253,6 +259,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         var timeValues;
         timeValues = scroller.values;
         var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1]);
+        this.model.StartTimeString = ko.observable(startTime.toString("hh:mm TT"));
         this.setEndTime(startTime);
     },
     setEndTime:function(startTime){
@@ -278,6 +285,8 @@ MF.Views.AppointmentView = MF.Views.View.extend({
                 endMin="0"+endMin;
             }
             $("#endTime").text(endHour+":"+endMin+" "+amPm);
+            this.model.EndTimeString = ko.observable(endHour+":"+endMin+" "+amPm);
+
     }
 
 });
@@ -329,6 +338,7 @@ MF.Views.ClientFormView = MF.Views.View.extend({
 });
 MF.Views.PaymentListView = MF.Views.View.extend({
     initialize:function(){
+        this.options.gridOptions ={multiselect:false};
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "defaultGridEventsMixin");
@@ -398,47 +408,28 @@ MF.Views.PaymentFormView = MF.Views.View.extend({
     }
 });
 
-MF.Views.TrainerFormView = MF.Views.AjaxFormView.extend({
-     events:_.extend({
+MF.Views.TrainerFormView = MF.Views.View.extend({
+     initialize: function(){
+        MF.mixin(this, "formMixin");
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+    },
+     events:{
         'click #trainerPayments' : 'trainerPayments',
-         'click #payTrainer' : 'payTrainer'
-    }, MF.Views.AjaxFormView.prototype.events),
+         'click #payTrainer' : 'payTrainer',
+         'click #save' : 'saveItem',
+        'click #cancel' : 'cancel'
+    },
     viewLoaded:function(){
-        this.$el.find(this.options.crudFormSelector).data().crudForm.setBeforeSubmitFuncs(this.clientRateBeforeSubmit);
-        this.loadPlugins();
-        this.loadTokenizers();
-    },
-    clientRateBeforeSubmit:function(arr){
-        var items =$("[name='ClientsInput']").data('selectedItems');
-        if(items&&$(items).size()>0){
-            $.each(items, function(i,item){
-            arr.push({"name":"SelectedClients["+i+"].id","value":item.id});
-            arr.push({"name":"SelectedClients["+i+"].name","value":item.name});
-            arr.push({"name":"SelectedClients["+i+"].percentage","value":item.percentage});
-            })
-        }
-    },
-    loadTokenizers: function(){
-        var clientOptions = $.extend({el:"#clients", id:"clientToken"},this.options.clientOptions);
-        var userRoleOptions = $.extend({el:"#userRoles"},this.options.userRolesOptions);
-        this.clientsView = new MF.Views.TrainerEditableTokenView(clientOptions);
-        this.clientsView.render();
-        this.storeChild(this.clientsView);
-
-        this.userRolesView = new MF.Views.TokenView(userRoleOptions);
-        this.userRolesView.render();
-        this.storeChild(this.userRolesView);
-    },
-    loadPlugins:function(){
-        $('#color',"#detailArea").miniColors();
+        $('#color',this.el).miniColors();
     },
     trainerPayments:function(){
-        var id = $(this.el).find("#EntityId").val();
-        MF.vent.trigger("route","trainerpaymentlist/"+id,true);
+        var rel = MF.State.get("Relationships");
+        MF.vent.trigger("route","trainerpaymentlist/"+rel.entityId,true);
     },
     payTrainer:function(){
-        var id = $(this.el).find("#EntityId").val();
-        MF.vent.trigger("route","paytrainerlist/"+id,true);
+        var rel = MF.State.get("Relationships");
+        MF.vent.trigger("route","paytrainerlist/"+rel.entityId,true);
     }
 });
 
@@ -512,16 +503,36 @@ MF.Views.TrainerEditableTokenView = MF.Views.EditableTokenView.extend({
 
 });
 
-MF.Views.TrainerGridView = MF.Views.GridView.extend({
+MF.Views.TrainerGridView = MF.Views.View.extend({
+    initialize:function(){
+        this.options.gridOptions ={multiselect:false};
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
+    },
+    addNew:function(){
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,0,parentId) ,true);
+    },
+    editItem:function(id){
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,id,parentId),true);
+    },
     viewLoaded:function(){
-        MF.vent.bind("Redirect",this.showPayGrid,this);
+        this.setupBindings();
+    },
+    _setupBindings:function(){
+         MF.vent.bind("Redirect",this.showPayGrid,this);
+    },
+    _unbindBindings:function(){
+         MF.vent.bind("Redirect",this.showPayGrid,this);
     },
     showPayGrid:function(id){
         MF.vent.trigger("route","paytrainerlist/"+id,true);
     },
     onClose:function(){
-        MF.vent.unbind("Redirect");
-        this._super("onClose",arguments);
+        this.unbindBindings();
     }
 });
 

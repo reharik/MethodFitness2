@@ -10,16 +10,16 @@
 
     <div class="col left">
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.LocationEntityId).ToHtmlTag()
+            @Html.SubmissionFor(x => x.LocationEntityId).LabelDisplay(WebLocalizationKeys.LOCATION).ToHtmlTag()
         </div>
         <div class="fieldRow">
             @if (@UserPermissionService.Allow("/Calendar/SetAppointmentForOthers"))
             {
-                @Html.SubmissionFor(x => x.TrainerEntityId).ToHtmlTag()
+                @Html.SubmissionFor(x => x.TrainerEntityId).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
             }
             else
             {
-                @Html.ViewFor(x => x.TrainerFullNameFNF).ToHtmlTag()
+                @Html.ViewFor(x => x.TrainerFullNameFNF).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
                 @Html.SubmissionFor(x => x.TrainerEntityId).HideRoot().ToHtmlTag()
             }
         </div>
@@ -34,7 +34,7 @@
         </div>
         <h5>@WebLocalizationKeys.STARTTIME</h5>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.StartTime).ToHtmlTag()
+            @Html.SubmissionFor(x => x.StartTime).HideLabel().ToHtmlTag()
         </div>
         <h5>
             @WebLocalizationKeys.ENDTIME

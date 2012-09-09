@@ -41,9 +41,13 @@ namespace MethodFitness.Core.Html.Grid
             var cellValues = new List<string>();
             foreach (var column in columns)
             {
-                modifications.ForEachItem(x => x.Invoke(column, item));
-                string value = column.BuildColumn(item, user, _authorizationService, gridName);
-                cellValues.Add(value ?? string.Empty);
+                bool isAllowed = !column.Operation.IsNotEmpty() || _authorizationService.IsAllowed(user, column.Operation);
+                if (isAllowed)
+                {
+                    modifications.ForEachItem(x => x.Invoke(column, item));
+                    string value = column.BuildColumn(item, gridName);
+                    cellValues.Add(value ?? string.Empty);
+                }
             }
             return cellValues.ToArray();
         }

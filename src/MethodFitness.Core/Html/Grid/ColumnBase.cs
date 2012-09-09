@@ -14,7 +14,7 @@ namespace MethodFitness.Core.Html.Grid
         IDictionary<string, string> Properties { get; set; }
         string Operation { get; set; }
         int ColumnIndex { get; set; }
-        string BuildColumn(object item, User user, IAuthorizationService _authorizationService, string gridName = "");
+        string BuildColumn(object item, string gridName = "");
     }
 
     public class ColumnBase<ENTITY> : IGridColumn, IEquatable<ColumnBase<ENTITY>> where ENTITY : IGridEnabledClass
@@ -33,15 +33,13 @@ namespace MethodFitness.Core.Html.Grid
 
         public int ColumnIndex { get; set; }
 
-        public virtual string BuildColumn(object item, User user, IAuthorizationService _authorizationService, string gridName)
+        public virtual string BuildColumn(object item, string gridName)
         {
-            return FormatValue((ENTITY)item, user, _authorizationService);
+            return FormatValue((ENTITY)item);
         }
 
-        protected string FormatValue(ENTITY item, User user, IAuthorizationService _authorizationService)
+        protected string FormatValue(ENTITY item)
         {
-            bool isAllowed = !Operation.IsNotEmpty() || _authorizationService.IsAllowed(user, Operation);
-            if (!isAllowed) return null;
             var propertyValue = propertyAccessor.GetValue(item);
             var value = propertyValue;
             if (propertyValue != null)

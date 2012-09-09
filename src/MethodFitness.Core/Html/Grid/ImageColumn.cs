@@ -30,10 +30,10 @@ namespace MethodFitness.Core.Html.Grid
             Properties[GridColumnProperties.width.ToString()] = width;
             return this;
         }
-        public override string BuildColumn(object item, User user, IAuthorizationService _authorizationService, string gridName = "")
+        public override string BuildColumn(object item, string gridName = "")
         {
             var _item = (ENTITY)item;
-            var value = FormatValue(_item, user, _authorizationService);
+            var value = FormatValue(_item);
             if (value.IsEmpty()) return null;
             var divTag = BuildDiv();
             divTag.AddClasses(new[] { "imageColumn" });

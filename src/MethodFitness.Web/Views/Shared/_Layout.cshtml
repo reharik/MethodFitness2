@@ -32,7 +32,7 @@
 
     @Script("jqueryPlugins/jquery-1.7.1.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.transform-0.9.3.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery-ui-1.8.16.custom.min.js").ToHtmlTag()
+    @Script("jqueryPlugins/jquery-ui-1.8.22.custom.min.js").ToHtmlTag()
     @Script("jqueryPlugins/cc.tokeninput2.js").ToHtmlTag()
 
     @Script("jqueryPlugins/grid.locale-en.js").ToHtmlTag()
@@ -159,9 +159,12 @@
     
     <script id="payTrainerSearchTemplate" type="text/x-jQuery-tmpl">
         <div id="filterArea">
-            <div class="headerInput">@WebLocalizationKeys.END_DATE
-            <input type="text" id="end_date" class="datePicker"/></div>
+            <div class="headerInput">
+                @WebLocalizationKeys.END_DATE
+                <input type="text" data-bind="value:EndDate" name="EndDate" class="datePicker" >
+            </div>
             <button id="search" class="filter" title="@WebLocalizationKeys.FILTER"></button>
+            <button id='payTrainerButton' class='dollar_sign' ></button>
         </div>
     </script>
 </html>

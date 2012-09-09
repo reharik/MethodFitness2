@@ -11,6 +11,6 @@ namespace MethodFitness.Web.Areas.Schedule.Grids
     {
         void AddColumnModifications(Action<IGridColumn, ENTITY> modification);
         GridDefinition GetGridDefinition(string url);
-        GridItemsViewModel GetGridItemsViewModel(PageSortFilter pageSortFilter, IQueryable<ENTITY> items);
+        GridItemsViewModel  GetGridItemsViewModel(PageSortFilter pageSortFilter, IQueryable<ENTITY> items);
     }
 }

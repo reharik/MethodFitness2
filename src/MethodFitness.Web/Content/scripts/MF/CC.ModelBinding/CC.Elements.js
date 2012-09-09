@@ -81,9 +81,6 @@ CC.Elements.DateTextbox = CC.Elements.Element.extend({
             mode: 'scroller',
             dateOrder: 'mmddyyyy',
             headerPreText:headerText,
-            onClose:function(valText,inst){
-                MF.vent.trigger(this.name+":dateBox:close",[valText,inst]);
-            }
         }
     },
     destroy:function(){

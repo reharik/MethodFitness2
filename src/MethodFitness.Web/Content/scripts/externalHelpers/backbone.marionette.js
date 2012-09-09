@@ -1167,13 +1167,14 @@ _.extend(Marionette.TemplateCache, {
   // from the DOM.
 
  // REH 7.23.12 Adding the url to get the template if not in cache
-  get: function(templateId, url){
+  get: function(templateId, url, data){
     var that = this;
     var cachedTemplate = this.templateCaches[templateId];
 
     if (!cachedTemplate){
       cachedTemplate = new Marionette.TemplateCache(templateId);
       cachedTemplate.url = url;
+        cachedTemplate.data = data;
       this.templateCaches[templateId] = cachedTemplate;
     }
 

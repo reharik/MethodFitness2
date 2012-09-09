@@ -113,12 +113,18 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             }
         }
 
+        public ActionResult Display_Template(ViewModel input)
+        {
+            return View("Display", new AppointmentViewModel());
+        }
+
         public ActionResult Display(ViewModel input)
         {
             var appointment = _repository.Find<Appointment>(input.EntityId);
             var model = Mapper.Map<Appointment, AppointmentViewModel>(appointment);
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
-            return PartialView(model);
+            model._clientItems = appointment.Clients.Select(x => x.FullNameFNF);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -165,8 +171,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)
         {
             appointment.Date = model.Date;
-            appointment.StartTime = model.StartTime;
-            appointment.EndTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
+            appointment.StartTime = DateTime.Parse(model.Date.ToShortDateString()+" "+model.StartTimeString);
+            var endTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
+            appointment.EndTime = DateTime.Parse(model.Date.ToShortDateString() + " " + endTime.ToShortTimeString()); 
             appointment.AppointmentType = model.AppointmentType;
             var trainer = _repository.Find<Trainer>(model.TrainerEntityId);
             var location = _repository.Find<Location>(model.LocationEntityId);
@@ -191,17 +198,23 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public IEnumerable<SelectListItem> _sAMPMList { get; set; }
         public IEnumerable<SelectListItem> _AppointmentTypeList { get; set; }
 
-        public DateTime StartTime { get; set; }
         public string TrainerFullNameFNF { get; set; }
         public int LocationEntityId { get; set; }
+        public string LocationName { get; set; }
         public int TrainerEntityId { get; set; }
         public string AppointmentType { get; set; }
         [ValidateNonEmpty]
         public DateTime Date { get; set; }
         [ValidateNonEmpty]
+        public DateTime StartTime { get; set; }
+        public string StartTimeString { get; set; }
+        [ValidateNonEmpty]
         public DateTime EndTime { get; set; }
+        public string EndTimeString { get; set; }
+        
         public string Notes { get; set; }
-       
+
+        public IEnumerable<string> _clientItems { get; set; }
     }
 
     public class AddEditAppointmentViewModel : ViewModel
