@@ -53,7 +53,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             if(input.GetValidationHelpers().Any())
             {
                var origional = ReflectionHelper.GetProperty(_expression).Name;
-               input.GetValidationHelpers().Each(x => x.ErrorMessage = x.ErrorMessage.Replace(origional, _labelDisplay));
+               input.GetValidationHelpers().ForEachItem(x => x.ErrorMessage = x.ErrorMessage.Replace(origional, _labelDisplay));
             }
             if (_inputRootClasses!=null&&_inputRootClasses.Any()) root.AddClasses(_inputRootClasses);
             if (_inputClasses!=null&&_inputClasses.Any()) input.AddClasses(_inputClasses);
@@ -67,7 +67,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             }
             if (cssClass.Contains(" "))
             {
-                cssClass.Split(' ').Each(_inputRootClasses.Add);
+                cssClass.Split(' ').ForEachItem(_inputRootClasses.Add);
             }
             else
             {
@@ -84,7 +84,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             }
             if (cssClass.Contains(" "))
             {
-                cssClass.Split(' ').Each(_inputClasses.Add);
+                cssClass.Split(' ').ForEachItem(_inputClasses.Add);
             }
             else
             {

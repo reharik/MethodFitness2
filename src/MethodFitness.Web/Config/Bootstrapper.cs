@@ -51,6 +51,7 @@ namespace MethodFitness.Web.Config
                 StructureMapBootstrapper.Bootstrap();
                 ModelBindingBootstaper.Bootstrap();
             }
+            AutoMapperBootstrapper.Bootstrap();
             // sets SM as CSL
             ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator());
             // sets MVCDependencyResolver to use the CSL
@@ -61,7 +62,7 @@ namespace MethodFitness.Web.Config
 
             var library = ObjectFactory.Container.GetInstance<TagProfileLibrary>();
             var conventions = ObjectFactory.Container.GetAllInstances<HtmlConventionRegistry>();
-            conventions.Each(library.ImportRegistry);
+            conventions.ForEachItem(library.ImportRegistry);
 
             //SecurityBootstrapper.Bootstrap();
         }

@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <ToolsPath>$(MSBuildProjectDirectory)\src\lib</ToolsPath>
+    <SourcePath>$(MSBuildProjectDirectory)\src</SourcePath>
+    <MSBuildCommunityTasksPath>$(ToolsPath)</MSBuildCommunityTasksPath>
+    <NUnit>$(ToolsPath)</NUnit>
+    <Trunk>$(MSBuildProjectDirectory)..\..</Trunk>
+  </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+  
+
+
+<!-- ____________PUBLIC TASKS_______________  -->
+
+  <Target Name="Build" DependsOnTargets="_build;_unitTests" />
+  <!--  <Target Name="Stage" DependsOnTargets="_build;_minifyJSandCss;_outputWebFiles;" />-->
+<<<<<<< HEAD
+  <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToQA;" />
+
+ <Target Name="_pushToQA" >
+=======
+<!--  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />-->
+  <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToQA;" />
+  
+ <Target Name="_outputWebFiles" >
+>>>>>>> ko
+    <ItemGroup>
+      <WebFiles Include="src\MethodFitness.Web\**\*.*;"
+                Exclude="src\MethodFitness.Web\obj\**;
+						 src\MethodFitness.Web\**\*.cs;
+						 src\MethodFitness.Web\**\.idea\**;
+						 src\MethodFitness.Web\**\.svn\**;
+						 src\MethodFitness.Web\**\*.pdb;
+						 src\MethodFitness.Web\*.csproj.*;
+						 src\MethodFitness.Web\*.sln;
+						 src\MethodFitness.Web\Tenant\**;
+						 src\MethodFitness.Web\App_Data\**;
+						 src\MethodFitness.Web\Logs\**; 		 "
+                />
+    </ItemGroup>
+    <Time>
+      <Output TaskParameter="Month" PropertyName="Month" />
+      <Output TaskParameter="Day" PropertyName="Day" />
+      <Output TaskParameter="Year" PropertyName="Year" />
+      <Output TaskParameter="Hour" PropertyName="Hour" />
+      <Output TaskParameter="Minute" PropertyName="Minute" />
+    </Time>
+
+   <PropertyGroup>
+     <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
+   </PropertyGroup>
+
+   <MakeDir Directories="$(OutputDirectory)"  />
+   <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
+   <Zip Files="@(WebFiles)"
+     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
+     ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
+     ZipLevel="9" />
+<<<<<<< HEAD
+  </Target>
+=======
+ </Target>
+>>>>>>> ko
+
+  <Target Name="myTemp" >
+    <Message Text="Current Date and Time: $(Month).$(Day).$(Year)-$(Hour).$(Minute)" />
+  </Target>
+
+  <Target Name="_build">
+    <MSBuild Projects="$(SourcePath)\MethodFitness.sln" Properties="Configuration=Debug" ContinueOnError="false" />
+  </Target>
+
+  <ItemGroup>
+    <UnitTestAssemblies Include="$(SourcePath)\MethodFitness.Tests\bin\Debug\MethodFitness.Tests.dll;" />
+  </ItemGroup>
+  <Target Name="_unitTests">
+    <NUnit Assemblies="@(UnitTestAssemblies)" ToolPath="$(NUnit)" />
+  </Target>
+
+  <Target Name="_minifyJSandCss">
+    <Exec Command="$(SourcePath)\ConcatAndCompress\bin\Debug\ConcatAndCompress.exe" ></Exec>
+  </Target>
+
+</Project>

@@ -32,7 +32,7 @@ namespace MethodFitness.Web.Controllers
             User user=null;
             if (User.Identity.IsAuthenticated)
             {
-                user = _repository.Find<User>(_sessionContext.GetUserEntityId());
+                user = _repository.Find<User>(_sessionContext.GetUserId());
             }
             HeaderViewModel model = new HeaderViewModel
                                         {

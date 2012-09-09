@@ -5,7 +5,7 @@ Version: 3.0, 03.31.2009
 By: Maggie Costello Wachs (maggie@filamentgroup.com) and Scott Jehl (scott@filamentgroup.com)
 	http://www.filamentgroup.com
 	* reference articles: http://www.filamentgroup.com/lab/jquery_ipod_style_drilldown_menu/
-		
+
 Copyright (c) 2009 Filament Group
 Dual licensed under the MIT (filamentgroup.com/examples/mit-license.txt) and GPL (filamentgroup.com/examples/gpl-license.txt) licenses.
 --------------------------------------------------------------------*/
@@ -34,13 +34,13 @@ function CCMenu(_caller, _options){
 		width: 220, // width of menu container, must be set or passed in to calculate widths of child menus
 		maxHeight: 400, // max height of menu (if a drilldown: height does not include breadcrumb)
 		positionOpts: {
-			posX: 'left', 
+			posX: 'left',
 			posY: 'bottom',
 			offsetX: 0,
 			offsetY: 0,
 			directionH: 'right',
-			directionV: 'down', 
-			detectH: true, // do horizontal collision detection  
+			directionV: 'down',
+			detectH: true, // do horizontal collision detection
 			detectV: true, // do vertical collision detection
 			linkToFront: false
 		},
@@ -109,9 +109,9 @@ function CCMenu(_caller, _options){
 
         $('.fg-menu-all-lists').find('span').remove();
 		$(".fg-menu-breadcrumb").empty().append( $('<li class="fg-menu-breadcrumb-text">'+options.crumbDefaultText+'</li>') );
-        	
-        
-        
+
+
+
         var tokens = displayText.split("/");
         var parentUl = container.find('.fg-menu');
         $(tokens).each(function(x,xy){
@@ -128,10 +128,10 @@ function CCMenu(_caller, _options){
     this.showMenu = function(){
 		if (!menu.menuExists) {
             menu.create();
-            var urlToken = $.address.value();
-            if(urlToken){
-                menu.setMenuByUrl(urlToken);
-            }
+//            var urlToken = $.address.value();
+//            if(urlToken){
+//                menu.setMenuByUrl(urlToken);
+//            }
         }
 		menu.menuOpen = true;
 		// assign key events
@@ -212,7 +212,7 @@ function CCMenu(_caller, _options){
 		});
 	};
 
-	this.create = function(){	
+	this.create = function(){
 		container.css({ width: options.width }).appendTo(options.containingElement).find('ul:first').not('.fg-menu-breadcrumb').addClass('fg-menu');
 		container.find('ul, li a').addClass('ui-corner-all');
 
@@ -221,7 +221,7 @@ function CCMenu(_caller, _options){
 		container.find('li').attr('role', 'menuitem');
 		container.find('li:has(ul)').attr('aria-haspopup', 'true').find('ul').attr('aria-expanded', 'false');
 		container.find('a').attr('tabindex', '-1');
-		
+
 		// when there are multiple levels of hierarchy, create flyout or drilldown menu
 		if (container.find('ul').size() > 1) {
 			menu.drilldown(container, options);
@@ -232,7 +232,7 @@ function CCMenu(_caller, _options){
 				return false;
 			});
 		}
-		
+
 		if (options.linkHover) {
 			var allLinks = container.find('.fg-menu li a');
 			allLinks.hover(
@@ -246,7 +246,7 @@ function CCMenu(_caller, _options){
 				}
 			);
 		}
-		
+
 		if (options.linkHoverSecondary) {
 			container.find('.fg-menu li').hover(
 				function(){
@@ -257,10 +257,10 @@ function CCMenu(_caller, _options){
 				function(){ $(this).removeClass(options.linkHoverSecondary); }
 			);
 		}
-		
+
 		menu.setPosition(container, caller, options);
 	};
-	
+
 	this.chooseItem = function(item){
 		// edit this for your own custom function/callback:
         $('.fg-menu li a',container).removeClass(options.callerOnState);

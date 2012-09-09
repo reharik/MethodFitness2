@@ -26,7 +26,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         {
             Notification notification;
             var trainer = _repository.Find<Trainer>(input.EntityId);
-            var trainerPayment = trainer.PayTrainer(input.PaymentDetailsDto);
+            var trainerPayment = trainer.PayTrainer(input.eligableRows, input.paymentAmount);
             if(trainerPayment==null)
             {
                 notification = new Notification {Success = false, Message = WebLocalizationKeys.YOU_MUST_SELECT_AT_ONE_SESSION.ToString()};

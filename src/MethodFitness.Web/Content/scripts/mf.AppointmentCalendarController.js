@@ -133,7 +133,7 @@ mf.AppointmentCalendarController = mf.Controller.extend({
             return;
         }
         var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
-        this.editEvent(this.options.calendarDef.AddEditUrl,data);
+        this.editEvent(this.model.calendarDef.AddEditUrl,data);
     },
 
     editEvent:function(url, data){

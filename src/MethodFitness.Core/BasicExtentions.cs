@@ -79,7 +79,7 @@ namespace MethodFitness.Core
         }
 
         [DebuggerStepThrough]
-        public static IEnumerable<T> Each<T>(this IEnumerable<T> values, Action<T> eachAction)
+        public static IEnumerable<T> ForEachItem<T>(this IEnumerable<T> values, Action<T> eachAction)
         {
             foreach (var item in values)
             {
@@ -90,7 +90,7 @@ namespace MethodFitness.Core
         }
 
         [DebuggerStepThrough]
-        public static IEnumerable Each(this IEnumerable values, Action<object> eachAction)
+        public static IEnumerable ForEachItem(this IEnumerable values, Action<object> eachAction)
         {
             foreach (var item in values)
             {
@@ -139,7 +139,7 @@ namespace MethodFitness.Core
 
         public static IList<T> AddRange<T>(this IList<T> list, IEnumerable<T> items)
         {
-            items.Each(list.Add);
+            items.ForEachItem(list.Add);
             return list;
         }
 
@@ -321,7 +321,7 @@ namespace MethodFitness.Core
         //    List<ErrorInfo> errors = new List<ErrorInfo>();
         //    if(result.Errors!=null)
         //    {
-        //        result.Errors.Each(x => errors.Add(new ErrorInfo(x.Category.ToString(), x.Description)));
+        //        result.Errors.ForEachItem(x => errors.Add(new ErrorInfo(x.Category.ToString(), x.Description)));
         //    }
         //    continuation.Success = result.Success;
         //    continuation.ErrorCount = result.ErrorCount;

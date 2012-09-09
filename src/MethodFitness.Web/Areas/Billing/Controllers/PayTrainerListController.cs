@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MethodFitness.Core;
@@ -35,23 +36,21 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var model = new TrainersPaymentListViewModel()
             {
                 gridDef = _grid.GetGridDefinition(url),
-                Title = trainer.FullNameFNF+"'s " + WebLocalizationKeys.PAYMENT_AMOUNT,
+                _Title = trainer.FullNameFNF+"'s " + WebLocalizationKeys.PAYMENT_AMOUNT,
                 TrainersName = trainer.FullNameFNF,
                 EntityId = trainer.EntityId,
-                PayTrainerUrl = UrlContext.GetUrlForAction<PayTrainerController>(x=>x.PayTrainer(null),AreaName.Billing)
+                PayTrainerUrl = UrlContext.GetUrlForAction<PayTrainerController>(x=>x.PayTrainer(null),AreaName.Billing),
             };
             model.headerButtons.Add("return");
             return Json(model,JsonRequestBehavior.AllowGet);
         }
-
-        
 
         public JsonResult TrainerPayments(TrainerPaymentGridItemsRequestModel input)
         {
             var trainer = _repository.Find<Trainer>(input.ParentId);
             var sessions = trainer.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-            var items = _dynamicExpressionQuery.PerformQueryWithItems(sessions,input.filters, x=>x.Appointment.Date<=endDate);
+            var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);
             var sessionPaymentDtos = items.Select(x => new SessionPaymentDto
                                                            {
                                                                AppointmentDate = x.Appointment.Date,
@@ -82,7 +81,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
     public class PayTrainerViewModel:ViewModel
     {
-        public PaymentDetailsDto PaymentDetailsDto { get; set; }
+        public double paymentAmount { get; set; }
+        public IEnumerable<PaymentDetailsDto> eligableRows { get; set; }
     }
 
     public class SessionPaymentDto : IGridEnabledClass
@@ -101,5 +101,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public string TrainersName { get; set; }
 
         public string PayTrainerUrl { get; set; }
+
+        public string HeaderHtml { get; set; }
     }
 }

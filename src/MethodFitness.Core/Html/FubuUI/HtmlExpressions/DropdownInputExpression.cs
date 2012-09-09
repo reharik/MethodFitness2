@@ -61,7 +61,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
                                            };
             SelectTag tag = new SelectTag(action);
             string name = string.Empty;
-            request.Accessor.Names.Each(x => name += x + ".");
+            request.Accessor.Names.ForEachItem(x => name += x + ".");
             name = name.Substring(0, name.Length-1);
             tag.Attr("name", name);
             addInternalCssClasses(_htmlRoot, tag);
@@ -75,7 +75,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             if (input.GetValidationHelpers().Any())
             {
                 var origional = ReflectionHelper.GetProperty(_expression).Name;
-                input.GetValidationHelpers().Each(x => x.ErrorMessage = x.ErrorMessage.Replace(origional, _labelDisplay));
+                input.GetValidationHelpers().ForEachItem(x => x.ErrorMessage = x.ErrorMessage.Replace(origional, _labelDisplay));
             }
             if (_inputRootClass.IsNotEmpty()) root.AddClass(_inputRootClass);
             if (_inputClass.IsNotEmpty()) input.AddClass(_inputClass);

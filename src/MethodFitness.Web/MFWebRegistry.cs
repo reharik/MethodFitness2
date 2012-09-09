@@ -39,7 +39,7 @@ namespace MethodFitness.Web
                 x.WithDefaultConventions();
             });
 
-            For<HtmlConventionRegistry>().Add<MethodFitnessHtmlConventions>();
+            For<HtmlConventionRegistry>().Add<MethodFitnessHtmlConventions2>();
             For<IServiceLocator>().Singleton().Use(new StructureMapServiceLocator());
             For<IElementNamingConvention>().Use<MethodFitnessElementNamingConvention>();
             For(typeof(ITagGenerator<>)).Use(typeof(TagGenerator<>));

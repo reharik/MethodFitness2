@@ -1,5 +1,6 @@
 using System;
 using Castle.Components.Validator;
+using HtmlTags;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using FubuMVC.UI.Configuration;
@@ -12,10 +13,10 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
         public TagModifier CreateModifier(AccessorDef accessorDef)
         {
             if (!accessorDef.Accessor.HasAttribute<ValidateNonEmptyAttribute>()) return null;
-            TagModifier modifier = (request, tag) =>
-                                   tag.AddValidationHelper(ValidationRule.Required + ":true",
-                                                           ValidationRule.Required + ": '" +
-                                                           CoreLocalizationKeys.FIELD_REQUIRED.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) +"'");
+            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Required.ToString());
+            //                                   tag.AddValidationHelper(ValidationRule.Required + ":true",
+            //                                                           ValidationRule.Required + ": '" +
+            //                                                           CoreLocalizationKeys.FIELD_REQUIRED.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) +"'");
             return modifier;
         }
     }
@@ -40,10 +41,12 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
         public TagModifier CreateModifier(AccessorDef accessorDef)
         {
             if (!accessorDef.Accessor.HasAttribute<ValidateUrlAttribute>()) return null;
-            TagModifier modifier = (request, tag) =>
-                                   tag.AddValidationHelper(ValidationRule.Url + ":true",
-                                                           ValidationRule.Url + ": '" +
-                                                           CoreLocalizationKeys.VALID_URL_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
+            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Url.ToString());
+            
+//            TagModifier modifier = (request, tag) =>
+//                                   tag.AddValidationHelper(ValidationRule.Url + ":true",
+//                                                           ValidationRule.Url + ": '" +
+//                                                           CoreLocalizationKeys.VALID_URL_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
             return modifier;
         }
     }
@@ -53,10 +56,12 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
         public TagModifier CreateModifier(AccessorDef accessorDef)
         {
             if (!accessorDef.Accessor.HasAttribute<ValidateEmailAttribute>()) return null;
-            TagModifier modifier = (request, tag) =>
-                                   tag.AddValidationHelper(ValidationRule.Email + ":true",
-                                                           ValidationRule.Email + ": '" +
-                                                           CoreLocalizationKeys.VALID_EMAIL_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
+            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Email.ToString());
+//            
+//            TagModifier modifier = (request, tag) =>
+//                                   tag.AddValidationHelper(ValidationRule.Email + ":true",
+//                                                           ValidationRule.Email + ": '" +
+//                                                           CoreLocalizationKeys.VALID_EMAIL_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
             return modifier;
         }
     }
@@ -66,10 +71,12 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
         public TagModifier CreateModifier(AccessorDef accessorDef)
         {
             if (!accessorDef.Accessor.HasAttribute<ValidateSqlDateTimeAttribute>()) return null;
-            TagModifier modifier = (request, tag) =>
-                                   tag.AddValidationHelper(ValidationRule.Date + ":true",
-                                                           ValidationRule.Date + ": '" +
-                                                           CoreLocalizationKeys.VALID_DATE_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
+            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Date.ToString());
+
+//            TagModifier modifier = (request, tag) =>
+//                                   tag.AddValidationHelper(ValidationRule.Date + ":true",
+//                                                           ValidationRule.Date + ": '" +
+//                                                           CoreLocalizationKeys.VALID_DATE_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
             return modifier;
         }
     }
@@ -106,12 +113,12 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
                 || accessorDef.Accessor.PropertyType.IsNullableOf(typeof(float))
                 || accessorDef.Accessor.PropertyType.IsNullableOf(typeof(double)))
             {
-                TagModifier modifier = (request, tag) =>
-                                       tag.AddValidationHelper(ValidationRule.Number + ":true",
-                                                               ValidationRule.Number + ": '" +
-                                                               CoreLocalizationKeys.FIELD_MUST_BE_NUMBER.ToFormat(
-                                                                   request.Accessor.FieldName.
-                                                                       ToSeperateWordsFromPascalCase()) + "'");
+                TagModifier modifier = (request, tag) => { if (tag.TagName() == new TextboxTag().TagName())tag.AddClass("number"); };
+//                                       tag.AddValidationHelper(ValidationRule.Number + ":true",
+//                                                               ValidationRule.Number + ": '" +
+//                                                               CoreLocalizationKeys.FIELD_MUST_BE_NUMBER.ToFormat(
+//                                                                   request.Accessor.FieldName.
+//                                                                       ToSeperateWordsFromPascalCase()) + "'");
                 return modifier;
             }
             return null;

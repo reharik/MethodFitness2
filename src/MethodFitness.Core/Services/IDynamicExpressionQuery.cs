@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Script.Serialization;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Html.Grid;
 
 namespace MethodFitness.Core.Services
 {
@@ -12,15 +11,14 @@ namespace MethodFitness.Core.Services
     {
         IQueryable<ENTITY> PerformQuery<ENTITY>(string json = null,
                                                 Expression<Func<ENTITY, bool>> extraFilters = null,
-                                                bool isNullCheck = false) where ENTITY : Entity;
+                                                bool isNullCheck = false) where ENTITY : IPersistableObject;
 
-        IQueryable<ENTITY> PerformQueryWithItems<ENTITY>(IEnumerable<ENTITY> items,string json = null,
-                                               Expression<Func<ENTITY, bool>> extraFilters = null,
-                                               bool isNullCheck = false) where ENTITY : Entity;
+        Expression<Func<ENTITY, bool>> PrepareExpression<ENTITY>(string json,
+                                                                 Expression<Func<ENTITY, bool>> extraFilters = null);
 
-        IQueryable<ENTITY> PerformQuery<ENTITY>(Grid<ENTITY> _grid, string json = null,
-                                                                Expression<Func<ENTITY, bool>> extraFilters = null,
-                                                                bool isNullCheck = false) where ENTITY : Entity;
+        IQueryable<ENTITY> PerformQuery<ENTITY>(IEnumerable<ENTITY> items, string json = null,
+                                                Expression<Func<ENTITY, bool>> extraFilters = null,
+                                                bool isNullCheck = false);
     }
 
     public class DynamicExpressionQuery : IDynamicExpressionQuery
@@ -34,51 +32,33 @@ namespace MethodFitness.Core.Services
             _dynamicExpressionBuilder = dynamicExpressionBuilder;
         }
 
-        public IQueryable<ENTITY> PerformQuery<ENTITY>(Grid<ENTITY> _grid, string json = null,
+        public IQueryable<ENTITY> PerformQuery<ENTITY>(string json = null,
                                                         Expression<Func<ENTITY, bool>> extraFilters = null,
-                                                        bool isNullCheck = false) where ENTITY : Entity
+                                                        bool isNullCheck = false) where ENTITY : IPersistableObject
         {
-            var expression = prepareExpression(json, extraFilters);
-            var entities = expression == null ? _repository.Query<ENTITY>() : _repository.Query(expression);
-            var defaultSortColumnName = _grid.GetDefaultSortColumnName();
-            if (defaultSortColumnName.IsNotEmpty())
-            {
-                entities.OrderBy(_grid.GetDefaultSortColumnName());
-            }
-            return entities;
-        }
-
-        public IQueryable<ENTITY> PerformQuery<ENTITY>(string json = null, 
-                                                        Expression<Func<ENTITY, bool>> extraFilters = null,
-                                                        bool isNullCheck = false) where ENTITY : Entity
-        {
-            var expression = prepareExpression(json, extraFilters);
+            var expression = PrepareExpression(json, extraFilters);
             return expression == null ? _repository.Query<ENTITY>() : _repository.Query(expression);
         }
-
-        public IQueryable<ENTITY> PerformQueryWithItems<ENTITY>(IEnumerable<ENTITY> items, string json = null,
+        public IQueryable<ENTITY> PerformQuery<ENTITY>(IEnumerable<ENTITY> items, string json = null,
                                                         Expression<Func<ENTITY, bool>> extraFilters = null,
-                                                        bool isNullCheck = false) where ENTITY : Entity
+                                                        bool isNullCheck = false)
         {
-            var expression = prepareExpression(json, extraFilters);
+            var expression = PrepareExpression(json, extraFilters);
             return expression == null ? items.AsQueryable() : items.Where(expression.Compile()).AsQueryable();
         }
 
-        private Expression<Func<ENTITY, bool>> prepareExpression<ENTITY>(string json, Expression<Func<ENTITY, bool>> extraFilters) where ENTITY : Entity
+        public Expression<Func<ENTITY, bool>> PrepareExpression<ENTITY>(string json, Expression<Func<ENTITY, bool>> extraFilters = null)
         {
-            if (json.IsEmpty()) 
-                return extraFilters;
+            if (json.IsEmpty()) return extraFilters;
             var jqGridFilter = DeserializeJson(json);
-            
-            if (!jqGridFilter.rules.Any() ||  
-                jqGridFilter.rules.Any(x => x.op == "ListContains" && x.listOfIds.Count() <= 0)) 
-                return extraFilters;
-            
-            var expression = _dynamicExpressionBuilder.Build<ENTITY>(jqGridFilter);
-            Expression binaryExpression = extraFilters != null
-                                                    ? Expression.AndAlso(expression.Body, extraFilters.Body)
-                                                    : expression.Body;
+            if (jqGridFilter.rules.Any(x => x.op == "ListContains" && !x.listOfIds.Any())) return extraFilters;
 
+            var expression = _dynamicExpressionBuilder.Build<ENTITY>(jqGridFilter);
+            if (extraFilters == null)
+            {
+                return expression;
+            }
+            BinaryExpression binaryExpression = Expression.AndAlso(expression.Body, extraFilters.Body);
             Expression<Func<ENTITY, bool>> finalExpression = Expression.Lambda<Func<ENTITY, bool>>(binaryExpression, expression.Parameters);
             return finalExpression;
         }

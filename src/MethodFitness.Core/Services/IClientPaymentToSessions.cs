@@ -47,7 +47,7 @@ namespace MethodFitness.Core.Services
             var sessions = payment.Pairs;
             client.Sessions
                 .Where(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears).OrderBy(x=>x.Appointment.Date)
-                .Each(x =>
+                .ForEachItem(x =>
                           {
                               x.InArrears = false;
                               x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
@@ -77,7 +77,7 @@ namespace MethodFitness.Core.Services
                 {
                     if (inArrears>0)
                     {
-                        var arrear = client.Sessions.OrderBy(s => s.Appointment.Date).First(s => s.AppointmentType == AppointmentType.Pair.ToString() && s.InArrears);
+                        var arrear = client.Sessions.Where(s => s.AppointmentType == AppointmentType.Pair.ToString() && s.InArrears).OrderBy(s => s.Appointment.Date).First();
                         arrear.InArrears = false;
                         arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
                         arrear.Cost = price;
@@ -108,7 +108,7 @@ namespace MethodFitness.Core.Services
                 {
                     if (inArrears>0)
                     {
-                        var arrear = client.Sessions.OrderBy(s => s.Appointment.Date).First(s => s.AppointmentType == AppointmentType.HalfHour.ToString() && s.InArrears);
+                        var arrear = client.Sessions.Where(s => s.AppointmentType == AppointmentType.HalfHour.ToString() && s.InArrears).OrderBy(s => s.Appointment.Date).First();
                         arrear.InArrears = false;
                         arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
                         arrear.Cost = price;
@@ -139,7 +139,7 @@ namespace MethodFitness.Core.Services
                 {
                     if (inArrears>0)
                     {
-                        var arrear = client.Sessions.First(s => s.AppointmentType == AppointmentType.Hour.ToString() && s.InArrears);
+                        var arrear = client.Sessions.Where(s => s.AppointmentType == AppointmentType.Hour.ToString() && s.InArrears).OrderBy(s => s.Appointment.Date).First();
                         arrear.InArrears = false;
                         arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
                         arrear.Cost = price;
@@ -164,7 +164,7 @@ namespace MethodFitness.Core.Services
         {
             var sessions = payment.HalfHours;
             client.Sessions.Where(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears).OrderBy(x => x.Appointment.Date)
-                .Each(x =>
+                .ForEachItem(x =>
                 {
                     x.InArrears = false;
                     x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
@@ -189,7 +189,7 @@ namespace MethodFitness.Core.Services
             var sessions = payment.FullHours;
             client.Sessions
                 .Where(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears).OrderBy(x => x.Appointment.Date)
-                .Each(x =>
+                .ForEachItem(x =>
                 {
                     if (sessions > 0)
                     {

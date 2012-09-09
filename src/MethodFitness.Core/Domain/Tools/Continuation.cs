@@ -17,7 +17,7 @@ namespace MethodFitness.Core.Domain.Tools
                               ? Message + ", "
                               : string.Empty;
             var errors = string.Empty;
-            Errors.Each(x => errors += x.ErrorMessage + ", ");
+            Errors.ForEachItem(x => errors += x.ErrorMessage + ", ");
             errors.Remove(errors.LastIndexOf(","));
             return message + errors;
         }
