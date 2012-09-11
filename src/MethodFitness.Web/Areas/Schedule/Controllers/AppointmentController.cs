@@ -53,7 +53,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
             appointment.Date = input.ScheduledDate.HasValue ? input.ScheduledDate.Value : appointment.Date;
-            appointment.StartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.StartTime;
+            appointment.StartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value.ToLocalTime() : appointment.StartTime;
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserId();
             dynamic trainer = _repository.Find<User>(userEntityId);
@@ -81,7 +81,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
             model._AppointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true);
             model.EndTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
+            model.EndTimeString = model.EndTime.ToLocalTime().ToString();
             handleTrainer(model);
+            model.StartTimeString = model.StartTime.ToString();
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
@@ -171,7 +173,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)
         {
             appointment.Date = model.Date;
-            appointment.StartTime = DateTime.Parse(model.Date.ToShortDateString()+" "+model.StartTimeString);
+            appointment.StartTime = DateTime.Parse(model.Date.ToLocalTime().ToShortDateString()+" "+model.StartTimeString);
             var endTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
             appointment.EndTime = DateTime.Parse(model.Date.ToShortDateString() + " " + endTime.ToShortTimeString()); 
             appointment.AppointmentType = model.AppointmentType;

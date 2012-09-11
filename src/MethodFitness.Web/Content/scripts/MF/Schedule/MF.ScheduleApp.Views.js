@@ -82,11 +82,11 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
-        if(new XDate(date).diffHours(new XDate())>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
+        if(new XDate(date,true).diffHours(new XDate(true))>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
             alert("That period is closed");
             return;
         }
-        var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
+        var data = {"ScheduledDate" : new XDate(date).toString("M/d/yyyy"), "ScheduledStartTime": new XDate( date,true).toString("hh:mm TT")};
         this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
     },
     eventClick:function(calEvent, jsEvent, view) {
@@ -258,7 +258,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         var date = $('[name="Date"]').val();
         var timeValues;
         timeValues = scroller.values;
-        var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1]);
+        var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1],true);
         this.model.StartTimeString = ko.observable(startTime.toString("hh:mm TT"));
         this.setEndTime(startTime);
     },
