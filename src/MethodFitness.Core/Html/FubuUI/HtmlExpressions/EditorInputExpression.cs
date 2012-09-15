@@ -29,6 +29,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         private bool _hide;
         private string _elementId;
         private string _labelDisplay;
+        private bool _readOnly;
 
         public EditorInputExpression(ITagGenerator<VIEWMODEL> generator, Expression<Func<VIEWMODEL, object>> expression)
         {
@@ -43,7 +44,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             HtmlTag input = _generator.InputFor(_expression);
             addInternalCssClasses(_htmlRoot, input);
             if (_elementId.IsNotEmpty()) input.Id(_elementId);
-
+            if (_readOnly) { input.Attr("readonly", true); }
             _htmlRoot.Append(input);
             return _htmlRoot;
         }
@@ -99,6 +100,12 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             return this;
         }
 
+        public IEditorInputExpression<VIEWMODEL> ReadOnly()
+        {
+            _readOnly = true;
+            return this;
+        }
+        
         public IEditorInputExpression<VIEWMODEL> ElementId(string id)
         {
             _elementId = id;

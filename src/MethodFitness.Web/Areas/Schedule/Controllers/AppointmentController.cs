@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using AutoMapper;
 using Castle.Components.Validator;
 using MethodFitness.Core;
@@ -79,9 +80,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model._saveUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Save(null));
             model.Copy = input.Copy;
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
-            model._AppointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true);
+            var appointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true).ToList();
+            appointmentTypeList.Remove(appointmentTypeList.FirstOrDefault(x => x.Text == AppointmentType.Pair.ToString()));
+            model._AppointmentTypeList = appointmentTypeList;
             model.EndTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
             handleTrainer(model);
+            var xx = new DateTime(1972, 1, 5, 7, 0, 0, DateTimeKind.Local);
+            var y = new DateTime(1972, 1, 5, 7, 0, 0);
+            model.EndTimeString = new JavaScriptSerializer().Serialize(model.StartTime);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
@@ -151,11 +157,16 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
+            var changeAptType = appointment.AppointmentType != input.AppointmentType;
             mapToDomain(input, appointment);
             var notification = new Notification { Success = true };
             notification = appointment.CheckPermissions(user, _authorizationService, notification);
             notification = appointment.CheckForClients(notification);
-            if(appointment.EntityId==0)
+            if(changeAptType)
+            {
+                appointment.RestoreSessionsToClientWhenDeleted();
+            }
+            if(appointment.EntityId==0 || changeAptType)
             {
                 appointment.SetSessionsForClients();
             }
@@ -170,6 +181,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)
         {
+        
             appointment.Date = model.Date;
             appointment.StartTime = DateTime.Parse(model.Date.ToShortDateString()+" "+model.StartTimeString);
             var endTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);

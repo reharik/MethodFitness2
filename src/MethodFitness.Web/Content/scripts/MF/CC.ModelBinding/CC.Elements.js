@@ -223,10 +223,10 @@ CC.Elements.MultiSelect = CC.Elements.Element.extend({
         var that = this;
         this.type = "select";
         this.$input = this.$container.find("input.multiSelect");
-        this.$container.on(this.$input.attr("id")+":tokenizer:blur",$.proxy(that.multiSelectBlur,that));
-
+        MF.vent.bind(this.name+":tokenizer:add",$.proxy(that.multiSelectChange,that));
+        MF.vent.bind(this.name+":tokenizer:remove",$.proxy(that.multiSelectChange,that));
     },
-    multiSelectBlur: function(e, viewmodel){
+    multiSelectChange: function(e, viewmodel){
         this.selectedViewmodel = viewmodel;
         this.validate();
     },

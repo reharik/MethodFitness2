@@ -102,7 +102,6 @@ namespace MethodFitness.Core.Domain
                     x.AddSession(session);
                     AddSession(session);
                 }
-
             });
         }
 
@@ -127,5 +126,7 @@ namespace MethodFitness.Core.Domain
             _clients.ForEachItem(appointment.AddClient);
             return appointment;
         }
+
+
     }
 }

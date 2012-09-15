@@ -60,8 +60,6 @@ namespace MethodFitness.Core.Domain
         private IList<Payment> _payments = new List<Payment>();
         public virtual IEnumerable<Payment> Payments { get { return _payments; } }
 
-
-
         public virtual void RemovePayment(Payment payment)
         {
             _payments.Remove(payment);

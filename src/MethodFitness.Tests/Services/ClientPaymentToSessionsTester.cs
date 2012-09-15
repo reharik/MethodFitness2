@@ -89,7 +89,7 @@ namespace MethodFitness.Tests.Services
             _client.AddSession(_halfInArrears);
             _client.AddSession(_fullInArrears);
             _client.AddSession(_pairInArrears);
-            _payment = new Payment {HalfHours = 2,FullHours = 2,Pairs = 2};
+            _payment = new Payment {HalfHour = 2,FullHour = 2,Pair = 2};
             _SUT = new ClientPaymentToSessions();
             _result = _SUT.Execute(_client, _payment);
         }
@@ -143,7 +143,7 @@ namespace MethodFitness.Tests.Services
             _client.AddSession(_halfInArrears);
             _client.AddSession(_fullInArrears);
             _client.AddSession(_pairInArrears);
-            _payment = new Payment { HalfHourTenPacks = 1, FullHourTenPacks= 1, PairsTenPack= 1 };
+            _payment = new Payment { HalfHourTenPack = 1, FullHourTenPack= 1, PairTenPack= 1 };
             _SUT = new ClientPaymentToSessions();
             _result = _SUT.Execute(_client, _payment);
         }
