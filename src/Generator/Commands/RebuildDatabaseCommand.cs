@@ -26,7 +26,7 @@ namespace Generator.Commands
             ObjectFactory.Configure(x => x.For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactoryAndGenerateSchema()));
             sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
 
-//            new DataLoader().Load();
+            new DataLoader().Load();
             SqlServerHelper.AddRhinoSecurity(sessionFactory);
 
             ObjectFactory.ResetDefaults();

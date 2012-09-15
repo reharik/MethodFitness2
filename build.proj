@@ -31,6 +31,8 @@
 						 src\MethodFitness.Web\*.sln;
 						 src\MethodFitness.Web\Tenant\**;
 						 src\MethodFitness.Web\App_Data\**;
+						 src\MethodFitness.Web\web.config;
+						 src\MethodFitness.Web\connectionstrings.config;
 						 src\MethodFitness.Web\Logs\**; 		 "
                 />
     </ItemGroup>

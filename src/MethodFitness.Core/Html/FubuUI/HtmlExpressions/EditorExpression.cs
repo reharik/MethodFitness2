@@ -41,6 +41,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         private ISessionContext _sessionContext;
         private string _elType;
         private List<string> _rootClasses;
+        private bool _readOnly;
 
         public EditorExpression(ITagGenerator<VIEWMODEL> generator, Expression<Func<VIEWMODEL, object>> expression)
         {
@@ -347,6 +348,11 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             return this;
         }
 
+        public EditorExpression<VIEWMODEL> ReadOnly()
+        {
+            _readOnly = true;
+            return this;
+        } 
         #endregion
 
     }

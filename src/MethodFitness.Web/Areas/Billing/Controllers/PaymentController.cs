@@ -153,18 +153,18 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         private Payment mapToDomain(PaymentViewModel model, Payment payment)
         {
-            payment.FullHourTenPacks = model.FullHourTenPacks;
-            payment.FullHourTenPacksPrice = model.FullHourTenPacksPrice;
-            payment.FullHours = model.FullHours;
-            payment.FullHoursPrice = model.FullHoursPrice;
-            payment.HalfHourTenPacks = model.HalfHourTenPacks;
-            payment.HalfHourTenPacksPrice = model.HalfHourTenPacksPrice;
-            payment.HalfHours = model.HalfHours;
-            payment.HalfHoursPrice = model.HalfHoursPrice;
-            payment.Pairs = model.Pairs;
-            payment.PairsPrice = model.PairsPrice;
-            payment.PairsTenPack = model.PairsTenPack;
-            payment.PairsTenPackPrice = model.PairsTenPackPrice;
+            payment.FullHourTenPack = model.FullHourTenPack;
+            payment.FullHourTenPackPrice = model.FullHourTenPackPrice;
+            payment.FullHour = model.FullHour;
+            payment.FullHourPrice = model.FullHourPrice;
+            payment.HalfHourTenPack = model.HalfHourTenPack;
+            payment.HalfHourTenPackPrice = model.HalfHourTenPackPrice;
+            payment.HalfHour = model.HalfHour;
+            payment.HalfHourPrice = model.HalfHourPrice;
+            payment.Pair = model.Pair;
+            payment.PairPrice = model.PairPrice;
+            payment.PairTenPack = model.PairTenPack;
+            payment.PairTenPackPrice = model.PairTenPackPrice;
             payment.PaymentTotal = model.PaymentTotal;
             return payment;
         }
@@ -187,24 +187,24 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public SessionRatesDto _sessionRateDto { get; set; }
         public SessionRatesDto _sessionsAvailable { get; set; }
 
-        public int FullHours { get; set; }
-        public int HalfHours { get; set; }
-        public int FullHourTenPacks { get; set; }
-        public int HalfHourTenPacks { get; set; }
-        public int Pairs { get; set; }
-        public int PairsTenPack { get; set; }
+        public int FullHour { get; set; }
+        public int HalfHour { get; set; }
+        public int FullHourTenPack { get; set; }
+        public int HalfHourTenPack { get; set; }
+        public int Pair { get; set; }
+        public int PairTenPack { get; set; }
         public double PaymentTotal { get; set; }
 
-        public double FullHourTenPacksPrice { get; set; }
+        public double FullHourTenPackPrice { get; set; }
 
-        public double FullHoursPrice { get; set; }
+        public double FullHourPrice { get; set; }
 
-        public double HalfHourTenPacksPrice { get; set; }
+        public double HalfHourTenPackPrice { get; set; }
 
-        public double HalfHoursPrice { get; set; }
+        public double HalfHourPrice { get; set; }
 
-        public double PairsPrice { get; set; }
+        public double PairPrice { get; set; }
 
-        public double PairsTenPackPrice { get; set; }
+        public double PairTenPackPrice { get; set; }
     }
-}
+}   

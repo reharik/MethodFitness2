@@ -240,6 +240,17 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         var startDate = new XDate(new Date("1/5/1972 "+this.model.StartTime()));
         this.setEndTime(startDate);
         MF.vent.bind("StartTime:timeBox:close",this.handleTimeChange,this);
+        MF.vent.bind("ClientsDtos:tokenizer:add", this.clientChange, this);
+        MF.vent.bind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+    },
+    clientChange:function(){
+        if($(this.model.ClientsDtos.selectedItems()).size()>1){
+            $("appTypeDDlRoot").hide();
+            $("appTypePairRoot").val("Pair").show();
+        }else{
+            $("appTypeDDlRoot").show();
+            $("appTypePairRoot").val("").hide();
+        }
     },
     onClose:function(){
         MF.vent.unbind("StartTime:timeBox:close",this.handleTimeChange,this);
@@ -367,44 +378,38 @@ MF.Views.PaymentFormView = MF.Views.View.extend({
         MF.mixin(this, "modelAndElementsMixin");
     },
     viewLoaded:function(){
-        $("#fullHour").change($.proxy(function(e){
-            this.calculateTotal("FullHour","#fullHourTotal",e.target);
+        $("[name='FullHour']").change($.proxy(function(e){
+            this.calculateTotal("FullHour");
         },this));
-        $("#halfHour").change($.proxy(function(e){
-            this.calculateTotal("HalfHour","#halfHourTotal",e.target);
+        $("[name='HalfHour']").change($.proxy(function(e){
+            this.calculateTotal("HalfHour");
         },this));
-        $("#fullHourTenPack").change($.proxy(function(e){
-            this.calculateTotal("FullHourTenPack","#fullHourTenPackTotal",e.target);
+        $("[name='FullHourTenPack']").change($.proxy(function(e){
+            this.calculateTotal("FullHourTenPack");
         },this));
-        $("#halfHourTenPack").change($.proxy(function(e){
-            this.calculateTotal("HalfHourTenPack","#halfHourTenPackTotal",e.target);
+        $("[name='HalfHourTenPack']").change($.proxy(function(e){
+            this.calculateTotal("HalfHourTenPack");
         },this));
-        $("#pair").change($.proxy(function(e){
-            this.calculateTotal("Pair","#pairTotal",e.target);
+        $("[name='Pair']").change($.proxy(function(e){
+            this.calculateTotal("Pair");
         },this));
-         $("#pairTenPack").change($.proxy(function(e){
-            this.calculateTotal("PairTenPack","#pairTenPackTotal",e.target);
+         $("[name='PairTenPack']").change($.proxy(function(e){
+            this.calculateTotal("PairTenPack");
         },this));
-
-        this.calculateTotal("FullHour","#fullHourTotal","#fullHour");
-        this.calculateTotal("HalfHour","#halfHourTotal","#halfHour");
-        this.calculateTotal("FullHourTenPack","#fullHourTenPackTotal","#fullHourTenPack");
-        this.calculateTotal("HalfHourTenPack","#halfHourTenPackTotal","#halfHourTenPack");
-        this.calculateTotal("Pair","#pairTotal","#pair");
-        this.calculateTotal("PairTenPack","#pairTenPackTotal","#pairTenPack");
 
     },
-    calculateTotal:function(type, totalSelector, numberSelector){
-        var number = $(numberSelector).val();
+    calculateTotal:function(type){
+        var number = this.model[type]();
         var itemTotal = (this.model._sessionRateDto[type]() * number);
-        $(totalSelector).text("$" + itemTotal);
-        var total = parseInt($("#fullHourTotal").text().substring(1))
-            + parseInt($("#halfHourTotal").text().substring(1))
-            + parseInt($("#fullHourTenPackTotal").text().substring(1))
-            + parseInt($("#halfHourTenPackTotal").text().substring(1))
-            + parseInt($("#pairTotal").text().substring(1))
-            + parseInt($("#pairTenPackTotal").text().substring(1));
-        $("#total").val(total);
+        this.model[type+"Price"](itemTotal);
+        var total = this.model.FullHourPrice()
+            + this.model.HalfHourPrice()
+            + this.model.FullHourTenPackPrice()
+            + this.model.HalfHourTenPackPrice()
+            + this.model.PairPrice()
+            + this.model.PairTenPackPrice();
+        this.model.PaymentTotal(total);
+
     }
 });
 

@@ -23,16 +23,16 @@ namespace MethodFitness.Tests
         {
             return new Payment
                        {
-                           FullHours = 2,
-                           FullHoursPrice = 2,
-                           FullHourTenPacks = 2,
-                           FullHourTenPacksPrice = 20,
-                           HalfHourTenPacks = 2,
-                           HalfHourTenPacksPrice = 20,
-                           HalfHours = 2,
-                           HalfHoursPrice = 2,
-                           Pairs = 2,
-                           PairsPrice = 2,
+                           FullHour = 2,
+                           FullHourPrice = 2,
+                           FullHourTenPack = 2,
+                           FullHourTenPackPrice = 20,
+                           HalfHourTenPack = 2,
+                           HalfHourTenPackPrice = 20,
+                           HalfHour = 2,
+                           HalfHourPrice = 2,
+                           Pair = 2,
+                           PairPrice = 2,
                            PaymentTotal = 200
                        };
         }

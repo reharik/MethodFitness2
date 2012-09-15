@@ -156,7 +156,6 @@ $.TokenList = function (input, viewModel, settings) {
         .blur(function () {
             hide_dropdown();
             $(this).val("");
-            $(this).trigger(id+":tokenizer:blur",settings.viewModel.selectedItems());
         })
         //.bind("keyup keydown blur update", resize_input)
         .keydown(function (event) {
@@ -317,8 +316,7 @@ $.TokenList = function (input, viewModel, settings) {
 
     function is_printable_character(keycode) {
         return ((keycode >= 48 && keycode <= 90) ||     // 0-1a-z
-                (keycode >= 96 && keycode <= 111) ||    // numpad 0-9 + - / * .
-                (keycode >= 186 && keycode <= 192) ||   // ; = , - . / ^
+                (keycode >= 96 && keycode <= 111) ||    // numpad 0-9 + - / * .                (keycode >= 186 && keycode <= 192) ||   // ; = , - . / ^
                 (keycode >= 219 && keycode <= 222));    // ( \ ) '
     }
 
@@ -358,6 +356,7 @@ $.TokenList = function (input, viewModel, settings) {
         input_box.val("");
         // Don't show the help dropdown, they've got the idea
         hide_dropdown();
+        MF.vent.trigger(id+":tokenizer:add",settings.viewModel.selectedItems());
         // Execute the onAdd callback if defined
         if($.isFunction(callback)) {
             callback.call(item);
@@ -379,7 +378,7 @@ $.TokenList = function (input, viewModel, settings) {
                 .val("")
                 .focus();
         }
-
+        MF.vent.trigger(id+":tokenizer:remove",settings.viewModel.selectedItems());
         // Execute the onDelete callback if defined
         if($.isFunction(callback)) {
             callback.call(args);
