@@ -8,7 +8,7 @@ namespace MethodFitness.Web.Config
 {
     public class CustomJsonResult : JsonResult
     {
-        private const string _dateFormat = "yyyy-MM-ddThh:mm:ss";
+        private const string _dateFormat = "yyyy-MM-ddTHH:mm:ss";
 
         public override void ExecuteResult(ControllerContext context)
         {
