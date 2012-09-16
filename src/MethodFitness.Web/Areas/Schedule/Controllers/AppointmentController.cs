@@ -14,6 +14,7 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
 using MethodFitness.Security.Interfaces;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
@@ -50,7 +51,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             return View("AddUpdate", new AppointmentViewModel());
         }
 
-        public ActionResult AddUpdate(AddEditAppointmentViewModel input)
+        public CustomJsonResult AddUpdate(AddEditAppointmentViewModel input)
         {
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
             appointment.Date = input.ScheduledDate.HasValue ? input.ScheduledDate.Value : appointment.Date;
@@ -80,12 +81,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model._saveUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Save(null));
             model.Copy = input.Copy;
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
-            var appointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true).ToList();
-            appointmentTypeList.Remove(appointmentTypeList.FirstOrDefault(x => x.Text == AppointmentType.Pair.ToString()));
-            model._AppointmentTypeList = appointmentTypeList;
+            model._AppointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true);
             model.EndTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
             handleTrainer(model);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult{Data = model};
         }
 
         private DateTime getEndTime(string length, DateTime startTime)

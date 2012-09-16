@@ -95,6 +95,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             hideElements(_htmlRoot, labelBuilder, inputBuilder);
             addIds(labelBuilder, inputBuilder);
             addCustomLabel(labelBuilder);
+            if (_readOnly) { inputBuilder.ReadOnly(); }
             HtmlTag input = inputBuilder.ToHtmlTag();
             HtmlTag label = labelBuilder.ToHtmlTag();
             _htmlRoot.Children.Add(label);

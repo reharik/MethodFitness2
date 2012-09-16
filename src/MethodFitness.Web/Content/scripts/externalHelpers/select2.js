@@ -607,7 +607,9 @@
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
-                            selectable=id(result) !== undefined;
+                            // added check for disabled on dropdown option REH 9.15.12
+                            selectable=id(result) !== undefined && $(result.element).attr("disabled")!="disabled";
+//                            selectable=id(result) !== undefined;
                             compound=("children" in result) && result.children.length > 0;
 
                             node=$("<li></li>");

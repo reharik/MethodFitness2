@@ -27,8 +27,7 @@
                 @Html.SubmissionFor(x => x.ClientsDtos).ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.AppointmentType).RootId("aptTypeDDLRoot").ToHtmlTag()
-            @Html.ViewFor(x => x.AppointmentType).RootId("aptTypePairRoot").HideRoot().ToHtmlTag()
+            @Html.SubmissionFor(x => x.AppointmentType).ToHtmlTag()
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Date).ToHtmlTag()

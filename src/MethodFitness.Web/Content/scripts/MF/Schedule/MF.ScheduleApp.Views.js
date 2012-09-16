@@ -86,7 +86,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             alert("That period is closed");
             return;
         }
-        var data = {"ScheduledDate" : new XDate(date).toString("M/d/yyyy"), "ScheduledStartTime": new XDate( date,true).toString("hh:mm TT")};
+        var data = {"ScheduledDate" : new XDate(date).toString("M/d/yyyy"), "ScheduledStartTime": new XDate( date ).toString("hh:mm TT")};
         this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
     },
     eventClick:function(calEvent, jsEvent, view) {
@@ -235,25 +235,47 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         'click #cancel' : 'cancel'
     },
     viewLoaded:function(){
-        // this is strange, how is starttime a string when viewmodel is a date
-        this.model.StartTimeString = ko.observable(this.model.StartTime());
         var startDate = new XDate(new Date("1/5/1972 "+this.model.StartTime()));
         this.setEndTime(startDate);
         MF.vent.bind("StartTime:timeBox:close",this.handleTimeChange,this);
         MF.vent.bind("ClientsDtos:tokenizer:add", this.clientChange, this);
         MF.vent.bind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+        this.clientChange();
     },
     clientChange:function(){
+        var currentSelection = $("[name='AppointmentType']").select2("val");
         if($(this.model.ClientsDtos.selectedItems()).size()>1){
-            $("appTypeDDlRoot").hide();
-            $("appTypePairRoot").val("Pair").show();
+            if(currentSelection != "Pair"){
+                $("[name='AppointmentType']").data.previousSelection=currentSelection;
+            }
+            $("[name='AppointmentType']").select2("val","Pair");
+            $("[name='AppointmentType'] option").each(function(){
+                var $item = $(this);
+                if($item.text() != "Pair"){
+                    $item.attr("disabled","disabled")
+                }else{
+                    $item.removeAttr("disabled");
+                }
+            });
         }else{
-            $("appTypeDDlRoot").show();
-            $("appTypePairRoot").val("").hide();
+            if(currentSelection == "Pair"){
+                $("[name='AppointmentType']").select2("val",$("[name='AppointmentType']").data.previousSelection);
+            }
+            $("[name='AppointmentType'] option").each(function(){
+                var $item = $(this);
+                if($item.text() == "Pair"){
+                    $item.attr("disabled","disabled")
+                }else{
+                    $item.removeAttr("disabled");
+                }
+            });
         }
     },
     onClose:function(){
         MF.vent.unbind("StartTime:timeBox:close",this.handleTimeChange,this);
+        MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
+        MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+                
     },
     renderElements:function(){
         var collection = this.elementsViewmodel.collection;
@@ -272,10 +294,11 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1],true);
         this.model.StartTimeString = ko.observable(startTime.toString("hh:mm TT"));
         this.setEndTime(startTime);
+        return startTime;
     },
     setEndTime:function(startTime){
         var aptMin;
-        switch($("[name='AppointmentType']").val()){
+        switch(this.model.AppointmentType()){
             case "Hour":
             case "Pair":
                 aptMin = 60;

@@ -21,6 +21,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         private bool _hide;
         private string _elementId;
         private string _labelDisplay;
+        private bool _readOnly;
 
         public DropdownInputExpression(ITagGenerator<VIEWMODEL> generator, Expression<Func<VIEWMODEL, object>> expression, IEnumerable<SelectListItem> items)
         {
@@ -108,6 +109,12 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         public IEditorInputExpression<VIEWMODEL> CustomLabel(string labelDisplay)
         {
             _labelDisplay = labelDisplay;
+            return this;
+        }
+
+        public IEditorInputExpression<VIEWMODEL> ReadOnly()
+        {
+            _readOnly = true;
             return this;
         }
     }
