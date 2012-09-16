@@ -242,6 +242,13 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         MF.vent.bind("ClientsDtos:tokenizer:remove", this.clientChange, this);
         this.clientChange();
     },
+    handleOptions:function(){
+        if($(this.model.ClientsDtos.selectedItems()).size()>1){
+            this.setDisabledOptionsOnAptType(true);
+        }else{
+            this.setDisabledOptionsOnAptType(false);
+        }
+    },
     clientChange:function(){
         var currentSelection = $("[name='AppointmentType']").select2("val");
         if($(this.model.ClientsDtos.selectedItems()).size()>1){
@@ -249,27 +256,31 @@ MF.Views.AppointmentView = MF.Views.View.extend({
                 $("[name='AppointmentType']").data.previousSelection=currentSelection;
             }
             $("[name='AppointmentType']").select2("val","Pair");
-            $("[name='AppointmentType'] option").each(function(){
-                var $item = $(this);
-                if($item.text() != "Pair"){
-                    $item.attr("disabled","disabled")
-                }else{
-                    $item.removeAttr("disabled");
-                }
-            });
+            this.setDisabledOptionsOnAptType(true);
         }else{
             if(currentSelection == "Pair"){
                 $("[name='AppointmentType']").select2("val",$("[name='AppointmentType']").data.previousSelection);
             }
-            $("[name='AppointmentType'] option").each(function(){
+            this.setDisabledOptionsOnAptType(false);
+        }
+    },
+    setDisabledOptionsOnAptType:function(pairEneabled){
+        $("[name='AppointmentType'] option").each(function(){
                 var $item = $(this);
                 if($item.text() == "Pair"){
-                    $item.attr("disabled","disabled")
+                    if(pairEneabled){
+                        $item.removeAttr("disabled")
+                    }else{
+                        $item.attr("disabled","disabled")
+                    }
                 }else{
-                    $item.removeAttr("disabled");
+                    if(pairEneabled){
+                        $item.attr("disabled","disabled")
+                    }else{
+                        $item.removeAttr("disabled")
+                    }
                 }
             });
-        }
     },
     onClose:function(){
         MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
@@ -278,6 +289,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
     },
     
     handleTimeChange:function(valArray) {
+        this.handleOptions();
         var startTime = new XDate(this.model.Date().split("T")[0]+"t"+this.model.StartTimeString());
         this.setEndTime(startTime);
         return startTime;
