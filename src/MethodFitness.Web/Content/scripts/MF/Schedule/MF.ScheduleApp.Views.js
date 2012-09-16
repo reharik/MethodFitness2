@@ -231,13 +231,13 @@ MF.Views.AppointmentView = MF.Views.View.extend({
     },
     events:{
         'change [name="AppointmentType"]':'handleTimeChange',
+        'change [name="StartTimeString"]':'handleTimeChange',
         'click #save' : 'saveItem',
         'click #cancel' : 'cancel'
     },
     viewLoaded:function(){
-        var startDate = new XDate(new Date("1/5/1972 "+this.model.StartTime()));
+        var startDate = new XDate("1/5/1972t"+this.model.StartTimeString());
         this.setEndTime(startDate);
-        MF.vent.bind("StartTime:timeBox:close",this.handleTimeChange,this);
         MF.vent.bind("ClientsDtos:tokenizer:add", this.clientChange, this);
         MF.vent.bind("ClientsDtos:tokenizer:remove", this.clientChange, this);
         this.clientChange();
@@ -272,27 +272,13 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         }
     },
     onClose:function(){
-        MF.vent.unbind("StartTime:timeBox:close",this.handleTimeChange,this);
         MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
         MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
                 
     },
-    renderElements:function(){
-        var collection = this.elementsViewmodel.collection;
-        var startTimeElement = collection["StartTime"];
-        startTimeElement.timeDefaults.stepMinute = 15;
-        for(var item in collection){
-            collection[item].render();
-        }
-    },
+    
     handleTimeChange:function(valArray) {
-        var scroller = $('[name="StartTime"]').scroller('getInst');
-        if (!scroller) {return;}
-        var date = $('[name="Date"]').val();
-        var timeValues;
-        timeValues = scroller.values;
-        var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1],true);
-        this.model.StartTimeString = ko.observable(startTime.toString("hh:mm TT"));
+        var startTime = new XDate(this.model.Date().split("T")[0]+"t"+this.model.StartTimeString());
         this.setEndTime(startTime);
         return startTime;
     },
@@ -318,9 +304,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             if(endMin.length == 1){
                 endMin="0"+endMin;
             }
-            $("#endTime").text(endHour+":"+endMin+" "+amPm);
-            this.model.EndTimeString = ko.observable(endHour+":"+endMin+" "+amPm);
-
+            this.model.EndTimeString(endHour+":"+endMin+" "+amPm);
     }
 
 });

@@ -49,7 +49,7 @@ DEALLOCATE FK_KILLER
             using (ISession session = source.OpenSession())
             {
                 var sql =
-                    "USE [master] alter database MethodFitness_QA set single_user with rollback immediate DROP DATABASE MethodFitness_QA CREATE DATABASE MethodFitness_QA";
+                    "USE [master] alter database MethodFitness_DEV set single_user with rollback immediate DROP DATABASE MethodFitness_DEV CREATE DATABASE MethodFitness_DEV";
 
                 IDbConnection conn = session.Connection;
                 var cmd = conn.CreateCommand();

@@ -76,13 +76,15 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             }
 
             var model = Mapper.Map<Appointment, AppointmentViewModel>(appointment);
+            model._StartTimeStringList = _selectListItemService.CreateList<Time>();
             model.ClientsDtos = new TokenInputViewModel { _availableItems = _availableClients, selectedItems = selectedClients };
             model._LocationEntityIdList = locations;
             model._saveUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Save(null));
             model.Copy = input.Copy;
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
             model._AppointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true);
-            model.EndTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
+            model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
+            model.EndTimeString = getEndTime(model.AppointmentType, appointment.StartTime.Value).ToShortTimeString();
             handleTrainer(model);
             return new CustomJsonResult{Data = model};
         }
@@ -126,7 +128,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var model = Mapper.Map<Appointment, AppointmentViewModel>(appointment);
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
             model._clientItems = appointment.Clients.Select(x => x.FullNameFNF);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
+            model.EndTimeString = appointment.EndTime.Value.ToShortTimeString();
+            return new CustomJsonResult(){Data = model};
         }
 
         public ActionResult Delete(ViewModel input)
@@ -201,9 +205,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public TokenInputViewModel ClientsDtos { get; set; }
         public IEnumerable<SelectListItem> _LocationEntityIdList { get; set; }
         public IEnumerable<SelectListItem> _TrainerEntityIdList { get; set; }
-        public IEnumerable<SelectListItem> _sHourList { get; set; }
-        public IEnumerable<SelectListItem> _sMinutesList { get; set; }
-        public IEnumerable<SelectListItem> _sAMPMList { get; set; }
+        public IEnumerable<SelectListItem> _StartTimeStringList { get; set; }
         public IEnumerable<SelectListItem> _AppointmentTypeList { get; set; }
 
         public string TrainerFullNameFNF { get; set; }
@@ -214,15 +216,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         [ValidateNonEmpty]
         public DateTime Date { get; set; }
         [ValidateNonEmpty]
-        public DateTime StartTime { get; set; }
         public string StartTimeString { get; set; }
         [ValidateNonEmpty]
-        public DateTime EndTime { get; set; }
         public string EndTimeString { get; set; }
         
         public string Notes { get; set; }
 
         public IEnumerable<string> _clientItems { get; set; }
+
     }
 
     public class AddEditAppointmentViewModel : ViewModel
