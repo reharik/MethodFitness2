@@ -10,6 +10,7 @@ namespace MethodFitness.Core.Localization
     {
         public string Key { get; set; }
         public string Value { get; set; }
+        public int Index { get; set; }
         public bool IsActive { get; set; }
         public bool IsDefault { get; set; }
         public bool OnlyUseKeyForSelector { get; set; }

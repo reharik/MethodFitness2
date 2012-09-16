@@ -14,6 +14,7 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
 using MethodFitness.Security.Interfaces;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
@@ -50,7 +51,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             return View("AddUpdate", new AppointmentViewModel());
         }
 
-        public ActionResult AddUpdate(AddEditAppointmentViewModel input)
+        public CustomJsonResult AddUpdate(AddEditAppointmentViewModel input)
         {
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
             appointment.Date = input.ScheduledDate.HasValue ? input.ScheduledDate.Value : appointment.Date;
@@ -75,20 +76,17 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             }
 
             var model = Mapper.Map<Appointment, AppointmentViewModel>(appointment);
+            model._StartTimeStringList = _selectListItemService.CreateList<Time>();
             model.ClientsDtos = new TokenInputViewModel { _availableItems = _availableClients, selectedItems = selectedClients };
             model._LocationEntityIdList = locations;
             model._saveUrl = UrlContext.GetUrlForAction<AppointmentController>(x => x.Save(null));
             model.Copy = input.Copy;
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
-            var appointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true).ToList();
-            appointmentTypeList.Remove(appointmentTypeList.FirstOrDefault(x => x.Text == AppointmentType.Pair.ToString()));
-            model._AppointmentTypeList = appointmentTypeList;
-            model.EndTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
+            model._AppointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true);
+            model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
+            model.EndTimeString = getEndTime(model.AppointmentType, appointment.StartTime.Value).ToShortTimeString();
             handleTrainer(model);
-            var xx = new DateTime(1972, 1, 5, 7, 0, 0, DateTimeKind.Local);
-            var y = new DateTime(1972, 1, 5, 7, 0, 0);
-            model.EndTimeString = new JavaScriptSerializer().Serialize(model.StartTime);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult{Data = model};
         }
 
         private DateTime getEndTime(string length, DateTime startTime)
@@ -130,7 +128,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var model = Mapper.Map<Appointment, AppointmentViewModel>(appointment);
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
             model._clientItems = appointment.Clients.Select(x => x.FullNameFNF);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
+            model.EndTimeString = appointment.EndTime.Value.ToShortTimeString();
+            return new CustomJsonResult(){Data = model};
         }
 
         public ActionResult Delete(ViewModel input)
@@ -149,7 +149,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _repository.Save(appointment);
             _repository.HardDelete(appointment);
             _repository.UnitOfWork.Commit();
-            return Json(new Notification{Success = true},JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult{Data = new Notification{Success = true}};
         }
 
         public ActionResult Save(AppointmentViewModel input)
@@ -176,7 +176,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             }
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)
@@ -205,9 +205,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public TokenInputViewModel ClientsDtos { get; set; }
         public IEnumerable<SelectListItem> _LocationEntityIdList { get; set; }
         public IEnumerable<SelectListItem> _TrainerEntityIdList { get; set; }
-        public IEnumerable<SelectListItem> _sHourList { get; set; }
-        public IEnumerable<SelectListItem> _sMinutesList { get; set; }
-        public IEnumerable<SelectListItem> _sAMPMList { get; set; }
+        public IEnumerable<SelectListItem> _StartTimeStringList { get; set; }
         public IEnumerable<SelectListItem> _AppointmentTypeList { get; set; }
 
         public string TrainerFullNameFNF { get; set; }
@@ -218,15 +216,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         [ValidateNonEmpty]
         public DateTime Date { get; set; }
         [ValidateNonEmpty]
-        public DateTime StartTime { get; set; }
         public string StartTimeString { get; set; }
         [ValidateNonEmpty]
-        public DateTime EndTime { get; set; }
         public string EndTimeString { get; set; }
         
         public string Notes { get; set; }
 
         public IEnumerable<string> _clientItems { get; set; }
+
     }
 
     public class AddEditAppointmentViewModel : ViewModel

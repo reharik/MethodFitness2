@@ -96,6 +96,9 @@
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\NHibernate.dll</HintPath>
@@ -196,6 +199,7 @@
       <DependentUpon>TimeSheet.aspx</DependentUpon>
     </Compile>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
+    <Compile Include="Config\CustomJsonResult.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
     <Compile Include="Config\AutomapperBootstrapper.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />

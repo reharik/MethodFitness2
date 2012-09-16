@@ -176,6 +176,109 @@ namespace MethodFitness.Core.Enumerations
     }
 
     [Serializable]
+    public class Time : Enumeration
+    {
+        public static readonly Time TwelveAM = new Time { IsActive = true, Key = "12:00 AM", Index = 1};
+        public static readonly Time TwelveFifteenAM = new Time { IsActive = true, Key = "12:15 AM", Index = 2 };
+        public static readonly Time TwelveThirtyAM = new Time { IsActive = true, Key = "12:30 AM", Index = 3 };
+        public static readonly Time TwelveFourtyFiveAM = new Time { IsActive = true, Key = "12:45 AM", Index = 4 };
+        public static readonly Time OneAM = new Time { IsActive = true, Key = "1:00 AM", Index = 5 };
+        public static readonly Time OneFifteenAM = new Time { IsActive = true, Key = "1:15 AM", Index = 6 };
+        public static readonly Time OneThirtyAM = new Time { IsActive = true, Key = "1:30 AM", Index = 7 };
+        public static readonly Time OneFourtyFiveAM = new Time { IsActive = true, Key = "1:45 AM", Index = 8 };
+        public static readonly Time TwoAM = new Time { IsActive = true, Key = "2:00 AM", Index = 9 };
+        public static readonly Time TwoFifteenAM = new Time { IsActive = true, Key = "2:15 AM", Index = 10 };
+        public static readonly Time TwoThirtyAM = new Time { IsActive = true, Key = "2:30 AM", Index = 11 };
+        public static readonly Time TwoFourtyFiveAM = new Time { IsActive = true, Key = "2:45 AM", Index = 12 };
+        public static readonly Time ThreeAM = new Time { IsActive = true, Key = "3:00 AM", Index = 13 };
+        public static readonly Time ThreeFifteenAM = new Time { IsActive = true, Key = "3:15 AM", Index = 14 };
+        public static readonly Time ThreeThirtyAM = new Time { IsActive = true, Key = "3:30 AM", Index = 15 };
+        public static readonly Time ThreeFourtyFiveAM = new Time { IsActive = true, Key = "3:45 AM", Index = 16 };
+        public static readonly Time FourAM = new Time { IsActive = true, Key = "4:00 AM", Index = 17 };
+        public static readonly Time FourFifteenAM = new Time { IsActive = true, Key = "4:15 AM", Index = 18 };
+        public static readonly Time FourThirtyAM = new Time { IsActive = true, Key = "4:30 AM", Index = 19 };
+        public static readonly Time FourFourtyFiveAM = new Time { IsActive = true, Key = "4:45 AM", Index = 20 };
+        public static readonly Time FiveAM = new Time { IsActive = true, Key = "5:00 AM", Index = 21 };
+        public static readonly Time FiveFifteenAM = new Time { IsActive = true, Key = "5:15 AM", Index = 22 };
+        public static readonly Time FiveThirtyAM = new Time { IsActive = true, Key = "5:30 AM", Index = 23 };
+        public static readonly Time FiveFourtyFiveAM = new Time { IsActive = true, Key = "5:45 AM", Index = 24 };
+        public static readonly Time SixAM = new Time { IsActive = true, Key = "6:00 AM", Index = 25 };
+        public static readonly Time SixFifteenAM = new Time { IsActive = true, Key = "6:15 AM", Index = 26 };
+        public static readonly Time SixThirtyAM = new Time { IsActive = true, Key = "6:30 AM", Index = 27 };
+        public static readonly Time SixFourtyFiveAM = new Time { IsActive = true, Key = "6:45 AM", Index = 28 };
+        public static readonly Time SevenAM = new Time { IsActive = true, Key = "7:00 AM", Index = 29 };
+        public static readonly Time SevenFifteenAM = new Time { IsActive = true, Key = "7:15 AM", Index = 30 };
+        public static readonly Time SevenThirtyAM = new Time { IsActive = true, Key = "7:30 AM", Index = 31 };
+        public static readonly Time SevenFourtyFiveAM = new Time { IsActive = true, Key = "7:45 AM", Index = 32 };
+        public static readonly Time EightAM = new Time { IsActive = true, Key = "8:00 AM", Index = 33 };
+        public static readonly Time EightFifteenAM = new Time { IsActive = true, Key = "8:15 AM", Index = 34 };
+        public static readonly Time EightThirtyAM = new Time { IsActive = true, Key = "8:30 AM", Index = 35 };
+        public static readonly Time EightFourtyFiveAM = new Time { IsActive = true, Key = "8:45 AM", Index = 36 };
+        public static readonly Time NineAM = new Time { IsActive = true, Key = "9:00 AM", Index = 37 };
+        public static readonly Time NineFifteenAM = new Time { IsActive = true, Key = "9:15 AM", Index = 38 };
+        public static readonly Time NineThirtyAM = new Time { IsActive = true, Key = "9:30 AM", Index = 39 };
+        public static readonly Time NineFourtyFiveAM = new Time { IsActive = true, Key = "9:45 AM", Index = 40 };
+        public static readonly Time TenAM = new Time { IsActive = true, Key = "10:00 AM", Index = 41 };
+        public static readonly Time TenFifteenAM = new Time { IsActive = true, Key = "10:15 AM", Index = 42 };
+        public static readonly Time TenThirtyAM = new Time { IsActive = true, Key = "11:30 AM", Index = 43 };
+        public static readonly Time TenFourtyFiveAM = new Time { IsActive = true, Key = "10:45 AM", Index = 44 };
+        public static readonly Time ElevinAM = new Time { IsActive = true, Key = "11:00 AM", Index = 45 };
+        public static readonly Time ElevinFifteenAM = new Time { IsActive = true, Key = "11:15 AM", Index = 46 };
+        public static readonly Time ElevinThirtyAM = new Time { IsActive = true, Key = "11:30 AM", Index = 47 };
+        public static readonly Time ElevinFourtyFiveAM = new Time { IsActive = true, Key = "11:45 AM", Index = 48 };
+
+        public static readonly Time TwelvePM = new Time { IsActive = true, Key = "12:00 PM", Index = 49 };
+        public static readonly Time TwelveFifteenPM = new Time { IsActive = true, Key = "12:15 PM", Index = 50 };
+        public static readonly Time TwelveThirtyPM = new Time { IsActive = true, Key = "12:30 PM", Index = 51 };
+        public static readonly Time TwelveFourtyFivePM = new Time { IsActive = true, Key = "12:45 PM", Index = 52 };
+        public static readonly Time OnePM = new Time { IsActive = true, Key = "1:00 PM", Index = 53 };
+        public static readonly Time OneFifteenPM = new Time { IsActive = true, Key = "1:15 PM", Index = 54 };
+        public static readonly Time OneThirtyPM = new Time { IsActive = true, Key = "1:30 PM", Index = 55 };
+        public static readonly Time OneFourtyFivePM = new Time { IsActive = true, Key = "1:45 PM", Index = 56 };
+        public static readonly Time TwoPM = new Time { IsActive = true, Key = "2:00 PM", Index = 57 };
+        public static readonly Time TwoFifteenPM = new Time { IsActive = true, Key = "2:15 PM", Index = 58 };
+        public static readonly Time TwoThirtyPM = new Time { IsActive = true, Key = "2:30 PM", Index = 59 };
+        public static readonly Time TwoFourtyFivePM = new Time { IsActive = true, Key = "2:45 PM", Index = 60 };
+        public static readonly Time ThreePM = new Time { IsActive = true, Key = "3:00 PM", Index = 62 };
+        public static readonly Time ThreeFifteenPM = new Time { IsActive = true, Key = "3:15 PM", Index = 62 };
+        public static readonly Time ThreeThirtyPM = new Time { IsActive = true, Key = "3:30 PM", Index = 63 };
+        public static readonly Time ThreeFourtyFivePM = new Time { IsActive = true, Key = "3:45 PM", Index = 64 };
+        public static readonly Time FourPM = new Time { IsActive = true, Key = "4:00 PM", Index = 65 };
+        public static readonly Time FourFifteenPM = new Time { IsActive = true, Key = "4:15 PM", Index = 66 };
+        public static readonly Time FourThirtyPM = new Time { IsActive = true, Key = "4:30 PM", Index = 67 };
+        public static readonly Time FourFourtyFivePM = new Time { IsActive = true, Key = "4:45 PM", Index = 68 };
+        public static readonly Time FivePM = new Time { IsActive = true, Key = "5:00 PM", Index = 69 };
+        public static readonly Time FiveFifteenPM = new Time { IsActive = true, Key = "5:15 PM", Index = 70 };
+        public static readonly Time FiveThirtyPM = new Time { IsActive = true, Key = "5:30 PM", Index = 71 };
+        public static readonly Time FiveFourtyFivePM = new Time { IsActive = true, Key = "5:45 PM", Index = 72 };
+        public static readonly Time SixPM = new Time { IsActive = true, Key = "6:00 PM", Index = 73 };
+        public static readonly Time SixFifteenPM = new Time { IsActive = true, Key = "6:15 PM", Index = 74 };
+        public static readonly Time SixThirtyPM = new Time { IsActive = true, Key = "6:30 PM", Index = 75 };
+        public static readonly Time SixFourtyFivePM = new Time { IsActive = true, Key = "6:45 PM", Index = 76 };
+        public static readonly Time SevenPM = new Time { IsActive = true, Key = "7:00 PM", Index = 77 };
+        public static readonly Time SevenFifteenPM = new Time { IsActive = true, Key = "7:15 PM", Index = 78 };
+        public static readonly Time SevenThirtyPM = new Time { IsActive = true, Key = "7:30 PM", Index = 79 };
+        public static readonly Time SevenFourtyFivePM = new Time { IsActive = true, Key = "7:45 PM", Index = 80 };
+        public static readonly Time EightPM = new Time { IsActive = true, Key = "8:00 PM", Index = 81 };
+        public static readonly Time EightFifteenPM = new Time { IsActive = true, Key = "8:15 PM", Index = 82 };
+        public static readonly Time EightThirtyPM = new Time { IsActive = true, Key = "8:30 PM", Index = 83 };
+        public static readonly Time EightFourtyFivePM = new Time { IsActive = true, Key = "8:45 PM", Index = 84 };
+        public static readonly Time NinePM = new Time { IsActive = true, Key = "9:00 PM", Index = 85 };
+        public static readonly Time NineFifteenPM = new Time { IsActive = true, Key = "9:15 PM", Index = 86 };
+        public static readonly Time NineThirtyPM = new Time { IsActive = true, Key = "9:30 PM", Index = 87 };
+        public static readonly Time NineFourtyFivePM = new Time { IsActive = true, Key = "9:45 PM", Index = 88 };
+        public static readonly Time TenPM = new Time { IsActive = true, Key = "10:00 PM", Index = 89 };
+        public static readonly Time TenFifteenPM = new Time { IsActive = true, Key = "10:15 PM", Index = 90 };
+        public static readonly Time TenThirtyPM = new Time { IsActive = true, Key = "11:30 PM", Index = 91 };
+        public static readonly Time TenFourtyFivePM = new Time { IsActive = true, Key = "10:45 PM", Index = 92 };
+        public static readonly Time ElevinPM = new Time { IsActive = true, Key = "11:00 PM", Index = 93 };
+        public static readonly Time ElevinFifteenPM = new Time { IsActive = true, Key = "11:15 PM", Index = 94 };
+        public static readonly Time ElevinThirtyPM = new Time { IsActive = true, Key = "11:30 PM", Index = 95 };
+        public static readonly Time ElevinFourtyFivePM = new Time { IsActive = true, Key = "11:45 PM", Index = 96 };
+    
+    }
+
+    [Serializable]
     public class AMPM : Enumeration
     {
         public static readonly AMPM Empty = new AMPM { IsActive = false, Key = "" };

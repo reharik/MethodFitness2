@@ -300,7 +300,6 @@ namespace MethodFitness.Core
             return UrlContext.GetFullUrl(formattedUrl);
         }
         
-        
         public static Type GetTypeWhenProxy(this object possibleProxy)
         {
             if (possibleProxy is INHibernateProxy)
@@ -314,8 +313,19 @@ namespace MethodFitness.Core
             }
         }
 
+        public static DateTime SetTime(this DateTime date, string time)
+        {
+            return DateTime.Parse(date.ToShortDateString() + " " + time);
+        }
 
-
+        public static DateTime makeDateTime(this string time,DateTime date)
+        {
+            return DateTime.Parse(date.ToShortDateString() + " " + time);
+        }
+        public static DateTime makeDateTime(this string time, DateTime? date)
+        {
+            return DateTime.Parse(date.Value.ToShortDateString() + " " + time);
+        }
             //public static Continuation ToContinuation(this Result result, Continuation continuation)
         //{
         //    List<ErrorInfo> errors = new List<ErrorInfo>();

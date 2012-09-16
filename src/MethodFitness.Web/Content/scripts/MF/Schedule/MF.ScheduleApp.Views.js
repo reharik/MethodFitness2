@@ -82,11 +82,11 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
-        if(new XDate(date).diffHours(new XDate())>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
+        if(new XDate(date,true).diffHours(new XDate(true))>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
             alert("That period is closed");
             return;
         }
-        var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
+        var data = {"ScheduledDate" : new XDate(date).toString("M/d/yyyy"), "ScheduledStartTime": new XDate( date ).toString("hh:mm TT")};
         this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
     },
     eventClick:function(calEvent, jsEvent, view) {
@@ -231,51 +231,72 @@ MF.Views.AppointmentView = MF.Views.View.extend({
     },
     events:{
         'change [name="AppointmentType"]':'handleTimeChange',
+        'change [name="StartTimeString"]':'handleTimeChange',
         'click #save' : 'saveItem',
         'click #cancel' : 'cancel'
     },
     viewLoaded:function(){
-        // this is strange, how is starttime a string when viewmodel is a date
-        this.model.StartTimeString = ko.observable(this.model.StartTime());
-        var startDate = new XDate(new Date("1/5/1972 "+this.model.StartTime()));
+        var startDate = new XDate("1/5/1972t"+this.model.StartTimeString());
         this.setEndTime(startDate);
-        MF.vent.bind("StartTime:timeBox:close",this.handleTimeChange,this);
         MF.vent.bind("ClientsDtos:tokenizer:add", this.clientChange, this);
         MF.vent.bind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+        this.clientChange();
+    },
+    handleOptions:function(){
+        if($(this.model.ClientsDtos.selectedItems()).size()>1){
+            this.setDisabledOptionsOnAptType(true);
+        }else{
+            this.setDisabledOptionsOnAptType(false);
+        }
     },
     clientChange:function(){
+        var currentSelection = $("[name='AppointmentType']").select2("val");
         if($(this.model.ClientsDtos.selectedItems()).size()>1){
-            $("appTypeDDlRoot").hide();
-            $("appTypePairRoot").val("Pair").show();
+            if(currentSelection != "Pair"){
+                $("[name='AppointmentType']").data.previousSelection=currentSelection;
+            }
+            $("[name='AppointmentType']").select2("val","Pair");
+            this.setDisabledOptionsOnAptType(true);
         }else{
-            $("appTypeDDlRoot").show();
-            $("appTypePairRoot").val("").hide();
+            if(currentSelection == "Pair"){
+                $("[name='AppointmentType']").select2("val",$("[name='AppointmentType']").data.previousSelection);
+            }
+            this.setDisabledOptionsOnAptType(false);
         }
+    },
+    setDisabledOptionsOnAptType:function(pairEneabled){
+        $("[name='AppointmentType'] option").each(function(){
+                var $item = $(this);
+                if($item.text() == "Pair"){
+                    if(pairEneabled){
+                        $item.removeAttr("disabled")
+                    }else{
+                        $item.attr("disabled","disabled")
+                    }
+                }else{
+                    if(pairEneabled){
+                        $item.attr("disabled","disabled")
+                    }else{
+                        $item.removeAttr("disabled")
+                    }
+                }
+            });
     },
     onClose:function(){
-        MF.vent.unbind("StartTime:timeBox:close",this.handleTimeChange,this);
+        MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
+        MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+                
     },
-    renderElements:function(){
-        var collection = this.elementsViewmodel.collection;
-        var startTimeElement = collection["StartTime"];
-        startTimeElement.timeDefaults.stepMinute = 15;
-        for(var item in collection){
-            collection[item].render();
-        }
-    },
+    
     handleTimeChange:function(valArray) {
-        var scroller = $('[name="StartTime"]').scroller('getInst');
-        if (!scroller) {return;}
-        var date = $('[name="Date"]').val();
-        var timeValues;
-        timeValues = scroller.values;
-        var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1]);
-        this.model.StartTimeString = ko.observable(startTime.toString("hh:mm TT"));
+        this.handleOptions();
+        var startTime = new XDate(this.model.Date().split("T")[0]+"t"+this.model.StartTimeString());
         this.setEndTime(startTime);
+        return startTime;
     },
     setEndTime:function(startTime){
         var aptMin;
-        switch($("[name='AppointmentType']").val()){
+        switch(this.model.AppointmentType()){
             case "Hour":
             case "Pair":
                 aptMin = 60;
@@ -295,9 +316,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             if(endMin.length == 1){
                 endMin="0"+endMin;
             }
-            $("#endTime").text(endHour+":"+endMin+" "+amPm);
-            this.model.EndTimeString = ko.observable(endHour+":"+endMin+" "+amPm);
-
+            this.model.EndTimeString(endHour+":"+endMin+" "+amPm);
     }
 
 });

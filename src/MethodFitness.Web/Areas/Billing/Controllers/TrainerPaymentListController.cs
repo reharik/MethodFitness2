@@ -9,6 +9,7 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
@@ -41,7 +42,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 EntityId = trainer.EntityId
             };
             model.headerButtons.Add("return");
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
 
         public JsonResult TrainerPayments(GridItemsRequestModel input)
@@ -49,7 +50,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var trainer = _repository.Find<Trainer>(input.ParentId);
             var items = _dynamicExpressionQuery.PerformQuery(trainer.TrainerPayments,input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items);
-            return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = gridItemsViewModel };
         }
     }
 }

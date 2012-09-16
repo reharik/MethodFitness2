@@ -135,7 +135,10 @@ namespace MethodFitness.Core.Services
         {
             IEnumerable<Enumeration> enumerations = Enumeration.GetAllActive<ENUM>();
             if (enumerations == null) return null;
-            enumerations = enumerations.OrderBy(item => item.Key);
+            if (enumerations.Any(x => x.Index > 0))
+            {enumerations.OrderBy(x => x.Index);}
+            else{enumerations = enumerations.OrderBy(item => item.Key);}
+
             var items =
                 enumerations.Select(x => new SelectListItem {Text = x.Key, Value = onlyKey || x.Value.IsEmpty() ? x.Key : x.Value})
                     .ToList();
@@ -143,6 +146,7 @@ namespace MethodFitness.Core.Services
             {
                 items.Insert(0, new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
             }
+            
             return items;
         }
 

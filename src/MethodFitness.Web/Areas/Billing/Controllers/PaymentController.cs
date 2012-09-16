@@ -10,6 +10,7 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 using NHibernate.Linq;
 using StructureMap;
@@ -39,7 +40,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             return View("AddUpdate", new PaymentViewModel());
         }
 
-        public ActionResult AddUpdate(ViewModel input)
+        public CustomJsonResult AddUpdate(ViewModel input)
         {
 //            var payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
             var client = _repository.Find<Client>(input.ParentId);
@@ -73,7 +74,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             model._deleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null));
             model.ParentId = client.EntityId;
             model._saveUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.Save(null));
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult{Data = model};
         }
 
         public ActionResult Display_Template(ViewModel input)
@@ -81,16 +82,16 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             return View("Display", new PaymentViewModel());
         }
 
-        public ActionResult Display(ViewModel input)
+        public CustomJsonResult Display(ViewModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
             var payment =  client.Payments.FirstOrDefault(x=>x.EntityId == input.EntityId);
             var model = Mapper.Map<Payment, PaymentViewModel>(payment);
             model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
 
-        public ActionResult Delete(ViewModel input)
+        public CustomJsonResult Delete(ViewModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
             var payment = client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId);
@@ -102,13 +103,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 payment.Client = null;
                 _saveEntityService.ProcessSave(client);
                 var saveClientNotification = rulesResult.Finish();
-                return Json(saveClientNotification, JsonRequestBehavior.AllowGet);
+                return new CustomJsonResult { Data = saveClientNotification };
             }
             var notification = rulesResult.Finish();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
-        public ActionResult DeleteMultiple(BulkActionViewModel input)
+        public CustomJsonResult DeleteMultiple(BulkActionViewModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
@@ -126,10 +127,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             });
             _saveEntityService.ProcessSave(client);
             var notification = validationManager.Finish();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification};
         }
 
-        public ActionResult Save(PaymentViewModel input)
+        public CustomJsonResult Save(PaymentViewModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
             Payment payment;
@@ -147,7 +148,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var crudManager = _saveEntityService.ProcessSave(client);
 
             var notification = crudManager.Finish();
-            return Json(notification, "text/plain");
+            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
+
         }
 
 

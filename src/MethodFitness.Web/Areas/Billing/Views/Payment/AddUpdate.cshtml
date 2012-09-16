@@ -38,7 +38,7 @@
     </div>
     <hr class="hrClear"/>
     <div class="fieldRow">
-        @Html.SubmissionFor(x => x.PaymentTotal).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").ToHtmlTag()
+        @Html.ViewFor(x => x.PaymentTotal).AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").ToHtmlTag()
     </div>
 </div>
 <div class="col right">

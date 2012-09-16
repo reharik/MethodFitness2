@@ -16,7 +16,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "setupGridSearchMixin");
-        this.$gridContainer =  $("#" + this.options.gridId);
     },
     events:{
          'click .jqgrow':'handleSingleClick',
@@ -27,7 +26,10 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
     },
 
     beforeInitGrid:function(){
-        this.options.gridOptions={loadComplete : function(){
+        var that = this;
+        this.options.gridId="trainerPayment";
+        this.options.gridOptions={
+            loadComplete : function(){
             var ids = $(this).getDataIDs();
             var paymentRows =[];
             for (var i = 0, l = ids.length; i < l; i++) {
@@ -40,7 +42,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                         _checked:false
                     })
                 } else {
-                    var row = $('#' + rowId, this.el);
+                    var row = $('#' + rowId, that.el);
                     row.find("td").addClass('gridRowStrikeThrough');
                     row.find("td:first input").remove();
                 }
@@ -165,6 +167,7 @@ MF.Views.TrainerPaymentListGridView = MF.Views.View.extend({
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "defaultGridEventsMixin");
         MF.mixin(this, "setupGridSearchMixin");
+        this.options.gridId = "trainerPaymentsList";
     },
     events:{
          'click .return':'retunToParent'

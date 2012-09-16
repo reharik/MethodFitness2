@@ -35,6 +35,7 @@ namespace MethodFitness.Core.Domain
         public virtual string Source { get; set; }
         [TextArea]
         public virtual string SourceOther { get; set; }
+        [ValidateNonEmpty]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
         public virtual string FullNameLNF

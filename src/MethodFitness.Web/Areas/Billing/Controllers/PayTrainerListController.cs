@@ -10,6 +10,7 @@ using MethodFitness.Core.Html;
 using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
@@ -42,7 +43,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 PayTrainerUrl = UrlContext.GetUrlForAction<PayTrainerController>(x=>x.PayTrainer(null),AreaName.Billing),
             };
             model.headerButtons.Add("return");
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
 
         public JsonResult TrainerPayments(TrainerPaymentGridItemsRequestModel input)
@@ -70,7 +71,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
 
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos);
-            return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = gridItemsViewModel };
         }
     }
 

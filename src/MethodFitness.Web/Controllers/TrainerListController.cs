@@ -7,6 +7,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
@@ -33,7 +34,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 searchField = "LastName"
             };
             model.headerButtons.Add("new");
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
 
         public JsonResult Trainers(GridItemsRequestModel input)
@@ -41,7 +42,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             //TODO find way to deal with string here
             var items = _dynamicExpressionQuery.PerformQuery<User>(input.filters, x=>x.UserRoles.Any(r=>r.Name == "Trainer" ));
             var gridItemsViewModel = _trainerListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
-            return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = gridItemsViewModel };
         }
     }
 }

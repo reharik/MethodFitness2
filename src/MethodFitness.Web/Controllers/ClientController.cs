@@ -14,6 +14,7 @@ using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
+using MethodFitness.Web.Config;
 using StructureMap;
 
 namespace MethodFitness.Web.Controllers
@@ -80,7 +81,7 @@ namespace MethodFitness.Web.Controllers
             model._saveUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Save(null));
             model._StateList = _selectListItemService.CreateList<State>();
             model._SourceList = _selectListItemService.CreateList<Source>();
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
 
         public ActionResult Delete(ViewModel input)
@@ -93,7 +94,7 @@ namespace MethodFitness.Web.Controllers
                 _repository.Delete(client);
             }
             var notification = validationManager.Finish();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
 
         }
 
@@ -112,7 +113,7 @@ namespace MethodFitness.Web.Controllers
                 }
             });
             var notification = validationManager.FinishWithAction();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
         public ActionResult Save(ClientViewModel input)
@@ -134,7 +135,7 @@ namespace MethodFitness.Web.Controllers
 
 //            _uploadedFileHandlerService.SaveUploadedFile(file, client.FirstName + "_" + client.LastName);
             var notification = crudManager.Finish();
-            return Json(notification, "text/plain");
+            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
         }
 
         private void associateWithUser(Client client)
@@ -184,7 +185,7 @@ namespace MethodFitness.Web.Controllers
         public string FirstName { get; set; }
         [ValidateNonEmpty]
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
@@ -201,6 +202,7 @@ namespace MethodFitness.Web.Controllers
         public string Source { get; set; }
         public IEnumerable<SelectListItem> _SourceList { get; set; }
 
+        [ValidateNonEmpty]
         public DateTime StartDate { get; set; }
         public string SourceOther { get; set; }
         [TextArea]

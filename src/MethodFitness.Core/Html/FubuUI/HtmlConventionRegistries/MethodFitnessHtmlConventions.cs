@@ -16,7 +16,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
             Editors.Builder<GroupSelectedBuilder2>();
             Editors.Builder<TextAreaBuilder2>();
             Editors.Builder<DatePickerBuilder2>();
-            Editors.Builder<TimePickerBuilder2>();
+//            Editors.Builder<TimePickerBuilder2>();
             Editors.Builder<CheckboxBuilder2>();
             Editors.Builder<PasswordBuilder2>();
             Editors.Builder<MultiSelectBuilder2>();

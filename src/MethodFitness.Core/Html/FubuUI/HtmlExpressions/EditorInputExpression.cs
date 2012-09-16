@@ -17,6 +17,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
         IEditorInputExpression<VIEWMODEL> Hide();
         IEditorInputExpression<VIEWMODEL> ElementId(string id);
         IEditorInputExpression<VIEWMODEL> CustomLabel(string labelDisplay);
+        IEditorInputExpression<VIEWMODEL> ReadOnly();
     }
 
     public class EditorInputExpression<VIEWMODEL> : IEditorInputExpression<VIEWMODEL> where VIEWMODEL : class
@@ -44,7 +45,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
             HtmlTag input = _generator.InputFor(_expression);
             addInternalCssClasses(_htmlRoot, input);
             if (_elementId.IsNotEmpty()) input.Id(_elementId);
-            if (_readOnly) { input.Attr("readonly", true); }
+            if (_readOnly) { input.Attr("readonly", "readonly"); }
             _htmlRoot.Append(input);
             return _htmlRoot;
         }
