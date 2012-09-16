@@ -9,6 +9,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
 using MethodFitness.Security.Interfaces;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 using MethodFitness.Web.Models;
 
@@ -76,7 +77,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     TrainerId = user.EntityId
                 }
             };
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
         public string processTrainerName(User trainer)
         {
@@ -88,7 +89,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             return name;
         }
 
-        public JsonResult EventChanged(AppointmentChangedViewModel input)
+        public CustomJsonResult EventChanged(AppointmentChangedViewModel input)
         {
             var appointment = _repository.Find<Appointment>(input.EntityId);
             appointment.Date = input.ScheduledDate;
@@ -101,14 +102,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             notification = appointment.CheckForClients(notification);
             if (!notification.Success)
             {
-                return Json(notification, JsonRequestBehavior.AllowGet);
+                return new CustomJsonResult { Data = notification };
             }
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
-        public JsonResult Events(GetEventsViewModel input)
+        public CustomJsonResult Events(GetEventsViewModel input)
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
@@ -127,7 +128,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId));
             }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
-            return Json(events, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = events };
         }
 
         private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)

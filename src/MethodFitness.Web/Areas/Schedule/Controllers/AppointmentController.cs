@@ -149,7 +149,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _repository.Save(appointment);
             _repository.HardDelete(appointment);
             _repository.UnitOfWork.Commit();
-            return Json(new Notification{Success = true},JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult{Data = new Notification{Success = true}};
         }
 
         public ActionResult Save(AppointmentViewModel input)
@@ -176,7 +176,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             }
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)

@@ -70,7 +70,7 @@ CC.Elements.DateTextbox = CC.Elements.Element.extend({
         this.type = "datetextbox";
         this.$label = this.$container.find("label");
         this.$input.on("change",function(){that.validate();});
-        this.$input.datepicker();
+        this.$input.datepicker({ changeYear: true, changeMonth: true });
 //        this.$input.scroller(this.dateTimeDefaults());
     },
 //    dateTimeDefaults : function(){

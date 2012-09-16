@@ -14,6 +14,7 @@ using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
+using MethodFitness.Web.Config;
 using StructureMap;
 using xVal.ServerSide;
 
@@ -83,7 +84,7 @@ namespace MethodFitness.Web.Controllers
             model._deleteUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.Delete(null));
             model._saveUrl= UrlContext.GetUrlForAction<TrainerController>(x => x.Save(null));
             model._Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString();
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
 
         public ActionResult Display_Template(ViewModel input)
@@ -96,7 +97,7 @@ namespace MethodFitness.Web.Controllers
             var model = Mapper.Map<Trainer, TrainerViewModel>(trainer);
             model.addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId;
             model._Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString();
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
 
         public ActionResult Delete(ViewModel input)
@@ -109,7 +110,7 @@ namespace MethodFitness.Web.Controllers
                 _repository.Delete(trainer);
             }
             var notification = validationManager.FinishWithAction();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
 
         }
 
@@ -128,7 +129,7 @@ namespace MethodFitness.Web.Controllers
                 }
             });
             var notification = validationManager.FinishWithAction();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
         public ActionResult Save(TrainerViewModel input)
@@ -154,7 +155,7 @@ namespace MethodFitness.Web.Controllers
 
 //            _uploadedFileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
             var notification = crudManager.Finish();
-            return Json(notification, "text/plain");
+            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
         }
 
         private bool userRoleRules(User trainer, out ActionResult json)
@@ -169,7 +170,8 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
                                           };
                 {
-                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    json = new CustomJsonResult { Data = notification };
+
                     return true;
                 }
             }
@@ -182,7 +184,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
                                           };
                 {
-                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    json = new CustomJsonResult { Data = notification };
                     return true;
                 }
             }
@@ -195,7 +197,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
                                           };
                 {
-                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    json = new CustomJsonResult { Data = notification };
                     return true;
                 }
             }
@@ -208,7 +210,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
                                           };
                 {
-                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    json = new CustomJsonResult { Data = notification };
                     return true;
                 }
             }
@@ -292,9 +294,11 @@ namespace MethodFitness.Web.Controllers
         public string Password { get; set; }
         [ValidateSameAs("Password")]
         public string PasswordConfirmation { get; set; }
+        [ValidateNonEmpty]
         public string FirstName { get; set; }
+        [ValidateNonEmpty]
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
@@ -302,7 +306,9 @@ namespace MethodFitness.Web.Controllers
         public string ZipCode { get; set; }
         public string Color { get; set; }
         public string UserLoginInfoLoginName { get; set; }
+        [ValidateNonEmpty]
         public string Email { get; set; }
+        [ValidateNonEmpty]
         public string PhoneMobile { get; set; }
         public string SecondaryPhone { get; set; }
         public int ClientRateDefault { get; set; }

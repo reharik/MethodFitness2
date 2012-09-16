@@ -6,6 +6,7 @@ using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
@@ -25,7 +26,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             _repository = repository;
         }
 
-        public JsonResult ItemList(ViewModel input)
+        public CustomJsonResult ItemList(ViewModel input)
         {
             var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.EntityId;
             var model = new ListViewModel()
@@ -36,15 +37,15 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 ParentId = input.EntityId
             };
             model.headerButtons.Add("new");
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
 
-        public JsonResult Payments(GridItemsRequestModel input)
+        public CustomJsonResult Payments(GridItemsRequestModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
             var items = _dynamicExpressionQuery.PerformQuery(client.Payments, input.filters);
             var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items);
-            return Json(gridItemsViewModel, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = gridItemsViewModel };
         }
     }
 }

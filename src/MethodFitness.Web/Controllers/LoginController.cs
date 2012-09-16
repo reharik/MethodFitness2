@@ -7,6 +7,7 @@ using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Services;
 using StructureMap;
 
@@ -72,7 +73,7 @@ namespace MethodFitness.Web.Controllers
 //                ex.Source = "CATCH RAISED";
 //                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
 //            }
-            return Json(notification);
+            return new CustomJsonResult { Data = notification };
         }
             
 //            
