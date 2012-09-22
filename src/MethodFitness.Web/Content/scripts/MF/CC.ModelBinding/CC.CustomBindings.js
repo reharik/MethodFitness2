@@ -10,14 +10,18 @@ ko.bindingHandlers.MultiSelect = {
     init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
          var model = valueAccessor();
         model._resultsItems = ko.observableArray();
+
         $(element).tokenInput(model, {
                 internalTokenMarkup:function(){
                     var anchor = $("<a>").addClass("selectedItem").attr("data-bind",'text:name');
                     return $("<p>").append(anchor);
                 }
         });
-
-        ko.applyBindings(model, $(element).next("div")[0]);
+        var item = $(element).data("tokenInputObject");
+        var binding = function(){
+            ko.applyBindings(model, $(element).next("div")[0]);
+        };
+        item.init(binding);
     },
     update: function(element, valueAccessor, allBindingsAccessor, viewModel) {
         // This will be called once when the binding is first applied to an element,

@@ -15,7 +15,7 @@
         @RenderSection("ExtraContentHeaderButtons", false)
         <span class="title-name">@Model._Title</span>
         <button class="close cancel" title="@WebLocalizationKeys.CLOSE"></button>
-        @if (Model.Item.EntityId > 0)
+        @if (Model.EntityId > 0)
         {
             <span class="title-added">@WebLocalizationKeys.DATE_ADDED.ToFormat(Model.Item.CreateDate.ToLongDateString())</span>
         }

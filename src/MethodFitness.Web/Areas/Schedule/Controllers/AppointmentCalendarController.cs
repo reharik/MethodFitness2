@@ -124,8 +124,13 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                                                 && x.Location.EntityId==input.Loc);
             if (input.TrainerIds.IsNotEmpty())
             {
-                IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
-                appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId));
+                //This is necessary because when in trainer view the ledgend is not shown and returns "0"
+                if (input.TrainerIds == "NONE") { appointments = new List<Appointment>().AsQueryable(); }
+                else
+                {
+                    IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
+                    appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId));
+                }
             }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
             return new CustomJsonResult { Data = events };

@@ -178,8 +178,8 @@ MF.Views.CalendarView = MF.Views.View.extend({
         });
         if(ids){
             ids = ids.substr(0,ids.length-1);
-        }else{
-            ids="0";
+        }else if( $(".legendLabel").is("visible")){
+            ids="NONE";
         }
         this.replaceSource({url : this.model.CalendarDefinition.Url, data:{Loc:locId, TrainerIds:ids} });
         this.reload();
@@ -230,7 +230,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         MF.mixin(this, "modelAndElementsMixin");
     },
     events:{
-        'change [name="AppointmentType"]':'handleTimeChange',
+        'change [name="AppointmentType"]':'handleSwitchFromPairToInd',
         'change [name="StartTimeString"]':'handleTimeChange',
         'click #save' : 'saveItem',
         'click #cancel' : 'cancel'
@@ -238,43 +238,43 @@ MF.Views.AppointmentView = MF.Views.View.extend({
     viewLoaded:function(){
         var startDate = new XDate("1/5/1972t"+this.model.StartTimeString());
         this.setEndTime(startDate);
-        MF.vent.bind("ClientsDtos:tokenizer:add", this.clientChange, this);
-        MF.vent.bind("ClientsDtos:tokenizer:remove", this.clientChange, this);
-        this.clientChange();
+        MF.vent.bind("ClientsDtos:tokenizer:add", this.handleSwitchFromPairToInd, this);
+        MF.vent.bind("ClientsDtos:tokenizer:remove", this.handleSwitchFromPairToInd, this);
+        this.handleSwitchFromPairToInd();
     },
-    handleOptions:function(){
-        if($(this.model.ClientsDtos.selectedItems()).size()>1){
-            this.setDisabledOptionsOnAptType(true);
-        }else{
-            this.setDisabledOptionsOnAptType(false);
-        }
-    },
-    clientChange:function(){
+
+    setCurrentSelectionForAptType:function(isPair){
         var currentSelection = $("[name='AppointmentType']").select2("val");
-        if($(this.model.ClientsDtos.selectedItems()).size()>1){
-            if(currentSelection != "Pair"){
-                $("[name='AppointmentType']").data.previousSelection=currentSelection;
-            }
+        if(isPair){
+            $("[name='AppointmentType']").data.previousSelection=currentSelection;
             $("[name='AppointmentType']").select2("val","Pair");
-            this.setDisabledOptionsOnAptType(true);
+            this.model.AppointmentType("Pair");
         }else{
             if(currentSelection == "Pair"){
-                $("[name='AppointmentType']").select2("val",$("[name='AppointmentType']").data.previousSelection);
+                var previousSelection = $("[name='AppointmentType']").data.previousSelection;
+                $("[name='AppointmentType']").select2("val",previousSelection);
+                this.model.AppointmentType(previousSelection);
             }
-            this.setDisabledOptionsOnAptType(false);
         }
     },
-    setDisabledOptionsOnAptType:function(pairEneabled){
+
+    handleSwitchFromPairToInd:function(){
+        var isPair = $(this.model.ClientsDtos.selectedItems()).size()>1;
+        this.setCurrentSelectionForAptType(isPair);
+        this.setDisabledOptionsOnAptType(isPair);
+        this.handleTimeChange();
+    },
+    setDisabledOptionsOnAptType:function(isPair){
         $("[name='AppointmentType'] option").each(function(){
                 var $item = $(this);
                 if($item.text() == "Pair"){
-                    if(pairEneabled){
+                    if(isPair){
                         $item.removeAttr("disabled")
                     }else{
                         $item.attr("disabled","disabled")
                     }
                 }else{
-                    if(pairEneabled){
+                    if(isPair){
                         $item.attr("disabled","disabled")
                     }else{
                         $item.removeAttr("disabled")
@@ -287,9 +287,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
                 
     },
-    
-    handleTimeChange:function(valArray) {
-        this.handleOptions();
+    handleTimeChange:function() {
         var startTime = new XDate(this.model.Date().split("T")[0]+"t"+this.model.StartTimeString());
         this.setEndTime(startTime);
         return startTime;
@@ -382,6 +380,10 @@ MF.Views.PaymentListView = MF.Views.View.extend({
         var parentId = this.options.ParentId;
         MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,id,parentId),true);
     },
+    displayItem: function (id) {
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route", MF.generateRoute(this.options.display, id,parentId), true);
+    },
     viewLoaded:function(){
         this.setupBindings();
     },
@@ -438,14 +440,66 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
         MF.mixin(this, "ajaxFormMixin");
         MF.mixin(this, "modelAndElementsMixin");
     },
-     events:{
+    events:{
         'click #trainerPayments' : 'trainerPayments',
-         'click #payTrainer' : 'payTrainer',
-         'click #save' : 'saveItem',
-        'click #cancel' : 'cancel'
+        'click #payTrainer' : 'payTrainer',
+        'click #save' : 'saveItem',
+        'click #cancel' : 'cancel',
+        'click .tokenEditor' : 'tokenEditor'
     },
     viewLoaded:function(){
         $('#color',this.el).miniColors();
+         MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.bind("popup:templatePopup:cancel",this.tokenCancel,this);
+    },
+    multiSelectModifier:function(ccElement){
+        if(ccElement.name=="ClientsDtos"){
+            ccElement.multiSelectOptions = {
+                internalTokenMarkup:function(){
+                    var anchor = $("<a>").addClass("selectedItem").attr("data-bind",'text:display');
+                    var anchor2 = $("<a>").addClass("tokenEditor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
+                    return $("<p>").append(anchor).append(anchor2);
+                },
+                beforeTokenAddedFunction:$.proxy(this.beforeTokenAddedFunction,this)
+            }
+        }
+    },
+    tokenEditor:function(e){
+        var $li = $(e.target).closest("li");
+        this.currentlyEditing = $li;
+        var id=$li.attr("id");
+        var percentage = $(e.target).attr("rel");
+        var dataItem={id:id,percentage:percentage};
+        var buttons = this.options.buttons?this.options.buttons:MF.Views.popupButtonBuilder.builder("templatePopup").standardEditButons();
+        var popupOptions = {
+            id:"templatePopup",
+            buttons: buttons,
+            data:dataItem,
+            template:"#percentageTemplate"
+        };
+        this.templatedPopupView = new MF.Views.TemplatedPopupView(popupOptions);
+        this.templatedPopupView.render();
+        this.storeChild(this.templatedPopupView);
+    },
+    tokenSave:function(){
+        var id = $("#editingId").val();
+        var newVal = $("#newTrainerPercentage").val();
+        _.find(this.model.ClientsDtos.selectedItems(),function(item){
+            if(item.id() == id){
+                var anchorText = $(this.currentlyEditing.find("a").first()).text();
+                item.display(anchorText.substring(0, anchorText.indexOf('(')) + "( " + newVal + " ) ");
+                item.percentage(newVal);
+                return true;
+            }
+        },this);
+        this.templatedPopupView.close();
+    },
+    tokenCancel:function(){
+        this.templatedPopupView.close();
+    },
+    beforeTokenAddedFunction:function(item) {
+        item.percentage = ko.observable(this.model.ClientRateDefault());
+        item.display = ko.observable(item.name() + "(" + item.percentage() + ")")
     },
     trainerPayments:function(){
         var rel = MF.State.get("Relationships");
@@ -545,6 +599,7 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         this.setupBindings();
+        MF.vent.bind(this.options.gridId+":Redirect",this.showPayGrid,this);
     },
     _setupBindings:function(){
          MF.vent.bind("Redirect",this.showPayGrid,this);
