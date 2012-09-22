@@ -114,7 +114,7 @@ namespace MethodFitness.Core.Html.FubuUI.Builders
     {
         protected override bool matches(AccessorDef def)
         {
-            return def.Accessor.PropertyType == typeof(TokenInputViewModel);
+            return def.Accessor.PropertyType.GetInterface("ITokenInputViewModel")!=null;
         }
 
         public override HtmlTag Build(ElementRequest request)

@@ -70,14 +70,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
         $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
         $(".content-header",this.$el).find(".search").remove();
-        $("[name='EndDate']",this.$el).scroller({
-            preset: 'date',
-            theme: 'default',
-            display: 'modal',
-            mode: 'scroller',
-            dateOrder: 'mmddyyyy',
-            headerPreText:"End Date  "
-        });
+        $("[name='EndDate']",this.$el).datepicker();
         this.model.EndDate= ko.observable( new XDate().toString("MM/dd/yyyy") );
         }
 

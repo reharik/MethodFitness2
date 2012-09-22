@@ -95,7 +95,6 @@ MF.Views.View = Backbone.View.extend({
     }
   });
 
-
 MF.Views.FormView = MF.Views.View.extend({
     initialize: function(){
         MF.mixin(this, "formMixin");
@@ -254,7 +253,6 @@ MF.Views.PopupView = MF.Views.View.extend({
     }
 });
 
-
 MF.Views.TemplatedPopupView = MF.Views.View.extend({
 
     initialize: function(){
@@ -275,8 +273,6 @@ MF.Views.TemplatedPopupView = MF.Views.View.extend({
 
     }
 });
-
-
 
 MF.Views.popupButtonBuilder = (function(){
     return {
@@ -428,7 +424,6 @@ MF.Views.EditableTokenView = MF.Views.TokenView.extend({
     },
     tokenEditor:function(e){}
 });
-
 
 MF.Views.NotificationView = MF.Views.View.extend({
     events:_.extend({

@@ -26,14 +26,19 @@ MF.mixins.modelAndElementsMixin = {
         // make sure to apply ids prior to ko mapping.
         var that = this;
         this.mappingOptions ={ ignore:[] };
-        if(arrayOfIgnoreItems){
-             _.each(arrayOfIgnoreItems,function(item){
-                 that.mappingOptions.ignore.push(item);});
-        }
+        _.each(arrayOfIgnoreItems,function(item){ that.mappingOptions.ignore.push(item);});
+
         this.model = ko.mapping.fromJS(this.rawModel,this.mappingOptions);
         this.extendModel(this.model);
         ko.applyBindings(this.model,this.el);
         this.elementsViewmodel = CC.elementService.getElementsViewmodel(this);
+
+        if(this.boundElementOptions && this.boundElementOptions.modifiers){
+            _.each(this.boundElementOptions.modifiers,function(item){
+                item(this.elementsViewmodel.collection);
+            },this)
+        }
+
         var ignore = _.filter(_.keys(this.model),function(item){
             return (item.indexOf('_') == 0 && item != "__ko_mapping__");
         });
@@ -138,7 +143,6 @@ MF.mixins.displayMixin = {
         if(!this.options.noBubbleUp) {MF.WorkflowManager.returnParentView();}
     }
 };
-
 
 MF.mixins.ajaxDisplayMixin = {
     render:function(){

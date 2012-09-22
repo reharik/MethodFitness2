@@ -69,10 +69,19 @@ namespace MethodFitness.Web.Controllers
             }
             var clients = _repository.FindAll<Client>();
             var model = Mapper.Map<Trainer,TrainerViewModel>(trainer);
-
-            var _availableClients = clients.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF});
-            var selectedClients = trainer.Clients.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
-            model.ClientsDtos = new TokenInputViewModel { _availableItems = _availableClients, selectedItems = selectedClients };
+            var _availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
+            var selectedClients = trainer.Clients.Select(x =>
+                                                             {
+                                                                 var tcr = trainer.TrainerClientRates.FirstOrDefault(c => c.Client == x);
+                                                                 var percentage = tcr!=null ? tcr.Percent:trainer.ClientRateDefault;
+                                                                 return new TCRTokenInputDto
+                                                                             {
+                                                                                 id = x.EntityId.ToString(),
+                                                                                 name = x.FullNameLNF,
+                                                                                 percentage = percentage
+                                                                             };
+                                                             });
+            model.ClientsDtos = new TCRTokenInputViewModel { _availableItems = _availableClients, selectedItems = selectedClients.OrderBy(x=>x.name) };
 
             var userRoles = _repository.FindAll<UserRole>();
             var _availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.Name});
@@ -224,6 +233,9 @@ namespace MethodFitness.Web.Controllers
             if(trainer.UserRoles.Any(x=>x.Name==SecurityUserGroups.Administrator.ToString()))
             {
                 _authorizationRepository.AssociateUserWith(trainer, SecurityUserGroups.Administrator.ToString());
+            }else
+            {
+                _authorizationRepository.DetachUserFromGroup(trainer, SecurityUserGroups.Administrator.ToString());
             }
         }
 
@@ -272,13 +284,19 @@ namespace MethodFitness.Web.Controllers
                                                {
                                                    var client = _repository.Find<Client>(Int32.Parse(x.id));
                                                    trainer.AddClient(client,0);
+                                                   var tcr = trainer.TrainerClientRates.FirstOrDefault(r => r.Client == client);
+                                                   if (tcr != null) { tcr.Percent = x.percentage; }
+                                                   else{trainer.AddTrainerClientRate(new TrainerClientRate{Client = client,Percent = x.percentage,User = trainer});}
                                                });
                 trainer.Clients.ForEachItem(x =>
                                          {
                                              if (!model.ClientsDtos.selectedItems.Any(c => c.id == x.EntityId.ToString()))
-                                                 trainer.RemoveClient(x);
+                                             {
+                                                 remove.Add(x);
+                                             }
                                          });
             }
+            remove.ForEachItem(trainer.RemoveClient);
             return trainer;
         }
     }
@@ -287,7 +305,7 @@ namespace MethodFitness.Web.Controllers
     {
         public string _deleteUrl { get; set; }
         public IEnumerable<SelectListItem> _StateList { get; set; }
-        public TokenInputViewModel ClientsDtos { get; set; }
+        public TCRTokenInputViewModel ClientsDtos { get; set; }
         public TokenInputViewModel UserRolesDtos { get; set; }
 
         public bool DeleteImage { get; set; }
@@ -312,5 +330,17 @@ namespace MethodFitness.Web.Controllers
         public string PhoneMobile { get; set; }
         public string SecondaryPhone { get; set; }
         public int ClientRateDefault { get; set; }
+    }
+    public class TCRTokenInputDto:TokenInputDto
+    {
+        public int percentage { get; set; }
+        public string display { get { return name + "(" + percentage + ")"; } }
+
+    }
+
+    public class TCRTokenInputViewModel : ITokenInputViewModel
+    {
+        public IEnumerable<TCRTokenInputDto> _availableItems { get; set; }
+        public IEnumerable<TCRTokenInputDto> selectedItems { get; set; }
     }
 }   

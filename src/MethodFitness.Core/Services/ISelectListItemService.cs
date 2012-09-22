@@ -17,8 +17,7 @@ namespace MethodFitness.Core.Services
                                                        Expression<Func<ENTITY, object>> value, bool addSelectItem);
 
         IEnumerable<SelectListItem> CreateList<ENTITY>(Expression<Func<ENTITY, object>> text,
-                                                       Expression<Func<ENTITY, object>> value, bool addSelectItem,
-                                                       bool softDelete = false)
+                                                       Expression<Func<ENTITY, object>> value, bool addSelectItem)
             where ENTITY : IPersistableObject;
 
         IEnumerable<SelectListItem> CreateList<ENUM>(bool onlyKey = false, bool addSelectItem = false) where ENUM : Enumeration, new();
@@ -45,6 +44,8 @@ namespace MethodFitness.Core.Services
                                                              Expression<Func<ENTITY, object>> value,
                                                              bool addSelectItem)
             where ENTITY : ILookupType;
+
+        string SetModelValueBySelected(IEnumerable<SelectListItem> list, string value);
     }
 
     public class SelectListItemService : ISelectListItemService
@@ -66,19 +67,19 @@ namespace MethodFitness.Core.Services
             Accessor valueAccessor = value.ToAccessor();
             if (addSelectItem)
             {
-                items.Add(new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
+                items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
             }
             entityList.ForEachItem(x =>
-                                       {
-                                           if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
-                                           {
-                                               items.Add(new SelectListItem
-                                                             {
-                                                                 Text = textAccessor.GetValue(x).ToString(),
-                                                                 Value = valueAccessor.GetValue(x).ToString()
-                                                             });
-                                           }
-                                       });
+            {
+                if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
+                {
+                    items.Add(new SelectListItem
+                    {
+                        Text = textAccessor.GetValue(x).ToString(),
+                        Value = valueAccessor.GetValue(x).ToString()
+                    });
+                }
+            });
             return items.OrderBy(x => x.Text);
         }
 
@@ -96,22 +97,22 @@ namespace MethodFitness.Core.Services
             Accessor valueAccessor = value.ToAccessor();
             if (addSelectItem)
             {
-                items.Add(new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
+                items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
             }
             entityList.ForEachItem(x =>
-                                       {
-                                           if (text1Accessor.GetValue(x) != null && text2Accessor.GetValue(x) != null &&
-                                               valueAccessor.GetValue(x) != null)
-                                           {
-                                               items.Add(new SelectListItem
-                                                             {
-                                                                 Text =
-                                                                     text1Accessor.GetValue(x).ToString() + seperator +
-                                                                     text2Accessor.GetValue(x),
-                                                                 Value = valueAccessor.GetValue(x).ToString()
-                                                             });
-                                           }
-                                       });
+            {
+                if (text1Accessor.GetValue(x) != null && text2Accessor.GetValue(x) != null &&
+                    valueAccessor.GetValue(x) != null)
+                {
+                    items.Add(new SelectListItem
+                    {
+                        Text =
+                            text1Accessor.GetValue(x).ToString() + seperator +
+                            text2Accessor.GetValue(x),
+                        Value = valueAccessor.GetValue(x).ToString()
+                    });
+                }
+            });
             return items.OrderBy(x => x.Text);
         }
 
@@ -124,8 +125,7 @@ namespace MethodFitness.Core.Services
         }
 
         public IEnumerable<SelectListItem> CreateList<ENTITY>(Expression<Func<ENTITY, object>> text,
-                                                              Expression<Func<ENTITY, object>> value, bool addSelectItem,
-                                                              bool softDelete = false) where ENTITY : IPersistableObject
+                                                              Expression<Func<ENTITY, object>> value, bool addSelectItem) where ENTITY : IPersistableObject
         {
             var enumerable = _repository.FindAll<ENTITY>();
             return CreateList(enumerable, text, value, addSelectItem);
@@ -136,18 +136,26 @@ namespace MethodFitness.Core.Services
             IEnumerable<Enumeration> enumerations = Enumeration.GetAllActive<ENUM>();
             if (enumerations == null) return null;
             if (enumerations.Any(x => x.Index > 0))
-            {enumerations.OrderBy(x => x.Index);}
-            else{enumerations = enumerations.OrderBy(item => item.Key);}
+            { enumerations.OrderBy(x => x.Index); }
+            else { enumerations = enumerations.OrderBy(item => item.Key); }
 
-            var items =
-                enumerations.Select(x => new SelectListItem {Text = x.Key, Value = onlyKey || x.Value.IsEmpty() ? x.Key : x.Value})
-                    .ToList();
+            var items = enumerations.Select(x => new SelectListItem
+            {
+                Text = x.Key,
+                Value = onlyKey || x.Value.IsEmpty() ? x.Key : x.Value,
+                Selected = x.IsDefault
+            }).ToList();
             if (addSelectItem)
             {
-                items.Insert(0, new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
+                items.Insert(0, new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
             }
-            
+
             return items;
+        }
+
+        public string SetModelValueBySelected(IEnumerable<SelectListItem> list, string value)
+        {
+            return (value.IsEmpty() && list.Any(x => x.Selected)) ? list.First(x => x.Selected).Value : value;
         }
 
         public IEnumerable<SelectListItem> SetSelectedItemByValue(IEnumerable<SelectListItem> entityList, string value)
@@ -172,19 +180,19 @@ namespace MethodFitness.Core.Services
             Accessor valueAccessor = value.ToAccessor();
             if (addSelectItem)
             {
-                items.Add(new SelectListItem {Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = ""});
+                items.Add(new SelectListItem { Text = CoreLocalizationKeys.SELECT_ITEM.ToString(), Value = "" });
             }
             entityList.ForEachItem(x =>
-                                       {
-                                           if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
-                                           {
-                                               items.Add(new SelectListItem
-                                                             {
-                                                                 Text = textAccessor.GetValue(x).ToString(),
-                                                                 Value = valueAccessor.GetValue(x).ToString()
-                                                             });
-                                           }
-                                       });
+            {
+                if (textAccessor.GetValue(x) != null && valueAccessor.GetValue(x) != null)
+                {
+                    items.Add(new SelectListItem
+                    {
+                        Text = textAccessor.GetValue(x).ToString(),
+                        Value = valueAccessor.GetValue(x).ToString()
+                    });
+                }
+            });
             return items;
         }
     }

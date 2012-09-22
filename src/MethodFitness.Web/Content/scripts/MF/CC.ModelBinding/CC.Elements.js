@@ -211,19 +211,27 @@ CC.Elements.Select = CC.Elements.Element.extend({
     render:function(){
         this.type = "select";
         this.$input = this.$container.find("select");
-        this.$input.select2();
+//        this.$input.select2();
     },
     destroy:function(){
-        this.$input.select2("destroy");
+//        this.$input.select2("destroy");
         this._super("destroy",arguments);
     }
 });
 
 CC.Elements.MultiSelect = CC.Elements.Element.extend({
-    render:function(){
+    init:function(view){
+        this._super("init",arguments);
+        if($.isFunction(view.multiSelectModifier)){
+            view.multiSelectModifier(this);
+        }
+    },
+    render:function(options){
         var that = this;
         this.type = "select";
         this.$input = this.$container.find("input.multiSelect");
+        var item = this.$input.data("tokenInputObject");
+        item.render(this.multiSelectOptions);
         MF.vent.bind(this.name+":tokenizer:add",$.proxy(that.multiSelectChange,that));
         MF.vent.bind(this.name+":tokenizer:remove",$.proxy(that.multiSelectChange,that));
     },
