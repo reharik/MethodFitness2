@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using AutoMapper;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Enumerations;
+using CC.Core.Html;
+using CC.Core.Services;
+using CC.Security.Interfaces;
 using Castle.Components.Validator;
-using MethodFitness.Core;
-using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
-using MethodFitness.Core.Localization;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 

@@ -1,7 +1,7 @@
 using System.Linq;
+using CC.Core.DomainTools;
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Services;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 using xVal.ServerSide;
 
 namespace MethodFitness.Core.Rules

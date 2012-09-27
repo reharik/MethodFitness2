@@ -1,6 +1,6 @@
-﻿using MethodFitness.Core.Domain;
-using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html.Grid;
+﻿using CC.Core.DomainTools;
+using CC.Core.Html.Grid;
+using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Controllers;
@@ -10,10 +10,8 @@ namespace MethodFitness.Web.Areas.Schedule.Grids
     public class TrainerListGrid : Grid<User>, IEntityListGrid<User>
     {
 
-        public TrainerListGrid(IGridBuilder<User> gridBuilder,
-                                      ISessionContext sessionContext,
-                                      IRepository repository)
-            : base(gridBuilder, sessionContext, repository)
+        public TrainerListGrid(IGridBuilder<User> gridBuilder)
+            : base(gridBuilder)
         {
         }
 

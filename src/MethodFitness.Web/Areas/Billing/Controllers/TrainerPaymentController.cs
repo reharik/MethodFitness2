@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Web.Controllers;

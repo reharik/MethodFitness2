@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CC.Core.Services;
 using MethodFitness.Core.Services;
 
 namespace MethodFitness.Core.Rules

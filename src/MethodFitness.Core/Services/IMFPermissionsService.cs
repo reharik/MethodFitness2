@@ -1,4 +1,4 @@
-﻿using MethodFitness.Security.Interfaces;
+﻿using CC.Security.Interfaces;
 
 namespace MethodFitness.Core.Services
 {

@@ -1,12 +1,10 @@
-using System;
-using System.Linq;
 using System.Web.Mvc;
-using MethodFitness.Core;
-using MethodFitness.Core.CoreViewModelAndDTOs;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Html;
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
-using MethodFitness.Core.Html.Grid;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
@@ -19,24 +17,28 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         private readonly IEntityListGrid<TrainerPayment> _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IRepository _repository;
+        private readonly ISessionContext _sessionContext;
 
         public TrainerPaymentListController(IEntityListGrid<TrainerPayment> grid,
             IDynamicExpressionQuery dynamicExpressionQuery,
             IRepository repository,
-            ISaveEntityService saveEntityService )
+            ISessionContext sessionContext)
         {
             _grid = grid;
             _dynamicExpressionQuery = dynamicExpressionQuery;
             _repository = repository;
+            _sessionContext = sessionContext;
         }
 
         public ActionResult ItemList(ViewModel input)
         {
+            var user = _sessionContext.GetCurrentUser();
+
             var trainer = _repository.Find<User>(input.EntityId);
             var url = UrlContext.GetUrlForAction<TrainerPaymentListController>(x => x.TrainerPayments(null),AreaName.Billing) + "?ParentId="+input.EntityId;
             var model = new TrainersPaymentListViewModel()
             {
-                gridDef = _grid.GetGridDefinition(url),
+                gridDef = _grid.GetGridDefinition(url,user),
                 _Title = trainer.FullNameFNF+"'s " + WebLocalizationKeys.PAYMENTS,
                 TrainersName = trainer.FullNameFNF,
                 EntityId = trainer.EntityId
@@ -47,9 +49,11 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public JsonResult TrainerPayments(GridItemsRequestModel input)
         {
+            var user = _sessionContext.GetCurrentUser();
+
             var trainer = _repository.Find<Trainer>(input.ParentId);
             var items = _dynamicExpressionQuery.PerformQuery(trainer.TrainerPayments,input.filters);
-            var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items);
+            var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
             return new CustomJsonResult { Data = gridItemsViewModel };
         }
     }

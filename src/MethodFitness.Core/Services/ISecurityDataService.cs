@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web.Security;
+using CC.Core;
+using CC.Core.DomainTools;
 using MethodFitness.Core.Domain;
 
 namespace MethodFitness.Core.Services

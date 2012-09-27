@@ -1,20 +1,22 @@
 using System.Collections.Generic;
-using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html.Menu;
+using CC.Core.Html.Menu;
+using CC.Security;
+using MethodFitness.Core.Domain;
+using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
-using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Areas.Schedule.Controllers;
-using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Menus
 {
     public class MainMenu : IMenuConfig
     {
         private readonly IMenuBuilder _builder;
+        private readonly ISessionContext _sessionContext;
 
-        public MainMenu(IMenuBuilder builder)
+        public MainMenu(IMenuBuilder builder, ISessionContext sessionContext)
         {
             _builder = builder;
+            _sessionContext = sessionContext;
         }
 
         public IList<MenuItem> Build(bool withoutPermissions = false)
@@ -24,6 +26,11 @@ namespace MethodFitness.Web.Menus
 
         private IList<MenuItem> DefaultMenubuilder(bool withoutPermissions = false)
         {
+            IUser user = null;
+            if (!withoutPermissions)
+            {
+                user = _sessionContext.GetCurrentUser();
+            }
             return _builder
                 .CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR).Route("calendar")
                 .CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS)
@@ -31,7 +38,7 @@ namespace MethodFitness.Web.Menus
                     .HasChildren()
                         .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS)
                     .EndChildren()
-            .MenuTree(withoutPermissions);
+            .MenuTree(user);
         }
     }
 }

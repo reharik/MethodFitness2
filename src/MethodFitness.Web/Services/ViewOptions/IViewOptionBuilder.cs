@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core;
+using CC.Core.DomainTools;
+using CC.Core.Html;
+using CC.Security.Interfaces;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Web.Services.ViewOptions
 {

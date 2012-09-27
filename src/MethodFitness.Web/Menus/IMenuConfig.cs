@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MethodFitness.Core.Html.Menu;
+using CC.Core.Html.Menu;
 
 namespace MethodFitness.Web.Config
 {

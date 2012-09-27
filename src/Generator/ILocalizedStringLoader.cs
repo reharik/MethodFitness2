@@ -9,12 +9,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
+using CC.Core;
+using CC.Core.Domain;
+using CC.Core.DomainTools;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using NHibernate;
 using StructureMap;
 using DomainEntity = MethodFitness.Core.Domain.DomainEntity;
-using IRepository = MethodFitness.Core.Domain.IRepository;
+
 
 namespace Generator
 {
@@ -120,7 +123,7 @@ namespace Generator
         }
 
         private static T[] ReadFromXml<T>(string xmlFileName)
-            where T : DomainEntity
+            where T : Entity
         {
             if (!File.Exists(xmlFileName))
             {
@@ -142,7 +145,7 @@ namespace Generator
         }
 
         private static void DumpToXml<T>(IEnumerable<T> items, string xmlFileName)
-            where T : DomainEntity
+            where T : Entity
         {
             items.ForEachItem(l => l.EntityId = 0);
 
@@ -156,7 +159,7 @@ namespace Generator
         }
 
         private static void TranslateToCulture<T>(IEnumerable<T> items, string fromCulture, string toCulture, Expression<Func<T, string>> expression)
-            where T : DomainEntity
+            where T : Entity
         {
             var prop = FubuMVC.Core.Util.ReflectionHelper.GetAccessor(expression);
 

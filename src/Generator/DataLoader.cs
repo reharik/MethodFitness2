@@ -1,7 +1,9 @@
 using System;
+using CC.Core.DomainTools;
+using CC.Core.Services;
+using CC.Security.Interfaces;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 using StructureMap;
 

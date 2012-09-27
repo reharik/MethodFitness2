@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
-using MethodFitness.Core.Domain;
-using MethodFitness.Core.Html.Grid;
+﻿using CC.Core.DomainTools;
+using CC.Core.Html.Grid;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Schedule.Grids;
@@ -11,10 +9,8 @@ namespace MethodFitness.Web.Grids
     public class SessionPaymentListGrid : Grid<SessionPaymentDto>, IEntityListGrid<SessionPaymentDto>
     {
 
-        public SessionPaymentListGrid(IGridBuilder<SessionPaymentDto> gridBuilder,
-                                      ISessionContext sessionContext,
-                                      IRepository repository)
-            : base(gridBuilder, sessionContext, repository)
+        public SessionPaymentListGrid(IGridBuilder<SessionPaymentDto> gridBuilder)
+            : base(gridBuilder)
         {
         }
 

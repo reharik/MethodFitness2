@@ -1,4 +1,5 @@
 using System;
+using CC.Core.DomainTools;
 using MethodFitness.Core.Domain;
 
 namespace Generator.Commands

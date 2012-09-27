@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using CC.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core;
 
 namespace MethodFitness.Web.Controllers

@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using CC.Core;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Enumerations;
+using CC.Core.Html;
+using CC.Core.Localization;
+using CC.Core.Services;
 using Castle.Components.Validator;
-using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
-using MethodFitness.Core.Localization;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
 using MethodFitness.Web.Config;
 using StructureMap;
+using AreaName = MethodFitness.Core.Enumerations.AreaName;
 
 namespace MethodFitness.Web.Controllers
 {

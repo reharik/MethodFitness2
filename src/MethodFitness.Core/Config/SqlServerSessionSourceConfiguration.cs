@@ -1,7 +1,7 @@
 using System;
+using CC.Security;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using MethodFitness.Security;
 using NHibernate;
 using NHibernate.Cfg;
 
@@ -45,7 +45,7 @@ namespace MethodFitness.Core.Domain
                     _config.GenerateSchema(x);
                     x.SetProperty("adonet.batch_size", "100");
                     x.SetProperty("generate_statistics", "true");
-                    Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
+                    Security.Configure<User>(x, SecurityTableStructure.Prefix);
                 })
                 .BuildSessionFactory();
         }
@@ -62,7 +62,7 @@ namespace MethodFitness.Core.Domain
                 {
                     x.SetProperty("adonet.batch_size", "100");
                     x.SetProperty("generate_statistics", "true");
-                    Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
+                    Security.Configure<User>(x, SecurityTableStructure.Prefix);
                 })
                 .BuildSessionFactory();
         }
