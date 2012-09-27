@@ -37,8 +37,9 @@ namespace MethodFitness.Web
             {
                 x.TheCallingAssembly();
                 x.AssemblyContainingType<MergedEmailFactory>();
+                x.AssemblyContainingType<CoreLocalizationKeys>();
                 x.AssemblyContainingType<Entity>();
-//                x.AssemblyContainingType<IUser>();
+                x.AssemblyContainingType<IUser>();
                 x.AssemblyContainingType<HtmlConventionRegistry>();
                 x.ConnectImplementationsToTypesClosing(typeof(IEntityListGrid<>));
                 x.WithDefaultConventions();

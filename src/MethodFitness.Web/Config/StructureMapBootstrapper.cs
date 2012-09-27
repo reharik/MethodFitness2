@@ -12,7 +12,7 @@ namespace MethodFitness.Web.Config
                                          {
                                              x.AddRegistry(new MFWebRegistry());
                                          });
-//            ObjectFactory.AssertConfigurationIsValid();
+            ObjectFactory.AssertConfigurationIsValid();
         }
 
         public static void Restart()
