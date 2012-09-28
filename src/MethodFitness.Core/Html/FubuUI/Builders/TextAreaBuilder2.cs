@@ -1,6 +1,5 @@
-using System;
-using FubuMVC.Core.Util;
-using FubuMVC.UI.Configuration;
+using CC.Core.Utilities;
+using CCUIHelpers.Configuration;
 using HtmlTags;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;

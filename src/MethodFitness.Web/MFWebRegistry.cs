@@ -1,4 +1,7 @@
 using Alpinely.TownCrier;
+using CCUIHelpers;
+using CCUIHelpers.Configuration;
+using CCUIHelpers.Tags;
 using MethodFitness.Core.Services;
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
@@ -14,9 +17,6 @@ using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Menus;
 using MethodFitness.Web.Services;
-using FubuMVC.UI;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
 using MethodFitness.Web.Services.ViewOptions;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;

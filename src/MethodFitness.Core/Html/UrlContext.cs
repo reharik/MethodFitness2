@@ -2,8 +2,8 @@ using System;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using CC.Core.Utilities;
 using MethodFitness.Core.Enumerations;
-using FubuMVC.Core.Util;
 
 namespace MethodFitness.Core.Html
 {

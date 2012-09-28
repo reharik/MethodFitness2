@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using FubuMVC.Core.Util;
-using MethodFitness.Core.CoreViewModelAndDTOs;
+using CC.Core.Utilities;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Localization;
 

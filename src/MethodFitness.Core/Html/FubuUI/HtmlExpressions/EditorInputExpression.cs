@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web.Script.Serialization;
-using FubuMVC.Core.Util;
-using FubuMVC.UI.Tags;
+using CC.Core.Utilities;
+using CCUIHelpers.Tags;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions

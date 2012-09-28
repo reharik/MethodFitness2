@@ -249,6 +249,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             $("appTypePairRoot").val("Pair").show();
         }else{
             $("appTypeDDlRoot").show();
+            
             $("appTypePairRoot").val("").hide();
         }
     },

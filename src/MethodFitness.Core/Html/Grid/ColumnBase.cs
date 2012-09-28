@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MethodFitness.Security.Interfaces;
-using FubuMVC.Core.Util;
-using MethodFitness.Core.Domain;
+using CC.Core.Utilities;
 using MethodFitness.Core.Localization;
 
 namespace MethodFitness.Core.Html.Grid
@@ -111,7 +109,7 @@ namespace MethodFitness.Core.Html.Grid
             string fullname = propertyAccessor.Name;
             if (propertyAccessor is PropertyChain)
             {
-                fullname = propertyAccessor.Names.Aggregate((current, next) => current + "." + next);
+                fullname = propertyAccessor.PropertyNames.Aggregate((current, next) => current + "." + next);
             }
             Properties[GridColumnProperties.sortColumn.ToString()] = fullname;
             return this;

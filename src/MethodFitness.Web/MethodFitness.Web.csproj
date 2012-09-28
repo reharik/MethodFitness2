@@ -14,6 +14,7 @@
     <AssemblyName>MethodFitness.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,6 +54,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CC.Core.Utilities">
+      <HintPath>..\..\..\..\temp\Projects\ReflectionHelper\bin\Debug\CC.Core.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="CCUIHelpers">
+      <HintPath>..\..\..\..\temp\Projects\CCUIHelpers\CCUIHelpers\bin\Debug\CCUIHelpers.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Elmah.dll</HintPath>
@@ -60,14 +67,6 @@
     <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.UI, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\FubuMVC.UI.dll</HintPath>
     </Reference>
     <Reference Include="HibernatingRhinos.Profiler.Appender, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

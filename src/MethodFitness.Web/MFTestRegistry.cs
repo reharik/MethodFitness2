@@ -1,5 +1,7 @@
 using Alpinely.TownCrier;
-
+using CCUIHelpers;
+using CCUIHelpers.Configuration;
+using CCUIHelpers.Tags;
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
@@ -12,9 +14,6 @@ using MethodFitness.Security.Interfaces;
 using MethodFitness.Security.Services;
 using MethodFitness.Web.Menus;
 using MethodFitness.Web.Services;
-using FubuMVC.UI;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using StructureMap.Configuration.DSL;

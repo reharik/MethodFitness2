@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using FubuMVC.UI.Configuration;
+using CCUIHelpers.Configuration;
 using HtmlTags;
 using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;

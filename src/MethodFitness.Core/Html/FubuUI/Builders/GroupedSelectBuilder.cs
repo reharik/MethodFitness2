@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using MethodFitness.Core.Html.FubuUI.Tags;
-using FubuMVC.UI.Configuration;
+using CCUIHelpers.Configuration;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.FubuUI.Builders

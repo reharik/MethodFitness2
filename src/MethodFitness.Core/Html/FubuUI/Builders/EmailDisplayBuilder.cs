@@ -1,6 +1,4 @@
-using MethodFitness.Core.Domain.Tools.CustomAttributes;
-using FubuMVC.Core.Util;
-using FubuMVC.UI.Configuration;
+using CCUIHelpers.Configuration;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.FubuUI.Builders

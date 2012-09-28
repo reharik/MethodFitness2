@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CC.Core.Utilities;
 using MethodFitness.Core.Enumerations;
-using FubuMVC.Core.Util;
 
 namespace MethodFitness.Core.Localization
 {

@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using CC.Core.Utilities;
 using MethodFitness.Core.Localization;
-using FubuMVC.Core.Util;
 
 namespace MethodFitness.Core.Html.Grid
 {
@@ -14,7 +14,7 @@ namespace MethodFitness.Core.Html.Grid
             var name = LocalizationManager.GetLocalString(expression);
             if(propertyAccessor is PropertyChain)
             {
-                name = ((PropertyChain)(propertyAccessor)).Names.Aggregate((current, next) => current + "." + next);
+                name = ((PropertyChain)(propertyAccessor)).PropertyNames.Aggregate((current, next) => current + "." + next);
             }
             Properties[GridColumnProperties.name.ToString()] = name;
             Properties[GridColumnProperties.header.ToString()] = LocalizationManager.GetHeader(expression).HeaderText;

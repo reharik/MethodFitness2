@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using FubuMVC.Core.Util;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
+using CC.Core.Utilities;
+using CCUIHelpers.Configuration;
+using CCUIHelpers.Tags;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
@@ -61,7 +61,7 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
                                            };
             SelectTag tag = new SelectTag(action);
             string name = string.Empty;
-            request.Accessor.Names.ForEachItem(x => name += x + ".");
+            request.Accessor.PropertyNames.ForEachItem(x => name += x + ".");
             name = name.Substring(0, name.Length-1);
             tag.Attr("name", name);
             addInternalCssClasses(_htmlRoot, tag);

@@ -1,8 +1,8 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using CC.Core.Utilities;
 using StructureMap;
-using FubuMVC.Core.Util;
 
 namespace MethodFitness.Core.Localization
 {
@@ -37,7 +37,7 @@ namespace MethodFitness.Core.Localization
 
         public static string GetLocalString<T>(Expression<Func<T, object>> expression)
         {
-            PropertyInfo propertyInfo = FubuMVC.Core.Util.ReflectionHelper.GetProperty(expression);
+            PropertyInfo propertyInfo = ReflectionHelper.GetProperty(expression);
             return  propertyInfo.Name ;
         }
 

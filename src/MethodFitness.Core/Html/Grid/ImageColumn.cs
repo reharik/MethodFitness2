@@ -1,8 +1,7 @@
 using System.Collections.Generic;
+using CC.Core.Utilities;
 using MethodFitness.Core.Domain;
-using FubuMVC.Core.Util;
 using HtmlTags;
-using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Core.Html.Grid
 {

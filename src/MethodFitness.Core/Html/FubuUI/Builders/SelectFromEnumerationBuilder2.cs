@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
+using CC.Core.Utilities;
+using CCUIHelpers.Configuration;
 using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;
 using MethodFitness.Core.Localization;
-using FubuMVC.Core.Util;
-using FubuMVC.UI.Configuration;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.FubuUI.Builders

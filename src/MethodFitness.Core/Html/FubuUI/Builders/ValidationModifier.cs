@@ -1,10 +1,10 @@
 using System;
+using CC.Core.Utilities;
+using CCUIHelpers.Configuration;
 using Castle.Components.Validator;
 using HtmlTags;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
-using FubuMVC.UI.Configuration;
-using FubuMVC.Core.Util;
 
 namespace MethodFitness.Core.Html.FubuUI.Builders
 {

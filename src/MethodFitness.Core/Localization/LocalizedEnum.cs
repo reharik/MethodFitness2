@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using FubuMVC.Core.Util;
+using CC.Core.Utilities;
 
 namespace MethodFitness.Core.Localization
 {
@@ -28,16 +28,16 @@ namespace MethodFitness.Core.Localization
 
         public static Enumeration GetEnumerationByValue(this Accessor accessor, string value)
         {
-            if (value == null) return null; 
-            var enumeration = accessor.InnerProperty.GetEnumeration("");
+            if (value == null) return null;
+            Enumeration enumeration = accessor.InnerProperty.GetEnumeration("");
             return enumeration != null ? Enumeration.FromValue(enumeration, value) : null;
         }
 
         public static string LocalizedValue<T>(this T entity, Expression<Func<T, string>> expression)
         {
-            var accessor = ReflectionHelper.GetAccessor(expression);
+            Accessor accessor = ReflectionHelper.GetAccessor(expression);
             var key = accessor.GetValue(entity) as string;
-            var valueObject = accessor.GetLocalizedEnum(key);
+            Enumeration valueObject = accessor.GetLocalizedEnum(key);
             return LocalizationManager.GetText(valueObject);
         }
     }
@@ -45,24 +45,22 @@ namespace MethodFitness.Core.Localization
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class ValueOfAttribute : Attribute
     {
-        public Type LocalizedEnumType { get; private set; }
-
         public ValueOfAttribute(Type valueObjectType)
         {
-            
             LocalizedEnumType = valueObjectType;
         }
+
+        public Type LocalizedEnumType { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class AltListValueOfAttribute : Attribute
     {
-        public Type LocalizedEnumType { get; private set; }
-
         public AltListValueOfAttribute(Type valueObjectType)
         {
-
             LocalizedEnumType = valueObjectType;
         }
+
+        public Type LocalizedEnumType { get; private set; }
     }
 }

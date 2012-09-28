@@ -1,6 +1,6 @@
 using System;
-using FubuMVC.Core.Util;
-using FubuMVC.UI.Configuration;
+using CC.Core.Utilities;
+using CCUIHelpers.Configuration;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
 {

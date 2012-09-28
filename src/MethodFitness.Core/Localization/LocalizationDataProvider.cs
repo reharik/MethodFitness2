@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using FubuMVC.Core.Util;
+using CC.Core.Utilities;
 
 namespace MethodFitness.Core.Localization
 {
@@ -51,7 +50,7 @@ namespace MethodFitness.Core.Localization
             string value = string.Empty;
             if (accessor is PropertyChain)
             {
-                var names = ((PropertyChain) (accessor)).Names;
+                var names = ((PropertyChain) (accessor)).PropertyNames;
                 if (names.Last() != "Name")
                 {
                     value = names.Last();

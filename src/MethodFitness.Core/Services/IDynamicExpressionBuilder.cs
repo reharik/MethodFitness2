@@ -5,9 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Script.Serialization;
-using MethodFitness.Core.Domain;
-using FubuMVC.Core.Util;
-using MethodFitness.Core.Html.Grid;
+using CC.Core.Utilities;
 
 namespace MethodFitness.Core.Services
 {

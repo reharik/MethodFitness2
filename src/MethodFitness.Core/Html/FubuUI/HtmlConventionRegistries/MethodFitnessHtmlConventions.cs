@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
+using CC.Core.Utilities;
+using CCUIHelpers;
+using CCUIHelpers.Configuration;
 using MethodFitness.Core.Html.FubuUI.Builders;
-using FubuMVC.UI;
-using FubuMVC.UI.Configuration;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
@@ -61,9 +62,9 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
         public static string DeriveElementName(ElementRequest request)
         {
             var name = request.Accessor.Name;
-            if (request.Accessor is FubuMVC.Core.Util.PropertyChain)
+            if (request.Accessor is PropertyChain)
             {
-                name = ((FubuMVC.Core.Util.PropertyChain)(request.Accessor)).Names.Aggregate((current, next) => current + "." + next);
+                name = ((PropertyChain)(request.Accessor)).PropertyNames.Aggregate((current, next) => current + "." + next);
                 var isDomainEntity = false;
                 var de = request.Accessor.PropertyType.BaseType;
                 while (de.Name != "Object")

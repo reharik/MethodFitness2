@@ -6,9 +6,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using CC.Core.Utilities;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Html;
-using FubuMVC.Core.Util;
 using NHibernate.Proxy;
 
 namespace MethodFitness.Core

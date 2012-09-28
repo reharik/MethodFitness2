@@ -1,13 +1,13 @@
 using System;
-using System.Text.RegularExpressions;
+using System.Linq;
+using CC.Core.Utilities;
+using CCUIHelpers;
+using CCUIHelpers.Configuration;
+using CCUIHelpers.Tags;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Html.FubuUI.Builders;
 using MethodFitness.Core.Html.FubuUI.Tags;
-using FubuMVC.UI;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
 using HtmlTags;
-using System.Linq;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
 {
@@ -49,9 +49,9 @@ namespace MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries
             if (tag.IsInputElement())
             {
                 var name = request.Accessor.Name;
-                if (request.Accessor is FubuMVC.Core.Util.PropertyChain)
+                if (request.Accessor is PropertyChain)
                 {
-                    name = ((FubuMVC.Core.Util.PropertyChain)(request.Accessor)).Names.Aggregate((current, next) => current + "." + next);
+                    name = ((PropertyChain)(request.Accessor)).PropertyNames.Aggregate((current, next) => current + "." + next);
                     if (new InheritsFromDomainEntity().execute(request.Accessor.PropertyType))
                         name += ".EntityId";
                 }

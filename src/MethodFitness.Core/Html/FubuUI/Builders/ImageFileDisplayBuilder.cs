@@ -1,6 +1,5 @@
 using System;
-using MethodFitness.Core.Domain;
-using FubuMVC.UI.Configuration;
+using CCUIHelpers.Configuration;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.FubuUI.Builders

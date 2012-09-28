@@ -1,7 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using MethodFitness.Core;
-using FubuMVC.UI.Tags;
+using CCUIHelpers.Tags;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.FubuUI.HtmlExpressions
