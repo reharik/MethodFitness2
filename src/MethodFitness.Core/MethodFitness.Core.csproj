@@ -60,6 +60,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlTags, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\Iesi.Collections.dll</HintPath>
@@ -188,6 +189,10 @@
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserRole.cs" />
     <Compile Include="Enumerations\Enumerations.cs" />
+    <Compile Include="Html\Expressions\LinkExpression.cs" />
+    <Compile Include="Html\Expressions\ScriptReferenceExpression.cs" />
+    <Compile Include="Html\Expressions\StandardButtonExpression.cs" />
+    <Compile Include="Html\HtmlExtensions.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Config\NullSqlServerSessionSourceConfiguration.cs" />
     <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
