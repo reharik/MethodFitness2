@@ -1,12 +1,15 @@
 using System;
 using System.Web.Mvc;
 using System.Web.Security;
+using CC.Core;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Html;
+using CC.Core.Services;
 using Castle.Components.Validator;
-using MethodFitness.Core;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Services;
 using StructureMap;
 
@@ -72,7 +75,7 @@ namespace MethodFitness.Web.Controllers
 //                ex.Source = "CATCH RAISED";
 //                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
 //            }
-            return Json(notification);
+            return new CustomJsonResult { Data = notification };
         }
             
 //            

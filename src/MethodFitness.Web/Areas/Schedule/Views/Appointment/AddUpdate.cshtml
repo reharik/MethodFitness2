@@ -1,5 +1,4 @@
-﻿@using MethodFitness.Core.Enumerations
-@using MethodFitness.Core.Html.FubuUI
+﻿@using CC.Core.Html.CCUI
 @using MethodFitness.Core.Services
 @using MethodFitness.Web
 @using MethodFitness.Web.Areas.Schedule.Controllers
@@ -27,21 +26,16 @@
                 @Html.SubmissionFor(x => x.ClientsDtos).ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.AppointmentType).RootId("aptTypeDDLRoot").ToHtmlTag()
-            @Html.ViewFor(x => x.AppointmentType).RootId("aptTypePairRoot").HideRoot().ToHtmlTag()
+            @Html.SubmissionFor(x => x.AppointmentType).ToHtmlTag()
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Date).ToHtmlTag()
         </div>
-        <h5>@WebLocalizationKeys.STARTTIME</h5>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.StartTime).HideLabel().ToHtmlTag()
+            @Html.SubmissionFor(x => x.StartTimeString).ToHtmlTag()
         </div>
-        <h5>
-            @WebLocalizationKeys.ENDTIME
-        </h5>
         <div class="fieldRow">
-           <span id="endTime">@Model.EndTime.ToShortTimeString()</span>
+                      @Html.ViewFor(x => x.EndTimeString).ToHtmlTag()
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Notes).ToHtmlTag()

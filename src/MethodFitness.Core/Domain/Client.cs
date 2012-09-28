@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CC.Core.Domain;
+using CC.Core.Enumerations;
+using CC.Core.Localization;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Localization;
 
 namespace MethodFitness.Core.Domain
 {
@@ -35,6 +37,7 @@ namespace MethodFitness.Core.Domain
         public virtual string Source { get; set; }
         [TextArea]
         public virtual string SourceOther { get; set; }
+        [ValidateNonEmpty]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
         public virtual string FullNameLNF

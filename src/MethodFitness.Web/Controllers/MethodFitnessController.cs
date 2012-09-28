@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using MethodFitness.Core;
-using MethodFitness.Core.Html;
+using CC.Core.CoreViewModelAndDTOs;
 using MethodFitness.Web.Services.ViewOptions;
 
 namespace MethodFitness.Web.Controllers

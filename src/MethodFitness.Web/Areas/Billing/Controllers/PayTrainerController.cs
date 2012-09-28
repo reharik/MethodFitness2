@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Html;
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
-using MethodFitness.Core.Services;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
@@ -22,7 +23,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             _saveEntityService = saveEntityService;
         }
 
-        public ActionResult PayTrainer(PayTrainerViewModel input)
+        public CustomJsonResult PayTrainer(PayTrainerViewModel input)
         {
             Notification notification;
             var trainer = _repository.Find<Trainer>(input.EntityId);
@@ -30,12 +31,12 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             if(trainerPayment==null)
             {
                 notification = new Notification {Success = false, Message = WebLocalizationKeys.YOU_MUST_SELECT_AT_ONE_SESSION.ToString()};
-                return Json(notification, JsonRequestBehavior.AllowGet);
+                return new CustomJsonResult { Data = notification };
             }
             var crudManager = _saveEntityService.ProcessSave(trainer);
             notification = crudManager.Finish();
             notification.Variable = UrlContext.GetUrlForAction<PayTrainerController>(x => x.TrainerReceipt(null),AreaName.Billing)+"/"+trainerPayment.EntityId+"?ParentId="+trainer.EntityId;
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
         public ActionResult TrainerReceipt(ViewModel input)

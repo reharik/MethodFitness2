@@ -16,7 +16,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "setupGridSearchMixin");
-        this.$gridContainer =  $("#" + this.options.gridId);
     },
     events:{
          'click .jqgrow':'handleSingleClick',
@@ -27,7 +26,10 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
     },
 
     beforeInitGrid:function(){
-        this.options.gridOptions={loadComplete : function(){
+        var that = this;
+        this.options.gridId="trainerPayment";
+        this.options.gridOptions={
+            loadComplete : function(){
             var ids = $(this).getDataIDs();
             var paymentRows =[];
             for (var i = 0, l = ids.length; i < l; i++) {
@@ -40,7 +42,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                         _checked:false
                     })
                 } else {
-                    var row = $('#' + rowId, this.el);
+                    var row = $('#' + rowId, that.el);
                     row.find("td").addClass('gridRowStrikeThrough');
                     row.find("td:first input").remove();
                 }
@@ -68,14 +70,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
         $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
         $(".content-header",this.$el).find(".search").remove();
-        $("[name='EndDate']",this.$el).scroller({
-            preset: 'date',
-            theme: 'default',
-            display: 'modal',
-            mode: 'scroller',
-            dateOrder: 'mmddyyyy',
-            headerPreText:"End Date  "
-        });
+        $("[name='EndDate']",this.$el).datepicker();
         this.model.EndDate= ko.observable( new XDate().toString("MM/dd/yyyy") );
         }
 
@@ -165,6 +160,7 @@ MF.Views.TrainerPaymentListGridView = MF.Views.View.extend({
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "defaultGridEventsMixin");
         MF.mixin(this, "setupGridSearchMixin");
+        this.options.gridId = "trainerPaymentsList";
     },
     events:{
          'click .return':'retunToParent'

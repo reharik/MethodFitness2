@@ -10,14 +10,18 @@ ko.bindingHandlers.MultiSelect = {
     init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
          var model = valueAccessor();
         model._resultsItems = ko.observableArray();
+
         $(element).tokenInput(model, {
                 internalTokenMarkup:function(){
                     var anchor = $("<a>").addClass("selectedItem").attr("data-bind",'text:name');
                     return $("<p>").append(anchor);
                 }
         });
-
-        ko.applyBindings(model, $(element).next("div")[0]);
+        var item = $(element).data("tokenInputObject");
+        var binding = function(){
+            ko.applyBindings(model, $(element).next("div")[0]);
+        };
+        item.init(binding);
     },
     update: function(element, valueAccessor, allBindingsAccessor, viewModel) {
         // This will be called once when the binding is first applied to an element,
@@ -47,7 +51,7 @@ ko.bindingHandlers.dateString = {
 
         // handle .net crappy json
         var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
-        var formattedDate = valueUnwrapped? new XDate(new Date(parseInt(valueUnwrapped.substr(6)))).toString("MM/dd/yyyy"):"";
+        var formattedDate = valueUnwrapped? new XDate(new XDate(valueUnwrapped)).toString("MM/dd/yyyy"):"";
         if(element.nodeName  == "SPAN"){
            $(element).text(formattedDate).change();
         }
@@ -90,7 +94,7 @@ ko.bindingHandlers.timeString = {
 
         // handle .net crappy json
         var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
-        var formattedTime = valueUnwrapped? new XDate(new Date(parseInt(valueUnwrapped.substr(6)))).toString("hh:mm TT"):"";
+        var formattedTime = valueUnwrapped? new XDate(new Date(valueUnwrapped)).toString("hh:mm TT"):"";
         if(element.nodeName  == "SPAN"){
            $(element).text(formattedTime).change();
         }

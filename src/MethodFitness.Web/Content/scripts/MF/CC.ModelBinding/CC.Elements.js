@@ -70,52 +70,53 @@ CC.Elements.DateTextbox = CC.Elements.Element.extend({
         this.type = "datetextbox";
         this.$label = this.$container.find("label");
         this.$input.on("change",function(){that.validate();});
-        this.$input.scroller(this.dateTimeDefaults());
+        this.$input.datepicker({ changeYear: true, changeMonth: true });
+//        this.$input.scroller(this.dateTimeDefaults());
     },
-    dateTimeDefaults : function(){
-        var headerText = this.$label.is(":visible")?this.friendlyName+" ":'';
-        return {
-            preset: 'date',
-            theme: 'default',
-            display: 'modal',
-            mode: 'scroller',
-            dateOrder: 'mmddyyyy',
-            headerPreText:headerText,
-        }
-    },
+//    dateTimeDefaults : function(){
+//        var headerText = this.$label.is(":visible")?this.friendlyName+" ":'';
+//        return {
+//            preset: 'date',
+//            theme: 'default',
+//            display: 'modal',
+//            mode: 'scroller',
+//            dateOrder: 'mmddyyyy',
+//            headerPreText:headerText
+//        }
+//    },
     destroy:function(){
         this.$input.off("change");
         this._super("destroy",arguments);
     }
 });
 
-CC.Elements.TimeTextbox = CC.Elements.Element.extend({
-    render:function(){
-        var that = this;
-        this.type = "timetextbox";
-        this.$label = this.$container.find("label");
-        this.$input.on("change",function(){that.validate();});
-        this.$input.scroller(this.timeDefaults());
-    },
-    timeDefaults: function(){
-        var headerPreText = this.$label.is(":visible")?this.$label.text()+" ":'';
-        return {
-            preset: 'time',
-            theme: 'default',
-            display: 'modal',
-            mode: 'scroller',
-            dateOrder: 'hh:mm',
-            headerPreText:headerPreText,
-            onClose:function(valText,inst){
-                MF.vent.trigger(this.name+":timeBox:close",[valText,inst]);
-            }
-        }
-    },
-    destroy:function(){
-        this.$input.off("change");
-        this._super("destroy",arguments);
-    }
-});
+//CC.Elements.TimeTextbox = CC.Elements.Element.extend({
+//    render:function(){
+//        var that = this;
+//        this.type = "timetextbox";
+//        this.$label = this.$container.find("label");
+//        this.$input.on("change",function(){that.validate();});
+//        this.$input.scroller(this.timeDefaults());
+//    },
+//    timeDefaults: function(){
+//        var headerPreText = this.$label.is(":visible")?this.$label.text()+" ":'';
+//        return {
+//            preset: 'time',
+//            theme: 'default',
+//            display: 'modal',
+//            mode: 'scroller',
+//            dateOrder: 'hh:mm',
+//            headerPreText:headerPreText,
+//            onClose:function(valText,inst){
+//                MF.vent.trigger(this.name+":timeBox:close",[valText,inst]);
+//            }
+//        }
+//    },
+//    destroy:function(){
+//        this.$input.off("change");
+//        this._super("destroy",arguments);
+//    }
+//});
 
 CC.Elements.NumberTextbox = CC.Elements.Element.extend({
     render:function(){
@@ -210,19 +211,27 @@ CC.Elements.Select = CC.Elements.Element.extend({
     render:function(){
         this.type = "select";
         this.$input = this.$container.find("select");
-        this.$input.select2();
+//        this.$input.select2();
     },
     destroy:function(){
-        this.$input.select2("destroy");
+//        this.$input.select2("destroy");
         this._super("destroy",arguments);
     }
 });
 
 CC.Elements.MultiSelect = CC.Elements.Element.extend({
-    render:function(){
+    init:function(view){
+        this._super("init",arguments);
+        if($.isFunction(view.multiSelectModifier)){
+            view.multiSelectModifier(this);
+        }
+    },
+    render:function(options){
         var that = this;
         this.type = "select";
         this.$input = this.$container.find("input.multiSelect");
+        var item = this.$input.data("tokenInputObject");
+        item.render(this.multiSelectOptions);
         MF.vent.bind(this.name+":tokenizer:add",$.proxy(that.multiSelectChange,that));
         MF.vent.bind(this.name+":tokenizer:remove",$.proxy(that.multiSelectChange,that));
     },

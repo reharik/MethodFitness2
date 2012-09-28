@@ -1,6 +1,7 @@
 
 using System;
 using System.Linq;
+using CC.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 

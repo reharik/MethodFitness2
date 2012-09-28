@@ -54,12 +54,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CC.Core.Utilities">
-      <HintPath>..\..\..\..\temp\Projects\ReflectionHelper\bin\Debug\CC.Core.Utilities.dll</HintPath>
+    <Reference Include="CC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="CC.Core.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\CC.Core.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="CCUIHelpers">
-      <HintPath>..\..\..\..\temp\Projects\CCUIHelpers\CCUIHelpers\bin\Debug\CCUIHelpers.dll</HintPath>
-    </Reference>
+    <Reference Include="CC.Security, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="CC.UI.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Elmah.dll</HintPath>
@@ -76,10 +77,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\HibernatingRhinos.Profiler.Appender.NHibernateLog4Net.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlTags, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\HtmlTags.dll</HintPath>
-    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\Iesi.Collections.dll</HintPath>
@@ -94,6 +91,9 @@
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -195,6 +195,7 @@
       <DependentUpon>TimeSheet.aspx</DependentUpon>
     </Compile>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
+    <Compile Include="Config\CustomJsonResult.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
     <Compile Include="Config\AutomapperBootstrapper.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
@@ -233,7 +234,9 @@
     <Compile Include="Menus\HeaderMenu.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Services\IAuthenticationContext.cs" />
-    <Compile Include="Services\ISecuritySetupService.cs" />
+    <Compile Include="Services\ISecuritySetupService.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Services\ViewOptions\IViewOptionBuilder.cs" />
     <Compile Include="Services\ViewOptions\IViewOptionConfig.cs" />
     <Compile Include="Services\ViewOptions\ViewOption.cs" />
@@ -428,10 +431,6 @@
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
       <Name>MethodFitness.Core</Name>
       <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\MethodFitness.Security\MethodFitness.Security.csproj">
-      <Project>{DBA372FE-3D52-45B3-AF82-B37696328764}</Project>
-      <Name>MethodFitness.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReportingDataSets\MethodFitness.ReportingDataSets.csproj">
       <Project>{231B4A24-89B4-4212-AAA9-F234087037D1}</Project>

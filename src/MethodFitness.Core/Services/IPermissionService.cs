@@ -1,5 +1,6 @@
-﻿using MethodFitness.Core.Domain;
-using MethodFitness.Security.Interfaces;
+﻿using CC.Core.DomainTools;
+using CC.Security.Interfaces;
+using MethodFitness.Core.Domain;
 using StructureMap;
 
 namespace MethodFitness.Core.Services

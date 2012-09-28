@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Web.Mvc;
-using CCUIHelpers;
-using CCUIHelpers.Tags;
-using MethodFitness.Core;
+using CC.Core;
+using CC.UI.Helpers;
+using CC.UI.Helpers.Tags;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 using log4net.Config;

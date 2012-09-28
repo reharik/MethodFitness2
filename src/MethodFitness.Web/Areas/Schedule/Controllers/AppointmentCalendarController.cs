@@ -2,13 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Html;
+using CC.Core.Services;
+using CC.Security.Interfaces;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 using MethodFitness.Web.Models;
 
@@ -76,7 +79,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     TrainerId = user.EntityId
                 }
             };
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = model };
         }
         public string processTrainerName(User trainer)
         {
@@ -88,7 +91,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             return name;
         }
 
-        public JsonResult EventChanged(AppointmentChangedViewModel input)
+        public CustomJsonResult EventChanged(AppointmentChangedViewModel input)
         {
             var appointment = _repository.Find<Appointment>(input.EntityId);
             appointment.Date = input.ScheduledDate;
@@ -101,14 +104,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             notification = appointment.CheckForClients(notification);
             if (!notification.Success)
             {
-                return Json(notification, JsonRequestBehavior.AllowGet);
+                return new CustomJsonResult { Data = notification };
             }
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
-        public JsonResult Events(GetEventsViewModel input)
+        public CustomJsonResult Events(GetEventsViewModel input)
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
@@ -123,11 +126,16 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                                                 && x.Location.EntityId==input.Loc);
             if (input.TrainerIds.IsNotEmpty())
             {
-                IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
-                appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId));
+                //This is necessary because when in trainer view the ledgend is not shown and returns "0"
+                if (input.TrainerIds == "NONE") { appointments = new List<Appointment>().AsQueryable(); }
+                else
+                {
+                    IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
+                    appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId));
+                }
             }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
-            return Json(events, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = events };
         }
 
         private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)

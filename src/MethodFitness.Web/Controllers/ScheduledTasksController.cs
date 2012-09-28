@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core;
+using CC.Core.DomainTools;
 using MethodFitness.Core.Domain;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 using StructureMap;
 
 namespace MethodFitness.Web.Controllers

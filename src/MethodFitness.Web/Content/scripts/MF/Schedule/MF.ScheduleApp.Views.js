@@ -82,11 +82,11 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
-        if(new XDate(date).diffHours(new XDate())>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
+        if(new XDate(date,true).diffHours(new XDate(true))>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
             alert("That period is closed");
             return;
         }
-        var data = {"ScheduledDate" : $.fullCalendar.formatDate( date,"M/d/yyyy"), "ScheduledStartTime": $.fullCalendar.formatDate( date,"hh:mm TT")};
+        var data = {"ScheduledDate" : new XDate(date).toString("M/d/yyyy"), "ScheduledStartTime": new XDate( date ).toString("hh:mm TT")};
         this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
     },
     eventClick:function(calEvent, jsEvent, view) {
@@ -178,8 +178,8 @@ MF.Views.CalendarView = MF.Views.View.extend({
         });
         if(ids){
             ids = ids.substr(0,ids.length-1);
-        }else{
-            ids="0";
+        }else if( $(".legendLabel").is("visible")){
+            ids="NONE";
         }
         this.replaceSource({url : this.model.CalendarDefinition.Url, data:{Loc:locId, TrainerIds:ids} });
         this.reload();
@@ -230,53 +230,71 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         MF.mixin(this, "modelAndElementsMixin");
     },
     events:{
-        'change [name="AppointmentType"]':'handleTimeChange',
+        'change [name="AppointmentType"]':'handleSwitchFromPairToInd',
+        'change [name="StartTimeString"]':'handleTimeChange',
         'click #save' : 'saveItem',
         'click #cancel' : 'cancel'
     },
     viewLoaded:function(){
-        // this is strange, how is starttime a string when viewmodel is a date
-        this.model.StartTimeString = ko.observable(this.model.StartTime());
-        var startDate = new XDate(new Date("1/5/1972 "+this.model.StartTime()));
+        var startDate = new XDate("1/5/1972t"+this.model.StartTimeString());
         this.setEndTime(startDate);
-        MF.vent.bind("StartTime:timeBox:close",this.handleTimeChange,this);
-        MF.vent.bind("ClientsDtos:tokenizer:add", this.clientChange, this);
-        MF.vent.bind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+        MF.vent.bind("ClientsDtos:tokenizer:add", this.handleSwitchFromPairToInd, this);
+        MF.vent.bind("ClientsDtos:tokenizer:remove", this.handleSwitchFromPairToInd, this);
+        this.handleSwitchFromPairToInd();
     },
-    clientChange:function(){
-        if($(this.model.ClientsDtos.selectedItems()).size()>1){
-            $("appTypeDDlRoot").hide();
-            $("appTypePairRoot").val("Pair").show();
+
+    setCurrentSelectionForAptType:function(isPair){
+        var currentSelection = $("[name='AppointmentType']").select2("val");
+        if(isPair){
+            $("[name='AppointmentType']").data.previousSelection=currentSelection;
+            $("[name='AppointmentType']").select2("val","Pair");
+            this.model.AppointmentType("Pair");
         }else{
-            $("appTypeDDlRoot").show();
-            
-            $("appTypePairRoot").val("").hide();
+            if(currentSelection == "Pair"){
+                var previousSelection = $("[name='AppointmentType']").data.previousSelection;
+                $("[name='AppointmentType']").select2("val",previousSelection);
+                this.model.AppointmentType(previousSelection);
+            }
         }
+    },
+
+    handleSwitchFromPairToInd:function(){
+        var isPair = $(this.model.ClientsDtos.selectedItems()).size()>1;
+        this.setCurrentSelectionForAptType(isPair);
+        this.setDisabledOptionsOnAptType(isPair);
+        this.handleTimeChange();
+    },
+    setDisabledOptionsOnAptType:function(isPair){
+        $("[name='AppointmentType'] option").each(function(){
+                var $item = $(this);
+                if($item.text() == "Pair"){
+                    if(isPair){
+                        $item.removeAttr("disabled")
+                    }else{
+                        $item.attr("disabled","disabled")
+                    }
+                }else{
+                    if(isPair){
+                        $item.attr("disabled","disabled")
+                    }else{
+                        $item.removeAttr("disabled")
+                    }
+                }
+            });
     },
     onClose:function(){
-        MF.vent.unbind("StartTime:timeBox:close",this.handleTimeChange,this);
+        MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
+        MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+                
     },
-    renderElements:function(){
-        var collection = this.elementsViewmodel.collection;
-        var startTimeElement = collection["StartTime"];
-        startTimeElement.timeDefaults.stepMinute = 15;
-        for(var item in collection){
-            collection[item].render();
-        }
-    },
-    handleTimeChange:function(valArray) {
-        var scroller = $('[name="StartTime"]').scroller('getInst');
-        if (!scroller) {return;}
-        var date = $('[name="Date"]').val();
-        var timeValues;
-        timeValues = scroller.values;
-        var startTime = new XDate(date).setHours(timeValues[0] + (parseInt(timeValues[2])*12)).setMinutes(timeValues[1]);
-        this.model.StartTimeString = ko.observable(startTime.toString("hh:mm TT"));
+    handleTimeChange:function() {
+        var startTime = new XDate(this.model.Date().split("T")[0]+"t"+this.model.StartTimeString());
         this.setEndTime(startTime);
+        return startTime;
     },
     setEndTime:function(startTime){
         var aptMin;
-        switch($("[name='AppointmentType']").val()){
+        switch(this.model.AppointmentType()){
             case "Hour":
             case "Pair":
                 aptMin = 60;
@@ -296,9 +314,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             if(endMin.length == 1){
                 endMin="0"+endMin;
             }
-            $("#endTime").text(endHour+":"+endMin+" "+amPm);
-            this.model.EndTimeString = ko.observable(endHour+":"+endMin+" "+amPm);
-
+            this.model.EndTimeString(endHour+":"+endMin+" "+amPm);
     }
 
 });
@@ -364,6 +380,10 @@ MF.Views.PaymentListView = MF.Views.View.extend({
         var parentId = this.options.ParentId;
         MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,id,parentId),true);
     },
+    displayItem: function (id) {
+        var parentId = this.options.ParentId;
+        MF.vent.trigger("route", MF.generateRoute(this.options.display, id,parentId), true);
+    },
     viewLoaded:function(){
         this.setupBindings();
     },
@@ -420,14 +440,66 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
         MF.mixin(this, "ajaxFormMixin");
         MF.mixin(this, "modelAndElementsMixin");
     },
-     events:{
+    events:{
         'click #trainerPayments' : 'trainerPayments',
-         'click #payTrainer' : 'payTrainer',
-         'click #save' : 'saveItem',
-        'click #cancel' : 'cancel'
+        'click #payTrainer' : 'payTrainer',
+        'click #save' : 'saveItem',
+        'click #cancel' : 'cancel',
+        'click .tokenEditor' : 'tokenEditor'
     },
     viewLoaded:function(){
         $('#color',this.el).miniColors();
+         MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.bind("popup:templatePopup:cancel",this.tokenCancel,this);
+    },
+    multiSelectModifier:function(ccElement){
+        if(ccElement.name=="ClientsDtos"){
+            ccElement.multiSelectOptions = {
+                internalTokenMarkup:function(){
+                    var anchor = $("<a>").addClass("selectedItem").attr("data-bind",'text:display');
+                    var anchor2 = $("<a>").addClass("tokenEditor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
+                    return $("<p>").append(anchor).append(anchor2);
+                },
+                beforeTokenAddedFunction:$.proxy(this.beforeTokenAddedFunction,this)
+            }
+        }
+    },
+    tokenEditor:function(e){
+        var $li = $(e.target).closest("li");
+        this.currentlyEditing = $li;
+        var id=$li.attr("id");
+        var percentage = $(e.target).attr("rel");
+        var dataItem={id:id,percentage:percentage};
+        var buttons = this.options.buttons?this.options.buttons:MF.Views.popupButtonBuilder.builder("templatePopup").standardEditButons();
+        var popupOptions = {
+            id:"templatePopup",
+            buttons: buttons,
+            data:dataItem,
+            template:"#percentageTemplate"
+        };
+        this.templatedPopupView = new MF.Views.TemplatedPopupView(popupOptions);
+        this.templatedPopupView.render();
+        this.storeChild(this.templatedPopupView);
+    },
+    tokenSave:function(){
+        var id = $("#editingId").val();
+        var newVal = $("#newTrainerPercentage").val();
+        _.find(this.model.ClientsDtos.selectedItems(),function(item){
+            if(item.id() == id){
+                var anchorText = $(this.currentlyEditing.find("a").first()).text();
+                item.display(anchorText.substring(0, anchorText.indexOf('(')) + "( " + newVal + " ) ");
+                item.percentage(newVal);
+                return true;
+            }
+        },this);
+        this.templatedPopupView.close();
+    },
+    tokenCancel:function(){
+        this.templatedPopupView.close();
+    },
+    beforeTokenAddedFunction:function(item) {
+        item.percentage = ko.observable(this.model.ClientRateDefault());
+        item.display = ko.observable(item.name() + "(" + item.percentage() + ")")
     },
     trainerPayments:function(){
         var rel = MF.State.get("Relationships");
@@ -527,6 +599,7 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         this.setupBindings();
+        MF.vent.bind(this.options.gridId+":Redirect",this.showPayGrid,this);
     },
     _setupBindings:function(){
          MF.vent.bind("Redirect",this.showPayGrid,this);
