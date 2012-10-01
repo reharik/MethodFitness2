@@ -128,7 +128,7 @@ namespace MethodFitness.Web.Services
 
         public void AssociateAllUsersWithThierTypeGroup()
         {
-            _repository.DisableFilter("CompanyConditionFilter");
+           // _repository.DisableFilter("CompanyConditionFilter");
             var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
             admins.ForEachItem(x =>
                 _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));

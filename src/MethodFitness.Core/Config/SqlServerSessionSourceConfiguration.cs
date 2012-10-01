@@ -41,11 +41,11 @@ namespace MethodFitness.Core.Domain
                 .Mappings(_config.MappingConfiguration())
                 .ExposeConfiguration(x=>
                 {
+                    Security.Configure<User>(x, SecurityTableStructure.Prefix);
                     _config.ClusteredIndexOnManyToMany(x);
                     _config.GenerateSchema(x);
                     x.SetProperty("adonet.batch_size", "100");
                     x.SetProperty("generate_statistics", "true");
-                    Security.Configure<User>(x, SecurityTableStructure.Prefix);
                 })
                 .BuildSessionFactory();
         }
@@ -60,9 +60,9 @@ namespace MethodFitness.Core.Domain
                 .Mappings(_config.MappingConfiguration())
                 .ExposeConfiguration(x =>
                 {
+                    Security.Configure<User>(x, SecurityTableStructure.Prefix);
                     x.SetProperty("adonet.batch_size", "100");
                     x.SetProperty("generate_statistics", "true");
-                    Security.Configure<User>(x, SecurityTableStructure.Prefix);
                 })
                 .BuildSessionFactory();
         }

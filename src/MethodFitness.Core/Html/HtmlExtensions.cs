@@ -1,5 +1,4 @@
 using System.Web.Mvc;
-using CC.Core.Utilities;
 using MethodFitness.Core.Html.Expressions;
 
 namespace MethodFitness.Core.Html
