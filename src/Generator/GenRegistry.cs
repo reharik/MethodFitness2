@@ -1,8 +1,11 @@
 ﻿using Alpinely.TownCrier;
+using CC.Core.Domain;
 using CC.Core.DomainTools;
 using CC.Core.Localization;
+using CC.Security;
 using CC.Security.Interfaces;
 using CC.Security.Services;
+using CC.UI.Helpers;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using MethodFitness.Core;
@@ -29,6 +32,9 @@ namespace Generator
                 x.ConnectImplementationsToTypesClosing(typeof(IEntityListGrid<>));
                 x.AssemblyContainingType(typeof(CoreLocalizationKeys));
                 x.AssemblyContainingType(typeof(MergedEmailFactory));
+                x.AssemblyContainingType<Entity>();
+                x.AssemblyContainingType<IUser>();
+                x.AssemblyContainingType<HtmlConventionRegistry>(); 
                 x.WithDefaultConventions();
             });
 
@@ -40,7 +46,7 @@ namespace Generator
                .EqualToAppSetting("MethodFitness.sql_server_connection_string");
             For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory());
 
-            For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession(new SaveUpdateInterceptor()));
+            For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());//(new SaveUpdateInterceptor()));
 //            For<ISession>().HybridHttpOrThreadLocalScoped().Add(context => context.GetInstance<ISessionFactory>().OpenSession()).Named("NoFiltersOrInterceptor");
 
             For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Use<UnitOfWork>();

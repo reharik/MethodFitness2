@@ -8,15 +8,15 @@ namespace MethodFitness.Core.Domain.Persistence
         public PermissionMap()
         {
             Cache.ReadWrite().Region("cc-security");
+            Table("Permissions");
             Id(x => x.EntityId);
 
             Map(x => x.Allow).Not.Nullable();
             Map(x => x.Description).Length(1000);
             Map(x => x.Level).Not.Nullable();
-            References(x => x.Operation).Not.Nullable();
-            References(x => x.User);
-            References(x => x.UsersGroup);
+            References(x => x.Operation).Not.Nullable().Column("OperationId");
+            References(x => x.User).Column("UserId");
+            References(x => x.UsersGroup).Column("UserGroupId");
         }
-
     }
 }

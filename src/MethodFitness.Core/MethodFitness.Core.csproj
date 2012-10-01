@@ -157,6 +157,8 @@
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
+    <Compile Include="Domain\Persistence\OperationsMap.cs" />
+    <Compile Include="Domain\Persistence\PermissionMap.cs" />
     <Compile Include="Domain\Persistence\SessionMap.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -168,6 +170,7 @@
     <Compile Include="Domain\Persistence\UserRoleMap.cs" />
     <Compile Include="Domain\Persistence\UserMap.cs" />
     <Compile Include="Domain\Persistence\DomainEntityMap.cs" />
+    <Compile Include="Domain\Persistence\UsersGroupMap.cs" />
     <Compile Include="Domain\Session.cs" />
     <Compile Include="Domain\SessionRates.cs" />
     <Compile Include="Domain\SiteConfiguration.cs" />
@@ -217,6 +220,9 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="SubscriptionEngine\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

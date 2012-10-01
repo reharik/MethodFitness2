@@ -31,7 +31,11 @@ namespace MethodFitness.Web.Menus
             {
                 user = _sessionContext.GetCurrentUser();
             }
-            var builder = _builder.CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR).Route("calendar").CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS).CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools").HasChildren().CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS).EndChildren();
+            var builder =
+                _builder.CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR).Route("calendar")
+                    .CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS).CreateNode(
+                        WebLocalizationKeys.ADMIN_TOOLS, "tools").HasChildren().CreateTagNode<TrainerListController>(
+                            WebLocalizationKeys.TRAINERS).EndChildren();
             var list = builder.MenuTree(user);
             return list;
         }

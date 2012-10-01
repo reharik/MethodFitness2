@@ -28,14 +28,14 @@ namespace Generator.Commands
             sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
 
             new DataLoader().Load();
-            SqlServerHelper.AddRhinoSecurity(sessionFactory);
+//            SqlServerHelper.AddRhinoSecurity(sessionFactory);
 
-            ObjectFactory.ResetDefaults();
-            ObjectFactory.Initialize(x =>
-            {
-                x.AddRegistry(new GenRegistry());
-                x.AddRegistry(new CommandRegistry());
-            });
+//            ObjectFactory.ResetDefaults();
+//            ObjectFactory.Initialize(x =>
+//            {
+//                x.AddRegistry(new GenRegistry());
+//                x.AddRegistry(new CommandRegistry());
+//            });
             var securitySetup = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
             securitySetup.Execute(null);
 
