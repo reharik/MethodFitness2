@@ -12,11 +12,9 @@ using System.Xml.Serialization;
 using CC.Core;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
-using MethodFitness.Core;
-using MethodFitness.Core.Domain;
+using CC.Core.Utilities;
 using NHibernate;
 using StructureMap;
-using DomainEntity = MethodFitness.Core.Domain.DomainEntity;
 
 
 namespace Generator
@@ -161,7 +159,7 @@ namespace Generator
         private static void TranslateToCulture<T>(IEnumerable<T> items, string fromCulture, string toCulture, Expression<Func<T, string>> expression)
             where T : Entity
         {
-            var prop = FubuMVC.Core.Util.ReflectionHelper.GetAccessor(expression);
+            var prop = ReflectionHelper.GetAccessor(expression);
 
             fromCulture = fromCulture.Substring(0, 2);
             toCulture = toCulture.Substring(0, 2);

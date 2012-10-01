@@ -9,7 +9,6 @@ using CC.UI.Helpers;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using MethodFitness.Core;
-using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Web.Areas.Schedule.Grids;
