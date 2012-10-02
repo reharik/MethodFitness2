@@ -51,8 +51,8 @@
    <MakeDir Directories="$(OutputDirectory)"  />
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
    <Zip Files="@(WebFiles)"
-     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
-     ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
+     WorkingDirectory="C:\ServerApps\BackUp\MethodFitness_QA"
+     ZipFileName="C:\ServerApps\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
      ZipLevel="9" />
  </Target>
 
