@@ -177,6 +177,8 @@
     <Compile Include="Domain\SessionRates.cs" />
     <Compile Include="Domain\SiteConfiguration.cs" />
     <Compile Include="Domain\Tools\Continuation.cs" />
+    <Compile Include="Domain\Tools\NoInterceptorNoFiltersUnitOfWork.cs" />
+    <Compile Include="Domain\Tools\NoInterceptorNoFiltersRepository.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\LinkDisplayAttribute.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\LogAttribute.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\TextAreaAttribute.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="Domain\Tools\NullNHSetupConfig.cs" />
     <Compile Include="Domain\Tools\NullSession.cs" />
     <Compile Include="Domain\Tools\NullSessionFactory.cs" />
+    <Compile Include="Domain\Tools\NoFilterRepository.cs" />
     <Compile Include="Domain\TrainerClientRate.cs" />
     <Compile Include="Domain\TrainerPayment.cs" />
     <Compile Include="Domain\User.cs" />

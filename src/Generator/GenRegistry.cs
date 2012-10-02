@@ -6,6 +6,7 @@ using CC.Security;
 using CC.Security.Interfaces;
 using CC.Security.Services;
 using CC.UI.Helpers;
+using MethodFitness.Core.Config;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using MethodFitness.Core;
@@ -45,16 +46,15 @@ namespace Generator
                .EqualToAppSetting("MethodFitness.sql_server_connection_string");
             For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory());
 
-            For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());//(new SaveUpdateInterceptor()));
-//            For<ISession>().HybridHttpOrThreadLocalScoped().Add(context => context.GetInstance<ISessionFactory>().OpenSession()).Named("NoFiltersOrInterceptor");
+            For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession(new SaveUpdateInterceptor()));
+            For<ISession>().HybridHttpOrThreadLocalScoped().Add(context => context.GetInstance<ISessionFactory>().OpenSession()).Named("NoInterceptorNoFilters");
 
             For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Use<UnitOfWork>();
-//            For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Add(context => new UnitOfWork()).Named("NoFilters");
-//            For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Add(context => new UnitOfWork(true)).Named("NoFiltersOrInterceptor");
+            For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Add<NoInterceptorNoFiltersUnitOfWork>().Named("NoInterceptorNoFilters");
 
             For<IRepository>().Use<Repository>();
-//            For<IRepository>().Add(x => new Repository(true)).Named("NoFiltersOrInterceptor");
-//            For<IRepository>().Add(x => new Repository()).Named("NoFilters");
+            For<IRepository>().Add<NoFilterRepository>().Named("NoFilters");
+            For<IRepository>().Add<NoInterceptorNoFiltersRepository>().Named("NoInterceptorNoFilters");
 
             For<ISessionContext>().Use<DataLoaderSessionContext>();
 

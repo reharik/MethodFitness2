@@ -13,7 +13,7 @@ namespace MethodFitness.Web.Controllers
 
         public ScheduledTasksController()
         {
-            _repository = ObjectFactory.Container.GetInstance<IRepository>("NoFiltersOrInterceptor");
+            _repository = ObjectFactory.Container.GetInstance<IRepository>("NoInterceptorNoFiltersUnitOfWork");
         }
 
         public ActionResult ProcessAppointments()
