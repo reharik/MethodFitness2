@@ -45,7 +45,7 @@
     </Time>
 
    <PropertyGroup>
-     <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
+     <OutputDirectory>C:\ServerApps\MethodFitness_QA</OutputDirectory>
    </PropertyGroup>
 
    <MakeDir Directories="$(OutputDirectory)"  />
