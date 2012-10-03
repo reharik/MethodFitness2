@@ -1,3 +1,5 @@
+using CC.Core.Domain;
+
 namespace MethodFitness.Core.Domain
 {
     // this is fucked should have a third Interface so that I can restrict repo from saving lookuptypes

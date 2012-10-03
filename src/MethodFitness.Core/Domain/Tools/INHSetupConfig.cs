@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using CC.Core;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
@@ -18,7 +19,7 @@ namespace MethodFitness.Core.Domain.Tools
         {
             return MsSqlConfiguration
                 .MsSql2008
-                .ConnectionString(x => x.Is(connectionString)).Dialect<MsSqlAzureDialect>()
+                .ConnectionString(x => x.Is(connectionString))//.Dialect<MsSqlAzureDialect>()
                 .UseOuterJoin()
                 .ShowSql();
         }
@@ -29,12 +30,12 @@ namespace MethodFitness.Core.Domain.Tools
             //                                    .Where(ns => ns.Namespace == "MethodFitness.Core.Domain")
             //                                        .IgnoreBase(typeof(DomainEntity))))
             return (m => m.FluentMappings.AddFromAssemblyOf<User>()
-                            .Conventions.Add(ForeignKey.EndsWith("Id"))
-                            .Conventions.Add(DefaultLazy.Always())
-                            .Conventions.Add<ForeignKeyConstraintNameConvention>()
-                            .Conventions.Add<CustomManyToManyTableNameConvention>()
-                            .Conventions.Add(DefaultCascade.SaveUpdate())
-                            .Conventions.Add<TextAreaConvention>());
+                             .Conventions.Add(ForeignKey.EndsWith("Id"))
+                             .Conventions.Add(DefaultLazy.Always())
+                             .Conventions.Add<ForeignKeyConstraintNameConvention>()
+                             .Conventions.Add<CustomManyToManyTableNameConvention>()
+                             .Conventions.Add(DefaultCascade.SaveUpdate())
+                             .Conventions.Add<TextAreaConvention>());
         }
 
         public void GenerateSchema(Configuration config)

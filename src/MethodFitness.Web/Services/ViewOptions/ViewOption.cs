@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Web.Script.Serialization;
+using CC.Core.Html;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Services.ViewOptions

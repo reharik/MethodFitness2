@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Html;
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
-using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 

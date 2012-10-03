@@ -1,3 +1,4 @@
+using CC.Core.DomainTools;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 using NHibernate;

@@ -2,23 +2,17 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core;
+using CC.Core.Html.Menu;
+using CC.Core.Localization;
+using CC.Core.Utilities;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Html.Expressions;
-using MethodFitness.Core.Html.Menu;
-using MethodFitness.Core.Localization;
-using MethodFitness.Core.Services;
-using FubuMVC.Core.Util;
 
 namespace MethodFitness.Web
 {
     public abstract class CustomWebViewPage<T> : WebViewPage<T>
     {
-        public static MetaExpression MetaTag()
-        {
-            return new MetaExpression();
-        }
-
         public static LinkExpression LinkTag()
         {
             return new LinkExpression();
@@ -34,11 +28,6 @@ namespace MethodFitness.Web
             return new ScriptReferenceExpression(url);
         }
 
-        public static ImageExpression ImageExpression(string url)
-        {
-            return new ImageExpression(url);
-        }
-
         public static string ActionUrl<CONTROLLER>(Expression<Func<CONTROLLER, object>> actionExpression, AreaName area = null)
             where CONTROLLER : class
         {
@@ -50,17 +39,17 @@ namespace MethodFitness.Web
             return ("~/" + areaName + controller + "/" + action).ToFullUrl();
         }
 
-        public static FormExpression FormFor<CONTROLLER>(Expression<Func<CONTROLLER, object>> actionExpression, AreaName area = null, string id = null)
-            where CONTROLLER : class
-        {
-            var actionUrl = ActionUrl(actionExpression, area);
-            return new FormExpression(actionUrl,id);
-        }
-
-        public static FormExpression FormFor(string actionUrl, string id = null)
-        {
-            return new FormExpression(actionUrl, id);
-        }
+//        public static FormExpression FormFor<CONTROLLER>(Expression<Func<CONTROLLER, object>> actionExpression, AreaName area = null, string id = null)
+//            where CONTROLLER : class
+//        {
+//            var actionUrl = ActionUrl(actionExpression, area);
+//            return new FormExpression(actionUrl,id);
+//        }
+//
+//        public static FormExpression FormFor(string actionUrl, string id = null)
+//        {
+//            return new FormExpression(actionUrl, id);
+//        }
 
         public static StandardButtonExpression StandardButtonFor(string name, string value)
         {
@@ -72,18 +61,10 @@ namespace MethodFitness.Web
             return new StandardButtonExpression(name).LocalizedText(text);
         }
 
-        public static AlphaNumericPickerExpression GetAlphaNumericPicker()
-        {
-            return new AlphaNumericPickerExpression();
-        }
 
         /// <param name="collectionName">Collection name on model which contains selectable items</param>
         /// <param name="templateName">Template name for partial code</param>
-        public static ValueObjectSelector ValueObjectSelector(string collectionName, string templateName) 
-        {
-            return new ValueObjectSelector(collectionName,templateName);
-        }
-
+      
         public MvcHtmlString EndForm()
         {
             return MvcHtmlString.Create("</form>");

@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Conventions;
+﻿using CC.Core;
+using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 
 namespace MethodFitness.Core.Config

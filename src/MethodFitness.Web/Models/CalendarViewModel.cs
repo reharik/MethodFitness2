@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using CC.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 

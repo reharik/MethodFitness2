@@ -50,22 +50,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\CC.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CC.Security, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\CC.Security.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.Core">
-      <HintPath>..\lib\FubuMVC.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FubuMVC.UI">
-      <HintPath>..\lib\FubuMVC.UI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="HtmlTags">
-      <HintPath>..\lib\HtmlTags.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="HtmlTags, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\Iesi.Collections.dll</HintPath>
@@ -77,9 +74,9 @@
       <HintPath>..\lib\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0ecfe41405c30fb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="NHibernate, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -138,52 +135,50 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicExtentions.cs" />
     <Compile Include="Config\FilterDefinitions.cs" />
     <Compile Include="Config\ManyToManyTableNameConvention.cs" />
     <Compile Include="Config\ForeignKeyConstraintNameConvention.cs" />
     <Compile Include="Config\MsSqlAzureDialect.cs" />
     <Compile Include="Config\StructuremapGridConvention.cs" />
     <Compile Include="Config\TextAreaConvention.cs" />
-    <Compile Include="CoreViewModelAndDTOs\GroupSelectViewModel.cs" />
     <Compile Include="CoreViewModelAndDTOs\OrderDetailsDto.cs" />
     <Compile Include="CoreViewModelAndDTOs\PaymentDetailsDto.cs" />
-    <Compile Include="CoreViewModelAndDTOs\TokenInputDto.cs" />
     <Compile Include="Config\CustomIdentitiy.cs" />
     <Compile Include="Config\CustomPrincipal.cs" />
     <Compile Include="Config\SaveUpdateInterceptor.cs" />
     <Compile Include="Config\SqlServerSessionSourceConfiguration.cs" />
     <Compile Include="CoreLocalizationKeys.cs" />
     <Compile Include="CoreViewModelAndDTOs\DocumentDto.cs" />
-    <Compile Include="CoreViewModelAndDTOs\GridItemViewModel.cs" />
     <Compile Include="CoreViewModelAndDTOs\MembershipDto.cs" />
-    <Compile Include="CoreViewModelAndDTOs\ViewModel.cs" />
     <Compile Include="Domain\Appointment.cs" />
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\Client.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
-    <Compile Include="Domain\IPersistableObject.cs" />
-    <Compile Include="Domain\LocalizedEnumeration.cs" />
-    <Compile Include="Domain\LocalizedProperty.cs" />
-    <Compile Include="Domain\LocalizedText.cs" />
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\Payment.cs" />
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
+    <Compile Include="Domain\Persistence\OperationsMap.cs" />
+    <Compile Include="Domain\Persistence\PermissionMap.cs" />
+    <Compile Include="Domain\Persistence\SessionMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Domain\Persistence\TrainerPaymentMap.cs" />
     <Compile Include="Domain\Persistence\TrainerClientRateMap.cs" />
     <Compile Include="Domain\Persistence\PaymentMap.cs" />
     <Compile Include="Domain\Persistence\SessionRatesMap.cs" />
-    <Compile Include="Domain\Persistence\SessionMap.cs" />
     <Compile Include="Domain\Persistence\LocationMap.cs" />
     <Compile Include="Domain\Persistence\UserRoleMap.cs" />
     <Compile Include="Domain\Persistence\UserMap.cs" />
     <Compile Include="Domain\Persistence\DomainEntityMap.cs" />
+    <Compile Include="Domain\Persistence\UsersGroupMap.cs" />
     <Compile Include="Domain\Session.cs" />
     <Compile Include="Domain\SessionRates.cs" />
     <Compile Include="Domain\SiteConfiguration.cs" />
     <Compile Include="Domain\Tools\Continuation.cs" />
+    <Compile Include="Domain\Tools\NoInterceptorNoFiltersUnitOfWork.cs" />
+    <Compile Include="Domain\Tools\NoInterceptorNoFiltersRepository.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\LinkDisplayAttribute.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\LogAttribute.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\TextAreaAttribute.cs" />
@@ -192,94 +187,21 @@
     <Compile Include="Domain\Tools\CustomAttributes\ValidateSqlDateTimeAttribute.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\ValidateUrlAttribute.cs" />
     <Compile Include="Domain\Tools\INHSetupConfig.cs" />
-    <Compile Include="Domain\Tools\IRepository.cs" />
-    <Compile Include="Domain\Tools\IUnitOfWork.cs" />
     <Compile Include="Domain\Tools\NullNHibernateUnitOfWork.cs" />
     <Compile Include="Domain\Tools\NullNHSetupConfig.cs" />
     <Compile Include="Domain\Tools\NullSession.cs" />
     <Compile Include="Domain\Tools\NullSessionFactory.cs" />
-    <Compile Include="Domain\Tools\Repository.cs" />
-    <Compile Include="Domain\Tools\UnitOfWork.cs" />
-    <Compile Include="Domain\Tools\Notification.cs" />
-    <Compile Include="Domain\Tools\SqlStatementInterceptor.cs" />
+    <Compile Include="Domain\Tools\NoFilterRepository.cs" />
     <Compile Include="Domain\TrainerClientRate.cs" />
     <Compile Include="Domain\TrainerPayment.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserRole.cs" />
     <Compile Include="Enumerations\Enumerations.cs" />
-    <Compile Include="Html\Expressions\AlphaNumericPickerExpression.cs" />
-    <Compile Include="Html\Expressions\BoundExpression.cs" />
-    <Compile Include="Html\Expressions\StandardButtonExpression.cs" />
-    <Compile Include="Html\Expressions\FormExpression.cs" />
-    <Compile Include="Html\Expressions\HtmlCommonExpressionsBase.cs" />
-    <Compile Include="Html\Expressions\HtmlExpressionExtensions.cs" />
-    <Compile Include="Html\Expressions\HtmlTagExpressionBase.cs" />
-    <Compile Include="Html\Expressions\ImageExpression.cs" />
     <Compile Include="Html\Expressions\LinkExpression.cs" />
-    <Compile Include="Html\Expressions\MetaExpression.cs" />
     <Compile Include="Html\Expressions\ScriptReferenceExpression.cs" />
-    <Compile Include="Html\Expressions\StyledButtonExpression.cs" />
-    <Compile Include="Html\Expressions\SubmitButtonExpression.cs" />
-    <Compile Include="Html\Expressions\ValueObjectSelector.cs" />
-    <Compile Include="Html\FubuUI\Builders\DatePickerBuilder2.cs" />
-    <Compile Include="Html\FubuUI\Builders\DateTimeDisplayBuilder2.cs" />
-    <Compile Include="Html\FubuUI\Builders\GroupedSelectBuilder2.cs" />
-    <Compile Include="Html\FubuUI\Builders\ImageFileDisplayBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\ListDisplayBuilder2.cs" />
-    <Compile Include="Html\FubuUI\Builders\SelectFromEnumerationBuilder2.cs" />
-    <Compile Include="Html\FubuUI\Builders\SelectFromLookupTypeBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\LinkDisplayBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\DatePickerBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\EmailDisplayBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\GroupedSelectBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\ListDisplayBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\SelectFromEnumerationBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\SelectFromIEnumerableBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\TextAreaBuilder.cs" />
-    <Compile Include="Html\FubuUI\Builders\TextAreaBuilder2.cs" />
-    <Compile Include="Html\FubuUI\Builders\ValidationModifier.cs" />
-    <Compile Include="Html\FubuUI\FubuUIHtmlExtensions.cs" />
-    <Compile Include="Html\FubuUI\HtmlConventionRegistries\CustomTagActionExpressions.cs" />
-    <Compile Include="Html\FubuUI\HtmlConventionRegistries\DecisionCriticalElementNamingConvention.cs" />
-    <Compile Include="Html\FubuUI\HtmlConventionRegistries\DecisionCriticalHtmlConventions.cs" />
-    <Compile Include="Html\FubuUI\HtmlConventionRegistries\MethodFitnessHtmlConventions.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\ViewDisplayAddressExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\ViewDisplayCityStateExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\ViewDisplayDateRangeExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\DropdownInputExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\EditorExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\EditorInputExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\EditorLabelExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\ViewDisplayExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\ViewExpression.cs" />
-    <Compile Include="Html\FubuUI\HtmlExpressions\ViewLabelExpression.cs" />
-    <Compile Include="Html\FubuUI\Tags\PasswordTag.cs" />
-    <Compile Include="Html\FubuUI\Tags\PropertyValidationHelper.cs" />
-    <Compile Include="Html\FubuUI\Tags\RadioButtonListTag.cs" />
-    <Compile Include="Html\FubuUI\Tags\RadioButtonTag.cs" />
-    <Compile Include="Html\Grid\ColumnBase.cs" />
-    <Compile Include="Html\Grid\GroupingColumn.cs" />
-    <Compile Include="Html\Grid\DisplayColumn.cs" />
-    <Compile Include="Html\Grid\Grid.cs" />
-    <Compile Include="Html\Grid\GridBuilder.cs" />
-    <Compile Include="Html\Grid\HiddenColumn.cs" />
-    <Compile Include="Html\Grid\ImageButtonColumn.cs" />
-    <Compile Include="Html\Grid\ImageColumn.cs" />
-    <Compile Include="Html\Grid\LinkColumn.cs" />
-    <Compile Include="Html\Grid\Pager.cs" />
-    <Compile Include="Html\Grid\PageSortFilter.cs" />
+    <Compile Include="Html\Expressions\StandardButtonExpression.cs" />
     <Compile Include="Html\HtmlExtensions.cs" />
-    <Compile Include="Html\Menu\IMenuBuilder.cs" />
-    <Compile Include="Html\Menu\MenuExpression.cs" />
-    <Compile Include="Html\UrlContext.cs" />
     <Compile Include="ILogger.cs" />
-    <Compile Include="Localization\Enumeration.cs" />
-    <Compile Include="Localization\Header.cs" />
-    <Compile Include="Localization\LocalizationDataProvider.cs" />
-    <Compile Include="Localization\LocalizationManager.cs" />
-    <Compile Include="Localization\LocalizedEnum.cs" />
-    <Compile Include="Localization\LocalizedEnumRegistry.cs" />
-    <Compile Include="Localization\StringToken.cs" />
     <Compile Include="Config\NullSqlServerSessionSourceConfiguration.cs" />
     <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\DeleteTrainerRules.cs" />
@@ -291,32 +213,21 @@
     <Compile Include="Rules\RulesEngineBase.cs" />
     <Compile Include="Services\CustomAuthorizationRepository.cs" />
     <Compile Include="Services\DateTimeUtilities.cs" />
-    <Compile Include="Services\ICastleValidationRunner.cs" />
     <Compile Include="Services\IClientPaymentToSessions.cs" />
-    <Compile Include="Services\IValidationManager.cs" />
-    <Compile Include="Services\IDynamicExpressionBuilder.cs" />
-    <Compile Include="Services\IDynamicExpressionQuery.cs" />
     <Compile Include="Services\IEmailTemplateService.cs" />
     <Compile Include="Services\IFileHandlerService.cs" />
     <Compile Include="Services\IGetCompanyId.cs" />
     <Compile Include="Services\IMFPermissionsService.cs" />
     <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISessionContext.cs" />
-    <Compile Include="Services\ISaveEntityService.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />
-    <Compile Include="Services\ISelectListItemService.cs" />
-    <Compile Include="Services\IUpdateCollectionService.cs" />
-    <Compile Include="Services\SystemClock.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="SubscriptionEngine\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MethodFitness.Security\MethodFitness.Security.csproj">
-      <Project>{DBA372FE-3D52-45B3-AF82-B37696328764}</Project>
-      <Name>MethodFitness.Security</Name>
-    </ProjectReference>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

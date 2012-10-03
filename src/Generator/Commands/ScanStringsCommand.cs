@@ -1,10 +1,11 @@
 using System;
 using System.Reflection;
+using CC.Core;
+using CC.Core.Domain;
+using CC.Core.DomainTools;
+using CC.Core.Localization;
 using MethodFitness.Core;
-using MethodFitness.Core.Domain;
-using MethodFitness.Core.Localization;
 using MethodFitness.Web;
-using MethodFitness.Web.Config;
 using StructureMap;
 
 namespace Generator.Commands
