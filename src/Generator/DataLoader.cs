@@ -1,7 +1,9 @@
 using System;
+using CC.Core.DomainTools;
+using CC.Core.Services;
+using CC.Security.Interfaces;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 using StructureMap;
 
@@ -27,7 +29,7 @@ namespace Generator
         public void Load()
         {
             _dynamicExpressionQuery = ObjectFactory.GetInstance<IDynamicExpressionQuery>();
-            _repository = ObjectFactory.GetNamedInstance<IRepository>("NoFiltersOrInterceptor");
+            _repository = ObjectFactory.Container.GetInstance<IRepository>("NoInterceptorNoFilters");
             _securityDataService = ObjectFactory.GetInstance<ISecurityDataService>();
             _authorizationRepository = ObjectFactory.GetInstance<IAuthorizationRepository>();
 

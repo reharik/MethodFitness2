@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
+using CC.Core;
+using CC.Core.Html;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
 using HtmlTags;

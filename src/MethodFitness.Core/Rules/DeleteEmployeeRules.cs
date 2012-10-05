@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using MethodFitness.Core.Domain;
-using MethodFitness.Core.Services;
+using CC.Core.DomainTools;
+using CC.Core.Services;
 
 namespace MethodFitness.Core.Rules
 {

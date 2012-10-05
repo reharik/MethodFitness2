@@ -14,6 +14,7 @@
     <AssemblyName>MethodFitness.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,6 +54,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\CC.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CC.Core.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\CC.Core.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="CC.Security, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\CC.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="CC.UI.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\CC.UI.Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Elmah.dll</HintPath>
@@ -60,14 +77,6 @@
     <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.UI, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\FubuMVC.UI.dll</HintPath>
     </Reference>
     <Reference Include="HibernatingRhinos.Profiler.Appender, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -77,10 +86,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\HibernatingRhinos.Profiler.Appender.NHibernateLog4Net.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlTags, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\HtmlTags.dll</HintPath>
-    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\fluentnhibernate\Iesi.Collections.dll</HintPath>
@@ -89,7 +94,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0ecfe41405c30fb3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -238,7 +243,9 @@
     <Compile Include="Menus\HeaderMenu.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Services\IAuthenticationContext.cs" />
-    <Compile Include="Services\ISecuritySetupService.cs" />
+    <Compile Include="Services\ISecuritySetupService.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Services\ViewOptions\IViewOptionBuilder.cs" />
     <Compile Include="Services\ViewOptions\IViewOptionConfig.cs" />
     <Compile Include="Services\ViewOptions\ViewOption.cs" />
@@ -433,10 +440,6 @@
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
       <Name>MethodFitness.Core</Name>
       <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\MethodFitness.Security\MethodFitness.Security.csproj">
-      <Project>{DBA372FE-3D52-45B3-AF82-B37696328764}</Project>
-      <Name>MethodFitness.Security</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReportingDataSets\MethodFitness.ReportingDataSets.csproj">
       <Project>{231B4A24-89B4-4212-AAA9-F234087037D1}</Project>

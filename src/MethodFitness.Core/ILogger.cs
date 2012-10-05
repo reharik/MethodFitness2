@@ -1,4 +1,5 @@
 ﻿using System;
+using CC.Core;
 using log4net;
 
 namespace MethodFitness.Core

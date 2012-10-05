@@ -1,4 +1,5 @@
 using System.Configuration;
+using CC.Core.Domain;
 
 namespace MethodFitness.Core.Domain
 {

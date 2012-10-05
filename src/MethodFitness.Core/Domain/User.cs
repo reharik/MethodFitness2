@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using CC.Core;
+using CC.Core.Domain;
+using CC.Core.Enumerations;
+using CC.Core.Localization;
+using CC.Security;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
-using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Localization;
 using System.Linq;
-using MethodFitness.Security;
 using MethodFitness.Web.Areas.Billing.Controllers;
 
 namespace MethodFitness.Core.Domain

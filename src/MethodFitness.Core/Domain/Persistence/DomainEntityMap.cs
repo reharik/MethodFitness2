@@ -1,3 +1,4 @@
+using CC.Core.Domain;
 using MethodFitness.Core.Config;
 using FluentNHibernate.Mapping;
 

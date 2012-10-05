@@ -1,3 +1,4 @@
+using CC.Core.Domain;
 using MethodFitness.Core.Domain;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using CC.Core.Utilities;
 using MethodFitness.Core.Localization;
-using FubuMVC.Core.Util;
 using HtmlTags;
 
 namespace MethodFitness.Core.Html.Expressions

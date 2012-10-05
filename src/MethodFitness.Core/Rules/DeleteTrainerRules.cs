@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using CC.Core.DomainTools;
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using CC.Core;
+using CC.Core.DomainTools;
+using CC.Security.Interfaces;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Config;
-using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Web.Controllers;
@@ -127,7 +128,7 @@ namespace MethodFitness.Web.Services
 
         public void AssociateAllUsersWithThierTypeGroup()
         {
-            _repository.DisableFilter("CompanyConditionFilter");
+           // _repository.DisableFilter("CompanyConditionFilter");
             var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
             admins.ForEachItem(x =>
                 _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));

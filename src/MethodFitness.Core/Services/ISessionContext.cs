@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Web;
+using CC.Core.DomainTools;
+using CC.Core.Services;
+using CC.Security;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
 
@@ -15,10 +18,10 @@ namespace MethodFitness.Core.Services
         void AddUpdateSessionItem(SessionItem item);
         void RemoveSessionItem(Guid sessionKey);
         void RemoveSessionItem(string sessionKey);
-        User GetCurrentUser();
+        IUser GetCurrentUser();
     }
 
-    public class SessionContext : ISessionContext
+    public class SessionContext : ISessionContext,ICCSessionContext
     {
         private readonly IRepository _repository;
 
@@ -27,7 +30,7 @@ namespace MethodFitness.Core.Services
             _repository = repository;
         }
 
-        public User GetCurrentUser()
+        public IUser GetCurrentUser()
         {
             return _repository.Find<User>(GetUserId());
         }
@@ -81,7 +84,7 @@ namespace MethodFitness.Core.Services
     }
 
 
-    public class DataLoaderSessionContext : ISessionContext
+    public class DataLoaderSessionContext : ISessionContext, ICCSessionContext
     {
         public int GetCompanyId()
         {
@@ -123,7 +126,7 @@ namespace MethodFitness.Core.Services
             throw new NotImplementedException();
         }
 
-        public User GetCurrentUser()
+        public IUser GetCurrentUser()
         {
             throw new NotImplementedException();
         }

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using CC.Core;
 
 namespace MethodFitness.Core.Html.Expressions
 {
-    public class MetaExpression : HtmlCommonExpressionBase
+    public class MetaExpression 
     {
         public MetaExpression Name(string name)
         {

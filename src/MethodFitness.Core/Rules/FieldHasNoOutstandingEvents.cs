@@ -1,5 +1,4 @@
-using MethodFitness.Core.Domain;
-using MethodFitness.Core.Services;
+using CC.Core.Services;
 
 namespace MethodFitness.Core.Rules
 {

@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Threading;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using CC.Core.DomainTools;
 using MethodFitness.Core.Config;
-using MethodFitness.Core.Domain;
-using MethodFitness.Core.Html;
 using MethodFitness.Web.Config;
-using MethodFitness.Web.Controllers;
 using Elmah;
 using StructureMap;
-using System.Linq;
 
 namespace MethodFitness.Web
 {
@@ -80,8 +76,8 @@ namespace MethodFitness.Web
 
         protected void Application_EndRequest()
         {
-            var unitOfWork = ObjectFactory.Container.GetInstance<IUnitOfWork>();
-            unitOfWork.Dispose();
+//            var unitOfWork = ObjectFactory.Container.GetInstance<IUnitOfWork>();
+//            unitOfWork.Dispose();
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)

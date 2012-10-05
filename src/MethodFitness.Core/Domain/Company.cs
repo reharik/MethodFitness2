@@ -1,4 +1,6 @@
-﻿namespace MethodFitness.Core.Domain
+﻿using CC.Core.Domain;
+
+namespace MethodFitness.Core.Domain
 {
     public class Company:DomainEntity,IPersistableObject
     {

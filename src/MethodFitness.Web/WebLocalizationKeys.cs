@@ -1,5 +1,4 @@
-using System;
-using MethodFitness.Core.Localization;
+using CC.Core.Localization;
 
 namespace MethodFitness.Web
 {
