@@ -86,7 +86,7 @@ namespace MethodFitness.Core.Domain
                 var sessions = x.Sessions.Where(s => s.Appointment == null && s.AppointmentType == AppointmentType);
                 if (sessions.Any())
                 {
-                    var session = sessions.OrderBy(s => s.CreateDate).First();
+                    var session = sessions.OrderBy(s => s.CreatedDate).First();
                     session.Appointment = this;
                     session.Trainer = Trainer;
                     session.SessionUsed = true;

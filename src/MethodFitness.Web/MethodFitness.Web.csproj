@@ -208,6 +208,7 @@
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
     <Compile Include="Config\AutomapperBootstrapper.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
+    <Compile Include="Filters\AddUserToViewModelFilter.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
     <Compile Include="Grids\TrainerPaymentListGrid.cs" />
     <Compile Include="Grids\SessionPaymentListGrid.cs" />

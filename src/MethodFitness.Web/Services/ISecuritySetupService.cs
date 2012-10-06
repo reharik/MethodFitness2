@@ -95,7 +95,7 @@ namespace MethodFitness.Web.Services
             menuConfig.ForEachItem(x =>
             {
                 var menuItems = x.Build(true);
-                BasicExtentions.ForEachItem(menuItems, m =>
+                menuItems.ForEachItem(m =>
                 {
                     var operation = "/MenuItem/" + m.Text.RemoveWhiteSpace();
                     if (!Operations.Contains(operation))

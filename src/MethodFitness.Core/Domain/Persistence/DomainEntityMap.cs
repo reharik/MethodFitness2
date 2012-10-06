@@ -20,13 +20,13 @@ namespace MethodFitness.Core.Domain.Persistence
         public EntityMap()
         {
             Id(x => x.EntityId);
-            Map(x => x.CreateDate)
+            Map(x => x.CreatedDate)
                 .Default("(getdate())");
             Map(x => x.ChangeDate)
                 //.Not.Nullable()
                 .Default("(getdate())");
             Map(x => x.ChangedBy);
-            Map(x => x.Archived);
+            Map(x => x.IsDeleted);
             ApplyFilter<DeletedConditionFilter>("Archived= :Archived");
         }
     }

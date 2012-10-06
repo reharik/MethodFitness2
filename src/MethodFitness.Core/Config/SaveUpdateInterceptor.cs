@@ -30,7 +30,7 @@ namespace MethodFitness.Core.Config
 
         private static bool OnSave(object item, object[] state, string[] propertyNames)
         {
-            var getSettingsFromPrincipal = ObjectFactory.GetInstance<ISessionContext>();
+            var sessionContext = ObjectFactory.GetInstance<ISessionContext>();
             var systemClock = ObjectFactory.Container.GetInstance<ISystemClock>();
 
             var domainEntity = item as DomainEntity;
@@ -42,17 +42,17 @@ namespace MethodFitness.Core.Config
                     {
                         state[i] = systemClock.Now;
                     }
-                    if (!domainEntity.CreateDate.HasValue && "CreateDate".Equals(propertyNames[i]))
+                    if (!domainEntity.CreatedDate.HasValue && "CreateDate".Equals(propertyNames[i]))
                     {
                         state[i] = systemClock.Now;
                     }
                     if ("ChangedBy".Equals(propertyNames[i]))
                     {
-                        state[i] = getSettingsFromPrincipal.GetUserId();
+                        state[i] = sessionContext.GetCurrentUser();
                     }
                     if ("CompanyId".Equals(propertyNames[i]))
                     {
-                        state[i] = getSettingsFromPrincipal.GetCompanyId();
+                        state[i] = sessionContext.GetCompanyId();
                     }
                 }
                 return true;
@@ -67,13 +67,13 @@ namespace MethodFitness.Core.Config
                     {
                         state[i] = systemClock.Now;
                     }
-                    if (!entity.CreateDate.HasValue && "CreateDate".Equals(propertyNames[i]))
+                    if (!entity.CreatedDate.HasValue && "CreateDate".Equals(propertyNames[i]))
                     {
                         state[i] = systemClock.Now;
                     }
                     if ("ChangedBy".Equals(propertyNames[i]))
                     {
-                        state[i] = getSettingsFromPrincipal.GetUserId();
+                        state[i] = sessionContext.GetCurrentUser();
                     }
                 }
                 return true;

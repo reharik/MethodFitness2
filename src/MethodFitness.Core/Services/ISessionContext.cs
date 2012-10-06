@@ -32,7 +32,7 @@ namespace MethodFitness.Core.Services
 
         public IUser GetCurrentUser()
         {
-            return _repository.Find<User>(GetUserId());
+            return _repository.Load<User>(GetUserId());
         }
 
         public int GetCompanyId()
