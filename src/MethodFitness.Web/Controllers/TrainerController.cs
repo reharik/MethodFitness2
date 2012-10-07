@@ -128,7 +128,7 @@ namespace MethodFitness.Web.Controllers
         public ActionResult DeleteMultiple(BulkActionViewModel input)
         {
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteTrainerRules");
-            IValidationManager<User> validationManager = new ValidationManager<User>(_repository);
+            IValidationManager validationManager = new ValidationManager(_repository);
             input.EntityIds.ForEachItem(x =>
             {
                 var item = _repository.Find<User>(x);
@@ -136,7 +136,7 @@ namespace MethodFitness.Web.Controllers
                 var report = validationManager.GetLastValidationReport();
                 if (report.Success)
                 {
-                    report.SuccessAction = a => _repository.Delete(a);
+                    report.SuccessAction = a => _repository.Delete((User)a);
                 }
             });
             var notification = validationManager.FinishWithAction();

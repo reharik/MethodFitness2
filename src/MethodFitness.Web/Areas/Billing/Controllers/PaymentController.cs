@@ -114,7 +114,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         {
             var client = _repository.Find<Client>(input.ParentId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
-            IValidationManager<Payment> validationManager = new ValidationManager<Payment>(_repository);
+            IValidationManager validationManager = new ValidationManager(_repository);
             input.EntityIds.ForEachItem(x =>
             {
                 var payment = client.Payments.FirstOrDefault(i => i.EntityId == x);
