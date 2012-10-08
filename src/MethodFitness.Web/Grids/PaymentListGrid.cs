@@ -16,11 +16,11 @@ namespace MethodFitness.Web.Grids
 
         protected override Grid<Payment> BuildGrid()
         {
-            GridBuilder.LinkColumnFor(x => x.CreatedDate)
+            GridBuilder.LinkColumnFor(x => x.CreatedDate, "MF")
                 .ToPerformAction(ColumnAction.AddUpdateItem)
                 .ToolTip(WebLocalizationKeys.EDIT_ITEM)
                 .DefaultSortColumn().SecurityOperation("/Payment/AddUpdate");
-            GridBuilder.LinkColumnFor(x => x.CreatedDate)
+            GridBuilder.LinkColumnFor(x => x.CreatedDate, "MF")
                 .ToPerformAction(ColumnAction.DisplayItem)
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
                 .DefaultSortColumn().SecurityOperation("/Payment/Display");

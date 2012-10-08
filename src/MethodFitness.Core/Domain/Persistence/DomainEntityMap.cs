@@ -22,7 +22,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Id(x => x.EntityId);
             Map(x => x.CreatedDate)
                 .Default("(getdate())");
-            Map(x => x.ChangeDate)
+            Map(x => x.ChangedDate)
                 //.Not.Nullable()
                 .Default("(getdate())");
             Map(x => x.ChangedBy);
