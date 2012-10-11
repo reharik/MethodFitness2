@@ -13,6 +13,7 @@ using CC.Core;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
 using CC.Core.Utilities;
+using MethodFitness.Core.Domain;
 using NHibernate;
 using StructureMap;
 

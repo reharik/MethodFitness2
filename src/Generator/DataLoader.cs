@@ -29,7 +29,7 @@ namespace Generator
         public void Load()
         {
             _dynamicExpressionQuery = ObjectFactory.GetInstance<IDynamicExpressionQuery>();
-            _repository = ObjectFactory.Container.GetInstance<IRepository>("NoInterceptorNoFilters");
+            _repository = ObjectFactory.Container.GetInstance<IRepository>();
             _securityDataService = ObjectFactory.GetInstance<ISecurityDataService>();
             _authorizationRepository = ObjectFactory.GetInstance<IAuthorizationRepository>();
 

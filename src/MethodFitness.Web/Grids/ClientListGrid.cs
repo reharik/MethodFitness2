@@ -10,7 +10,6 @@ namespace MethodFitness.Web.Grids
 {
     public class ClientListGrid : Grid<Client>, IEntityListGrid<Client>
     {
-
         public ClientListGrid(IGridBuilder<Client> gridBuilder)
             : base(gridBuilder)
         {

@@ -75,9 +75,9 @@ namespace MethodFitness.Core.Domain
 
         #endregion
 
-        public override void UpdateSelf(Entity entity)
+        public override void UpdateSelf(Entity entityBase)
         {
-            var self = (Client) entity;
+            var self = (Client) entityBase;
             FirstName = self.FirstName;
             LastName = self.LastName;
             Email = self.Email;
