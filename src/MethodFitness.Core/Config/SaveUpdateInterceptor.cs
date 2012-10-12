@@ -30,51 +30,31 @@ namespace MethodFitness.Core.Config
 
         private static bool OnSave(object item, object[] state, string[] propertyNames)
         {
-            var getSettingsFromPrincipal = ObjectFactory.GetInstance<ISessionContext>();
+            var sessionContext = ObjectFactory.GetInstance<ISessionContext>();
             var systemClock = ObjectFactory.Container.GetInstance<ISystemClock>();
 
-            var domainEntity = item as DomainEntity;
-            if (domainEntity != null)
-            {
-                for (int i = 0; i < propertyNames.Length; i++)
-                {
-                    if ("ChangeDate".Equals(propertyNames[i]))
-                    {
-                        state[i] = systemClock.Now;
-                    }
-                    if (!domainEntity.CreateDate.HasValue && "CreateDate".Equals(propertyNames[i]))
-                    {
-                        state[i] = systemClock.Now;
-                    }
-                    if ("ChangedBy".Equals(propertyNames[i]))
-                    {
-                        state[i] = getSettingsFromPrincipal.GetUserId();
-                    }
-                    if ("CompanyId".Equals(propertyNames[i]))
-                    {
-                        state[i] = getSettingsFromPrincipal.GetCompanyId();
-                    }
-                }
-                return true;
-            }
-           
             var entity = item as Entity;
             if (entity != null)
             {
                 for (int i = 0; i < propertyNames.Length; i++)
                 {
-                    if ("ChangeDate".Equals(propertyNames[i]))
-                    {
-                        state[i] = systemClock.Now;
-                    }
-                    if (!entity.CreateDate.HasValue && "CreateDate".Equals(propertyNames[i]))
-                    {
-                        state[i] = systemClock.Now;
-                    }
                     if ("ChangedBy".Equals(propertyNames[i]))
                     {
-                        state[i] = getSettingsFromPrincipal.GetUserId();
+                        state[i] = sessionContext.GetCurrentUser();
+                    } 
+                    if ("ChangedDate".Equals(propertyNames[i]))
+                    {
+                        state[i] = systemClock.Now;
                     }
+                    if ("CreatedBy".Equals(propertyNames[i]) && entity.CreatedBy == null)
+                    {
+                        state[i] = sessionContext.GetCurrentUser();
+                    }
+                    if ("CreatedDate".Equals(propertyNames[i]) && !entity.CreatedDate.HasValue )
+                    {
+                        state[i] = systemClock.Now;
+                    }
+                    
                 }
                 return true;
             }

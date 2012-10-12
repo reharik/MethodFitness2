@@ -114,7 +114,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         {
             var client = _repository.Find<Client>(input.ParentId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
-            IValidationManager<Payment> validationManager = new ValidationManager<Payment>(_repository);
+            IValidationManager validationManager = new ValidationManager(_repository);
             input.EntityIds.ForEachItem(x =>
             {
                 var payment = client.Payments.FirstOrDefault(i => i.EntityId == x);
@@ -157,17 +157,17 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         private Payment mapToDomain(PaymentViewModel model, Payment payment)
         {
             payment.FullHourTenPack = model.FullHourTenPack;
-            payment.FullHourTenPackPrice = model.FullHourTenPackPrice;
+            payment.FullHourTenPackPrice = model.FullHourTenPack > 0 ? model.FullHourTenPackPrice / model.FullHourTenPack : 0;
             payment.FullHour = model.FullHour;
-            payment.FullHourPrice = model.FullHourPrice;
+            payment.FullHourPrice = model.FullHour > 0 ? model.FullHourPrice / model.FullHour : 0;
             payment.HalfHourTenPack = model.HalfHourTenPack;
-            payment.HalfHourTenPackPrice = model.HalfHourTenPackPrice;
+            payment.HalfHourTenPackPrice = model.HalfHourTenPack > 0 ? model.HalfHourTenPackPrice / model.HalfHourTenPack : 0;
             payment.HalfHour = model.HalfHour;
-            payment.HalfHourPrice = model.HalfHourPrice;
+            payment.HalfHourPrice = model.HalfHour > 0 ? model.HalfHourPrice / model.HalfHour : 0;
             payment.Pair = model.Pair;
-            payment.PairPrice = model.PairPrice;
+            payment.PairPrice = model.Pair > 0 ? model.PairPrice / model.Pair : 0;
             payment.PairTenPack = model.PairTenPack;
-            payment.PairTenPackPrice = model.PairTenPackPrice;
+            payment.PairTenPackPrice = model.PairTenPack > 0 ? model.PairTenPackPrice / model.PairTenPack : 0;
             payment.PaymentTotal = model.PaymentTotal;
             return payment;
         }

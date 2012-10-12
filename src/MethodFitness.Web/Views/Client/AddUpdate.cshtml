@@ -66,22 +66,22 @@
                     <h4>@WebLocalizationKeys.CLIENT_RATES</h4>
                 </div>
                 <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesFullHour).AddClassToRoot("half first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.SessionRatesFullHour).LabelDisplay(WebLocalizationKeys.FULL_HOUR).AddClassToRoot("half first").ToHtmlTag()
                 </div>
                 <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesHalfHour).AddClassToRoot("half first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.SessionRatesFullHourTenPack).LabelDisplay(WebLocalizationKeys.FULL_HOUR_TEN_PACK).AddClassToRoot("half first").ToHtmlTag()
                 </div>
                 <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesFullHourTenPack).AddClassToRoot("half first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.SessionRatesHalfHour).LabelDisplay(WebLocalizationKeys.HALF_HOUR).AddClassToRoot("half first").ToHtmlTag()
                 </div>
                 <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesHalfHourTenPack).AddClassToRoot("half first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.SessionRatesHalfHourTenPack).LabelDisplay(WebLocalizationKeys.HALF_HOUR_TEN_PACK).AddClassToRoot("half first").ToHtmlTag()
                 </div>
                 <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesPair).AddClassToRoot("half first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.SessionRatesPair).LabelDisplay(WebLocalizationKeys.PAIR).AddClassToRoot("half first").ToHtmlTag()
                 </div>
                 <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesPairTenPack).AddClassToRoot("half first").ToHtmlTag()
+                    @Html.SubmissionFor(x => x.SessionRatesPairTenPack).LabelDisplay(WebLocalizationKeys.PAIR_TEN_PACK).AddClassToRoot("half first").ToHtmlTag()
                 </div>
             </div>
         }

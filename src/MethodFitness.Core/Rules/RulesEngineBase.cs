@@ -8,14 +8,14 @@ namespace MethodFitness.Core.Rules
 {
     public abstract class RulesEngineBase
     {
-        public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity) where ENTITY : class
+        public IValidationManager ExecuteRules<ENTITY>(ENTITY entity) where ENTITY : class
         {
             var repository = ObjectFactory.GetInstance<IRepository>();
-            var validationManager = new ValidationManager<ENTITY>(repository);
+            var validationManager = new ValidationManager(repository);
             return ExecuteRules(entity, validationManager);
         }
         public List<IRule> Rules { get; set; }
-        public IValidationManager<ENTITY> ExecuteRules<ENTITY>(ENTITY entity, IValidationManager<ENTITY> validationManager) where ENTITY : class
+        public IValidationManager ExecuteRules<ENTITY>(ENTITY entity, IValidationManager validationManager) where ENTITY : class
         {
             Rules.ForEachItem(x => validationManager.AddValidationReport(x.Execute(entity)));
             return validationManager;
@@ -24,7 +24,7 @@ namespace MethodFitness.Core.Rules
 
     public interface IRule
     {
-        ValidationReport<ENTITY> Execute<ENTITY>(ENTITY entity) where ENTITY : class;
+        ValidationReport Execute<ENTITY>(ENTITY entity) where ENTITY : class;
     }
 
 }

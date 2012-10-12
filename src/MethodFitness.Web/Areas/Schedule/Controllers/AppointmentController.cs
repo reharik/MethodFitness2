@@ -82,8 +82,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model.Copy = input.Copy;
             model._Title = WebLocalizationKeys.APPOINTMENT_INFORMATION.ToString();
             model._AppointmentTypeList = _selectListItemService.CreateList<AppointmentType>(true);
-            model.AppointmentType = _selectListItemService.SetModelValueBySelected(model._AppointmentTypeList, model.AppointmentType);
-
+            model.AppointmentType = appointment.AppointmentType ?? "Hour";
             model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
             model.EndTimeString = getEndTime(model.AppointmentType, appointment.StartTime.Value).ToShortTimeString();
             handleTrainer(model);

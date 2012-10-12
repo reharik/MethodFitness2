@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using System.Web.Mvc;
 using MethodFitness.Web.Config;
+using MethodFitness.Web.Filters;
 
 namespace MethodFitness.Web.Controllers
 {
-    [CustomAuthorize]
+    [CustomAuthorize, AddUserToViewModelFilter]
     public class MFController : Controller
     {
         protected string RenderViewToString()

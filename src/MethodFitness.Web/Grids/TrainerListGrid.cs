@@ -17,7 +17,7 @@ namespace MethodFitness.Web.Areas.Schedule.Grids
 
         protected override Grid<User> BuildGrid()
         {
-            GridBuilder.LinkColumnFor(x => x.FirstName)
+            GridBuilder.LinkColumnFor(x => x.FirstName, "MF")
                 .ForAction<TrainerController>(x => x.AddUpdate(null))
                 .ToPerformAction(ColumnAction.AddUpdateItem)
                 .ToolTip(WebLocalizationKeys.EDIT_ITEM)
@@ -25,7 +25,7 @@ namespace MethodFitness.Web.Areas.Schedule.Grids
             GridBuilder.DisplayFor(x => x.LastName);
             GridBuilder.DisplayFor(x => x.Email);
             GridBuilder.DisplayFor(x => x.PhoneMobile);
-            GridBuilder.ImageButtonColumn().ForAction<PayTrainerListController>(x => x.ItemList(null))
+            GridBuilder.ImageButtonColumn("MF").ForAction<PayTrainerListController>(x => x.ItemList(null))
                 .ToPerformAction(ColumnAction.Redirect).ImageName("pay_trainer.png");
             return this;
         }
