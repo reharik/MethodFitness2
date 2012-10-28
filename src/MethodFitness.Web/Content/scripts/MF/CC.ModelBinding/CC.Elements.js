@@ -204,9 +204,12 @@ CC.Elements.PictureGallery= CC.Elements.Element.extend({
 
 CC.Elements.Select = CC.Elements.Element.extend({
     init:function(){
+        var that = this;
         this._super("init",arguments);
+        this.type = "select";
         this.$input = this.$container.find("select");
         this.name = this.$input.attr('name');
+        this.$input.on("change",function(){that.validate();});
     },
     render:function(){
         this.type = "select";

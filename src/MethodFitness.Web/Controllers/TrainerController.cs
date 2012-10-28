@@ -26,7 +26,7 @@ namespace MethodFitness.Web.Controllers
     {
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
-        private readonly IFileHandlerService _uploadedFileHandlerService;
+        private readonly IFileHandlerService _fileHandlerService;
         private readonly ISessionContext _sessionContext;
         private readonly ISecurityDataService _securityDataService;
         private readonly IAuthorizationRepository _authorizationRepository;
@@ -35,7 +35,7 @@ namespace MethodFitness.Web.Controllers
 
         public TrainerController(IRepository repository,
             ISaveEntityService saveEntityService,
-            IFileHandlerService uploadedFileHandlerService,
+            IFileHandlerService fileHandlerService,
             ISessionContext sessionContext,
             ISecurityDataService securityDataService,
             IAuthorizationRepository authorizationRepository,
@@ -44,7 +44,7 @@ namespace MethodFitness.Web.Controllers
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
-            _uploadedFileHandlerService = uploadedFileHandlerService;
+            _fileHandlerService = fileHandlerService;
             _sessionContext = sessionContext;
             _securityDataService = securityDataService;
             _authorizationRepository = authorizationRepository;
@@ -155,16 +155,16 @@ namespace MethodFitness.Web.Controllers
             addSecurityUserGroups(trainer);
 //            if (input.DeleteImage)
 //            {
-////                _uploadedFileHandlerService.DeleteFile(trainer.ImageUrl);
+//                _fileHandlerService.DeleteFile(trainer.ImageUrl);
 //                trainer.ImageUrl = string.Empty;
 //            }
 //            
-//            var file = _uploadedFileHandlerService.RetrieveUploadedFile();
+//            var file = _fileHandlerService.RetrieveUploadedFile();
 ////            var serverDirectory = "/CustomerPhotos/" + _sessionContext.GetCompanyId() + "/Trainers";
-//            trainer.ImageUrl = _uploadedFileHandlerService.GetUrlForFile(file, trainer.FirstName + "_" + trainer.LastName);
+//            trainer.ImageUrl = _fileHandlerService.GetUrlForFile(file, trainer.FirstName + "_" + trainer.LastName);
             var crudManager = _saveEntityService.ProcessSave(trainer);
 
-//            _uploadedFileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
+//            _fileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
             var notification = crudManager.Finish();
             return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
         }

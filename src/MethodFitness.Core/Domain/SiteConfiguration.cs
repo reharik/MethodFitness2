@@ -1,18 +1,11 @@
 ﻿using System.Configuration;
 using System.Web.Script.Serialization;
+using CC.Core.Services;
 
 namespace MethodFitness.Core.Domain
 {
-    public class SiteConfiguration 
+    public class SiteConfiguration : SiteConfigurationBase
     {
-        public virtual string Name { get; set; }
-        public virtual string Host { get; set; }
-        public virtual string MFUrl { get; set; }
-        public virtual string LanguageDefault { get; set; }
-        public virtual string ScriptsPath { get; set; }
-        public virtual string CssPath { get; set; }
-        public virtual string ImagesPath { get; set; }
-        public virtual string WebSiteRoot { get; set; }
         public virtual string TrainerClientRateDefault { get; set; }
     }
 
@@ -24,6 +17,14 @@ namespace MethodFitness.Core.Domain
             var jss = new JavaScriptSerializer();
             var siteConfiguration = jss.Deserialize<SiteConfiguration>(appSetting);
             return siteConfiguration;
+        }
+    }
+
+    public class InjectableSiteConfig : IInjectableSiteConfig
+    {
+        public SiteConfigurationBase Settings()
+        {
+            return SiteConfig.Settings();
         }
     }
 }

@@ -19,6 +19,7 @@ namespace MethodFitness.Core.Services
         void RemoveSessionItem(Guid sessionKey);
         void RemoveSessionItem(string sessionKey);
         IUser GetCurrentUser();
+
     }
 
     public class SessionContext : ISessionContext,ICCSessionContext
@@ -81,6 +82,11 @@ namespace MethodFitness.Core.Services
             HttpContext.Current.Session.Remove(sessionKey);
         }
 
+        public string MapPath(string url)
+        {
+            return HttpContext.Current.Server.MapPath(url);
+        }
+
     }
 
 
@@ -127,6 +133,11 @@ namespace MethodFitness.Core.Services
         }
 
         public IUser GetCurrentUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string MapPath(string url)
         {
             throw new NotImplementedException();
         }
