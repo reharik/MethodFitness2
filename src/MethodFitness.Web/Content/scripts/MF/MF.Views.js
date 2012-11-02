@@ -148,6 +148,7 @@ MF.Views.AjaxPopupFormModule  = MF.Views.View.extend({
         this.options.noBubbleUp=true;
         this.options.isPopup=true;
         this.popupForm = this.options.view && MF.Views[this.options.view] ? new MF.Views[this.options.view](this.options) : new MF.Views.AjaxFormView(this.options);
+        this.popupForm.notification = new CC.NotificationService();
         this.popupForm.render();
         this.storeChild(this.popupForm);
         $(this.el).append(this.popupForm.el);
@@ -163,8 +164,11 @@ MF.Views.AjaxPopupFormModule  = MF.Views.View.extend({
          MF.vent.unbind("popup:"+this.id+":cancel");
         MF.vent.unbind("popup:"+this.id+":save");
         MF.vent.unbind("form:"+this.id+":success");
+        this.notification = null;
     },
     loadPopupView:function(formOptions){
+        this.$el.find("#popupMessageContainer").append("<ul data-bind=\"foreach:{data:messages, beforeRemove: fadeOut}\"><li data-bind=\"text:message, css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }\"></li></ul>");
+        this.popupForm.notification.render(this.$el.find("#popupMessageContainer").get(0));
         var buttons = formOptions.buttons?formOptions.buttons:MF.Views.popupButtonBuilder.builder(formOptions.id).standardEditButons();
         var popupOptions = {
             id:this.id,
