@@ -87,7 +87,7 @@ MF.mixins.modelAndElementsMixin = {
         }, this);
         model._title = ko.computed(function(){
             if(model.EntityId()<=0 && model._Title()){
-                return "Add New "+model._Title_Title();
+                return "Add New "+model._Title();
             }
             return model._Title() ? model._Title() : "";
         },this);

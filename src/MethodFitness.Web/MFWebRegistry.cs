@@ -4,6 +4,7 @@ using CC.Core.DomainTools;
 using CC.Core.Html.CCUI.HtmlConventionRegistries;
 using CC.Core.Html.Grid;
 using CC.Core.Localization;
+using CC.Core.Services;
 using CC.Security;
 using CC.Security.Interfaces;
 using CC.Security.Services;
@@ -91,6 +92,7 @@ namespace MethodFitness.Web
             For<RulesEngineBase>().Add<DeleteTrainerRules>().Named("DeleteTrainerRules");
 
             For<ISessionContext>().Use<SessionContext>();
+            For<ICCSessionContext>().Use<SessionContext>();
             For<IMFPermissionsService>().Use<MFPermissionsService>();
         }
     }
