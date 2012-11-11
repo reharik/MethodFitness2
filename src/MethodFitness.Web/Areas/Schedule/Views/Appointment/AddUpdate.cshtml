@@ -32,10 +32,10 @@
             @Html.SubmissionFor(x => x.Date).ToHtmlTag()
         </div>
         <div class="fieldRow">
-            @Html.SubmissionFor(x => x.StartTimeString).ToHtmlTag()
+            @Html.SubmissionFor(x => x.StartTimeString).LabelDisplay(WebLocalizationKeys.STARTTIME).ToHtmlTag()
         </div>
         <div class="fieldRow">
-                      @Html.ViewFor(x => x.EndTimeString).ToHtmlTag()
+            @Html.ViewFor(x => x.EndTimeString).LabelDisplay(WebLocalizationKeys.ENDTIME).ToHtmlTag()
         </div>
         <div class="fieldRow">
             @Html.SubmissionFor(x => x.Notes).ToHtmlTag()

@@ -1,7 +1,5 @@
-﻿using CC.Core.DomainTools;
-using CC.Core.Html.Grid;
+﻿using CC.Core.Html.Grid;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 
 namespace MethodFitness.Web.Grids
@@ -16,7 +14,7 @@ namespace MethodFitness.Web.Grids
 
         protected override Grid<TrainerPayment> BuildGrid()
         {
-            GridBuilder.LinkColumnFor(x => x.CreatedDate, "MF")
+            GridBuilder.LinkColumnFor(x => x.CreatedDate)
                 .ToPerformAction(ColumnAction.DisplayItem).WithId("trainerPaymentsList")
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
                 .DefaultSortColumn().SecurityOperation("/TrainerPayment/Display");

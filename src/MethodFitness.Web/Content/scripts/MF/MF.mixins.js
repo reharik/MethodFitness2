@@ -5,6 +5,14 @@
  * Time: 9:53 AM
  * To change this template use File | Settings | File Templates.
  */
+if (typeof MF == "undefined") {
+    var MF = {};
+}
+
+if (typeof CC == "undefined") {
+    var CC = {};
+}
+
 MF.mixins = {};
 
 MF.mixin = function(target, mixin, preserveRender){
@@ -40,13 +48,14 @@ MF.mixins.modelAndElementsMixin = {
         }
 
         var ignore = _.filter(_.keys(this.model),function(item){
-            return (item.indexOf('_') == 0 && item != "__ko_mapping__");
+            return (item.indexOf('_') == 0 && item != "__ko_mapping__" );
         });
         _.each(ignore,function(item){
             that.mappingOptions.ignore.push(item);});
         this.renderElements();
         this.mappingOptions.ignore.push("_availableItems");
         this.mappingOptions.ignore.push("_resultsItems");
+        this.mappingOptions.ignore = _.uniq(this.mappingOptions.ignore);
         MF.vent.trigger("model:"+this.id+"modelLoaded");
     },
     bindSpecificModelAndElements:function(viewModel){

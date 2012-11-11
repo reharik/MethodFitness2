@@ -22,7 +22,9 @@ CC.Elements.Element = function($container){
 };
 CC.Elements.Element.extend = Backbone.View.extend;
 $.extend(CC.Elements.Element.prototype,{
-    init:function(){
+    init:function(view){
+        this.notification = view.notification?view.notification:CC.notification;
+        this.viewId = view.cid;
         this.cid = _.uniqueId("c");
         this.$input = this.$container.find("input");
         this.type = "Element";
@@ -30,7 +32,7 @@ $.extend(CC.Elements.Element.prototype,{
         this.name = this.$input.attr('name');
     },
     validate:function(){
-        CC.ValidationRunner.runElement(this);
+        CC.ValidationRunner.runElement(this,this.notification);
     },
     getValue:function(){
         return this.$input.val();
@@ -48,7 +50,7 @@ $.extend(CC.Elements.Element.prototype,{
         this.isValid = isValid;
     },
     destroy:function(){
-        CC.notification.removeById(this.cid);
+        this.notification.removeById(this.cid);
     }
 });
 
@@ -204,9 +206,12 @@ CC.Elements.PictureGallery= CC.Elements.Element.extend({
 
 CC.Elements.Select = CC.Elements.Element.extend({
     init:function(){
+        var that = this;
         this._super("init",arguments);
+        this.type = "select";
         this.$input = this.$container.find("select");
         this.name = this.$input.attr('name');
+        this.$input.on("change",function(){that.validate();});
     },
     render:function(){
         this.type = "select";

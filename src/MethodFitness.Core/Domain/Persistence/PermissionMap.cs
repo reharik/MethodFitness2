@@ -16,7 +16,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.Level).Not.Nullable();
             References(x => x.Operation).Not.Nullable().Column("OperationId");
             References(x => x.User).Column("UserId");
-            References(x => x.UsersGroup).Column("UserGroupId");
+            References(x => x.UsersGroup).Column("UsersGroupId");
         }
     }
 }
