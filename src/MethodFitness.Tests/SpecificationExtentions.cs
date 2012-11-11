@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml;
-using FubuMVC.Core.Util;
-using MethodFitness.Core;
-using MethodFitness.Core.Domain;
+using CC.Core;
+using CC.Core.Domain;
+using CC.Core.Utilities;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using Rhino.Mocks;
@@ -257,7 +257,7 @@ namespace MethodFitness.Tests
 
         public static void ShouldContainAllOf(this string actual, params string[] expectedItems)
         {
-            expectedItems.Each(expected => actual.ShouldContain(expected));
+            expectedItems.ForEachItem(expected => actual.ShouldContain(expected));
         }
 
         public static void ShouldContain<T>(this IEnumerable<T> actual, Func<T, bool> expected)
@@ -333,8 +333,8 @@ namespace MethodFitness.Tests
             if (actual.Count == 0 && expected.Count == 0) return;
 
             string message = "";
-            actual.Each(o => message += string.Format("Extra:  {0}\n", (object)o));
-            expected.Each(o => message += string.Format("Missing:  {0}\n", o));
+            actual.ForEachItem(o => message += string.Format("Extra:  {0}\n", (object)o));
+            expected.ForEachItem(o => message += string.Format("Missing:  {0}\n", o));
 
             Assert.Fail(message);
         }
@@ -402,7 +402,7 @@ namespace MethodFitness.Tests
             var constraint = new CapturingConstraint();
             var constraints = new List<AbstractConstraint>();
 
-            method.GetParameters().Each(p => constraints.Add(constraint));
+            method.GetParameters().ForEachItem(p => constraints.Add(constraint));
 
             var expectation = expectAction(mock).Constraints(constraints.ToArray()).Repeat.Any();
             optionsAction(expectation);

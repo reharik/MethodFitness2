@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Web;
+using CC.Core.DomainTools;
+using CC.Core.Services;
+using CC.Security;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
 
@@ -8,17 +11,18 @@ namespace MethodFitness.Core.Services
     public interface ISessionContext
     {
         int GetCompanyId();
-        int GetUserEntityId();
+        int GetUserId();
         object RetrieveSessionObject(Guid sessionKey);
         object RetrieveSessionObject(string sessionKey);
         SessionItem RetrieveSessionItem(string sessionKey);
         void AddUpdateSessionItem(SessionItem item);
         void RemoveSessionItem(Guid sessionKey);
         void RemoveSessionItem(string sessionKey);
-        User GetCurrentUser();
+        IUser GetCurrentUser();
+
     }
 
-    public class SessionContext : ISessionContext
+    public class SessionContext : ISessionContext,ICCSessionContext
     {
         private readonly IRepository _repository;
 
@@ -27,9 +31,9 @@ namespace MethodFitness.Core.Services
             _repository = repository;
         }
 
-        public User GetCurrentUser()
+        public IUser GetCurrentUser()
         {
-            return _repository.Find<User>(GetUserEntityId());
+            return _repository.Load<User>(GetUserId());
         }
 
         public int GetCompanyId()
@@ -39,7 +43,7 @@ namespace MethodFitness.Core.Services
             return customPrincipal != null ? customPrincipal.CompanyId : 0;
         }
 
-        public int GetUserEntityId()
+        public int GetUserId()
         {
             var httpContext = HttpContext.Current;
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
@@ -78,17 +82,22 @@ namespace MethodFitness.Core.Services
             HttpContext.Current.Session.Remove(sessionKey);
         }
 
+        public string MapPath(string url)
+        {
+            return HttpContext.Current.Server.MapPath(url);
+        }
+
     }
 
 
-    public class DataLoaderSessionContext : ISessionContext
+    public class DataLoaderSessionContext : ISessionContext, ICCSessionContext
     {
         public int GetCompanyId()
         {
             return 1;
         }
 
-        public int GetUserEntityId()
+        public int GetUserId()
         {
             return 1;
         }
@@ -123,7 +132,12 @@ namespace MethodFitness.Core.Services
             throw new NotImplementedException();
         }
 
-        public User GetCurrentUser()
+        public IUser GetCurrentUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string MapPath(string url)
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,4 @@
-using System;
-using MethodFitness.Core.Localization;
+using CC.Core.Localization;
 
 namespace MethodFitness.Web
 {
@@ -150,6 +149,14 @@ namespace MethodFitness.Web
 
         public static readonly StringToken END_DATE = new WebLocalizationKeys("END_DATE", "End Date");
         public static readonly StringToken FILTER = new WebLocalizationKeys("FILTER", "Filter");
+
+        public static readonly StringToken FULL_HOUR = new WebLocalizationKeys("FULL_HOUR", "Full Hour");
+        public static readonly StringToken HALF_HOUR = new WebLocalizationKeys("HALF_HOUR", "Half Hour");
+        public static readonly StringToken FULL_HOUR_TEN_PACK = new WebLocalizationKeys("FULL_HOUR_TEN_PACK", "Full Hour 10 Pack");
+        public static readonly StringToken HALF_HOUR_TEN_PACK = new WebLocalizationKeys("HALF_HOUR_TEN_PACK", "Half Hour 10 Pack");
+        public static readonly StringToken PAIR = new WebLocalizationKeys("PAIR", "Pair");
+        public static readonly StringToken PAIR_TEN_PACK = new WebLocalizationKeys("PAIR_TEN_PACK", "Pairs 10 Pack");
+
 
     }
 }

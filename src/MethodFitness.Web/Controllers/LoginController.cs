@@ -1,15 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
+using CC.Core;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Html;
+using CC.Core.Services;
 using Castle.Components.Validator;
-using MethodFitness.Core;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Config;
 using MethodFitness.Web.Services;
 using StructureMap;
 
@@ -43,6 +43,7 @@ namespace MethodFitness.Web.Controllers
         {
             var loginViewModel = new LoginViewModel
                                      {
+                                         _saveUrl = UrlContext.GetUrlForAction<LoginController>(x => x.Login(null))
                                      };
             return View(loginViewModel);
         }
@@ -54,7 +55,7 @@ namespace MethodFitness.Web.Controllers
 
 //            try
 //            {
-                if (input.HasCredentials())
+            if (input.UserName.IsNotEmpty() && input.Password.IsNotEmpty())
                 {
                     var redirectUrl = string.Empty;
                     var user = _securityDataService.AuthenticateForUserId(input.UserName, input.Password);
@@ -74,7 +75,7 @@ namespace MethodFitness.Web.Controllers
 //                ex.Source = "CATCH RAISED";
 //                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
 //            }
-            return Json(notification);
+            return new CustomJsonResult { Data = notification };
         }
             
 //            
@@ -93,10 +94,10 @@ namespace MethodFitness.Web.Controllers
         public ActionResult Log_in(LoginViewModel input)
         {
             var user = _repository.Find<User>(input.EntityId);
-            if(user.UserLoginInfo.ByPassToken!=input.Guid)
-            {
-                return RedirectToAction("Login");
-            }
+//            if(user.UserLoginInfo.ByPassToken!=input.Guid)
+//            {
+//                return RedirectToAction("Login");
+//            }
             var redirectUrl = _authenticationContext.ThisUserHasBeenAuthenticated(user,false);
             user.UserLoginInfo.ByPassToken = Guid.Empty;
             var crudManager = _saveEntityService.ProcessSave(user);
@@ -117,30 +118,14 @@ namespace MethodFitness.Web.Controllers
 
     public class LoginViewModel : ViewModel
     {
-        public Guid Guid { get; set; }
-        public string SiteName { get { return CoreLocalizationKeys.SITE_NAME.ToString(); } }
         [ValidateNonEmpty]
         public string UserName { get; set; }
         [ValidateNonEmpty]
         public string Password { get; set; }
         public bool RememberMe { get; set; }
-        public string RegisterUrl { get; set; }
         public string ForgotPasswordUrl { get; set; }
-        public string ForgotPasswordTitle { get; set; }
-        
-        public bool HasCredentials()
-        {
-            return UserName.IsNotEmpty() && Password.IsNotEmpty();
-        }
+        public string _saveUrl { get; set; }
     }
 
-    public class RegisterViewModel : ViewModel
-    {
-        [ValidateNonEmpty]
-        public string FirstName { get; set; }
-        [ValidateNonEmpty]
-        public string LastName { get; set; }
-        [ValidateNonEmpty, ValidateEmail]
-        public string Email { get; set; }
-    }
+   
 }

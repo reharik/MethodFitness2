@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using System.Web.Mvc;
 using MethodFitness.Web.Config;
+using MethodFitness.Web.Filters;
 
 namespace MethodFitness.Web.Controllers
 {
-    [CustomAuthorize]
+    [CustomAuthorize, AddUserToViewModelFilter]
     public class MFController : Controller
     {
         protected string RenderViewToString()
@@ -40,20 +41,20 @@ namespace MethodFitness.Web.Controllers
             }
         }
 
-        public ActionResult ConvertToPDF(string viewName, object model, bool inline=false)
-        {
-            var v = new SautinSoft.PdfVision();
-            v.PageStyle.PageSize.A4();
-
-            string html = RenderViewToString(viewName, model);
-
-            var pdfBytes = v.ConvertHtmlStringToPDFStream(html);
-            //if(inline)
-            //{
-                Response.AppendHeader("Content-Disposition", "inline");
-            //}
-            return File(pdfBytes, "application/pdf", "Portfolio.pdf");
-        }
+//        public ActionResult ConvertToPDF(string viewName, object model, bool inline=false)
+//        {
+////            var v = new SautinSoft.PdfVision();
+////            v.PageStyle.PageSize.A4();
+////
+////            string html = RenderViewToString(viewName, model);
+////
+////            var pdfBytes = v.ConvertHtmlStringToPDFStream(html);
+////            //if(inline)
+////            //{
+////                Response.AppendHeader("Content-Disposition", "inline");
+////            //}
+////            return File(pdfBytes, "application/pdf", "Portfolio.pdf");
+//        }
 
       
     }

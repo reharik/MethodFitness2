@@ -1,4 +1,6 @@
 using System.Linq;
+using CC.Core.DomainTools;
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Controllers;
@@ -17,10 +19,10 @@ namespace MethodFitness.Core.Rules
             _repository = repository;
         }
 
-        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY client) where ENTITY : DomainEntity
+        public ValidationReport Execute<ENTITY>(ENTITY client) where ENTITY : class
         {
             var _client = client as Client;
-            var result = new ValidationReport<ENTITY> { Success = true,entity = _client as ENTITY};
+            var result = new ValidationReport{ Success = true, entity = _client};
             var appointments = _repository.Query<Appointment>(x => x.Clients.Any(i => i == _client));
             if (appointments.Any())
             {

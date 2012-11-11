@@ -1,3 +1,4 @@
+using CC.Core.Domain;
 using MethodFitness.Core.Config;
 using FluentNHibernate.Mapping;
 
@@ -12,20 +13,16 @@ namespace MethodFitness.Core.Domain.Persistence
         }
     }
 
-
-
     public class EntityMap<ENTITY> : ClassMap<ENTITY> where ENTITY : Entity
     {
         public EntityMap()
         {
             Id(x => x.EntityId);
-            Map(x => x.CreateDate)
-                .Default("(getdate())");
-            Map(x => x.ChangeDate)
-                //.Not.Nullable()
-                .Default("(getdate())");
-            Map(x => x.ChangedBy);
-            Map(x => x.Archived);
+            Map(x => x.CreatedDate);
+            Map(x => x.ChangedDate);
+            References(x => x.ChangedBy).LazyLoad().Class<User>();
+            References(x => x.CreatedBy).LazyLoad().Class<User>();
+            Map(x => x.IsDeleted);
             ApplyFilter<DeletedConditionFilter>("Archived= :Archived");
         }
     }

@@ -1,7 +1,7 @@
 using System.Linq;
+using CC.Core.DomainTools;
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Services;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 using xVal.ServerSide;
 
 namespace MethodFitness.Core.Rules
@@ -17,9 +17,9 @@ namespace MethodFitness.Core.Rules
             _repository = repository;
         }
 
-        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY trainer) where ENTITY : DomainEntity
+        public ValidationReport Execute<ENTITY>(ENTITY trainer) where ENTITY : class
         {
-            var result = new ValidationReport<ENTITY> { Success = true };
+            var result = new ValidationReport { Success = true };
             var _trainer = trainer as User;
             var appointments = _repository.Query<Appointment>(x => x.Trainer == _trainer);
             if (appointments.Any())

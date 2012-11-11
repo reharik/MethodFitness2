@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
+using CC.Core;
+using CC.Core.Domain;
+using CC.Core.Enumerations;
+using CC.Core.Localization;
+using CC.Security;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
-using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Localization;
 using System.Linq;
-using MethodFitness.Security;
 using MethodFitness.Web.Areas.Billing.Controllers;
 
 namespace MethodFitness.Core.Domain
 {
-    public class  User : DomainEntity, IUser
+    public class  User : DomainEntity, IUser, IPersistableObject
     {
         [ValidateNonEmpty]
         public virtual string FirstName { get; set; }
@@ -142,6 +144,8 @@ namespace MethodFitness.Core.Domain
         private IList<TrainerPayment> _trainerPayments = new List<TrainerPayment>();
         public virtual void EmptyTrainerPayments() { _trainerPayments.Clear(); }
         public virtual IEnumerable<TrainerPayment> TrainerPayments { get { return _trainerPayments; } }
+
+
         public virtual void RemoveTrainerPayment(TrainerPayment trainerPayment)
         {
             _trainerPayments.Remove(trainerPayment);
@@ -153,15 +157,15 @@ namespace MethodFitness.Core.Domain
         }
         #endregion
 
-        public virtual TrainerPayment PayTrainer(PaymentDetailsDto input)
+        public virtual TrainerPayment PayTrainer(IEnumerable<PaymentDetailsDto> items, double amount)
         {
-            if (input == null || input.items == null || !input.items.Any()) return null;
+            if (items == null || !items.Any()) return null;
             var trainerPayment = new TrainerPayment
             {
                 Trainer = this,
-                Total = input.amount
+                Total = amount
             };
-            input.items.Each(x =>
+            items.ForEachItem(x =>
             {
                 var session = Sessions.First(y => y.EntityId == x.id);
                 session.TrainerPaid = true;
@@ -170,7 +174,7 @@ namespace MethodFitness.Core.Domain
                     Appointment = session.Appointment,
                     AppointmentCost = session.Cost,
                     Client = session.Client,
-                    TrainerPay = x.amount
+                    TrainerPay = x.trainerPay
                 });
             });
             AddTrainerPayment(trainerPayment);

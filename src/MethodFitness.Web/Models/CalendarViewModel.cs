@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using CC.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 
@@ -10,7 +11,7 @@ namespace MethodFitness.Web.Models
         public CalendarDefinition CalendarDefinition { get; set; }
         public string DeleteUrl { get; set; }
         public Location Location { get; set; }
-        public IEnumerable<SelectListItem> LocationList { get; set; }
+        public IEnumerable<SelectListItem> _LocationList { get; set; }
         public string CalendarUrl { get; set; }
         public string Loc { get; set; }
 
@@ -32,7 +33,7 @@ namespace MethodFitness.Web.Models
         public string EventsUrlBase { get; set; }
         public string Title { get; set; }
 
-        public string AddEditUrl { get; set; }
+        public string AddUpdateUrl { get; set; }
 
         public string EventChangedUrl { get; set; }
 
@@ -49,6 +50,10 @@ namespace MethodFitness.Web.Models
         public bool CanSeeOthersAppointments { get; set; }
 
         public int TrainerId { get; set; }
+
+        public string AddUpdateRoute { get; set; }
+
+        public string DisplayRoute { get; set; }
     }
 
     public class CalendarEvent

@@ -66,6 +66,19 @@ div.col {
 	padding: 10px 20px;
 	display: block;
 }
+
+div.puCol {
+	width: 200px;
+	padding: 10px 20px;
+	display: block;
+}
+
+div.puColFull {
+    width: 500px;
+    padding: 10px 20px;
+	display: block;
+}
+
 div.dashboardCol {
 	width: 400px;
 	padding: 10px 20px;
@@ -141,7 +154,7 @@ div.fieldRow div.two-thirds {
 	width: 62%;
 	float: left;
 }
-div.fieldRow div.one-quarter {
+div.one-quarter {
 	margin-right: 8px;
 	width: 23%;
 	float: left;
@@ -387,6 +400,7 @@ div.footer div.col {
 /*Directly below was used to adjust the margins for the picture preview icon.*/
 .view_label, .view_display{
 	 margin: 8px 0 0 8px;
+    float: left;
 }
 
 .create_port{
@@ -572,4 +586,53 @@ div.headerInput input{
     font-family: verdana;
     width:90px;
     text-align: center;
+}
+
+#messageContainer ul, ul {
+    list-style: none;
+}
+
+.error {
+	background: url(../images/validation_error.png) 10px 3px no-repeat;
+	background-color: #FF9999;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    margin: 5px;
+    padding: 3px 3px 3px 40px;
+    line-height: 25px;
+}
+
+.success {
+    background-color: #00cc00;
+    font-size:13px;
+    font-weight:bold;
+    width:auto;
+    height:auto;
+    line-height: 25px;
+    margin:0 30px 10px 30px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+    margin-top: 15px;
+}
+
+.invalid{
+    border: 1px solid red;
+}
+.valid{
+    border: 1px solid green;
+}
+
+.deleteImage {
+    background: url("../images/delete.png") no-repeat;
+    width: 95px !important;
+    height: 25px !important;
+    vertical-align: bottom;
+}
+
+.hrClear{
+    clear:left;
+}
+
+.narrow{
+    width:20%;
 }

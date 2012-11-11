@@ -1,5 +1,4 @@
-﻿@using HtmlTags
-@using MethodFitness.Core.Html.FubuUI
+﻿@using CC.Core.Html.CCUI
 @using MethodFitness.Web
 @using MethodFitness.Web.Controllers
 @model TrainerViewModel
@@ -8,76 +7,51 @@
     Layout = "~/Views/Shared/_FormLayout.cshtml";
 }
 
-@section HeaderJavascript{
-    var userRolesOptions = {
-    availableItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableItems)),
-    selectedItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedItems))
-    }
-    var clientOptions={
-    availableItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.AvailableClients)),
-    selectedItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.SelectedClients)),
-    selectedItemsArray: "SelectedClients"
-    }
-    extraFormOptions.userRolesOptions = userRolesOptions;
-    extraFormOptions.clientOptions = clientOptions;
-    extraFormOptions.deleteUrl = '@Model.DeleteUrl';
-    extraFormOptions.crudFormOptions={};
-
-
-}
+  
 @section ExtraContentHeaderButtons{
     <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
     <button id="trainerPayments" class="trainer_payment_history" title="@WebLocalizationKeys.TRAINER_PAYMENTS"></button>
     <button id="payTrainer" class="pay_trainer" title="@WebLocalizationKeys.PAY_TRAINER"></button>
 }
 
-  @MvcHtmlString.Create(FormFor<TrainerController>(x => x.Save(null)).AddClass("CRUD").ElementId("CRUDForm").ToString())
-        <input type="hidden" id="EntityId" name="EntityId" value="@Model.Item.EntityId">
         <div class="col left">
             <div class="fieldRow">
                 <h4>@WebLocalizationKeys.PERSONAL_INFORMATION</h4>
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.FirstName).AddClassToRoot("half first").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.LastName).AddClassToRoot("half last").ToHtmlTag()
+                @Html.SubmissionFor(x => x.FirstName).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.LastName).AddClassToRoot("half last").ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.ViewFor(x => x.Item.UserLoginInfo.LoginName).AddClassToRoot("half first").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.BirthDate).AddClassToRoot("half").ToHtmlTag()
+                @Html.ViewFor(x => x.UserLoginInfoLoginName).LabelDisplay(WebLocalizationKeys.LOGIN_NAME).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.BirthDate).AddClassToRoot("half").ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.Address1).AddClassToRoot("half first").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.Address2).AddClassToRoot("half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Address1).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.Address2).AddClassToRoot("half").ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.City).AddClassToRoot("half first").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.State).AddClassToRoot("one-quarter").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.ZipCode).AddClassToRoot("one-quarter").ToHtmlTag()
+                @Html.SubmissionFor(x => x.City).AddClassToRoot("half first").ToHtmlTag()
+                @Html.SubmissionFor(x => x.State).AddClassToRoot("one-quarter").ToHtmlTag()
+                @Html.SubmissionFor(x => x.ZipCode).AddClassToRoot("one-quarter").ToHtmlTag()
             </div>
             <div class="fieldRow">
                 @WebLocalizationKeys.SELECT_COLOR_TO_ASSOCIATE_WITH_THIS_PERSON.ToString()
             </div>
             <div class="fieldRow">
-                @MvcHtmlString.Create(Html.SubmissionFor(x => x.Item.Color).HideLabel().AddClassToRoot("first half").InputId("color").ToString())
+                @MvcHtmlString.Create(Html.SubmissionFor(x => x.Color).HideLabel().AddClassToRoot("first half").InputId("color").ToString())
                 <div id="colorPicker"></div>
             </div>
-           <div class="fieldRow artifact-field">
-                <div id="userRoles">
-                    <label class="section">@WebLocalizationKeys.USER_ROLES</label>
-                    <div id="userRoles" class="dci_assetSection">
-                        <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE.ToString()</div>
-                        <input type="text" name="UserRolesInput" id="Input" class="artifact nolabels"/>
-                    </div>
-                </div>
+                <div class="fieldRow artifact-field">
+                @Html.SubmissionFor(x => x.UserRolesDtos).ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.USER_ROLES).ToHtmlTag()
             </div>
-            
         </div>
         <div class="col right">
             <div class="fieldRow">
                 <h4>@WebLocalizationKeys.PASSWORD</h4>
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.UserLoginInfo.LoginName).ToHtmlTag()
+                @Html.SubmissionFor(x => x.UserLoginInfoLoginName).LabelDisplay(WebLocalizationKeys.LOGIN_NAME).ToHtmlTag()
             </div>
             <div class="fieldRow">
                 @Html.SubmissionFor(x => x.Password).InputId("Password").ToHtmlTag()
@@ -86,28 +60,20 @@
                 @Html.SubmissionFor(x => x.PasswordConfirmation).ToHtmlTag()
             </div>
              <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.Email).ToHtmlTag()
+                @Html.SubmissionFor(x => x.Email).ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.PhoneMobile).AddClassToRoot("first half").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Item.SecondaryPhone).AddClassToRoot("half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.PhoneMobile).AddClassToRoot("first half").ToHtmlTag()
+                @Html.SubmissionFor(x => x.SecondaryPhone).AddClassToRoot("half").ToHtmlTag()
             </div>
              <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.ClientRateDefault).ToHtmlTag()
+                @Html.SubmissionFor(x => x.ClientRateDefault).ToHtmlTag()
             </div>
             <div class="fieldRow artifact-field">
-                <div id="clients">
-                    <label class="section">@WebLocalizationKeys.CLIENTS</label>
-                    <div id="clients" class="dci_assetSection">
-                        <div class="instruction" id="hasAssets">@WebLocalizationKeys.SELECT_ONE_OR_MORE.ToString()</div>
-                        <input type="text" name="ClientsInput" id="Input" class="artifact nolabels"/>
-                    </div>
-                </div>
+                @Html.SubmissionFor(x => x.ClientsDtos).ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
             </div>
         </div>
      
-    @EndForm()
-    
         <script id="percentageTemplate" type="text/x-jQuery-tmpl">
             <input type="hidden" id="editingId" value="${id}" />
             <div class="col left">

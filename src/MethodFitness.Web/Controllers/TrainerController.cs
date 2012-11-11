@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
+using CC.Core;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Enumerations;
+using CC.Core.Html;
+using CC.Core.Services;
+using CC.Security.Interfaces;
 using Castle.Components.Validator;
-using MethodFitness.Core;
-using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
+using MethodFitness.Web.Config;
 using StructureMap;
 using xVal.ServerSide;
 
@@ -22,27 +26,35 @@ namespace MethodFitness.Web.Controllers
     {
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
-        private readonly IFileHandlerService _uploadedFileHandlerService;
+        private readonly IFileHandlerService _fileHandlerService;
         private readonly ISessionContext _sessionContext;
         private readonly ISecurityDataService _securityDataService;
         private readonly IAuthorizationRepository _authorizationRepository;
         private readonly IUpdateCollectionService _updateCollectionService;
+        private readonly ISelectListItemService _selectListItemService;
 
         public TrainerController(IRepository repository,
             ISaveEntityService saveEntityService,
-            IFileHandlerService uploadedFileHandlerService,
+            IFileHandlerService fileHandlerService,
             ISessionContext sessionContext,
             ISecurityDataService securityDataService,
             IAuthorizationRepository authorizationRepository,
-            IUpdateCollectionService updateCollectionService)
+            IUpdateCollectionService updateCollectionService,
+            ISelectListItemService selectListItemService)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
-            _uploadedFileHandlerService = uploadedFileHandlerService;
+            _fileHandlerService = fileHandlerService;
             _sessionContext = sessionContext;
             _securityDataService = securityDataService;
             _authorizationRepository = authorizationRepository;
             _updateCollectionService = updateCollectionService;
+            _selectListItemService = selectListItemService;
+        }
+
+        public ActionResult AddUpdate_Template(ViewModel input)
+        {
+            return View("TrainerAddUpdate", new TrainerViewModel());
         }
 
         public ActionResult AddUpdate(ViewModel input)
@@ -58,39 +70,45 @@ namespace MethodFitness.Web.Controllers
                 trainer.ClientRateDefault = Int32.Parse(SiteConfig.Settings().TrainerClientRateDefault);
             }
             var clients = _repository.FindAll<Client>();
-            var availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId, name = x.FullNameLNF, percentage = trainer.ClientRateDefault});
-            var selectedClients = trainer.Clients.Any()
-                ? trainer.Clients.Select(x => new TCRTokenInputDto { id = x.EntityId, name = x.FullNameLNF, percentage = trainer.TrainerClientRates.FirstOrDefault(c=>c.Client==x).Percent})
-                : null;
-            var userRoles = _repository.FindAll<UserRole>();
-            var availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name});
-            var selectedUserRoles = trainer.UserRoles.Any()
-                ? trainer.UserRoles.Select(x => new TokenInputDto { id = x.EntityId, name = x.Name })
-                : null;
+            var model = Mapper.Map<Trainer,TrainerViewModel>(trainer);
+            var _availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
+            var selectedClients = trainer.Clients.Select(x =>
+                                                             {
+                                                                 var tcr = trainer.TrainerClientRates.FirstOrDefault(c => c.Client == x);
+                                                                 var percentage = tcr!=null ? tcr.Percent:trainer.ClientRateDefault;
+                                                                 return new TCRTokenInputDto
+                                                                             {
+                                                                                 id = x.EntityId.ToString(),
+                                                                                 name = x.FullNameLNF,
+                                                                                 percentage = percentage
+                                                                             };
+                                                             });
+            model.ClientsDtos = new TCRTokenInputViewModel { _availableItems = _availableClients, selectedItems = selectedClients.OrderBy(x=>x.name) };
 
-            var model = new TrainerViewModel
-            {
-                Item = trainer,
-                DeleteUrl = UrlContext.GetUrlForAction<TrainerController>(x=>x.Delete(null)),
-                AvailableItems = availableUserRoles,
-                SelectedItems = selectedUserRoles,
-                AvailableClients = availableClients,
-                SelectedClients = selectedClients,
-                Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
-            };
-            return PartialView("TrainerAddUpdate", model);
+            var userRoles = _repository.FindAll<UserRole>();
+            var _availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.Name});
+            var selectedUserRoles = trainer.UserRoles.Select(x => new TokenInputDto {id = x.EntityId.ToString(), name = x.Name});
+            model.UserRolesDtos = new TokenInputViewModel { _availableItems = _availableUserRoles, selectedItems = selectedUserRoles };
+
+            model._StateList = _selectListItemService.CreateList<State>();
+
+            model._deleteUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.Delete(null));
+            model._saveUrl= UrlContext.GetUrlForAction<TrainerController>(x => x.Save(null));
+            model._Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString();
+            return new CustomJsonResult { Data = model };
         }
 
+        public ActionResult Display_Template(ViewModel input)
+        {
+            return View("TrainerView", new TrainerViewModel());
+        }
         public ActionResult Display(ViewModel input)
         {
             var trainer = _repository.Find<Trainer>(input.EntityId);
-            var model = new TrainerViewModel
-            {
-                Item = trainer,
-                addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId,
-                Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString()
-            };
-            return PartialView("TrainerView", model);
+            var model = Mapper.Map<Trainer, TrainerViewModel>(trainer);
+            model.addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId;
+            model._Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString();
+            return new CustomJsonResult { Data = model };
         }
 
         public ActionResult Delete(ViewModel input)
@@ -103,26 +121,26 @@ namespace MethodFitness.Web.Controllers
                 _repository.Delete(trainer);
             }
             var notification = validationManager.FinishWithAction();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
 
         }
 
         public ActionResult DeleteMultiple(BulkActionViewModel input)
         {
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteTrainerRules");
-            IValidationManager<User> validationManager = new ValidationManager<User>(_repository);
-            input.EntityIds.Each(x =>
+            IValidationManager validationManager = new ValidationManager(_repository);
+            input.EntityIds.ForEachItem(x =>
             {
                 var item = _repository.Find<User>(x);
                 validationManager = rulesEngineBase.ExecuteRules(item, validationManager);
                 var report = validationManager.GetLastValidationReport();
                 if (report.Success)
                 {
-                    report.SuccessAction = a => _repository.Delete(a);
+                    report.SuccessAction = a => _repository.Delete((User)a);
                 }
             });
             var notification = validationManager.FinishWithAction();
-            return Json(notification, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = notification };
         }
 
         public ActionResult Save(TrainerViewModel input)
@@ -137,18 +155,18 @@ namespace MethodFitness.Web.Controllers
             addSecurityUserGroups(trainer);
 //            if (input.DeleteImage)
 //            {
-////                _uploadedFileHandlerService.DeleteFile(trainer.ImageUrl);
+//                _fileHandlerService.DeleteFile(trainer.ImageUrl);
 //                trainer.ImageUrl = string.Empty;
 //            }
 //            
-//            var file = _uploadedFileHandlerService.RetrieveUploadedFile();
+//            var file = _fileHandlerService.RetrieveUploadedFile();
 ////            var serverDirectory = "/CustomerPhotos/" + _sessionContext.GetCompanyId() + "/Trainers";
-//            trainer.ImageUrl = _uploadedFileHandlerService.GetUrlForFile(file, trainer.FirstName + "_" + trainer.LastName);
+//            trainer.ImageUrl = _fileHandlerService.GetUrlForFile(file, trainer.FirstName + "_" + trainer.LastName);
             var crudManager = _saveEntityService.ProcessSave(trainer);
 
-//            _uploadedFileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
+//            _fileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
             var notification = crudManager.Finish();
-            return Json(notification, "text/plain");
+            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
         }
 
         private bool userRoleRules(User trainer, out ActionResult json)
@@ -163,7 +181,8 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
                                           };
                 {
-                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    json = new CustomJsonResult { Data = notification };
+
                     return true;
                 }
             }
@@ -176,7 +195,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
                                           };
                 {
-                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    json = new CustomJsonResult { Data = notification };
                     return true;
                 }
             }
@@ -189,7 +208,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
                                           };
                 {
-                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    json = new CustomJsonResult { Data = notification };
                     return true;
                 }
             }
@@ -202,7 +221,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
                                           };
                 {
-                    json = Json(notification, JsonRequestBehavior.AllowGet);
+                    json = new CustomJsonResult { Data = notification };
                     return true;
                 }
             }
@@ -216,6 +235,9 @@ namespace MethodFitness.Web.Controllers
             if(trainer.UserRoles.Any(x=>x.Name==SecurityUserGroups.Administrator.ToString()))
             {
                 _authorizationRepository.AssociateUserWith(trainer, SecurityUserGroups.Administrator.ToString());
+            }else
+            {
+                _authorizationRepository.DetachUserFromGroup(trainer, SecurityUserGroups.Administrator.ToString());
             }
         }
 
@@ -231,73 +253,96 @@ namespace MethodFitness.Web.Controllers
 
         private Trainer mapToDomain(TrainerViewModel model, Trainer trainer)
         {
-            var trainerModel = model.Item;
-            trainer.Address1 = trainerModel.Address1;
-            trainer.Address2 = trainerModel.Address2;
-            trainer.FirstName = trainerModel.FirstName;
-            trainer.LastName = trainerModel.LastName;
-            trainer.Email = trainerModel.Email;
-            trainer.PhoneMobile = trainerModel.PhoneMobile;
-            trainer.City = trainerModel.City;
-            trainer.State = trainerModel.State;
-            trainer.ZipCode = trainerModel.ZipCode;
-            trainer.Notes = trainerModel.Notes;
-            trainer.Status = trainerModel.Status;
-            trainer.BirthDate = trainerModel.BirthDate;
-            trainer.ClientRateDefault = trainerModel.ClientRateDefault;
-            trainer.Color = trainerModel.Color.IsNotEmpty()?trainerModel.Color:"#3366CC";
+            trainer.Address1 = model.Address1;
+            trainer.Address2 = model.Address2;
+            trainer.FirstName = model.FirstName;
+            trainer.LastName = model.LastName;
+            trainer.Email = model.Email;
+            trainer.PhoneMobile = model.PhoneMobile;
+            trainer.City = model.City;
+            trainer.State = model.State;
+            trainer.ZipCode = model.ZipCode;
+            trainer.BirthDate = model.BirthDate;
+            trainer.ClientRateDefault = model.ClientRateDefault;
+            trainer.Color = model.Color.IsNotEmpty() ? model.Color : "#3366CC";
             if (trainer.UserLoginInfo==null) trainer.UserLoginInfo = new UserLoginInfo();
-            trainer.UserLoginInfo.LoginName = trainerModel.UserLoginInfo.LoginName;
-
-            _updateCollectionService.UpdateFromCSV(trainer.UserRoles, model.UserRolesInput, trainer.AddUserRole, trainer.RemoveUserRole);
+            trainer.UserLoginInfo.LoginName = model.UserLoginInfoLoginName;
+            
+            _updateCollectionService.Update(trainer.UserRoles, model.UserRolesDtos, trainer.AddUserRole, trainer.RemoveUserRole);
             updateClientInfo(model, trainer);
             return trainer;
         }
         private User updateClientInfo(TrainerViewModel model, Trainer trainer)
         {
             var remove = new List<Client>();
-            if (model.SelectedClients == null)
+            if (model.ClientsDtos == null || model.ClientsDtos.selectedItems == null)
             {
-                trainer.Clients.Each(remove.Add);
-                remove.Each(trainer.RemoveClient);
+                trainer.Clients.ForEachItem(remove.Add);
+                remove.ForEachItem(trainer.RemoveClient);
             }
             else
             {
-                model.SelectedClients.Each(x =>
+                model.ClientsDtos.selectedItems.ForEachItem(x =>
                                                {
-                                                   var client = _repository.Find<Client>(x.id);
-                                                   trainer.AddClient(client, x.percentage);
+                                                   var client = _repository.Find<Client>(Int32.Parse(x.id));
+                                                   trainer.AddClient(client,0);
+                                                   var tcr = trainer.TrainerClientRates.FirstOrDefault(r => r.Client == client);
+                                                   if (tcr != null) { tcr.Percent = x.percentage; }
+                                                   else{trainer.AddTrainerClientRate(new TrainerClientRate{Client = client,Percent = x.percentage,User = trainer});}
                                                });
-                trainer.Clients.Each(x =>
+                trainer.Clients.ForEachItem(x =>
                                          {
-                                             if (!model.SelectedClients.Any(c => c.id == x.EntityId))
-                                                 trainer.RemoveClient(x);
+                                             if (!model.ClientsDtos.selectedItems.Any(c => c.id == x.EntityId.ToString()))
+                                             {
+                                                 remove.Add(x);
+                                             }
                                          });
             }
+            remove.ForEachItem(trainer.RemoveClient);
             return trainer;
         }
     }
 
-    public class TCRTokenInputDto : TokenInputDto
-    {
-        public int percentage { get; set; }
-    }
-
     public class TrainerViewModel:ViewModel
     {
-        public Trainer Item { get; set; }
-        public IEnumerable<TokenInputDto> AvailableItems { get; set; }
-        public IEnumerable<TokenInputDto> SelectedItems { get; set; }
+        public string _deleteUrl { get; set; }
+        public IEnumerable<SelectListItem> _StateList { get; set; }
+        public TCRTokenInputViewModel ClientsDtos { get; set; }
+        public TokenInputViewModel UserRolesDtos { get; set; }
+
         public bool DeleteImage { get; set; }
         public string Password { get; set; }
         [ValidateSameAs("Password")]
         public string PasswordConfirmation { get; set; }
-        public string UserRolesInput { get; set; }
-        public string ClientsInput { get; set; }
-
-        public IEnumerable<TCRTokenInputDto> AvailableClients { get; set; }
-        public IEnumerable<TCRTokenInputDto> SelectedClients { get; set; }
-
-        public string DeleteUrl { get; set; }
+        [ValidateNonEmpty]
+        public string FirstName { get; set; }
+        [ValidateNonEmpty]
+        public string LastName { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+        public string Color { get; set; }
+        public string UserLoginInfoLoginName { get; set; }
+        [ValidateNonEmpty]
+        public string Email { get; set; }
+        [ValidateNonEmpty]
+        public string PhoneMobile { get; set; }
+        public string SecondaryPhone { get; set; }
+        public int ClientRateDefault { get; set; }
     }
-}
+    public class TCRTokenInputDto:TokenInputDto
+    {
+        public int percentage { get; set; }
+        public string display { get { return name + "(" + percentage + ")"; } }
+
+    }
+
+    public class TCRTokenInputViewModel : ITokenInputViewModel
+    {
+        public IEnumerable<TCRTokenInputDto> _availableItems { get; set; }
+        public IEnumerable<TCRTokenInputDto> selectedItems { get; set; }
+    }
+}   

@@ -1,6 +1,5 @@
 ﻿@model TrainerViewModel
-@using MethodFitness.Core.Html.Expressions
-@using MethodFitness.Core.Html.FubuUI
+@using CC.Core.Html.CCUI
 @using MethodFitness.Web
 @using MethodFitness.Web.Controllers
 @using HtmlTags
@@ -9,9 +8,9 @@
 
 @section HeaderJavascript{
     var repeaters = {
-        addressItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.Item.Addresses)),
-        emailItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.Item.Emails)),
-        phoneItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.Item.Phones))
+        addressItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.Addresses)),
+        emailItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model.Emails)),
+        phoneItems: @MvcHtmlString.Create(JsonUtil.ToJson(Model..Item.Phones))
     }
     extraFormOptions.repeaters = repeaters;
 }
@@ -19,7 +18,6 @@
     <div id="errorMessagesForm" class="mf_ErrorMessages errorMessages"><ul></ul></div>
 </div>
 <div id="userProfile">
-    @MvcHtmlString.Create(FormFor<UserProfileController>(x => x.Save(null)).AddClass("mf_CRUD").ElementId("CRUDForm").ToString())
         <input type="hidden" id="EntityId" name="EntityId" value="@Model.Item.EntityId">
         <div class="col left">
             <div class="fieldRow">
@@ -31,7 +29,7 @@
                 @Html.SubmissionFor(x => x.Item.LastName).AddClassToRoot("two-five last").ToHtmlTag()
             </div>
             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Item.Title).ToHtmlTag()
+                @Html.SubmissionFor(x => x.Item._Title).ToHtmlTag()
             </div>
             <div class="fieldRow">
                 @Html.ViewFor(x => x.Item.UserLoginInfo.LoginName).AddClassToRoot("half").ToHtmlTag()
@@ -50,7 +48,6 @@
             </div>
         </div>
      
-    @EndForm()
         <div class="col left">
             <div class="fieldRow">
                 <h4>@WebLocalizationKeys.ADDRESSES</h4>

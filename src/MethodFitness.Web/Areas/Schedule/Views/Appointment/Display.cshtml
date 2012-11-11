@@ -1,48 +1,40 @@
 ﻿@model AppointmentViewModel
-@using MethodFitness.Core.Html.FubuUI
+@using CC.Core.Html.CCUI
 @using MethodFitness.Web
 @using MethodFitness.Web.Areas.Schedule.Controllers
 
 @{
     Layout = "~/Views/Shared/_popupLayout.cshtml";
 }
-        @MvcHtmlString.Create(Html.HiddenFor(x => x.Appointment.EntityId, new { @class = "copyEntityId" }).ToString())
-            <input type="hidden" name="Appointment.EntityId" id="EntityId" value="@Model.Appointment.EntityId"/>
-<div class="col full">
+<div class="puColFull">
     <div class="fieldRow">
-        @Model.Appointment.Date.Value.ToLongDateString(), @Model.Appointment.StartTime.Value.ToShortTimeString() - @Model.Appointment.EndTime.Value.ToShortTimeString()    
+        <span>@WebLocalizationKeys.APPOINTMENT_INFORMATION: </span>
+        <span data-bind="dateString:Date"></span>,
+        <span data-bind="text:StartTimeString"></span> - 
+        <span data-bind="text:EndTimeString"></span>
     </div>
 </div>
 
 <div class="puCol left">
     <div class="fieldRow">
-        @Html.ViewFor(x => x.Appointment.Trainer.FullNameFNF).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
+        @Html.ViewFor(x => x.TrainerFullNameFNF).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
     </div> 
     <div class="fieldRow">
-        @Html.ViewFor(x => x.Appointment.Location.Name).LabelDisplay(WebLocalizationKeys.LOCATION).ToHtmlTag()
+        @Html.ViewFor(x => x.LocationName).LabelDisplay(WebLocalizationKeys.LOCATION).ToHtmlTag()
     </div>
     
 </div>
 <div class="puCol right">
       
     <div class="fieldRow">
-        <div class="view_root half first">
-            <div class="view_label">
-                <label>@WebLocalizationKeys.CLIENTS:</label>
-            </div>
-            <div class="view_display">
-                @foreach (var c in @Model.Appointment.Clients)
-                {
-                    <span>@c.FullNameLNF</span>
-                    <br/>  
-                }
-            </div>
+        <div class="view_root">
+            @Html.ViewFor(x => x._clientItems).LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
         </div>
     </div>
 </div>
-<div class="col full clear">
+<div class="col clear">
     <div class="fieldRow">
-        @Html.ViewFor(x => x.Appointment.Notes).ToHtmlTag()
+        @Html.ViewFor(x => x.Notes).ToHtmlTag()
     </div>
 </div>
 

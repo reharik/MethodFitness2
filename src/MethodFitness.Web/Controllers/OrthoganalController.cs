@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using CC.Core.DomainTools;
+using CC.Core.Html.Menu;
 using MethodFitness.Core;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Html.Menu;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using StructureMap;
@@ -32,7 +33,7 @@ namespace MethodFitness.Web.Controllers
             User user=null;
             if (User.Identity.IsAuthenticated)
             {
-                user = _repository.Find<User>(_sessionContext.GetUserEntityId());
+                user = _repository.Find<User>(_sessionContext.GetUserId());
             }
             HeaderViewModel model = new HeaderViewModel
                                         {

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using CC.Core;
+using CC.Core.DomainTools;
+using CC.Security.Interfaces;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Config;
-using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Web.Controllers;
@@ -47,7 +48,7 @@ namespace MethodFitness.Web.Services
         {
             CreateUserGroups();
             AssociateAllUsersWithThierTypeGroup();
-            CreateKYTAdminOperation();
+            CreateMFAdminOperation();
             CreateOperationsForAllControllers();
             CreateOperationsForAllMenuItems();
             CreateMiscellaneousOperations();
@@ -56,7 +57,7 @@ namespace MethodFitness.Web.Services
             _repository.UnitOfWork.Commit();
         }
 
-        private void CreateKYTAdminOperation()
+        private void CreateMFAdminOperation()
         {
             createOperation("/AdminOrGreater");
             createOperation("/MFAdmin");
@@ -91,10 +92,10 @@ namespace MethodFitness.Web.Services
         public void CreateOperationsForAllMenuItems()
         {
             var menuConfig = _container.GetAllInstances<IMenuConfig>();
-            menuConfig.Each(x =>
+            menuConfig.ForEachItem(x =>
             {
                 var menuItems = x.Build(true);
-                menuItems.Each(m =>
+                menuItems.ForEachItem(m =>
                 {
                     var operation = "/MenuItem/" + m.Text.RemoveWhiteSpace();
                     if (!Operations.Contains(operation))
@@ -127,12 +128,12 @@ namespace MethodFitness.Web.Services
 
         public void AssociateAllUsersWithThierTypeGroup()
         {
-            _repository.DisableFilter("CompanyConditionFilter");
+           // _repository.DisableFilter("CompanyConditionFilter");
             var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
-            admins.Each(x =>
+            admins.ForEachItem(x =>
                 _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
             var employees = _repository.FindAll<User>();
-            employees.Each(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
+            employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
         }
 
         public void CreateUserGroups()

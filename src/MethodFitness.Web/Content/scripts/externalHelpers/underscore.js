@@ -67,9 +67,9 @@
   // Collection Functions
   // --------------------
 
-  // The cornerstone, an `each` implementation, aka `forEach`.
-  // Handles objects with the built-in `forEach`, arrays, and raw objects.
-  // Delegates to **ECMAScript 5**'s native `forEach` if available.
+  // The cornerstone, an `each` implementation, aka `forForEachItem`.
+  // Handles objects with the built-in `forForEachItem`, arrays, and raw objects.
+  // Delegates to **ECMAScript 5**'s native `forForEachItem` if available.
   var each = _.each = _.forEach = function(obj, iterator, context) {
     if (obj == null) return;
     if (nativeForEach && obj.forEach === nativeForEach) {

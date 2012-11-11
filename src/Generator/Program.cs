@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using CC.Core;
 using MethodFitness.Core;
 using MethodFitness.Web;
 using StructureMap;
@@ -62,7 +63,7 @@ namespace Generator
 
             var maxLength = commands.Max(c=>c.toCanonicalCommandName().Length);
 
-            commands.Each(
+            commands.ForEachItem(
                 c =>
                 Console.WriteLine("    {0, " + (maxLength + 1) + "} -> {1}", c.toCanonicalCommandName(), c.Description));
 

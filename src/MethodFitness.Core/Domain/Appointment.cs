@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CC.Core;
+using CC.Core.Domain;
+using CC.Core.DomainTools;
+using CC.Core.Localization;
+using CC.Security.Interfaces;
 using Castle.Components.Validator;
-using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Localization;
-using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 using xVal.ServerSide;
 
 namespace MethodFitness.Core.Domain
 {
-    public class Appointment:DomainEntity
+    public class Appointment : DomainEntity, IPersistableObject
     {
         [ValidateNonEmpty]
         public virtual DateTime? Date { get; set; }
@@ -79,12 +81,12 @@ namespace MethodFitness.Core.Domain
         }
         public virtual void SetSessionsForClients()
         {
-            Clients.Each(x =>
+            Clients.ForEachItem(x =>
             {
                 var sessions = x.Sessions.Where(s => s.Appointment == null && s.AppointmentType == AppointmentType);
                 if (sessions.Any())
                 {
-                    var session = sessions.OrderBy(s => s.CreateDate).First();
+                    var session = sessions.OrderBy(s => s.CreatedDate).First();
                     session.Appointment = this;
                     session.Trainer = Trainer;
                     session.SessionUsed = true;
@@ -102,13 +104,12 @@ namespace MethodFitness.Core.Domain
                     x.AddSession(session);
                     AddSession(session);
                 }
-
             });
         }
 
         public virtual void RestoreSessionsToClientWhenDeleted()
         {
-            Sessions.Each(x => x.Client.RestoreSession(x));
+            Sessions.ForEachItem(x => x.Client.RestoreSession(x));
         }
 
         public override Entity CloneSelf()
@@ -124,8 +125,10 @@ namespace MethodFitness.Core.Domain
                                       Notes = Notes,
                                       AppointmentType = AppointmentType,
                                   };
-            _clients.Each(appointment.AddClient);
+            _clients.ForEachItem(appointment.AddClient);
             return appointment;
         }
+
+
     }
 }

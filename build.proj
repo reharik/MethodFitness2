@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <ToolsPath>$(MSBuildProjectDirectory)\lib</ToolsPath>
+    <ToolsPath>$(MSBuildProjectDirectory)\src\lib</ToolsPath>
     <SourcePath>$(MSBuildProjectDirectory)\src</SourcePath>
     <MSBuildCommunityTasksPath>$(ToolsPath)</MSBuildCommunityTasksPath>
     <NUnit>$(ToolsPath)</NUnit>
@@ -16,9 +16,10 @@
 
   <Target Name="Build" DependsOnTargets="_build;_unitTests" />
   <!--  <Target Name="Stage" DependsOnTargets="_build;_minifyJSandCss;_outputWebFiles;" />-->
-  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />
-
- <Target Name="_outputWebFiles" >
+<!--  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />-->
+  <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToQA;" />
+  
+ <Target Name="_pushToQA" >
     <ItemGroup>
       <WebFiles Include="src\MethodFitness.Web\**\*.*;"
                 Exclude="src\MethodFitness.Web\obj\**;
@@ -30,6 +31,8 @@
 						 src\MethodFitness.Web\*.sln;
 						 src\MethodFitness.Web\Tenant\**;
 						 src\MethodFitness.Web\App_Data\**;
+						 src\MethodFitness.Web\web.config;
+						 src\MethodFitness.Web\connectionstrings.config;
 						 src\MethodFitness.Web\Logs\**; 		 "
                 />
     </ItemGroup>
@@ -41,13 +44,17 @@
       <Output TaskParameter="Minute" PropertyName="Minute" />
     </Time>
 
-    <PropertyGroup>
-      <OutputDirectory>c:\development\BuildFiles\MethodFitness\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute)</OutputDirectory>
-    </PropertyGroup>
+   <PropertyGroup>
+     <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
+   </PropertyGroup>
 
-    <MakeDir Directories="$(OutputDirectory)"  />
-    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
-  </Target>
+   <MakeDir Directories="$(OutputDirectory)"  />
+   <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
+   <Zip Files="@(WebFiles)"
+     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
+     ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
+     ZipLevel="9" />
+ </Target>
 
   <Target Name="myTemp" >
     <Message Text="Current Date and Time: $(Month).$(Day).$(Year)-$(Hour).$(Minute)" />

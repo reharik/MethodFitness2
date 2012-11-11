@@ -1,15 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Web;
 using System.Web.Mvc;
-using MethodFitness.Core;
-using MethodFitness.Core.Services;
-using FubuMVC.UI;
-using FubuMVC.UI.Tags;
+using CC.Core;
+using CC.UI.Helpers;
+using CC.UI.Helpers.Tags;
 using Microsoft.Practices.ServiceLocation;
-using NHibernate.Mapping;
 using StructureMap;
-using StructureMap.Configuration;
 using log4net.Config;
 
 namespace MethodFitness.Web.Config
@@ -51,6 +47,7 @@ namespace MethodFitness.Web.Config
                 StructureMapBootstrapper.Bootstrap();
                 ModelBindingBootstaper.Bootstrap();
             }
+            AutoMapperBootstrapper.Bootstrap();
             // sets SM as CSL
             ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator());
             // sets MVCDependencyResolver to use the CSL
@@ -61,7 +58,7 @@ namespace MethodFitness.Web.Config
 
             var library = ObjectFactory.Container.GetInstance<TagProfileLibrary>();
             var conventions = ObjectFactory.Container.GetAllInstances<HtmlConventionRegistry>();
-            conventions.Each(library.ImportRegistry);
+            conventions.ForEachItem(library.ImportRegistry);
 
             //SecurityBootstrapper.Bootstrap();
         }

@@ -1,20 +1,20 @@
 using Alpinely.TownCrier;
-using AuthorizeNet;
+using CC.Core.DomainTools;
+using CC.Core.Html.CCUI.HtmlConventionRegistries;
+using CC.Core.Html.Grid;
+using CC.Core.Localization;
+using CC.Core.Services;
+using CC.Security.Interfaces;
+using CC.Security.Services;
+using CC.UI.Helpers;
+using CC.UI.Helpers.Configuration;
+using CC.UI.Helpers.Tags;
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
-using MethodFitness.Core.Html.FubuUI.HtmlConventionRegistries;
-using MethodFitness.Core.Html.Grid;
-using MethodFitness.Core.Localization;
-using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
-using MethodFitness.Security.Services;
 using MethodFitness.Web.Menus;
 using MethodFitness.Web.Services;
-using FubuMVC.UI;
-using FubuMVC.UI.Configuration;
-using FubuMVC.UI.Tags;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using StructureMap.Configuration.DSL;
@@ -31,16 +31,14 @@ namespace MethodFitness.Web.Config
                          x.TheCallingAssembly();
                          x.AssemblyContainingType(typeof (CoreLocalizationKeys));
                          x.AssemblyContainingType(typeof (MergedEmailFactory));
-                         x.AssemblyContainingType(typeof(Gateway));
+                         
                          x.WithDefaultConventions();
                      });
-            For<IGateway>().Use<Gateway>().Ctor<string>("apiLogin").EqualToAppSetting("Authorize.Net_apiLogin")
-                .Ctor<string>("transactionKey").EqualToAppSetting("Authorize.Net_TransactionKey")
-                .Ctor<bool>("testMode").EqualToAppSetting("Authorize.Net_testMode");
+           
 
-            For<HtmlConventionRegistry>().Add<MethodFitnessHtmlConventions>();
+            For<HtmlConventionRegistry>().Add<CCHtmlConventions>();
             For<IServiceLocator>().Singleton().Use(new StructureMapServiceLocator());
-            For<IElementNamingConvention>().Use<MethodFitnessElementNamingConvention>();
+            For<IElementNamingConvention>().Use<CCElementNamingConvention>();
             For(typeof (ITagGenerator<>)).Use(typeof (TagGenerator<>));
             For<TagProfileLibrary>().Singleton();
             For<ICastleValidationRunner>().Use<DummyCastleValidationRunnerSuccess>();
@@ -51,17 +49,17 @@ namespace MethodFitness.Web.Config
             For<ISessionFactory>().Use<NullSessionFactory>();
 
             For<ISession>().Use<NullSession>();
-            For<ISession>().Use<NullSession>().Named("NoFiltersOrInterceptor");
+//            For<ISession>().Use<NullSession>().Named("NoFiltersOrInterceptor");
 
 
             For<IUnitOfWork>().Use<NullNHibernateUnitOfWork>();
-            For<IUnitOfWork>().Add<NullNHibernateUnitOfWork>().Named("NoFiltersOrInterceptor");
-            For<IUnitOfWork>().Add<NullNHibernateUnitOfWork>().Named("NoFilters");
+//            For<IUnitOfWork>().Add<NullNHibernateUnitOfWork>().Named("NoFiltersOrInterceptor");
+//            For<IUnitOfWork>().Add<NullNHibernateUnitOfWork>().Named("NoFilters");
             //For<IGetCompanyIdService>().Use<DataLoaderGetCompanyIdService>();
 
             For<IRepository>().Use<Repository>();
-            For<IRepository>().Add(x => new Repository()).Named("NoFiltersOrInterceptor");
-            For<IRepository>().Add(x => new Repository(true)).Named("NoFilters");
+//            For<IRepository>().Add(x => new Repository()).Named("NoFiltersOrInterceptor");
+//            For<IRepository>().Add(x => new Repository(true)).Named("NoFilters");
 
             For<ILocalizationDataProvider>().Use<LocalizationDataProvider>();
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();

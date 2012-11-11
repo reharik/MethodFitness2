@@ -1,3 +1,5 @@
+using CC.Core;
+using CC.Core.Html;
 using MethodFitness.Core.Domain;
 using HtmlTags;
 

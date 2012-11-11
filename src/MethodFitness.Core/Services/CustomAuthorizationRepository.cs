@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using MethodFitness.Security.Model;
-using MethodFitness.Security.Services;
+using CC.Security.Model;
+using CC.Security.Services;
 using NHibernate;
 
 namespace MethodFitness.Core.Services

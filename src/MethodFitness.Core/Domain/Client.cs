@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CC.Core.Domain;
+using CC.Core.Enumerations;
+using CC.Core.Localization;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Localization;
 
 namespace MethodFitness.Core.Domain
 {
-    public class Client:DomainEntity
+    public class Client : DomainEntity, IPersistableObject
     {
         [ValidateNonEmpty]
         public virtual string FirstName { get; set; }
@@ -35,6 +37,7 @@ namespace MethodFitness.Core.Domain
         public virtual string Source { get; set; }
         [TextArea]
         public virtual string SourceOther { get; set; }
+        [ValidateNonEmpty]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
         public virtual string FullNameLNF
@@ -60,8 +63,6 @@ namespace MethodFitness.Core.Domain
         private IList<Payment> _payments = new List<Payment>();
         public virtual IEnumerable<Payment> Payments { get { return _payments; } }
 
-
-
         public virtual void RemovePayment(Payment payment)
         {
             _payments.Remove(payment);
@@ -74,9 +75,9 @@ namespace MethodFitness.Core.Domain
 
         #endregion
 
-        public override void UpdateSelf(Entity entity)
+        public override void UpdateSelf(Entity entityBase)
         {
-            var self = (Client) entity;
+            var self = (Client) entityBase;
             FirstName = self.FirstName;
             LastName = self.LastName;
             Email = self.Email;

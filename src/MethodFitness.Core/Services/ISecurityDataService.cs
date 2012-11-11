@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web.Security;
+using CC.Core;
+using CC.Core.DomainTools;
 using MethodFitness.Core.Domain;
 
 namespace MethodFitness.Core.Services
@@ -31,7 +33,7 @@ namespace MethodFitness.Core.Services
             //return user;
             var users = _repository.Query<User>(u => u.UserLoginInfo.LoginName.ToLowerInvariant() == username.ToLowerInvariant() );// && u.UserLoginInfo.Password == password).FirstOrDefault();
             User ValidUser = null;
-            users.Each(x =>
+            users.ForEachItem(x =>
             {
                 var passwordHash = CreatePasswordHash(password, x.UserLoginInfo.Salt);
                 if (x.UserLoginInfo.Password == passwordHash)

@@ -1,7 +1,9 @@
 using System;
+using CC.Core.DomainTools;
+using CC.Core.Services;
+using CC.Security.Interfaces;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 using StructureMap;
 
@@ -27,7 +29,7 @@ namespace Generator
         public void Load()
         {
             _dynamicExpressionQuery = ObjectFactory.GetInstance<IDynamicExpressionQuery>();
-            _repository = ObjectFactory.GetNamedInstance<IRepository>("NoFiltersOrInterceptor");
+            _repository = ObjectFactory.Container.GetInstance<IRepository>();
             _securityDataService = ObjectFactory.GetInstance<ISecurityDataService>();
             _authorizationRepository = ObjectFactory.GetInstance<IAuthorizationRepository>();
 
@@ -78,7 +80,7 @@ namespace Generator
                                    LastName = "Harik",
                                    CompanyId = 1,
                                    Color = "#148509",
-                                   CreateDate = DateTime.Now,
+                                   CreatedDate = DateTime.Now,
                                    ClientRateDefault = 65,
                                    PhoneMobile = "401.743.9669",
                                    Email = "methodfit@gmail.com"
@@ -100,7 +102,7 @@ namespace Generator
                 FirstName = "Admin",
                 LastName = "Admin",
                 CompanyId = 1,
-                CreateDate = DateTime.Now,
+                CreatedDate = DateTime.Now,
                 PhoneMobile = "123456789",
                 Email = "methodfit@gmail.com"
             };

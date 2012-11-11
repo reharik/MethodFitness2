@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core;
+using CC.Core.DomainTools;
 using MethodFitness.Core.Domain;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 using StructureMap;
 
 namespace MethodFitness.Web.Controllers
@@ -13,15 +13,15 @@ namespace MethodFitness.Web.Controllers
 
         public ScheduledTasksController()
         {
-            _repository = ObjectFactory.Container.GetInstance<IRepository>("NoFiltersOrInterceptor");
+            _repository = ObjectFactory.Container.GetInstance<IRepository>("NoInterceptorNoFiltersUnitOfWork");
         }
 
         public ActionResult ProcessAppointments()
         {
             var appointments = _repository.Query<Appointment>(x => x.EndTime > DateTime.Now.AddDays(-1) && x.EndTime <= DateTime.Now);
-            appointments.Each(x =>
+            appointments.ForEachItem(x =>
                                   {
-                                      x.Sessions.Each(s =>
+                                      x.Sessions.ForEachItem(s =>
                                                           {
                                                               s.SessionUsed = true;
                                                               s.Trainer = x.Trainer;

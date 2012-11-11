@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core;
+using CC.Core.DomainTools;
+using CC.Core.Html;
+using CC.Security.Interfaces;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
-using MethodFitness.Security.Interfaces;
 
 namespace MethodFitness.Web.Services.ViewOptions
 {
@@ -64,7 +65,7 @@ namespace MethodFitness.Web.Services.ViewOptions
             currentItem.id = itemName;
             currentItem.viewName = "GridView";
             currentItem.route = itemName;
-            currentItem.addUpate = itemName.Replace("list", "");
+            currentItem.addUpdate = itemName.Replace("list", "");
             currentItem.display = itemName.Replace("list", "display");
             return this;
         }
@@ -123,7 +124,7 @@ namespace MethodFitness.Web.Services.ViewOptions
 
         public IViewOptionBuilder AddUpdateToken(string addUpdate)
         {
-            currentItem.addUpate = addUpdate;
+            currentItem.addUpdate = addUpdate;
             return this;
         }
 
@@ -153,7 +154,7 @@ namespace MethodFitness.Web.Services.ViewOptions
             }
             else
             {
-                if (_authorizationService.IsAllowed(_repository.Find<User>(_sessionContext.GetUserEntityId()),"/Schedule/MenuItem" + currentItem.Operation)) 
+                if (_authorizationService.IsAllowed(_repository.Find<User>(_sessionContext.GetUserId()),"/Schedule/MenuItem" + currentItem.Operation)) 
                 {
                     Items.Add(currentItem);
                 }

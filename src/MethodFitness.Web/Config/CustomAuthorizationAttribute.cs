@@ -1,8 +1,6 @@
 ﻿using System.Web.Mvc;
-using MethodFitness.Core;
-using MethodFitness.Core.Html;
+using CC.Core.Html;
 using MethodFitness.Web.Controllers;
-using StructureMap;
 
 namespace MethodFitness.Web.Config
 {
@@ -17,4 +15,7 @@ namespace MethodFitness.Web.Config
             }
         }
     }
+
+   
+
 }

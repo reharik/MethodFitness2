@@ -1,3 +1,4 @@
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 
@@ -9,9 +10,9 @@ namespace MethodFitness.Core.Rules
         {
         }
 
-        public ValidationReport<ENTITY> Execute<ENTITY>(ENTITY field) where ENTITY : DomainEntity
+        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : class
         {
-            var result = new ValidationReport<ENTITY> { Success = true };
+            var result = new ValidationReport { Success = true };
 //            var _field = field as Field;
 //            var pendingTasks = _field.GetPendingTasks();
 //            if(pendingTasks.Count()>0)

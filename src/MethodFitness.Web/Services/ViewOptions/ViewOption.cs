@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Web.Script.Serialization;
+using CC.Core.Html;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Services.ViewOptions
@@ -14,7 +14,7 @@ namespace MethodFitness.Web.Services.ViewOptions
         public string subViewName { get; set; }
         public string id { get; set; }
         public string route { get; set; }
-        public string addUpate { get; set; }
+        public string addUpdate { get; set; }
         public string display { get; set; }
         public bool isChild { get; set; }
         public bool noBubbleUp { get; set; }

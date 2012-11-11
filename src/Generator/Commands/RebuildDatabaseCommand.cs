@@ -1,3 +1,4 @@
+using CC.Core.DomainTools;
 using MethodFitness.Core.Domain;
 using NHibernate;
 using StructureMap;
@@ -20,21 +21,21 @@ namespace Generator.Commands
         public void Execute(string[] args)
         {
 //            ObjectFactory.Configure(x => x.For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory()));
-            var sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
+          //  var sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
 //            SqlServerHelper.DeleteReaddDb(sessionFactory);
 
             ObjectFactory.Configure(x => x.For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactoryAndGenerateSchema()));
-            sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
+            var sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
 
             new DataLoader().Load();
-            SqlServerHelper.AddRhinoSecurity(sessionFactory);
+//            SqlServerHelper.AddRhinoSecurity(sessionFactory);
 
-            ObjectFactory.ResetDefaults();
-            ObjectFactory.Initialize(x =>
-            {
-                x.AddRegistry(new GenRegistry());
-                x.AddRegistry(new CommandRegistry());
-            });
+//            ObjectFactory.ResetDefaults();
+//            ObjectFactory.Initialize(x =>
+//            {
+//                x.AddRegistry(new GenRegistry());
+//                x.AddRegistry(new CommandRegistry());
+//            });
             var securitySetup = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
             securitySetup.Execute(null);
 

@@ -1,6 +1,5 @@
 ﻿@model LoginViewModel
-@using MethodFitness.Core.Html.Expressions
-@using MethodFitness.Core.Html.FubuUI
+@using CC.Core.Html.CCUI
 @using MethodFitness.Web
 @using MethodFitness.Web.Controllers
 @using HtmlTags
@@ -23,56 +22,45 @@
     @CSS("ie.css").ToHtmlTag()
      <![endif]-->
      @CSS("mf.css").ToHtmlTag()
-    @Script("jqueryPlugins/jquery-1.6.2.min.js").ToHtmlTag()
+       @Script("jqueryPlugins/jquery-1.7.1.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery-ui-1.8.16.custom.min.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.validate.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.form.js").ToHtmlTag()
-    @Script("internalHelpers/cc.utilities.js").ToHtmlTag()
-    @Script("internalHelpers/cc.Notifications.js").ToHtmlTag()
-    @Script("internalHelpers/cc.crudForm.js").ToHtmlTag()
     @Script("externalHelpers/underscore.js").ToHtmlTag()
-    @Script("externalHelpers/backbone.js").ToHtmlTag()
+     @Script("externalHelpers/backbone.js").ToHtmlTag()
+    @Script("externalHelpers/backbone.marionette.js").ToHtmlTag()
+    @Script("externalHelpers/knockout-2.1.0.debug.js").ToHtmlTag()    
+        @Script("externalHelpers/knockout.mapping.js").ToHtmlTag()    
 
-    @Script("mf.baseClass.js").ToHtmlTag()
-    @Script("mf.PopupView.js").ToHtmlTag()
-    @Script("mf.FormView.js").ToHtmlTag()
-    @Script("mf.ajaxPopupFormModule.js").ToHtmlTag()
-    @Script("mf.forgottenPasswordController.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.pubsub.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.metadata.js").ToHtmlTag()
-    @Script("externalHelpers/json2.js").ToHtmlTag()
+        @Script("MF/MF.App.js").ToHtmlTag()
+    @Script("MF/MF.Views.js").ToHtmlTag()
+    @Script("MF/MF.State.js").ToHtmlTag()
+    @Script("MF/MF.Mixins.js").ToHtmlTag()
+    @Script("MF/MF.OneOffViews.js").ToHtmlTag()
+
+    
+    @Script("MF/CC.ModelBinding/CC.Elements.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.NotificationService.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ModelService.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ValidationRules.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ValidationRunner.js").ToHtmlTag()
+    @Script("internalHelpers/mf.repository.js").ToHtmlTag()
+
+        @Script("externalHelpers/json2.js").ToHtmlTag()
     
     <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
     <script type="text/javascript">
         
-       var forgotPasswordUrl =@MvcHtmlString.Create(JsonUtil.ToJson(Model.ForgotPasswordUrl));
-        var popupTitle = "@Model.ForgotPasswordTitle";
-		
-		var extraFormOptions = {};
-
+       var extraFormOptions = {};
+        extraFormOptions.forgotPasswordUrl=@MvcHtmlString.Create(JsonUtil.ToJson(Model.ForgotPasswordUrl));
+                
         $(document).ready(function () {
-            var loginArea = new cc.NotificationArea("loginArea","#errorMessagesGrid","#errorMessagesForm",MF.vent);
-            loginArea.render("body#signin");
-            MF.notificationService = new cc.MessageNotficationService();
-            MF.notificationService.addArea(loginArea);
-            $('.mf_CRUD').crudForm({},"loginArea");
-            $("#save").click(function (event) {
-                $("#CRUDForm").submit();
-                event.preventDefault();
-            });
-
-            $("#forgotPasswordArea").hide();
-
-            $("#forgotPassword").click(function () {
-                new mf.ForgottenPasswordController({el: "#forgotPassword",
-                        id: "forgotPasswordController",
-                        forgottenPasswordUrl: forgotPasswordUrl,
-                        title: popupTitle });
-            });
-
-            $("input[name='UserName']").focus();
-
+            var model =  @MvcHtmlString.Create(JsonUtil.ToJson(Model));
+            var view = new MF.Views.LoginView({el:".signin"});
+            view.rawModel = model;
+            view.render();
         });
+        
         </script>
     </head>
     <body id="signin">
@@ -80,14 +68,14 @@
             <div class="content-outer">
                 <div class="content-header"></div>
                 <div class="content-inner norequired">
-                    @MvcHtmlString.Create(FormFor<LoginController>(l => l.Login(null)).AddClass("mf_CRUD").ElementId("CRUDForm").ToString())
-                        
+                    <div id="messageContainer">
+                        <ul data-bind="foreach:messages">
+                            <li data-bind="text:message,css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
+                        </ul>
+                    </div> 
                         <div class="signin">
                             <div class="col">
                                 <label class="big">@WebLocalizationKeys.SIGN_IN</label>
-                                <div id="validation-container-wrapper">
-                                    <div id="errorMessagesForm" class="mf_ErrorMessages errorMessages"><ul></ul></div>
-                                </div>
                                 <div class="fieldRow">
                                     @Html.SubmissionFor(x => x.UserName).ToHtmlTag()
                                 </div>
@@ -103,11 +91,9 @@
                                 <a href="#" id="forgotPassword">@WebLocalizationKeys.FORGOT_YOUR_PASSWORD</a>
                             </div>
                         </div>
-                    @EndForm()
                 </div>
                 <div class="content-footer"><span></span></div>
             </div>
         </div>
-        <div id="forgotPasswordArea"></div>
     </body>
 </html>

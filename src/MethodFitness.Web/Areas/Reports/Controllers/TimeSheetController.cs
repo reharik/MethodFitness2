@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using MethodFitness.Core;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
+using CC.Core.Services;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Core.Html;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Controllers;
 
@@ -31,7 +32,7 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
                                 TrainerList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId,false),
                                 StartDate = startDate,
                                 EndDate = startDate.AddDays(6),
-                                Title = WebLocalizationKeys.TIME_SHEET.ToString(),
+                                _Title = WebLocalizationKeys.TIME_SHEET.ToString(),
                                 ReportUrl = "/Areas/Reports/Reports/TimeSheet.aspx"
                             };
             return View(model);

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
+using CC.Core;
+using CC.Core.Html;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.Domain;
 using HtmlTags;
@@ -94,7 +96,7 @@ namespace MethodFitness.Core.Html.Expressions
 
         private void addClassesAndAttributesToRoot(HtmlTag root)
         {
-            HtmlAttributes.Each(x => root.Attr(x.Key, x.Value));
+            HtmlAttributes.ForEachItem(x => root.Attr(x.Key, x.Value));
         }
 
     }
