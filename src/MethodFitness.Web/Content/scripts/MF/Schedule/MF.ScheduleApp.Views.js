@@ -71,7 +71,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "ScheduledDate":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")};
-        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
+        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
     },
     eventResize:function( event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
         var data = {"EntityId":event.EntityId,
@@ -79,7 +79,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")
         };
-        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
+        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
         if(new XDate(date,true).diffHours(new XDate(true))>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){

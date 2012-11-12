@@ -135,7 +135,8 @@ MF.mixins.formMixin = {
     },
     successHandler:function(_result){
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
-        if(!CC.notification.handleResult(result,this.cid)){
+        var currentNotification = this.notification?this.notification:CC.notification;
+        if(!currentNotification.handleResult(result,this.cid)){
             return;
         }
         MF.vent.trigger("form:"+this.id+":success",result);
