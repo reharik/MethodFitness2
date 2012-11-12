@@ -448,7 +448,12 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
         'click .tokenEditor' : 'tokenEditor'
     },
     viewLoaded:function(){
-        $('#color',this.el).miniColors();
+        var that = this;
+        $('#color',this.el).miniColors({
+            change:function(hex){
+                that.model.Color(hex);
+            }
+        });
          MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
         MF.vent.bind("popup:templatePopup:cancel",this.tokenCancel,this);
     },
