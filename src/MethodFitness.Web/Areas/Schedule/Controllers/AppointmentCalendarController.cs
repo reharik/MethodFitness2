@@ -14,6 +14,7 @@ using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 using MethodFitness.Web.Models;
+using NHibernate.Linq;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
@@ -120,14 +121,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
             var appointments = input.Loc<=0
-                ? _repository.Query<Appointment>(x => x.StartTime >= startDateTime && x.Date <= endDateTime)
+                ? _repository.Query<Appointment>(x => x.StartTime >= startDateTime && x.Date <= endDateTime).Fetch(x => x.Clients).Fetch(x => x.Trainer).AsEnumerable()
                 : _repository.Query<Appointment>(x => x.StartTime >= startDateTime 
                                                 && x.Date <= endDateTime
-                                                && x.Location.EntityId==input.Loc);
+                                                && x.Location.EntityId == input.Loc).Fetch(x => x.Clients).Fetch(x => x.Trainer).AsEnumerable();
             if (input.TrainerIds.IsNotEmpty())
             {
                 //This is necessary because when in trainer view the ledgend is not shown and returns "0"
-                if (input.TrainerIds == "NONE") { appointments = new List<Appointment>().AsQueryable(); }
+                if (input.TrainerIds == "NONE") { appointments = new List<Appointment>(); }
                 else
                 {
                     IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
