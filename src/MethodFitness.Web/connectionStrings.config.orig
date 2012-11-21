@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<!--  Included from the Web.config to keep connection strings separate -->
+<appSettings>
+
+<<<<<<< HEAD
+<!--  <add key="MethodFitness.sql_server_connection_string" value="Data Source=(Local);Initial Catalog=MethodFitness_PROD;Integrated Security=True;" />-->
+  <add key="MethodFitness.sql_server_connection_string" value="Server=cannibalcoder.cloudapp.net;Database=MethodFitness_QA;User ID=methodfitness;Password=m3th0d;Connection Timeout=30;" />
+=======
+<!--  <add key="MethodFitness.sql_server_connection_string" value="Data Source=woad.arvixe.com;Initial Catalog=methodfitness_PROD;User ID=methodFit;Password=meth0d;Integrated Security=False;"/>-->
+<!--  <add key="MethodFitness.sql_server_connection_string" value="Data Source=woad.arvixe.com;Initial Catalog=methodfitness_PROD;User ID=methodFit;Password=meth0d;Integrated Security=False;"/>-->
+<!--  <add key="MethodFitness.sql_server_connection_string" value="Server=cannibalcoder.cloudapp.net;Database=MethodFitness_QA;User ID=methodfitness;Password=m3th0d;Connection Timeout=30;" />-->
+>>>>>>> 86acff45874f102bf90bf85aedd891f940fca8ec
+
+</appSettings>

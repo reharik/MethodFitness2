@@ -10,11 +10,13 @@ using CC.Core.Html;
 using CC.Core.Services;
 using CC.Security.Interfaces;
 using Castle.Components.Validator;
+using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
+using xVal.ServerSide;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
@@ -144,7 +146,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 var notification = new Notification{Message=WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
                 return Json(notification,JsonRequestBehavior.AllowGet);
             }
-            appointment.RestoreSessionsToClientWhenDeleted();
+            appointment.RestoreSessionsToClients();
             //first save app to save the clients and sessions that have been restored
             _repository.Save(appointment);
             _repository.HardDelete(appointment);
@@ -157,26 +159,45 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var changeAptType = appointment.AppointmentType != input.AppointmentType;
-            mapToDomain(input, appointment);
-            var notification = new Notification { Success = true };
-            notification = appointment.CheckPermissions(user, _authorizationService, notification);
-            notification = appointment.CheckForClients(notification);
-            if(changeAptType)
-            {
-                appointment.RestoreSessionsToClientWhenDeleted();
-            }
-            if(appointment.EntityId==0 || changeAptType)
-            {
-                appointment.SetSessionsForClients();
-            }
-            if(!notification.Success)
+
+            var notification = validateAppointment(user, input);
+            if (!notification.Success)
             {
                 return Json(notification, JsonRequestBehavior.AllowGet);
             }
+            // check if new or there were any changes.
+            // if so clear all sessions.
+            var applySessionsForClients = appointment.CheckForChangesAndReturnNeedToSetSessions(input.ClientsDtos.selectedItems, input.AppointmentType);
+            // map or remap values
+            mapToDomain(input, appointment);
+            // apply or reapply the sessions
+            if (applySessionsForClients)
+            {
+                appointment.SetSessionsForClients();
+            }
+            
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
             return new CustomJsonResult { Data = notification };
+        }
+
+        private Notification validateAppointment(User user, AppointmentViewModel input)
+        {
+            var notification = new Notification { Success = true };
+            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now,TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+            if (DateTime.Parse(input.StartTimeString) < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            {
+                notification.Success = false;
+                notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
+                return notification;
+            }
+
+            if (!input.ClientsDtos.selectedItems.Any())
+            {
+                notification = new Notification { Success = false };
+                notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
+            }
+            return notification;
         }
 
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)

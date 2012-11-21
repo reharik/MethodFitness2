@@ -23,6 +23,9 @@
     <div class="fieldRow">
         @Html.ViewFor(x => x.Pair).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
     </div>
+    <div class="fieldRow">
+        @Html.ViewFor(x => x.PairTenPack).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pairTenPack").ToHtmlTag()
+    </div>
     <hr/>
     <div class="fieldRow">
         @Html.ViewFor(x => x.PaymentTotal).AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").InputId("total").ToHtmlTag()
