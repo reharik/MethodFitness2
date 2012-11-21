@@ -8,6 +8,7 @@ using CC.Core.DomainTools;
 using CC.Core.Html;
 using CC.Core.Services;
 using CC.Security.Interfaces;
+using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
@@ -100,9 +101,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.StartTime = input.StartTime;
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var notification = new Notification { Success = true };
-            notification = appointment.CheckPermissions(user, _authorizationService, notification);
-            notification = appointment.CheckForClients(notification);
+            var notification = validateAppointment(user, input);
             if (!notification.Success)
             {
                 return new CustomJsonResult { Data = notification };
@@ -110,6 +109,19 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
             return new CustomJsonResult { Data = notification };
+        }
+
+        private Notification validateAppointment(User user, AppointmentChangedViewModel input)
+        {
+            var notification = new Notification { Success = true };
+            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+            if (input.StartTime < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            {
+                notification.Success = false;
+                notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
+                return notification;
+            }
+            return notification;
         }
 
         public CustomJsonResult Events(GetEventsViewModel input)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CC.Core;
+using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
 using CC.Core.Localization;
@@ -58,27 +59,7 @@ namespace MethodFitness.Core.Domain
             _sessions.Add(session);
         }
         #endregion
-  
-        public virtual Notification CheckPermissions(User user, IAuthorizationService authorizationService, Notification notification)
-        {
-            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now,TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-            if (StartTime < convertTime && !authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
-            {
-                notification.Success = false;
-                notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
-            }
-            return notification;
-
-        } 
-        public virtual Notification CheckForClients(Notification notification)
-        {
-            if (!Clients.Any())
-            {
-                notification = new Notification { Success = false };
-                notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
-            }
-            return notification;
-        }
+        
         public virtual void SetSessionsForClients()
         {
             Clients.ForEachItem(x =>
@@ -107,7 +88,7 @@ namespace MethodFitness.Core.Domain
             });
         }
 
-        public virtual void RestoreSessionsToClientWhenDeleted()
+        public virtual void RestoreSessionsToClients()
         {
             Sessions.ForEachItem(x => x.Client.RestoreSession(x));
         }
@@ -128,7 +109,20 @@ namespace MethodFitness.Core.Domain
             _clients.ForEachItem(appointment.AddClient);
             return appointment;
         }
-
-
+        //christ this was a hard one to name. 
+        // if there were changes to type or clients return the sessions to client.
+        // if sessions were returned to clients we need to re apply them for this appointment.
+        public virtual bool CheckForChangesAndReturnNeedToSetSessions(IEnumerable<TokenInputDto> selectedItems, string appointmentType)
+        {
+            if (IsNew()) return true;
+            var currentClientsIds = Clients.Select(x => x.EntityId);
+            var newClientsIds = selectedItems.Select(x => Int32.Parse(x.id));
+            if(AppointmentType != appointmentType || currentClientsIds.Except(newClientsIds).Any())
+            {
+                RestoreSessionsToClients();
+                return true;
+            }
+            return false;
+        }
     }
 }
