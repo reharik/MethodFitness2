@@ -24,12 +24,12 @@
      <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
    </PropertyGroup>
    
-   <ItemGroup>
-     <RemoveFiles Include="$(OutputDirectory)\**\*.*;"
-               Exclude="$(OutputDirectory)\log4net.config
-						 $(OutputDirectory)\web.config;
-						 $(OutputDirectory)\connectionstrings.config;"/>
-   </ItemGroup>
+<!--   <ItemGroup>-->
+<!--     <RemoveFiles Include="$(OutputDirectory)\**\*.*;"-->
+<!--               Exclude="$(OutputDirectory)\log4net.config-->
+<!--						 $(OutputDirectory)\web.config;-->
+<!--						 $(OutputDirectory)\connectionstrings.config;"/>-->
+<!--   </ItemGroup>-->
    
    <ItemGroup>
      <WebFiles Include="src\MethodFitness.Web\**\*.*;"
@@ -57,12 +57,12 @@
    
 <!--   <RemoveDir Directories="@(RemoveFiles)" />-->
 <!--   <Message Text="Folders deleted: @(RemoveFiles)" />-->
-<!--   <MakeDir Directories="$(OutputDirectory)"  />-->
-<!--   <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />-->
-<!--   <Zip Files="@(WebFiles)"-->
-<!--     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"-->
-<!--     ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"-->
-<!--     ZipLevel="9" />-->
+   <MakeDir Directories="$(OutputDirectory)"  />
+   <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
+   <Zip Files="@(WebFiles)"
+     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
+     ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
+     ZipLevel="9" />
  </Target>
 
   <Target Name="myTemp" >

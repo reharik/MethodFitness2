@@ -31,10 +31,13 @@ namespace Generator
 
                 IGeneratorCommand command;
                 var commands = ObjectFactory.GetAllInstances<IGeneratorCommand>();
-                if (args.Length == 0)
+                if (args.Length == 0) displayHelpAndExit(args, commands);
+                command = commands.FirstOrDefault(c => c.toCanonicalCommandName() == args[0].toCanonicalCommandName());
+                if (command == null) //displayHelpAndExit(args, commands);
                 {
+                    displayHelpAndExit(args, commands);
                     //                    command = ObjectFactory.Container.GetInstance<IGeneratorCommand>("rebuilddatabase");
-                    command = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
+                  //  command = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
                 }
                 else
                 {
