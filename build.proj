@@ -29,7 +29,6 @@
 						 src\MethodFitness.Web\**\*.pdb;
 						 src\MethodFitness.Web\*.csproj.*;
 						 src\MethodFitness.Web\*.sln;
-						 src\MethodFitness.Web\Tenant\**;
 						 src\MethodFitness.Web\App_Data\**;
 						 src\MethodFitness.Web\web.config;
 						 src\MethodFitness.Web\connectionstrings.config;
@@ -47,7 +46,7 @@
    <PropertyGroup>
      <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
    </PropertyGroup>
-
+   <RemoveDir Directories="$(OutputDirectory)" />
    <MakeDir Directories="$(OutputDirectory)"  />
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
    <Zip Files="@(WebFiles)"

@@ -8,12 +8,14 @@ using CC.Core.DomainTools;
 using CC.Core.Html;
 using CC.Core.Services;
 using CC.Security.Interfaces;
+using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 using MethodFitness.Web.Models;
+using NHibernate.Linq;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
@@ -99,9 +101,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             appointment.StartTime = input.StartTime;
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var notification = new Notification { Success = true };
-            notification = appointment.CheckPermissions(user, _authorizationService, notification);
-            notification = appointment.CheckForClients(notification);
+            var notification = validateAppointment(user, input);
             if (!notification.Success)
             {
                 return new CustomJsonResult { Data = notification };
@@ -109,6 +109,19 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
             return new CustomJsonResult { Data = notification };
+        }
+
+        private Notification validateAppointment(User user, AppointmentChangedViewModel input)
+        {
+            var notification = new Notification { Success = true };
+            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+            if (input.StartTime < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            {
+                notification.Success = false;
+                notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
+                return notification;
+            }
+            return notification;
         }
 
         public CustomJsonResult Events(GetEventsViewModel input)
@@ -120,14 +133,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
             var appointments = input.Loc<=0
-                ? _repository.Query<Appointment>(x => x.StartTime >= startDateTime && x.Date <= endDateTime)
+                ? _repository.Query<Appointment>(x => x.StartTime >= startDateTime && x.Date <= endDateTime).Fetch(x => x.Clients).Fetch(x => x.Trainer).AsEnumerable()
                 : _repository.Query<Appointment>(x => x.StartTime >= startDateTime 
                                                 && x.Date <= endDateTime
-                                                && x.Location.EntityId==input.Loc);
+                                                && x.Location.EntityId == input.Loc).Fetch(x => x.Clients).Fetch(x => x.Trainer).AsEnumerable();
             if (input.TrainerIds.IsNotEmpty())
             {
                 //This is necessary because when in trainer view the ledgend is not shown and returns "0"
-                if (input.TrainerIds == "NONE") { appointments = new List<Appointment>().AsQueryable(); }
+                if (input.TrainerIds == "NONE") { appointments = new List<Appointment>(); }
                 else
                 {
                     IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
