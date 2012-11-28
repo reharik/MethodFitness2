@@ -74,9 +74,7 @@ namespace MethodFitness.Core.Domain
         public virtual string LoginName { get; set; }
         [ValidateNonEmpty]
         public virtual string Password { get; set; }
-        [ValidateSqlDateTime]
         public virtual string Salt { get; set; }
-        public virtual bool CanLogin { get; set; }
         [ValidateSqlDateTime]
         public virtual DateTime? LastVisitDate { get; set; }
         public virtual Guid ByPassToken { get; set; }
