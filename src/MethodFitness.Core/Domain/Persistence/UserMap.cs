@@ -31,7 +31,6 @@ namespace MethodFitness.Core.Domain.Persistence
                 Map(x => x.LoginName);
                 Map(x => x.Password);
                 Map(x => x.Salt);
-                Map(x => x.CanLogin);
                 Map(x => x.LastVisitDate);
                 Map(x => x.ByPassToken);
             }
