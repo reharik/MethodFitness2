@@ -142,9 +142,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var user = _repository.Find<User>(userEntityId);
             var appointment = _repository.Find<Appointment>(input.EntityId);
             
-            if (appointment.StartTime.Value.ToLocalTime() < DateTime.Now && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
+            if (appointment.StartTime < DateTime.Now && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
             {
-                var notification = new Notification{Message=WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
+                var notification = new Notification{Message=  WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
                 return Json(notification,JsonRequestBehavior.AllowGet);
             }
             appointment.RestoreSessionsToClients();
