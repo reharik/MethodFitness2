@@ -141,8 +141,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             var appointment = _repository.Find<Appointment>(input.EntityId);
-            
-            if (appointment.StartTime.Value.ToLocalTime() < DateTime.Now && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
+
+            if (appointment.StartTime < TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+                && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
             {
                 var notification = new Notification{Message=WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
                 return Json(notification,JsonRequestBehavior.AllowGet);
@@ -186,7 +187,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             var notification = new Notification { Success = true };
             var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now,TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-            if (DateTime.Parse(input.StartTimeString) < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            var startTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.StartTimeString);
+            if (startTime < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
