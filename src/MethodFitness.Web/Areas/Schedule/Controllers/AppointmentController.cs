@@ -108,12 +108,12 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             if (_userPermissionService.IsAllowed("/Calendar/SetAppointmentForOthers"))
             {
-                var trainers = _repository.Query<Trainer>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
+                var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
                 model._TrainerEntityIdList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true);
             }else
             {
                 var userId = _sessionContext.GetUserId();
-                var trainer = _repository.Find<Trainer>(userId);
+                var trainer = _repository.Find<User>(userId);
                 model.TrainerFullNameFNF = trainer.FullNameFNF;
                 model.TrainerEntityId = trainer.EntityId;
             }
@@ -211,7 +211,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var endTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
             appointment.EndTime = DateTime.Parse(model.Date.ToShortDateString() + " " + endTime.ToShortTimeString()); 
             appointment.AppointmentType = model.AppointmentType;
-            var trainer = _repository.Find<Trainer>(model.TrainerEntityId);
+            var trainer = _repository.Find<User>(model.TrainerEntityId);
             var location = _repository.Find<Location>(model.LocationEntityId);
             appointment.Trainer = trainer;
             appointment.Location = location;

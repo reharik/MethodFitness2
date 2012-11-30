@@ -1,4 +1,6 @@
 ﻿using CC.Security.Interfaces;
+using KnowYourTurf.Web.Security;
+using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
 
 namespace DBFluentMigration.Iteration_0
@@ -18,8 +20,7 @@ namespace DBFluentMigration.Iteration_0
         public void Update()
         {
             GrantAdminPermissions();
-            GrantFacilitiesPermissions();
-            GrantEmployeePermissions();
+            GrantTrainerPermissions();
         }
 
         public void GrantAdminPermissions()
@@ -31,66 +32,57 @@ namespace DBFluentMigration.Iteration_0
             }
         }
 
-        public void GrantFacilitiesPermissions()
+        
+        public void GrantTrainerPermissions()
         {
-            _permissions.CreateControllerPermission("EventController", UserType.Facilities);
-            _permissions.CreateControllerPermission("EventCalendarController", UserType.Facilities);
-            _permissions.CreateControllerPermission("KnowYourTurfController", UserType.Facilities);
-            _permissions.CreateControllerPermission("OrthogonalController", UserType.Facilities);
-            
-            _permissions.CreateMenuPermission(UserType.Facilities, "Events");
-        }
+            _permissions.CreateControllerPermission("KnowYourTurfController", UserType.Trainer);
+            _permissions.CreateControllerPermission("OrthogonalController", UserType.Trainer);
+            _permissions.CreateControllerPermission("CalculatorController", UserType.Trainer);
+            _permissions.CreateControllerPermission("CalculatorListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("TrainerDashboardController", UserType.Trainer);
+            _permissions.CreateControllerPermission("TrainerController", UserType.Trainer);
+            _permissions.CreateControllerPermission("EquipmentController", UserType.Trainer);
+            _permissions.CreateControllerPermission("EquipmentListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("EventController", UserType.Trainer);
+            _permissions.CreateControllerPermission("EventCalendarController", UserType.Trainer);
+            _permissions.CreateControllerPermission("FieldController", UserType.Trainer);
+            _permissions.CreateControllerPermission("FieldDashboardController", UserType.Trainer);
+            _permissions.CreateControllerPermission("FieldListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("ForumController", UserType.Trainer);
+            _permissions.CreateControllerPermission("InventoryListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("PhotoController", UserType.Trainer);
+            _permissions.CreateControllerPermission("DocumentController", UserType.Trainer);
+            _permissions.CreateControllerPermission("PurchaseOrderCommitController", UserType.Trainer);
+            _permissions.CreateControllerPermission("PurchaseOrderController", UserType.Trainer);
+            _permissions.CreateControllerPermission("PurchaseOrderLineItemController", UserType.Trainer);
+            _permissions.CreateControllerPermission("PurchaseOrderListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("TaskController", UserType.Trainer);
+            _permissions.CreateControllerPermission("TaskCalendarController", UserType.Trainer);
+            _permissions.CreateControllerPermission("TaskListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("VendorContactController", UserType.Trainer);
+            _permissions.CreateControllerPermission("VendorContactListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("VendorController", UserType.Trainer);
+            _permissions.CreateControllerPermission("VendorListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("WeatherController", UserType.Trainer);
+            _permissions.CreateControllerPermission("WeatherListController", UserType.Trainer);
+            _permissions.CreateControllerPermission("EquipmentDashboardController", UserType.Trainer);
+            _permissions.CreateControllerPermission("EquipmentTaskCalendarController", UserType.Trainer);
+            _permissions.CreateControllerPermission("EquipmentTaskController", UserType.Trainer);
+            _permissions.CreateControllerPermission("EquipmentTaskListController", UserType.Trainer);
 
-        public void GrantEmployeePermissions()
-        {
-            _permissions.CreateControllerPermission("KnowYourTurfController", UserType.Employee);
-            _permissions.CreateControllerPermission("OrthogonalController", UserType.Employee);
-            _permissions.CreateControllerPermission("CalculatorController", UserType.Employee);
-            _permissions.CreateControllerPermission("CalculatorListController", UserType.Employee);
-            _permissions.CreateControllerPermission("EmployeeDashboardController", UserType.Employee);
-            _permissions.CreateControllerPermission("EmployeeController", UserType.Employee);
-            _permissions.CreateControllerPermission("EquipmentController", UserType.Employee);
-            _permissions.CreateControllerPermission("EquipmentListController", UserType.Employee);
-            _permissions.CreateControllerPermission("EventController", UserType.Employee);
-            _permissions.CreateControllerPermission("EventCalendarController", UserType.Employee);
-            _permissions.CreateControllerPermission("FieldController", UserType.Employee);
-            _permissions.CreateControllerPermission("FieldDashboardController", UserType.Employee);
-            _permissions.CreateControllerPermission("FieldListController", UserType.Employee);
-            _permissions.CreateControllerPermission("ForumController", UserType.Employee);
-            _permissions.CreateControllerPermission("InventoryListController", UserType.Employee);
-            _permissions.CreateControllerPermission("PhotoController", UserType.Employee);
-            _permissions.CreateControllerPermission("DocumentController", UserType.Employee);
-            _permissions.CreateControllerPermission("PurchaseOrderCommitController", UserType.Employee);
-            _permissions.CreateControllerPermission("PurchaseOrderController", UserType.Employee);
-            _permissions.CreateControllerPermission("PurchaseOrderLineItemController", UserType.Employee);
-            _permissions.CreateControllerPermission("PurchaseOrderListController", UserType.Employee);
-            _permissions.CreateControllerPermission("TaskController", UserType.Employee);
-            _permissions.CreateControllerPermission("TaskCalendarController", UserType.Employee);
-            _permissions.CreateControllerPermission("TaskListController", UserType.Employee);
-            _permissions.CreateControllerPermission("VendorContactController", UserType.Employee);
-            _permissions.CreateControllerPermission("VendorContactListController", UserType.Employee);
-            _permissions.CreateControllerPermission("VendorController", UserType.Employee);
-            _permissions.CreateControllerPermission("VendorListController", UserType.Employee);
-            _permissions.CreateControllerPermission("WeatherController", UserType.Employee);
-            _permissions.CreateControllerPermission("WeatherListController", UserType.Employee);
-            _permissions.CreateControllerPermission("EquipmentDashboardController", UserType.Employee);
-            _permissions.CreateControllerPermission("EquipmentTaskCalendarController", UserType.Employee);
-            _permissions.CreateControllerPermission("EquipmentTaskController", UserType.Employee);
-            _permissions.CreateControllerPermission("EquipmentTaskListController", UserType.Employee);
-
-            _permissions.CreateMenuPermission(UserType.Employee, "EquipmentTasks");
-            _permissions.CreateMenuPermission(UserType.Employee, "EquipmentTasksLists");
-            _permissions.CreateMenuPermission(UserType.Employee, "EquipmentTasks");
-            _permissions.CreateMenuPermission(UserType.Employee, "CompletedEquipmentTasks");
-            _permissions.CreateMenuPermission(UserType.Employee, "EquipmentTaskCalendar");
-            _permissions.CreateMenuPermission(UserType.Employee, "Home");
-            _permissions.CreateMenuPermission(UserType.Employee, "Fields");
-            _permissions.CreateMenuPermission(UserType.Employee, "Equipment");
-            _permissions.CreateMenuPermission(UserType.Employee, "Tasks");
-            _permissions.CreateMenuPermission(UserType.Employee, "Events");
-            _permissions.CreateMenuPermission(UserType.Employee, "Calculators");
-            _permissions.CreateMenuPermission(UserType.Employee, "Weather");
-            _permissions.CreateMenuPermission(UserType.Employee, "Forum");
+            _permissions.CreateMenuPermission(UserType.Trainer, "EquipmentTasks");
+            _permissions.CreateMenuPermission(UserType.Trainer, "EquipmentTasksLists");
+            _permissions.CreateMenuPermission(UserType.Trainer, "EquipmentTasks");
+            _permissions.CreateMenuPermission(UserType.Trainer, "CompletedEquipmentTasks");
+            _permissions.CreateMenuPermission(UserType.Trainer, "EquipmentTaskCalendar");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Home");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Fields");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Equipment");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Tasks");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Events");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Calculators");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Weather");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Forum");
         }
 
         

@@ -26,7 +26,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public CustomJsonResult PayTrainer(PayTrainerViewModel input)
         {
             Notification notification;
-            var trainer = _repository.Find<Trainer>(input.EntityId);
+            var trainer = _repository.Find<User>(input.EntityId);
             var trainerPayment = trainer.PayTrainer(input.eligableRows, input.paymentAmount);
             if(trainerPayment==null)
             {
@@ -41,7 +41,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult TrainerReceipt(ViewModel input)
         {
-            var trainer = _repository.Find<Trainer>(input.ParentId);
+            var trainer = _repository.Find<User>(input.ParentId);
             var payment = trainer.TrainerPayments.FirstOrDefault(x => x.EntityId == input.EntityId);
             var model = new TrainerReceiptViewModel
                                               {

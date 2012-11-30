@@ -19,8 +19,14 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.ZipCode);
             Map(x => x.Notes);
             Map(x => x.ImageUrl);
+            Map(x => x.Color);
+            Map(x => x.ClientRateDefault);
             References(x => x.UserLoginInfo);
+            HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
+            HasMany(x => x.TrainerClientRates).Access.CamelCaseField(Prefix.Underscore);
+            HasMany(x => x.TrainerPayments).Access.CamelCaseField(Prefix.Underscore);
             HasManyToMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
+            HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
             DiscriminateSubClassesOnColumn("type");
         }
 
@@ -33,27 +39,6 @@ namespace MethodFitness.Core.Domain.Persistence
                 Map(x => x.Salt);
                 Map(x => x.LastVisitDate);
                 Map(x => x.ByPassToken);
-            }
-        }
-
-        public class TrainerMap : SubclassMap<Trainer>
-        {
-            public TrainerMap()
-            {
-                DiscriminatorValue("Trainer");
-                Map(x => x.Color);
-                Map(x => x.ClientRateDefault);
-                HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
-                HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
-                HasMany(x => x.TrainerClientRates).Access.CamelCaseField(Prefix.Underscore);
-                HasMany(x => x.TrainerPayments).Access.CamelCaseField(Prefix.Underscore);
-            }
-        }
-
-        public class AdministratorMap : SubclassMap<Administrator>
-        {
-            public AdministratorMap()
-            {
             }
         }
     }

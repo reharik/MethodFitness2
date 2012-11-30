@@ -2,6 +2,7 @@
 using System.Linq;
 using CC.Security.Interfaces;
 using CC.Security.Model;
+using MethodFitness.Core.Enumerations;
 
 namespace KnowYourTurf.Web.Security
 {

@@ -147,9 +147,9 @@ namespace MethodFitness.Web.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var trainer = _repository.Find<User>(userEntityId);
-            if(trainer is Trainer)
+            if (trainer is User)
             {
-                ((Trainer)trainer).AddClient(client, ((Trainer)trainer).ClientRateDefault);
+                trainer.AddClient(client, trainer.ClientRateDefault);
             }
             _saveEntityService.ProcessSave(trainer);
         }

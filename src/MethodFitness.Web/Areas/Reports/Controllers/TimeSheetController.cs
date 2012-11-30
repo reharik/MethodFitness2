@@ -25,7 +25,7 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
 
         public ActionResult Display(ViewModel input)
         {
-            var trainers = _repository.Query<User>(x => x.UserRoles.Any(r => r.Name == SecurityUserGroups.Trainer.ToString()));
+            var trainers = _repository.Query<User>(x => x.UserRoles.Any(r => r.Name == UserType.Trainer.ToString()));
             var startDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
             var model = new TimeSheetViewModel
                             {

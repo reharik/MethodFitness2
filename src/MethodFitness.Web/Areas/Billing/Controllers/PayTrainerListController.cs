@@ -53,7 +53,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult TrainerPayments(TrainerPaymentGridItemsRequestModel input)
         {
             var user = _sessionContext.GetCurrentUser();
-            var trainer = _repository.Find<Trainer>(input.ParentId);
+            var trainer = _repository.Find<User>(input.ParentId);
             var sessions = trainer.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
             var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);
