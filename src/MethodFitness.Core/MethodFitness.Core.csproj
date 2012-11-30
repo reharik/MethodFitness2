@@ -203,6 +203,7 @@
     <Compile Include="Html\HtmlExtensions.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Config\NullSqlServerSessionSourceConfiguration.cs" />
+    <Compile Include="Security\IOperations.cs" />
     <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\DeleteTrainerRules.cs" />
     <Compile Include="Rules\DeleteEmployeeRules.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Rules\FieldHasNoOutstandingEvents.cs" />
     <Compile Include="Rules\FieldHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\RulesEngineBase.cs" />
+    <Compile Include="Security\IPermissions.cs" />
     <Compile Include="Services\CustomAuthorizationRepository.cs" />
     <Compile Include="Services\DateTimeUtilities.cs" />
     <Compile Include="Services\IClientPaymentToSessions.cs" />

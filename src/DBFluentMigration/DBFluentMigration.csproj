@@ -105,11 +105,11 @@
     <Content Include="MigrateApp\x86\sqlcese40.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KnowYourTurf.Core\KnowYourTurf.Core.csproj">
+    <ProjectReference Include="..\MethodFitness.Core\MethodFitness.Core.csproj">
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
       <Name>KnowYourTurf.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KnowYourTurf.Web\KnowYourTurf.Web.csproj">
+    <ProjectReference Include="..\MethodFitness.Web\MethodFitness.Web.csproj">
       <Project>{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}</Project>
       <Name>KnowYourTurf.Web</Name>
     </ProjectReference>

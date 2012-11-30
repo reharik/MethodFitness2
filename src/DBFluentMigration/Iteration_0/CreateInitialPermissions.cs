@@ -1,7 +1,5 @@
 ﻿using CC.Security.Interfaces;
-using KnowYourTurf.Core.Enums;
-using KnowYourTurf.Core.Services;
-using KnowYourTurf.Web.Security;
+using MethodFitness.Core.Services;
 
 namespace DBFluentMigration.Iteration_0
 {
