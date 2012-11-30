@@ -91,6 +91,7 @@ namespace MethodFitness.Web.Controllers
             model.UserRolesDtos = new TokenInputViewModel { _availableItems = _availableUserRoles, selectedItems = selectedUserRoles };
 
             model._StateList = _selectListItemService.CreateList<State>();
+            model._StateList = _selectListItemService.CreateList<Status>();
 
             model._deleteUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.Delete(null));
             model._saveUrl= UrlContext.GetUrlForAction<TrainerController>(x => x.Save(null));
@@ -307,6 +308,7 @@ namespace MethodFitness.Web.Controllers
     {
         public string _deleteUrl { get; set; }
         public IEnumerable<SelectListItem> _StateList { get; set; }
+        public IEnumerable<SelectListItem> _StatusList { get; set; }
         public TCRTokenInputViewModel ClientsDtos { get; set; }
         public TokenInputViewModel UserRolesDtos { get; set; }
 
@@ -332,6 +334,7 @@ namespace MethodFitness.Web.Controllers
         public string PhoneMobile { get; set; }
         public string SecondaryPhone { get; set; }
         public int ClientRateDefault { get; set; }
+        public string Status { get; set; }
     }
     public class TCRTokenInputDto:TokenInputDto
     {

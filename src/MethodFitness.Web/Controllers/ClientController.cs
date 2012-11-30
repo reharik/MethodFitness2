@@ -206,6 +206,8 @@ namespace MethodFitness.Web.Controllers
         [ValueOf(typeof(Source))]
         public string Source { get; set; }
         public IEnumerable<SelectListItem> _SourceList { get; set; }
+        public string Status { get; set; }
+        public IEnumerable<SelectListItem> _StatusList { get; set; }
 
         [ValidateNonEmpty]
         public DateTime StartDate { get; set; }

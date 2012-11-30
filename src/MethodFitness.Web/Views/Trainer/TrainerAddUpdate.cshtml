@@ -72,6 +72,10 @@
             <div class="fieldRow artifact-field">
                 @Html.SubmissionFor(x => x.ClientsDtos).ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
             </div>
+             <div class="fieldRow artifact-field">
+                @Html.SubmissionFor(x => x.Status).ToHtmlTag()
+            </div>
+
         </div>
      
         <script id="percentageTemplate" type="text/x-jQuery-tmpl">
