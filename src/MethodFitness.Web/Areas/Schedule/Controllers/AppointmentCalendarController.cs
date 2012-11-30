@@ -128,7 +128,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var canSeeOthers = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOtherAppointments");
+            var canSeeOthers = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOthersAppointments");
             var events = new List<CalendarEvent>();
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);

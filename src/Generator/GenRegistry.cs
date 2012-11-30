@@ -51,6 +51,8 @@ namespace Generator
             For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Use<UnitOfWork>();
 
             For<IRepository>().Use<Repository>();
+            // no idea why this pos needs to be declared explicitly. very annoying
+            For<IQADataLoader>().Use<QaDataLoader>();
 
             For<ISessionContext>().Use<DataLoaderSessionContext>();
 

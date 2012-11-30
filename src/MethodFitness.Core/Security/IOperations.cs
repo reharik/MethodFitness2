@@ -54,7 +54,7 @@ namespace MethodFitness.Core
         public void CreateOperation(string operation)
         {
             if (_allOperations == null) _allOperations = _authorizationRepository.GetAllOperations();
-            if (!_allOperations.Any(x => x.Name == operation))
+            if (_allOperations.All(x => x.Name != operation))
             {
                 _authorizationRepository.CreateOperation(operation);
             }

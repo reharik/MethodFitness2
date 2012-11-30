@@ -7,13 +7,10 @@ namespace DBFluentMigration.Iteration_0
 {
     public class CreateInitialPermissions
     {
-        private readonly IAuthorizationRepository _authorizationRepository;
         private readonly IPermissions _permissions;
 
-        public CreateInitialPermissions(IAuthorizationRepository authorizationRepository, 
-            IPermissions permissions)
+        public CreateInitialPermissions(IPermissions permissions)
         {
-            _authorizationRepository = authorizationRepository;
             _permissions = permissions;
         }
 
@@ -25,66 +22,67 @@ namespace DBFluentMigration.Iteration_0
 
         public void GrantAdminPermissions()
         {
-            var operations = ((CustomAuthorizationRepository)_authorizationRepository).GetAllOperations();
-            foreach (var operation in operations)
-            {
-                _permissions.CreatePermission(UserType.Administrator, operation.Name, 10);
-            }
+            _permissions.CreateControllerPermission(UserType.Administrator, "ClientController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "ClientListController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "EmployeeDashboardController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "MethodFitnessController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "MFController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "OrthoganalController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "ScheduledTasksController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "TrainerController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "TrainerListController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "AppointmentCalendarController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "AppointmentController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "TimeSheetController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "PaymentController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "PaymentListController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "PayTrainerController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "PayTrainerListController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "TrainerPaymentController");
+            _permissions.CreateControllerPermission(UserType.Administrator, "TrainerPaymentListController");
+
+            _permissions.CreateMenuPermission(UserType.Administrator, "Calendar");
+            _permissions.CreateMenuPermission(UserType.Administrator, "Clients");
+            _permissions.CreateMenuPermission(UserType.Administrator, "AdminTools");
+            _permissions.CreateMenuPermission(UserType.Administrator, "Trainers");
+
+            _permissions.CreatePermission(UserType.Administrator, "/Calendar/CanSeeOthersAppointments");
+            _permissions.CreatePermission(UserType.Administrator, "/Calendar/CanEditOtherAppointments");
+            _permissions.CreatePermission(UserType.Administrator, "/Calendar/CanEnterRetroactiveAppointments");
+            _permissions.CreatePermission(UserType.Administrator, "/Calendar/CanEditPastAppointments");
+            _permissions.CreatePermission(UserType.Administrator, "/Calendar/SetAppointmentForOthers");
+            _permissions.CreatePermission(UserType.Administrator, "/Calendar/CanDeleteRetroactiveAppointments");
+            _permissions.CreatePermission(UserType.Administrator, "/Clients/CanScheduleAllClients");
+            _permissions.CreatePermission(UserType.Administrator, "/Clients/CanDeleteClients");
+            _permissions.CreatePermission(UserType.Administrator, "/TrainerPayment/Display");
+            _permissions.CreatePermission(UserType.Administrator, "/TrainerPayment/Active");
+            _permissions.CreatePermission(UserType.Administrator, "/Payment/AddUpdate");
+            _permissions.CreatePermission(UserType.Administrator, "/Billing/ChangeClientRates");
+
         }
 
         
         public void GrantTrainerPermissions()
         {
-            _permissions.CreateControllerPermission("KnowYourTurfController", UserType.Trainer);
-            _permissions.CreateControllerPermission("OrthogonalController", UserType.Trainer);
-            _permissions.CreateControllerPermission("CalculatorController", UserType.Trainer);
-            _permissions.CreateControllerPermission("CalculatorListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("TrainerDashboardController", UserType.Trainer);
-            _permissions.CreateControllerPermission("TrainerController", UserType.Trainer);
-            _permissions.CreateControllerPermission("EquipmentController", UserType.Trainer);
-            _permissions.CreateControllerPermission("EquipmentListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("EventController", UserType.Trainer);
-            _permissions.CreateControllerPermission("EventCalendarController", UserType.Trainer);
-            _permissions.CreateControllerPermission("FieldController", UserType.Trainer);
-            _permissions.CreateControllerPermission("FieldDashboardController", UserType.Trainer);
-            _permissions.CreateControllerPermission("FieldListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("ForumController", UserType.Trainer);
-            _permissions.CreateControllerPermission("InventoryListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("PhotoController", UserType.Trainer);
-            _permissions.CreateControllerPermission("DocumentController", UserType.Trainer);
-            _permissions.CreateControllerPermission("PurchaseOrderCommitController", UserType.Trainer);
-            _permissions.CreateControllerPermission("PurchaseOrderController", UserType.Trainer);
-            _permissions.CreateControllerPermission("PurchaseOrderLineItemController", UserType.Trainer);
-            _permissions.CreateControllerPermission("PurchaseOrderListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("TaskController", UserType.Trainer);
-            _permissions.CreateControllerPermission("TaskCalendarController", UserType.Trainer);
-            _permissions.CreateControllerPermission("TaskListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("VendorContactController", UserType.Trainer);
-            _permissions.CreateControllerPermission("VendorContactListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("VendorController", UserType.Trainer);
-            _permissions.CreateControllerPermission("VendorListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("WeatherController", UserType.Trainer);
-            _permissions.CreateControllerPermission("WeatherListController", UserType.Trainer);
-            _permissions.CreateControllerPermission("EquipmentDashboardController", UserType.Trainer);
-            _permissions.CreateControllerPermission("EquipmentTaskCalendarController", UserType.Trainer);
-            _permissions.CreateControllerPermission("EquipmentTaskController", UserType.Trainer);
-            _permissions.CreateControllerPermission("EquipmentTaskListController", UserType.Trainer);
+            _permissions.CreateControllerPermission(UserType.Trainer, "ClientController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "ClientListController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "EmployeeDashboardController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "MethodFitnessController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "MFController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "OrthoganalController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "ScheduledTasksController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "AppointmentCalendarController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "AppointmentController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "PaymentController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "PaymentListController");
 
-            _permissions.CreateMenuPermission(UserType.Trainer, "EquipmentTasks");
-            _permissions.CreateMenuPermission(UserType.Trainer, "EquipmentTasksLists");
-            _permissions.CreateMenuPermission(UserType.Trainer, "EquipmentTasks");
-            _permissions.CreateMenuPermission(UserType.Trainer, "CompletedEquipmentTasks");
-            _permissions.CreateMenuPermission(UserType.Trainer, "EquipmentTaskCalendar");
-            _permissions.CreateMenuPermission(UserType.Trainer, "Home");
-            _permissions.CreateMenuPermission(UserType.Trainer, "Fields");
-            _permissions.CreateMenuPermission(UserType.Trainer, "Equipment");
-            _permissions.CreateMenuPermission(UserType.Trainer, "Tasks");
-            _permissions.CreateMenuPermission(UserType.Trainer, "Events");
-            _permissions.CreateMenuPermission(UserType.Trainer, "Calculators");
-            _permissions.CreateMenuPermission(UserType.Trainer, "Weather");
-            _permissions.CreateMenuPermission(UserType.Trainer, "Forum");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Calendar");
+            _permissions.CreateMenuPermission(UserType.Trainer, "Clients");
+            
+            _permissions.CreatePermission(UserType.Trainer, "/TrainerPayment/Display");
+            _permissions.CreatePermission(UserType.Trainer, "/Payment/Display");
+
         }
-
         
     }
 }

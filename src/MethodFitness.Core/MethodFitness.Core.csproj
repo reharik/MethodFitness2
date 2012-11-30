@@ -213,6 +213,7 @@
     <Compile Include="Rules\FieldHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\RulesEngineBase.cs" />
     <Compile Include="Security\IPermissions.cs" />
+    <Compile Include="Security\IUserGroups.cs" />
     <Compile Include="Services\CustomAuthorizationRepository.cs" />
     <Compile Include="Services\DateTimeUtilities.cs" />
     <Compile Include="Services\IClientPaymentToSessions.cs" />
