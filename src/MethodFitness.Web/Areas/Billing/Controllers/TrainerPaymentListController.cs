@@ -51,7 +51,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         {
             var user = _sessionContext.GetCurrentUser();
 
-            var trainer = _repository.Find<Trainer>(input.ParentId);
+            var trainer = _repository.Find<User>(input.ParentId);
             var items = _dynamicExpressionQuery.PerformQuery(trainer.TrainerPayments,input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
             return new CustomJsonResult { Data = gridItemsViewModel };

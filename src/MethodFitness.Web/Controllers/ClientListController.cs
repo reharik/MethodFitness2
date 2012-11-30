@@ -57,7 +57,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
             }else
             {
-                items = _dynamicExpressionQuery.PerformQuery(((Trainer)trainer).Clients, input.filters);
+                items = _dynamicExpressionQuery.PerformQuery(trainer.Clients, input.filters);
             }
             var gridItemsViewModel = _clientListGrid.GetGridItemsViewModel(input.PageSortFilter, items, trainer);
             return new CustomJsonResult { Data = gridItemsViewModel };
