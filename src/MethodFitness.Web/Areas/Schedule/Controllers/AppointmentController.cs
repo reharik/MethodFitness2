@@ -142,7 +142,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var user = _repository.Find<User>(userEntityId);
             var appointment = _repository.Find<Appointment>(input.EntityId);
 
-            if (appointment.StartTime < TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+            if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time")
                 && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
             {
                 var notification = new Notification{Message=WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
@@ -186,7 +186,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private Notification validateAppointment(User user, AppointmentViewModel input)
         {
             var notification = new Notification { Success = true };
-            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now,TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+            var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var startTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.StartTimeString);
             if (startTime < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
