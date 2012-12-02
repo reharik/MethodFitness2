@@ -13,6 +13,7 @@ using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
+using NHibernate.Linq;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
@@ -53,7 +54,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult TrainerPayments(TrainerPaymentGridItemsRequestModel input)
         {
             var user = _sessionContext.GetCurrentUser();
-            var trainer = _repository.Find<User>(input.ParentId);
+            var trainer = _repository.Query<User>(x=>x.EntityId == input.ParentId).Fetch(x=>x.Sessions).FirstOrDefault();
             var sessions = trainer.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
             var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);

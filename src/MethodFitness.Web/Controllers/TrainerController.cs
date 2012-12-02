@@ -91,7 +91,6 @@ namespace MethodFitness.Web.Controllers
             model.UserRolesDtos = new TokenInputViewModel { _availableItems = _availableUserRoles, selectedItems = selectedUserRoles };
 
             model._StateList = _selectListItemService.CreateList<State>();
-            model._StateList = _selectListItemService.CreateList<Status>();
 
             model._deleteUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.Delete(null));
             model._saveUrl= UrlContext.GetUrlForAction<TrainerController>(x => x.Save(null));
@@ -289,7 +288,7 @@ namespace MethodFitness.Web.Controllers
                                                    trainer.AddClient(client,0);
                                                    var tcr = trainer.TrainerClientRates.FirstOrDefault(r => r.Client == client);
                                                    if (tcr != null) { tcr.Percent = x.percentage; }
-                                                   else{trainer.AddTrainerClientRate(new TrainerClientRate{Client = client,Percent = x.percentage,User = trainer});}
+                                                   else{trainer.AddTrainerClientRate(new TrainerClientRate{Client = client,Percent = x.percentage,Trainer = trainer});}
                                                });
                 trainer.Clients.ForEachItem(x =>
                                          {
@@ -334,7 +333,6 @@ namespace MethodFitness.Web.Controllers
         public string PhoneMobile { get; set; }
         public string SecondaryPhone { get; set; }
         public int ClientRateDefault { get; set; }
-        public string Status { get; set; }
     }
     public class TCRTokenInputDto:TokenInputDto
     {

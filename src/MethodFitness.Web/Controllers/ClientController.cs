@@ -84,7 +84,7 @@ namespace MethodFitness.Web.Controllers
             model._paymentListUrl = UrlContext.GetUrlForAction<PaymentListController>(x=>x.ItemList(null),AreaName.Billing)+"?ParentId="+client.EntityId;
             model._sessionsAvailable = clientSessionsDto;
             model._saveUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Save(null));
-            model._StateList = _selectListItemService.CreateList<State>();
+            model._StateList = _selectListItemService.CreateList<State>(); 
             model._SourceList = _selectListItemService.CreateList<Source>();
             return new CustomJsonResult { Data = model };
         }
@@ -206,8 +206,6 @@ namespace MethodFitness.Web.Controllers
         [ValueOf(typeof(Source))]
         public string Source { get; set; }
         public IEnumerable<SelectListItem> _SourceList { get; set; }
-        public string Status { get; set; }
-        public IEnumerable<SelectListItem> _StatusList { get; set; }
 
         [ValidateNonEmpty]
         public DateTime StartDate { get; set; }

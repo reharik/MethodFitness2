@@ -30,7 +30,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var trainerPayment = trainer.PayTrainer(input.eligableRows, input.paymentAmount);
             if(trainerPayment==null)
             {
-                notification = new Notification {Success = false, Message = WebLocalizationKeys.YOU_MUST_SELECT_AT_ONE_SESSION.ToString()};
+                notification = new Notification {Success = false, Message = WebLocalizationKeys.YOU_MUST_SELECT_AT_LEAST_ONE_SESSION.ToString()};
                 return new CustomJsonResult { Data = notification };
             }
             var crudManager = _saveEntityService.ProcessSave(trainer);

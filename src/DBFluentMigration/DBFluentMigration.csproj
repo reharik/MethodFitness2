@@ -56,6 +56,8 @@
     <Compile Include="Iteration_0\CreateInitialPermissions.cs" />
     <Compile Include="Iteration_1\10010_Drop_User_Type_Column_From_UserTable.cs" />
     <Compile Include="Iteration_1\10020_Change_Trainer_Client_To_User_Client.cs" />
+    <Compile Include="Iteration_1\10030_Add_Status_To_Client.cs" />
+    <Compile Include="Iteration_1\10040_Add_Status_To_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

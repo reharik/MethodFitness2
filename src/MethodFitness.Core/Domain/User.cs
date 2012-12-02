@@ -33,8 +33,6 @@ namespace MethodFitness.Core.Domain
         public virtual string Notes { get; set; }
         public virtual DateTime? BirthDate { get; set; }
         public virtual string ImageUrl { get; set; }
-        [ValueOf(typeof(Status))]
-        public virtual string Status { get; set; }
         public virtual string Color { get; set; }
         public virtual int ClientRateDefault { get; set; }
         
@@ -79,7 +77,7 @@ namespace MethodFitness.Core.Domain
             else
             {
                 _clients.Add(client);
-                AddTrainerClientRate(new TrainerClientRate { User = this, Client = client, Percent = clientRate });
+                AddTrainerClientRate(new TrainerClientRate { Trainer = this, Client = client, Percent = clientRate });
             }
         }
 

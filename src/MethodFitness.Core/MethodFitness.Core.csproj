@@ -177,6 +177,7 @@
     <Compile Include="Domain\SessionRates.cs" />
     <Compile Include="Domain\SiteConfiguration.cs" />
     <Compile Include="Domain\Tools\Continuation.cs" />
+    <Compile Include="Domain\Tools\MFUnitOfWork.cs" />
     <Compile Include="Domain\Tools\NoInterceptorNoFiltersUnitOfWork.cs" />
     <Compile Include="Domain\Tools\NoInterceptorNoFiltersRepository.cs" />
     <Compile Include="Domain\Tools\CustomAttributes\LinkDisplayAttribute.cs" />
