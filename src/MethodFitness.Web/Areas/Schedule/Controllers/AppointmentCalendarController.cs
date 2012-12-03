@@ -114,8 +114,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         private Notification validateAppointment(User user, AppointmentChangedViewModel input)
         {
             var notification = new Notification { Success = true };
-            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-            if (input.StartTime < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            // nice to pull this off user
+            var currentTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
+            if (input.StartTime < currentTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();

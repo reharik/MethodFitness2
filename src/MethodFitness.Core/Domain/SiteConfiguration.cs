@@ -7,6 +7,7 @@ namespace MethodFitness.Core.Domain
     public class SiteConfiguration : SiteConfigurationBase
     {
         public virtual string TrainerClientRateDefault { get; set; }
+        public virtual string LastDayOfPayWeek { get; set; }
     }
 
     public static class SiteConfig

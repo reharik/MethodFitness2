@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerSessionViewController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerPaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PayTrainerListController.cs" />
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="Filters\AddUserToViewModelFilter.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
+    <Compile Include="Grids\SessionViewListGrid.cs" />
     <Compile Include="Grids\TrainerPaymentListGrid.cs" />
     <Compile Include="Grids\SessionPaymentListGrid.cs" />
     <Compile Include="Grids\PaymentListGrid.cs" />

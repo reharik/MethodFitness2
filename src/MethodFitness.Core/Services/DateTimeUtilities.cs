@@ -54,5 +54,9 @@ namespace MethodFitness.Core.Services
             return dt.AddDays(-1*diff).Date;
         }
 
+        public static DateTime LocalizedDateTime(this DateTime dt,string timeZoneId)
+        {
+            return TimeZoneInfo.ConvertTime(dt, TimeZoneInfo.FindSystemTimeZoneById(timeZoneId));
+        }
     }
 }

@@ -14,7 +14,6 @@ namespace KnowYourTurf.Core.Domain.Tools
             var enableDeletdFilter = _session.EnableFilter("IsDeletedConditionFilter");
             if (enableDeletdFilter != null)
                 enableDeletdFilter.SetParameter("IsDeleted", false);
-           
         }
     }
 }

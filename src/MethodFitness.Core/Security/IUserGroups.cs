@@ -41,7 +41,7 @@ namespace KnowYourTurf.Web.Security
         {
             var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
             admins.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
-            var employees = _repository.Query<User>(x => !x.UserRoles.Any(y => y.Name == SecurityUserGroups.Trainer.ToString()));
+            var employees = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Trainer.ToString()));
             employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
         }
 
