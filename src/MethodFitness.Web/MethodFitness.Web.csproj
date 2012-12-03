@@ -190,7 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
-    <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationController.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerSessionViewController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerPaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PayTrainerListController.cs" />
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />

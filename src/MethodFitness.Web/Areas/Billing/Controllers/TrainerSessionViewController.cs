@@ -17,14 +17,14 @@ using NHibernate.Linq;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
-    public class TrainerSessionVerificationController : MFController
+    public class TrainerSessionViewController : MFController
     {
         private readonly IEntityListGrid<SessionVerificationDto> _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IRepository _repository;
         private readonly ISessionContext _sessionContext;
 
-        public TrainerSessionVerificationController(IEntityListGrid<SessionVerificationDto> grid,
+        public TrainerSessionViewController(IEntityListGrid<SessionVerificationDto> grid,
             IDynamicExpressionQuery dynamicExpressionQuery,
             IRepository repository, ISessionContext sessionContext)
         {
@@ -36,7 +36,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => x.TrainerSessions(null), AreaName.Billing) + "?ParentId=" + input.EntityId;
+            var url = UrlContext.GetUrlForAction<TrainerSessionViewController>(x => x.TrainerSessions(null), AreaName.Billing) + "?ParentId=" + input.EntityId;
             var user = (User)input.User;
             var model = new TrainersPaymentListViewModel()
             {
@@ -44,7 +44,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 _Title = user.FullNameFNF + "'s " + WebLocalizationKeys.PAYMENT_AMOUNT,
                 TrainersName = user.FullNameFNF,
                 EntityId = user.EntityId,
-                PayTrainerUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => x.Accept(null), AreaName.Billing),
             };
             return new CustomJsonResult { Data = model };
         }
@@ -76,22 +75,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
             return new CustomJsonResult { Data = gridItemsViewModel };
         }
-
-        public CustomJsonResult Accept(PayTrainerViewModel input)
-        {
-            Notification notification =null;
-//            var trainerPayment = trainer.PayTrainer(input.eligableRows, input.paymentAmount);
-//            if (trainerPayment == null)
-//            {
-//                notification = new Notification { Success = false, Message = WebLocalizationKeys.YOU_MUST_SELECT_AT_LEAST_ONE_SESSION.ToString() };
-//                return new CustomJsonResult { Data = notification };
-//            }
-//            var crudManager = _saveEntityService.ProcessSave(trainer);
-//            notification = crudManager.Finish();
-//            notification.Variable = UrlContext.GetUrlForAction<PayTrainerController>(x => x.TrainerReceipt(null), AreaName.Billing) + "/" + trainerPayment.EntityId + "?ParentId=" + trainer.EntityId;
-            return new CustomJsonResult { Data = notification };
-        }
-
     }
 
     public class SessionVerificationDto : IGridEnabledClass

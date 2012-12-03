@@ -20,7 +20,7 @@ namespace DBFluentMigration.Iteration_1
 
         private void GrantTrainerPermissions()
         {
-            _permissions.CreateControllerPermission(UserType.Trainer, "TrainerSessionVerificationController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "TrainerSessionViewController");
             _permissions.CreateMenuPermission(UserType.Trainer, "SessionReport");
         }
 
