@@ -248,9 +248,9 @@
     <Compile Include="Services\ISecuritySetupService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\ViewOptions\IViewOptionBuilder.cs" />
-    <Compile Include="Services\ViewOptions\IViewOptionConfig.cs" />
-    <Compile Include="Services\ViewOptions\ViewOption.cs" />
+    <Compile Include="Services\RouteTokens\IRouteTokenBuilder.cs" />
+    <Compile Include="Services\RouteTokens\IRouteTokenConfig.cs" />
+    <Compile Include="Services\RouteTokens\RouteToken.cs" />
     <Compile Include="WebLocalizationKeys.cs" />
     <Compile Include="MFWebRegistry.cs" />
     <Compile Include="Global.asax.cs">

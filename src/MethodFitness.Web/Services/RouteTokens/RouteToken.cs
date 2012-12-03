@@ -7,7 +7,7 @@ using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Services.ViewOptions
 {
-    public class ViewOption
+    public class RouteToken
     {
         public string url { get; set; }
         public string viewName { get; set; }

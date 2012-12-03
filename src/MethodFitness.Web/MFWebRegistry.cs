@@ -84,7 +84,7 @@ namespace MethodFitness.Web
             For<IPermissionsBuilderService>().HybridHttpOrThreadLocalScoped().Use<PermissionsBuilderService>();
             For<IPermissionsService>().HybridHttpOrThreadLocalScoped().Use<PermissionsService>();
             For<ISecuritySetupService>().Use<DefaultSecuritySetupService>();
-            For<IViewOptionConfig>().Add<ScheduleViewOptionList>();
+            For<IRouteTokenConfig>().Add<ScheduleRouteTokenList>();
 
             For(typeof(IGridBuilder<>)).Use(typeof(GridBuilder<>));
             
