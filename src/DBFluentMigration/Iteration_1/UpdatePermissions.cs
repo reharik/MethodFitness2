@@ -15,20 +15,14 @@ namespace DBFluentMigration.Iteration_1
 
         public void Update()
         {
-            GrantAdminPermissions();
             GrantTrainerPermissions();
         }
 
         private void GrantTrainerPermissions()
         {
-            throw new System.NotImplementedException();
+            _permissions.CreateControllerPermission(UserType.Trainer, "TrainerSessionVerificationController");
+            _permissions.CreateMenuPermission(UserType.Trainer, "SessionReport");
         }
 
-        public void GrantAdminPermissions()
-        {
-            _permissions.CreateControllerPermission(UserType.Administrator, "ClientController");
-            _permissions.CreateControllerPermission(UserType.Administrator, "ClientListController");
-            _permissions.CreateControllerPermission(UserType.Administrator, "EmployeeDashboardController");
-        }
     }
 }

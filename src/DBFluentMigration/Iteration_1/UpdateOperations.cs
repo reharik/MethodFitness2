@@ -19,7 +19,7 @@ namespace DBFluentMigration.Iteration_1
 
         public void CreateControllerOptions()
         {
-            _operations.CreateOperationForControllerType("TrainerSessionVerificationController");
+            _operations.CreateOperationForControllerType("TrainerSessionViewController");
         }
 
         public void CreateMenuItemOptions()

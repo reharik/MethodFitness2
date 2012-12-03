@@ -61,15 +61,13 @@ namespace Generator
             };
 
             var salt = _securityDataService.CreateSalt();
-            var passwordHash = _securityDataService.CreatePasswordHash("6664355", salt);
+            var passwordHash = _securityDataService.CreatePasswordHash("123", salt);
             _admin1 = new User
             {
-                FirstName = "Amahl",
-                LastName = "Harik",
+                FirstName = "Admin",
+                LastName = "Admin",
                 CompanyId = 1,
-                Color = "#148509",
                 CreatedDate = DateTime.Now,
-                ClientRateDefault = 65,
                 PhoneMobile = "401.743.9669",
                 Email = "methodfit@gmail.com"
 
@@ -78,7 +76,7 @@ namespace Generator
             _admin1.AddUserRole(userRoleAdmin);
             _admin1.UserLoginInfo = new UserLoginInfo
             {
-                LoginName = "aih",
+                LoginName = "Admin",
                 Password = passwordHash,
                 Salt = salt,
                 CompanyId = 1
@@ -87,17 +85,19 @@ namespace Generator
             var passwordHash1 = _securityDataService.CreatePasswordHash("123", salt1);
             _admin2 = new User()
             {
-                FirstName = "Admin",
-                LastName = "Admin",
+                FirstName = "Amahl",
+                LastName = "Harik",
                 CompanyId = 1,
+                Color = "#148509",
+                ClientRateDefault = 65,
                 CreatedDate = DateTime.Now,
                 PhoneMobile = "123456789",
                 Email = "methodfit@gmail.com"
             };
-            _admin2.AddUserRole(userRoleAdmin);
+            _admin2.AddUserRole(userRoleTrainer);
             _admin2.UserLoginInfo = new UserLoginInfo
             {
-                LoginName = "Admin",
+                LoginName = "aih",
                 Password = passwordHash1,
                 Salt = salt1,
                 CompanyId = 1

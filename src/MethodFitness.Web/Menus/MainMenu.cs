@@ -35,7 +35,7 @@ namespace MethodFitness.Web.Menus
             var builder =
                 _builder.CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR).Route("calendar")
                         .CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS)
-                        .CreateTagNode<TrainerSessionVerificationController>(WebLocalizationKeys.SESSION_REPORT)
+                        .CreateTagNode<TrainerSessionViewController>(WebLocalizationKeys.SESSION_REPORT)
                         .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                         .HasChildren()
                             .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS)
