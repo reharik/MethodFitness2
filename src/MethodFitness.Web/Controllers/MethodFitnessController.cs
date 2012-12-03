@@ -7,18 +7,18 @@ namespace MethodFitness.Web.Controllers
 {
     public class MethodFitnessController:MFController
     {
-        private readonly IViewOptionConfig _viewOptionConfig;
+        private readonly IRouteTokenConfig _routeTokenConfig;
 
-        public MethodFitnessController(IViewOptionConfig viewOptionConfig)
+        public MethodFitnessController(IRouteTokenConfig routeTokenConfig)
         {
-            _viewOptionConfig = viewOptionConfig;
+            _routeTokenConfig = routeTokenConfig;
         }
 
         public ActionResult Home(ViewModel input)
          {
              var methodFitnessViewModel = new MethodFitnessViewModel
                                                  {
-                                                     SerializedRoutes = _viewOptionConfig.Build(true)
+                                                     SerializedRoutes = _routeTokenConfig.Build(true)
                                                  };
              return View(methodFitnessViewModel);
          }
@@ -32,6 +32,6 @@ namespace MethodFitness.Web.Controllers
         public string FirstTimeUrl { get; set; }
         public string UserProfileUrl { get; set; }
 
-        public IList<ViewOption> SerializedRoutes { get; set; }
+        public IList<RouteToken> SerializedRoutes { get; set; }
     }
 }

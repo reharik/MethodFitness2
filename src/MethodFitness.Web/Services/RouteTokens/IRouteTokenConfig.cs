@@ -6,20 +6,20 @@ using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Services.ViewOptions
 {
-    public interface IViewOptionConfig
+    public interface IRouteTokenConfig
     {
-        IList<ViewOption> Build(bool withoutPermissions = false);
+        IList<RouteToken> Build(bool withoutPermissions = false);
     }
-    public class ScheduleViewOptionList : IViewOptionConfig
+    public class ScheduleRouteTokenList : IRouteTokenConfig
     {
-        private readonly IViewOptionBuilder _builder;
+        private readonly IRouteTokenBuilder _builder;
 
-        public ScheduleViewOptionList(IViewOptionBuilder viewOptionBuilder)
+        public ScheduleRouteTokenList(IRouteTokenBuilder routeTokenBuilder)
         {
-            _builder = viewOptionBuilder;
+            _builder = routeTokenBuilder;
         }
 
-        public IList<ViewOption> Build(bool withoutPermissions = false)
+        public IList<RouteToken> Build(bool withoutPermissions = false)
         {
             _builder.WithoutPermissions(withoutPermissions);
             _builder.Url<OrthogonalController>(x => x.MainMenu()).ViewId("scheduleMenu").End();

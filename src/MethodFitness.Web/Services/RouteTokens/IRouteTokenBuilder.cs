@@ -12,53 +12,53 @@ using MethodFitness.Core.Services;
 
 namespace MethodFitness.Web.Services.ViewOptions
 {
-    public interface IViewOptionBuilder
+    public interface IRouteTokenBuilder
     {
-        IList<ViewOption> Items { get; set; }
-        IViewOptionBuilder UrlForList<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
-        IViewOptionBuilder UrlForForm<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
-        IViewOptionBuilder UrlForDisplay<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
-        IViewOptionBuilder Url<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName=null) where CONTROLLER : Controller;
-        IViewOptionBuilder RouteToken(string route);
-        IViewOptionBuilder ViewName(string viewName);
-        IViewOptionBuilder SubViewName(string subViewName);
-        IViewOptionBuilder ViewId(string ViewId);
-        IViewOptionBuilder AddUpdateToken(string addUpdate);
-        IViewOptionBuilder IsChild(bool isChild = true);
-        IViewOptionBuilder NoBubbleUp();
-        IViewOptionBuilder Operation(string operation);
-        IViewOptionBuilder End();
+        IList<RouteToken> Items { get; set; }
+        IRouteTokenBuilder UrlForList<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
+        IRouteTokenBuilder UrlForForm<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
+        IRouteTokenBuilder UrlForDisplay<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller;
+        IRouteTokenBuilder Url<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName=null) where CONTROLLER : Controller;
+        IRouteTokenBuilder RouteToken(string route);
+        IRouteTokenBuilder ViewName(string viewName);
+        IRouteTokenBuilder SubViewName(string subViewName);
+        IRouteTokenBuilder ViewId(string ViewId);
+        IRouteTokenBuilder AddUpdateToken(string addUpdate);
+        IRouteTokenBuilder IsChild(bool isChild = true);
+        IRouteTokenBuilder NoBubbleUp();
+        IRouteTokenBuilder Operation(string operation);
+        IRouteTokenBuilder End();
         void WithoutPermissions(bool withOutPermissions);
     }
 
-    public class ViewOptionBuilder : IViewOptionBuilder
+    public class RouteTokenBuilder : IRouteTokenBuilder
     {
         private readonly IAuthorizationService _authorizationService;
         private readonly ISessionContext _sessionContext;
         private readonly IRepository _repository;
 
-        public ViewOptionBuilder(IAuthorizationService authorizationService,
+        public RouteTokenBuilder(IAuthorizationService authorizationService,
             ISessionContext sessionContext,
             IRepository repository)
         {
             _authorizationService = authorizationService;
             _sessionContext = sessionContext;
             _repository = repository;
-            Items = new List<ViewOption>();
+            Items = new List<RouteToken>();
         }
 
-        private ViewOption _currentItem;
+        private RouteToken _currentItem;
         private bool _withOutPermissions;
 
-        private ViewOption currentItem
+        private RouteToken currentItem
         {
-            get { return _currentItem ?? (_currentItem = new ViewOption()); }
+            get { return _currentItem ?? (_currentItem = new RouteToken()); }
             set { _currentItem = value; }
         }
 
-        public IList<ViewOption> Items { get; set; }
+        public IList<RouteToken> Items { get; set; }
 
-        public IViewOptionBuilder UrlForList<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
+        public IRouteTokenBuilder UrlForList<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
         {
             currentItem.url = UrlContext.GetUrlForAction(action, areaName);
             var itemName = typeof(CONTROLLER).Name.Replace("Controller", "").ToLowerInvariant();
@@ -70,7 +70,7 @@ namespace MethodFitness.Web.Services.ViewOptions
             return this;
         }
 
-        public IViewOptionBuilder UrlForForm<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
+        public IRouteTokenBuilder UrlForForm<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
         {
             currentItem.url = UrlContext.GetUrlForAction(action, areaName);
             var itemName = typeof(CONTROLLER).Name.Replace("Controller", "").ToLowerInvariant();
@@ -81,7 +81,7 @@ namespace MethodFitness.Web.Services.ViewOptions
             return this;
         }
 
-        public IViewOptionBuilder UrlForDisplay<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
+        public IRouteTokenBuilder UrlForDisplay<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
         {
             currentItem.url = UrlContext.GetUrlForAction(action, areaName);
             var itemName = typeof(CONTROLLER).Name.Replace("Controller", "").ToLowerInvariant()+"display";
@@ -92,61 +92,61 @@ namespace MethodFitness.Web.Services.ViewOptions
             return this;
         }
 
-        public IViewOptionBuilder Url<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
+        public IRouteTokenBuilder Url<CONTROLLER>(Expression<Func<CONTROLLER, object>> action, AreaName areaName = null) where CONTROLLER : Controller
         {
             currentItem.url = UrlContext.GetUrlForAction(action, areaName);
             return this;
         }
 
-        public IViewOptionBuilder RouteToken(string route)
+        public IRouteTokenBuilder RouteToken(string route)
         {
             currentItem.route = route;
             return this;
         }
 
-        public IViewOptionBuilder ViewName(string viewName)
+        public IRouteTokenBuilder ViewName(string viewName)
         {
             currentItem.viewName = viewName;
             return this;
         }
 
-        public IViewOptionBuilder SubViewName(string subViewName)
+        public IRouteTokenBuilder SubViewName(string subViewName)
         {
             currentItem.subViewName = subViewName;
             return this;
         }
 
-        public IViewOptionBuilder ViewId(string ViewId)
+        public IRouteTokenBuilder ViewId(string ViewId)
         {
             currentItem.id = ViewId;
             return this;
         }
 
-        public IViewOptionBuilder AddUpdateToken(string addUpdate)
+        public IRouteTokenBuilder AddUpdateToken(string addUpdate)
         {
             currentItem.addUpdate = addUpdate;
             return this;
         }
 
-        public IViewOptionBuilder IsChild(bool isChild = true)
+        public IRouteTokenBuilder IsChild(bool isChild = true)
         {
             currentItem.isChild = isChild;
             return this;
         }
 
-        public IViewOptionBuilder NoBubbleUp()
+        public IRouteTokenBuilder NoBubbleUp()
         {
             currentItem.noBubbleUp = true;
             return this;
         }
 
-        public IViewOptionBuilder Operation(string operation)
+        public IRouteTokenBuilder Operation(string operation)
         {
             currentItem.Operation = operation;
             return this;
         }
 
-        public IViewOptionBuilder End()
+        public IRouteTokenBuilder End()
         {
             if (_withOutPermissions || currentItem.Operation.IsEmpty())
             {
@@ -159,7 +159,7 @@ namespace MethodFitness.Web.Services.ViewOptions
                     Items.Add(currentItem);
                 }
             }
-            currentItem = new ViewOption();
+            currentItem = new RouteToken();
             return this;
         }
 

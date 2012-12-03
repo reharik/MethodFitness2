@@ -60,7 +60,7 @@ namespace Generator
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();
 
             For<IMenuConfig>().Use<MainMenu>();
-            For<IViewOptionConfig>().Add<ScheduleViewOptionList>();
+            For<IRouteTokenConfig>().Add<ScheduleRouteTokenList>();
 
             For<IAuthorizationService>().HybridHttpOrThreadLocalScoped().Use<AuthorizationService>();
             For<IAuthorizationRepository>().HybridHttpOrThreadLocalScoped().Use<CustomAuthorizationRepository>();
