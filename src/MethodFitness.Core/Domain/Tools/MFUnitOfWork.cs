@@ -12,11 +12,8 @@ namespace KnowYourTurf.Core.Domain.Tools
         {
             _session = session;
             var enableDeletdFilter = _session.EnableFilter("IsDeletedConditionFilter");
-            var enableStatusFilter = _session.EnableFilter("StatusConditionFilter");
             if (enableDeletdFilter != null)
                 enableDeletdFilter.SetParameter("IsDeleted", false);
-            if (enableStatusFilter != null)
-                enableStatusFilter.SetParameter("Status", "Active");
         }
     }
 }
