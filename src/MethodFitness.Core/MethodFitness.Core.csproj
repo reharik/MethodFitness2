@@ -159,6 +159,7 @@
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
+    <Compile Include="Domain\Persistence\TrainerSessionVerificationMap.cs" />
     <Compile Include="Domain\Persistence\OperationsMap.cs" />
     <Compile Include="Domain\Persistence\PermissionMap.cs" />
     <Compile Include="Domain\Persistence\SessionMap.cs">
@@ -195,6 +196,7 @@
     <Compile Include="Domain\Tools\NoFilterRepository.cs" />
     <Compile Include="Domain\TrainerClientRate.cs" />
     <Compile Include="Domain\TrainerPayment.cs" />
+    <Compile Include="Domain\TrainerSessionVerification.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserRole.cs" />
     <Compile Include="Enumerations\Enumerations.cs" />

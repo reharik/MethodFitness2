@@ -17,21 +17,26 @@ using NHibernate.Linq;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
-    public class TrainerSessionViewController : MFController
+    public class TrainerSessionVerificationController : MFController
     {
-        private readonly IEntityListGrid<SessionViewDto> _grid;
+        private readonly IEntityListGrid<SessionVerificationDto> _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
+        private readonly IRepository _repository;
+        private readonly ISessionContext _sessionContext;
 
-        public TrainerSessionViewController(IEntityListGrid<SessionViewDto> grid,
-            IDynamicExpressionQuery dynamicExpressionQuery)
+        public TrainerSessionVerificationController(IEntityListGrid<SessionVerificationDto> grid,
+            IDynamicExpressionQuery dynamicExpressionQuery,
+            IRepository repository, ISessionContext sessionContext)
         {
             _grid = grid;
             _dynamicExpressionQuery = dynamicExpressionQuery;
+            _repository = repository;
+            _sessionContext = sessionContext;
         }
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<TrainerSessionViewController>(x => x.TrainerSessions(null), AreaName.Billing) + "?ParentId=" + input.EntityId;
+            var url = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => x.TrainerSessions(null), AreaName.Billing) + "?ParentId=" + input.EntityId;
             var user = (User)input.User;
             var model = new TrainersPaymentListViewModel()
             {
@@ -49,7 +54,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var sessions = user.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
             var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);
-            var sessionPaymentDtos = items.Select(x => new SessionViewDto
+            var sessionPaymentDtos = items.Select(x => new SessionVerificationDto
                                                            {
                                                                AppointmentDate = x.Appointment.Date,
                                                                EntityId = x.EntityId,
@@ -72,7 +77,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         }
     }
 
-    public class SessionViewDto : IGridEnabledClass
+    public class SessionVerificationDto : IGridEnabledClass
     {
         public int EntityId { get; set; }
         public string FullName { get; set; }
