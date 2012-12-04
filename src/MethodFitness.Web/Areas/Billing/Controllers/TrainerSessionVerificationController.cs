@@ -75,6 +75,11 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
             return new CustomJsonResult { Data = gridItemsViewModel };
         }
+
+        public JsonResult Display(ViewModel input)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class SessionVerificationDto : IGridEnabledClass

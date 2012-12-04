@@ -122,6 +122,17 @@ namespace MethodFitness.Core.Domain
             _trainerPayments.Add(trainerPayment);
         }
 
+        private IList<TrainerSessionVerification> _trainerSessionVerifications = new List<TrainerSessionVerification>();
+        public virtual IEnumerable<TrainerSessionVerification> TrainerSessionVerifications { get { return _trainerSessionVerifications; } }
+        public virtual void RemoveTrainerSessionVerification(TrainerSessionVerification trainerSessionVerification)
+        {
+            _trainerSessionVerifications.Remove(trainerSessionVerification);
+        }
+        public virtual void AddTrainerSessionVerification(TrainerSessionVerification trainerSessionVerification)
+        {
+            if (_trainerSessionVerifications.Contains(trainerSessionVerification)) return;
+            _trainerSessionVerifications.Add(trainerSessionVerification);
+        }
         #endregion
 
         public virtual TrainerPayment PayTrainer(IEnumerable<PaymentDetailsDto> items, double amount)

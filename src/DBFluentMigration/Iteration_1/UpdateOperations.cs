@@ -20,11 +20,16 @@ namespace DBFluentMigration.Iteration_1
         public void CreateControllerOptions()
         {
             _operations.CreateOperationForControllerType("TrainerSessionViewController");
+            _operations.CreateOperationForControllerType("TrainerSessionVerificationListController");
+            _operations.CreateOperationForControllerType("TrainerSessionVerificationController");
         }
 
         public void CreateMenuItemOptions()
         {
             _operations.CreateOperationForMenuItem("SessionReport");
+            _operations.CreateOperationForMenuItem("SessionVerification");
+            _operations.CreateOperationForMenuItem("SessionVerification/Historical");
+            _operations.CreateOperationForMenuItem("SessionVerification/Current");
         }
     }
 }

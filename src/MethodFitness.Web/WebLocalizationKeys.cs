@@ -158,6 +158,9 @@ namespace MethodFitness.Web
         public static readonly StringToken PAIR_TEN_PACK = new WebLocalizationKeys("PAIR_TEN_PACK", "Pairs 10 Pack");
 
         public static readonly StringToken SESSION_REPORT = new WebLocalizationKeys("SESSION_REPORT", "Session Report");
-
+        public static readonly StringToken SESSION_VERIFICATION = new WebLocalizationKeys("SESSION_VERIFICATION", "Session Verification");
+        public static readonly StringToken HISTORICAL = new WebLocalizationKeys("HISTORICAL", "Historical");
+        public static readonly StringToken CURRENT = new WebLocalizationKeys("CURRENT", "Current");
+    
     }
 }

@@ -21,7 +21,12 @@ namespace DBFluentMigration.Iteration_1
         private void GrantTrainerPermissions()
         {
             _permissions.CreateControllerPermission(UserType.Trainer, "TrainerSessionViewController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "TrainerSessionVerificationListController");
+            _permissions.CreateControllerPermission(UserType.Trainer, "TrainerSessionVerificationController");
             _permissions.CreateMenuPermission(UserType.Trainer, "SessionReport");
+            _permissions.CreateMenuPermission(UserType.Trainer, "SessionVerification");
+            _permissions.CreateMenuPermission(UserType.Trainer, "SessionVerification/Historical");
+            _permissions.CreateMenuPermission(UserType.Trainer, "SessionVerification/Current");
         }
 
     }
