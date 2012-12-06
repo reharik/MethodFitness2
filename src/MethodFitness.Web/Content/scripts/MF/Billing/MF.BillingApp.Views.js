@@ -77,7 +77,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         ko.applyBindings(this.model,this.el);
     },
 
-    retunToParent:function(){
+    returnToParent:function(){
         MF.WorkflowManager.returnParentView(null,true);
     },
     filterByDate:function(e){
@@ -153,6 +153,109 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
     }
 });
 
+MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
+    initialize:function(){
+        this.beforeInitGrid();
+        this.model = {};
+        MF.vent.bind("paymentGrid:eligableRows",$.proxy(function(rows){
+            this.setupElements(rows);
+        },this));
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "setupGridSearchMixin");
+    },
+    events:{
+        'click #acceptSessionsButton':'acceptSessions',
+        'click #alertAdminButton':'alertAdmin'
+    },
+
+    beforeInitGrid:function(){
+        var that = this;
+        this.options.gridId="trainerPayment";
+        this.options.paymentTotal = 0;
+        this.options.gridOptions={
+            multiselect:false,
+            loadComplete : function(){
+                var ids = $(this).getDataIDs();
+                var paymentRows =[];
+                for (var i = 0, l = ids.length; i < l; i++) {
+                    var rowId = ids[i];
+                    var rowData = $(this).getRowData(rowId);
+                    if (parseInt(rowData.TrainerPay) > 0) {
+                        paymentRows.push({
+                            id:rowId,
+                            trainerPay:rowData.TrainerPay
+                        });
+                        that.options.paymentTotal+= parseFloat(rowData.TrainerPay);
+                    } else {
+                        var row = $('#' + rowId, that.el);
+                        row.find("td").addClass('gridRowStrikeThrough');
+                        row.find("td:first input").remove();
+                    }
+                }
+                MF.vent.trigger("paymentGrid:eligableRows",paymentRows);
+            }}
+    },
+    viewLoaded:function(){
+        MF.vent.bind("popup:payTrainerPopup:save",this.formSave,this);
+        MF.vent.bind("popup:payTrainerPopup:cancel",this.formCancel,this);
+    },
+    onClose:function(){
+        MF.vent.unbind("popup:payTrainerPopup:save");
+        MF.vent.unbind("popup:payTrainerPopup:cancel");
+        this._super("onClose",arguments);
+    },
+    setupElements:function(rows){
+        $(this.el).find(".content-header").prepend('<button>Accept</button><button>Reject</button>' );
+        this.model.paymentAmount = ko.observable(this.options.paymentTotal);
+        if($("#payTrainerButton").size()==0){
+            $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
+        }
+        ko.applyBindings(this.model,this.el);
+    },
+    acceptSessions:function(){
+        var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
+        promise.done($.proxy(this.acceptSessionsCallback,this));
+    },
+    alertAdmin:function(){
+        var builder = MF.Views.popupButtonBuilder.builder("trainerAlertAdminPopup");
+        builder.addButton("Send", builder.getSaveFunc());
+        builder.addCancelButton();
+        var data={trainersName:this.options.EntityId};
+        var formOptions = {
+            id: "trainerAlertAdminPopup",
+            data:data,
+            template:"#trainerAlertAdminPopup",
+            title:"Alert Admin",
+            buttons:builder.getButtons()
+        };
+        this.templatePopup = new MF.Views.TemplatedPopupView(formOptions);
+        this.templatePopup.render();
+        this.storeChild(this.templatePopup);
+    },
+    formSave:function(){
+        var model = ko.mapping.toJS(this.model);
+        model.EntityId = MF.State.get("Relationships").entityId;
+        var data = JSON.stringify(model);
+        var promise = MF.repository.ajaxPostModel(this.options.AlertAdminEmailUrl,data);
+        promise.done($.proxy(this.emailCallback,this));
+    },
+    emailCallback:function(result){
+        if(result.Success){
+           //Put success message on grid
+            this.formCancel();
+        }
+    },
+    acceptSessionsCallback:function(result){
+        if(result.Success){
+            //Put success message on grid
+        }
+    },
+    formCancel:function(){
+        this.templatePopup.close();
+    }
+});
+
 MF.Views.TrainerSessionView = MF.Views.View.extend({
     initialize:function(){
         this.beforeInitGrid();
@@ -173,7 +276,6 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
             loadComplete : function(){
                 var ids = $(this).getDataIDs();
                 var paymentRows =[];
-                var paymentTotal = 0;
                 for (var i = 0, l = ids.length; i < l; i++) {
                     var rowId = ids[i];
                     var rowData = $(this).getRowData(rowId);
