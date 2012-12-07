@@ -44,6 +44,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 _Title = user.FullNameFNF + "'s " + WebLocalizationKeys.PAYMENT_AMOUNT,
                 TrainersName = user.FullNameFNF,
                 EntityId = user.EntityId,
+                From = user.Email,
+                To = SiteConfig.Settings().AdminEmail,
+                Subject = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT.ToString(),
+                Body = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT_BODY.ToString()
             };
             return new CustomJsonResult { Data = model };
         }

@@ -260,10 +260,33 @@ MF.Views.PopupView = MF.Views.View.extend({
 MF.Views.TemplatedPopupView = MF.Views.View.extend({
 
     initialize: function(){
-        this.options = $.extend({},MF.opupDefaults,this.options);
+        this.options = $.extend({},MF.popupDefaults,this.options);
     },
     render:function(){
         $(this.el).append($(this.options.template).tmpl(this.options.data));
+        var popupOptions = {
+            id:this.id,
+            el:this.el, // we pass the el here so we can call the popup on it
+            buttons: this.options.buttons,
+            width:this.options.popupWidth,
+            title:this.options.title
+        };
+        var view = new MF.Views.PopupView(popupOptions);
+        view.render();
+        this.storeChild(view);
+
+    }
+});
+
+MF.Views.KOPopupView = MF.Views.View.extend({
+
+    initialize: function(){
+        this.options = $.extend({},MF.popupDefaults,this.options);
+    },
+    render:function(){
+        var template = $(this.options.template).clone().show();
+        $(this.el).append(template);
+         ko.applyBindings(this.options.data,this.el);
         var popupOptions = {
             id:this.id,
             el:this.el, // we pass the el here so we can call the popup on it

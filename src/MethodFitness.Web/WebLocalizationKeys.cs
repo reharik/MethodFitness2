@@ -161,6 +161,10 @@ namespace MethodFitness.Web
         public static readonly StringToken SESSION_VERIFICATION = new WebLocalizationKeys("SESSION_VERIFICATION", "Session Verification");
         public static readonly StringToken HISTORICAL = new WebLocalizationKeys("HISTORICAL", "Historical");
         public static readonly StringToken CURRENT = new WebLocalizationKeys("CURRENT", "Current");
-    
+
+
+        public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT", "There is a problem with my sessions for this pay period");
+        public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT_BODY = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT_BODY", "There is a problem with my sessions for this pay period.  Please look at the following:");
+
     }
 }

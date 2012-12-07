@@ -8,13 +8,14 @@ namespace MethodFitness.Core.Domain
     {
         public virtual string TrainerClientRateDefault { get; set; }
         public virtual string LastDayOfPayWeek { get; set; }
+        public virtual string AdminEmail { get; set; }
     }
 
     public static class SiteConfig
     {
         public static SiteConfiguration Settings()
         {
-            var appSetting = ConfigurationSettings.AppSettings["SystemSupport.SiteConfiguration"];
+            var appSetting = ConfigurationSettings.AppSettings["MethodFitness.SiteConfiguration"];
             var jss = new JavaScriptSerializer();
             var siteConfiguration = jss.Deserialize<SiteConfiguration>(appSetting);
             return siteConfiguration;

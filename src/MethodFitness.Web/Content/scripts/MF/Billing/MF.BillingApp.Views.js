@@ -7,10 +7,10 @@
  */
 
 MF.Views.PayTrainerGridView = MF.Views.View.extend({
-    initialize:function(){
+    initialize: function () {
         this.beforeInitGrid();
         this.model = {};
-        MF.vent.bind("paymentGrid:eligableRows",$.proxy(function(rows){
+        MF.vent.bind("paymentGrid:eligableRows", $.proxy(function(rows){
             this.setupElements(rows);
         },this));
         MF.mixin(this, "ajaxGridMixin");
@@ -206,7 +206,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         this._super("onClose",arguments);
     },
     setupElements:function(rows){
-        $(this.el).find(".content-header").prepend('<button>Accept</button><button>Reject</button>' );
+        $(this.el).find(".content-header").prepend('<button id="acceptSessionsButton">Accept</button><button id="alertAdminButton">Reject</button>' );
         this.model.paymentAmount = ko.observable(this.options.paymentTotal);
         if($("#payTrainerButton").size()==0){
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
@@ -214,22 +214,26 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         ko.applyBindings(this.model,this.el);
     },
     acceptSessions:function(){
-        var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
+        var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,{});
         promise.done($.proxy(this.acceptSessionsCallback,this));
     },
     alertAdmin:function(){
+        this.model.From = ko.observable(this.options.From);
+        this.model.To = ko.observable(this.options.To);
+        this.model.Subject = ko.observable(this.options.Subject);
+        this.model.Body = ko.observable(this.options.Body);
         var builder = MF.Views.popupButtonBuilder.builder("trainerAlertAdminPopup");
         builder.addButton("Send", builder.getSaveFunc());
         builder.addCancelButton();
-        var data={trainersName:this.options.EntityId};
+        var data=this.model
         var formOptions = {
             id: "trainerAlertAdminPopup",
             data:data,
-            template:"#trainerAlertAdminPopup",
+            template:"#emailTemplate",
             title:"Alert Admin",
             buttons:builder.getButtons()
         };
-        this.templatePopup = new MF.Views.TemplatedPopupView(formOptions);
+        this.templatePopup = new MF.Views.KOPopupView(formOptions);
         this.templatePopup.render();
         this.storeChild(this.templatePopup);
     },

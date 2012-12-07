@@ -106,9 +106,12 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
     public class TrainersPaymentListViewModel:ListViewModel
     {
         public string TrainersName { get; set; }
-
         public string PayTrainerUrl { get; set; }
-
         public string HeaderHtml { get; set; }
+
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
     }
 }
