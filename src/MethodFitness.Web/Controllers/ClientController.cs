@@ -12,7 +12,6 @@ using CC.Core.Localization;
 using CC.Core.Services;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
@@ -24,6 +23,8 @@ using AreaName = MethodFitness.Core.Enumerations.AreaName;
 
 namespace MethodFitness.Web.Controllers
 {
+    using CC.Core.CustomAttributes;
+
     public class ClientController : MFController
     {
         private readonly IRepository _repository;
