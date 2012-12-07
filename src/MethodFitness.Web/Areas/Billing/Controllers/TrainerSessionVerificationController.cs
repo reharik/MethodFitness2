@@ -17,6 +17,12 @@ using NHibernate.Linq;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
+    using System.Net.Mail;
+
+    using Castle.Core.Smtp;
+
+    using xVal.ServerSide;
+
     public class TrainerSessionVerificationController : MFController
     {
         private readonly IEntityListGrid<SessionVerificationDto> _grid;
@@ -24,9 +30,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         private readonly IRepository _repository;
         private readonly ISessionContext _sessionContext;
 
+       
+
+
         public TrainerSessionVerificationController(IEntityListGrid<SessionVerificationDto> grid,
             IDynamicExpressionQuery dynamicExpressionQuery,
-            IRepository repository, ISessionContext sessionContext)
+            IRepository repository,
+            ISessionContext sessionContext)
         {
             _grid = grid;
             _dynamicExpressionQuery = dynamicExpressionQuery;
@@ -47,9 +57,33 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 From = user.Email,
                 To = SiteConfig.Settings().AdminEmail,
                 Subject = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT.ToString(),
-                Body = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT_BODY.ToString()
+                Body = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT_BODY.ToString(),
+                AlertAdminEmailUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x=>AlertAdminEmail(null),AreaName.Billing)
             };
             return new CustomJsonResult { Data = model };
+        }
+
+        public JsonResult AlertAdminEmail(TrainersPaymentListViewModel input)
+        {
+            var notification = new Notification{Success = true,Message = WebLocalizationKeys.EMAIL_SENT_SUCCESSFULLY.ToString()};
+//            try
+//            {
+//                // pull this shit out and put it in a service fool.
+//                var message = new MailMessage(new MailAddress(input.From), new MailAddress(input.To))
+//                                  {
+//                                      Subject = input.Subject,
+//                                      Body = input.Body
+//                                  };
+//                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);
+//                smtpClient.Send(message);
+//            }
+//            catch (Exception exception)
+//            {
+//                notification.Success = false;
+//                notification.Errors= new List<ErrorInfo>();
+//                notification.Errors.Add(new ErrorInfo("",exception.Message));
+//            }
+            return new CustomJsonResult { Data = notification };
         }
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)

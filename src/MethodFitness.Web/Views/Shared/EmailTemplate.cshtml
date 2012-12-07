@@ -2,15 +2,25 @@
 
 @model MethodFitness.Web.Models.EmailViewModel
 
-<div class="fieldRow">
-    @Html.SubmissionFor(x => x.From).AddClassToRoot("three-quarters").ToHtmlTag()
+
+<div data-bind="stopBinding:true">
+    <div id="puMessageContainer">
+        <ul data-bind="foreach:{data:messages, beforeRemove: fadeOut}">
+            <li data-bind="text:message, css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
+        </ul>
+    </div>
 </div>
-<div class="fieldRow">
-    @Html.SubmissionFor(x => x.To).AddClassToRoot("three-quarters").ToHtmlTag()
-</div>
-<div class="fieldRow">
-    @Html.SubmissionFor(x => x.Subject).AddClassToRoot("three-quarters").ToHtmlTag()
-</div>
-<div class="fieldRow">
-    @Html.SubmissionFor(x => x.Body).AddClassToRoot("three-quarters").ToHtmlTag()
+<div id="email">
+    <div class="fieldRow">
+        @Html.SubmissionFor(x => x.From).AddClassToRoot("three-quarters").ToHtmlTag()
+    </div>
+    <div class="fieldRow">
+        @Html.SubmissionFor(x => x.To).AddClassToRoot("three-quarters").ToHtmlTag()
+    </div>
+    <div class="fieldRow">
+        @Html.SubmissionFor(x => x.Subject).AddClassToRoot("three-quarters").ToHtmlTag()
+    </div>
+    <div class="fieldRow">
+        @Html.SubmissionFor(x => x.Body).AddClassToRoot("three-quarters").ToHtmlTag()
+    </div>
 </div>

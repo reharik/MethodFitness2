@@ -113,5 +113,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public string To { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
+
+        public string AlertAdminEmailUrl { get; set; }
     }
 }

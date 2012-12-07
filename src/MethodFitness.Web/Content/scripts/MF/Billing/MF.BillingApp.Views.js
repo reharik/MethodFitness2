@@ -163,6 +163,9 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "setupGridSearchMixin");
+        
+        this.notification = new CC.NotificationService();
+        
     },
     events:{
         'click #acceptSessionsButton':'acceptSessions',
@@ -197,12 +200,12 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
             }}
     },
     viewLoaded:function(){
-        MF.vent.bind("popup:payTrainerPopup:save",this.formSave,this);
-        MF.vent.bind("popup:payTrainerPopup:cancel",this.formCancel,this);
+        MF.vent.bind("popup:trainerAlertAdminPopup:save",this.formSave,this);
+        MF.vent.bind("popup:trainerAlertAdminPopup:cancel",this.formCancel,this);
     },
     onClose:function(){
-        MF.vent.unbind("popup:payTrainerPopup:save");
-        MF.vent.unbind("popup:payTrainerPopup:cancel");
+        MF.vent.unbind("popup:trainerAlertAdminPopup:save");
+        MF.vent.unbind("popup:trainerAlertAdminPopup:cancel");
         this._super("onClose",arguments);
     },
     setupElements:function(rows){
@@ -239,16 +242,18 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
     },
     formSave:function(){
         var model = ko.mapping.toJS(this.model);
-        model.EntityId = MF.State.get("Relationships").entityId;
         var data = JSON.stringify(model);
         var promise = MF.repository.ajaxPostModel(this.options.AlertAdminEmailUrl,data);
         promise.done($.proxy(this.emailCallback,this));
     },
-    emailCallback:function(result){
-        if(result.Success){
-           //Put success message on grid
-            this.formCancel();
+    emailCallback:function(_result){
+        var result = typeof _result =="string" ? JSON.parse(_result) : _result;
+        this.notification.render(_result.Success ?$("#messageContainer").get(0) : $("#puMessageContainer",this.templatePopup.el).get(0));
+        if(!this.notification.handleResult(result,this.cid)){
+            return;
         }
+        MF.vent.trigger("form:"+this.id+":success",result);
+       this.formCancel();
     },
     acceptSessionsCallback:function(result){
         if(result.Success){

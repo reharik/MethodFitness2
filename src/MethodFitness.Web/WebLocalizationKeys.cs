@@ -165,6 +165,7 @@ namespace MethodFitness.Web
 
         public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT", "There is a problem with my sessions for this pay period");
         public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT_BODY = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT_BODY", "There is a problem with my sessions for this pay period.  Please look at the following:");
+        public static readonly StringToken EMAIL_SENT_SUCCESSFULLY = new WebLocalizationKeys("EMAIL_SENT_SUCCESSFULLY", "Email Sent Successfully");
 
     }
 }
