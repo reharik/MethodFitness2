@@ -58,31 +58,37 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 To = SiteConfig.Settings().AdminEmail,
                 Subject = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT.ToString(),
                 Body = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT_BODY.ToString(),
+                AcceptSessionsUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => AcceptSessions(null), AreaName.Billing),
                 AlertAdminEmailUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x=>AlertAdminEmail(null),AreaName.Billing)
             };
             return new CustomJsonResult { Data = model };
         }
 
+        public JsonResult AcceptSessions(ViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         public JsonResult AlertAdminEmail(TrainersPaymentListViewModel input)
         {
             var notification = new Notification{Success = true,Message = WebLocalizationKeys.EMAIL_SENT_SUCCESSFULLY.ToString()};
-//            try
-//            {
-//                // pull this shit out and put it in a service fool.
-//                var message = new MailMessage(new MailAddress(input.From), new MailAddress(input.To))
-//                                  {
-//                                      Subject = input.Subject,
-//                                      Body = input.Body
-//                                  };
-//                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);
-//                smtpClient.Send(message);
-//            }
-//            catch (Exception exception)
-//            {
-//                notification.Success = false;
-//                notification.Errors= new List<ErrorInfo>();
-//                notification.Errors.Add(new ErrorInfo("",exception.Message));
-//            }
+            try
+            {
+                // pull this shit out and put it in a service fool.
+                var message = new MailMessage(new MailAddress(input.From), new MailAddress(input.To))
+                                  {
+                                      Subject = input.Subject,
+                                      Body = input.Body
+                                  };
+                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);
+                smtpClient.Send(message);
+            }
+            catch (Exception exception)
+            {
+                notification.Success = false;
+                notification.Errors= new List<ErrorInfo>();
+                notification.Errors.Add(new ErrorInfo("",exception.Message));
+            }
             return new CustomJsonResult { Data = notification };
         }
 

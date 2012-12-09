@@ -165,7 +165,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         MF.mixin(this, "setupGridSearchMixin");
         
         this.notification = new CC.NotificationService();
-        
+
     },
     events:{
         'click #acceptSessionsButton':'acceptSessions',
@@ -217,8 +217,18 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         ko.applyBindings(this.model,this.el);
     },
     acceptSessions:function(){
-        var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,{});
-        promise.done($.proxy(this.acceptSessionsCallback,this));
+        var model = ko.mapping.toJS(this.model);
+        var data = JSON.stringify(model);
+        var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
+        promise.done($.proxy(this.paymentCallback,this));
+    },
+    acceptSessionsCallback:function(result){
+        var result = typeof _result =="string" ? JSON.parse(_result) : _result;
+        this.notification.render($("#messageContainer").get(0));
+        if(!this.notification.handleResult(result,this.cid)){
+            return;
+        }
+        MF.vent.trigger("form:"+this.id+":success",result);
     },
     alertAdmin:function(){
         this.model.From = ko.observable(this.options.From);
