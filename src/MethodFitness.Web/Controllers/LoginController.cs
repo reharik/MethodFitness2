@@ -75,7 +75,7 @@ namespace MethodFitness.Web.Controllers
 //                ex.Source = "CATCH RAISED";
 //                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
 //            }
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
             
 //            

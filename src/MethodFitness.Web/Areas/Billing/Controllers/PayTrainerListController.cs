@@ -48,7 +48,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 PayTrainerUrl = UrlContext.GetUrlForAction<PayTrainerController>(x=>x.PayTrainer(null),AreaName.Billing),
             };
             model.headerButtons.Add("return");
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public JsonResult TrainerPayments(TrainerPaymentGridItemsRequestModel input)
@@ -64,6 +64,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                                                EntityId = x.EntityId,
                                                                FullName = x.Client.FullNameLNF,
                                                                PricePerSession = x.Cost,
+                                                               InArrears = x.InArrears,
+                                                               TrainerVerified = x.TrainerVerified,
                                                                Type = x.AppointmentType,
                                                                TrainerPercentage =
                                                                    x.Trainer.TrainerClientRates.FirstOrDefault(
@@ -75,9 +77,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                                                        y => y.Client == x.Client).Percent * .01 * x.Cost : x.Trainer.ClientRateDefault * .01 * x.Cost
                                                            });
 
-
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
 
@@ -101,6 +102,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public double PricePerSession { get; set; }
         public int TrainerPercentage { get; set; }
         public double TrainerPay { get; set; }
+        public bool InArrears { get; set; }
+        public bool TrainerVerified { get; set; }
     }
 
     public class TrainersPaymentListViewModel:ListViewModel

@@ -34,7 +34,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 _Title = WebLocalizationKeys.PAYMENTS.ToString(),
                 addUpdateUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => x.Display(null))
             };
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public JsonResult Items(GridItemsRequestModel input)
@@ -42,7 +42,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var user = (User) input.User;
             var items = _dynamicExpressionQuery.PerformQuery(user.TrainerSessionVerifications, input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
 }

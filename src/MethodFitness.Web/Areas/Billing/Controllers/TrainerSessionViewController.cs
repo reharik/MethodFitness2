@@ -40,7 +40,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 TrainersName = user.FullNameFNF,
                 EntityId = user.EntityId,
             };
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
@@ -56,6 +56,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                                                FullName = x.Client.FullNameLNF,
                                                                PricePerSession = x.Cost,
                                                                Type = x.AppointmentType,
+                                                               InArrears = x.InArrears,
                                                                TrainerPercentage =
                                                                    x.Trainer.TrainerClientRates.FirstOrDefault(
                                                                        y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
@@ -68,7 +69,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
 
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
 
@@ -81,5 +82,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public double PricePerSession { get; set; }
         public int TrainerPercentage { get; set; }
         public double TrainerPay { get; set; }
+        public bool InArrears { get; set; }
     }
 }

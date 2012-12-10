@@ -21,7 +21,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         'click .jqgrow':'handleSingleClick',
         'click .cbox':'handleSelectAllClick',
         'click #payTrainerButton':'payTrainer',
-        'click .return':'retunToParent',
+        'click .return':'returnToParent',
         'click #search':'filterByDate'
     },
 
@@ -34,17 +34,28 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                 var paymentRows =[];
                 for (var i = 0, l = ids.length; i < l; i++) {
                     var rowId = ids[i];
+                    var row;
                     var rowData = $(this).getRowData(rowId);
-                    if (parseInt(rowData.TrainerPay) > 0) {
+                    if (rowData.InArrears=="True") {
+                        row = $('#' + rowId, that.el);
+                        row.find("td").addClass('gridRowStrikeThrough');
+                        row.find("td:first input").remove();
+                    } else if(rowData.TrainerVerified=="True") {
+                        row = $('#' + rowId, that.el);
+                        row.find("td").addClass('gridRowGreen');
                         paymentRows.push({
                             id:rowId,
                             trainerPay:rowData.TrainerPay,
                             _checked:false
                         })
                     } else {
-                        var row = $('#' + rowId, that.el);
-                        row.find("td").addClass('gridRowStrikeThrough');
-                        row.find("td:first input").remove();
+                        row = $('#' + rowId, that.el);
+                        row.find("td").addClass('gridRowGrey');
+                        paymentRows.push({
+                            id:rowId,
+                            trainerPay:rowData.TrainerPay,
+                            _checked:false
+                        })
                     }
                 }
                 MF.vent.trigger("paymentGrid:eligableRows",paymentRows);
@@ -209,6 +220,8 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         this._super("onClose",arguments);
     },
     setupElements:function(rows){
+        this.model.eligableRows = ko.mapping.fromJS(rows);
+
         $(this.el).find(".content-header").prepend('<button id="acceptSessionsButton">Accept</button><button id="alertAdminButton">Reject</button>' );
         this.model.paymentAmount = ko.observable(this.options.paymentTotal);
         if($("#payTrainerButton").size()==0){
@@ -218,11 +231,12 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
     },
     acceptSessions:function(){
         var model = ko.mapping.toJS(this.model);
+        model.EntityIds = _.pluck(model.eligableRows,"id");
         var data = JSON.stringify(model);
         var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
-        promise.done($.proxy(this.paymentCallback,this));
+        promise.done($.proxy(this.acceptSessionsCallback,this));
     },
-    acceptSessionsCallback:function(result){
+    acceptSessionsCallback:function(_result){
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
         this.notification.render($("#messageContainer").get(0));
         if(!this.notification.handleResult(result,this.cid)){
@@ -264,11 +278,6 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         }
         MF.vent.trigger("form:"+this.id+":success",result);
        this.formCancel();
-    },
-    acceptSessionsCallback:function(result){
-        if(result.Success){
-            //Put success message on grid
-        }
     },
     formCancel:function(){
         this.templatePopup.close();

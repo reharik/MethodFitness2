@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using CC.Core;
 using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.DomainTools;
 using CC.Core.Html;
@@ -10,6 +11,7 @@ using CC.Core.Services;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
@@ -27,6 +29,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
     {
         private readonly IEntityListGrid<SessionVerificationDto> _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
+        private readonly ISaveEntityService _saveEntityService;
         private readonly IRepository _repository;
         private readonly ISessionContext _sessionContext;
 
@@ -35,11 +38,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public TrainerSessionVerificationController(IEntityListGrid<SessionVerificationDto> grid,
             IDynamicExpressionQuery dynamicExpressionQuery,
+            ISaveEntityService saveEntityService,
             IRepository repository,
             ISessionContext sessionContext)
         {
             _grid = grid;
             _dynamicExpressionQuery = dynamicExpressionQuery;
+            _saveEntityService = saveEntityService;
             _repository = repository;
             _sessionContext = sessionContext;
         }
@@ -61,12 +66,20 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 AcceptSessionsUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => AcceptSessions(null), AreaName.Billing),
                 AlertAdminEmailUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x=>AlertAdminEmail(null),AreaName.Billing)
             };
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
-        public JsonResult AcceptSessions(ViewModel viewModel)
+        public JsonResult AcceptSessions(BulkActionViewModel input)
         {
-            throw new NotImplementedException();
+            var user = (User) input.User;
+            input.EntityIds.ForEachItem(x =>
+                {
+                    var session = user.Sessions.FirstOrDefault(y => y.EntityId == x);
+                    if (session != null) { session.TrainerVerified = true; }
+                });
+            var validationManager = _saveEntityService.ProcessSave(user);
+            var notification = validationManager.Finish();
+            return new CustomJsonResult(notification);
         }
 
         public JsonResult AlertAdminEmail(TrainersPaymentListViewModel input)
@@ -89,13 +102,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 notification.Errors= new List<ErrorInfo>();
                 notification.Errors.Add(new ErrorInfo("",exception.Message));
             }
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
         {
             var user = ((User) input.User);
-            var sessions = user.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
+            var sessions = user.Sessions.Where(x => !x.TrainerPaid && !x.TrainerVerified).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
             var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);
             var sessionPaymentDtos = items.Select(x => new SessionVerificationDto
@@ -105,6 +118,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                                                FullName = x.Client.FullNameLNF,
                                                                PricePerSession = x.Cost,
                                                                Type = x.AppointmentType,
+                                                               InArrears = x.InArrears,
                                                                TrainerPercentage =
                                                                    x.Trainer.TrainerClientRates.FirstOrDefault(
                                                                        y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
@@ -117,7 +131,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
 
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
 
         public JsonResult Display(ViewModel input)
@@ -135,5 +149,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public double PricePerSession { get; set; }
         public int TrainerPercentage { get; set; }
         public double TrainerPay { get; set; }
+        public bool InArrears { get; set; }
     }
 }

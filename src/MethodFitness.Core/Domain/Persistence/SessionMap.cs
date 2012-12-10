@@ -11,6 +11,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.AppointmentType);
             Map(x => x.SessionUsed);
             Map(x => x.TrainerPaid);
+            Map(x => x.TrainerVerified);
             Map(x => x.PurchaseBatchNumber);
             Map(x => x.TrainerCheckNumber);
             Map(x => x.InArrears);

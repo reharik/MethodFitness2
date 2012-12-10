@@ -88,7 +88,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
             model.EndTimeString = getEndTime(model.AppointmentType, appointment.StartTime.Value).ToShortTimeString();
             handleTrainer(model);
-            return new CustomJsonResult{Data = model};
+            return new CustomJsonResult(model);
         }
 
         private DateTime getEndTime(string length, DateTime startTime)
@@ -132,7 +132,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model._clientItems = appointment.Clients.Select(x => x.FullNameFNF);
             model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
             model.EndTimeString = appointment.EndTime.Value.ToShortTimeString();
-            return new CustomJsonResult(){Data = model};
+            return new CustomJsonResult(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -153,7 +153,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             _repository.Save(appointment);
             _repository.HardDelete(appointment);
             _repository.UnitOfWork.Commit();
-            return new CustomJsonResult{Data = new Notification{Success = true}};
+            return new CustomJsonResult(new Notification{Success = true});
         }
 
         public ActionResult Save(AppointmentViewModel input)
@@ -180,7 +180,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         private Notification validateAppointment(User user, AppointmentViewModel input)
