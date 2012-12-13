@@ -72,11 +72,19 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult AcceptSessions(BulkActionViewModel input)
         {
             var user = (User) input.User;
+            var verification = new TrainerSessionVerification {Trainer = user};
+            //get this from the view then add it to the verification
+            var total = 0;
             input.EntityIds.ForEachItem(x =>
                 {
                     var session = user.Sessions.FirstOrDefault(y => y.EntityId == x);
-                    if (session != null) { session.TrainerVerified = true; }
+                    if (session != null)
+                    {
+                        session.TrainerVerified = true;
+                        verification.AddTrainerApprovedSessionItem(session);
+                    }
                 });
+            user.AddTrainerSessionVerification(verification);
             var validationManager = _saveEntityService.ProcessSave(user);
             var notification = validationManager.Finish();
             return new CustomJsonResult(notification);

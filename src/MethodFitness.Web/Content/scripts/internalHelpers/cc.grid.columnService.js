@@ -19,6 +19,7 @@ cc.grid.columnService = (function() {
                 if (item.formatoptions && typeof item.formatoptions == "string") {
                     item.formatoptions = JSON.parse(item.formatoptions);
                 }
+                item.hidden = item.hidden == "true";
                 item.search = item.search != "false";
                 item.sortable= item.sortable != "false";
                 if (!item.width) { item.width = "100%";}
