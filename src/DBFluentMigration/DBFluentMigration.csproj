@@ -56,12 +56,14 @@
     <Compile Include="Iteration_0\CreateInitialPermissions.cs" />
     <Compile Include="Iteration_1\10010_Drop_User_Type_Column_From_UserTable.cs" />
     <Compile Include="Iteration_1\10020_Change_Trainer_Client_To_User_Client.cs" />
+    <Compile Include="Iteration_1\10040_Add_TrainerVerified_To_Session.cs" />
     <Compile Include="Iteration_1\UpdateOperations.cs" />
     <Compile Include="Iteration_1\UpdatePermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DBFluentMigration.dll.config" />
+    <Compile Include="Iteration_1\10030_AddTrainerSessionVerification.cs" />
     <None Include="MigrateApp\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
     <None Include="MigrateApp\Migrate.exe.config" />
     <None Include="MigrateApp\policy.2.0.Npgsql.config" />
@@ -111,11 +113,11 @@
   <ItemGroup>
     <ProjectReference Include="..\MethodFitness.Core\MethodFitness.Core.csproj">
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
-      <Name>KnowYourTurf.Core</Name>
+      <Name>MethodFitness.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\MethodFitness.Web\MethodFitness.Web.csproj">
       <Project>{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}</Project>
-      <Name>KnowYourTurf.Web</Name>
+      <Name>MethodFitness.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

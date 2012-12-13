@@ -19,19 +19,14 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 {
     public class TrainerSessionViewController : MFController
     {
-        private readonly IEntityListGrid<SessionVerificationDto> _grid;
+        private readonly IEntityListGrid<SessionViewDto> _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
-        private readonly IRepository _repository;
-        private readonly ISessionContext _sessionContext;
 
-        public TrainerSessionViewController(IEntityListGrid<SessionVerificationDto> grid,
-            IDynamicExpressionQuery dynamicExpressionQuery,
-            IRepository repository, ISessionContext sessionContext)
+        public TrainerSessionViewController(IEntityListGrid<SessionViewDto> grid,
+            IDynamicExpressionQuery dynamicExpressionQuery)
         {
             _grid = grid;
             _dynamicExpressionQuery = dynamicExpressionQuery;
-            _repository = repository;
-            _sessionContext = sessionContext;
         }
 
         public ActionResult ItemList(ViewModel input)
@@ -45,7 +40,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 TrainersName = user.FullNameFNF,
                 EntityId = user.EntityId,
             };
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
@@ -54,13 +49,14 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var sessions = user.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
             var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);
-            var sessionPaymentDtos = items.Select(x => new SessionVerificationDto
+            var sessionPaymentDtos = items.Select(x => new SessionViewDto
                                                            {
                                                                AppointmentDate = x.Appointment.Date,
                                                                EntityId = x.EntityId,
                                                                FullName = x.Client.FullNameLNF,
                                                                PricePerSession = x.Cost,
                                                                Type = x.AppointmentType,
+                                                               InArrears = x.InArrears,
                                                                TrainerPercentage =
                                                                    x.Trainer.TrainerClientRates.FirstOrDefault(
                                                                        y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
@@ -73,11 +69,11 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
 
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
 
-    public class SessionVerificationDto : IGridEnabledClass
+    public class SessionViewDto : IGridEnabledClass
     {
         public int EntityId { get; set; }
         public string FullName { get; set; }
@@ -86,5 +82,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public double PricePerSession { get; set; }
         public int TrainerPercentage { get; set; }
         public double TrainerPay { get; set; }
+        public bool InArrears { get; set; }
     }
 }

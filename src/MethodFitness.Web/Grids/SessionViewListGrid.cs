@@ -6,15 +6,15 @@ using MethodFitness.Web.Areas.Schedule.Grids;
 
 namespace MethodFitness.Web.Grids
 {
-    public class SessionViewListGrid : Grid<SessionVerificationDto>, IEntityListGrid<SessionVerificationDto>
+    public class SessionViewListGrid : Grid<SessionViewDto>, IEntityListGrid<SessionViewDto>
     {
 
-        public SessionViewListGrid(IGridBuilder<SessionVerificationDto> gridBuilder)
+        public SessionViewListGrid(IGridBuilder<SessionViewDto> gridBuilder)
             : base(gridBuilder)
         {
         }
 
-        protected override Grid<SessionVerificationDto> BuildGrid()
+        protected override Grid<SessionViewDto> BuildGrid()
         {
             GridBuilder.DisplayFor(x => x.FullName);
             GridBuilder.DisplayFor(x => x.AppointmentDate);

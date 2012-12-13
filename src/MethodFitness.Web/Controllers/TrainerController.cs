@@ -95,7 +95,7 @@ namespace MethodFitness.Web.Controllers
             model._deleteUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.Delete(null));
             model._saveUrl= UrlContext.GetUrlForAction<TrainerController>(x => x.Save(null));
             model._Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString();
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public ActionResult Display_Template(ViewModel input)
@@ -108,7 +108,7 @@ namespace MethodFitness.Web.Controllers
             var model = Mapper.Map<User, TrainerViewModel>(trainer);
             model.addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId;
             model._Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString();
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -121,7 +121,7 @@ namespace MethodFitness.Web.Controllers
                 _repository.Delete(trainer);
             }
             var notification = validationManager.FinishWithAction();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
 
         }
 
@@ -140,7 +140,7 @@ namespace MethodFitness.Web.Controllers
                 }
             });
             var notification = validationManager.FinishWithAction();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         public ActionResult Save(TrainerViewModel input)
@@ -166,7 +166,7 @@ namespace MethodFitness.Web.Controllers
 
 //            _fileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
             var notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
+            return new CustomJsonResult(notification){ ContentType = "text/plain" };
         }
 
         private bool userRoleRules(User trainer, out ActionResult json)
@@ -181,7 +181,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
                                           };
                 {
-                    json = new CustomJsonResult { Data = notification };
+                    json = new CustomJsonResult(notification);
 
                     return true;
                 }
@@ -195,7 +195,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
                                           };
                 {
-                    json = new CustomJsonResult { Data = notification };
+                    json = new CustomJsonResult(notification);
                     return true;
                 }
             }
@@ -208,7 +208,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
                                           };
                 {
-                    json = new CustomJsonResult { Data = notification };
+                    json = new CustomJsonResult(notification);
                     return true;
                 }
             }
@@ -221,7 +221,7 @@ namespace MethodFitness.Web.Controllers
                                                             WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
                                           };
                 {
-                    json = new CustomJsonResult { Data = notification };
+                    json = new CustomJsonResult(notification);
                     return true;
                 }
             }

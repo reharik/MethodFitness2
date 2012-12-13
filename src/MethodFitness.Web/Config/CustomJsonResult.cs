@@ -1,6 +1,9 @@
 using System;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.DomainTools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -8,6 +11,11 @@ namespace MethodFitness.Web.Config
 {
     public class CustomJsonResult : JsonResult
     {
+        public CustomJsonResult(object input)
+        {
+            Data = input;
+        }
+
         private const string _dateFormat = "yyyy-MM-ddTHH:mm:ss";
 
         public override void ExecuteResult(ControllerContext context)

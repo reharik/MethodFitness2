@@ -44,7 +44,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 EntityId = trainer.EntityId
             };
             model.headerButtons.Add("return");
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public JsonResult TrainerPayments(GridItemsRequestModel input)
@@ -54,7 +54,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var trainer = _repository.Find<User>(input.ParentId);
             var items = _dynamicExpressionQuery.PerformQuery(trainer.TrainerPayments,input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
 }

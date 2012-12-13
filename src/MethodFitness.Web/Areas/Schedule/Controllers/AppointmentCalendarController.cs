@@ -81,7 +81,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     TrainerId = user.EntityId
                 }
             };
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
         public string processTrainerName(User trainer)
         {
@@ -104,11 +104,11 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var notification = validateAppointment(user, input);
             if (!notification.Success)
             {
-                return new CustomJsonResult { Data = notification };
+                return new CustomJsonResult(notification);
             }
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         private Notification validateAppointment(User user, AppointmentChangedViewModel input)
@@ -149,7 +149,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 }
             }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
-            return new CustomJsonResult { Data = events };
+            return new CustomJsonResult(events);
         }
 
         private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)

@@ -12,7 +12,6 @@ using CC.Core.Localization;
 using CC.Core.Services;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain;
-using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
@@ -24,6 +23,8 @@ using AreaName = MethodFitness.Core.Enumerations.AreaName;
 
 namespace MethodFitness.Web.Controllers
 {
+    using CC.Core.CustomAttributes;
+
     public class ClientController : MFController
     {
         private readonly IRepository _repository;
@@ -86,7 +87,7 @@ namespace MethodFitness.Web.Controllers
             model._saveUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Save(null));
             model._StateList = _selectListItemService.CreateList<State>(); 
             model._SourceList = _selectListItemService.CreateList<Source>();
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -99,7 +100,7 @@ namespace MethodFitness.Web.Controllers
                 _repository.Delete(client);
             }
             var notification = validationManager.Finish();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
 
         }
 
@@ -118,7 +119,7 @@ namespace MethodFitness.Web.Controllers
                 }
             });
             var notification = validationManager.FinishWithAction();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         public ActionResult Save(ClientViewModel input)
@@ -140,7 +141,7 @@ namespace MethodFitness.Web.Controllers
 
 //            _uploadedFileHandlerService.SaveUploadedFile(file, client.FirstName + "_" + client.LastName);
             var notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
+            return new CustomJsonResult(notification){ ContentType = "text/plain" };
         }
 
         private void associateWithUser(Client client)

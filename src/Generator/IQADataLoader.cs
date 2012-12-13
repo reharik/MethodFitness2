@@ -69,8 +69,8 @@ namespace Generator
                 CompanyId = 1,
                 CreatedDate = DateTime.Now,
                 PhoneMobile = "401.743.9669",
-                Email = "methodfit@gmail.com"
-
+                Email = "methodfit@gmail.com",
+                ClientRateDefault = 65
             };
             _admin1.AddUserRole(userRoleTrainer);
             _admin1.AddUserRole(userRoleAdmin);
