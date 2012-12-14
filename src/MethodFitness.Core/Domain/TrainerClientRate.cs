@@ -7,14 +7,14 @@ namespace MethodFitness.Core.Domain
     public class TrainerClientRate :DomainEntity, IEquatable<TrainerClientRate>
     {
         public virtual Client Client { get; set; }
-        public virtual User User { get; set; }
+        public virtual User Trainer { get; set; }
         public virtual int Percent { get; set; }
 
         public override void UpdateSelf(Entity entity)
         {
             var self = (TrainerClientRate)entity;
             Client = self.Client;
-            User = self.User;
+            Trainer = self.Trainer;
             Percent = self.Percent;
         }
 
@@ -25,7 +25,7 @@ namespace MethodFitness.Core.Domain
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (this.GetTypeWhenProxy() != obj.GetTypeWhenProxy()) return false;
-            return (Client == obj.Client && User == obj.User && Percent == obj.Percent);
+            return (Client == obj.Client && Trainer == obj.Trainer && Percent == obj.Percent);
         }
 
         public override bool Equals(object obj)

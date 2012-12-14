@@ -33,9 +33,8 @@ namespace MethodFitness.Core.Domain
         public virtual string Notes { get; set; }
         public virtual DateTime? BirthDate { get; set; }
         public virtual string ImageUrl { get; set; }
-        [ValueOf(typeof(Status))]
-        public virtual string Status { get; set; }
-       
+        public virtual string Color { get; set; }
+        public virtual int ClientRateDefault { get; set; }
         
         public virtual UserLoginInfo UserLoginInfo { get; set; }
         public virtual string FullNameLNF
@@ -60,38 +59,7 @@ namespace MethodFitness.Core.Domain
             if (_userRoles.Contains(userRole)) return;
             _userRoles.Add(userRole);
         }
-        #endregion
 
-        public virtual SecurityInfo SecurityInfo
-        {
-            get { return new SecurityInfo(FullNameLNF, EntityId); }
-        }
-    }
-
-    public class UserLoginInfo : DomainEntity
-    {
-        [ValidateNonEmpty]
-        public virtual string LoginName { get; set; }
-        [ValidateNonEmpty]
-        public virtual string Password { get; set; }
-        public virtual string Salt { get; set; }
-        [ValidateSqlDateTime]
-        public virtual DateTime? LastVisitDate { get; set; }
-        public virtual Guid ByPassToken { get; set; }
-
-        #region Collections
-        #endregion
-    }
-
-    public class Administrator : User
-    {
-    }
-
-    public class Trainer:User
-    {
-        public virtual string Color { get; set; }
-        public virtual int ClientRateDefault { get; set; }
-        #region
         private IList<Client> _clients = new List<Client>();
         public virtual void EmptyClients() { _clients.Clear(); }
         public virtual IEnumerable<Client> Clients { get { return _clients; } }
@@ -109,7 +77,7 @@ namespace MethodFitness.Core.Domain
             else
             {
                 _clients.Add(client);
-                AddTrainerClientRate(new TrainerClientRate { User = this, Client = client, Percent = clientRate });
+                AddTrainerClientRate(new TrainerClientRate { Trainer = this, Client = client, Percent = clientRate });
             }
         }
 
@@ -153,6 +121,18 @@ namespace MethodFitness.Core.Domain
             if (_trainerPayments.Contains(trainerPayment)) return;
             _trainerPayments.Add(trainerPayment);
         }
+
+        private IList<TrainerSessionVerification> _trainerSessionVerifications = new List<TrainerSessionVerification>();
+        public virtual IEnumerable<TrainerSessionVerification> TrainerSessionVerifications { get { return _trainerSessionVerifications; } }
+        public virtual void RemoveTrainerSessionVerification(TrainerSessionVerification trainerSessionVerification)
+        {
+            _trainerSessionVerifications.Remove(trainerSessionVerification);
+        }
+        public virtual void AddTrainerSessionVerification(TrainerSessionVerification trainerSessionVerification)
+        {
+            if (_trainerSessionVerifications.Contains(trainerSessionVerification)) return;
+            _trainerSessionVerifications.Add(trainerSessionVerification);
+        }
         #endregion
 
         public virtual TrainerPayment PayTrainer(IEnumerable<PaymentDetailsDto> items, double amount)
@@ -178,5 +158,25 @@ namespace MethodFitness.Core.Domain
             AddTrainerPayment(trainerPayment);
             return trainerPayment;
         }
+
+        public virtual SecurityInfo SecurityInfo
+        {
+            get { return new SecurityInfo(FullNameLNF, EntityId); }
+        }
+    }
+
+    public class UserLoginInfo : DomainEntity
+    {
+        [ValidateNonEmpty]
+        public virtual string LoginName { get; set; }
+        [ValidateNonEmpty]
+        public virtual string Password { get; set; }
+        public virtual string Salt { get; set; }
+        [ValidateSqlDateTime]
+        public virtual DateTime? LastVisitDate { get; set; }
+        public virtual Guid ByPassToken { get; set; }
+
+        #region Collections
+        #endregion
     }
 }

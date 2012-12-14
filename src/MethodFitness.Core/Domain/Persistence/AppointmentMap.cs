@@ -13,7 +13,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.AppointmentType);
             Map(x => x.Completed);
             References(x => x.Location);
-            References(x => x.Trainer);
+            References(x => x.Trainer).Column("TrainerId");
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore).Cascade.None();
             HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore).Cascade.None();
         } 

@@ -44,7 +44,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 searchField = "LastName"
             };
             model.headerButtons.Add("new");
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public JsonResult Clients(GridItemsRequestModel input)
@@ -57,10 +57,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
             }else
             {
-                items = _dynamicExpressionQuery.PerformQuery(((Trainer)trainer).Clients, input.filters);
+                items = _dynamicExpressionQuery.PerformQuery(trainer.Clients, input.filters);
             }
             var gridItemsViewModel = _clientListGrid.GetGridItemsViewModel(input.PageSortFilter, items, trainer);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
     

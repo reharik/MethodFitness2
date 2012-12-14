@@ -15,12 +15,12 @@
         @Html.ViewFor(x => x.FullHourPrice).HideLabel().ToHtmlTag()
     </div>
     <div class="fieldRow">
-        @Html.SubmissionFor(x => x.HalfHour).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").ToHtmlTag()
-        @Html.ViewFor(x => x.HalfHourPrice).HideLabel().ToHtmlTag()
-    </div>
-    <div class="fieldRow">
         @Html.SubmissionFor(x => x.FullHourTenPack).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").ToHtmlTag()
         @Html.ViewFor(x => x.FullHourTenPackPrice).HideLabel().ToHtmlTag()
+    </div>
+     <div class="fieldRow">
+        @Html.SubmissionFor(x => x.HalfHour).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").ToHtmlTag()
+        @Html.ViewFor(x => x.HalfHourPrice).HideLabel().ToHtmlTag()
     </div>
     <div class="fieldRow">
         @Html.SubmissionFor(x => x.HalfHourTenPack).InLine().AddClassToRoot("two-thirds").AddClassToInput("payment_input").ToHtmlTag()

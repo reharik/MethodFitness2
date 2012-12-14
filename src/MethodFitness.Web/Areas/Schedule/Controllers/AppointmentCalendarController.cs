@@ -53,9 +53,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var locations = _selectListItemService.CreateList<Location>(x=>x.Name,x=>x.EntityId,false).ToList();
             locations.Insert(0,new SelectListItem{Text=WebLocalizationKeys.ALL.ToString(),Value = "0"});
             var trainersDto = new List<TrainerLegendDto>();
-            if(user.UserRoles.Any(x=>x.Name==SecurityUserGroups.Administrator.ToString()))
+            if(user.UserRoles.Any(x=>x.Name==UserType.Administrator.ToString()))
             {
-                var trainers = _repository.Query<Trainer>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Trainer.ToString()));
+                var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == UserType.Trainer.ToString()));
                 trainersDto = trainers.Select(x=> new TrainerLegendDto {Name=processTrainerName(x),
                     Color=x.Color,
                 EntityId = x.EntityId}).ToList();
@@ -81,7 +81,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                     TrainerId = user.EntityId
                 }
             };
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
         public string processTrainerName(User trainer)
         {
@@ -104,18 +104,19 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var notification = validateAppointment(user, input);
             if (!notification.Success)
             {
-                return new CustomJsonResult { Data = notification };
+                return new CustomJsonResult(notification);
             }
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         private Notification validateAppointment(User user, AppointmentChangedViewModel input)
         {
             var notification = new Notification { Success = true };
-            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-            if (input.StartTime < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            // nice to pull this off user
+            var currentTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
+            if (input.StartTime < currentTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
@@ -128,7 +129,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var canSeeOthers = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOtherAppointments");
+            var canSeeOthers = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOthersAppointments");
             var events = new List<CalendarEvent>();
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
@@ -148,7 +149,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 }
             }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
-            return new CustomJsonResult { Data = events };
+            return new CustomJsonResult(events);
         }
 
         private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)

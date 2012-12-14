@@ -129,22 +129,22 @@ namespace MethodFitness.Web.Services
         public void AssociateAllUsersWithThierTypeGroup()
         {
            // _repository.DisableFilter("CompanyConditionFilter");
-            var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
+            var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == UserType.Administrator.ToString()));
             admins.ForEachItem(x =>
-                _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
+                _authorizationRepository.AssociateUserWith(x, UserType.Administrator.ToString()));
             var employees = _repository.FindAll<User>();
-            employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
+            employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, UserType.Trainer.ToString()));
         }
 
         public void CreateUserGroups()
         {
-            if (_authorizationRepository.GetUsersGroupByName(SecurityUserGroups.Administrator.ToString()) == null)
+            if (_authorizationRepository.GetUsersGroupByName(UserType.Administrator.ToString()) == null)
             {
-                _authorizationRepository.CreateUsersGroup(SecurityUserGroups.Administrator.ToString());
+                _authorizationRepository.CreateUsersGroup(UserType.Administrator.ToString());
             }
-            if (_authorizationRepository.GetUsersGroupByName(SecurityUserGroups.Trainer.ToString()) == null)
+            if (_authorizationRepository.GetUsersGroupByName(UserType.Trainer.ToString()) == null)
             {
-                _authorizationRepository.CreateUsersGroup(SecurityUserGroups.Trainer.ToString());
+                _authorizationRepository.CreateUsersGroup(UserType.Trainer.ToString());
             }
         }
 

@@ -13,6 +13,7 @@ using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
+using NHibernate.Linq;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
@@ -47,13 +48,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 PayTrainerUrl = UrlContext.GetUrlForAction<PayTrainerController>(x=>x.PayTrainer(null),AreaName.Billing),
             };
             model.headerButtons.Add("return");
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public JsonResult TrainerPayments(TrainerPaymentGridItemsRequestModel input)
         {
             var user = _sessionContext.GetCurrentUser();
-            var trainer = _repository.Find<Trainer>(input.ParentId);
+            var trainer = _repository.Query<User>(x=>x.EntityId == input.ParentId).Fetch(x=>x.Sessions).FirstOrDefault();
             var sessions = trainer.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
             var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);
@@ -63,6 +64,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                                                EntityId = x.EntityId,
                                                                FullName = x.Client.FullNameLNF,
                                                                PricePerSession = x.Cost,
+                                                               InArrears = x.InArrears,
+                                                               TrainerVerified = x.TrainerVerified,
                                                                Type = x.AppointmentType,
                                                                TrainerPercentage =
                                                                    x.Trainer.TrainerClientRates.FirstOrDefault(
@@ -74,9 +77,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                                                        y => y.Client == x.Client).Percent * .01 * x.Cost : x.Trainer.ClientRateDefault * .01 * x.Cost
                                                            });
 
-
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
 
@@ -100,14 +102,23 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public double PricePerSession { get; set; }
         public int TrainerPercentage { get; set; }
         public double TrainerPay { get; set; }
+        public bool InArrears { get; set; }
+        public bool TrainerVerified { get; set; }
     }
 
     public class TrainersPaymentListViewModel:ListViewModel
     {
         public string TrainersName { get; set; }
-
         public string PayTrainerUrl { get; set; }
-
         public string HeaderHtml { get; set; }
+
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+
+        public string AlertAdminEmailUrl { get; set; }
+
+        public string AcceptSessionsUrl { get; set; }
     }
 }

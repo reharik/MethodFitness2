@@ -26,22 +26,22 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public CustomJsonResult PayTrainer(PayTrainerViewModel input)
         {
             Notification notification;
-            var trainer = _repository.Find<Trainer>(input.EntityId);
+            var trainer = _repository.Find<User>(input.EntityId);
             var trainerPayment = trainer.PayTrainer(input.eligableRows, input.paymentAmount);
             if(trainerPayment==null)
             {
-                notification = new Notification {Success = false, Message = WebLocalizationKeys.YOU_MUST_SELECT_AT_ONE_SESSION.ToString()};
-                return new CustomJsonResult { Data = notification };
+                notification = new Notification {Success = false, Message = WebLocalizationKeys.YOU_MUST_SELECT_AT_LEAST_ONE_SESSION.ToString()};
+                return new CustomJsonResult(notification);
             }
             var crudManager = _saveEntityService.ProcessSave(trainer);
             notification = crudManager.Finish();
             notification.Variable = UrlContext.GetUrlForAction<PayTrainerController>(x => x.TrainerReceipt(null),AreaName.Billing)+"/"+trainerPayment.EntityId+"?ParentId="+trainer.EntityId;
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         public ActionResult TrainerReceipt(ViewModel input)
         {
-            var trainer = _repository.Find<Trainer>(input.ParentId);
+            var trainer = _repository.Find<User>(input.ParentId);
             var payment = trainer.TrainerPayments.FirstOrDefault(x => x.EntityId == input.EntityId);
             var model = new TrainerReceiptViewModel
                                               {

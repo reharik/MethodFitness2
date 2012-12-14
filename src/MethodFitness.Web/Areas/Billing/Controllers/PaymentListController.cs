@@ -40,7 +40,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 ParentId = input.EntityId
             };
             model.headerButtons.Add("new");
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public CustomJsonResult Payments(GridItemsRequestModel input)
@@ -49,7 +49,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var client = _repository.Find<Client>(input.ParentId);
             var items = _dynamicExpressionQuery.PerformQuery(client.Payments, input.filters);
             var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
 }

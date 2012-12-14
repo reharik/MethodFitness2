@@ -135,7 +135,7 @@ namespace MethodFitness.Web
         public static readonly StringToken PRICE_SESSION = new WebLocalizationKeys("PRICE_SESSION", "Price/Session");
         public static readonly StringToken TRAINER_PERCENTAGE_FOR_CLIENT = new WebLocalizationKeys("TRAINER_PERCENTAGE_FOR_CLIENT", "Enter percentage for ${name}");
         public static readonly StringToken PAYMENT_AMOUNT = new WebLocalizationKeys("PAYMENT_AMOUNT", "Payment Amount: $");
-        public static readonly StringToken YOU_MUST_SELECT_AT_ONE_SESSION = new WebLocalizationKeys("YOU_MUST_SELECT_AT_ONE_SESSION", "You must select at least one session for payment");
+        public static readonly StringToken YOU_MUST_SELECT_AT_LEAST_ONE_SESSION = new WebLocalizationKeys("YOU_MUST_SELECT_AT_LEAST_ONE_SESSION", "You must select at least one session for payment");
 
         public static readonly StringToken CLIENT_NAME = new WebLocalizationKeys("CLIENT_NAME", "Client Name");
         public static readonly StringToken DATE = new WebLocalizationKeys("DATE", "Date");
@@ -157,6 +157,15 @@ namespace MethodFitness.Web
         public static readonly StringToken PAIR = new WebLocalizationKeys("PAIR", "Pair");
         public static readonly StringToken PAIR_TEN_PACK = new WebLocalizationKeys("PAIR_TEN_PACK", "Pairs 10 Pack");
 
+        public static readonly StringToken SESSION_REPORT = new WebLocalizationKeys("SESSION_REPORT", "Session Report");
+        public static readonly StringToken SESSION_VERIFICATION = new WebLocalizationKeys("SESSION_VERIFICATION", "Session Verification");
+        public static readonly StringToken HISTORICAL = new WebLocalizationKeys("HISTORICAL", "Historical");
+        public static readonly StringToken CURRENT = new WebLocalizationKeys("CURRENT", "Current");
+
+
+        public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT", "There is a problem with my sessions for this pay period");
+        public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT_BODY = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT_BODY", "There is a problem with my sessions for this pay period.  Please look at the following:");
+        public static readonly StringToken EMAIL_SENT_SUCCESSFULLY = new WebLocalizationKeys("EMAIL_SENT_SUCCESSFULLY", "Email Sent Successfully");
 
     }
 }

@@ -36,12 +36,21 @@ namespace MethodFitness.Core.Enumerations
     }
 
     [Serializable]
+    public class UserType : Enumeration
+    {
+        public static readonly UserType Empty = new UserType { IsActive = false, Key = "" };
+        public static readonly UserType Administrator = new UserType { IsActive = true, Key = "Administrator" };
+        public static readonly UserType Trainer = new UserType { IsActive = true, Key = "Trainer" };
+    }
+
+    [Serializable]
     public class SecurityUserGroups : Enumeration
     {
         public static readonly SecurityUserGroups Empty = new SecurityUserGroups { IsActive = false, Key = "" };
         public static readonly SecurityUserGroups Administrator = new SecurityUserGroups { IsActive = true, Key = "Administrator" };
         public static readonly SecurityUserGroups Trainer = new SecurityUserGroups { IsActive = true, Key = "Trainer" };
     }
+
 
     [Serializable]
     public class AppointmentLength : Enumeration

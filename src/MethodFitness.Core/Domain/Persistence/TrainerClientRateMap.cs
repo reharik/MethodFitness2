@@ -7,7 +7,7 @@ namespace MethodFitness.Core.Domain.Persistence
         public TrainerClientRateMap()
         {
             Map(x => x.Percent).Column("`Percent`");
-            References(x => x.User);
+            References(x => x.Trainer).Column("TrainerId");
             References(x => x.Client);
         } 
     }

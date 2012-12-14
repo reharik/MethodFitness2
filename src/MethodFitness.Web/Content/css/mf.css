@@ -567,9 +567,15 @@ margin: 0;
 .showing{
     text-decoration: underline;
 }
-
 .gridRowStrikeThrough{
     background: url(../images/strike.png) center center !important;
+}
+.gridRowGreen{
+    background-color: #66ff00;
+}
+
+.gridRowGrey{
+    background-color: #dbdbd5;
 }
 
 div.headerInput{

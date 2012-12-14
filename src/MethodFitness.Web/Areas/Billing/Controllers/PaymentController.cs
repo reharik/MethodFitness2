@@ -75,7 +75,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             model._deleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null));
             model.ParentId = client.EntityId;
             model._saveUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.Save(null));
-            return new CustomJsonResult{Data = model};
+            return new CustomJsonResult(model);
         }
 
         public ActionResult Display_Template(ViewModel input)
@@ -89,7 +89,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var payment =  client.Payments.FirstOrDefault(x=>x.EntityId == input.EntityId);
             var model = Mapper.Map<Payment, PaymentViewModel>(payment);
             model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public CustomJsonResult Delete(ViewModel input)
@@ -104,10 +104,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 payment.Client = null;
                 _saveEntityService.ProcessSave(client);
                 var saveClientNotification = rulesResult.Finish();
-                return new CustomJsonResult { Data = saveClientNotification };
+                return new CustomJsonResult(saveClientNotification);
             }
             var notification = rulesResult.Finish();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         public CustomJsonResult DeleteMultiple(BulkActionViewModel input)
@@ -128,7 +128,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             });
             _saveEntityService.ProcessSave(client);
             var notification = validationManager.Finish();
-            return new CustomJsonResult { Data = notification};
+            return new CustomJsonResult(notification);
         }
 
         public CustomJsonResult Save(PaymentViewModel input)
@@ -149,7 +149,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var crudManager = _saveEntityService.ProcessSave(client);
 
             var notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
+            return new CustomJsonResult(notification){ ContentType = "text/plain" };
 
         }
 
