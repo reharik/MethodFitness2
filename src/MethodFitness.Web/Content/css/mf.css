@@ -642,3 +642,11 @@ div.headerInput input{
 .narrow{
     width:20%;
 }
+
+.thumbsImage{
+    padding:10px;
+}
+
+.thumbsLeft{
+    padding: 10px 10px 10px 0px;
+}

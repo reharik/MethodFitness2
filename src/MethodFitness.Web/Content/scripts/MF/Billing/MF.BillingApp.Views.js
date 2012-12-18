@@ -222,8 +222,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
     setupElements:function(rows){
         this.model.eligableRows = ko.mapping.fromJS(rows);
 
-        $(this.el).find(".content-header").prepend('<button id="acceptSessionsButton">Accept</button><button id="alertAdminButton">Reject</button>' );
-        this.model.paymentAmount = ko.observable(this.options.paymentTotal);
+        $(this.el).find(".content-header").prepend('<a href="#" id="acceptSessionsButton"><img src="/content/images/thumbs_up.jpg" title="Accept Sessions" class="thumbsImage" /></a><a href="#" id="alertAdminButton"><img src="/content/images/thumbs_down.jpg" title="Email Admin of a problem" class="thumbsImage thumbsLeft" /></a>' );this.model.paymentAmount = ko.observable(this.options.paymentTotal);
         if($("#payTrainerButton").size()==0){
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
         }
