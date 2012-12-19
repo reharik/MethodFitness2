@@ -33,9 +33,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         private readonly IRepository _repository;
         private readonly ISessionContext _sessionContext;
 
-       
-
-
         public TrainerSessionVerificationController(IEntityListGrid<SessionVerificationDto> grid,
             IDynamicExpressionQuery dynamicExpressionQuery,
             ISaveEntityService saveEntityService,
@@ -101,7 +98,12 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                       Subject = input.Subject,
                                       Body = input.Body
                                   };
-                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);
+
+                var smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.Credentials = new System.Net.NetworkCredential("reharik@gmail.com", "m124m124");
+                smtpClient.EnableSsl = true;
+                
+//                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);
                 smtpClient.Send(message);
             }
             catch (Exception exception)

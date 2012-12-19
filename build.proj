@@ -70,7 +70,7 @@
   </Target>
 
   <Target Name="_build">
-    <MSBuild Projects="$(SourcePath)\MethodFitness.sln" Properties="Configuration=Debug" ContinueOnError="false" />
+    <MSBuild Projects="$(SourcePath)\MethodFitness_build.sln" Properties="Configuration=Debug" ContinueOnError="false" />
   </Target>
 
   <ItemGroup>
