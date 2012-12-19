@@ -7,7 +7,7 @@ namespace MethodFitness.Core.Domain.Persistence
         public TrainerPaymentMap()
         {
             Map(x => x.Total);
-            References(x => x.Trainer).Column("TrainerId");
+            References(x => x.Trainer);
             HasMany(x => x.TrainerPaymentSessionItems).Access.CamelCaseField(Prefix.Underscore);
         } 
     }
