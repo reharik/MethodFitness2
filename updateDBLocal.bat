@@ -1,3 +1,3 @@
 @ECHO OFF
-src\DBFluentMigration\MigrateApp\migrate -a src\DBFluentMigration\bin\debug\DBFluentMigration.dll -db sqlserver2008 -conn "Data Source=rharik-pc;Initial Catalog=MethodFitness_DEV;Integrated Security=True;"
+src\DBFluentMigration\MigrateApp\migrate -a src\DBFluentMigration\bin\debug\DBFluentMigration.dll -db sqlserver2008 -conn "Data Source=rharik-desktop\mssqlserver2012;Initial Catalog=MethodFitness_DEV2;Integrated Security=True;"
 echo "Done!"

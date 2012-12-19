@@ -4,16 +4,12 @@
 // The following connection settings were used to generate this file
 // 
 //     Provider:               `System.Data.SqlClient`
-//     Connection String:      `Data Source=CannibalCoder.cloudapp.net;Initial Catalog=MethodFitness_PROD;User ID=methodfitness;password=**zapped**;`
+//     Connection String:      `Data Source=rharik-desktop\mssqlserver2012;Initial Catalog=MethodFitness_DEV2;Integrated Security=True;`
 //     Schema:                 ``
 //     Include Views:          `False`
 
 //     Factory Name:          `SqlClientFactory`
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Linq.Expressions;
+
 using FluentMigrator;
 
 namespace Migrations
@@ -23,10 +19,12 @@ namespace Migrations
     {
         public override void Up()
         {
+
             //For Appointment_Client
             Create.Table("Appointment_Client").InSchema("dbo")
                 .WithColumn("AppointmentId").AsInt32().NotNullable()
                 .WithColumn("ClientId").AsInt32().NotNullable();
+
 
             //For Client
             Create.Table("Client").InSchema("dbo")
@@ -55,6 +53,8 @@ namespace Migrations
                 .WithColumn("SessionRatesId").AsInt32().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
 
+
+        
             //For Company
             Create.Table("Company").InSchema("dbo")
                 .WithColumn("EntityId").AsInt32().PrimaryKey().Identity().NotNullable()
@@ -66,6 +66,7 @@ namespace Migrations
                 .WithColumn("Name").AsString().Nullable()
                 .WithColumn("Description").AsString().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
+
 
             //For Location
             Create.Table("Location").InSchema("dbo")
@@ -82,6 +83,7 @@ namespace Migrations
                 .WithColumn("State").AsString().Nullable()
                 .WithColumn("Zip").AsString().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
+
 
             //For Payment
             Create.Table("Payment").InSchema("dbo")
@@ -107,6 +109,7 @@ namespace Migrations
                 .WithColumn("PairTenPackPrice").AsDouble().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
 
+
             //For Session
             Create.Table("Session").InSchema("dbo")
                 .WithColumn("EntityId").AsInt32().PrimaryKey().Identity().NotNullable()
@@ -128,6 +131,7 @@ namespace Migrations
                 .WithColumn("TrainerId").AsInt32().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
 
+
             //For SessionRates
             Create.Table("SessionRates").InSchema("dbo")
                 .WithColumn("EntityId").AsInt32().PrimaryKey().Identity().NotNullable()
@@ -144,6 +148,7 @@ namespace Migrations
                 .WithColumn("PairTenPack").AsDouble().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
 
+
             //For security_Operations
             Create.Table("security_Operations").InSchema("dbo")
                 .WithColumn("EntityId").AsInt32().PrimaryKey().Identity().NotNullable()
@@ -152,9 +157,13 @@ namespace Migrations
                 .WithColumn("ParentId").AsInt32().Nullable();
 
             Create.Index("UQ__security__737584F62645B050").OnTable("security_Operations").InSchema("dbo")
+
                 .OnColumn("EntityId").Ascending()
+
                 .OnColumn("Name").Ascending()
+
                 .WithOptions().Unique();
+
 
             //For TrainerClientRate
             Create.Table("TrainerClientRate").InSchema("dbo")
@@ -170,6 +179,7 @@ namespace Migrations
                 .WithColumn("TrainerId").AsInt32().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
 
+
             //For security_Permissions
             Create.Table("security_Permissions").InSchema("dbo")
                 .WithColumn("EntityId").AsInt32().PrimaryKey().Identity().NotNullable()
@@ -180,6 +190,7 @@ namespace Migrations
                 .WithColumn("UsersGroupId").AsInt32().Nullable()
                 .WithColumn("Description").AsString().Nullable();
 
+
             //For security_UsersGroups
             Create.Table("security_UsersGroups").InSchema("dbo")
                 .WithColumn("EntityId").AsInt32().PrimaryKey().Identity().NotNullable()
@@ -188,9 +199,13 @@ namespace Migrations
                 .WithColumn("Description").AsString().Nullable();
 
             Create.Index("UQ__security__737584F630C33EC3").OnTable("security_UsersGroups").InSchema("dbo")
+
                 .OnColumn("EntityId").Ascending()
+
                 .OnColumn("Name").Ascending()
+
                 .WithOptions().Unique();
+
 
             //For TrainerPayment
             Create.Table("TrainerPayment").InSchema("dbo")
@@ -203,6 +218,7 @@ namespace Migrations
                 .WithColumn("Total").AsDouble().Nullable()
                 .WithColumn("TrainerId").AsInt32().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
+
 
             //For TrainerPaymentSessionItem
             Create.Table("TrainerPaymentSessionItem").InSchema("dbo")
@@ -219,15 +235,18 @@ namespace Migrations
                 .WithColumn("TrainerPaymentId").AsInt32().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
 
+
             //For security_UsersToUsersGroups
             Create.Table("security_UsersToUsersGroups").InSchema("dbo")
                 .WithColumn("GroupId").AsInt32().PrimaryKey().NotNullable()
                 .WithColumn("UserId").AsInt32().PrimaryKey().NotNullable();
 
+
             //For security_UsersGroupsHierarchy
             Create.Table("security_UsersGroupsHierarchy").InSchema("dbo")
                 .WithColumn("ParentGroup").AsInt32().PrimaryKey().NotNullable()
                 .WithColumn("ChildGroup").AsInt32().PrimaryKey().NotNullable();
+
 
             //For User
             Create.Table("User").InSchema("dbo")
@@ -256,15 +275,18 @@ namespace Migrations
                 .WithColumn("ClientRateDefault").AsInt32().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
 
+
             //For User_UserRole
             Create.Table("User_UserRole").InSchema("dbo")
                 .WithColumn("UserId").AsInt32().NotNullable()
                 .WithColumn("UserRoleId").AsInt32().NotNullable();
 
+
             //For Trainer_Client
             Create.Table("Trainer_Client").InSchema("dbo")
                 .WithColumn("TrainerId").AsInt32().NotNullable()
                 .WithColumn("ClientId").AsInt32().NotNullable();
+
 
             //For UserLoginInfo
             Create.Table("UserLoginInfo").InSchema("dbo")
@@ -282,6 +304,7 @@ namespace Migrations
                 .WithColumn("ByPassToken").AsGuid().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
 
+
             //For UserRole
             Create.Table("UserRole").InSchema("dbo")
                 .WithColumn("EntityId").AsInt32().PrimaryKey().Identity().NotNullable()
@@ -292,6 +315,7 @@ namespace Migrations
                 .WithColumn("Name").AsString().Nullable()
                 .WithColumn("Description").AsString().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
+
 
             //For Appointment
             Create.Table("Appointment").InSchema("dbo")
@@ -309,6 +333,8 @@ namespace Migrations
                 .WithColumn("LocationId").AsInt32().Nullable()
                 .WithColumn("TrainerId").AsInt32().Nullable()
                 .WithColumn("CreatedById").AsInt32().Nullable();
+
+
 
 
             //Foreign Key List 
@@ -427,87 +453,56 @@ namespace Migrations
 
         public override void Down()
         {
-            Delete.ForeignKey("FK_Clients_manyToMany_Appointment");
-            Delete.ForeignKey("FK_Clients_manyToMany_Appointment_otherFK");
-            Delete.ForeignKey("FK_Client_manyToOne_SessionRates");
-            Delete.ForeignKey("FK_methodFit_Client_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_Client_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_methodFit_Company_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_Company_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_methodFit_Location_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_Location_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_Payments_oneToMany_Client");
-            Delete.ForeignKey("FK_methodFit_Payment_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_Payment_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_Sessions_oneToMany_Appointment");
-            Delete.ForeignKey("FK_Sessions_oneToMany_Client");
-            Delete.ForeignKey("FK_methodFit_Session_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_Session_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_Sessions_oneToMany_Trainer");
-            Delete.ForeignKey("FK_methodFit_SessionRates_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_SessionRates_manyToOne_CreatedById");
-            Delete.ForeignKey("FKE58BBFF82B7CDCD3");
-            Delete.ForeignKey("FK_TrainerClientRate_manyToOne_Client");
-            Delete.ForeignKey("FK_methodFit_TrainerClientRate_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_TrainerClientRate_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_TrainerClientRate_manyToOne_User");
-            Delete.ForeignKey("FK_TrainerClientRates_oneToMany_Trainer");
-            Delete.ForeignKey("FKEA223C4C71C937C7");
-            Delete.ForeignKey("FKEA223C4C2EE8F612");
-            Delete.ForeignKey("FKEA223C4CFC8C2B95");
-            Delete.ForeignKey("FKEC3AF233D0CB87D0");
-            Delete.ForeignKey("FK_methodFit_TrainerPayment_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_TrainerPayment_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_TrainerPayments_oneToMany_Trainer");
-            Delete.ForeignKey("FK_TrainerPaymentSessionItem_manyToOne_Appointment");
-            Delete.ForeignKey("FK_TrainerPaymentSessionItem_manyToOne_Client");
-            Delete.ForeignKey("FK_TrainerPaymentSessionItems_oneToMany_TrainerPayment");
-            Delete.ForeignKey("FK_methodFit_TrainerPaymentSessionItem_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_TrainerPaymentSessionItem_manyToOne_CreatedById");
-            Delete.ForeignKey("FK7817F27A1238D4D4");
-            Delete.ForeignKey("FK7817F27AA6C99102");
-            Delete.ForeignKey("FK69A3B61FA860AB70");
-            Delete.ForeignKey("FK69A3B61FA87BAE50");
-            Delete.ForeignKey("FK_methodFit_User_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_User_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_User_manyToOne_UserLoginInfo");
-            Delete.ForeignKey("FK_UserRoles_manyToMany_User");
-            Delete.ForeignKey("FK_UserRoles_manyToMany_User_otherFK");
-            Delete.ForeignKey("FK_Clients_manyToMany_Trainer_otherFK");
-            Delete.ForeignKey("FK_Clients_manyToMany_Trainer");
-            Delete.ForeignKey("FK_methodFit_UserLoginInfo_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_UserLoginInfo_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_methodFit_UserRole_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_UserRole_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_Appointment_manyToOne_Location");
-            Delete.ForeignKey("FK_methodFit_Appointment_manyToOne_ChangedById");
-            Delete.ForeignKey("FK_methodFit_Appointment_manyToOne_CreatedById");
-            Delete.ForeignKey("FK_Appointment_manyToOne_Trainer");
+            Delete.ForeignKey("FK_Clients_manyToMany_Appointment"); Delete.ForeignKey("FK_Clients_manyToMany_Appointment_otherFK"); Delete.ForeignKey("FK_Client_manyToOne_SessionRates"); Delete.ForeignKey("FK_methodFit_Client_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_Client_manyToOne_CreatedById"); Delete.ForeignKey("FK_methodFit_Company_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_Company_manyToOne_CreatedById"); Delete.ForeignKey("FK_methodFit_Location_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_Location_manyToOne_CreatedById"); Delete.ForeignKey("FK_Payments_oneToMany_Client"); Delete.ForeignKey("FK_methodFit_Payment_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_Payment_manyToOne_CreatedById"); Delete.ForeignKey("FK_Sessions_oneToMany_Appointment"); Delete.ForeignKey("FK_Sessions_oneToMany_Client"); Delete.ForeignKey("FK_methodFit_Session_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_Session_manyToOne_CreatedById"); Delete.ForeignKey("FK_Sessions_oneToMany_Trainer"); Delete.ForeignKey("FK_methodFit_SessionRates_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_SessionRates_manyToOne_CreatedById"); Delete.ForeignKey("FKE58BBFF82B7CDCD3"); Delete.ForeignKey("FK_TrainerClientRate_manyToOne_Client"); Delete.ForeignKey("FK_methodFit_TrainerClientRate_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_TrainerClientRate_manyToOne_CreatedById"); Delete.ForeignKey("FK_TrainerClientRate_manyToOne_User"); Delete.ForeignKey("FK_TrainerClientRates_oneToMany_Trainer"); Delete.ForeignKey("FKEA223C4C71C937C7"); Delete.ForeignKey("FKEA223C4C2EE8F612"); Delete.ForeignKey("FKEA223C4CFC8C2B95"); Delete.ForeignKey("FKEC3AF233D0CB87D0"); Delete.ForeignKey("FK_methodFit_TrainerPayment_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_TrainerPayment_manyToOne_CreatedById"); Delete.ForeignKey("FK_TrainerPayments_oneToMany_Trainer"); Delete.ForeignKey("FK_TrainerPaymentSessionItem_manyToOne_Appointment"); Delete.ForeignKey("FK_TrainerPaymentSessionItem_manyToOne_Client"); Delete.ForeignKey("FK_TrainerPaymentSessionItems_oneToMany_TrainerPayment"); Delete.ForeignKey("FK_methodFit_TrainerPaymentSessionItem_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_TrainerPaymentSessionItem_manyToOne_CreatedById"); Delete.ForeignKey("FK7817F27A1238D4D4"); Delete.ForeignKey("FK7817F27AA6C99102"); Delete.ForeignKey("FK69A3B61FA860AB70"); Delete.ForeignKey("FK69A3B61FA87BAE50"); Delete.ForeignKey("FK_methodFit_User_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_User_manyToOne_CreatedById"); Delete.ForeignKey("FK_User_manyToOne_UserLoginInfo"); Delete.ForeignKey("FK_UserRoles_manyToMany_User"); Delete.ForeignKey("FK_UserRoles_manyToMany_User_otherFK"); Delete.ForeignKey("FK_Clients_manyToMany_Trainer_otherFK"); Delete.ForeignKey("FK_Clients_manyToMany_Trainer"); Delete.ForeignKey("FK_methodFit_UserLoginInfo_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_UserLoginInfo_manyToOne_CreatedById"); Delete.ForeignKey("FK_methodFit_UserRole_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_UserRole_manyToOne_CreatedById"); Delete.ForeignKey("FK_Appointment_manyToOne_Location"); Delete.ForeignKey("FK_methodFit_Appointment_manyToOne_ChangedById"); Delete.ForeignKey("FK_methodFit_Appointment_manyToOne_CreatedById"); Delete.ForeignKey("FK_Appointment_manyToOne_Trainer");
 
             Delete.Index("UQ__security__737584F62645B050");
+
             Delete.Index("UQ__security__737584F630C33EC3");
 
+
+
             Delete.Table("Appointment");
+
             Delete.Table("UserRole");
+
             Delete.Table("UserLoginInfo");
+
             Delete.Table("Trainer_Client");
+
             Delete.Table("User_UserRole");
+
             Delete.Table("User");
+
             Delete.Table("security_UsersGroupsHierarchy");
+
             Delete.Table("security_UsersToUsersGroups");
+
             Delete.Table("TrainerPaymentSessionItem");
+
             Delete.Table("TrainerPayment");
+
             Delete.Table("security_UsersGroups");
+
             Delete.Table("security_Permissions");
+
             Delete.Table("TrainerClientRate");
+
             Delete.Table("security_Operations");
+
             Delete.Table("SessionRates");
+
             Delete.Table("Session");
+
             Delete.Table("Payment");
+
             Delete.Table("Location");
+
             Delete.Table("Company");
+
             Delete.Table("Client");
+
             Delete.Table("Appointment_Client");
+
         }
     }
 }
