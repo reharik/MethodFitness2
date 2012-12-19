@@ -159,8 +159,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandRegistry.cs" />
+    <Compile Include="Commands\DefaultSecuritySetupCommand.cs" />
     <Compile Include="Commands\MigratorCommand.cs" />
     <Compile Include="Commands\DropReaddDatabaseCommand.cs" />
+    <Compile Include="Commands\RebuildDatabaseCommand.cs" />
     <Compile Include="MigratorConsole.cs" />
     <Compile Include="IQADataLoader.cs" />
     <Compile Include="Commands\QADataLoadCommand.cs" />
