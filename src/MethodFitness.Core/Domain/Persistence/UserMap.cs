@@ -29,7 +29,6 @@ namespace MethodFitness.Core.Domain.Persistence
             HasMany(x => x.TrainerSessionVerifications).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
             HasManyToMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
-            ApplyFilter<StatusConditionFilter>("Status= :Status");
 
         }
 
