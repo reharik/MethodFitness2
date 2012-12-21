@@ -9,6 +9,8 @@ using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
+using NHibernate.Linq;
+using System.Linq;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
@@ -51,7 +53,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         {
             var user = _sessionContext.GetCurrentUser();
 
-            var trainer = _repository.Find<User>(input.ParentId);
+            var trainer = _repository.Query<User>(x=>x.EntityId==input.ParentId).FetchMany(x=>x.TrainerPayments).FirstOrDefault();
             var items = _dynamicExpressionQuery.PerformQuery(trainer.TrainerPayments,input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
             return new CustomJsonResult(gridItemsViewModel);
