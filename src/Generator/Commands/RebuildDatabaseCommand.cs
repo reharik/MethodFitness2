@@ -36,8 +36,8 @@ namespace Generator.Commands
 //                x.AddRegistry(new GenRegistry());
 //                x.AddRegistry(new CommandRegistry());
 //            });
-            var securitySetup = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
-            securitySetup.Execute(null);
+//            var securitySetup = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
+//            securitySetup.Execute(null);
 
 
 
