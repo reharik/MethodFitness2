@@ -8,6 +8,7 @@ using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
+using NHibernate.Linq;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
@@ -41,7 +42,11 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult TrainerReceipt(ViewModel input)
         {
-            var trainer = _repository.Find<User>(input.ParentId);
+            var trainer = _repository.Query<User>(x => x.EntityId == input.ParentId)
+                .FetchMany(x => x.TrainerPayments)
+                .ThenFetchMany(x => x.TrainerPaymentSessionItems)
+                .ThenFetch(x=>x.Appointment)
+                .ThenFetchMany(x=>x.Clients).FirstOrDefault();
             var payment = trainer.TrainerPayments.FirstOrDefault(x => x.EntityId == input.EntityId);
             var model = new TrainerReceiptViewModel
                                               {
