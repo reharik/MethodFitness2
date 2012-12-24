@@ -174,7 +174,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "setupGridSearchMixin");
-        
+
         this.notification = new CC.NotificationService();
 
     },
@@ -251,7 +251,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         var builder = MF.Views.popupButtonBuilder.builder("trainerAlertAdminPopup");
         builder.addButton("Send", builder.getSaveFunc());
         builder.addCancelButton();
-        var data=this.model
+        var data=this.model;
         var formOptions = {
             id: "trainerAlertAdminPopup",
             data:data,
