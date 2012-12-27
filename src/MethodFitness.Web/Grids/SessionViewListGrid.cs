@@ -1,5 +1,6 @@
 ﻿using CC.Core.DomainTools;
 using CC.Core.Html.Grid;
+using MethodFitness.Core.NamedQueries;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Schedule.Grids;

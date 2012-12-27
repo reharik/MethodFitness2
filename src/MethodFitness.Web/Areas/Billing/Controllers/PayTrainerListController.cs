@@ -7,6 +7,7 @@ using CC.Core.DomainTools;
 using CC.Core.Html;
 using CC.Core.Html.Grid;
 using CC.Core.Services;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
@@ -93,18 +94,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public IEnumerable<PaymentDetailsDto> eligableRows { get; set; }
     }
 
-    public class SessionPaymentDto : IGridEnabledClass
-    {
-        public int EntityId { get; set; }
-        public string FullName { get; set; }
-        public DateTime? AppointmentDate { get; set; }
-        public string Type { get; set; }
-        public double PricePerSession { get; set; }
-        public int TrainerPercentage { get; set; }
-        public double TrainerPay { get; set; }
-        public bool InArrears { get; set; }
-        public bool TrainerVerified { get; set; }
-    }
+    
 
     public class TrainersPaymentListViewModel:ListViewModel
     {
