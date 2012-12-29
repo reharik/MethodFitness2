@@ -5,18 +5,19 @@ namespace MethodFitness.Core.CoreViewModelAndDTOs
 {
     public class TrainerSessionDto : IGridEnabledClass
     {
-        public int EntityId { get; set; }
-        public int TrainerId { get; set; }
-        public string FirstlName { get; set; }
-        public string LastName { get; set; }
-        public DateTime? AppointmentDate { get; set; }
-        public string Type { get; set; }
-        public int TrainerPercentage { get; set; }
-        public bool InArrears { get; set; }
-        public bool TrainerVerified { get; set; }
-        public double PricePerSession { get; set; }
-        public double TrainerPay { get { return TrainerPercentage * .01 * PricePerSession; }}
-        public string FullName { get { return FirstlName + " " + LastName; } }
+        public virtual int EntityId { get; set; }
+        public virtual int TrainerId { get; set; }
+        public virtual string FirstName { get; set; }
+        public virtual string LastName { get; set; }
+        public virtual DateTime? AppointmentDate { get; set; }
+        public virtual string Type { get; set; }
+        public virtual int TrainerPercentage { get; set; }
+        public virtual bool InArrears { get; set; }
+        public virtual bool TrainerVerified { get; set; }
+        public virtual bool TrainerPaid { get; set; }
+        public virtual double PricePerSession { get; set; }
+        public virtual double TrainerPay { get { return TrainerPercentage * .01 * PricePerSession; }}
+        public virtual string FullName { get { return FirstName + " " + LastName; } }
 
     }
 }

@@ -19,16 +19,16 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 {
     public class TrainerSessionViewController : MFController
     {
-        private readonly SessionVerificationListGrid _grid;
 
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IRepository _repository;
+        private IEntityListGrid<TrainerSessionDto> _grid;
 
-        public TrainerSessionViewController(SessionVerificationListGrid grid,
+        public TrainerSessionViewController(
             IDynamicExpressionQuery dynamicExpressionQuery,
             IRepository repository)
         {
-            _grid = grid;
+            _grid = ObjectFactory.Container.GetInstance<IEntityListGrid<TrainerSessionDto>>("SessionVerification");
             _dynamicExpressionQuery = dynamicExpressionQuery;
             _repository = repository;
         }
@@ -50,9 +50,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
         {
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate);
 
-            var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos,input.filters);
+            var items = _dynamicExpressionQuery.PerformQuery<TrainerSessionDto>(input.filters, x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate);
 //            var sessionPaymentDtos = items.Select(x => new SessionViewDto
 //                                                           {
 //                                                               AppointmentDate = x.Appointment.Date,

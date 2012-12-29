@@ -98,8 +98,8 @@ namespace MethodFitness.Web
             For<ICCSessionContext>().Use<SessionContext>();
             For<IMFPermissionsService>().Use<MFPermissionsService>();
 
-            For<SessionVerificationListGrid>().Use<SessionVerificationListGrid>();
-            For<SessionPaymentListGrid>().Use<SessionPaymentListGrid>();
+            For<IEntityListGrid<TrainerSessionDto>>().Use<SessionVerificationListGrid>().Named("SessionVerification");
+            For<IEntityListGrid<TrainerSessionDto>>().Add<SessionPaymentListGrid>().Named("SessionPaymentVerification");
         }
     }
 }

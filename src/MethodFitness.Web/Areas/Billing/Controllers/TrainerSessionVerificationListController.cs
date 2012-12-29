@@ -17,13 +17,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 {
     public class TrainerSessionVerificationListController : MFController
     {
-        private readonly IEntityListGrid<TrainerSessionDto>  _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
+        private IEntityListGrid<TrainerSessionVerification> _grid;
 
-        public TrainerSessionVerificationListController(SessionVerificationListGrid grid,
+        public TrainerSessionVerificationListController(
             IDynamicExpressionQuery dynamicExpressionQuery)
         {
-            _grid = grid;
+            _grid = ObjectFactory.Container.GetInstance<IEntityListGrid<TrainerSessionVerification>>();
             _dynamicExpressionQuery = dynamicExpressionQuery;
         }
 
