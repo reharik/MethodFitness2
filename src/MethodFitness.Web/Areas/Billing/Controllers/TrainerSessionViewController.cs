@@ -4,22 +4,27 @@ using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.DomainTools;
 using CC.Core.Html;
 using CC.Core.Services;
+using CC.Security;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.NamedQueries;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
+using MethodFitness.Web.Grids;
+using StructureMap;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
     public class TrainerSessionViewController : MFController
     {
-        private readonly IEntityListGrid<SessionViewDto> _grid;
+        private readonly SessionVerificationListGrid _grid;
+
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IRepository _repository;
 
-        public TrainerSessionViewController(IEntityListGrid<SessionViewDto> grid,
+        public TrainerSessionViewController(SessionVerificationListGrid grid,
             IDynamicExpressionQuery dynamicExpressionQuery,
             IRepository repository)
         {
@@ -45,10 +50,9 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
         {
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-            var user = _repository.ExecuteSproc<SessionViewDto>();
-            var x = "";
-//            var sessions = user.Sessions.OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
-//            var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters);
+            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate);
+
+            var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos,input.filters);
 //            var sessionPaymentDtos = items.Select(x => new SessionViewDto
 //                                                           {
 //                                                               AppointmentDate = x.Appointment.Date,
@@ -68,9 +72,9 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 //                                                           });
 //
 //
-//            var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
-//            return new CustomJsonResult(gridItemsViewModel);
-            return null;
+            var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, (IUser)input.User);
+            return new CustomJsonResult(gridItemsViewModel);
+//            return null;
         }
     }
 
