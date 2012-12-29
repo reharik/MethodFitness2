@@ -150,6 +150,7 @@
     <Compile Include="CoreLocalizationKeys.cs" />
     <Compile Include="CoreViewModelAndDTOs\DocumentDto.cs" />
     <Compile Include="CoreViewModelAndDTOs\MembershipDto.cs" />
+    <Compile Include="CoreViewModelAndDTOs\TrainerSessionDto.cs" />
     <Compile Include="Domain\Appointment.cs" />
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\Client.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
+    <Compile Include="Domain\Persistence\TrainerSessionMap.cs" />
     <Compile Include="Domain\Persistence\TrainerSessionVerificationMap.cs" />
     <Compile Include="Domain\Persistence\OperationsMap.cs" />
     <Compile Include="Domain\Persistence\PermissionMap.cs" />
@@ -177,7 +179,6 @@
     <Compile Include="Domain\Session.cs" />
     <Compile Include="Domain\SessionRates.cs" />
     <Compile Include="Domain\SiteConfiguration.cs" />
-    <Compile Include="Domain\Tools\Continuation.cs" />
     <Compile Include="Domain\Tools\MFUnitOfWork.cs" />
     <Compile Include="Domain\Tools\NoInterceptorNoFiltersUnitOfWork.cs" />
     <Compile Include="Domain\Tools\NoInterceptorNoFiltersRepository.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Html\HtmlExtensions.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Config\NullSqlServerSessionSourceConfiguration.cs" />
+    <Compile Include="NamedQueries\TrainerSessionQuery.cs" />
     <Compile Include="Security\IOperations.cs" />
     <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\DeleteTrainerRules.cs" />

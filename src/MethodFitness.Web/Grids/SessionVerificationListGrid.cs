@@ -1,20 +1,21 @@
 ﻿using CC.Core.DomainTools;
 using CC.Core.Html.Grid;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Areas.Schedule.Grids;
 
 namespace MethodFitness.Web.Grids
 {
-    public class SessionVerificationListGrid : Grid<SessionVerificationDto>, IEntityListGrid<SessionVerificationDto>
+    public class SessionVerificationListGrid : Grid<TrainerSessionDto>, IEntityListGrid<TrainerSessionDto>
     {
 
-        public SessionVerificationListGrid(IGridBuilder<SessionVerificationDto> gridBuilder)
+        public SessionVerificationListGrid(IGridBuilder<TrainerSessionDto> gridBuilder)
             : base(gridBuilder)
         {
         }
 
-        protected override Grid<SessionVerificationDto> BuildGrid()
+        protected override Grid<TrainerSessionDto> BuildGrid()
         {
             GridBuilder.DisplayFor(x => x.FullName);
             GridBuilder.DisplayFor(x => x.AppointmentDate);

@@ -12,7 +12,9 @@ MF.Views.ResetPasswordView = MF.Views.View.extend({
         MF.mixin(this, "baseFormView");
     },
     render: function(){
-        MF.notificationService = new cc.MessageNotficationService();
+        CC.notification = new CC.NotificationService();
+        CC.notification.render($("#messageContainer").get(0));
+
         this.bindModelAndElements();
         if(this.setBindings){this.setBindings();}
         $("input[name='Password']").focus();

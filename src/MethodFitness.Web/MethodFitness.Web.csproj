@@ -229,7 +229,6 @@
     <Compile Include="Grids\ClientListGrid.cs" />
     <Compile Include="Grids\TrainerSessionVerificationListGrid.cs" />
     <Compile Include="Grids\SessionVerificationListGrid.cs" />
-    <Compile Include="Grids\SessionViewListGrid.cs" />
     <Compile Include="Grids\TrainerPaymentListGrid.cs" />
     <Compile Include="Grids\SessionPaymentListGrid.cs" />
     <Compile Include="Grids\PaymentListGrid.cs" />

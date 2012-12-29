@@ -18,10 +18,10 @@ CC.NotificationService = function(){
 };
 
 $.extend(CC.NotificationService.prototype,{
-    selector:"",
-    render:function(_selector){
-        selector = _selector;
-        ko.applyBindings(this.viewmodel,_selector);
+    successSelector:"",
+    render:function(_successSelector, _errorSelector){
+        successSelector = _successSelector;
+        ko.applyBindings(this.viewmodel,successSelector);
     },
     add:function(msgObject){
         var exists = _.any(this.viewmodel.messages(),function(msg){
@@ -29,11 +29,11 @@ $.extend(CC.NotificationService.prototype,{
         });
         if(!exists){
             this.viewmodel.messages.push(msgObject);
-//            if(msgObject.shouldSelfDestruct){
-//                msgObject.parent = this;
-//                msgObject.selfDestruct();
+            if(msgObject.shouldSelfDestruct){
+                msgObject.parent = this;
+                msgObject.selfDestruct();
 
-//            }
+            }
         }
     },
     remove:function(msgObject){

@@ -3,24 +3,27 @@ using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.DomainTools;
 using CC.Core.Html;
 using CC.Core.Services;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
+using MethodFitness.Web.Grids;
+using StructureMap;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
     public class TrainerSessionVerificationListController : MFController
     {
-        private readonly IEntityListGrid<TrainerSessionVerification> _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
+        private IEntityListGrid<TrainerSessionVerification> _grid;
 
-        public TrainerSessionVerificationListController(IEntityListGrid<TrainerSessionVerification> grid,
+        public TrainerSessionVerificationListController(
             IDynamicExpressionQuery dynamicExpressionQuery)
         {
-            _grid = grid;
+            _grid = ObjectFactory.Container.GetInstance<IEntityListGrid<TrainerSessionVerification>>();
             _dynamicExpressionQuery = dynamicExpressionQuery;
         }
 
