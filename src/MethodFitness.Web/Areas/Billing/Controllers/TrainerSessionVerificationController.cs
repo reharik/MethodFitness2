@@ -120,31 +120,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
         {
-//            var user = _repository.Query<User>(x=>x.EntityId == input.User.EntityId).FetchMany(x=>x.Sessions).ThenFetch(x=>x.Appointment).ThenFetchMany(x=>x.Clients).FirstOrDefault();
-//            var sessions = user.Sessions.Where(x => !x.TrainerPaid && !x.TrainerVerified).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
             var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate);
 
             var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos, input.filters);
-//            var sessionPaymentDtos = items.Select(x => new SessionVerificationDto
-//                                                           {
-//                                                               AppointmentDate = x.Appointment.Date,
-//                                                               EntityId = x.EntityId,
-//                                                               FullName = x.Client.FullNameLNF,
-//                                                               PricePerSession = x.Cost,
-//                                                               Type = x.AppointmentType,
-//                                                               InArrears = x.InArrears,
-//                                                               TrainerPercentage =
-//                                                                   x.Trainer.TrainerClientRates.FirstOrDefault(
-//                                                                       y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
-//                                                                       y => y.Client == x.Client).Percent:x.Trainer.ClientRateDefault,
-//                                                               TrainerPay =
-//                                                                   x.Trainer.TrainerClientRates.FirstOrDefault(
-//                                                                       y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
-//                                                                       y => y.Client == x.Client).Percent * .01 * x.Cost : x.Trainer.ClientRateDefault * .01 * x.Cost
-//                                                           });
-
-
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,input.User);
             return new CustomJsonResult(gridItemsViewModel);
         }

@@ -52,28 +52,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
 
             var items = _dynamicExpressionQuery.PerformQuery<TrainerSessionDto>(input.filters, x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate);
-//            var sessionPaymentDtos = items.Select(x => new SessionViewDto
-//                                                           {
-//                                                               AppointmentDate = x.Appointment.Date,
-//                                                               EntityId = x.EntityId,
-//                                                               FullName = x.Client.FullNameLNF,
-//                                                               PricePerSession = x.Cost,
-//                                                               Type = x.AppointmentType,
-//                                                               InArrears = x.InArrears,
-//                                                               TrainerPercentage =
-//                                                                   x.Trainer.TrainerClientRates.FirstOrDefault(
-//                                                                       y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
-//                                                                       y => y.Client == x.Client).Percent:x.Trainer.ClientRateDefault,
-//                                                               TrainerPay =
-//                                                                   x.Trainer.TrainerClientRates.FirstOrDefault(
-//                                                                       y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
-//                                                                       y => y.Client == x.Client).Percent * .01 * x.Cost : x.Trainer.ClientRateDefault * .01 * x.Cost
-//                                                           });
-//
-//
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, (IUser)input.User);
             return new CustomJsonResult(gridItemsViewModel);
-//            return null;
         }
     }
 
