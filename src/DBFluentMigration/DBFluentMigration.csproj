@@ -58,6 +58,7 @@
     <Compile Include="Iteration_1\10020_Change_Trainer_Client_To_User_Client.cs" />
     <Compile Include="Iteration_1\10040_Add_TrainerVerified_To_Session.cs" />
     <Compile Include="Iteration_1\10050_Remove_UserId_From_trainerclientrate.cs" />
+    <Compile Include="Iteration_1\10060_Create_TrainerSession_View.cs" />
     <Compile Include="Iteration_1\UpdateOperations.cs" />
     <Compile Include="Iteration_1\UpdatePermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

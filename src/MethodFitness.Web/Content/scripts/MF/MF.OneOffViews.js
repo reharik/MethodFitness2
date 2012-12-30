@@ -30,9 +30,15 @@ MF.Views.LoginView = MF.Views.View.extend({
         "click .save": "submitClick"
     }},
     initialize: function(){
+        var that = this;
         MF.mixin(this, "formMixin");
         MF.mixin(this, "modelAndElementsMixin");
         this.registerEvents();
+        this.$el.delegate(this.$el,"keypress",function(e){
+            if(e.keyCode==13){
+                that.submitClick();
+            }
+        });
     },
     render: function () {
         this.bindModelAndElements();

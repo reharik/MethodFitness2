@@ -571,11 +571,11 @@ margin: 0;
     background: url(../images/strike.png) center center !important;
 }
 .gridRowGreen{
-    background-color: #66ff00;
+    background-color: #66ff00 !important;
 }
 
 .gridRowGrey{
-    background-color: #dbdbd5;
+    background-color: #dbdbd5 !important;
 }
 
 div.headerInput{
