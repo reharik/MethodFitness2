@@ -174,7 +174,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "setupGridSearchMixin");
-        
+
         this.notification = new CC.NotificationService();
 
     },
@@ -195,16 +195,16 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
                 for (var i = 0, l = ids.length; i < l; i++) {
                     var rowId = ids[i];
                     var rowData = $(this).getRowData(rowId);
-                    if (parseInt(rowData.TrainerPay) > 0) {
+                    if (rowData.InArrears=="True") {
+                        var row = $('#' + rowId, that.el);
+                        row.find("td").addClass('gridRowStrikeThrough');
+                        row.find("td:first input").remove();
+                    } else {
                         paymentRows.push({
                             id:rowId,
                             trainerPay:rowData.TrainerPay
                         });
-                        that.options.paymentTotal+= parseFloat(rowData.TrainerPay);
-                    } else {
-                        var row = $('#' + rowId, that.el);
-                        row.find("td").addClass('gridRowStrikeThrough');
-                        row.find("td:first input").remove();
+                        that.options.paymentTotal += parseFloat(rowData.TrainerPay);
                     }
                 }
                 MF.vent.trigger("paymentGrid:eligableRows",paymentRows);
@@ -251,7 +251,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         var builder = MF.Views.popupButtonBuilder.builder("trainerAlertAdminPopup");
         builder.addButton("Send", builder.getSaveFunc());
         builder.addCancelButton();
-        var data=this.model
+        var data=this.model;
         var formOptions = {
             id: "trainerAlertAdminPopup",
             data:data,
@@ -306,16 +306,16 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
                 for (var i = 0, l = ids.length; i < l; i++) {
                     var rowId = ids[i];
                     var rowData = $(this).getRowData(rowId);
-                    if (parseInt(rowData.TrainerPay) > 0) {
+                    if (rowData.InArrears=="True") {
+                        var row = $('#' + rowId, that.el);
+                        row.find("td").addClass('gridRowStrikeThrough');
+                        row.find("td:first input").remove();
+                    } else {
                         paymentRows.push({
                             id:rowId,
                             trainerPay:rowData.TrainerPay
                         });
-                        that.options.paymentTotal+= parseFloat(rowData.TrainerPay);
-                    } else {
-                        var row = $('#' + rowId, that.el);
-                        row.find("td").addClass('gridRowStrikeThrough');
-                        row.find("td:first input").remove();
+                        that.options.paymentTotal += parseFloat(rowData.TrainerPay);
                     }
                 }
                 MF.vent.trigger("paymentGrid:eligableRows",paymentRows);

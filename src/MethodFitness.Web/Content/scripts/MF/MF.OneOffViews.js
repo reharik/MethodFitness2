@@ -12,7 +12,9 @@ MF.Views.ResetPasswordView = MF.Views.View.extend({
         MF.mixin(this, "baseFormView");
     },
     render: function(){
-        MF.notificationService = new cc.MessageNotficationService();
+        CC.notification = new CC.NotificationService();
+        CC.notification.render($("#messageContainer").get(0));
+
         this.bindModelAndElements();
         if(this.setBindings){this.setBindings();}
         $("input[name='Password']").focus();
@@ -28,9 +30,15 @@ MF.Views.LoginView = MF.Views.View.extend({
         "click .save": "submitClick"
     }},
     initialize: function(){
+        var that = this;
         MF.mixin(this, "formMixin");
         MF.mixin(this, "modelAndElementsMixin");
         this.registerEvents();
+        this.$el.delegate(this.$el,"keypress",function(e){
+            if(e.keyCode==13){
+                that.submitClick();
+            }
+        });
     },
     render: function () {
         this.bindModelAndElements();
