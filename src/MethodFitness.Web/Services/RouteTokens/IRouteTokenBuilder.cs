@@ -24,6 +24,7 @@ namespace MethodFitness.Web.Services.ViewOptions
         IRouteTokenBuilder SubViewName(string subViewName);
         IRouteTokenBuilder ViewId(string ViewId);
         IRouteTokenBuilder AddUpdateToken(string addUpdate);
+        IRouteTokenBuilder DisplayToken(string display);
         IRouteTokenBuilder IsChild(bool isChild = true);
         IRouteTokenBuilder NoBubbleUp();
         IRouteTokenBuilder Operation(string operation);
@@ -124,7 +125,13 @@ namespace MethodFitness.Web.Services.ViewOptions
 
         public IRouteTokenBuilder AddUpdateToken(string addUpdate)
         {
-            currentItem.addUpdate = addUpdate;
+            currentItem.addUpdate = addUpdate.ToLowerInvariant();
+            return this;
+        }
+
+        public IRouteTokenBuilder DisplayToken(string display)
+        {
+            currentItem.display = display.ToLowerInvariant();
             return this;
         }
 

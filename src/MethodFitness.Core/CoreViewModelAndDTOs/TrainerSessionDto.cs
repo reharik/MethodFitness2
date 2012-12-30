@@ -7,6 +7,7 @@ namespace MethodFitness.Core.CoreViewModelAndDTOs
     {
         public virtual int EntityId { get; set; }
         public virtual int TrainerId { get; set; }
+        public virtual int TrainerSessionVerificationId { get; set; }
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
         public virtual DateTime? AppointmentDate { get; set; }

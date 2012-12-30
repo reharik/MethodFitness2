@@ -203,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
+    <Compile Include="Areas\Billing\Controllers\VerifiedTrainerSessionsController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationListController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionViewController.cs" />
