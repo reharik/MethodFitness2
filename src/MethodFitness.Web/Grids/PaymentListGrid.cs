@@ -25,6 +25,8 @@ namespace MethodFitness.Web.Grids
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
                 .DefaultSortColumn().SecurityOperation("/Payment/Display");
             GridBuilder.DisplayFor(x => x.PaymentTotal);
+            GridBuilder.SetSearchField(x => x.CreatedDate);
+
             return this;
         }
     }

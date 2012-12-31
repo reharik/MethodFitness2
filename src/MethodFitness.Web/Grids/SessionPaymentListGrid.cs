@@ -25,6 +25,8 @@ namespace MethodFitness.Web.Grids
             GridBuilder.DisplayFor(x => x.TrainerPay);
             GridBuilder.HideColumnFor(x => x.InArrears);
             GridBuilder.HideColumnFor(x => x.TrainerVerified);
+            GridBuilder.SetSearchField(x => x.LastName);
+
             return this;
         }
     }
