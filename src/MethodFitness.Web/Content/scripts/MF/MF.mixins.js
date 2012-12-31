@@ -109,7 +109,7 @@ MF.mixins.formMixin = {
     },
 
     saveItem:function(){
-        var isValid = CC.ValidationRunner.runViewModel(this.elementsViewmodel);
+        var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel);
         if(!isValid){return;}
         var data;
         var fileInputs = $('input:file', this.$el);

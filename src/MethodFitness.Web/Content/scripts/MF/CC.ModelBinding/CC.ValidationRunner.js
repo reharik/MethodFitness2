@@ -39,9 +39,10 @@ CC.ValidationRunner = (function(){
             CCElement.isValid = elementIsValid;
         }
     };
-    runner.runViewModel = function(viewModel){
+    runner.runViewModel = function(cid, viewModel){
         var isValid = true;
         var collection = viewModel.collection;
+        CC.notification.removeAllErrorsByViewId(cid);
         for (var el in collection){
             if(collection.hasOwnProperty(el)){
                 collection[el].validate();

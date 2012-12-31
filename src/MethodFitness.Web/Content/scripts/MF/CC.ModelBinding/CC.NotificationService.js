@@ -32,7 +32,6 @@ $.extend(CC.NotificationService.prototype,{
             if(msgObject.shouldSelfDestruct){
                 msgObject.parent = this;
                 msgObject.selfDestruct();
-
             }
         }
     },

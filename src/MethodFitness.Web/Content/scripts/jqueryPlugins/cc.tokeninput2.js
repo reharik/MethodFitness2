@@ -271,6 +271,10 @@ $.TokenList = function (_input, _viewModel, _settings) {
         // Public functions
         //
 
+        this.getSelectedItems = function(){
+            return settings.viewModel.selectedItems();
+        };
+
         this.clear = function() {
             selected_token_list.children("li").each(delete_selected_listItem);
         };
