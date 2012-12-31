@@ -15,7 +15,7 @@ namespace MethodFitness.Web.Grids
         protected override Grid<TrainerSessionVerification> BuildGrid()
         {
             GridBuilder.LinkColumnFor(x => x.CreatedDate)
-                .ToPerformAction(ColumnAction.DisplayItem).WithId("trainerPaymentsList")
+                .ToPerformAction(ColumnAction.DisplayItem)  
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
                 .DefaultSortColumn();
             GridBuilder.DisplayFor(x => x.Total);

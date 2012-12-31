@@ -35,7 +35,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             {
                 gridDef = _grid.GetGridDefinition(url,user),
                 _Title = WebLocalizationKeys.PAYMENTS.ToString(),
-                addUpdateUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => x.Display(null))
+                displayUrl = UrlContext.GetUrlForAction<VerifiedTrainerSessionsController>(x => x.ItemList(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
             };
             return new CustomJsonResult(model);
         }

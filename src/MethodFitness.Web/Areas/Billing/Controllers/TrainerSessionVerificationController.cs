@@ -74,7 +74,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var user = (User) input.User;
             var verification = new TrainerSessionVerification {Trainer = user};
             //get this from the view then add it to the verification
-            var total = 0;
+            var total = 0d;
+            // call tolist because were gonna itterate
+            user.TrainerClientRates.ToList();
+            user.Sessions.Where(x=> input.EntityIds.Contains(x.EntityId)).ToList();
             input.EntityIds.ForEachItem(x =>
                 {
                     var session = user.Sessions.FirstOrDefault(y => y.EntityId == x);
@@ -82,6 +85,9 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                     {
                         session.TrainerVerified = true;
                         verification.AddTrainerApprovedSessionItem(session);
+                        var trainerClientRate = user.TrainerClientRates.FirstOrDefault(tcr => tcr.EntityId == session.Client.EntityId);
+                        int percent = trainerClientRate != null ? trainerClientRate.Percent:user.ClientRateDefault;
+                        verification.Total += session.Cost * (percent*.01);
                     }
                 });
             user.AddTrainerSessionVerification(verification);

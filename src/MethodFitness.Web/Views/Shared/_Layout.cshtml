@@ -156,16 +156,19 @@
             </div>
         </div>
     </script>
-    
-       <script id="payTrainerTemplate" type="text/x-jQuery-tmpl">
-        <div class="col left">
-            <div class="fieldRow">
-                Are you sure you would like to pay $${amount} to ${trainersName}?
+
+    <script id="payTrainerSearchTemplate" type="text/x-jQuery-tmpl">
+        <div id="filterArea">
+            <div class="headerInput">
+                @WebLocalizationKeys.END_DATE
+                <input type="text" data-bind="value:EndDate" name="EndDate" class="datePicker" >
             </div>
+            <button id="search" class="filter" title="@WebLocalizationKeys.FILTER"></button>
+            <button id='payTrainerButton' class='dollar_sign' ></button>
         </div>
     </script>
     
-     <div style="display:none" id="emailTemplate" >
+    <div style="display:none" id="emailTemplate" >
         @Html.Partial("EmailTemplate", new EmailViewModel())
     </div>
 

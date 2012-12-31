@@ -13,18 +13,20 @@ using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 using MethodFitness.Web.Grids;
+using NHibernate.Linq;
+using NHibernate.SqlCommand;
 using StructureMap;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
-    public class TrainerSessionViewController : MFController
+    public class VerifiedTrainerSessionsController : MFController
     {
 
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IRepository _repository;
         private IEntityListGrid<TrainerSessionDto> _grid;
 
-        public TrainerSessionViewController(
+        public VerifiedTrainerSessionsController(
             IDynamicExpressionQuery dynamicExpressionQuery,
             IRepository repository)
         {
@@ -35,13 +37,11 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult ItemList(ViewModel input)
         {
-            var url = UrlContext.GetUrlForAction<TrainerSessionViewController>(x => x.TrainerSessions(null), AreaName.Billing) + "?ParentId=" + input.EntityId;
+            var url = UrlContext.GetUrlForAction<VerifiedTrainerSessionsController>(x => x.TrainerSessions(null), AreaName.Billing) + "?ParentId=" + input.EntityId;
             var user = (User)input.User;
             var model = new TrainersPaymentListViewModel()
             {
                 gridDef = _grid.GetGridDefinition(url, user),
-                _Title = user.FullNameFNF + "'s " + WebLocalizationKeys.PAYMENT_AMOUNT,
-                TrainersName = user.FullNameFNF,
                 EntityId = user.EntityId,
             };
             return new CustomJsonResult(model);
@@ -49,9 +49,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
         {
-            var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-
-            var items = _dynamicExpressionQuery.PerformQuery<TrainerSessionDto>(input.filters, x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate);
+            var items = _dynamicExpressionQuery.PerformQuery<TrainerSessionDto>(input.filters, x => x.TrainerSessionVerificationId == input.ParentId);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, (IUser)input.User);
             return new CustomJsonResult(gridItemsViewModel);
         }

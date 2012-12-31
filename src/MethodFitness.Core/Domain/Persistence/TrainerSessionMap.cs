@@ -11,6 +11,7 @@ namespace MethodFitness.Core.Domain.Persistence
           Table("TrainerSessions");
             Id(x => x.EntityId);
             Map(x => x.TrainerId);
+            Map(x => x.TrainerSessionVerificationId);
             Map(x => x.FirstName);
             Map(x => x.LastName);
             Map(x => x.AppointmentDate);
