@@ -29,6 +29,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
             loadComplete : function(){
                 var ids = $(this).getDataIDs();
                 var paymentRows =[];
+                that.options.paymentTotal = 0;
                 for (var i = 0, l = ids.length; i < l; i++) {
                     var rowId = ids[i];
                     var row;
@@ -44,7 +45,8 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                             id:rowId,
                             trainerPay:rowData.TrainerPay,
                             _checked:false
-                        })
+                        });
+                        that.options.paymentTotal += parseFloat(rowData.TrainerPay);
                     } else {
                         row = $('#' + rowId, that.el);
                         row.find("td").addClass('gridRowGrey');
@@ -52,7 +54,8 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                             id:rowId,
                             trainerPay:rowData.TrainerPay,
                             _checked:false
-                        })
+                        });
+                        that.options.paymentTotal += parseFloat(rowData.TrainerPay);
                     }
                 }
                 that.model.paymentAmount = ko.observable(that.options.paymentTotal);
