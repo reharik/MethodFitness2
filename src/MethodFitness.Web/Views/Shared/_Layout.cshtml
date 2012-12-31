@@ -156,8 +156,19 @@
             </div>
         </div>
     </script>
+
+    <script id="payTrainerSearchTemplate" type="text/x-jQuery-tmpl">
+        <div id="filterArea">
+            <div class="headerInput">
+                @WebLocalizationKeys.END_DATE
+                <input type="text" data-bind="value:EndDate" name="EndDate" class="datePicker" >
+            </div>
+            <button id="search" class="filter" title="@WebLocalizationKeys.FILTER"></button>
+            <button id='payTrainerButton' class='dollar_sign' ></button>
+        </div>
+    </script>
     
-     <div style="display:none" id="emailTemplate" >
+    <div style="display:none" id="emailTemplate" >
         @Html.Partial("EmailTemplate", new EmailViewModel())
     </div>
 
