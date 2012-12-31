@@ -19,6 +19,7 @@ namespace MethodFitness.Web.Grids
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
                 .DefaultSortColumn();
             GridBuilder.DisplayFor(x => x.Total);
+            GridBuilder.SetSearchField(x => x.CreatedDate);
             return this;
         }
     }

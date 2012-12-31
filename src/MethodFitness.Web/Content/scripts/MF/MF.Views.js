@@ -124,6 +124,23 @@ MF.Views.AjaxDisplayView = MF.Views.View.extend({
     }
 });
 
+MF.Views.NoMultiSelectGridView= MF.Views.View.extend({
+    initialize: function(){
+        this.options.gridOptions ={multiselect:false};
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
+    },
+    viewLoaded:function(){
+        this.setupBindings();
+    },
+    onClose:function(){
+        this.unbindBindings();
+    }
+});
+
+
 MF.Views.GridView = MF.Views.View.extend({
     initialize: function(){
         MF.mixin(this, "ajaxGridMixin");

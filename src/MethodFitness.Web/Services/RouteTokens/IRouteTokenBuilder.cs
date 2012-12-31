@@ -30,6 +30,7 @@ namespace MethodFitness.Web.Services.ViewOptions
         IRouteTokenBuilder Operation(string operation);
         IRouteTokenBuilder End();
         void WithoutPermissions(bool withOutPermissions);
+        IRouteTokenBuilder NoMultiSelectGridView();
     }
 
     public class RouteTokenBuilder : IRouteTokenBuilder
@@ -173,6 +174,12 @@ namespace MethodFitness.Web.Services.ViewOptions
         public void WithoutPermissions(bool withOutPermissions)
         {
             _withOutPermissions = withOutPermissions;
+        }
+
+        public IRouteTokenBuilder NoMultiSelectGridView()
+        {
+            currentItem.NoMultiSelectGridView = true;
+            return this;
         }
     }
 }

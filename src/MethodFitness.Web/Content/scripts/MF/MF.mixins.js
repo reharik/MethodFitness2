@@ -204,7 +204,7 @@ MF.mixins.setupGridMixin = {
         } else {
             this.options.gridId = "gridContainer";
         }
-
+        this.options.searchField = this.options.gridDef.SearchField ||this.options.searchField;
         $("#" + this.options.gridId, this.el).AsGrid(this.options.gridDef, this.options.gridOptions);
         ///////
         $(this.el).gridSearch({onClear:$.proxy(this.removeSearch, this),onSubmit:$.proxy(this.search, this)});
