@@ -46,7 +46,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                             trainerPay:rowData.TrainerPay,
                             _checked:false
                         });
-                        that.options.paymentTotal += parseFloat(rowData.TrainerPay);
                     } else {
                         row = $('#' + rowId, that.el);
                         row.find("td").addClass('gridRowGrey');
@@ -55,7 +54,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                             trainerPay:rowData.TrainerPay,
                             _checked:false
                         });
-                        that.options.paymentTotal += parseFloat(rowData.TrainerPay);
                     }
                 }
                 that.model.paymentAmount = ko.observable(that.options.paymentTotal);
@@ -75,17 +73,17 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
     reloadGrid: function () {
         $("#" + this.options.gridId).trigger("reloadGrid");
     },
-    setupElements:function(rows){
+    setupElements:function(){
         if($("#filterArea").size()==0){
             $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
             $("[name='EndDate']",this.$el).datepicker();
             this.model.EndDate= ko.observable( new XDate().toString("MM/dd/yyyy") );
-        $("#payTrainerButton").hide();
-        $('.paymentAmount').hide();
-        $(".content-header",this.$el).find(".search").remove();
+            $("#payTrainerButton").hide();
+            $('.paymentAmount').hide();
+            $(".content-header",this.$el).find(".search").remove();
 
-        ko.applyBindings(this.model,this.el);
+            ko.applyBindings(this.model,this.el);
         }
     },
 
