@@ -27,12 +27,15 @@
     @Script("jqueryPlugins/jquery.validate.js").ToHtmlTag()
     @Script("jqueryPlugins/jquery.form.js").ToHtmlTag()
     @Script("externalHelpers/underscore.js").ToHtmlTag()
-     @Script("externalHelpers/backbone.js").ToHtmlTag()
+    @Script("externalHelpers/backbone.js").ToHtmlTag()
     @Script("externalHelpers/backbone.marionette.js").ToHtmlTag()
     @Script("externalHelpers/knockout-2.1.0.debug.js").ToHtmlTag()    
-        @Script("externalHelpers/knockout.mapping.js").ToHtmlTag()    
+    @Script("externalHelpers/knockout.mapping.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/jquery.noty.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/inline.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/default.js").ToHtmlTag()    
 
-        @Script("MF/MF.App.js").ToHtmlTag()
+    @Script("MF/MF.App.js").ToHtmlTag()
     @Script("MF/MF.Views.js").ToHtmlTag()
     @Script("MF/MF.State.js").ToHtmlTag()
     @Script("MF/MF.Mixins.js").ToHtmlTag()
@@ -40,7 +43,6 @@
 
     
     @Script("MF/CC.ModelBinding/CC.Elements.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.NotificationService.js").ToHtmlTag()
     @Script("MF/CC.ModelBinding/CC.ModelService.js").ToHtmlTag()
     @Script("MF/CC.ModelBinding/CC.ValidationRules.js").ToHtmlTag()
     @Script("MF/CC.ModelBinding/CC.ValidationRunner.js").ToHtmlTag()
@@ -68,16 +70,7 @@
             <div class="content-outer">
                 <div class="content-header"></div>
                 <div class="content-inner norequired">
-                    <div id="successMessageContainer">
-                        <ul data-bind="foreach:messages">
-                            <li data-bind="text:message,css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
-                        </ul>
-                    </div> 
-                     <div id="errorMessageContainer">
-                        <ul data-bind="foreach:messages">
-                            <li data-bind="text:message,css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
-                        </ul>
-                    </div> 
+                    <div id="messageContainer"></div> 
                     <div class="signin">
                             <div class="col">
                                 <label class="big">@WebLocalizationKeys.SIGN_IN</label>

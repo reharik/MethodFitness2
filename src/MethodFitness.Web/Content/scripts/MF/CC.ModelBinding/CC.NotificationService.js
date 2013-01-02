@@ -36,9 +36,9 @@ $.extend(CC.NotificationService.prototype,{
     },
     getCorrectViewModel:function(status){
         if(status=="success"){
-            return this.successViewmodel.messages();
+            return this.successViewmodel.messages;
         }else if (status == "error"){
-            return this.errorViewmodel.messages();
+            return this.errorViewmodel.messages;
         }
     },
     add:function(msgObject, status){
@@ -54,7 +54,7 @@ $.extend(CC.NotificationService.prototype,{
             }
         }
     },
-    remove:function(msgObject){
+    remove:function(msgObject,status){
         var messages=this.getCorrectViewModel(status);
         messages.remove(function(msg){
             return msg.elementCid()===msgObject.elementCid()
@@ -62,16 +62,16 @@ $.extend(CC.NotificationService.prototype,{
         });
     },
 
-    removeById:function(cid){
+    removeById:function(cid,status){
         var messages=this.getCorrectViewModel(status);
         messages.remove(function(item){
             return item.elementCid()===cid;
         });
     },
 
-    removeAllErrorsByViewId:function(viewId){
-        var errorMessages=this.getCorrectViewModel(status);
-        var successMessages=this.getCorrectViewModel(status);
+    removeAllErrorsByViewId:function(viewId,status){
+        var errorMessages=this.errorViewmodel.messages;
+        var successMessages=this.successViewmodel.messages;
         errorMessages.remove(function(item){
             return item.viewId()===viewId&& item.status()==='error';
         });
@@ -96,16 +96,16 @@ $.extend(CC.NotificationService.prototype,{
         var that=this;
         if(!result.Success){
             if(result.Message){
-                that.add("error", new CC.NotificationMessage("",cid, result.Message,"error"));
+                that.add(new CC.NotificationMessage("",cid, result.Message,"error"),"error");
             }
             if(result.Errors){
                 _.each(result.Errors,function(item){
-                    that.add("error", new CC.NotificationMessage("",cid, item.ErrorMessage,"error"));
+                    that.add(new CC.NotificationMessage("",cid, item.ErrorMessage,"error"),"error");
                 })
             }
         }else{
             if(result.Message){
-                that.add("success",new CC.NotificationMessage("",cid, result.Message,"success",true));
+                that.add(new CC.NotificationMessage("",cid, result.Message,"success",true),"success");
                 that.removeAllErrorsByViewId(cid);
             }
         }

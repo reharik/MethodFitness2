@@ -23,7 +23,7 @@ namespace Migrations
     {
         public override void Up()
         {
-            string sql = System.IO.File.ReadAllText(@"c:\development\cannibalcoder\methodfitness\src\dbfluentmigration\initialdb.sql");
+            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\initialdb.sql");
             Execute.Sql(sql);
         }
 
