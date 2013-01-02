@@ -68,12 +68,17 @@
             <div class="content-outer">
                 <div class="content-header"></div>
                 <div class="content-inner norequired">
-                    <div id="messageContainer">
+                    <div id="successMessageContainer">
                         <ul data-bind="foreach:messages">
                             <li data-bind="text:message,css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
                         </ul>
                     </div> 
-                        <div class="signin">
+                     <div id="errorMessageContainer">
+                        <ul data-bind="foreach:messages">
+                            <li data-bind="text:message,css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
+                        </ul>
+                    </div> 
+                    <div class="signin">
                             <div class="col">
                                 <label class="big">@WebLocalizationKeys.SIGN_IN</label>
                                 <div class="fieldRow">

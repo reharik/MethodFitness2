@@ -25,10 +25,10 @@ MF.addInitializer(function(){
     });
 
     CC.notification = new CC.NotificationService();
-    CC.notification.render($("#messageContainer").get(0));
+    CC.notification.render($("#successMessageContainer").get(0), $("#errorMessageContainer").get(0));
     Backbone.Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
         return MF.repository.ajaxGet(this.url, this.data);
-    },
+    };
 
     // overriding compileTemplate with passthrough function because we are not compiling
     Backbone.Marionette.TemplateCache.prototype.compileTemplate = function(rawTemplate){ return rawTemplate;};

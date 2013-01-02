@@ -7,7 +7,15 @@
  */
 
 CC.NotificationService = function(){
-    this.viewmodel = {
+    this.successViewmodel = {
+        messages: ko.observableArray(),
+        fadeOut: function(item){
+            if(item.nodeType ==1){
+                $(item).hide("slow");
+            }
+        }
+    };
+    this.errorViewmodel = {
         messages: ko.observableArray(),
         fadeOut: function(item){
             if(item.nodeType ==1){
@@ -19,16 +27,27 @@ CC.NotificationService = function(){
 
 $.extend(CC.NotificationService.prototype,{
     successSelector:"",
+    errorSelector:"",
     render:function(_successSelector, _errorSelector){
-        successSelector = _successSelector;
-        ko.applyBindings(this.viewmodel,successSelector);
+        this.successSelector = _successSelector;
+        this.errorSelector = _errorSelector;
+        ko.applyBindings(this.successViewmodel,this.successSelector);
+        ko.applyBindings(this.errorViewmodel,this.errorSelector);
     },
-    add:function(msgObject){
-        var exists = _.any(this.viewmodel.messages(),function(msg){
+    getCorrectViewModel:function(status){
+        if(status=="success"){
+            return this.successViewmodel.messages();
+        }else if (status == "error"){
+            return this.errorViewmodel.messages();
+        }
+    },
+    add:function(msgObject, status){
+        var messages=this.getCorrectViewModel(status);
+        var exists = _.any(messages,function(msg){
             return msgObject.elementCid() === msg.elementCid() && msgObject.message() === msg.message();
         });
         if(!exists){
-            this.viewmodel.messages.push(msgObject);
+            messages.push(msgObject);
             if(msgObject.shouldSelfDestruct){
                 msgObject.parent = this;
                 msgObject.selfDestruct();
@@ -36,38 +55,57 @@ $.extend(CC.NotificationService.prototype,{
         }
     },
     remove:function(msgObject){
-        this.viewmodel.messages.remove(function(msg){
+        var messages=this.getCorrectViewModel(status);
+        messages.remove(function(msg){
             return msg.elementCid()===msgObject.elementCid()
             && msg.message() === msgObject.message();
         });
     },
 
     removeById:function(cid){
-        this.viewmodel.messages.remove(function(item){
+        var messages=this.getCorrectViewModel(status);
+        messages.remove(function(item){
             return item.elementCid()===cid;
         });
     },
 
     removeAllErrorsByViewId:function(viewId){
-         this.viewmodel.messages.remove(function(item){
+        var errorMessages=this.getCorrectViewModel(status);
+        var successMessages=this.getCorrectViewModel(status);
+        errorMessages.remove(function(item){
             return item.viewId()===viewId&& item.status()==='error';
         });
+        successMessages.remove(function(item){
+            return item.viewId()===viewId&& item.status()==='success';
+        });
+    },
+
+    resetSuccessSelector:function(_successSelector){
+        ko.cleanNode(this.successSelector[0]);
+        this.successSelector = _successSelector;
+        ko.applyBindings(this.successViewmodel,this.successSelector);
+    },
+
+    resetErrorSelector:function(_errorSelector){
+        ko.cleanNode(this.errorSelector[0]);
+        this.errorSelector = _successSelector;
+        ko.applyBindings(this.errorViewmodel,this.errorSelector);
     },
 
     handleResult:function(result, cid){
         var that=this;
         if(!result.Success){
             if(result.Message){
-                that.add(new CC.NotificationMessage("",cid, result.Message,"error"));
+                that.add("error", new CC.NotificationMessage("",cid, result.Message,"error"));
             }
             if(result.Errors){
                 _.each(result.Errors,function(item){
-                    that.add(new CC.NotificationMessage("",cid, item.ErrorMessage,"error"));
+                    that.add("error", new CC.NotificationMessage("",cid, item.ErrorMessage,"error"));
                 })
             }
         }else{
             if(result.Message){
-                that.add(new CC.NotificationMessage("",cid, result.Message,"success",true));
+                that.add("success",new CC.NotificationMessage("",cid, result.Message,"success",true));
                 that.removeAllErrorsByViewId(cid);
             }
         }
