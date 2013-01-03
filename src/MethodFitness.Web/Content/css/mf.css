@@ -601,6 +601,7 @@ div.headerInput input{
 .error {
 	background: url(../images/validation_error.png) 10px 3px no-repeat;
 	background-color: #FF9999;
+
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     margin: 5px;
@@ -622,10 +623,10 @@ div.headerInput input{
 }
 
 .invalid{
-    border: 1px solid red;
+    border: 2px solid red;
 }
 .valid{
-    border: 1px solid green;
+    border: 2px solid green;
 }
 
 .deleteImage {

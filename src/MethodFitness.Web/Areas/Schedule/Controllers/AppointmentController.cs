@@ -195,7 +195,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 return notification;
             }
 
-            if (!input.ClientsDtos.selectedItems.Any())
+            if (input.ClientsDtos==null || !input.ClientsDtos.selectedItems.Any())
             {
                 notification = new Notification { Success = false };
                 notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
@@ -226,6 +226,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
     {
         [ValidateNonEmpty]
         public bool Copy { get; set; }
+        [ValidateNonEmpty]
         public TokenInputViewModel ClientsDtos { get; set; }
         public IEnumerable<SelectListItem> _LocationEntityIdList { get; set; }
         public IEnumerable<SelectListItem> _TrainerEntityIdList { get; set; }
@@ -233,8 +234,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public IEnumerable<SelectListItem> _AppointmentTypeList { get; set; }
 
         public string TrainerFullNameFNF { get; set; }
+        [ValidateNonEmpty]
         public int LocationEntityId { get; set; }
         public string LocationName { get; set; }
+        [ValidateNonEmpty]
         public int TrainerEntityId { get; set; }
         public string AppointmentType { get; set; }
         [ValidateNonEmpty]

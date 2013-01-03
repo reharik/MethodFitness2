@@ -63,17 +63,24 @@ MF.Views.LoginView = MF.Views.View.extend({
     },
 
     submitClick: function (e) {
-        var isValid = CC.ValidationRunner.runViewModel(this.elementsViewmodel);
+        var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel);
         if(!isValid){return;}
         var data = JSON.stringify(ko.mapping.toJS(this.model));
         var promise = MF.repository.ajaxPostModel(this.model._saveUrl(),data);
-        promise.done(this.success);
+        promise.done($.proxy(this.success,this));
     },
     success:function(result){
         if(result.Success){
             window.location.href = result.RedirectUrl;
         }else{
-            CC.notification.handleResult(result);
+            if(result.Message && !$.noty.getByViewIdAndElementId(this.cid)){
+                $(this.errorSelector).noty({type: "error", text: result.Message, viewId:this.cid});
+            }
+            if(result.Errors && !$.noty.getByViewIdAndElementId(this.cid)){
+                _.each(result.Errors,function(item){
+                    $(this.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:this.cid});
+                })
+            }
         }
 
     }

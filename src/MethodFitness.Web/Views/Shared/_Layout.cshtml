@@ -43,7 +43,13 @@
     @Script("jqueryPlugins/jquery.fileinput.js").ToHtmlTag()
     @Script("jqueryPlugins/mobiscroll.core-2.0.1.js").ToHtmlTag()
     @Script("jqueryPlugins/mobiscroll.datetime-2.0.1.js").ToHtmlTag()
+
+    @Script("jqueryPlugins/noty/jquery.noty.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/inline.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/default.js").ToHtmlTag()    
+    
     @Script("externalHelpers/select2.js").ToHtmlTag()
+
 
     @Script("externalHelpers/fullcalendar.js").ToHtmlTag()
     @Script("externalHelpers/underscore.js").ToHtmlTag()
@@ -110,10 +116,7 @@
             <div id="main-content">
                 <div class="content-outer" >
                     <div id="messageContainer">
-                        <ul data-bind="foreach:{data:messages, beforeRemove: fadeOut}">
-                            <li data-bind="text:message, css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
-                        </ul>
-                    </div>
+                    </div> 
                     <div id="contentInner">
                         @RenderBody()
                     </div>

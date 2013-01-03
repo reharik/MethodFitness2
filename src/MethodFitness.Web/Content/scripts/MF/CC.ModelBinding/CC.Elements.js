@@ -23,7 +23,6 @@ CC.Elements.Element = function($container){
 CC.Elements.Element.extend = Backbone.View.extend;
 $.extend(CC.Elements.Element.prototype,{
     init:function(view){
-        this.notification = view.notification?view.notification:CC.notification;
         this.viewId = view.cid;
         this.cid = _.uniqueId("c");
         this.$input = this.$container.find("input");
@@ -31,8 +30,9 @@ $.extend(CC.Elements.Element.prototype,{
         this.friendlyName = this.trimFieldName();
         this.name = this.$input.attr('name');
     },
+    errorSelector:"#messageContainer",
     validate:function(){
-        CC.ValidationRunner.runElement(this,this.notification);
+        CC.ValidationRunner.runElement(this,this.errorSelector);
     },
     getValue:function(){
         return this.$input.val();
@@ -50,7 +50,7 @@ $.extend(CC.Elements.Element.prototype,{
         this.isValid = isValid;
     },
     destroy:function(){
-        this.notification.removeById(this.cid);
+        $.noty.closeByElementId(this.cid);
     }
 });
 
@@ -237,8 +237,8 @@ CC.Elements.MultiSelect = CC.Elements.Element.extend({
         this.$input = this.$container.find("input.multiSelect");
         var item = this.$input.data("tokenInputObject");
         item.render(this.multiSelectOptions);
-        MF.vent.bind(this.name+":tokenizer:add",$.proxy(that.multiSelectChange,that));
-        MF.vent.bind(this.name+":tokenizer:remove",$.proxy(that.multiSelectChange,that));
+        MF.vent.bind(this.name+":tokenizer:add",$.proxy(function(e){that.multiSelectChange(e,item.getSelectedItems())},that));
+        MF.vent.bind(this.name+":tokenizer:remove",$.proxy(function(e){that.multiSelectChange(e,item.getSelectedItems())},that));
     },
     multiSelectChange: function(e, viewmodel){
         this.selectedViewmodel = viewmodel;
