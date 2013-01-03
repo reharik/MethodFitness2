@@ -127,7 +127,9 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
         {
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate);
+            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.User.EntityId 
+                && x.AppointmentDate <= endDate
+                && !x.TrainerVerified);
 
             var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos, input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,input.User);

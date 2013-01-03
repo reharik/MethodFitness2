@@ -190,7 +190,8 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         'click #alertAdminButton':'alertAdmin',
         'click #search':'filterByDate'
     },
-
+    successSelector:"#messageContainer",
+    errorSelector:"#messageContainer",
     beforeInitGrid:function(){
         var that = this;
         this.options.gridId="trainerPayment";
@@ -232,9 +233,9 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
     },
     setupElements:function(){
         if($("#filterArea").size()==0){
-            $(this.el).find(".content-header").append($("#payTrainerSearchTemplate").tmpl());
-            $("#payTrainerButton","#filterArea").remove();
-            $("#filterArea").prepend('<a href="#" id="acceptSessionsButton"><img src="/content/images/thumbs_up.jpg" title="Accept Sessions" class="thumbsImage" /></a><a href="#" id="alertAdminButton"><img src="/content/images/thumbs_down.jpg" title="Email Admin of a problem" class="thumbsImage thumbsLeft" /></a>' );
+//            $(this.el).find(".content-header").append($("#payTrainerSearchTemplate").tmpl());
+            $(this.el).find(".content-header").prepend('<a href="#" id="acceptSessionsButton"><img src="/content/images/thumbs_up.jpg" title="Accept Sessions" class="thumbsImage" /></a><a href="#" id="alertAdminButton"><img src="/content/images/thumbs_down.jpg" title="Email Admin of a problem" class="thumbsImage thumbsLeft" /></a>' );
+//            $("#filterArea").empty();
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
             $("[name='EndDate']",this.$el).datepicker();
             this.model.EndDate= ko.observable( new XDate().toString("MM/dd/yyyy") );
@@ -259,11 +260,26 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
     },
     acceptSessionsCallback:function(_result){
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
-        this.notification.render($("#messageContainer").get(0));
-        if(!this.notification.handleResult(result,this.cid)){
-            return;
+        if(!result.Success){
+            if(result.Message && !$.noty.getByViewIdAndElementId(this.cid)){
+                $(this.errorSelector).noty({type: "error", text: result.Message, viewId:this.cid});
+            }
+            if(result.Errors && !$.noty.getByViewIdAndElementId(this.cid)){
+                _.each(result.Errors,function(item){
+                    $(this.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:this.cid});
+                })
+            }
+        }else{
+            if(result.Message){
+                var note = $(this.successSelector).noty({type: "success", text:result.Message, viewId:this.cid});
+                note.setAnimationSpeed(1000);
+                note.setTimeout(3000);
+                $.noty.closeAllErrorsByViewId(this.cid);
+            }
+            this.model.paymentAmount(0);
+            this.reloadGrid();
+            MF.vent.trigger("form:"+this.id+":success",result);
         }
-        MF.vent.trigger("form:"+this.id+":success",result);
     },
     alertAdmin:function(){
         this.model.From = ko.observable(this.options.From);
