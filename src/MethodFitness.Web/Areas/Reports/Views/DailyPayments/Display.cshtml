@@ -1,0 +1,21 @@
+﻿@using CC.Core.Html.CCUI
+@using MethodFitness.Web
+@model MethodFitness.Web.Areas.Reports.Controllers.DailyPaymentViewModel
+
+@{
+    Layout = "~/Views/Shared/_ReportLayout.cshtml";
+}
+<div class="col full">
+    <div class="fieldRow">
+        @Html.SubmissionFor(x=>x.StartDate).AddClassToRoot("one-third").ToHtmlTag()
+        @StandardButtonFor("viewReport", WebLocalizationKeys.VIEW_REPORT).AddClass("save").ToHtmlTag()
+
+    </div>
+</div>
+
+<div class="col full">
+    <div class="fieldRow">
+        <iframe width="900px" height="900px" id="reportBody"></iframe>
+    </div>
+</div>
+
