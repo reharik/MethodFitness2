@@ -34,7 +34,7 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
             var startDate = DateTime.Now;
             var model = new DailyPaymentViewModel
                             {
-                                StartDate = startDate,
+                                Date = startDate,
                                 _Title = WebLocalizationKeys.DAILY_PAYMENTS.ToString(),
                                 ReportUrl = "/Areas/Reports/Reports/DailyPayments.aspx"
                             };
@@ -44,7 +44,7 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
 
     public class DailyPaymentViewModel : ViewModel
     {
-        public DateTime StartDate { get; set; }
+        public DateTime Date { get; set; }
         public string ReportUrl { get; set; }
     }
 }

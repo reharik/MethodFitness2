@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MethodFitness.Web.Areas.Reporting.Views
+namespace MethodFitness.Web.Areas.Reports.Reports
 {
-    public partial class TimeSheet : System.Web.UI.Page
+    public partial class DailyPayments1 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -220,10 +220,10 @@
     <Compile Include="Areas\Reports\Reports\DailyPayments.aspx.designer.cs">
       <DependentUpon>DailyPayments.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Reports\Reports\DailyPaymentsDataSet.Designer.cs">
+    <Compile Include="Areas\Reports\Reports\DailyPayments.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DailyPaymentsDataSet.xsd</DependentUpon>
+      <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Compile>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
     <Compile Include="Config\CustomJsonResult.cs" />
@@ -554,16 +554,16 @@
     <Content Include="Views\Shared\_ReportLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Reports\Reports\DailyPaymentsDataSet.xsc">
-      <DependentUpon>DailyPaymentsDataSet.xsd</DependentUpon>
+    <Content Include="Areas\Reports\Reports\DailyPayments.xsc">
+      <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
-    <None Include="Areas\Reports\Reports\DailyPaymentsDataSet.xsd">
+    <None Include="Areas\Reports\Reports\DailyPayments.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DailyPaymentsDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Areas\Reports\Reports\DailyPaymentsDataSet.xss">
-      <DependentUpon>DailyPaymentsDataSet.xsd</DependentUpon>
+    <Content Include="Areas\Reports\Reports\DailyPayments.xss">
+      <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
   </ItemGroup>
   <PropertyGroup>
