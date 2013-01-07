@@ -102,6 +102,22 @@ MF.mixins.modelAndElementsMixin = {
     }
 };
 
+MF.mixins.reportMixin = {
+    events:{
+        'click #viewReport' : 'viewReport'
+    },
+    successSelector:"#messageContainer",
+    errorSelector:"#messageContainer",
+    viewReport:function(){
+        var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel,this.errorSelector);
+        if(!isValid){return;}
+        var url = this.createUrl();
+        $("#reportBody").attr("src",url);
+    },
+    createUrl:function(data){
+    }
+}
+
 MF.mixins.formMixin = {
     events:{
         'click #save' : 'saveItem',

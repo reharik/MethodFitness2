@@ -19,15 +19,15 @@
             WaitMessageFont-Size="14pt"
             Width="875"
             Height="875">
-            <LocalReport ReportPath="Areas\Reports\Reports\DailyPayments.rdlc">
+            <LocalReport ReportPath="Areas\Reports\RDLC\DailyPayments.rdlc">
                 <DataSources>
                     <rsweb:ReportDataSource DataSourceId="SqlDataSource1" Name="DailyPayments" />
                 </DataSources>
             </LocalReport>
         </rsweb:ReportViewer>
       <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
-        ConnectionString="<%$ ConnectionStrings:MethodFitness_QAConnectionString %>" 
-        SelectCommand="DailyPayments" SelectCommandType="StoredProcedure">
+        ConnectionString='<%$ appSettings:MethodFitness.sql_server_connection_string %>'
+        SelectCommand="DailyPayments" SelectCommandType="StoredProcedure"> 
         <SelectParameters>
             <asp:QueryStringParameter Name="Date" DefaultValue="dbnull" QueryStringField="Date" Type="DateTime" />
         </SelectParameters>

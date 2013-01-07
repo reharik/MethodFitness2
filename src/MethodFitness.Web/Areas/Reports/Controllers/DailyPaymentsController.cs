@@ -36,7 +36,7 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
                             {
                                 Date = startDate,
                                 _Title = WebLocalizationKeys.DAILY_PAYMENTS.ToString(),
-                                ReportUrl = "/Areas/Reports/Reports/DailyPayments.aspx"
+                                ReportUrl = "/Areas/Reports/ReportViewer/DailyPayments.aspx"
                             };
             return new CustomJsonResult(model);
         }

@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace MethodFitness.Web.Areas.Reports.Reports {
+namespace MethodFitness.Web.Areas.Reports.XSD {
     
     
     /// <summary>
@@ -20,17 +20,17 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("DailyPayments")]
+    [global::System.Xml.Serialization.XmlRootAttribute("TrainerMetric")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class DailyPayments : global::System.Data.DataSet {
+    public partial class TrainerMetric : global::System.Data.DataSet {
         
-        private DailyPaymentsDataTable tableDailyPayments;
+        private TrainerMetricDataTable tableTrainerMetric;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public DailyPayments() {
+        public TrainerMetric() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected DailyPayments(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected TrainerMetric(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["DailyPayments"] != null)) {
-                    base.Tables.Add(new DailyPaymentsDataTable(ds.Tables["DailyPayments"]));
+                if ((ds.Tables["TrainerMetric"] != null)) {
+                    base.Tables.Add(new TrainerMetricDataTable(ds.Tables["TrainerMetric"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public DailyPaymentsDataTable _DailyPayments {
+        public TrainerMetricDataTable _TrainerMetric {
             get {
-                return this.tableDailyPayments;
+                return this.tableTrainerMetric;
             }
         }
         
@@ -127,7 +127,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            DailyPayments cln = ((DailyPayments)(base.Clone()));
+            TrainerMetric cln = ((TrainerMetric)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["DailyPayments"] != null)) {
-                    base.Tables.Add(new DailyPaymentsDataTable(ds.Tables["DailyPayments"]));
+                if ((ds.Tables["TrainerMetric"] != null)) {
+                    base.Tables.Add(new TrainerMetricDataTable(ds.Tables["TrainerMetric"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableDailyPayments = ((DailyPaymentsDataTable)(base.Tables["DailyPayments"]));
+            this.tableTrainerMetric = ((TrainerMetricDataTable)(base.Tables["TrainerMetric"]));
             if ((initTable == true)) {
-                if ((this.tableDailyPayments != null)) {
-                    this.tableDailyPayments.InitVars();
+                if ((this.tableTrainerMetric != null)) {
+                    this.tableTrainerMetric.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "DailyPayments";
+            this.DataSetName = "TrainerMetric";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/DailyPayments.xsd";
+            this.Namespace = "http://tempuri.org/TrainerMetric.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableDailyPayments = new DailyPaymentsDataTable();
-            base.Tables.Add(this.tableDailyPayments);
+            this.tableTrainerMetric = new TrainerMetricDataTable();
+            base.Tables.Add(this.tableTrainerMetric);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerialize_DailyPayments() {
+        private bool ShouldSerialize_TrainerMetric() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            DailyPayments ds = new DailyPayments();
+            TrainerMetric ds = new TrainerMetric();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,27 +270,31 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void DailyPaymentsRowChangeEventHandler(object sender, DailyPaymentsRowChangeEvent e);
+        public delegate void TrainerMetricRowChangeEventHandler(object sender, TrainerMetricRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class DailyPaymentsDataTable : global::System.Data.TypedTableBase<DailyPaymentsRow> {
-            
-            private global::System.Data.DataColumn columnCreatedDate;
+        public partial class TrainerMetricDataTable : global::System.Data.TypedTableBase<TrainerMetricRow> {
             
             private global::System.Data.DataColumn columnTrainer;
             
             private global::System.Data.DataColumn columnClient;
             
-            private global::System.Data.DataColumn columnPaymentTotal;
+            private global::System.Data.DataColumn columnHour;
+            
+            private global::System.Data.DataColumn columnHalfHour;
+            
+            private global::System.Data.DataColumn columnPair;
+            
+            private global::System.Data.DataColumn columnHoursPerWeek;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DailyPaymentsDataTable() {
-                this.TableName = "DailyPayments";
+            public TrainerMetricDataTable() {
+                this.TableName = "TrainerMetric";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -298,7 +302,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal DailyPaymentsDataTable(global::System.Data.DataTable table) {
+            internal TrainerMetricDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -315,17 +319,9 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected DailyPaymentsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected TrainerMetricDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn CreatedDateColumn {
-                get {
-                    return this.columnCreatedDate;
-                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -346,9 +342,33 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PaymentTotalColumn {
+            public global::System.Data.DataColumn HourColumn {
                 get {
-                    return this.columnPaymentTotal;
+                    return this.columnHour;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HalfHourColumn {
+                get {
+                    return this.columnHalfHour;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PairColumn {
+                get {
+                    return this.columnPair;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HoursPerWeekColumn {
+                get {
+                    return this.columnHoursPerWeek;
                 }
             }
             
@@ -363,48 +383,50 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DailyPaymentsRow this[int index] {
+            public TrainerMetricRow this[int index] {
                 get {
-                    return ((DailyPaymentsRow)(this.Rows[index]));
+                    return ((TrainerMetricRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DailyPaymentsRowChangeEventHandler DailyPaymentsRowChanging;
+            public event TrainerMetricRowChangeEventHandler TrainerMetricRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DailyPaymentsRowChangeEventHandler DailyPaymentsRowChanged;
+            public event TrainerMetricRowChangeEventHandler TrainerMetricRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DailyPaymentsRowChangeEventHandler DailyPaymentsRowDeleting;
+            public event TrainerMetricRowChangeEventHandler TrainerMetricRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DailyPaymentsRowChangeEventHandler DailyPaymentsRowDeleted;
+            public event TrainerMetricRowChangeEventHandler TrainerMetricRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddDailyPaymentsRow(DailyPaymentsRow row) {
+            public void AddTrainerMetricRow(TrainerMetricRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DailyPaymentsRow AddDailyPaymentsRow(System.DateTime CreatedDate, string Trainer, string Client, double PaymentTotal) {
-                DailyPaymentsRow rowDailyPaymentsRow = ((DailyPaymentsRow)(this.NewRow()));
+            public TrainerMetricRow AddTrainerMetricRow(string Trainer, string Client, int Hour, int HalfHour, int Pair, int HoursPerWeek) {
+                TrainerMetricRow rowTrainerMetricRow = ((TrainerMetricRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        CreatedDate,
                         Trainer,
                         Client,
-                        PaymentTotal};
-                rowDailyPaymentsRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowDailyPaymentsRow);
-                return rowDailyPaymentsRow;
+                        Hour,
+                        HalfHour,
+                        Pair,
+                        HoursPerWeek};
+                rowTrainerMetricRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowTrainerMetricRow);
+                return rowTrainerMetricRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                DailyPaymentsDataTable cln = ((DailyPaymentsDataTable)(base.Clone()));
+                TrainerMetricDataTable cln = ((TrainerMetricDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -412,61 +434,71 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new DailyPaymentsDataTable();
+                return new TrainerMetricDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnCreatedDate = base.Columns["CreatedDate"];
                 this.columnTrainer = base.Columns["Trainer"];
                 this.columnClient = base.Columns["Client"];
-                this.columnPaymentTotal = base.Columns["PaymentTotal"];
+                this.columnHour = base.Columns["Hour"];
+                this.columnHalfHour = base.Columns["HalfHour"];
+                this.columnPair = base.Columns["Pair"];
+                this.columnHoursPerWeek = base.Columns["HoursPerWeek"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnCreatedDate = new global::System.Data.DataColumn("CreatedDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCreatedDate);
                 this.columnTrainer = new global::System.Data.DataColumn("Trainer", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTrainer);
                 this.columnClient = new global::System.Data.DataColumn("Client", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnClient);
-                this.columnPaymentTotal = new global::System.Data.DataColumn("PaymentTotal", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPaymentTotal);
+                this.columnHour = new global::System.Data.DataColumn("Hour", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHour);
+                this.columnHalfHour = new global::System.Data.DataColumn("HalfHour", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHalfHour);
+                this.columnPair = new global::System.Data.DataColumn("Pair", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPair);
+                this.columnHoursPerWeek = new global::System.Data.DataColumn("HoursPerWeek", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHoursPerWeek);
                 this.columnTrainer.ReadOnly = true;
                 this.columnTrainer.MaxLength = 511;
                 this.columnClient.ReadOnly = true;
                 this.columnClient.MaxLength = 511;
-                this.ExtendedProperties.Add("Generator_TablePropName", "_DailyPayments");
-                this.ExtendedProperties.Add("Generator_UserTableName", "DailyPayments");
+                this.columnHour.ReadOnly = true;
+                this.columnHalfHour.ReadOnly = true;
+                this.columnPair.ReadOnly = true;
+                this.columnHoursPerWeek.ReadOnly = true;
+                this.ExtendedProperties.Add("Generator_TablePropName", "_TrainerMetric");
+                this.ExtendedProperties.Add("Generator_UserTableName", "TrainerMetric");
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DailyPaymentsRow NewDailyPaymentsRow() {
-                return ((DailyPaymentsRow)(this.NewRow()));
+            public TrainerMetricRow NewTrainerMetricRow() {
+                return ((TrainerMetricRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new DailyPaymentsRow(builder);
+                return new TrainerMetricRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(DailyPaymentsRow);
+                return typeof(TrainerMetricRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.DailyPaymentsRowChanged != null)) {
-                    this.DailyPaymentsRowChanged(this, new DailyPaymentsRowChangeEvent(((DailyPaymentsRow)(e.Row)), e.Action));
+                if ((this.TrainerMetricRowChanged != null)) {
+                    this.TrainerMetricRowChanged(this, new TrainerMetricRowChangeEvent(((TrainerMetricRow)(e.Row)), e.Action));
                 }
             }
             
@@ -474,8 +506,8 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.DailyPaymentsRowChanging != null)) {
-                    this.DailyPaymentsRowChanging(this, new DailyPaymentsRowChangeEvent(((DailyPaymentsRow)(e.Row)), e.Action));
+                if ((this.TrainerMetricRowChanging != null)) {
+                    this.TrainerMetricRowChanging(this, new TrainerMetricRowChangeEvent(((TrainerMetricRow)(e.Row)), e.Action));
                 }
             }
             
@@ -483,8 +515,8 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.DailyPaymentsRowDeleted != null)) {
-                    this.DailyPaymentsRowDeleted(this, new DailyPaymentsRowChangeEvent(((DailyPaymentsRow)(e.Row)), e.Action));
+                if ((this.TrainerMetricRowDeleted != null)) {
+                    this.TrainerMetricRowDeleted(this, new TrainerMetricRowChangeEvent(((TrainerMetricRow)(e.Row)), e.Action));
                 }
             }
             
@@ -492,14 +524,14 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.DailyPaymentsRowDeleting != null)) {
-                    this.DailyPaymentsRowDeleting(this, new DailyPaymentsRowChangeEvent(((DailyPaymentsRow)(e.Row)), e.Action));
+                if ((this.TrainerMetricRowDeleting != null)) {
+                    this.TrainerMetricRowDeleting(this, new TrainerMetricRowChangeEvent(((TrainerMetricRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveDailyPaymentsRow(DailyPaymentsRow row) {
+            public void RemoveTrainerMetricRow(TrainerMetricRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -508,7 +540,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DailyPayments ds = new DailyPayments();
+                TrainerMetric ds = new TrainerMetric();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -526,7 +558,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "DailyPaymentsDataTable";
+                attribute2.FixedValue = "TrainerMetricDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -570,31 +602,15 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class DailyPaymentsRow : global::System.Data.DataRow {
+        public partial class TrainerMetricRow : global::System.Data.DataRow {
             
-            private DailyPaymentsDataTable tableDailyPayments;
+            private TrainerMetricDataTable tableTrainerMetric;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal DailyPaymentsRow(global::System.Data.DataRowBuilder rb) : 
+            internal TrainerMetricRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableDailyPayments = ((DailyPaymentsDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime CreatedDate {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableDailyPayments.CreatedDateColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CreatedDate\' in table \'DailyPayments\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableDailyPayments.CreatedDateColumn] = value;
-                }
+                this.tableTrainerMetric = ((TrainerMetricDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -602,14 +618,14 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             public string Trainer {
                 get {
                     try {
-                        return ((string)(this[this.tableDailyPayments.TrainerColumn]));
+                        return ((string)(this[this.tableTrainerMetric.TrainerColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Trainer\' in table \'DailyPayments\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Trainer\' in table \'TrainerMetric\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDailyPayments.TrainerColumn] = value;
+                    this[this.tableTrainerMetric.TrainerColumn] = value;
                 }
             }
             
@@ -618,79 +634,151 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
             public string Client {
                 get {
                     try {
-                        return ((string)(this[this.tableDailyPayments.ClientColumn]));
+                        return ((string)(this[this.tableTrainerMetric.ClientColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Client\' in table \'DailyPayments\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Client\' in table \'TrainerMetric\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDailyPayments.ClientColumn] = value;
+                    this[this.tableTrainerMetric.ClientColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double PaymentTotal {
+            public int Hour {
                 get {
                     try {
-                        return ((double)(this[this.tableDailyPayments.PaymentTotalColumn]));
+                        return ((int)(this[this.tableTrainerMetric.HourColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PaymentTotal\' in table \'DailyPayments\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Hour\' in table \'TrainerMetric\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDailyPayments.PaymentTotalColumn] = value;
+                    this[this.tableTrainerMetric.HourColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCreatedDateNull() {
-                return this.IsNull(this.tableDailyPayments.CreatedDateColumn);
+            public int HalfHour {
+                get {
+                    try {
+                        return ((int)(this[this.tableTrainerMetric.HalfHourColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HalfHour\' in table \'TrainerMetric\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTrainerMetric.HalfHourColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCreatedDateNull() {
-                this[this.tableDailyPayments.CreatedDateColumn] = global::System.Convert.DBNull;
+            public int Pair {
+                get {
+                    try {
+                        return ((int)(this[this.tableTrainerMetric.PairColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Pair\' in table \'TrainerMetric\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTrainerMetric.PairColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int HoursPerWeek {
+                get {
+                    try {
+                        return ((int)(this[this.tableTrainerMetric.HoursPerWeekColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HoursPerWeek\' in table \'TrainerMetric\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTrainerMetric.HoursPerWeekColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsTrainerNull() {
-                return this.IsNull(this.tableDailyPayments.TrainerColumn);
+                return this.IsNull(this.tableTrainerMetric.TrainerColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetTrainerNull() {
-                this[this.tableDailyPayments.TrainerColumn] = global::System.Convert.DBNull;
+                this[this.tableTrainerMetric.TrainerColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsClientNull() {
-                return this.IsNull(this.tableDailyPayments.ClientColumn);
+                return this.IsNull(this.tableTrainerMetric.ClientColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetClientNull() {
-                this[this.tableDailyPayments.ClientColumn] = global::System.Convert.DBNull;
+                this[this.tableTrainerMetric.ClientColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPaymentTotalNull() {
-                return this.IsNull(this.tableDailyPayments.PaymentTotalColumn);
+            public bool IsHourNull() {
+                return this.IsNull(this.tableTrainerMetric.HourColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPaymentTotalNull() {
-                this[this.tableDailyPayments.PaymentTotalColumn] = global::System.Convert.DBNull;
+            public void SetHourNull() {
+                this[this.tableTrainerMetric.HourColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHalfHourNull() {
+                return this.IsNull(this.tableTrainerMetric.HalfHourColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHalfHourNull() {
+                this[this.tableTrainerMetric.HalfHourColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPairNull() {
+                return this.IsNull(this.tableTrainerMetric.PairColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPairNull() {
+                this[this.tableTrainerMetric.PairColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHoursPerWeekNull() {
+                return this.IsNull(this.tableTrainerMetric.HoursPerWeekColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHoursPerWeekNull() {
+                this[this.tableTrainerMetric.HoursPerWeekColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -698,22 +786,22 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class DailyPaymentsRowChangeEvent : global::System.EventArgs {
+        public class TrainerMetricRowChangeEvent : global::System.EventArgs {
             
-            private DailyPaymentsRow eventRow;
+            private TrainerMetricRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DailyPaymentsRowChangeEvent(DailyPaymentsRow row, global::System.Data.DataRowAction action) {
+            public TrainerMetricRowChangeEvent(TrainerMetricRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DailyPaymentsRow Row {
+            public TrainerMetricRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -729,7 +817,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         }
     }
 }
-namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
+namespace MethodFitness.Web.Areas.Reports.XSD.TrainerMetricTableAdapters {
     
     
     /// <summary>
@@ -741,7 +829,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class DailyPaymentsTableAdapter : global::System.ComponentModel.Component {
+    public partial class TrainerMetricTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -755,7 +843,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public DailyPaymentsTableAdapter() {
+        public TrainerMetricTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -852,11 +940,13 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "DailyPayments";
-            tableMapping.ColumnMappings.Add("CreatedDate", "CreatedDate");
+            tableMapping.DataSetTable = "TrainerMetric";
             tableMapping.ColumnMappings.Add("Trainer", "Trainer");
             tableMapping.ColumnMappings.Add("Client", "Client");
-            tableMapping.ColumnMappings.Add("PaymentTotal", "PaymentTotal");
+            tableMapping.ColumnMappings.Add("Hour", "Hour");
+            tableMapping.ColumnMappings.Add("HalfHour", "HalfHour");
+            tableMapping.ColumnMappings.Add("Pair", "Pair");
+            tableMapping.ColumnMappings.Add("HoursPerWeek", "HoursPerWeek");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -873,23 +963,37 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "dbo.DailyPayments";
+            this._commandCollection[0].CommandText = "dbo.TrainerMetric";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartDate", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EndDate", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TrainerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(DailyPayments.DailyPaymentsDataTable dataTable, global::System.Nullable<global::System.DateTime> Date) {
+        public virtual int Fill(TrainerMetric.TrainerMetricDataTable dataTable, global::System.Nullable<global::System.DateTime> StartDate, global::System.Nullable<global::System.DateTime> EndDate, global::System.Nullable<int> TrainerId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((Date.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(Date.Value));
+            if ((StartDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((EndDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((TrainerId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((int)(TrainerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -902,15 +1006,27 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual DailyPayments.DailyPaymentsDataTable GetData(global::System.Nullable<global::System.DateTime> Date) {
+        public virtual TrainerMetric.TrainerMetricDataTable GetData(global::System.Nullable<global::System.DateTime> StartDate, global::System.Nullable<global::System.DateTime> EndDate, global::System.Nullable<int> TrainerId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((Date.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(Date.Value));
+            if ((StartDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(StartDate.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            DailyPayments.DailyPaymentsDataTable dataTable = new DailyPayments.DailyPaymentsDataTable();
+            if ((EndDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((System.DateTime)(EndDate.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((TrainerId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((int)(TrainerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            TrainerMetric.TrainerMetricDataTable dataTable = new TrainerMetric.TrainerMetricDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -984,7 +1100,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(DailyPayments dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(TrainerMetric dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -994,7 +1110,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(DailyPayments dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(TrainerMetric dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1004,7 +1120,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(DailyPayments dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(TrainerMetric dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1038,7 +1154,7 @@ namespace MethodFitness.Web.Areas.Reports.Reports.DailyPaymentsTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(DailyPayments dataSet) {
+        public virtual int UpdateAll(TrainerMetric dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

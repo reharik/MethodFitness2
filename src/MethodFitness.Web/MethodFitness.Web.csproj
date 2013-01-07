@@ -210,26 +210,39 @@
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentListController.cs" />
+    <Compile Include="Areas\Reports\Controllers\TrainerMetricController.cs" />
     <Compile Include="Areas\Reports\Controllers\DailyPaymentsController.cs" />
-    <Compile Include="Areas\Reports\Controllers\TimeSheetController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
-    <Compile Include="Areas\Reports\Reports\DailyPayments.aspx.cs">
+    <Compile Include="Areas\Reports\ReportViewer\TrainerMetric.aspx.cs">
+      <DependentUpon>TrainerMetric.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Areas\Reports\ReportViewer\TrainerMetric.aspx.designer.cs">
+      <DependentUpon>TrainerMetric.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Reports\ReportViewer\DailyPayments.aspx.cs">
       <DependentUpon>DailyPayments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Areas\Reports\Reports\DailyPayments.aspx.designer.cs">
+    <Compile Include="Areas\Reports\ReportViewer\DailyPayments.aspx.designer.cs">
       <DependentUpon>DailyPayments.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Reports\Reports\DailyPayments.Designer.cs">
+    <Compile Include="Areas\Reports\XSD\DailyPayments.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Reports\XSD\TrainerMetric.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
     </Compile>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
     <Compile Include="Config\CustomJsonResult.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
     <Compile Include="Config\AutomapperBootstrapper.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
+    <Compile Include="CustomWebViewPage.cs" />
     <Compile Include="Filters\AddUserToViewModelFilter.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
     <Compile Include="Grids\TrainerSessionVerificationListGrid.cs" />
@@ -242,7 +255,8 @@
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Config\Bootstrapper.cs" />
     <Compile Include="Config\CustomAuthorizationAttribute.cs" />
-    <Content Include="Areas\Reports\Reports\DailyPayments.aspx" />
+    <Content Include="Areas\Reports\ReportViewer\TrainerMetric.aspx" />
+    <Content Include="Areas\Reports\ReportViewer\DailyPayments.aspx" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Compile Include="Config\ModelBinders.cs" />
     <Compile Include="Config\ModelBindingBootstaper.cs" />
@@ -264,7 +278,6 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrthoganalController.cs" />
     <Compile Include="Controllers\MFController.cs" />
-    <Compile Include="CustomViewPage.cs" />
     <Compile Include="Menus\HeaderMenu.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
@@ -517,7 +530,8 @@
     <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Reports\Reports\DailyPayments.rdlc" />
+    <EmbeddedResource Include="Areas\Reports\RDLC\DailyPayments.rdlc" />
+    <EmbeddedResource Include="Areas\Reports\RDLC\TrainerMetric.rdlc" />
     <EmbeddedResource Include="Areas\Reports\Reports\TimeSheet.rdlc" />
   </ItemGroup>
   <ItemGroup>
@@ -554,16 +568,28 @@
     <Content Include="Views\Shared\_ReportLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Reports\Reports\DailyPayments.xsc">
+    <Content Include="Areas\Reports\XSD\DailyPayments.xsc">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
-    <None Include="Areas\Reports\Reports\DailyPayments.xsd">
+    <Content Include="Areas\Reports\Views\TrainerMetric\Display.cshtml" />
+    <None Include="Areas\Reports\XSD\DailyPayments.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Areas\Reports\Reports\DailyPayments.xss">
+    <Content Include="Areas\Reports\XSD\DailyPayments.xss">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Content>
+    <Content Include="Areas\Reports\XSD\TrainerMetric.xsc">
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Content>
+    <None Include="Areas\Reports\XSD\TrainerMetric.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TrainerMetric.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Areas\Reports\XSD\TrainerMetric.xss">
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
     </Content>
   </ItemGroup>
   <PropertyGroup>
