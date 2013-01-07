@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Web.Areas.Billing.Controllers;
+using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 using MethodFitness.Web.Controllers;
 
@@ -46,6 +47,9 @@ namespace MethodFitness.Web.Services.ViewOptions
 
             _builder.UrlForList<TrainerPaymentListController>(x => x.ItemList(null), AreaName.Billing).ViewName("TrainerPaymentListGridView").IsChild().End();
             _builder.UrlForForm<TrainerPaymentController>(x => x.Display(null), AreaName.Billing).End();
+
+            _builder.UrlForForm<DailyPaymentsController>(x => x.Display(null), AreaName.Reports).ViewName("DailyPaymentsView").End();
+            _builder.UrlForForm<TrainerMetricController>(x => x.Display(null), AreaName.Reports).ViewName("TrainerMetricView").End();
 
             return _builder.Items;
         }
