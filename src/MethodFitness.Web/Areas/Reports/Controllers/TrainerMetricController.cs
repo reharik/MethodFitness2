@@ -14,25 +14,25 @@ using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Areas.Reports.Controllers
 {
-    public class DailyPaymentsController : AdminController
+    public class TrainerMetricController : AdminController
     {
         private readonly IRepository _repository;
         private readonly ISelectListItemService _selectListItemService;
 
-        public DailyPaymentsController(IRepository repository, ISelectListItemService selectListItemService)
+        public TrainerMetricController(IRepository repository, ISelectListItemService selectListItemService)
         {
             _repository = repository;
             _selectListItemService = selectListItemService;
         }
         public ActionResult Display_Template(ViewModel input)
         {
-            return View("Display", new DailyPaymentViewModel());
+            return View("Display", new TrainerMetricViewModel());
         }
 
         public CustomJsonResult Display(ViewModel input)
         {
             var startDate = DateTime.Now;
-            var model = new DailyPaymentViewModel
+            var model = new TrainerMetricViewModel
                             {
                                 Date = startDate,
                                 _Title = WebLocalizationKeys.DAILY_PAYMENTS.ToString(),
@@ -42,7 +42,7 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
         }
     }
 
-    public class DailyPaymentViewModel : ViewModel
+    public class TrainerMetricViewModel : ViewModel
     {
         public DateTime Date { get; set; }
         public string ReportUrl { get; set; }

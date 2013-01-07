@@ -210,17 +210,18 @@
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentListController.cs" />
+    <Compile Include="Areas\Reports\Controllers\TrainerMetricController.cs" />
     <Compile Include="Areas\Reports\Controllers\DailyPaymentsController.cs" />
     <Compile Include="Areas\Reports\Controllers\TimeSheetController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
-    <Compile Include="Areas\Reports\Reports\DailyPayments.aspx.cs">
+    <Compile Include="Areas\Reports\ReportViewer\DailyPayments.aspx.cs">
       <DependentUpon>DailyPayments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Areas\Reports\Reports\DailyPayments.aspx.designer.cs">
+    <Compile Include="Areas\Reports\ReportViewer\DailyPayments.aspx.designer.cs">
       <DependentUpon>DailyPayments.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Reports\Reports\DailyPayments.Designer.cs">
+    <Compile Include="Areas\Reports\XSD\DailyPayments.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DailyPayments.xsd</DependentUpon>
@@ -242,7 +243,7 @@
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Config\Bootstrapper.cs" />
     <Compile Include="Config\CustomAuthorizationAttribute.cs" />
-    <Content Include="Areas\Reports\Reports\DailyPayments.aspx" />
+    <Content Include="Areas\Reports\ReportViewer\DailyPayments.aspx" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Compile Include="Config\ModelBinders.cs" />
     <Compile Include="Config\ModelBindingBootstaper.cs" />
@@ -255,6 +256,11 @@
     <Compile Include="Areas\Schedule\Controllers\AppointmentCalendarController.cs" />
     <Compile Include="Controllers\TrainerListController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerPaymentListController.cs" />
+    <Compile Include="MethodFitness_QADataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MethodFitness_QADataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="MFTestRegistry.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\IMenuConfig.cs" />
@@ -517,7 +523,8 @@
     <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Reports\Reports\DailyPayments.rdlc" />
+    <EmbeddedResource Include="Areas\Reports\RDLC\DailyPayments.rdlc" />
+    <EmbeddedResource Include="Areas\Reports\RDLC\TrainerMetric.rdlc" />
     <EmbeddedResource Include="Areas\Reports\Reports\TimeSheet.rdlc" />
   </ItemGroup>
   <ItemGroup>
@@ -554,16 +561,28 @@
     <Content Include="Views\Shared\_ReportLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Reports\Reports\DailyPayments.xsc">
+    <Content Include="Areas\Reports\XSD\DailyPayments.xsc">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
-    <None Include="Areas\Reports\Reports\DailyPayments.xsd">
+    <Content Include="Areas\Reports\Views\TrainerMetric\Display.cshtml" />
+    <None Include="Areas\Reports\XSD\DailyPayments.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Areas\Reports\Reports\DailyPayments.xss">
+    <Content Include="Areas\Reports\XSD\DailyPayments.xss">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Content>
+    <Content Include="MethodFitness_QADataSet.xsc">
+      <DependentUpon>MethodFitness_QADataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="MethodFitness_QADataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MethodFitness_QADataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="MethodFitness_QADataSet.xss">
+      <DependentUpon>MethodFitness_QADataSet.xsd</DependentUpon>
     </Content>
   </ItemGroup>
   <PropertyGroup>
