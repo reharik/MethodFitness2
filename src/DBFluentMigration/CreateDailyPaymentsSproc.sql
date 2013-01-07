@@ -15,7 +15,7 @@ SELECT        dbo.Payment.CreatedDate, trainer.FirstName + ' ' + trainer.LastNam
 FROM            dbo.Payment INNER JOIN
                          dbo.[User] AS trainer ON dbo.Payment.CreatedById = trainer.EntityId INNER JOIN
                          dbo.Client ON dbo.Payment.ClientId = dbo.Client.EntityId
-WHERE @Date is null AND dbo.Payment.CreatedDate = dbo.Payment.CreatedDate
+WHERE @Date = CAST('1800-01-01' as Date) AND dbo.Payment.CreatedDate = dbo.Payment.CreatedDate
 	  OR 
 	  CAST(dbo.Payment.CreatedDate AS date) = @Date
 END

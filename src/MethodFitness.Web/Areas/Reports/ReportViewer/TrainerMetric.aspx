@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DailyPayments.aspx.cs" Inherits="MethodFitness.Web.Areas.Reports.Reports.DailyPayments1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TrainerMetric.aspx.cs" Inherits="MethodFitness.Web.Areas.Reports.Reports.TrainerMetric" %>
 <%@ Register TagPrefix="rsweb" Namespace="Microsoft.Reporting.WebForms" Assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" %>
 
 <!DOCTYPE html>
@@ -17,19 +17,21 @@
             Font-Size="8pt" 
             WaitMessageFont-Names="Verdana" 
             WaitMessageFont-Size="14pt"
-            Width="875"
-            Height="875">
-            <LocalReport ReportPath="Areas\Reports\RDLC\DailyPayments.rdlc">
+            Width="875px"
+            Height="875px">
+            <LocalReport ReportPath="Areas\Reports\RDLC\TrainerMetric.rdlc" >
                 <DataSources>
-                    <rsweb:ReportDataSource DataSourceId="SqlDataSource1" Name="DailyPayments" />
+                    <rsweb:ReportDataSource DataSourceId="SqlDataSource1" Name="TrainerMetric" />
                 </DataSources>
             </LocalReport>
         </rsweb:ReportViewer>
       <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
         ConnectionString='<%$ appSettings:MethodFitness.sql_server_connection_string %>'
-        SelectCommand="DailyPayments" SelectCommandType="StoredProcedure"> 
+        SelectCommand="TrainerMetric" SelectCommandType="StoredProcedure"> 
         <SelectParameters>
-            <asp:QueryStringParameter Name="Date" DefaultValue="dbnull" QueryStringField="Date" Type="DateTime" />
+            <asp:QueryStringParameter Name="TrainerId" DefaultValue="1" QueryStringField="TrainerId" Type="Int32" />
+            <asp:QueryStringParameter Name="StartDate" DefaultValue="dbnull" QueryStringField="StartDate" Type="DateTime" />
+            <asp:QueryStringParameter Name="EndDate" DefaultValue="dbnull" QueryStringField="EndDate" Type="DateTime" />
         </SelectParameters>
     </asp:SqlDataSource>
     

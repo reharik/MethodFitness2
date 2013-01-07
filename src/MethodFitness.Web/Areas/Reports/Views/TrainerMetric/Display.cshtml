@@ -7,7 +7,9 @@
 }
 <div class="col full">
     <div class="fieldRow">
-        @Html.SubmissionFor(x=>x.Date).AddClassToRoot("one-third").ToHtmlTag()
+        @Html.SubmissionFor(x=>x.TrainerEntityId).AddClassToRoot("one-third").ToHtmlTag()
+        @Html.SubmissionFor(x=>x.StartDate).AddClassToRoot("one-third").ToHtmlTag()
+        @Html.SubmissionFor(x => x.EndDate).AddClassToRoot("one-third").ToHtmlTag()
     </div>
     <div class="fieldRow">
         @StandardButtonFor("viewReport", WebLocalizationKeys.VIEW_REPORT).AddClass("save").ToHtmlTag()

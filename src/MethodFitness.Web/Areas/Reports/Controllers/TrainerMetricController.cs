@@ -31,20 +31,26 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
 
         public CustomJsonResult Display(ViewModel input)
         {
-            var startDate = DateTime.Now;
+            var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
             var model = new TrainerMetricViewModel
-                            {
-                                Date = startDate,
-                                _Title = WebLocalizationKeys.DAILY_PAYMENTS.ToString(),
-                                ReportUrl = "/Areas/Reports/ReportViewer/DailyPayments.aspx"
-                            };
+            {
+                _TrainerEntityIdList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true),
+                _Title = WebLocalizationKeys.TRAINER_METRIC.ToString(),
+                ReportUrl = "/Areas/Reports/ReportViewer/TrainerMetric.aspx"
+            };
             return new CustomJsonResult(model);
         }
     }
 
     public class TrainerMetricViewModel : ViewModel
     {
-        public DateTime Date { get; set; }
+        public IEnumerable<SelectListItem> _TrainerEntityIdList { get; set; }
+        [ValidateNonEmpty]
+        public int TrainerEntityId { get; set; }
+        [ValidateNonEmpty]
+        public DateTime StartDate { get; set; }
+        [ValidateNonEmpty]
+        public DateTime EndDate { get; set; }
         public string ReportUrl { get; set; }
     }
 }

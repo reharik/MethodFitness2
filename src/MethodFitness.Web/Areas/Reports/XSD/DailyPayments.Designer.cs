@@ -864,7 +864,7 @@ namespace MethodFitness.Web.Areas.Reports.XSD.DailyPaymentsTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MethodFitness_QAConnectionString"].ConnectionString;
+            this._connection.ConnectionString = System.Configuration.ConfigurationManager.AppSettings["MethodFitness.sql_server_connection_string"].ToString();
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

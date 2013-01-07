@@ -19,11 +19,11 @@ using FluentMigrator;
 namespace Migrations
 {
     [Migration(10070)]
-    public class Create_DailyPayments_View : Migration
+    public class Create_DailyPayments_Sproc : Migration
     {
         public override void Up()
         {
-            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\CreateDailyPaymentsView.sql");
+            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\CreateDailyPaymentsSproc.sql");
             Execute.Sql(sql);
         }
 
