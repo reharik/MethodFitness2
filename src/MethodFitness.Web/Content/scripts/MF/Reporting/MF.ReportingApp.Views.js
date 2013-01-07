@@ -6,6 +6,7 @@ MF.Views.DailyPaymentsView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         $("[name=Date]").val("");
+        this.model.Date("");
         this.viewReport();
     },
     createUrl:function(){
