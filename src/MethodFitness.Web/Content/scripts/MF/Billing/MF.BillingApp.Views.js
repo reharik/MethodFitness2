@@ -36,11 +36,10 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                     var rowData = $(this).getRowData(rowId);
                     if (rowData.InArrears=="True") {
                         row = $('#' + rowId, that.el);
-                        row.find("td").addClass('gridRowStrikeThrough');
+                        row.find("td").addClass('gridRowRedFont');
                         row.find("td:first input").remove();
                     } else if(rowData.TrainerVerified=="True") {
                         row = $('#' + rowId, that.el);
-                        row.find("td").addClass('gridRowGreen');
                         paymentRows.push({
                             id:rowId,
                             trainerPay:rowData.TrainerPay,
@@ -169,8 +168,10 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         }
         if(this.model.paymentAmount()>0){
             $("#payTrainerButton").show();
+            $('.paymentAmount').show();
         } else {
             $("#payTrainerButton").hide();
+            $('.paymentAmount').hide();
         }
     }
 });
@@ -206,7 +207,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
                     var rowData = $(this).getRowData(rowId);
                     if (rowData.InArrears=="True") {
                         var row = $('#' + rowId, that.el);
-                        row.find("td").addClass('gridRowStrikeThrough');
+                        row.find("td").addClass('gridRowRedFont');
                         row.find("td:first input").remove();
                     } else {
                         paymentRows.push({
@@ -342,7 +343,7 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
                     var rowData = $(this).getRowData(rowId);
                     if (rowData.InArrears=="True") {
                         var row = $('#' + rowId, that.el);
-                        row.find("td").addClass('gridRowStrikeThrough');
+                        row.find("td").addClass('gridRowRedFont');
                         row.find("td:first input").remove();
                     }
                     that.options.paymentTotal += parseFloat(rowData.TrainerPay);

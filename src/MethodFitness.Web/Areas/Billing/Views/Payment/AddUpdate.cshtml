@@ -38,6 +38,9 @@
     <div class="fieldRow">
         @Html.ViewFor(x => x.PaymentTotal).AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").ToHtmlTag()
     </div>
+    <div class="fieldRow">
+        @Html.SubmissionFor(x => x.Notes).AddClassToInput("payment_input disableInput medium").ToHtmlTag()
+    </div>
 </div>
 <div class="col right">
     <div class="fieldRow">

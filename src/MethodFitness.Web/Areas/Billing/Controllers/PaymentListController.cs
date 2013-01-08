@@ -31,12 +31,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public CustomJsonResult ItemList(ViewModel input)
         {
             var user = _sessionContext.GetCurrentUser();
+            var client = _repository.Find<Client>(input.ParentId);
             var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.EntityId;
             var model = new ListViewModel()
             {
                 addUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
                 gridDef = _paymentListGrid.GetGridDefinition(url,user),
-                _Title = WebLocalizationKeys.PAYMENTS.ToString(),
+                _Title = WebLocalizationKeys.CLIENT_PAYMENTS.ToFormat(client.FullNameFNF),
                 ParentId = input.EntityId
             };
             model.headerButtons.Add("new");

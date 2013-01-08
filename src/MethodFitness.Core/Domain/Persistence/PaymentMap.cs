@@ -19,6 +19,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.PairPrice);
             Map(x => x.PairTenPack);
             Map(x => x.PairTenPackPrice);
+            Map(x => x.Notes);
             References(x => x.Client);
         } 
     }

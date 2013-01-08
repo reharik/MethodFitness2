@@ -34,6 +34,8 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
             var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
             var model = new TrainerMetricViewModel
             {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
                 _TrainerEntityIdList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true),
                 _Title = WebLocalizationKeys.TRAINER_METRIC.ToString(),
                 ReportUrl = "/Areas/Reports/ReportViewer/TrainerMetric.aspx"

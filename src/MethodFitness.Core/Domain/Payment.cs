@@ -20,5 +20,6 @@ namespace MethodFitness.Core.Domain
         public virtual double PaymentTotal { get; set; }
         public virtual int PairTenPack { get; set; }
         public virtual double PairTenPackPrice { get; set; }
+        public virtual string Notes { get; set; }
     }
 }

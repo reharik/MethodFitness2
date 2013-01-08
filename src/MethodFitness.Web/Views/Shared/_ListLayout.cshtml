@@ -22,11 +22,8 @@
         <input class="search" /> 
         @RenderSection("ExtraContentHeaderButtons", false)
         <button id="new" class="new" title="@WebLocalizationKeys.NEW"></button>
-        <span class="title-name">@Model.Title</span>
+        <span class="title-name" data-bind="text:_Title"></span>
     </div>
     <div id="contentArea" class="content-inner">
-    <div id="validation-container-wrapper">
-        <div id="errorMessagesGrid" class="mf_ErrorMessages errorMessages"><ul></ul></div>
-    </div>
         @RenderBody()
     </div>

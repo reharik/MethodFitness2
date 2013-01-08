@@ -16,10 +16,11 @@ namespace MethodFitness.Web.Grids
         {
             GridBuilder.LinkColumnFor(x => x.CreatedDate)
                 .ToPerformAction(ColumnAction.DisplayItem)  
-                .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
-                .DefaultSortColumn();
+                .ToolTip(WebLocalizationKeys.DISPLAY_ITEM);
             GridBuilder.DisplayFor(x => x.Total);
             GridBuilder.SetSearchField(x => x.CreatedDate);
+            GridBuilder.SetDefaultSortColumn(x => x.CreatedDate);
+
             return this;
         }
     }

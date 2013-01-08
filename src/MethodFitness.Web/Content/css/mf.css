@@ -570,8 +570,10 @@ margin: 0;
 .gridRowStrikeThrough{
     background: url(../images/strike.png) center center !important;
 }
-.gridRowGreen{
-    background-color: #66ff00 !important;
+
+.gridRowRedFont{
+    color:red;
+    font: bold;
 }
 
 .gridRowGrey{

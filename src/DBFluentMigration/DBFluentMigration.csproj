@@ -68,6 +68,7 @@
   <ItemGroup>
     <None Include="DBFluentMigration.dll.config" />
     <Compile Include="Iteration_1\10030_AddTrainerSessionVerification.cs" />
+    <Compile Include="Iteration_1\10090_Add_Notes_Column_To_Payment.cs" />
     <None Include="MigrateApp\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
     <None Include="MigrateApp\Migrate.exe.config" />
     <None Include="MigrateApp\policy.2.0.Npgsql.config" />

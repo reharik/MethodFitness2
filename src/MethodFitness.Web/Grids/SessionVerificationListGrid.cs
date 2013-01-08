@@ -17,17 +17,15 @@ namespace MethodFitness.Web.Grids
 
         protected override Grid<TrainerSessionDto> BuildGrid()
         {
-            GridBuilder.DisplayFor(x => x.FullName);
             GridBuilder.DisplayFor(x => x.AppointmentDate);
             GridBuilder.DisplayFor(x => x.Type);
             GridBuilder.DisplayFor(x => x.PricePerSession);
             GridBuilder.DisplayFor(x => x.TrainerPercentage);
             GridBuilder.DisplayFor(x => x.TrainerPay);
             GridBuilder.SetSearchField(x => x.LastName);
+            GridBuilder.SetDefaultSortColumn(x => x.LastName);
 
             return this;
         }
     }
-
-    
 }
