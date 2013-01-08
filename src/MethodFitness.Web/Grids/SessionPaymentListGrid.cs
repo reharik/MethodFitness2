@@ -26,6 +26,7 @@ namespace MethodFitness.Web.Grids
             GridBuilder.HideColumnFor(x => x.InArrears);
             GridBuilder.HideColumnFor(x => x.TrainerVerified);
             GridBuilder.SetSearchField(x => x.LastName);
+            GridBuilder.SetDefaultSortColumn(x => x.LastName);
 
             return this;
         }

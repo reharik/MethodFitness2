@@ -485,13 +485,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_ContentAreaLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_FormLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_AssetDetailLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_DetailLayout.cshtml" />
