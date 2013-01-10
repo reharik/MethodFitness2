@@ -60,14 +60,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserId();
             dynamic trainer = _repository.Find<User>(userEntityId);
-            IEnumerable<Client> clients;
-            if(!_authorizationService.IsAllowed(trainer,"/Clients/CanScheduleAllClients"))
-            {
-                clients = trainer.Clients;
-            }else
-            {
-                clients = _repository.FindAll<Client>();
-            }
+            IEnumerable<Client> clients = !this._authorizationService.IsAllowed(trainer, "/Clients/CanScheduleAllClients")
+                    ? trainer.Clients
+                    : this._repository.FindAll<Client>();
             var _availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF});
             var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
 

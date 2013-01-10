@@ -22,6 +22,7 @@ namespace MethodFitness.Web.Grids
             GridBuilder.DisplayFor(x => x.PricePerSession);
             GridBuilder.DisplayFor(x => x.TrainerPercentage);
             GridBuilder.DisplayFor(x => x.TrainerPay);
+            GridBuilder.HideColumnFor(x => x.InArrears);
             GridBuilder.SetSearchField(x => x.LastName);
             GridBuilder.SetDefaultSortColumn(x => x.LastName);
 

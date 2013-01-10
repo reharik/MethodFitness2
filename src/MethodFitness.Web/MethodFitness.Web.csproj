@@ -526,13 +526,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Areas\Reports\RDLC\DailyPayments.rdlc" />
     <EmbeddedResource Include="Areas\Reports\RDLC\TrainerMetric.rdlc" />
-    <EmbeddedResource Include="Areas\Reports\Reports\TimeSheet.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Reports\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Reports\Views\TimeSheet\Display.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Reports\Views\Shared\_ReportLayout.cshtml" />
