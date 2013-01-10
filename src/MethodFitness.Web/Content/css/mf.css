@@ -572,8 +572,9 @@ margin: 0;
 }
 
 .gridRowRedFont{
-    color:red;
-    font: bold;
+    color:red !important;;
+    font: bold !important;;
+    background-color: #ffdffd !important;
 }
 
 .gridRowGrey{

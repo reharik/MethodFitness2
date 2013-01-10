@@ -235,19 +235,21 @@ CC.Elements.MultiSelect = CC.Elements.Element.extend({
         var that = this;
         this.type = "select";
         this.$input = this.$container.find("input.multiSelect");
-        var item = this.$input.data("tokenInputObject");
-        item.render(this.multiSelectOptions);
-        MF.vent.bind(this.name+":tokenizer:add",$.proxy(function(e){that.multiSelectChange(e,item.getSelectedItems())},that));
-        MF.vent.bind(this.name+":tokenizer:remove",$.proxy(function(e){that.multiSelectChange(e,item.getSelectedItems())},that));
+        this.item = this.$input.data("tokenInputObject");
+        this.item.render(this.multiSelectOptions);
+        MF.vent.bind(this.name+":tokenizer:add",$.proxy(that.multiSelectChange,that));
+        MF.vent.bind(this.name+":tokenizer:remove",$.proxy(that.multiSelectChange,that));
     },
-    multiSelectChange: function(e, viewmodel){
-        this.selectedViewmodel = viewmodel;
+    multiSelectChange: function(e){
+        this.selectedViewmodel = this.item.getSelectedItems();
         this.validate();
     },
     getValue:function(){
-        return this.selectedViewmodel;
+        return this.item.getSelectedItems();
     },
     destroy:function(){
+        MF.vent.unbind(this.name+":tokenizer:add");
+        MF.vent.unbind(this.name+":tokenizer:remove");
         this.$container.off(this.$input.attr("id")+":tokenizer:blur");
         $("#"+this.$input.attr("name")+"_container *").unbind().remove();
         this._super("destroy",arguments);

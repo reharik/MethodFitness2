@@ -13,6 +13,7 @@ CC.ValidationRunner = (function(){
         if(!elem.attr('class')){return[];}
         return elem.attr('class').split(/\s+/);
     }
+
     runner.runElement = function(CCElement, errorSelector){
         var elementIsValid = true;
         var classes = classList(CCElement.$input);
