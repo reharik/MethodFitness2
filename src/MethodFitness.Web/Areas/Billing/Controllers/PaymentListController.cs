@@ -31,7 +31,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public CustomJsonResult ItemList(ViewModel input)
         {
             var user = _sessionContext.GetCurrentUser();
-            var client = _repository.Find<Client>(input.ParentId);
+            var client = _repository.Find<Client>(input.EntityId);
             var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.EntityId;
             var model = new ListViewModel()
             {
