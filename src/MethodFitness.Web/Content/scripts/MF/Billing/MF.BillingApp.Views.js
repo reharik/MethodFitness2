@@ -330,6 +330,9 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "setupGridSearchMixin");
     },
+    events:{
+        'click #search':'filterByDate'
+    },
     beforeInitGrid:function(){
         var that = this;
         this.options.gridId="trainerPayment";
@@ -353,13 +356,23 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
                 that.setupElements();
             }}
     },
-
+    filterByDate:function(e){
+        var obj = {"endDate":this.model.EndDate()};
+        $("#" + this.options.gridId).jqGrid('setGridParam',{postData:obj});
+        this.reloadGrid();
+    },
     reloadGrid: function () {
         $("#" + this.options.gridId).trigger("reloadGrid");
     },
     setupElements:function(){
-        $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
-        ko.applyBindings(this.model,this.el);
+        if($("#filterArea").size()==0){
+            $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
+            $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
+            $("[name='EndDate']",this.$el).datepicker();
+            this.model.EndDate= ko.observable( new XDate().toString("MM/dd/yyyy") );
+            $("#payTrainerButton").hide();
+            ko.applyBindings(this.model,this.el);
+        }
     }
 });
 
