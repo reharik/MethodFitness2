@@ -15,10 +15,12 @@ namespace MethodFitness.Web.Grids
         protected override Grid<TrainerSessionVerification> BuildGrid()
         {
             GridBuilder.LinkColumnFor(x => x.CreatedDate)
-                .ToPerformAction(ColumnAction.DisplayItem).WithId("trainerPaymentsList")
-                .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
-                .DefaultSortColumn();
+                .ToPerformAction(ColumnAction.DisplayItem)  
+                .ToolTip(WebLocalizationKeys.DISPLAY_ITEM);
             GridBuilder.DisplayFor(x => x.Total);
+            GridBuilder.SetSearchField(x => x.CreatedDate);
+            GridBuilder.SetDefaultSortColumn(x => x.CreatedDate);
+
             return this;
         }
     }

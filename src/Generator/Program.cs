@@ -4,10 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using CC.Core;
-using CC.Core.DomainTools;
-using MethodFitness.Core;
 using MethodFitness.Core.Domain;
-using MethodFitness.Web;
 using StructureMap;
 
 namespace Generator

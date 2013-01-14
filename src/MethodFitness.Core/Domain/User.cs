@@ -107,6 +107,19 @@ namespace MethodFitness.Core.Domain
             _sessions.Add(session);
         }
 
+        private IList<Appointment> _appointments = new List<Appointment>();
+        public virtual void EmptyAppointments() { _appointments.Clear(); }
+        public virtual IEnumerable<Appointment> Appointments { get { return _appointments; } }
+        public virtual void RemoveAppointment(Appointment appointment)
+        {
+            _appointments.Remove(appointment);
+        }
+        public virtual void AddAppointment(Appointment appointment)
+        {
+            if (_appointments.Contains(appointment)) return;
+            _appointments.Add(appointment);
+        }
+
         private IList<TrainerPayment> _trainerPayments = new List<TrainerPayment>();
         public virtual void EmptyTrainerPayments() { _trainerPayments.Clear(); }
         public virtual IEnumerable<TrainerPayment> TrainerPayments { get { return _trainerPayments; } }

@@ -25,14 +25,14 @@ CC.validationRules = (function(){
     return {
         required: function(CCElement) {
             var val = CCElement.getValue();
-            if(CCElement.type == "select") {
+            if(CCElement.type == "select" || CCElement.type == "multiselect") {
 				// could be an array for select-multiple or a string, both are fine this way
 				return val && val.length > 0;
             }else if(CCElement.type.indexOf("textbox")>=0||CCElement.type=="textarea"){
 				return $.trim(val).length > 0;
 			}else if(CCElement.type == "checkbox"){
 				return val;
-			}
+            }
 		},
         minlength: function(CCElement, param) {
             var val = CCElement.getValue();

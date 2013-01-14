@@ -18,6 +18,7 @@ namespace MethodFitness.Web.Services.ViewOptions
         public string display { get; set; }
         public bool isChild { get; set; }
         public bool noBubbleUp { get; set; }
+        public bool NoMultiSelectGridView { get; set; }
         [ScriptIgnore]
         public string Operation { get; set; }
 

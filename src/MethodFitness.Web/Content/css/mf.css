@@ -570,12 +570,15 @@ margin: 0;
 .gridRowStrikeThrough{
     background: url(../images/strike.png) center center !important;
 }
-.gridRowGreen{
-    background-color: #66ff00;
+
+.gridRowRedFont{
+    color:red !important;;
+    font: bold !important;;
+    background-color: #ffdffd !important;
 }
 
 .gridRowGrey{
-    background-color: #dbdbd5;
+    background-color: #dbdbd5 !important;
 }
 
 div.headerInput{
@@ -601,6 +604,7 @@ div.headerInput input{
 .error {
 	background: url(../images/validation_error.png) 10px 3px no-repeat;
 	background-color: #FF9999;
+
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     margin: 5px;
@@ -622,10 +626,10 @@ div.headerInput input{
 }
 
 .invalid{
-    border: 1px solid red;
+    border: 2px solid red;
 }
 .valid{
-    border: 1px solid green;
+    border: 2px solid green;
 }
 
 .deleteImage {

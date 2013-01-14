@@ -127,8 +127,9 @@ namespace MethodFitness.Web
         public static readonly StringToken VIEW_REPORT = new WebLocalizationKeys("VIEW_REPORT", "View Report");
 
         public static readonly StringToken OTHER = new WebLocalizationKeys("OTHER", "Other");
+        public static readonly StringToken CLIENT_PAYMENTS = new WebLocalizationKeys("PAYMENTS", "Payments for {0}");
         public static readonly StringToken PAYMENTS = new WebLocalizationKeys("PAYMENTS", "Payments");
-        public static readonly StringToken PAYMENT_INFORMATION = new WebLocalizationKeys("PAYMENT_INFORMATION", "Payment Information");
+        public static readonly StringToken PAYMENT_INFORMATION = new WebLocalizationKeys("PAYMENT_INFORMATION", "Payment Information For {0}");
         public static readonly StringToken MAKE_PAYMENT = new WebLocalizationKeys("MAKE_PAYMENT", "Make Payment");
         public static readonly StringToken CURRENT_CLIENT_INVENTORY = new WebLocalizationKeys("CURRENT_CLIENT_INVENTORY", "Current Client Inventory");
         public static readonly StringToken CLIENT_PURCHASE = new WebLocalizationKeys("CLIENT_PURCHASE", "Client Purchase");
@@ -166,6 +167,10 @@ namespace MethodFitness.Web
         public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT", "There is a problem with my sessions for this pay period");
         public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT_BODY = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT_BODY", "There is a problem with my sessions for this pay period.  Please look at the following:");
         public static readonly StringToken EMAIL_SENT_SUCCESSFULLY = new WebLocalizationKeys("EMAIL_SENT_SUCCESSFULLY", "Email Sent Successfully");
+
+        public static readonly StringToken REPORTS = new WebLocalizationKeys("REPORTS", "Reports");
+        public static readonly StringToken DAILY_PAYMENTS = new WebLocalizationKeys("DAILY_PAYMENTS", "Daily Payments");
+        public static readonly StringToken TRAINER_METRIC = new WebLocalizationKeys("TRAINER_METRIC", "Trainer Metric");
 
     }
 }

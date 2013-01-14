@@ -43,7 +43,13 @@
     @Script("jqueryPlugins/jquery.fileinput.js").ToHtmlTag()
     @Script("jqueryPlugins/mobiscroll.core-2.0.1.js").ToHtmlTag()
     @Script("jqueryPlugins/mobiscroll.datetime-2.0.1.js").ToHtmlTag()
+
+    @Script("jqueryPlugins/noty/jquery.noty.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/inline.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/default.js").ToHtmlTag()    
+    
     @Script("externalHelpers/select2.js").ToHtmlTag()
+
 
     @Script("externalHelpers/fullcalendar.js").ToHtmlTag()
     @Script("externalHelpers/underscore.js").ToHtmlTag()
@@ -67,6 +73,9 @@
     @Script("MF/Schedule/MF.ScheduleApp.Views.js").ToHtmlTag()
     @Script("MF/Billing/MF.BillingApp.Routing.js").ToHtmlTag()
     @Script("MF/Billing/MF.BillingApp.Views.js").ToHtmlTag()
+
+    @Script("MF/Reporting/MF.ReportingApp.Routing.js").ToHtmlTag()
+    @Script("MF/Reporting/MF.ReportingApp.Views.js").ToHtmlTag()
     
     @Script("MF/CC.ModelBinding/CC.CustomBindings.js").ToHtmlTag()
     @Script("MF/CC.ModelBinding/CC.Elements.js").ToHtmlTag()
@@ -110,10 +119,7 @@
             <div id="main-content">
                 <div class="content-outer" >
                     <div id="messageContainer">
-                        <ul data-bind="foreach:{data:messages, beforeRemove: fadeOut}">
-                            <li data-bind="text:message, css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }"></li>
-                        </ul>
-                    </div>
+                    </div> 
                     <div id="contentInner">
                         @RenderBody()
                     </div>
@@ -135,9 +141,6 @@
             <span class="title-name">${_Title}</span>
         </div>
         <div id="contentArea" class="content-inner">
-            <div id="validation-container-wrapper">
-                <div id="errorMessagesGrid" class="dci_ErrorMessages errorMessages"><ul></ul></div>
-            </div>
             {{if EntityId}}
             <input id="EntityId" type="hidden" value="${EntityId}"/>
             {{/if}}
@@ -156,16 +159,19 @@
             </div>
         </div>
     </script>
-    
-       <script id="payTrainerTemplate" type="text/x-jQuery-tmpl">
-        <div class="col left">
-            <div class="fieldRow">
-                Are you sure you would like to pay $${amount} to ${trainersName}?
+
+    <script id="payTrainerSearchTemplate" type="text/x-jQuery-tmpl">
+        <div id="filterArea">
+            <div class="headerInput">
+                @WebLocalizationKeys.END_DATE
+                <input type="text" data-bind="value:EndDate" name="EndDate" class="datePicker" >
             </div>
+            <button id="search" class="filter" title="@WebLocalizationKeys.FILTER"></button>
+            <button id='payTrainerButton' class='dollar_sign' ></button>
         </div>
     </script>
     
-     <div style="display:none" id="emailTemplate" >
+    <div style="display:none" id="emailTemplate" >
         @Html.Partial("EmailTemplate", new EmailViewModel())
     </div>
 

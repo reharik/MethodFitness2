@@ -24,11 +24,13 @@ namespace MethodFitness.Web.Services.ViewOptions
         IRouteTokenBuilder SubViewName(string subViewName);
         IRouteTokenBuilder ViewId(string ViewId);
         IRouteTokenBuilder AddUpdateToken(string addUpdate);
+        IRouteTokenBuilder DisplayToken(string display);
         IRouteTokenBuilder IsChild(bool isChild = true);
         IRouteTokenBuilder NoBubbleUp();
         IRouteTokenBuilder Operation(string operation);
         IRouteTokenBuilder End();
         void WithoutPermissions(bool withOutPermissions);
+        IRouteTokenBuilder NoMultiSelectGridView();
     }
 
     public class RouteTokenBuilder : IRouteTokenBuilder
@@ -124,7 +126,13 @@ namespace MethodFitness.Web.Services.ViewOptions
 
         public IRouteTokenBuilder AddUpdateToken(string addUpdate)
         {
-            currentItem.addUpdate = addUpdate;
+            currentItem.addUpdate = addUpdate.ToLowerInvariant();
+            return this;
+        }
+
+        public IRouteTokenBuilder DisplayToken(string display)
+        {
+            currentItem.display = display.ToLowerInvariant();
             return this;
         }
 
@@ -166,6 +174,12 @@ namespace MethodFitness.Web.Services.ViewOptions
         public void WithoutPermissions(bool withOutPermissions)
         {
             _withOutPermissions = withOutPermissions;
+        }
+
+        public IRouteTokenBuilder NoMultiSelectGridView()
+        {
+            currentItem.NoMultiSelectGridView = true;
+            return this;
         }
     }
 }

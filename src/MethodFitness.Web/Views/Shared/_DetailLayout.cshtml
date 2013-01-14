@@ -4,16 +4,14 @@
     
     <div class="content-header">
         @RenderSection("ContentHeaderButtons", false)
-        <span class="title-name"> @Model._Title</span>
+        <span class="title-name" data-bind="text:_Title"></span>
         @if (Model.Item.EntityId > 0)
         {
             <span class="title-added">@WebLocalizationKeys.DATE_ADDED.ToFormat(Model.Item.CreateDate.ToLongDateString())</span>
         }
     </div>
     <div id="contentArea" class="content-inner">
-            <div id="validation-container-wrapper">
-                <div id="errorMessagesForm" class="mf_ErrorMessages errorMessages"><ul></ul></div>
-            </div>
+           
         <div class="required_style"><span>* @WebLocalizationKeys.REQUIRED</span></div>
             @RenderBody()
             <div class="footer">

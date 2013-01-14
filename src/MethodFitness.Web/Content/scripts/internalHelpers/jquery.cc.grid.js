@@ -34,7 +34,7 @@ if (typeof cc.grid == 'undefined') {
             //emptyrecords:"aint go nothin",
             gridComplete:function(){$(this).find(".cbox").parent().addClass("jqg_cb");},
             sortorder: "asc",
-            sortname:cc.grid.columnService.defaultSortColumnName(gridDefinition),
+            sortname:gridDefinition.DefaultSortColumn ? gridDefinition.DefaultSortColumn :"", //  cc.grid.columnService.defaultSortColumnName(gridDefinition),
             onSortCol:function(index,iCol,sortorder) {cc.gridHelper.adjustSortStyles(index,iCol,sortorder);},
             jsonReader: {
                 repeatitems: true,

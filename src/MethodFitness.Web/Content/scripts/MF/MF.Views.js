@@ -124,6 +124,23 @@ MF.Views.AjaxDisplayView = MF.Views.View.extend({
     }
 });
 
+MF.Views.NoMultiSelectGridView= MF.Views.View.extend({
+    initialize: function(){
+        this.options.gridOptions ={multiselect:false};
+        MF.mixin(this, "ajaxGridMixin");
+        MF.mixin(this, "setupGridMixin");
+        MF.mixin(this, "defaultGridEventsMixin");
+        MF.mixin(this, "setupGridSearchMixin");
+    },
+    viewLoaded:function(){
+        this.setupBindings();
+    },
+    onClose:function(){
+        this.unbindBindings();
+    }
+});
+
+
 MF.Views.GridView = MF.Views.View.extend({
     initialize: function(){
         MF.mixin(this, "ajaxGridMixin");
@@ -148,7 +165,8 @@ MF.Views.AjaxPopupFormModule  = MF.Views.View.extend({
         this.options.noBubbleUp=true;
         this.options.isPopup=true;
         this.popupForm = this.options.view && MF.Views[this.options.view] ? new MF.Views[this.options.view](this.options) : new MF.Views.AjaxFormView(this.options);
-        this.popupForm.notification = new CC.NotificationService();
+        this.popupForm.errorSelector = "#popupMessageContainer";
+
         this.popupForm.render();
         this.storeChild(this.popupForm);
         $(this.el).append(this.popupForm.el);
@@ -167,8 +185,6 @@ MF.Views.AjaxPopupFormModule  = MF.Views.View.extend({
         this.notification = null;
     },
     loadPopupView:function(formOptions){
-        this.$el.find("#popupMessageContainer").append("<ul data-bind=\"foreach:{data:messages, beforeRemove: fadeOut}\"><li data-bind=\"text:message, css: { error: status()=='error', warning: status()=='warning', success: status()=='success' }\"></li></ul>");
-        this.popupForm.notification.render(this.$el.find("#popupMessageContainer").get(0));
         var buttons = formOptions.buttons?formOptions.buttons:MF.Views.popupButtonBuilder.builder(formOptions.id).standardEditButons();
         var popupOptions = {
             id:this.id,
@@ -235,11 +251,6 @@ MF.Views.AjaxPopupDisplayModule  = MF.Views.View.extend({
 MF.Views.PopupView = MF.Views.View.extend({
     render:function(){
         $(".ui-dialog").remove();
-        var errorMessages = $("div[id*='errorMessages']", this.el);
-        if(errorMessages){
-            var id = errorMessages.attr("id");
-            errorMessages.attr("id","errorMessagesPU").removeClass(id).addClass("errorMessagesPU");
-        }
 
         $(this.el).dialog({
             modal: true,
@@ -307,7 +318,7 @@ MF.Views.popupButtonBuilder = (function(){
         var buttons = {};
         var _addButton = function(name,func){ buttons[name] = func; };
         var saveFunc = function() {
-            MF.vent.trigger("popup:"+id+":save");
+            MF.vent.trigger("popup:"+id+":save", this);
         };
         var editFunc = function(event) {MF.vent.trigger("popup:"+id+":edit");};
         var cancelFunc = function(){
@@ -450,31 +461,6 @@ MF.Views.EditableTokenView = MF.Views.TokenView.extend({
         data.splice(idx,1);
     },
     tokenEditor:function(e){}
-});
-
-MF.Views.NotificationView = MF.Views.View.extend({
-    events:_.extend({
-        "click #trapezoid":"toggle"
-    }, MF.Views.View.prototype.events),
-    render: function(){
-        var $trap = $("<div>").attr("id","trapezoid");
-        $trap.text("vaslasdflasdf");
-      //  $trap.hide();
-        this.$el.html($trap);
-        $("#main-content").prepend(this.$el);
-        this.viewLoaded();
-        MF.vent.trigger("form:"+this.id+":pageLoaded",this.options);
-        return this;
-    },
-    toggle:function(){
-        $("#trapezoid").hide("blind",{},2000).delay(800).show("blind",{},2000);
-    },
-    show:function(){
-        $("#trapezoid").show("blind",{},2000);
-    },
-    hide:function(){
-        $("#trapezoid").hide("blind",{},2000);
-    }
 });
 
 MF.tokenDefaults = {

@@ -60,14 +60,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserId();
             dynamic trainer = _repository.Find<User>(userEntityId);
-            IEnumerable<Client> clients;
-            if(!_authorizationService.IsAllowed(trainer,"/Clients/CanScheduleAllClients"))
-            {
-                clients = trainer.Clients;
-            }else
-            {
-                clients = _repository.FindAll<Client>();
-            }
+            IEnumerable<Client> clients = !this._authorizationService.IsAllowed(trainer, "/Clients/CanScheduleAllClients")
+                    ? trainer.Clients
+                    : this._repository.FindAll<Client>();
             var _availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF});
             var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
 
@@ -195,7 +190,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 return notification;
             }
 
-            if (!input.ClientsDtos.selectedItems.Any())
+            if (input.ClientsDtos==null || !input.ClientsDtos.selectedItems.Any())
             {
                 notification = new Notification { Success = false };
                 notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
@@ -226,6 +221,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
     {
         [ValidateNonEmpty]
         public bool Copy { get; set; }
+        [ValidateNonEmpty]
         public TokenInputViewModel ClientsDtos { get; set; }
         public IEnumerable<SelectListItem> _LocationEntityIdList { get; set; }
         public IEnumerable<SelectListItem> _TrainerEntityIdList { get; set; }
@@ -233,8 +229,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public IEnumerable<SelectListItem> _AppointmentTypeList { get; set; }
 
         public string TrainerFullNameFNF { get; set; }
+        [ValidateNonEmpty]
         public int LocationEntityId { get; set; }
         public string LocationName { get; set; }
+        [ValidateNonEmpty]
         public int TrainerEntityId { get; set; }
         public string AppointmentType { get; set; }
         [ValidateNonEmpty]

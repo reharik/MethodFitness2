@@ -18,6 +18,8 @@ using StructureMap;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
+    using CC.Core.CustomAttributes;
+
     public class PaymentController : MFController
     {
         private readonly IRepository _repository;
@@ -71,7 +73,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var model = Mapper.Map<Payment,PaymentViewModel>(payment);
             model._sessionRateDto = sessionRatesDto;
             model._sessionsAvailable = clientSessionsDto;
-            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
+            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
             model._deleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null));
             model.ParentId = client.EntityId;
             model._saveUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.Save(null));
@@ -88,7 +90,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var client = _repository.Find<Client>(input.ParentId);
             var payment =  client.Payments.FirstOrDefault(x=>x.EntityId == input.EntityId);
             var model = Mapper.Map<Payment, PaymentViewModel>(payment);
-            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
+            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
             return new CustomJsonResult(model);
         }
 
@@ -197,17 +199,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public int Pair { get; set; }
         public int PairTenPack { get; set; }
         public double PaymentTotal { get; set; }
-
         public double FullHourTenPackPrice { get; set; }
-
         public double FullHourPrice { get; set; }
-
         public double HalfHourTenPackPrice { get; set; }
-
         public double HalfHourPrice { get; set; }
-
         public double PairPrice { get; set; }
-
         public double PairTenPackPrice { get; set; }
+        [TextArea]
+        public string Notes { get; set; }
     }
 }   

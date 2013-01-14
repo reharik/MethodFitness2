@@ -32,8 +32,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var model = new ListViewModel()
             {
                 addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
-                gridDef = _trainerListGrid.GetGridDefinition(url,user),
-                searchField = "LastName"
+                gridDef = _trainerListGrid.GetGridDefinition(url,user)
             };
             model.headerButtons.Add("new");
             return new CustomJsonResult(model);

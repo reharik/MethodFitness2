@@ -40,8 +40,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 deleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
                // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
                 gridDef = _clientListGrid.GetGridDefinition(url,user),
-                _Title = WebLocalizationKeys.CLIENTS.ToString(),
-                searchField = "LastName"
+                _Title = WebLocalizationKeys.CLIENTS.ToString()
             };
             model.headerButtons.Add("new");
             return new CustomJsonResult(model);

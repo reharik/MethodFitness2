@@ -4,6 +4,7 @@ using CC.Security;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
+using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 
@@ -44,6 +45,11 @@ namespace MethodFitness.Web.Menus
                         .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                         .HasChildren()
                             .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS)
+                            .CreateNode(WebLocalizationKeys.REPORTS)
+                                .HasChildren()
+                                    .CreateTagNode<DailyPaymentsController>(WebLocalizationKeys.DAILY_PAYMENTS)
+                                    .CreateTagNode<TrainerMetricController>(WebLocalizationKeys.TRAINER_METRIC)
+                                .EndChildren()
                         .EndChildren();
             var list = builder.MenuTree(user);
             return list;

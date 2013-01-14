@@ -8,6 +8,7 @@ using CC.Core.DomainTools;
 using CC.Core.Html;
 using CC.Core.Html.Grid;
 using CC.Core.Services;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
@@ -16,6 +17,7 @@ using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
 using NHibernate.Linq;
+using StructureMap;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
@@ -27,19 +29,20 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
     public class TrainerSessionVerificationController : MFController
     {
-        private readonly IEntityListGrid<SessionVerificationDto> _grid;
+        private readonly IEntityListGrid<TrainerSessionDto> _grid;
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly ISaveEntityService _saveEntityService;
         private readonly IRepository _repository;
         private readonly ISessionContext _sessionContext;
 
-        public TrainerSessionVerificationController(IEntityListGrid<SessionVerificationDto> grid,
+        public TrainerSessionVerificationController(
             IDynamicExpressionQuery dynamicExpressionQuery,
             ISaveEntityService saveEntityService,
             IRepository repository,
             ISessionContext sessionContext)
         {
-            _grid = grid;
+            _grid = ObjectFactory.Container.GetInstance<IEntityListGrid<TrainerSessionDto>>("SessionVerification");
+
             _dynamicExpressionQuery = dynamicExpressionQuery;
             _saveEntityService = saveEntityService;
             _repository = repository;
@@ -71,7 +74,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var user = (User) input.User;
             var verification = new TrainerSessionVerification {Trainer = user};
             //get this from the view then add it to the verification
-            var total = 0;
+            var total = 0d;
+            // call tolist because were gonna itterate
+            user.TrainerClientRates.ToList();
+            user.Sessions.Where(x=> input.EntityIds.Contains(x.EntityId)).ToList();
             input.EntityIds.ForEachItem(x =>
                 {
                     var session = user.Sessions.FirstOrDefault(y => y.EntityId == x);
@@ -79,6 +85,9 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                     {
                         session.TrainerVerified = true;
                         verification.AddTrainerApprovedSessionItem(session);
+                        var trainerClientRate = user.TrainerClientRates.FirstOrDefault(tcr => tcr.EntityId == session.Client.EntityId);
+                        int percent = trainerClientRate != null ? trainerClientRate.Percent:user.ClientRateDefault;
+                        verification.Total += session.Cost * (percent*.01);
                     }
                 });
             user.AddTrainerSessionVerification(verification);
@@ -109,6 +118,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             catch (Exception exception)
             {
                 notification.Success = false;
+                notification.Message = "";
                 notification.Errors= new List<ErrorInfo>();
                 notification.Errors.Add(new ErrorInfo("",exception.Message));
             }
@@ -117,30 +127,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
         {
-            var user = _repository.Query<User>(x=>x.EntityId == input.User.EntityId).FetchMany(x=>x.Sessions).ThenFetch(x=>x.Appointment).ThenFetchMany(x=>x.Clients).FirstOrDefault();
-            var sessions = user.Sessions.Where(x => !x.TrainerPaid && !x.TrainerVerified).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-            var items = _dynamicExpressionQuery.PerformQuery(sessions,input.filters, x=>x.Appointment.Date<=endDate);
-            var sessionPaymentDtos = items.Select(x => new SessionVerificationDto
-                                                           {
-                                                               AppointmentDate = x.Appointment.Date,
-                                                               EntityId = x.EntityId,
-                                                               FullName = x.Client.FullNameLNF,
-                                                               PricePerSession = x.Cost,
-                                                               Type = x.AppointmentType,
-                                                               InArrears = x.InArrears,
-                                                               TrainerPercentage =
-                                                                   x.Trainer.TrainerClientRates.FirstOrDefault(
-                                                                       y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
-                                                                       y => y.Client == x.Client).Percent:x.Trainer.ClientRateDefault,
-                                                               TrainerPay =
-                                                                   x.Trainer.TrainerClientRates.FirstOrDefault(
-                                                                       y => y.Client == x.Client)!=null?x.Trainer.TrainerClientRates.FirstOrDefault(
-                                                                       y => y.Client == x.Client).Percent * .01 * x.Cost : x.Trainer.ClientRateDefault * .01 * x.Cost
-                                                           });
+            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.User.EntityId 
+                && x.AppointmentDate <= endDate
+                && !x.TrainerVerified);
 
-
-            var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, sessionPaymentDtos,user);
+            var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos, input.filters);
+            var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,input.User);
             return new CustomJsonResult(gridItemsViewModel);
         }
 

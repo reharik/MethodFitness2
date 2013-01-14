@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using Alpinely.TownCrier;
 using CC.Core;
+using MethodFitness.Core.Domain;
 using StructureMap;
 
 namespace MethodFitness.Core.Services
@@ -40,7 +41,7 @@ namespace MethodFitness.Core.Services
                 message.From = input.From;
                 message.To.AddRange(addresses);
 
-                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);
+                var smtpClient = new SmtpClient(SiteConfig.Settings().SMTPServer, 25);
                 smtpClient.Send(message);
             }
             catch(Exception ex)

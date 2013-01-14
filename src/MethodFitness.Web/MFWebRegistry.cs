@@ -14,12 +14,14 @@ using CC.UI.Helpers.Tags;
 using KnowYourTurf.Core.Domain.Tools;
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
+using MethodFitness.Web.Grids;
 using MethodFitness.Web.Menus;
 using MethodFitness.Web.Services;
 using MethodFitness.Web.Services.ViewOptions;
@@ -95,6 +97,9 @@ namespace MethodFitness.Web
             For<ISessionContext>().Use<SessionContext>();
             For<ICCSessionContext>().Use<SessionContext>();
             For<IMFPermissionsService>().Use<MFPermissionsService>();
+
+            For<IEntityListGrid<TrainerSessionDto>>().Use<SessionVerificationListGrid>().Named("SessionVerification");
+            For<IEntityListGrid<TrainerSessionDto>>().Add<SessionPaymentListGrid>().Named("SessionPaymentVerification");
         }
     }
 }
