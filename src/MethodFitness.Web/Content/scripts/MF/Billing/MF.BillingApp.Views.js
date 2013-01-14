@@ -233,7 +233,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         this._super("onClose",arguments);
     },
     setupElements:function(){
-        if($("#filterArea").size()==0){
+        if($("#acceptSessionsButton").size()==0){
 //            $(this.el).find(".content-header").append($("#payTrainerSearchTemplate").tmpl());
             $(this.el).find(".content-header").prepend('<a href="#" id="acceptSessionsButton"><img src="/content/images/thumbs_up.jpg" title="Accept Sessions" class="thumbsImage" /></a><a href="#" id="alertAdminButton"><img src="/content/images/thumbs_down.jpg" title="Email Admin of a problem" class="thumbsImage thumbsLeft" /></a>' );
 //            $("#filterArea").empty();
