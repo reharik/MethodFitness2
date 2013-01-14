@@ -9,7 +9,10 @@ GO
 CREATE VIEW [dbo].[TrainerSessions]
 AS
 SELECT        ses.EntityId, ses.Cost AS PricePerSession, ses.AppointmentType AS Type, ses.TrainerVerified, ses.TrainerSessionVerificationId, ses.InArrears, ses.ClientId, 
-                         ses.TrainerPaid, app.Date AS AppointmentDate, Client.FirstName, Client.LastName, tcr.[Percent] AS TrainerPercentage, app.EntityId AS AppId, app.TrainerId
+                         ses.TrainerPaid, app.Date AS AppointmentDate, Client.FirstName, Client.LastName, ISNULL(tcr.[Percent],
+                             (SELECT        ClientRateDefault
+                               FROM            dbo.[User]
+                               WHERE        (EntityId = app.TrainerId))) AS TrainerPercentage, app.EntityId AS AppId, app.TrainerId
 FROM            dbo.Appointment AS app LEFT OUTER JOIN
                          dbo.Session AS ses ON ses.AppointmentId = app.EntityId LEFT OUTER JOIN
                          dbo.Client AS Client ON ses.ClientId = Client.EntityId LEFT OUTER JOIN

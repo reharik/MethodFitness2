@@ -1,5 +1,3 @@
-USE [MethodFitness_QA]
-GO
 /****** Object:  StoredProcedure [dbo].[TrainerMetric]    Script Date: 1/6/2013 5:34:05 PM ******/
 SET ANSI_NULLS ON
 GO

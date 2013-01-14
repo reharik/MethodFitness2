@@ -37,12 +37,14 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public ActionResult ItemList(ViewModel input)
         {
+            var trainerSessionVerification = _repository.Find<TrainerSessionVerification>(input.EntityId);
             var url = UrlContext.GetUrlForAction<VerifiedTrainerSessionsController>(x => x.TrainerSessions(null), AreaName.Billing) + "?ParentId=" + input.EntityId;
             var user = (User)input.User;
             var model = new TrainersPaymentListViewModel()
             {
                 gridDef = _grid.GetGridDefinition(url, user),
                 EntityId = user.EntityId,
+                _Title = "Created on: " + trainerSessionVerification.CreatedDate.Value.ToShortDateString()+".  Total Verfied: $"+trainerSessionVerification.Total
             };
             return new CustomJsonResult(model);
         }

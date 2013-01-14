@@ -806,9 +806,9 @@ div.ui-dialog {
     width: 100%;
 }
 
-.ui-widget-header .ui-icon {
-    background: url("../images/close-dialog.png");
-}
+/*.ui-widget-header .ui-icon {*/
+    /*background: url("../images/close-dialog.png");*/
+/*}*/
 
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: none; }
 
@@ -1851,13 +1851,13 @@ div.ui-datepicker {
 	padding: 0 !important;
 }
 
-.ui-datepicker .ui-icon-circle-triangle-e {
-	background: url("../images/ui-bg_arrow_gt.png") no-repeat !important; 
-}
+/*.ui-datepicker .ui-icon-circle-triangle-e {*/
+	/*background: url("../images/ui-bg_arrow_gt.png") no-repeat !important; */
+/*}*/
 
-.ui-datepicker .ui-icon-circle-triangle-w {
-	background: url("../images/ui-bg_arrow_lt.png") no-repeat !important; 
-}
+/*.ui-datepicker .ui-icon-circle-triangle-w {*/
+	/*background: url("../images/ui-bg_arrow_lt.png") no-repeat !important; */
+/*}*/
 
 .ui-datepicker-prev-hover
 	, .ui-datepicker-next-hover 
