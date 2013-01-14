@@ -118,6 +118,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             catch (Exception exception)
             {
                 notification.Success = false;
+                notification.Message = "";
                 notification.Errors= new List<ErrorInfo>();
                 notification.Errors.Add(new ErrorInfo("",exception.Message));
             }

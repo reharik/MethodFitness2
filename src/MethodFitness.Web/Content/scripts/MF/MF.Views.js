@@ -318,7 +318,7 @@ MF.Views.popupButtonBuilder = (function(){
         var buttons = {};
         var _addButton = function(name,func){ buttons[name] = func; };
         var saveFunc = function() {
-            MF.vent.trigger("popup:"+id+":save");
+            MF.vent.trigger("popup:"+id+":save", this);
         };
         var editFunc = function(event) {MF.vent.trigger("popup:"+id+":edit");};
         var cancelFunc = function(){
