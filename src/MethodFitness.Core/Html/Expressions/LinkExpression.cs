@@ -78,7 +78,7 @@ namespace MethodFitness.Core.Html.Expressions
 
         public LinkExpression AsStyleSheet()
         {
-            BasedAt(SiteConfig.Settings().CssPath);
+            BasedAt(Site.Config.CssPath);
             Rel("stylesheet");
             Type("text/css");
             return this;

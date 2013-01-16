@@ -244,15 +244,15 @@ MF.Views.AppointmentView = MF.Views.View.extend({
     },
 
     setCurrentSelectionForAptType:function(isPair){
-        var currentSelection = $("[name='AppointmentType']").select2("val");
+        var currentSelection = $("[name='AppointmentType']").val();
         if(isPair){
             $("[name='AppointmentType']").data.previousSelection=currentSelection;
-            $("[name='AppointmentType']").select2("val","Pair");
+            $("[name='AppointmentType']").val("Pair");
             this.model.AppointmentType("Pair");
         }else{
             if(currentSelection == "Pair"){
                 var previousSelection = $("[name='AppointmentType']").data.previousSelection;
-                $("[name='AppointmentType']").select2("val",previousSelection);
+                $("[name='AppointmentType']").val(previousSelection);
                 this.model.AppointmentType(previousSelection);
             }
         }

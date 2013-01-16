@@ -14,6 +14,9 @@
  * Date: Sun Aug 21 22:06:09 2011 -0700
  *
  */
+
+/// <reference path="../jqueryPlugins/jquery-1.7.1.js"/>
+
  
 (function($, undefined) {
 

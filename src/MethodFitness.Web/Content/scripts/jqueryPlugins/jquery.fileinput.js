@@ -6,6 +6,10 @@
  * licensed under MIT (filamentgroup.com/examples/mit-license.txt)
  * --------------------------------------------------------------------
  */
+
+/// <reference path="jquery-1.7.1.js"/>
+
+
 $.fn.customFileInput = function(){
 	//apply events and styles for file input element
 	var fileInput = $(this)

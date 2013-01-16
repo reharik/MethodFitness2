@@ -9,6 +9,9 @@
  *
  **/
 
+/// <reference path="../jquery-1.7.1.js"/>
+
+
 if (typeof Object.create !== 'function') {
     Object.create = function (o) {
         function F() {

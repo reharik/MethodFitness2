@@ -5,50 +5,21 @@
 @using HtmlTags
 
 @{
+    Cassette.Views.Bundles.Reference("content/css");
+    Cassette.Views.Bundles.Reference("content/scripts");
+}
+
+@{
     Layout = "";
 }
-<!--[if IE]>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- [Else]>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- [endif]-->
 <html>
     <head>
     <title>Login</title>
+        
+    @Cassette.Views.Bundles.RenderStylesheets()
 
-    @CSS("jquery-ui-1.8.16.custom.css").ToHtmlTag()
-    @CSS("main.css").ToHtmlTag()
-    <!--[if gt IE 7]>
-    @CSS("ie.css").ToHtmlTag()
-     <![endif]-->
-     @CSS("mf.css").ToHtmlTag()
-       @Script("jqueryPlugins/jquery-1.7.1.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery-ui-1.8.16.custom.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.validate.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.form.js").ToHtmlTag()
-    @Script("externalHelpers/underscore.js").ToHtmlTag()
-    @Script("externalHelpers/backbone.js").ToHtmlTag()
-    @Script("externalHelpers/backbone.marionette.js").ToHtmlTag()
-    @Script("externalHelpers/knockout-2.1.0.debug.js").ToHtmlTag()    
-    @Script("externalHelpers/knockout.mapping.js").ToHtmlTag()    
-    @Script("jqueryPlugins/noty/jquery.noty.js").ToHtmlTag()    
-    @Script("jqueryPlugins/noty/inline.js").ToHtmlTag()    
-    @Script("jqueryPlugins/noty/default.js").ToHtmlTag()    
-
-    @Script("MF/MF.App.js").ToHtmlTag()
-    @Script("MF/MF.Views.js").ToHtmlTag()
-    @Script("MF/MF.State.js").ToHtmlTag()
-    @Script("MF/MF.Mixins.js").ToHtmlTag()
-    @Script("MF/MF.OneOffViews.js").ToHtmlTag()
-
-    
-    @Script("MF/CC.ModelBinding/CC.Elements.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.ModelService.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.ValidationRules.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.ValidationRunner.js").ToHtmlTag()
-    @Script("internalHelpers/mf.repository.js").ToHtmlTag()
-
-        @Script("externalHelpers/json2.js").ToHtmlTag()
+    @Cassette.Views.Bundles.RenderScripts()
     
     <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
     <script type="text/javascript">

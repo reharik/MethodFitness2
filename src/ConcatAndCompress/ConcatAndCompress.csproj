@@ -11,7 +11,8 @@
     <RootNamespace>ConcatAndCompress</RootNamespace>
     <AssemblyName>ConcatAndCompress</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -38,7 +39,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxMin">
-      <HintPath>..\..\lib\MicrosoftMinifier\AjaxMin.dll</HintPath>
+      <HintPath>..\lib\AjaxMin.dll</HintPath>
+    </Reference>
+    <Reference Include="CC.Core">
+      <HintPath>..\MethodFitness.Web\bin\CC.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MethodFitness.Core">
+      <HintPath>..\MethodFitness.Web\bin\MethodFitness.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MethodFitness.Web">
+      <HintPath>..\MethodFitness.Web\bin\MethodFitness.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,8 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConcatenateFiles.cs" />
+    <Compile Include="ProcessFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

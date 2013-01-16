@@ -8,6 +8,10 @@
  *
  */
 
+/// <reference path="jquery-1.7.1.js"/>
+/// <reference path="../externalHelpers/knockout-2.1.0.debug.js"/>
+/// <reference path="../externalHelpers/knockout.mapping-lastest.debug.js"/>
+
 (function ($) {
 // Default settings
 var DEFAULT_SETTINGS = {
