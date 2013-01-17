@@ -20,11 +20,13 @@
             <span class="title-added">@WebLocalizationKeys.DATE_ADDED.ToFormat(Model.Item.CreateDate.ToLongDateString())</span>
         }
     </div>
-    <div id="contentArea" class="content-inner">
-        <div class="required_style"><span>* @WebLocalizationKeys.REQUIRED</span></div>
-        @RenderBody()
+<div id="contentArea" class="content-inner">
+    <div class="form">
+    <div class="required_style"><span>* @WebLocalizationKeys.REQUIRED</span></div>
+    @RenderBody()
         <div class="footer">
             @StandardButtonFor("save", WebLocalizationKeys.SAVE).AddClass("save").ToHtmlTag()
             @StandardButtonFor("cancel", WebLocalizationKeys.CANCEL).AddClass("cancel").ToHtmlTag()
         </div>
     </div>
+</div>

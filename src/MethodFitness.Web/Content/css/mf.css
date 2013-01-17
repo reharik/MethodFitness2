@@ -318,7 +318,7 @@ form button.cancel:active {
 }
 /*  The editor_root was focused upon to fix the margin issues with the fields.  Please manipulate this to fix any further issues.*/
 .editor_root {
-	margin: 8px 0 8px 8px !important;
+	margin: 4px 0 4px 0px !important;
 }
 
 .view_root {

@@ -1,0 +1,53 @@
+
+
+input, textarea, .uneditable-input {
+    width: 100%;
+}
+
+label, input, button, select, textarea {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+    color: #666666;
+}
+
+
+input,
+button,
+select,
+textarea {
+    font-family: helvetica,sans-serif;
+}
+
+label {
+    display: block;
+    margin-bottom: 2;
+}
+
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 4px 4px 4px 4px;
+    color: #838383;
+    display: inline-block;
+    font-size: 13px;
+    height: 25px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+
+.subHeader{
+    color:#666666;
+}
+
+/*.row-fluid [class*="span"] {*/
+    /*display: block;*/
+    /*min-height: 30px;*/
+    /*-webkit-box-sizing: border-box;*/
+    /*-moz-box-sizing: border-box;*/
+    /*box-sizing: border-box;*/
+    /*float: left;*/
+    /*margin-left: .01%;*/
+    /**margin-left: .01%;*/
+/*}*/
