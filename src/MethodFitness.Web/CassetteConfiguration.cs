@@ -24,7 +24,7 @@ namespace MethodFitness.Web
             // So you probably want to tweak these defaults!
 
             bundles.Add<ScriptBundle>("content/scripts", this.JavascriptFileList());
-            bundles.Add<StylesheetBundle>("Content/css", CssFileList());
+            bundles.Add<StylesheetBundle>("Content/css", CssFileList(), bundle => bundle.EmbedImages());
 
             // To combine files, try something like this instead:
             //   bundles.Add<StylesheetBundle>("Content");
