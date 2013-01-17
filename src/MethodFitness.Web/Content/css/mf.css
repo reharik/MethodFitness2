@@ -234,83 +234,43 @@ label.section-available {
 	color: brown;
 }
 
-.footer button {
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	font-size: 12px;
-	font-weight: bold;
-	padding-bottom: 5px;
+ button {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 5px;
+ }
+ button.save {
+    background: url("../images/button-save-bg.png") repeat-x scroll 0 0 #CCCCCC;
+    border: 1px solid #B7D6DE;
+    height: 27px;
+    width: 80px;
+    color: #437182;
+ }
+ button.cancel {
+    background: url("../images/button-cancel-bg.png") repeat-x scroll 0 0 #CCCCCC;
+    border: 1px solid #dfdfdf;
+    height: 27px;
+    width: 80px;
+    color: #8F8F8F;
+ }
+ button.save:hover {
+    background: url("../images/button-save-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
+ }
+button.cancel:hover {
+    background: url("../images/button-cancel-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
 }
-.footer button.save {
-	background: url("../images/button-save-bg.png") repeat-x scroll 0 0 #CCCCCC;
-	border: 1px solid #B7D6DE;
-	height: 27px;
-	width: 80px;
-	color: #437182;
+ button.save:active {
+    background: url("../images/button-save-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
+    -webkit-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
+    -moz-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
+    box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
 }
-.footer button.cancel {
-	background: url("../images/button-cancel-bg.png") repeat-x scroll 0 0 #CCCCCC;
-	border: 1px solid #dfdfdf;
-	height: 27px;
-	width: 80px;
-	color: #8F8F8F;
-}
-.footer button.save:hover {
-	background: url("../images/button-save-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
-}
-.footer button.cancel:hover {
-	background: url("../images/button-cancel-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
-}
-.footer button.save:active {
-	background: url("../images/button-save-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
-	-webkit-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-	-moz-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-	box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-}
-.footer button.cancel:active {
-	background: url("../images/button-cancel-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
-}
-
-
-
-form button {
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	font-size: 12px;
-	font-weight: bold;
-	padding-bottom: 5px;
-}
-form button.save {
-	background: url("../images/button-save-bg.png") repeat-x scroll 0 0 #CCCCCC;
-	border: 1px solid #B7D6DE;
-	height: 27px;
-	width: 80px;
-	color: #437182;
-}
-form button.cancel {
-	background: url("../images/button-cancel-bg.png") repeat-x scroll 0 0 #CCCCCC;
-	border: 1px solid #dfdfdf;
-	height: 27px;
-	width: 80px;
-	color: #8F8F8F;
-}
-form button.save:hover {
-	background: url("../images/button-save-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
-}
-form button.cancel:hover {
-	background: url("../images/button-cancel-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
-}
-form button.save:active {
-	background: url("../images/button-save-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
-	-webkit-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-	-moz-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-	box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
-}
-form button.cancel:active {
-	background: url("../images/button-cancel-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
-}
+ button.cancel:active {
+    background: url("../images/button-cancel-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
+ }
 
 
 .artifact-field .editor_root, .artifact-field .editor_label, .artifact-field .editor_input {
@@ -318,7 +278,7 @@ form button.cancel:active {
 }
 /*  The editor_root was focused upon to fix the margin issues with the fields.  Please manipulate this to fix any further issues.*/
 .editor_root {
-	margin: 4px 0 4px 0px !important;
+	margin: 4px 2px!important;
 }
 
 .view_root {
@@ -398,9 +358,23 @@ div.footer div.col {
 }
 
 /*Directly below was used to adjust the margins for the picture preview icon.*/
-.view_label, .view_display{
-	 margin: 8px 0 0 8px;
+.view_label{
     float: left;
+    font-size: 12px;
+    color: #666666;
+}
+
+.view_label label{
+    font-weight: bold;
+    text-align: left;
+}
+
+.view_display{
+    float: left;
+    font-size: 12px;
+    color: #666666;
+    line-height: 20px;
+    padding-left: 10px;
 }
 
 .create_port{
@@ -583,7 +557,8 @@ margin: 0;
 
 div.headerInput{
 	float: left;
-    margin: 11px 0 0 10px;
+    margin: 8px 0 0 10px;
+    height: 30px;
     color: #666666;
     font-size: .8em;
     font-family: verdana;

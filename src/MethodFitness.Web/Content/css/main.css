@@ -510,7 +510,7 @@ div.ui-dialog {
     padding-left: 10px;
 }
 
-.ui-widget-content {
+.ui-jqgrid.ui-widget-content {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAABkCAYAAAD0ZHJ6AAAAeUlEQVRoge3OMQHAIBAAsVL/nh8JDDfAkCjImpn5HvbfDpwIVoKVYCVYCVaClWAlWAlWgpVgJVgJVoKVYCVYCVaClWAlWAlWgpVgJVgJVoKVYCVYCVaClWAlWAlWgpVgJVgJVoKVYCVYCVaClWAlWAlWgpVgJVgJVhtqiwTEKTLXTgAAAABJRU5ErkJggg==") repeat-x scroll 50% 50% #FFFFFF;
     border: none;
     color: #222222;

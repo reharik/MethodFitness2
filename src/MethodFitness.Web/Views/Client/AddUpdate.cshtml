@@ -1,11 +1,10 @@
 ﻿@using CC.Core.Html.CCUI
 @using MethodFitness.Core.Services
 @using MethodFitness.Web
-@using MethodFitness.Web.Controllers
-@model ClientViewModel
+@model MethodFitness.Web.Controllers.ClientViewModel
 
 @{
-    Layout = "~/Views/Shared/_FormLayout.cshtml";
+    this.Layout = "~/Views/Shared/_FormLayout.cshtml";
 }
 
 @section ExtraContentHeaderButtons{
@@ -16,120 +15,100 @@
     <button class="client_payment" title="@WebLocalizationKeys.MAKE_PAYMENT"></button>
 }
 
-<div class="row">
-    <div class="span4">
-                <h5 class="subHeader">@WebLocalizationKeys.CLIENT_INFORMATION</h5>
-    </div>
-</div>
 
 <div class="row">
-    <div class="span5">
-        @Html.SubmissionFor(x => x.FirstName).ToHtmlTag()
+    <div class="span8">
+        <h5 class="subHeader">@WebLocalizationKeys.CLIENT_INFORMATION</h5>
     </div>
-    <div class="span5">
-        @Html.SubmissionFor(x => x.LastName).ToHtmlTag()
+</div>
+<div class="row">
+@*-----------Left Column-------------*@
+    <div class="span10">
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.FirstName).Size("5").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.LastName).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.BirthDate).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.Address1).Size("5").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.Address2).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.City).Size("5").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.State).Size("2").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.ZipCode).Size("3").ToHtmlTag()
+        </div>
     </div>
+
     <div class="span1"></div>
-    
-    <div class="span5">
-        @Html.SubmissionFor(x => x.FirstName).ToHtmlTag()
+@*-----------Right Column-------------*@
+    <div class="span10">
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.Email).Size("8").ToHtmlTag()
+        </div>
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.MobilePhone).Size("5").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.SecondaryPhone).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.Source).Size("5").InputId("source").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.StartDate).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+                @this.Html.SubmissionFor(x => x.SourceOther).Size("10").RootId("other").LabelDisplay(WebLocalizationKeys.SOURCE_NOTES).ToHtmlTag()
+        </div>
     </div>
-    <div class="span5">
-        @Html.SubmissionFor(x => x.LastName).ToHtmlTag()
-    </div>
+
 </div>
 
 <div class="row">
     <div class="span10">
-        @Html.SubmissionFor(x => x.FirstName).ToHtmlTag()
-    </div>
-</div>
-
-
-
-
-
-<div class="col left">
-            <div class="fieldRow">
-                <h4>@WebLocalizationKeys.CLIENT_INFORMATION</h4>
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.FirstName).AddClassToRoot("half first").ToHtmlTag()
-                @Html.SubmissionFor(x => x.LastName).AddClassToRoot("half last").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.BirthDate).AddClassToRoot("half first").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Address1).AddClassToRoot("half first").ToHtmlTag()
-                @Html.SubmissionFor(x => x.Address2).AddClassToRoot("half").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.City).AddClassToRoot("half first").ToHtmlTag()
-                @Html.SubmissionFor(x => x.State).AddClassToRoot("one-quarter").ToHtmlTag()
-                @Html.SubmissionFor(x => x.ZipCode).AddClassToRoot("one-quarter").ToHtmlTag()
-            </div>
-            
-        </div>
-        <div class="col right">
-             <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Email).ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.MobilePhone).AddClassToRoot("first half").ToHtmlTag()
-                @Html.SubmissionFor(x => x.SecondaryPhone).AddClassToRoot("half").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Source).AddClassToRoot("half first").InputId("source").ToHtmlTag()
-                @Html.SubmissionFor(x => x.StartDate).AddClassToRoot("half").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.SourceOther).RootId("other").AddClassToRoot("first").LabelDisplay(WebLocalizationKeys.SOURCE_NOTES).ToHtmlTag()
-            </div>
-        </div>
-        <div class="col full clear">
-            <div class="fieldRow">
-                @Html.SubmissionFor(x => x.Notes).ToHtmlTag()
-            </div>
-        </div>
         @if (UserPermissionService.Allow("/Billing/ChangeClientRates"))
         {
-            <div class="col full clear"></div>
-            <div class="col left">
-                <div class="fieldRow">
-                    <h4>@WebLocalizationKeys.CLIENT_RATES</h4>
+            <div class="row">
+                <div class="span10">
+                    <h5 class="subHeader">@WebLocalizationKeys.CLIENT_RATES</h5>
                 </div>
-                <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesFullHour).LabelDisplay(WebLocalizationKeys.FULL_HOUR).AddClassToRoot("half first").ToHtmlTag()
-                </div>
-                <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesFullHourTenPack).LabelDisplay(WebLocalizationKeys.FULL_HOUR_TEN_PACK).AddClassToRoot("half first").ToHtmlTag()
-                </div>
-                <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesHalfHour).LabelDisplay(WebLocalizationKeys.HALF_HOUR).AddClassToRoot("half first").ToHtmlTag()
-                </div>
-                <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesHalfHourTenPack).LabelDisplay(WebLocalizationKeys.HALF_HOUR_TEN_PACK).AddClassToRoot("half first").ToHtmlTag()
-                </div>
-                <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesPair).LabelDisplay(WebLocalizationKeys.PAIR).AddClassToRoot("half first").ToHtmlTag()
-                </div>
-                <div class="fieldRow">
-                    @Html.SubmissionFor(x => x.SessionRatesPairTenPack).LabelDisplay(WebLocalizationKeys.PAIR_TEN_PACK).AddClassToRoot("half first").ToHtmlTag()
-                </div>
+            </div>
+            <div class="row">
+                    @this.Html.SubmissionFor(x => x.SessionRatesFullHour).LabelDisplay(WebLocalizationKeys.FULL_HOUR).Size("5").ToHtmlTag()
+            </div>
+            <div class="row">
+                    @this.Html.SubmissionFor(x => x.SessionRatesFullHourTenPack).LabelDisplay(WebLocalizationKeys.FULL_HOUR_TEN_PACK).Size("5").ToHtmlTag()
+            </div>
+            <div class="row">
+                    @this.Html.SubmissionFor(x => x.SessionRatesHalfHour).LabelDisplay(WebLocalizationKeys.HALF_HOUR).Size("5").ToHtmlTag()
+            </div>
+            <div class="row">
+                    @this.Html.SubmissionFor(x => x.SessionRatesHalfHourTenPack).LabelDisplay(WebLocalizationKeys.HALF_HOUR_TEN_PACK).Size("5").ToHtmlTag()
+            </div>
+            <div class="row">
+                    @this.Html.SubmissionFor(x => x.SessionRatesPair).LabelDisplay(WebLocalizationKeys.PAIR).Size("5").ToHtmlTag()
+            </div>
+            <div class="row">
+                    @this.Html.SubmissionFor(x => x.SessionRatesPairTenPack).LabelDisplay(WebLocalizationKeys.PAIR_TEN_PACK).Size("5").ToHtmlTag()
             </div>
         }
-        <div class="col right">
-            <div class="fieldRow">
-                <h4>@WebLocalizationKeys.CURRENT_CLIENT_INVENTORY</h4>
-            </div>
-            <div class="fieldRow">
-                @Html.ViewFor(x => x._sessionsAvailable.FullHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.ViewFor(x => x._sessionsAvailable.HalfHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
-            </div>
-            <div class="fieldRow">
-                @Html.ViewFor(x => x._sessionsAvailable.Pair).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
-            </div>
+    </div>
+<div class="span1"/>
+
+<div class="span10">
+    <div class="row">
+        <div class="span5">
+            <h5 class="subHeader">@WebLocalizationKeys.CURRENT_CLIENT_INVENTORY</h5>
         </div>
+        </div>
+        <div class="row">
+                @this.Html.ViewFor(x => x._sessionsAvailable.FullHour).Size("5").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
+        </div>
+        <div class="row">
+                @this.Html.ViewFor(x => x._sessionsAvailable.HalfHour).Size("5").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
+        </div>
+        <div class="row">
+                @this.Html.ViewFor(x => x._sessionsAvailable.Pair).Size("5").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
+        </div>
+    </div>
+</div>
+    

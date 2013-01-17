@@ -1,4 +1,4 @@
-
+﻿
 
 input, textarea, .uneditable-input {
     width: 100%;
@@ -37,17 +37,18 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     vertical-align: middle;
 }
 
+select {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    width: 100%;
+}
+
 .subHeader{
     color:#666666;
 }
 
-/*.row-fluid [class*="span"] {*/
-    /*display: block;*/
-    /*min-height: 30px;*/
-    /*-webkit-box-sizing: border-box;*/
-    /*-moz-box-sizing: border-box;*/
-    /*box-sizing: border-box;*/
-    /*float: left;*/
-    /*margin-left: .01%;*/
-    /**margin-left: .01%;*/
-/*}*/
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 12px;
+}

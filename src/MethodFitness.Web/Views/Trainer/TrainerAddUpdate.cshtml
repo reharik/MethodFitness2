@@ -14,7 +14,81 @@
     <button id="payTrainer" class="pay_trainer" title="@WebLocalizationKeys.PAY_TRAINER"></button>
 }
 
-        <div class="col left">
+<div class="row">
+@*-----------Left Column-------------*@
+    <div class="span10">
+        <div class="row">
+            <div class="span5">
+            <h4>@WebLocalizationKeys.PERSONAL_INFORMATION</h4>
+            </div>
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.FirstName).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.LastName).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.ViewFor(x => x.UserLoginInfoLoginName).LabelDisplay(WebLocalizationKeys.LOGIN_NAME).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.BirthDate).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.Address1).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.Address2).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.City).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.State).Size("2").ToHtmlTag()
+            @Html.SubmissionFor(x => x.ZipCode).Size("3").ToHtmlTag()
+        </div>
+        <div class="row">
+            <div class="span10">
+                @WebLocalizationKeys.SELECT_COLOR_TO_ASSOCIATE_WITH_THIS_PERSON.ToString()
+            </div>
+        </div>
+        <div class="row">
+            <div class="span5">
+                @MvcHtmlString.Create(Html.SubmissionFor(x => x.Color).HideLabel().AddClassToRoot("first half").InputId("color").ToString())
+                <div id="colorPicker"></div>
+           </div>
+        </div>
+        <div class="row artifact-field">
+            @Html.SubmissionFor(x => x.UserRolesDtos).Size("5").ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.USER_ROLES).ToHtmlTag()
+        </div>
+    </div>
+
+    <div class="span1"></div>
+@*-----------Right Column-------------*@
+    <div class="span10">
+        <div class="row">
+            <div class="span5">
+                <h4>@WebLocalizationKeys.PASSWORD</h4>
+            </div>
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.UserLoginInfoLoginName).Size("5").LabelDisplay(WebLocalizationKeys.LOGIN_NAME).ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.Password).Size("5").InputId("Password").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.PasswordConfirmation).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.Email).Size("8").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.PhoneMobile).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.SecondaryPhone).Size("5").ToHtmlTag()
+        </div>
+            <div class="row">
+            @Html.SubmissionFor(x => x.ClientRateDefault).Size("5").ToHtmlTag()
+        </div>
+        <div class="row artifact-field">
+            @Html.SubmissionFor(x => x.ClientsDtos).Size("5").ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
+        </div>
+    </div>
+</div>
+
+<div class="col left">
             <div class="fieldRow">
                 <h4>@WebLocalizationKeys.PERSONAL_INFORMATION</h4>
             </div>
