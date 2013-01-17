@@ -57,15 +57,16 @@
             <button style="display:none" class="return" title="@WebLocalizationKeys.RETURN"></button>
             <span class="title-name">${_Title}</span>
         </div>
-        <div id="contentArea" class="content-inner">
-            {{if EntityId}}
-            <input id="EntityId" type="hidden" value="${EntityId}"/>
-            {{/if}}
-            {{if ParentId}}
-            <input id="ParentId" type="hidden" value="${ParentId}"/>
-            {{/if}}
-            <table id="gridContainer" class="scroll"></table>
-            <div id="pager" class="scroll" style="text-align:center;"></div>
+        <div class="form-scroll-inner">
+            <div id="contentArea" class="content-inner">
+                {{if EntityId}}
+                <input id="EntityId" type="hidden" value="${EntityId}"/>
+                {{/if}}
+                {{if ParentId}}
+                <input id="ParentId" type="hidden" value="${ParentId}"/>
+                {{/if}}
+                <table id="gridContainer" class="scroll"></table>
+            </div>
         </div>
     </script>
     

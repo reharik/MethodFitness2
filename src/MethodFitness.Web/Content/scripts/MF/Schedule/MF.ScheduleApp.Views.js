@@ -32,6 +32,8 @@ MF.Views.CalendarView = MF.Views.View.extend({
         });
         //callback for render
         this.viewLoaded();
+        $("div.form-scroll-inner").height( $(window).height()-180);
+        $("#calendar",this.el).fullCalendar('option', 'height', $(window).height()-182);
         //general notification of pageloaded
         MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
         this.calendarBindings();
@@ -332,6 +334,7 @@ MF.Views.ClientFormView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         this._setupBindings();
+        $("div.form-scroll-inner").height( $(window).height()-180);
     },
      _setupBindings:function(){
          MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);

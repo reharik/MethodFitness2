@@ -373,9 +373,10 @@ div.form-scroll-wrapper {
 }
 
 div.form-scroll-inner {
-    height: 480px;
-    overflow-y: auto;
+    overflow: hidden;
 }
+
+
 
 
 /*******   SIGN-IN PAGE   *******/

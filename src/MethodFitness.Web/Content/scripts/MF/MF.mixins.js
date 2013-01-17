@@ -191,6 +191,7 @@ MF.mixins.ajaxDisplayMixin = {
     },
     renderCallback:function(){
         this.bindModelAndElements();
+        $("div.form-scroll-inner").height( $(window).height()-180);
         this.viewLoaded();
         MF.vent.trigger("display:"+this.id+":pageLoaded",this.options);
     }
@@ -203,6 +204,7 @@ MF.mixins.ajaxFormMixin = {
     },
     renderCallback:function(){
         this.bindModelAndElements();
+        $("div.form-scroll-inner").height( $(window).height()-180);
         this.viewLoaded();
         MF.vent.trigger("form:"+this.id+":pageLoaded",this.options);
     }
@@ -217,6 +219,8 @@ MF.mixins.ajaxGridMixin = {
         $(this.el).html($("#gridTemplate").tmpl(result));
         $.extend(this.options,result,MF.gridDefaults);
         this.setupGrid();
+        $("div.form-scroll-inner").height( $(window).height()-180);
+        $("#"+this.options.gridId).setGridHeight($("div.form-scroll-inner").height()-28  );
         this.viewLoaded();
         MF.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
 
