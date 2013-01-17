@@ -59,7 +59,7 @@ hr {
         #f2f2f2;
     border-top: 1px solid #e5e5e5;
     margin: 0;
-    min-height: 500px;
+    /*min-height: 500px;*/
 }
 
 #top-separator {
@@ -92,7 +92,7 @@ hr {
 }
 
 .content-outer .content-inner {
-    min-height: 400px;
+    /*min-height: 400px;*/
     background: white;
     padding: 0 0 3px 0px;
     position: relative;
@@ -172,8 +172,8 @@ hr {
 }
 
 .content-outer .content-header button {
-    filter: progid :       DXImageTransform.Microsoft.gradient (  
-        startColorstr =  
+    filter: progid :       DXImageTransform.Microsoft.gradient (
+        startColorstr =
         '#f9f9f9', endColorstr =       '#e9e9e9', GradientType =       0 );
     /* IE6-9 */
     background: linear-gradient(top, #f9f9f9 0%, #e9e9e9 100%); /* W3C */
@@ -373,7 +373,8 @@ div.form-scroll-wrapper {
 }
 
 div.form-scroll-inner {
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 
@@ -509,14 +510,20 @@ div.ui-dialog {
     padding-left: 10px;
 }
 
+.ui-widget-content {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAABkCAYAAAD0ZHJ6AAAAeUlEQVRoge3OMQHAIBAAsVL/nh8JDDfAkCjImpn5HvbfDpwIVoKVYCVYCVaClWAlWAlWgpVgJVgJVoKVYCVYCVaClWAlWAlWgpVgJVgJVoKVYCVYCVaClWAlWAlWgpVgJVgJVoKVYCVYCVaClWAlWAlWgpVgJVgJVhtqiwTEKTLXTgAAAABJRU5ErkJggg==") repeat-x scroll 50% 50% #FFFFFF;
+    border: none;
+    color: #222222;
+}
+
 
 /*   fixing ie7       */
-#jqgh_gridContainer_cb 
-{ 
+#jqgh_gridContainer_cb
+{
 	padding: 1px;
 	text-align: center;
   }
-	
+
 
 #gridContainer_cb{
 	padding-left: 1px;
@@ -649,8 +656,8 @@ td.jqg_cb {
     /* Opera11.10+ */
     background: -ms-linear-gradient(top, #fae8b3 0%, #f9e1a0 100%);
     /* IE10+ */
-    filter: progid :       DXImageTransform.Microsoft.gradient (  
-        startColorstr =  
+    filter: progid :       DXImageTransform.Microsoft.gradient (
+        startColorstr =
         '#fae8b3', endColorstr =       '#f9e1a0', GradientType =       0 );
     /* IE6-9 */
     background: linear-gradient(top, #fae8b3 0%, #f9e1a0 100%); /* W3C */
@@ -668,8 +675,8 @@ td.jqg_cb {
     /* Opera11.10+ */
     background: -ms-linear-gradient(top, #fae8b3 0%, #f9e1a0 100%);
     /* IE10+ */
-    filter: progid :       DXImageTransform.Microsoft.gradient (  
-        startColorstr =  
+    filter: progid :       DXImageTransform.Microsoft.gradient (
+        startColorstr =
         '#fae8b3', endColorstr =       '#f9e1a0', GradientType =       0 );
     /* IE6-9 */
     background: linear-gradient(top, #fae8b3 0%, #f9e1a0 100%); /* W3C */
@@ -687,8 +694,8 @@ td.jqg_cb {
     /* Opera11.10+ */
     background: -ms-linear-gradient(top, #e1e1e1 0%, #d7d7d7 100%);
     /* IE10+ */
-    filter: progid :       DXImageTransform.Microsoft.gradient (  
-        startColorstr =  
+    filter: progid :       DXImageTransform.Microsoft.gradient (
+        startColorstr =
         '#e1e1e1', endColorstr =       '#d7d7d7', GradientType =       0 );
     /* IE6-9 */
     background: linear-gradient(top, #e1e1e1 0%, #d7d7d7 100%); /* W3C */
@@ -920,7 +927,7 @@ textarea {
 
 .bottom_cont h4,
 	.portfolio-description,
-	.marrgin-twenty 
+	.marrgin-twenty
 {
     margin-left: 20px;
 }
@@ -955,7 +962,7 @@ button.plus-rounded {
 
 #associate-existing-document #gbox_Grid
 	, #associate-existing-document
-	, #associate-existing-document .ui-jqgrid-bdiv 
+	, #associate-existing-document .ui-jqgrid-bdiv
 {
     height: auto !important;
 }
@@ -1047,12 +1054,12 @@ ul li.token-input-input-token {
 .ui-datepicker tbody td {
 	border: 1px solid #E8E8E8;
 	padding: 0px;
-	
+
 }
 
 .ui-datepicker tbody .ui-state-default
 	,.ui-datepicker tbody .ui-state-hover
-	,.ui-datepicker tbody .ui-state-active 
+	,.ui-datepicker tbody .ui-state-active
 {
 	background: url("../images/ui-bg_glass_38_e6e6e6.png") repeat-x scroll 50% 50% !important;
 	height: 30px;
@@ -1070,7 +1077,7 @@ ul li.token-input-input-token {
     font-size: 12px;
     height: 20px;
     line-height: 20px;
-    
+
 }
 
 .ui-datepicker tbody .ui-state-active {
@@ -1104,7 +1111,7 @@ ul li.token-input-input-token {
 }
 
 div.ui-datepicker {
-	
+
 	width: 200px !important;
 	padding: 0 !important;
 }
