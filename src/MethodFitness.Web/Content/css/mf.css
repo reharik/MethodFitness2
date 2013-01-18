@@ -229,3 +229,11 @@ div.headerInput input{
     width:90px;
     text-align: center;
 }
+
+.thumbsImage{
+    padding:10px;
+}
+
+.thumbsLeft{
+    padding: 10px 10px 10px 0px;
+}
