@@ -142,6 +142,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Harness.cs" />
     <Compile Include="ObjectMother.cs" />
     <Compile Include="Services\ClientPaymentToSessionsTester.cs" />
     <Compile Include="Services\SiteConfigTester.cs" />

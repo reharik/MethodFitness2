@@ -108,6 +108,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                       Body = input.Body
                                   };
 
+//                var smtpClient = new SmtpClient(SiteConfig.Settings().SMTPServer);
+//                smtpClient.Credentials = new System.Net.NetworkCredential(SiteConfig.Settings().AdminEmail, SiteConfig.Settings().SMTPPW);
                 var smtpClient = new SmtpClient("smtp.gmail.com", 587);
                 smtpClient.Credentials = new System.Net.NetworkCredential("reharik@gmail.com", "m124m124");
                 smtpClient.EnableSsl = true;
@@ -127,13 +129,22 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
         {
-            var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.User.EntityId 
-                && x.AppointmentDate <= endDate
-                && !x.TrainerVerified);
+            var endDate = DateTime.Now;
+            if (endDate.DayOfWeek != DayOfWeek.Sunday)
+            {
+                int diff = endDate.DayOfWeek - DayOfWeek.Sunday;
+                if (diff < 0)
+                {
+                    diff += 7;
+                }
+
+                endDate = endDate.AddDays(-1 * diff).Date;
+            }
+            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(
+                    x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate && !x.TrainerVerified);
 
             var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos, input.filters);
-            var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,input.User);
+            var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, input.User);
             return new CustomJsonResult(gridItemsViewModel);
         }
 
