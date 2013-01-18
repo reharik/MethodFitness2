@@ -17,11 +17,11 @@
   <Target Name="Build" DependsOnTargets="_build;_unitTests" />
   <!--  <Target Name="Stage" DependsOnTargets="_build;_minifyJSandCss;_outputWebFiles;" />-->
 <!--  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />-->
-  <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToQA;" />
+  <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToProd;" />
   
- <Target Name="_pushToQA" >
+ <Target Name="_pushToProd" >
    <PropertyGroup>
-     <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
+     <OutputDirectory>f:\WebSites\MethodFitness_PreRelease</OutputDirectory>
    </PropertyGroup>
    
    <ItemGroup>
@@ -51,13 +51,13 @@
    <MakeDir Directories="$(OutputDirectory)"  />
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
    <Zip Files="@(WebFiles)"
-     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
-     ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
+     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_PROD"
+     ZipFileName="f:\WebSites\BackUp\MethodFitness_PROD\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
      ZipLevel="9" />
  </Target>
 
   <Target Name="_build">
-    <MSBuild Projects="$(SourcePath)\MethodFitness_build.sln" Properties="Configuration=Debug" ContinueOnError="false" />
+    <MSBuild Projects="$(SourcePath)\MethodFitness_build.sln" Properties="Configuration=Release" ContinueOnError="false" />
   </Target>
 
   <ItemGroup>
