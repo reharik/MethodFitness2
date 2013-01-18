@@ -136,6 +136,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="appSettings.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -144,6 +145,7 @@
     <Compile Include="Harness.cs" />
     <Compile Include="ObjectMother.cs" />
     <Compile Include="Services\ClientPaymentToSessionsTester.cs" />
+    <Compile Include="Services\SiteConfigTester.cs" />
     <Compile Include="SpecificationExtentions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

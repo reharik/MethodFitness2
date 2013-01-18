@@ -18,11 +18,12 @@ if (typeof cc.grid == 'undefined') {
             colNames: cc.grid.columnService.columnNames(gridDefinition),
             colModel: cc.grid.columnService.columnModel(gridDefinition),
             rowNum: 10000,
-            multiselect: true,
-            scrollOffset:0,
+            scroll:false,
             altRows:true,
-            height:"100%",
+//            height:"100%",
+            width:"100%",
             autowidth:true,
+            multiselect: true,
             // here we move the value of the entityId to ParentId since it's the Id of the containing element
             // and set EntityId to RowId as RowId is for the Particular entity we want to change
             beforeSubmitCell: function(rowid, celname, value, iRow, iCol) { return { RootId: rootId, ParentId: entityId, EntityId: rowid, rowId: rowid, cellName: celname, cellValue: value} },

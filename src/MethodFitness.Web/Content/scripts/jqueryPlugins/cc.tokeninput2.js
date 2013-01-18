@@ -8,6 +8,10 @@
  *
  */
 
+/// <reference path="jquery-1.7.1.js"/>
+/// <reference path="../externalHelpers/knockout-2.1.0.debug.js"/>
+/// <reference path="../externalHelpers/knockout.mapping-lastest.debug.js"/>
+
 (function ($) {
 // Default settings
 var DEFAULT_SETTINGS = {
@@ -31,6 +35,8 @@ var DEFAULT_SETTINGS = {
     onAdd: null,
     onDelete: null,
     idPrefix: "token-input-",
+    // this is overwritten in the views.tokenview and ko.bindingHandlers.MultiSelect
+    // and in the views.  bit messy
     internalTokenMarkup:function(item){return "<p>"+ item.name +"</p>";},
     afterTokenSelectedFunction:function(){},
     beforeTokenAddedFunction:function(){}

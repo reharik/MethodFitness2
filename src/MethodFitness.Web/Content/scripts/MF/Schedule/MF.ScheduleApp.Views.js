@@ -32,6 +32,8 @@ MF.Views.CalendarView = MF.Views.View.extend({
         });
         //callback for render
         this.viewLoaded();
+        $("div.form-scroll-inner").height( $(window).height()-180);
+        $("#calendar",this.el).fullCalendar('option', 'height', $(window).height()-182);
         //general notification of pageloaded
         MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
         this.calendarBindings();
@@ -244,15 +246,15 @@ MF.Views.AppointmentView = MF.Views.View.extend({
     },
 
     setCurrentSelectionForAptType:function(isPair){
-        var currentSelection = $("[name='AppointmentType']").select2("val");
+        var currentSelection = $("[name='AppointmentType']").val();
         if(isPair){
             $("[name='AppointmentType']").data.previousSelection=currentSelection;
-            $("[name='AppointmentType']").select2("val","Pair");
+            $("[name='AppointmentType']").val("Pair");
             this.model.AppointmentType("Pair");
         }else{
             if(currentSelection == "Pair"){
                 var previousSelection = $("[name='AppointmentType']").data.previousSelection;
-                $("[name='AppointmentType']").select2("val",previousSelection);
+                $("[name='AppointmentType']").val(previousSelection);
                 this.model.AppointmentType(previousSelection);
             }
         }
@@ -332,6 +334,7 @@ MF.Views.ClientFormView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         this._setupBindings();
+        $("div.form-scroll-inner").height( $(window).height()-180);
     },
      _setupBindings:function(){
          MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
@@ -449,7 +452,7 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         var that = this;
-        $('#color',this.el).miniColors({
+        $('#colorPickerInput',this.el).miniColors({
             change:function(hex){
                 that.model.Color(hex);
             }
@@ -462,7 +465,7 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
             ccElement.multiSelectOptions = {
                 internalTokenMarkup:function(){
                     var anchor = $("<a>").addClass("selectedItem").attr("data-bind",'text:display');
-                    var anchor2 = $("<a>").addClass("tokenEditor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
+                    var anchor2 = $("<a>").addClass("tokenEditor stdTxtColor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
                     return $("<p>").append(anchor).append(anchor2);
                 },
                 beforeTokenAddedFunction:$.proxy(this.beforeTokenAddedFunction,this)

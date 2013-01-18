@@ -12,6 +12,9 @@
 //jsHint options
 /*global document, window, jQuery, DOMParser, ActiveXObject $ */
 
+/// <reference path="jquery-1.7.1.js"/>
+/// <reference path="grid.locale-en.js"/>
+
 (function ($) {
 
 $.jgrid = $.jgrid || {};

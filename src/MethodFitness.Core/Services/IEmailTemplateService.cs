@@ -41,7 +41,7 @@ namespace MethodFitness.Core.Services
                 message.From = input.From;
                 message.To.AddRange(addresses);
 
-                var smtpClient = new SmtpClient(SiteConfig.Settings().SMTPServer, 25);
+                var smtpClient = new SmtpClient(Site.Config.SMTPServer, 25);
                 smtpClient.Send(message);
             }
             catch(Exception ex)

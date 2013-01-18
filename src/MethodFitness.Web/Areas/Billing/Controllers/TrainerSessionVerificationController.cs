@@ -60,7 +60,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 TrainersName = user.FullNameFNF,
                 EntityId = user.EntityId,
                 From = user.Email,
-                To = SiteConfig.Settings().AdminEmail,
+                To = Site.Config.AdminEmail,
                 Subject = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT.ToString(),
                 Body = WebLocalizationKeys.PROBLEM_WITH_SESSIONS_ALERT_BODY.ToString(),
                 AcceptSessionsUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => AcceptSessions(null), AreaName.Billing),

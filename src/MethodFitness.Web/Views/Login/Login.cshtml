@@ -7,11 +7,7 @@
 @{
     Layout = "";
 }
-<!--[if IE]>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- [Else]>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- [endif]-->
 <html>
     <head>
     <title>Login</title>
@@ -22,15 +18,14 @@
     @CSS("ie.css").ToHtmlTag()
      <![endif]-->
      @CSS("mf.css").ToHtmlTag()
-       @Script("jqueryPlugins/jquery-1.7.1.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery-ui-1.8.16.custom.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.validate.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.form.js").ToHtmlTag()
+     @Script("jqueryPlugins/jquery-1.7.1.js").ToHtmlTag() 
+     @Script("jqueryPlugins/jquery-ui-1.8.22.custom.min.js").ToHtmlTag()
+
     @Script("externalHelpers/underscore.js").ToHtmlTag()
     @Script("externalHelpers/backbone.js").ToHtmlTag()
     @Script("externalHelpers/backbone.marionette.js").ToHtmlTag()
     @Script("externalHelpers/knockout-2.1.0.debug.js").ToHtmlTag()    
-    @Script("externalHelpers/knockout.mapping.js").ToHtmlTag()    
+    @Script("externalHelpers/knockout.mapping-lastest.debug.js").ToHtmlTag()    
     @Script("jqueryPlugins/noty/jquery.noty.js").ToHtmlTag()    
     @Script("jqueryPlugins/noty/inline.js").ToHtmlTag()    
     @Script("jqueryPlugins/noty/default.js").ToHtmlTag()    

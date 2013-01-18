@@ -6,6 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 
+/// <reference path="../externalHelpers/backbone.js"/>
+/// <reference path="MF.App.js"/>
+/// <reference path="MF.WorkflowManager.js"/>
+/// <reference path="MF.Views.js"/>
+/// <reference path="MF.State.js"/>
+
+
+
 MF.Controller = (function(MF, Backbone){
     var Controller = {};
 
