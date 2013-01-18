@@ -452,7 +452,7 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         var that = this;
-        $('#color',this.el).miniColors({
+        $('#colorPickerInput',this.el).miniColors({
             change:function(hex){
                 that.model.Color(hex);
             }
@@ -465,7 +465,7 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
             ccElement.multiSelectOptions = {
                 internalTokenMarkup:function(){
                     var anchor = $("<a>").addClass("selectedItem").attr("data-bind",'text:display');
-                    var anchor2 = $("<a>").addClass("tokenEditor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
+                    var anchor2 = $("<a>").addClass("tokenEditor stdTxtColor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
                     return $("<p>").append(anchor).append(anchor2);
                 },
                 beforeTokenAddedFunction:$.proxy(this.beforeTokenAddedFunction,this)

@@ -50,6 +50,34 @@ hr {
     text-decoration: none;
 }
 
+#login-links .first:hover {
+    background: #a5c8d8 !important;
+    color: #467697 !important;
+    border-radius: 5px;
+    padding-bottom: 2px;
+    padding-right: 5px;
+}
+span#login-links a.first {
+    background: #407397;
+    color: #ffffff !important;
+    border-radius: 5px;
+    padding-bottom: 2px;
+    padding-right: 5px;
+    -webkit-border--radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+}
+span#login-links a.active {
+    background: white;
+    color: #333333 !important;
+    border-radius: 5px;
+    padding-bottom: 2px;
+    padding-right: 5px;
+    -webkit-border--radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+}
+
 #login-links  a.first {
     border-left: none;
 }
@@ -318,10 +346,6 @@ hr {
 }
 
 
-
-
-
-
 .content-outer .content-header span {
     display: block;
     text-align: center;
@@ -365,11 +389,6 @@ hr {
 
 .norequired .required_style {
     display: none;
-}
-
-
-div.form-scroll-wrapper {
-    padding-top: 12px;
 }
 
 div.form-scroll-inner {
@@ -446,20 +465,6 @@ body#signin {
 * html .signin button.save {
 	padding-bottom: 0px;
 }
-
-
-/*
-
-#signin #errorMessagesForm {
-	display:block !important;
-}
-
-
-#signin .invalid_field {
-	display:block !important;
-}
-*/
-
 
 
 /*******   JQUERY UI DIALOG EXTENSIONS  **********/
@@ -714,82 +719,6 @@ td.jqg_cb {
     padding: 0;
 }
 
-.full-width {
-    width: 100%;
-}
-
-#main-content .radio {
-    width: 10px;
-    float: left;
-}
-
-.content-outer .content-inner h3 {
-    font-size: 12px;
-    color: #666666;
-    font-weight: bold;
-    margin: 10px 0 10px 30px;
-    width: 690px;
-}
-
-.close {
-    background: url("../images/close-x.png") no-repeat scroll 0 0
-        transparent;
-    border: none;
-    cursor: pointer;
-    height: 16px;
-    right: 20px;
-    top: 5px;
-    width: 14px;
-}
-
-div.no-left-nav {
-    margin-left: 10px !important;
-}
-div.no-left-nav div.fieldRow h4 {
-    color: #457596;
-    font-size: 13px;
-    margin: 0 0 12px;
-}
-div.no-left-nav .content-outer .content-header span.title-name {
-    color:#666666;
-    padding-top: 1em;
-    font-size: 1em;
-}
-
-#login-links .first:hover {
-    background: #a5c8d8 !important;
-    color: #467697 !important;
-    border-radius: 5px;
-    padding-bottom: 2px;
-    padding-right: 5px;
-}
-span#login-links a.first {
-    background: #407397;
-    color: #ffffff !important;
-    border-radius: 5px;
-    padding-bottom: 2px;
-    padding-right: 5px;
-    -webkit-border--radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
-}
-span#login-links a.active {
-    background: white;
-    color: #333333 !important;
-    border-radius: 5px;
-    padding-bottom: 2px;
-    padding-right: 5px;
-    -webkit-border--radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
-}
-
-
-
-.add_another {
-    margin: 20px 0 20px 30px;
-}
-
 .select-items-list ul{
     border-bottom: 1px solid #D9D9D9;
     margin: 12px 0;
@@ -814,20 +743,8 @@ span#login-links a.active {
     background: #f6f6f6;
 }
 
-
 .select-items-list button.plus-rounded {
     margin-top: 10px;
-}
-.create_port a {
-    background: url(../images/plus_button.png) no-repeat #f9f9f9 center left;
-    padding: 5px 5px 5px 25px;
-    line-height: 15px;
-    border: 1px solid #cccccc;
-    -moz-border-radius: 10px;
-    -web-kit-border-raduis: 10px;
-    color: #666666;
-    font-size: 0.7em;
-    text-decoration: none;
 }
 
 /* select-items-list close button*/
@@ -839,34 +756,6 @@ span#login-links a.active {
     text-indent: -999em;
     margin-right: 5px;
     float: right;
-}
-
-div.progress-bar {
-    min-width: 110px;
-    display: block;
-    width: 99%;
-}
-
-div.progress-bar div {
-    background: #a3a3a3;
-    display: block;
-    padding: 1px;
-    border-radius: 12px;
-    height: 15px;
-    float: left;
-    width: 60%;
-}
-
-div.progress-bar span {
-    background: url(../images/progress.png) repeat-x;
-    display: block;
-    border-radius: 12px;
-    height: 15px;
-}
-
-div.progress-bar .progress-label {
-    width: 40%;
-    margin-left: 5px;
 }
 
 #left-navigation ul li>a.float-right {
@@ -883,139 +772,11 @@ div.progress-bar .progress-label {
     color: #666666;
 }
 
-.artifact-field .float-none {
-    float: none;
-}
-
-
-textarea {
-    color: #838383;
-    font-size: 14px;
-    font-family: Verdana;
-}
-
-.bottom_cont ul li span.half {
-    width: 45%;
-    float: left;
-    margin: 0 1% 0 0;
-}
-
-.bottom_cont ul li span.three-quarters {
-    width: 70%;
-    float: left;
-    margin: 0 1% 0 0;
-}
-
-.bottom_cont ul li span.half a {
-    font-size: 10px;
-}
-
 #left-navigation ul li hr {
     width: 100%;
     margin: 0px;
 }
 
-.bottom_cont p {
-    width: 100%;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
-.bottom_cont a.link {
-    margin-left: 0px;
-}
-
-.bottom_cont h4,
-	.portfolio-description,
-	.marrgin-twenty
-{
-    margin-left: 20px;
-}
-
-
-button.rounded {
-    -moz-border-radius: 12px 12px 12px 12px;
-    border-radius: 12px 12px 12px 12px;
-    background: white;
-    border: 1px solid #E0E0E0;
-    color: #888888;
-    cursor: pointer;
-    font-family: tahoma;
-    font-size: 11px;
-    font-weight: bold;
-    padding: 2px 8px 2px 8px;
-}
-
-button.plus-rounded {
-    background: url("../images/plus_button.png") no-repeat scroll 2px 3px white;
-    border: 1px solid #E0E0E0;
-    border-radius: 12px 12px 12px 12px;
-    clear: both;
-    color: #888888;
-    cursor: pointer;
-    font-family: tahoma;
-    font-size: 11px;
-    font-weight: bold;
-    padding: 2px 8px 2px 27px;
-    text-align: left;
-}
-
-#associate-existing-document #gbox_Grid
-	, #associate-existing-document
-	, #associate-existing-document .ui-jqgrid-bdiv
-{
-    height: auto !important;
-}
-
-.bottom_cont {
-    margin: 10px 0;
-    float: left;
-}
-
-.bottom_cont ul {
-    margin: 10px 0 10px 30px;
-    padding: 0;
-    width: 690px;
-    float: left;
-}
-
-
-.bottom_cont ul li span {
-    color: #666666;
-    font-size: 0.7em;
-}
-
-.bottom_cont ul li span input[type="text"] {
-    width: 100%;
-}
-
-.bottom_cont ul li span.long_span {
-    width: 19%;
-    float: left;
-    margin: 0 1% 0 0;
-}
-
-.bottom_cont ul li span.small_span {
-    width: 9%;
-    float: left;
-    margin: 0 1% 0 0;
-}
-
-.bottom_cont .three-quarters .text {
-    width: 100%;
-    height: 31px;
-}
-
-.bottom_cont .three-quarters {
-    width: 70%;
-    margin-left: 20px;
-}
-
-.bottom_cont .three-quarters a {
-    margin-left: 20px;
-    color: #457596;
-    text-decoration: none;
-}
 
 ul.token-input-list li{
     -webkit-border-radius: 5px;
@@ -1195,19 +956,3 @@ div.ui-datepicker {
 .ui-datepicker table {
 	margin: 0 !important;
 }
-
-.page-instructions
-{
-	padding: 20px;
-	margin: 20px;
-	font-size: 12px;
-}
-
-.artifact-field button.plus-rounded {
-	clear: none ;
-	margin-left: 10px;
-	margin-top: 3px;
-}
-
-
-

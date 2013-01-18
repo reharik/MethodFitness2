@@ -17,9 +17,7 @@
 
 
 <div class="row">
-    <div class="span8">
-        <h5 class="subHeader">@WebLocalizationKeys.CLIENT_INFORMATION</h5>
-    </div>
+        <h5 class="stdTxtColor ml2 span8">@WebLocalizationKeys.CLIENT_INFORMATION</h5>
 </div>
 <div class="row">
 @*-----------Left Column-------------*@
@@ -63,14 +61,14 @@
 
 </div>
 
+<div class="row blank"></div>
+
 <div class="row">
     <div class="span10">
         @if (UserPermissionService.Allow("/Billing/ChangeClientRates"))
         {
             <div class="row">
-                <div class="span10">
-                    <h5 class="subHeader">@WebLocalizationKeys.CLIENT_RATES</h5>
-                </div>
+                    <h5 class="stdTxtColor ml2 span10">@WebLocalizationKeys.CLIENT_RATES</h5>
             </div>
             <div class="row">
                     @this.Html.SubmissionFor(x => x.SessionRatesFullHour).LabelDisplay(WebLocalizationKeys.FULL_HOUR).Size("5").ToHtmlTag()
@@ -92,14 +90,13 @@
             </div>
         }
     </div>
-<div class="span1"/>
+    <div class="span1"/>
 
-<div class="span10">
-    <div class="row">
-        <div class="span5">
-            <h5 class="subHeader">@WebLocalizationKeys.CURRENT_CLIENT_INVENTORY</h5>
+    <div class="span10">
+        <div class="row">
+            <h5 class="stdTxtColor ml2 span5">@WebLocalizationKeys.CURRENT_CLIENT_INVENTORY</h5>
         </div>
-        </div>
+        <div class="row blank"></div>
         <div class="row">
                 @this.Html.ViewFor(x => x._sessionsAvailable.FullHour).Size("5").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
         </div>
