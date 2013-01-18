@@ -20,6 +20,8 @@ using xVal.ServerSide;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
+    using CC.Core.CustomAttributes;
+
     public class AppointmentController : MFController
     {
         private readonly IRepository _repository;
@@ -241,7 +243,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public string StartTimeString { get; set; }
         [ValidateNonEmpty]
         public string EndTimeString { get; set; }
-        
+        [TextArea]
         public string Notes { get; set; }
 
         public IEnumerable<string> _clientItems { get; set; }

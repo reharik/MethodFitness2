@@ -38,6 +38,7 @@ namespace MethodFitness.Web
         public List<string> CssFileList()
         {
             var fileNames = new List<String>();
+            fileNames.Add("bootstrap.css");
             fileNames.Add("jquery.miniColors.css");
             fileNames.Add("fullcalendar.css");
             fileNames.Add("token-input.css");
@@ -47,6 +48,8 @@ namespace MethodFitness.Web
             fileNames.Add("fg.menu.css");
             fileNames.Add("main.css");
             fileNames.Add("mf.css");
+            fileNames.Add("CC.css");
+
             return fileNames;
         } 
         public List<string> JavascriptFileList()

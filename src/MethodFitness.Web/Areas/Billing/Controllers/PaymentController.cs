@@ -171,6 +171,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             payment.PairTenPack = model.PairTenPack;
             payment.PairTenPackPrice = model.PairTenPack > 0 ? model.PairTenPackPrice / model.PairTenPack : 0;
             payment.PaymentTotal = model.PaymentTotal;
+            payment.Notes = model.Notes;
             return payment;
         }
     }
