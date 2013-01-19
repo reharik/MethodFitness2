@@ -431,6 +431,12 @@ body#signin {
 
 #signin .col {
     width: 344px;
+    margin-left:30px;
+}
+
+#signin .reverse {
+    float: left;
+    margin-right: 10px;
 }
 
 #signin .big {
@@ -438,11 +444,11 @@ body#signin {
     font-family: sans-serif;
     font-size: 18px;
     font-weight: bold;
-    margin: 20px 10px;
+    margin: 20px 0px;
 }
 
-#signin div.fieldRow label.checkbox {
-    width: 80%;
+#signin .footer {
+    padding-top: 30px;
 }
 
 #signin .footer a {
@@ -456,6 +462,11 @@ body#signin {
 	color: #666;
 	font-family: helvetica,sans-serif;
 	font-size: 13px;
+    height: 25px;
+}
+
+.signin .ckbLabel{
+    padding-top: 6px ;
 }
 
 .signin button.save {
