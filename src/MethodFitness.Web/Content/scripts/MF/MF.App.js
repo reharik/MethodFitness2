@@ -21,10 +21,6 @@
  */
 
 
-/// <reference path="../externalHelpers/backbone.marionette.js"/>
-/// <reference path="../jqueryPlugins/jquery-1.7.1.js"/>
-/// <reference path="../internalHelpers/mf.repository.js"/>
-
 
 var MF = new Backbone.Marionette.Application();
 

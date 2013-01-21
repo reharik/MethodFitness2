@@ -8,7 +8,6 @@
  * http://jquery.org/license
  */
 
-/// <reference path="jquery-1.7.1.js"/>
 
 (function( jQuery, undefined ){
 	var oldManip = jQuery.fn.domManip, tmplItmAtt = "_tmplitem", htmlExpr = /^[^<]*(<[\w\W]+>)[^>]*$|\{\{\! /,

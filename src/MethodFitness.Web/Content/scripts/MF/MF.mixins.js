@@ -219,8 +219,6 @@ MF.mixins.ajaxGridMixin = {
         $(this.el).html($("#gridTemplate").tmpl(result));
         $.extend(this.options,result,MF.gridDefaults);
         this.setupGrid();
-        $("div.form-scroll-inner").height( $(window).height()-180);
-        $("#"+this.options.gridId).setGridHeight($("div.form-scroll-inner").height()-36  );
         this.viewLoaded();
         MF.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
 
