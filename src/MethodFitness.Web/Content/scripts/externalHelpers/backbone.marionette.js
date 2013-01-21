@@ -6,9 +6,6 @@
 // Documentation and Full License Available at:
 // http://github.com/derickbailey/backbone.marionette
 
-/// <reference path="underscore.js"/>
-/// <reference path="backbone.js"/>
-/// <reference path="../jqueryPlugins/jquery-1.7.1.js"/>
 
 Backbone.Marionette = (function(Backbone, _, $){
   var Marionette = {};

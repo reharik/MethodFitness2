@@ -19,7 +19,7 @@ MF.Header = (function(MF, Backbone){
             this.setupGlobalSettings();
         },
         setupGlobalSettings:function(){
-          $("a[rel^='prettyPhoto']").live('mouseover', function()
+          $("a[rel^='prettyPhoto']").on('mouseover', function()
             {
                 if (!$(this).data('init'))
                 {

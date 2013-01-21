@@ -625,6 +625,7 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
 
 MF.Views.ClientGridView = MF.Views.View.extend({
     initialize:function(){
+        this.options.gridOptions ={multiselect:false};
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "defaultGridEventsMixin");

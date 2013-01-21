@@ -33,7 +33,11 @@ if (typeof cc.grid == 'undefined') {
             },
             loadtext:"",
             //emptyrecords:"aint go nothin",
-            gridComplete:function(){$(this).find(".cbox").parent().addClass("jqg_cb");},
+            gridComplete:function(){
+                $(this).find(".cbox").parent().addClass("jqg_cb");
+                $("div.form-scroll-inner").height( $(window).height()-180);
+                $(this).setGridHeight($("div.form-scroll-inner").height()-36  );
+            },
             sortorder: "asc",
             sortname:gridDefinition.DefaultSortColumn ? gridDefinition.DefaultSortColumn :"", //  cc.grid.columnService.defaultSortColumnName(gridDefinition),
             onSortCol:function(index,iCol,sortorder) {cc.gridHelper.adjustSortStyles(index,iCol,sortorder);},

@@ -7,20 +7,24 @@
 @{
     Layout = "";
 }
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--[if IE]>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <!-- [Else]>
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+        <!-- [endif]-->
 <html>
     <head>
     <title>Login</title>
 
     @CSS("bootstrap.css").ToHtmlTag()
-    @CSS("jquery-ui-1.8.16.custom.css").ToHtmlTag()
+    @CSS("jquery-ui-1.10.0.custom.css").ToHtmlTag()
     @CSS("main.css").ToHtmlTag()
     <!--[if gt IE 7]>
     @CSS("ie.css").ToHtmlTag()
      <![endif]-->
      @CSS("mf.css").ToHtmlTag()
-     @Script("jqueryPlugins/jquery-1.7.1.js").ToHtmlTag() 
-     @Script("jqueryPlugins/jquery-ui-1.8.22.custom.min.js").ToHtmlTag()
+     @Script("jqueryPlugins/jquery-1.9.0.js").ToHtmlTag() 
+     @Script("jqueryPlugins/jquery-ui-1.10.0.custom.js").ToHtmlTag()
 
     @Script("externalHelpers/underscore.js").ToHtmlTag()
     @Script("externalHelpers/backbone.js").ToHtmlTag()

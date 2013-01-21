@@ -2,7 +2,6 @@
 /// (c) 2012 Steven Sanderson, Roy Jacobs - http://knockoutjs.com/
 /// License: MIT (http://www.opensource.org/licenses/mit-license.php)
 
-/// <reference path="knockout-2.1.0.debug.js"/>
 
 (function (factory) {
 	// Module systems magic dance.
