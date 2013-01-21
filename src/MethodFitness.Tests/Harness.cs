@@ -18,7 +18,7 @@
 
         }
 
-        [Test]
+        [Test, Ignore("just a spike")]
         public void should_return_correct_date()
         {
             var endDate = DateTime.Now;
