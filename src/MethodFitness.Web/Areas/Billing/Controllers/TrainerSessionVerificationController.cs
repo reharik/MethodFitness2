@@ -110,8 +110,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
 //                var smtpClient = new SmtpClient(SiteConfig.Settings().SMTPServer);
 //                smtpClient.Credentials = new System.Net.NetworkCredential(SiteConfig.Settings().AdminEmail, SiteConfig.Settings().SMTPPW);
-                var smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.Credentials = new System.Net.NetworkCredential("reharik@gmail.com", "m124m124");
+                var smtpClient = new SmtpClient(Site.Config.SMTPServer,110);
+                smtpClient.Credentials = new System.Net.NetworkCredential("info@methodfit.com", Site.Config.SMTPPW);
                 smtpClient.EnableSsl = true;
                 
 //                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);

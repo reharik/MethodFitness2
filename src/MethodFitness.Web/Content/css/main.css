@@ -133,6 +133,12 @@ span#login-links a.active {
 {
     padding: 0 0 3px 20px !important;
 }
+
+.content-inner .calendar
+{
+    padding: 0 0 3px 0px !important;
+}
+
 .content-outer .content-footer {
     height: 17px;
     width: 100%;

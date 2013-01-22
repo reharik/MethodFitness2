@@ -79,3 +79,14 @@ select {
 .tokenEditor{
     text-decoration: none;
 }
+
+.fc-header-title {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 9pt !important;
+}
+
+.fc-header .fc-button {
+    margin: 4px 0;
+    vertical-align: top;
+}

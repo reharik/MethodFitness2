@@ -55,7 +55,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                         });
                     }
                 }
-                that.model.paymentAmount = ko.observable(that.options.paymentTotal);
                 that.model.eligableRows = ko.mapping.fromJS(paymentRows);
                 that.setupElements();
             }}
@@ -74,6 +73,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
     },
     setupElements:function(){
         if($("#filterArea").size()==0){
+            this.model.paymentAmount = ko.observable();
             $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
             $("[name='EndDate']",this.$el).datepicker();
@@ -83,6 +83,12 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
             $(".content-header",this.$el).find(".search").remove();
 
             ko.applyBindings(this.model,this.el);
+        }
+        this.model.paymentAmount(this.options.paymentTotal.toFixed(2));
+        if(this.model.paymentAmount()<=0){
+            $(".paymentAmount").hide();
+        }else{
+            $(".paymentAmount").show();
         }
     },
 
@@ -139,10 +145,10 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         var itemAmount = parseFloat(data.trainerPay());
 
         if (checkbox.is(":checked")) {
-            this.model.paymentAmount(this.model.paymentAmount() + itemAmount);
+            this.model.paymentAmount(Math.round((this.model.paymentAmount() + itemAmount)*100)/100);
             data._checked(true);
         } else {
-            this.model.paymentAmount(this.model.paymentAmount() - itemAmount);
+            this.model.paymentAmount(Math.round((this.model.paymentAmount() - itemAmount)*100)/100);
             data._checked(false);
         }
         if(this.model.paymentAmount()>0){
@@ -159,8 +165,9 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         if($(e.currentTarget).is(":checked")){
             _.each(this.model.eligableRows(),function(item){
                 item._checked(true);
-                this.model.paymentAmount(this.model.paymentAmount() +parseFloat(item.trainerPay()))
+                this.model.paymentAmount(this.model.paymentAmount() +parseFloat(item.trainerPay()));
             },this);
+            this.model.paymentAmount(Math.round(this.model.paymentAmount()*100)/100);
         }else{
             _.each(this.model.eligableRows(),function(item){
                 item._checked(false);
@@ -218,7 +225,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
                     }
                 }
 
-                that.model.paymentAmount = ko.observable(that.options.paymentTotal);
+                that.model.paymentAmount = ko.observable(Math.round(that.options.paymentTotal));
                 that.model.eligableRows = ko.mapping.fromJS(paymentRows);
                 that.setupElements();
             }}
@@ -373,7 +380,6 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
                     that.options.paymentTotal += parseFloat(rowData.TrainerPay);
                 }
 
-                that.model.paymentAmount = ko.observable(that.options.paymentTotal);
                 that.setupElements();
             }}
     },
@@ -387,12 +393,19 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
     },
     setupElements:function(){
         if($("#filterArea").size()==0){
+            this.model.paymentAmount = ko.observable();
             $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
             $("[name='EndDate']",this.$el).datepicker();
             this.model.EndDate= ko.observable( new XDate().toString("MM/dd/yyyy") );
             $("#payTrainerButton").hide();
             ko.applyBindings(this.model,this.el);
+        }
+        this.model.paymentAmount(Math.round(this.options.paymentTotal));
+        if(this.model.paymentAmount()<=0){
+            $(".paymentAmount").hide();
+        }else{
+            $(".paymentAmount").show();
         }
     }
 });

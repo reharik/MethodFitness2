@@ -16,6 +16,7 @@ div.footer {
 	display: block;
 	clear: both;
 	padding: 10px 0 10px 30px;
+    background-color: #f5f5f5;
 }
 div.left {
 	float: left;
@@ -165,7 +166,7 @@ button.cancel:hover {
 .legend {
     border: 1px solid black;
     float: left;
-    margin:0px 5px 5px 5px;
+    margin:4px 5px 5px 5px;
     width:6%;
     padding:7px 0 10px 5px;
     font-size: 12px;

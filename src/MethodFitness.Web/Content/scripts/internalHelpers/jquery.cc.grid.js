@@ -35,7 +35,7 @@ if (typeof cc.grid == 'undefined') {
             //emptyrecords:"aint go nothin",
             gridComplete:function(){
                 $(this).find(".cbox").parent().addClass("jqg_cb");
-                $("div.form-scroll-inner").height( $(window).height()-180);
+                $("div.form-scroll-inner").height( window.innerHeight-180);
                 $(this).setGridHeight($("div.form-scroll-inner").height()-36  );
             },
             sortorder: "asc",
