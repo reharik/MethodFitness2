@@ -285,8 +285,8 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             });
     },
     onClose:function(){
-        MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
-        MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+        MF.vent.unbind("ClientsDtos:tokenizer:add");
+        MF.vent.unbind("ClientsDtos:tokenizer:remove");
                 
     },
     handleTimeChange:function() {
