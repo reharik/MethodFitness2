@@ -112,7 +112,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 //                smtpClient.Credentials = new System.Net.NetworkCredential(SiteConfig.Settings().AdminEmail, SiteConfig.Settings().SMTPPW);
                 var smtpClient = new SmtpClient(Site.Config.SMTPServer);
                 smtpClient.Credentials = new System.Net.NetworkCredential("info@methodfit.com", Site.Config.SMTPPW);
-                smtpClient.EnableSsl = true;
                 
 //                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);
                 smtpClient.Send(message);
