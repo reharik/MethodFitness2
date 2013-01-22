@@ -191,7 +191,7 @@ MF.mixins.ajaxDisplayMixin = {
     },
     renderCallback:function(){
         this.bindModelAndElements();
-        $("div.form-scroll-inner").height( $(window).height()-180);
+        $("div.form-scroll-inner").height( window.innerHeight - 180);
         this.viewLoaded();
         MF.vent.trigger("display:"+this.id+":pageLoaded",this.options);
     }
@@ -204,7 +204,7 @@ MF.mixins.ajaxFormMixin = {
     },
     renderCallback:function(){
         this.bindModelAndElements();
-        $("div.form-scroll-inner").height( $(window).height()-180);
+        $("div.form-scroll-inner").height( window.innerHeight - 220);
         this.viewLoaded();
         MF.vent.trigger("form:"+this.id+":pageLoaded",this.options);
     }
