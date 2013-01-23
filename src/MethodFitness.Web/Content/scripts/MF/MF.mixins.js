@@ -116,7 +116,7 @@ MF.mixins.reportMixin = {
     },
     createUrl:function(data){
     }
-}
+};
 
 MF.mixins.formMixin = {
     events:{

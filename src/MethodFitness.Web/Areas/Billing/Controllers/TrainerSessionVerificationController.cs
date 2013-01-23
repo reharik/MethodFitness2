@@ -107,11 +107,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                       Subject = input.Subject,
                                       Body = input.Body
                                   };
+                message.ReplyToList.Add(new MailAddress(input.From));
 
                 var smtpClient = new SmtpClient("smtp.gmail.com", 587);
                 smtpClient.Credentials = new System.Net.NetworkCredential("methodfit@gmail.com", "methgoo69");
                 smtpClient.EnableSsl = true;
-                
+
+
 //                var smtpClient = new SmtpClient(SiteConfig.Settings().SMTPServer);
 //                smtpClient.Credentials = new System.Net.NetworkCredential(SiteConfig.Settings().AdminEmail, SiteConfig.Settings().SMTPPW);
 //                var smtpClient = new SmtpClient(Site.Config.SMTPServer, 465);
