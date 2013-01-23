@@ -108,7 +108,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                                       Body = input.Body
                                   };
                 message.ReplyToList.Add(new MailAddress(input.From));
-
                 var smtpClient = new SmtpClient("smtp.gmail.com", 587);
                 smtpClient.Credentials = new System.Net.NetworkCredential("methodfit@gmail.com", "methgoo69");
                 smtpClient.EnableSsl = true;
