@@ -129,7 +129,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
     paymentCallback:function(result){
         if(result.Success){
             this.reloadGrid();
-            window.open(result.Variable);
             this.formCancel();
         }
     },
@@ -310,8 +309,8 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         this.storeChild(this.templatePopup);
     },
     formSave:function(popupEl){
-//        var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel,this.errorSelector);
-//        if(!isValid){return;}
+        var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel,this.errorSelector);
+        if(!isValid){return;}
 
         var model = ko.mapping.toJS(this.model);
         var data = JSON.stringify(model);
@@ -340,7 +339,6 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
                 $.noty.closeAllErrorsByViewId(this.cid);
             }
             MF.vent.trigger("form:"+this.id+":success",result);
-            if(!this.options.noBubbleUp){MF.WorkflowManager.returnParentView(result,true);}
             MF.vent.trigger("form:"+this.id+":success",result);
             this.formCancel();
         }
