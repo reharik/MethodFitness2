@@ -31,10 +31,10 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
 
         public CustomJsonResult Display(ViewModel input)
         {
-            var startDate = DateTime.Now;
             var model = new DailyPaymentViewModel
                             {
-                                Date = startDate,
+                                StartDate = DateTime.Now,
+                                EndDate = DateTime.Now,
                                 _Title = WebLocalizationKeys.DAILY_PAYMENTS.ToString(),
                                 ReportUrl = "/Areas/Reports/ReportViewer/DailyPayments.aspx"
                             };
@@ -44,7 +44,8 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
 
     public class DailyPaymentViewModel : ViewModel
     {
-        public DateTime Date { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string ReportUrl { get; set; }
     }
 }

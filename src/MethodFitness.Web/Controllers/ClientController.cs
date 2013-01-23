@@ -148,10 +148,8 @@ namespace MethodFitness.Web.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var trainer = _repository.Find<User>(userEntityId);
-            if (trainer is User)
-            {
-                trainer.AddClient(client, trainer.ClientRateDefault);
-            }
+            if (trainer.Clients.Any(x => x.EntityId == client.EntityId)) return;
+            trainer.AddClient(client, trainer.ClientRateDefault);
             _saveEntityService.ProcessSave(trainer);
         }
 

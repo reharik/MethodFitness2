@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Iteration2\20020_Alter_DailyPayments_Sproc.cs" />
     <Compile Include="Iteration2\20010_Add_Notes_Column_To_Appointment.cs" />
     <Compile Include="Iteration_0\CreateInitialOperations.cs" />
     <Compile Include="Iteration_0\CreateInitialDB.cs" />

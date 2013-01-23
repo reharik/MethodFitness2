@@ -11,8 +11,11 @@
         @Html.SubmissionFor(x => x.EndDate).Size("3").ToHtmlTag()
 </div>
 
+<<<<<<< HEAD
+=======
 @section FooterButtons
 {
     @StandardButtonFor("viewReport", WebLocalizationKeys.VIEW_REPORT).AddClass("save").ToHtmlTag()
 }
 
+>>>>>>> development
