@@ -259,11 +259,13 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         $("#" + this.options.gridId).trigger("reloadGrid");
     },
     acceptSessions:function(){
-        var model = ko.mapping.toJS(this.model);
-        model.EntityIds = _.pluck(model.eligableRows,"id");
-        var data = JSON.stringify(model);
-        var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
-        promise.done($.proxy(this.acceptSessionsCallback,this));
+        if (confirm("If you are sure that all of these appointments are correct please click 'OK'.")) {
+            var model = ko.mapping.toJS(this.model);
+            model.EntityIds = _.pluck(model.eligableRows,"id");
+            var data = JSON.stringify(model);
+            var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
+            promise.done($.proxy(this.acceptSessionsCallback,this));
+        }
     },
     acceptSessionsCallback:function(_result){
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;

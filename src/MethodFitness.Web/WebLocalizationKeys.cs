@@ -172,5 +172,8 @@ namespace MethodFitness.Web
         public static readonly StringToken DAILY_PAYMENTS = new WebLocalizationKeys("DAILY_PAYMENTS", "Daily Payments");
         public static readonly StringToken TRAINER_METRIC = new WebLocalizationKeys("TRAINER_METRIC", "Trainer Metric");
 
+
+        public static readonly StringToken NO_SESSIONS_TO_VERIFY = new WebLocalizationKeys("NO_SESSIONS_TO_VERIFY", "You have no eligible sessions to verify");
+
     }
 }

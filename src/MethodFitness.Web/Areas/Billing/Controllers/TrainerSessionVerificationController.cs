@@ -71,6 +71,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 
         public JsonResult AcceptSessions(BulkActionViewModel input)
         {
+            if (input.EntityIds == null || !input.EntityIds.Any())
+            {
+                return new CustomJsonResult(new Notification{Success = false,Message = WebLocalizationKeys.NO_SESSIONS_TO_VERIFY.ToString()});
+            }
             var user = (User) input.User;
             var verification = new TrainerSessionVerification {Trainer = user};
             //get this from the view then add it to the verification
