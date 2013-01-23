@@ -5,12 +5,12 @@
 @{
     Layout = "~/Views/Shared/_ReportLayout.cshtml";
 }
-<div class="col full">
-    <div class="fieldRow">
-        @Html.SubmissionFor(x=>x.Date).AddClassToRoot("one-third").ToHtmlTag()
-    </div>
-    <div class="fieldRow">
-        @StandardButtonFor("viewReport", WebLocalizationKeys.VIEW_REPORT).AddClass("save").ToHtmlTag()
-    </div>
+<div class="row">
+    @Html.SubmissionFor(x=>x.StartDate).Size("3").ToHtmlTag()
+    @Html.SubmissionFor(x=>x.EndDate).Size("3").ToHtmlTag()
 </div>
+@section FooterButtons
+{
+    @StandardButtonFor("viewReport", WebLocalizationKeys.VIEW_REPORT).AddClass("save").ToHtmlTag()
+}
 

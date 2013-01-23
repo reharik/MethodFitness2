@@ -29,7 +29,8 @@
         ConnectionString='<%$ appSettings:MethodFitness.sql_server_connection_string %>'
         SelectCommand="DailyPayments" SelectCommandType="StoredProcedure"> 
         <SelectParameters>
-            <asp:QueryStringParameter Name="Date" DefaultValue="dbnull" QueryStringField="Date" Type="DateTime" />
+            <asp:QueryStringParameter Name="StartDate" DefaultValue="dbnull" QueryStringField="StartDate" Type="DateTime" />
+            <asp:QueryStringParameter Name="EndDate" DefaultValue="dbnull" QueryStringField="EndDate" Type="DateTime" />
         </SelectParameters>
     </asp:SqlDataSource>
     

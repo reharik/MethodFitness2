@@ -4,19 +4,8 @@ MF.Views.DailyPaymentsView = MF.Views.View.extend({
         MF.mixin(this, "modelAndElementsMixin");
         MF.mixin(this, "reportMixin");
     },
-    viewLoaded:function(){
-        $("[name=Date]").val("");
-        this.model.Date("");
-        this.viewReport();
-    },
     createUrl:function(){
-        var date = this.model.Date();
-        var param = "?Date=01/01/1800";
-        if(date){
-            param = "?Date="+date;
-        }
-        var url = this.model.ReportUrl()+ param;
-        return url;
+        return this.model.ReportUrl()+ "?StartDate="+this.model.StartDate()+"&EndDate="+this.model.EndDate();
     }
 });
 
