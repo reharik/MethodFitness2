@@ -177,7 +177,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -446,19 +445,8 @@
               <TablixMembers>
                 <TablixMember />
               </TablixMembers>
-              <KeepWithGroup>After</KeepWithGroup>
             </TablixMember>
             <TablixMember>
-              <Group Name="Group1">
-                <GroupExpressions>
-                  <GroupExpression>=Int((RowNumber(Nothing)-1)/30)</GroupExpression>
-                </GroupExpressions>
-              </Group>
-              <SortExpressions>
-                <SortExpression>
-                  <Value>=Fields!CreatedDate.Value</Value>
-                </SortExpression>
-              </SortExpressions>
               <TablixHeader>
                 <Size>0.03125in</Size>
                 <CellContents>

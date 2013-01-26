@@ -175,7 +175,7 @@ namespace MethodFitness.Web
 
         public static readonly StringToken NO_SESSIONS_TO_VERIFY = new WebLocalizationKeys("NO_SESSIONS_TO_VERIFY", "You have no eligible sessions to verify");
 
-        public static readonly StringToken TRAINER_SESSIONS_VERIFIED = new WebLocalizationKeys("TRAINER_SESSIONS_VERIFIED", "Trainer {0} has just submitted his sessions as verified.");
+        public static readonly StringToken TRAINER_SESSIONS_VERIFIED = new WebLocalizationKeys("TRAINER_SESSIONS_VERIFIED", "Trainer {0} has verified his appointments.");
 
 
     }

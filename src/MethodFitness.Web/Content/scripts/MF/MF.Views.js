@@ -292,9 +292,14 @@ MF.Views.KOPopupView = MF.Views.View.extend({
     render:function(){
         var template = $(this.options.template).clone().show();
         $(this.el).append(template);
+        this.errorSelector = $("#popupMessageContainer",this.el);
+
         ko.applyBindings(this.options.data,this.el);
         this.elementsViewmodel = CC.elementService.getElementsViewmodel(this);
-        this.errorSelector = $("#popupMessageContainer",this.el);
+        var collection = this.elementsViewmodel.collection;
+        for(var item in collection){
+            collection[item].render();
+        }
 
         var popupOptions = {
             id:this.id,

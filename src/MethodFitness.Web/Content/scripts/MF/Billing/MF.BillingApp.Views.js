@@ -29,7 +29,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
             loadComplete : function(){
                 var ids = $(this).getDataIDs();
                 var paymentRows =[];
-                that.options.paymentTotal = 0;
                 for (var i = 0, l = ids.length; i < l; i++) {
                     var rowId = ids[i];
                     var row;
@@ -84,12 +83,8 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
 
             ko.applyBindings(this.model,this.el);
         }
-        this.model.paymentAmount(this.options.paymentTotal.toFixed(2));
-        if(this.model.paymentAmount()<=0){
-            $(".paymentAmount").hide();
-        }else{
-            $(".paymentAmount").show();
-        }
+        this.model.paymentAmount(0);
+        $(".paymentAmount").hide();
     },
 
     returnToParent:function(){
@@ -308,22 +303,24 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         };
         this.templatePopup = new MF.Views.KOPopupView(formOptions);
         this.templatePopup.render();
+        this.templatePopup.successSelector = $("#messageContainer",this.templatePopup.el);
+
         this.storeChild(this.templatePopup);
     },
-    formSave:function(popupEl){
+    formSave:function(){
         var popup = this.templatePopup;
         var isValid = CC.ValidationRunner.runViewModel(popup.cid, popup.elementsViewmodel,popup.errorSelector);
         if(!isValid){return;}
 
-        var model = ko.mapping.toJS(popup.options.model);
+        var model = ko.mapping.toJS(popup.options.data);
         var data = JSON.stringify(model);
         var promise = MF.repository.ajaxPostModel(this.options.AlertAdminEmailUrl,data);
-        promise.done($.proxy(function(result){this.emailCallback(result, popupEl)},this));
+        promise.done($.proxy(this.emailCallback,this));
     },
-    emailCallback:function(_result, popupEl){
+    emailCallback:function(_result){
         var that = this;
-        this.successSelector=$("#messageContainer",this.el);
-        this.errorSelector=$("#popupMessageContainer",popupEl);
+        this.successSelector=$("#messageContainer");
+        this.errorSelector=$("#popupMessageContainer",this.templatePopup.$el);
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
         if(!result.Success){
             if(result.Message && !$.noty.getByViewIdAndElementId(this.cid)){
