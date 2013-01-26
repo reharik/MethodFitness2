@@ -291,14 +291,14 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         }
     },
     alertAdmin:function(){
-        this.model.From = ko.observable(this.options.From);
-        this.model.To = ko.observable(this.options.To);
-        this.model.Subject = ko.observable(this.options.Subject);
-        this.model.Body = ko.observable(this.options.Body);
+        var model = {From: ko.observable(this.options.From)};
+        model.To = ko.observable(this.options.To);
+        model.Subject = ko.observable(this.options.Subject);
+        model.Body = ko.observable(this.options.Body);
         var builder = MF.Views.popupButtonBuilder.builder("trainerAlertAdminPopup");
         builder.addButton("Send", builder.getSaveFunc());
         builder.addCancelButton();
-        var data=this.model;
+        var data=model;
         var formOptions = {
             id: "trainerAlertAdminPopup",
             data:data,
@@ -311,10 +311,11 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         this.storeChild(this.templatePopup);
     },
     formSave:function(popupEl){
-        var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel,this.errorSelector);
+        var popup = this.templatePopup;
+        var isValid = CC.ValidationRunner.runViewModel(popup.cid, popup.elementsViewmodel,popup.errorSelector);
         if(!isValid){return;}
 
-        var model = ko.mapping.toJS(this.model);
+        var model = ko.mapping.toJS(popup.options.model);
         var data = JSON.stringify(model);
         var promise = MF.repository.ajaxPostModel(this.options.AlertAdminEmailUrl,data);
         promise.done($.proxy(function(result){this.emailCallback(result, popupEl)},this));

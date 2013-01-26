@@ -34,12 +34,14 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         private readonly ISaveEntityService _saveEntityService;
         private readonly IRepository _repository;
         private readonly ISessionContext _sessionContext;
+        private readonly IEmailService _emailService;
 
         public TrainerSessionVerificationController(
             IDynamicExpressionQuery dynamicExpressionQuery,
             ISaveEntityService saveEntityService,
             IRepository repository,
-            ISessionContext sessionContext)
+            ISessionContext sessionContext,
+            IEmailService emailService)
         {
             _grid = ObjectFactory.Container.GetInstance<IEntityListGrid<TrainerSessionDto>>("SessionVerification");
 
@@ -47,6 +49,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             _saveEntityService = saveEntityService;
             _repository = repository;
             _sessionContext = sessionContext;
+            _emailService = emailService;
         }
 
         public ActionResult ItemList(ViewModel input)
@@ -76,63 +79,44 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 return new CustomJsonResult(new Notification{Success = false,Message = WebLocalizationKeys.NO_SESSIONS_TO_VERIFY.ToString()});
             }
             var user = (User) input.User;
-            var verification = new TrainerSessionVerification {Trainer = user};
-            //get this from the view then add it to the verification
-            var total = 0d;
-            // call tolist because were gonna itterate
-            user.TrainerClientRates.ToList();
-            user.Sessions.Where(x=> input.EntityIds.Contains(x.EntityId)).ToList();
-            input.EntityIds.ForEachItem(x =>
-                {
-                    var session = user.Sessions.FirstOrDefault(y => y.EntityId == x);
-                    if (session != null)
-                    {
-                        session.TrainerVerified = true;
-                        verification.AddTrainerApprovedSessionItem(session);
-                        var trainerClientRate = user.TrainerClientRates.FirstOrDefault(tcr => tcr.EntityId == session.Client.EntityId);
-                        int percent = trainerClientRate != null ? trainerClientRate.Percent:user.ClientRateDefault;
-                        verification.Total += session.Cost * (percent*.01);
-                    }
-                });
-            user.AddTrainerSessionVerification(verification);
+            user.SessionVerification(input.EntityIds);
             var validationManager = _saveEntityService.ProcessSave(user);
             var notification = validationManager.Finish();
+            if (notification.Success)
+            {
+                var emailDto = new EmailDTO
+                {
+                    Body = WebLocalizationKeys.TRAINER_SESSIONS_VERIFIED.ToFormat(user.FullNameFNF),
+                    Subject = WebLocalizationKeys.TRAINER_SESSIONS_VERIFIED.ToFormat(user.FullNameFNF),
+                    From = new MailAddress(Site.Config.AdminEmail),
+                    To = new MailAddress(Site.Config.AdminEmail)
+                };
+
+                _emailService.SendEmail(emailDto);
+            }
             return new CustomJsonResult(notification);
         }
 
         public JsonResult AlertAdminEmail(TrainersPaymentListViewModel input)
         {
             var notification = new Notification{Success = true,Message = WebLocalizationKeys.EMAIL_SENT_SUCCESSFULLY.ToString()};
-            try
-            {
-                // pull this shit out and put it in a service fool.
-                var message = new MailMessage(new MailAddress(input.From), new MailAddress(input.To))
-                                  {
-                                      Subject = input.Subject,
-                                      Body = input.Body
-                                  };
-                message.ReplyToList.Add(new MailAddress(input.From));
-                var smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.Credentials = new System.Net.NetworkCredential("methodfit@gmail.com", "methgoo69");
-                smtpClient.EnableSsl = true;
+            var emailDto = new EmailDTO
+                {
+                    Body = input.Body,
+                    Subject = input.Subject,
+                    From = new MailAddress(input.From),
+                    To = new MailAddress(input.To),
+                    ReplyTo = new MailAddress(input.From)
+                };
 
-
-//                var smtpClient = new SmtpClient(SiteConfig.Settings().SMTPServer);
-//                smtpClient.Credentials = new System.Net.NetworkCredential(SiteConfig.Settings().AdminEmail, SiteConfig.Settings().SMTPPW);
-//                var smtpClient = new SmtpClient(Site.Config.SMTPServer, 465);
-//                smtpClient.Credentials = new System.Net.NetworkCredential(Site.Config.SMTPUN, Site.Config.SMTPPW);
-//                smtpClient.EnableSsl = true;
-                
-//                var smtpClient = new SmtpClient("mail.methodfitness.com", 25);
-                smtpClient.Send(message);
-            }
-            catch (Exception exception)
+            var exception = _emailService.SendEmail(emailDto);
+            if (exception.IsNotEmpty())
             {
                 notification.Success = false;
                 notification.Message = "";
-                notification.Errors= new List<ErrorInfo>();
-                notification.Errors.Add(new ErrorInfo("",exception.Message));
+                notification.Errors= new List<ErrorInfo> {new ErrorInfo("", exception)};
             }
+
             return new CustomJsonResult(notification);
         }
 

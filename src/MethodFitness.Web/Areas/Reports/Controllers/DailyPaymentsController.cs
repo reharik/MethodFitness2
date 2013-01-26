@@ -44,7 +44,9 @@ namespace MethodFitness.Web.Areas.Reports.Controllers
 
     public class DailyPaymentViewModel : ViewModel
     {
+        [ValidateNonEmpty]
         public DateTime StartDate { get; set; }
+        [ValidateNonEmpty]
         public DateTime EndDate { get; set; }
         public string ReportUrl { get; set; }
     }
