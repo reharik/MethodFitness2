@@ -456,8 +456,12 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
                 that.model.Color(hex);
             }
         });
-         MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
         MF.vent.bind("popup:templatePopup:cancel",this.tokenCancel,this);
+    },
+    onClose:function(){
+        MF.vent.unbind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.unbind("popup:templatePopup:cancel",this.tokenCancel,this);
     },
     multiSelectModifier:function(ccElement){
         if(ccElement.name=="ClientsDtos"){

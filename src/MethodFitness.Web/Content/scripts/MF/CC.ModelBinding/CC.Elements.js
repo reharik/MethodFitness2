@@ -29,8 +29,8 @@ $.extend(CC.Elements.Element.prototype,{
         this.type = "Element";
         this.friendlyName = this.trimFieldName();
         this.name = this.$input.attr('name');
+        this.errorSelector = view.errorSelector?view.errorSelector:"#messageContainer";
     },
-    errorSelector:"#messageContainer",
     validate:function(){
         CC.ValidationRunner.runElement(this,this.errorSelector);
     },
