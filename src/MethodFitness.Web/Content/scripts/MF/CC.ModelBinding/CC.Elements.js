@@ -23,16 +23,16 @@ CC.Elements.Element = function($container){
 CC.Elements.Element.extend = Backbone.View.extend;
 $.extend(CC.Elements.Element.prototype,{
     init:function(view){
-        this.notification = view.notification?view.notification:CC.notification;
         this.viewId = view.cid;
         this.cid = _.uniqueId("c");
         this.$input = this.$container.find("input");
         this.type = "Element";
         this.friendlyName = this.trimFieldName();
         this.name = this.$input.attr('name');
+        this.errorSelector = view.errorSelector?view.errorSelector:"#messageContainer";
     },
     validate:function(){
-        CC.ValidationRunner.runElement(this,this.notification);
+        CC.ValidationRunner.runElement(this,this.errorSelector);
     },
     getValue:function(){
         return this.$input.val();
@@ -50,7 +50,7 @@ $.extend(CC.Elements.Element.prototype,{
         this.isValid = isValid;
     },
     destroy:function(){
-        this.notification.removeById(this.cid);
+        $.noty.closeByElementId(this.cid);
     }
 });
 
@@ -235,19 +235,21 @@ CC.Elements.MultiSelect = CC.Elements.Element.extend({
         var that = this;
         this.type = "select";
         this.$input = this.$container.find("input.multiSelect");
-        var item = this.$input.data("tokenInputObject");
-        item.render(this.multiSelectOptions);
+        this.item = this.$input.data("tokenInputObject");
+        this.item.render(this.multiSelectOptions);
         MF.vent.bind(this.name+":tokenizer:add",$.proxy(that.multiSelectChange,that));
         MF.vent.bind(this.name+":tokenizer:remove",$.proxy(that.multiSelectChange,that));
     },
-    multiSelectChange: function(e, viewmodel){
-        this.selectedViewmodel = viewmodel;
+    multiSelectChange: function(e){
+        this.selectedViewmodel = this.item.getSelectedItems();
         this.validate();
     },
     getValue:function(){
-        return this.selectedViewmodel;
+        return this.item.getSelectedItems();
     },
     destroy:function(){
+        MF.vent.unbind(this.name+":tokenizer:add");
+        MF.vent.unbind(this.name+":tokenizer:remove");
         this.$container.off(this.$input.attr("id")+":tokenizer:blur");
         $("#"+this.$input.attr("name")+"_container *").unbind().remove();
         this._super("destroy",arguments);

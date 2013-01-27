@@ -17,8 +17,10 @@ namespace MethodFitness.Web.Grids
             GridBuilder.LinkColumnFor(x => x.CreatedDate)
                 .ToPerformAction(ColumnAction.DisplayItem).WithId("trainerPaymentsList")
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
-                .DefaultSortColumn().SecurityOperation("/TrainerPayment/Display");
+                .SecurityOperation("/TrainerPayment/Display");
             GridBuilder.DisplayFor(x => x.Total);
+            GridBuilder.SetSearchField(x => x.CreatedDate);
+            GridBuilder.SetDefaultSortColumn(x => x.CreatedDate);
             return this;
         }
     }

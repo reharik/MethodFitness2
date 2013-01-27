@@ -20,23 +20,26 @@
   <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToQA;" />
   
  <Target Name="_pushToQA" >
-    <ItemGroup>
-      <WebFiles Include="src\MethodFitness.Web\**\*.*;"
-                Exclude="src\MethodFitness.Web\obj\**;
+   <PropertyGroup>
+     <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
+   </PropertyGroup>
+   
+   <ItemGroup>
+     <WebFiles Include="src\MethodFitness.Web\**\*.*;"
+               Exclude="src\MethodFitness.Web\obj\**;
 						 src\MethodFitness.Web\**\*.cs;
 						 src\MethodFitness.Web\**\.idea\**;
 						 src\MethodFitness.Web\**\.svn\**;
 						 src\MethodFitness.Web\**\*.pdb;
 						 src\MethodFitness.Web\*.csproj.*;
 						 src\MethodFitness.Web\*.sln;
-						 src\MethodFitness.Web\Tenant\**;
 						 src\MethodFitness.Web\App_Data\**;
 						 src\MethodFitness.Web\web.config;
 						 src\MethodFitness.Web\connectionstrings.config;
 						 src\MethodFitness.Web\Logs\**; 		 "
                 />
-    </ItemGroup>
-    <Time>
+   </ItemGroup>
+   <Time>
       <Output TaskParameter="Month" PropertyName="Month" />
       <Output TaskParameter="Day" PropertyName="Day" />
       <Output TaskParameter="Year" PropertyName="Year" />
@@ -44,10 +47,7 @@
       <Output TaskParameter="Minute" PropertyName="Minute" />
     </Time>
 
-   <PropertyGroup>
-     <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
-   </PropertyGroup>
-
+   
    <MakeDir Directories="$(OutputDirectory)"  />
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
    <Zip Files="@(WebFiles)"
@@ -56,12 +56,8 @@
      ZipLevel="9" />
  </Target>
 
-  <Target Name="myTemp" >
-    <Message Text="Current Date and Time: $(Month).$(Day).$(Year)-$(Hour).$(Minute)" />
-  </Target>
-
   <Target Name="_build">
-    <MSBuild Projects="$(SourcePath)\MethodFitness.sln" Properties="Configuration=Debug" ContinueOnError="false" />
+    <MSBuild Projects="$(SourcePath)\MethodFitness_build.sln" Properties="Configuration=Debug" ContinueOnError="false" />
   </Target>
 
   <ItemGroup>
@@ -69,10 +65,6 @@
   </ItemGroup>
   <Target Name="_unitTests">
     <NUnit Assemblies="@(UnitTestAssemblies)" ToolPath="$(NUnit)" />
-  </Target>
-
-  <Target Name="_minifyJSandCss">
-    <Exec Command="$(SourcePath)\ConcatAndCompress\bin\Debug\ConcatAndCompress.exe" ></Exec>
   </Target>
 
 </Project>

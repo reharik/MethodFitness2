@@ -41,9 +41,8 @@ namespace Generator
             For<INHSetupConfig>().Use<MFNHSetupConfig>();
 
             For<ISessionFactoryConfiguration>().Singleton()
-               .Use<SqlServerSessionSourceConfiguration>()
-               .Ctor<SqlServerSessionSourceConfiguration>("connectionStr")
-               .EqualToAppSetting("MethodFitness.sql_server_connection_string");
+                                               .Use<SqlServerSessionSourceConfiguration>()
+                                               .Ctor<SqlServerSessionSourceConfiguration>("connectionStr");
             For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory());
 
             For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());
@@ -51,6 +50,8 @@ namespace Generator
             For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Use<UnitOfWork>();
 
             For<IRepository>().Use<Repository>();
+            // no idea why this pos needs to be declared explicitly. very annoying
+            For<IQADataLoader>().Use<QaDataLoader>();
 
             For<ISessionContext>().Use<DataLoaderSessionContext>();
 
@@ -58,7 +59,7 @@ namespace Generator
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();
 
             For<IMenuConfig>().Use<MainMenu>();
-            For<IViewOptionConfig>().Add<ScheduleViewOptionList>();
+            For<IRouteTokenConfig>().Add<ScheduleRouteTokenList>();
 
             For<IAuthorizationService>().HybridHttpOrThreadLocalScoped().Use<AuthorizationService>();
             For<IAuthorizationRepository>().HybridHttpOrThreadLocalScoped().Use<CustomAuthorizationRepository>();

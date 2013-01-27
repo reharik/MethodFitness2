@@ -3,6 +3,8 @@ using CC.Core.Html.Menu;
 using CC.Security;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
+using MethodFitness.Web.Areas.Billing.Controllers;
+using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 
@@ -33,9 +35,22 @@ namespace MethodFitness.Web.Menus
             }
             var builder =
                 _builder.CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR).Route("calendar")
-                    .CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS).CreateNode(
-                        WebLocalizationKeys.ADMIN_TOOLS, "tools").HasChildren().CreateTagNode<TrainerListController>(
-                            WebLocalizationKeys.TRAINERS).EndChildren();
+                        .CreateTagNode<ClientListController>(WebLocalizationKeys.CLIENTS)
+                        .CreateTagNode<TrainerSessionViewController>(WebLocalizationKeys.SESSION_REPORT)
+                        .CreateNode(WebLocalizationKeys.SESSION_VERIFICATION)
+                        .HasChildren()
+                            .CreateTagNode<TrainerSessionVerificationListController>(WebLocalizationKeys.HISTORICAL)
+                            .CreateTagNode<TrainerSessionVerificationController>(WebLocalizationKeys.CURRENT)
+                        .EndChildren()
+                        .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
+                        .HasChildren()
+                            .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS)
+                            .CreateNode(WebLocalizationKeys.REPORTS)
+                                .HasChildren()
+                                    .CreateTagNode<DailyPaymentsController>(WebLocalizationKeys.DAILY_PAYMENTS)
+                                    .CreateTagNode<TrainerMetricController>(WebLocalizationKeys.TRAINER_METRIC)
+                                .EndChildren()
+                        .EndChildren();
             var list = builder.MenuTree(user);
             return list;
         }

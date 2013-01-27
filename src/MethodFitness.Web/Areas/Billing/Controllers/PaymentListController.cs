@@ -31,16 +31,17 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public CustomJsonResult ItemList(ViewModel input)
         {
             var user = _sessionContext.GetCurrentUser();
+            var client = _repository.Find<Client>(input.EntityId);
             var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.EntityId;
             var model = new ListViewModel()
             {
                 addUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
                 gridDef = _paymentListGrid.GetGridDefinition(url,user),
-                _Title = WebLocalizationKeys.PAYMENTS.ToString(),
+                _Title = WebLocalizationKeys.CLIENT_PAYMENTS.ToFormat(client.FullNameFNF),
                 ParentId = input.EntityId
             };
             model.headerButtons.Add("new");
-            return new CustomJsonResult { Data = model };
+            return new CustomJsonResult(model);
         }
 
         public CustomJsonResult Payments(GridItemsRequestModel input)
@@ -49,7 +50,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var client = _repository.Find<Client>(input.ParentId);
             var items = _dynamicExpressionQuery.PerformQuery(client.Payments, input.filters);
             var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
     }
 }

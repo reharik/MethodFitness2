@@ -19,6 +19,7 @@ cc.grid.columnService = (function() {
                 if (item.formatoptions && typeof item.formatoptions == "string") {
                     item.formatoptions = JSON.parse(item.formatoptions);
                 }
+                item.hidden = item.hidden == "true";
                 item.search = item.search != "false";
                 item.sortable= item.sortable != "false";
                 if (!item.width) { item.width = "100%";}
@@ -28,14 +29,17 @@ cc.grid.columnService = (function() {
                 return item;
             });
             return map;
-        },
-        defaultSortColumnName:function(gridDefinition){
-            var col = _.detect(gridDefinition.Columns, function(col){
-                if(col.sortColumn){
-                    return col.sortColumn;
-                }
-            });
-            if(col) {return col.sortColumn;}
         }
+        // now on griddef so I put it in the jquery.cc.grid
+        //,
+//        defaultSortColumnName:function(gridDefinition){
+//            var col = _.detect(gridDefinition.Columns, function(col){
+//                if(col.sortColumn){
+//                    return col.sortColumn;
+//                }
+//            });
+//            if(col) {return col.sortColumn;}
+
+//        }
     };
 })();

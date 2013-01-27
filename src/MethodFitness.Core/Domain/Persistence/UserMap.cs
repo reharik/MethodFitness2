@@ -1,4 +1,5 @@
 using FluentNHibernate.Mapping;
+using MethodFitness.Core.Config;
 
 namespace MethodFitness.Core.Domain.Persistence
 {
@@ -19,9 +20,17 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.ZipCode);
             Map(x => x.Notes);
             Map(x => x.ImageUrl);
+            Map(x => x.Color);
+            Map(x => x.ClientRateDefault);
             References(x => x.UserLoginInfo);
+            HasMany(x => x.Appointments).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
+            HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
+            HasMany(x => x.TrainerClientRates).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
+            HasMany(x => x.TrainerPayments).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
+            HasMany(x => x.TrainerSessionVerifications).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
             HasManyToMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
-            DiscriminateSubClassesOnColumn("type");
+            HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
+
         }
 
         public class UserLoginInfoMap : DomainEntityMap<UserLoginInfo>
@@ -31,30 +40,8 @@ namespace MethodFitness.Core.Domain.Persistence
                 Map(x => x.LoginName);
                 Map(x => x.Password);
                 Map(x => x.Salt);
-                Map(x => x.CanLogin);
                 Map(x => x.LastVisitDate);
                 Map(x => x.ByPassToken);
-            }
-        }
-
-        public class TrainerMap : SubclassMap<Trainer>
-        {
-            public TrainerMap()
-            {
-                DiscriminatorValue("Trainer");
-                Map(x => x.Color);
-                Map(x => x.ClientRateDefault);
-                HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
-                HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore);
-                HasMany(x => x.TrainerClientRates).Access.CamelCaseField(Prefix.Underscore);
-                HasMany(x => x.TrainerPayments).Access.CamelCaseField(Prefix.Underscore);
-            }
-        }
-
-        public class AdministratorMap : SubclassMap<Administrator>
-        {
-            public AdministratorMap()
-            {
             }
         }
     }

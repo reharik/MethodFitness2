@@ -1,0 +1,18 @@
+﻿@using CC.Core.Html.CCUI
+@using MethodFitness.Web
+@model MethodFitness.Web.Areas.Reports.Controllers.TrainerMetricViewModel
+
+@{
+    Layout = "~/Views/Shared/_ReportLayout.cshtml";
+}
+<div class="row">
+        @Html.SubmissionFor(x=>x.TrainerEntityId).Size("5").ToHtmlTag()
+        @Html.SubmissionFor(x=>x.StartDate).Size("3").ToHtmlTag()
+        @Html.SubmissionFor(x => x.EndDate).Size("3").ToHtmlTag()
+</div>
+
+@section FooterButtons
+{
+    @StandardButtonFor("viewReport", WebLocalizationKeys.VIEW_REPORT).AddClass("save").ToHtmlTag()
+}
+

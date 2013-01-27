@@ -13,7 +13,7 @@
 
    <div class="content-header">
         @RenderSection("ExtraContentHeaderButtons", false)
-        <span class="title-name">@Model._Title</span>
+        <span class="title-name" data-bind="text:_Title"></span>
         <button class="close cancel" title="@WebLocalizationKeys.CLOSE"></button>
         @if (Model.EntityId > 0)
         {

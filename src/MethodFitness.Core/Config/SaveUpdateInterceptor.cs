@@ -30,35 +30,37 @@ namespace MethodFitness.Core.Config
 
         private static bool OnSave(object item, object[] state, string[] propertyNames)
         {
-            var sessionContext = ObjectFactory.GetInstance<ISessionContext>();
-            var systemClock = ObjectFactory.Container.GetInstance<ISystemClock>();
+            var domainEntity = item as DomainEntity;
+            if (domainEntity == null) return false;
 
-            var entity = item as Entity;
-            if (entity != null)
+            var sessionContext = ObjectFactory.Container.GetInstance<ISessionContext>();
+            var currentUser = sessionContext.GetCurrentUser();
+            var systemClock = ObjectFactory.Container.GetInstance<ISystemClock>();
+            var getCompanyIdService = ObjectFactory.GetInstance<IGetCompanyIdService>();
+            for (int i = 0; i < propertyNames.Length; i++)
             {
-                for (int i = 0; i < propertyNames.Length; i++)
+                if ("ChangedDate".Equals(propertyNames[i]))
                 {
-                    if ("ChangedBy".Equals(propertyNames[i]))
-                    {
-                        state[i] = sessionContext.GetCurrentUser();
-                    } 
-                    if ("ChangedDate".Equals(propertyNames[i]))
-                    {
-                        state[i] = systemClock.Now;
-                    }
-                    if ("CreatedBy".Equals(propertyNames[i]) && entity.CreatedBy == null)
-                    {
-                        state[i] = sessionContext.GetCurrentUser();
-                    }
-                    if ("CreatedDate".Equals(propertyNames[i]) && !entity.CreatedDate.HasValue )
-                    {
-                        state[i] = systemClock.Now;
-                    }
-                    
+                    state[i] = systemClock.Now;
                 }
-                return true;
+                if (!domainEntity.CreatedDate.HasValue && "CreatedDate".Equals(propertyNames[i]))
+                {
+                    state[i] = systemClock.Now;
+                }
+                if ("CompanyId".Equals(propertyNames[i]))
+                {
+                    state[i] = getCompanyIdService.Execute();
+                }
+                if (domainEntity.CreatedBy == null && "CreatedBy".Equals(propertyNames[i]))
+                {
+                    state[i] = currentUser;
+                }
+                if ("ChangedBy".Equals(propertyNames[i]))
+                {
+                    state[i] = currentUser;
+                }
             }
-            return false;
+            return true;
 
         }
     }

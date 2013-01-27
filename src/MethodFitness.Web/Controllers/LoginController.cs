@@ -19,21 +19,21 @@ namespace MethodFitness.Web.Controllers
     {
         private readonly ISecurityDataService _securityDataService;
         private readonly IAuthenticationContext _authenticationContext;
-        private readonly IEmailTemplateService _emailTemplateService;
+        private readonly IEmailService _emailService;
         private readonly IContainer _container;
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
 
         public LoginController(ISecurityDataService securityDataService,
             IAuthenticationContext authenticationContext,
-            IEmailTemplateService emailTemplateService,
+            IEmailService emailService,
             IContainer container,
             IRepository repository,
             ISaveEntityService saveEntityService)
         {
             _securityDataService = securityDataService;
             _authenticationContext = authenticationContext;
-            _emailTemplateService = emailTemplateService;
+            _emailService = emailService;
             _container = container;
             _repository = repository;
             _saveEntityService = saveEntityService;
@@ -75,7 +75,7 @@ namespace MethodFitness.Web.Controllers
 //                ex.Source = "CATCH RAISED";
 //                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
 //            }
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
             
 //            

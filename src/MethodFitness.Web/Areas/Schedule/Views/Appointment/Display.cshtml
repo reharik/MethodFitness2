@@ -6,35 +6,38 @@
 @{
     Layout = "~/Views/Shared/_popupLayout.cshtml";
 }
-<div class="puColFull">
-    <div class="fieldRow">
-        <span>@WebLocalizationKeys.APPOINTMENT_INFORMATION: </span>
-        <span data-bind="dateString:Date"></span>,
-        <span data-bind="text:StartTimeString"></span> - 
-        <span data-bind="text:EndTimeString"></span>
-    </div>
-</div>
-
-<div class="puCol left">
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.TrainerFullNameFNF).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
-    </div> 
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.LocationName).LabelDisplay(WebLocalizationKeys.LOCATION).ToHtmlTag()
-    </div>
-    
-</div>
-<div class="puCol right">
-      
-    <div class="fieldRow">
+<div class="row">
+    <div class="span15">
         <div class="view_root">
-            @Html.ViewFor(x => x._clientItems).LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
+            <div class="view_label">
+                <label>@WebLocalizationKeys.APPOINTMENT_INFORMATION:</label>
+            </div>
+            <div class="view_display">
+                    <span data-bind="dateString:Date"></span>,
+                    <span data-bind="text:StartTimeString"></span> - 
+                    <span data-bind="text:EndTimeString"></span>
+            </div>
         </div>
     </div>
 </div>
-<div class="col clear">
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.Notes).ToHtmlTag()
+
+<div class="row">
+    <div class="span5">
+        @Html.ViewFor(x => x.TrainerFullNameFNF).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
+    </div> 
+    <div class="span5">
+        @Html.ViewFor(x => x._clientItems).LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
+    </div>
+</div>
+<div class="row">
+    <div class="span5">
+        @Html.ViewFor(x => x.LocationName).LabelDisplay(WebLocalizationKeys.LOCATION).ToHtmlTag()
     </div>
 </div>
 
+<div class="row">
+    <div class="span5">
+        @Html.ViewFor(x => x.Notes).ToHtmlTag()
+    </div>
+</div>
+      

@@ -10,14 +10,18 @@ using CC.Core.Html;
 using CC.Core.Services;
 using CC.Security.Interfaces;
 using Castle.Components.Validator;
+using MethodFitness.Core;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Controllers;
+using xVal.ServerSide;
 
 namespace MethodFitness.Web.Areas.Schedule.Controllers
 {
+    using CC.Core.CustomAttributes;
+
     public class AppointmentController : MFController
     {
         private readonly IRepository _repository;
@@ -58,14 +62,9 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserId();
             dynamic trainer = _repository.Find<User>(userEntityId);
-            IEnumerable<Client> clients;
-            if(!_authorizationService.IsAllowed(trainer,"/Clients/CanScheduleAllClients"))
-            {
-                clients = trainer.Clients;
-            }else
-            {
-                clients = _repository.FindAll<Client>();
-            }
+            IEnumerable<Client> clients = !this._authorizationService.IsAllowed(trainer, "/Clients/CanScheduleAllClients")
+                    ? trainer.Clients
+                    : this._repository.FindAll<Client>();
             var _availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF});
             var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
 
@@ -86,7 +85,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
             model.EndTimeString = getEndTime(model.AppointmentType, appointment.StartTime.Value).ToShortTimeString();
             handleTrainer(model);
-            return new CustomJsonResult{Data = model};
+            return new CustomJsonResult(model);
         }
 
         private DateTime getEndTime(string length, DateTime startTime)
@@ -106,12 +105,12 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             if (_userPermissionService.IsAllowed("/Calendar/SetAppointmentForOthers"))
             {
-                var trainers = _repository.Query<Trainer>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
+                var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
                 model._TrainerEntityIdList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true);
             }else
             {
                 var userId = _sessionContext.GetUserId();
-                var trainer = _repository.Find<Trainer>(userId);
+                var trainer = _repository.Find<User>(userId);
                 model.TrainerFullNameFNF = trainer.FullNameFNF;
                 model.TrainerEntityId = trainer.EntityId;
             }
@@ -130,7 +129,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             model._clientItems = appointment.Clients.Select(x => x.FullNameFNF);
             model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
             model.EndTimeString = appointment.EndTime.Value.ToShortTimeString();
-            return new CustomJsonResult(){Data = model};
+            return new CustomJsonResult(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -139,17 +138,19 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             var appointment = _repository.Find<Appointment>(input.EntityId);
-            if (appointment.StartTime < DateTime.Now && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
+
+            if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time")
+                && !_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
             {
                 var notification = new Notification{Message=WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString()};
                 return Json(notification,JsonRequestBehavior.AllowGet);
             }
-            appointment.RestoreSessionsToClientWhenDeleted();
+            appointment.RestoreSessionsToClients();
             //first save app to save the clients and sessions that have been restored
             _repository.Save(appointment);
             _repository.HardDelete(appointment);
             _repository.UnitOfWork.Commit();
-            return new CustomJsonResult{Data = new Notification{Success = true}};
+            return new CustomJsonResult(new Notification{Success = true});
         }
 
         public ActionResult Save(AppointmentViewModel input)
@@ -157,26 +158,46 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var changeAptType = appointment.AppointmentType != input.AppointmentType;
-            mapToDomain(input, appointment);
-            var notification = new Notification { Success = true };
-            notification = appointment.CheckPermissions(user, _authorizationService, notification);
-            notification = appointment.CheckForClients(notification);
-            if(changeAptType)
-            {
-                appointment.RestoreSessionsToClientWhenDeleted();
-            }
-            if(appointment.EntityId==0 || changeAptType)
-            {
-                appointment.SetSessionsForClients();
-            }
-            if(!notification.Success)
+
+            var notification = validateAppointment(user, input);
+            if (!notification.Success)
             {
                 return Json(notification, JsonRequestBehavior.AllowGet);
             }
+            // check if new or there were any changes.
+            // if so clear all sessions.
+            var applySessionsForClients = appointment.CheckForChangesAndReturnNeedToSetSessions(input.ClientsDtos.selectedItems, input.AppointmentType);
+            // map or remap values
+            mapToDomain(input, appointment);
+            // apply or reapply the sessions
+            if (applySessionsForClients)
+            {
+                appointment.SetSessionsForClients();
+            }
+            
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
+        }
+
+        private Notification validateAppointment(User user, AppointmentViewModel input)
+        {
+            var notification = new Notification { Success = true };
+            var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
+            var startTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.StartTimeString);
+            if (startTime < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            {
+                notification.Success = false;
+                notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
+                return notification;
+            }
+
+            if (input.ClientsDtos==null || !input.ClientsDtos.selectedItems.Any())
+            {
+                notification = new Notification { Success = false };
+                notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
+            }
+            return notification;
         }
 
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)
@@ -187,7 +208,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var endTime = getEndTime(model.AppointmentType, appointment.StartTime.Value);
             appointment.EndTime = DateTime.Parse(model.Date.ToShortDateString() + " " + endTime.ToShortTimeString()); 
             appointment.AppointmentType = model.AppointmentType;
-            var trainer = _repository.Find<Trainer>(model.TrainerEntityId);
+            var trainer = _repository.Find<User>(model.TrainerEntityId);
             var location = _repository.Find<Location>(model.LocationEntityId);
             appointment.Trainer = trainer;
             appointment.Location = location;
@@ -202,6 +223,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
     {
         [ValidateNonEmpty]
         public bool Copy { get; set; }
+        [ValidateNonEmpty]
         public TokenInputViewModel ClientsDtos { get; set; }
         public IEnumerable<SelectListItem> _LocationEntityIdList { get; set; }
         public IEnumerable<SelectListItem> _TrainerEntityIdList { get; set; }
@@ -209,8 +231,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public IEnumerable<SelectListItem> _AppointmentTypeList { get; set; }
 
         public string TrainerFullNameFNF { get; set; }
+        [ValidateNonEmpty]
         public int LocationEntityId { get; set; }
         public string LocationName { get; set; }
+        [ValidateNonEmpty]
         public int TrainerEntityId { get; set; }
         public string AppointmentType { get; set; }
         [ValidateNonEmpty]
@@ -219,7 +243,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         public string StartTimeString { get; set; }
         [ValidateNonEmpty]
         public string EndTimeString { get; set; }
-        
+        [TextArea]
         public string Notes { get; set; }
 
         public IEnumerable<string> _clientItems { get; set; }

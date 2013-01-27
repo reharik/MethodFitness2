@@ -11,14 +11,17 @@ using CC.Security.Services;
 using CC.UI.Helpers;
 using CC.UI.Helpers.Configuration;
 using CC.UI.Helpers.Tags;
+using KnowYourTurf.Core.Domain.Tools;
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
+using MethodFitness.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Domain.Tools;
 using MethodFitness.Core.Rules;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Schedule.Grids;
 using MethodFitness.Web.Config;
+using MethodFitness.Web.Grids;
 using MethodFitness.Web.Menus;
 using MethodFitness.Web.Services;
 using MethodFitness.Web.Services.ViewOptions;
@@ -61,7 +64,7 @@ namespace MethodFitness.Web
             For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession(new SaveUpdateInterceptor()));
             For<ISession>().HybridHttpOrThreadLocalScoped().Add(context => context.GetInstance<ISessionFactory>().OpenSession()).Named("NoInterceptorNoFilters");
 
-            For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Use<UnitOfWork>();
+            For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Use<MFUnitOfWork>();
             For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Add<NoInterceptorNoFiltersUnitOfWork>().Named("NoInterceptorNoFilters");
 
             For<IRepository>().Use<Repository>();
@@ -83,7 +86,7 @@ namespace MethodFitness.Web
             For<IPermissionsBuilderService>().HybridHttpOrThreadLocalScoped().Use<PermissionsBuilderService>();
             For<IPermissionsService>().HybridHttpOrThreadLocalScoped().Use<PermissionsService>();
             For<ISecuritySetupService>().Use<DefaultSecuritySetupService>();
-            For<IViewOptionConfig>().Add<ScheduleViewOptionList>();
+            For<IRouteTokenConfig>().Add<ScheduleRouteTokenList>();
 
             For(typeof(IGridBuilder<>)).Use(typeof(GridBuilder<>));
             
@@ -94,6 +97,9 @@ namespace MethodFitness.Web
             For<ISessionContext>().Use<SessionContext>();
             For<ICCSessionContext>().Use<SessionContext>();
             For<IMFPermissionsService>().Use<MFPermissionsService>();
+
+            For<IEntityListGrid<TrainerSessionDto>>().Use<SessionVerificationListGrid>().Named("SessionVerification");
+            For<IEntityListGrid<TrainerSessionDto>>().Add<SessionPaymentListGrid>().Named("SessionPaymentVerification");
         }
     }
 }

@@ -31,6 +31,8 @@ var DEFAULT_SETTINGS = {
     onAdd: null,
     onDelete: null,
     idPrefix: "token-input-",
+    // this is overwritten in the views.tokenview and ko.bindingHandlers.MultiSelect
+    // and in the views.  bit messy
     internalTokenMarkup:function(item){return "<p>"+ item.name +"</p>";},
     afterTokenSelectedFunction:function(){},
     beforeTokenAddedFunction:function(){}
@@ -270,6 +272,10 @@ $.TokenList = function (_input, _viewModel, _settings) {
         //
         // Public functions
         //
+
+        this.getSelectedItems = function(){
+            return settings.viewModel.selectedItems();
+        };
 
         this.clear = function() {
             selected_token_list.children("li").each(delete_selected_listItem);

@@ -18,6 +18,8 @@ using StructureMap;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
+    using CC.Core.CustomAttributes;
+
     public class PaymentController : MFController
     {
         private readonly IRepository _repository;
@@ -71,11 +73,11 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var model = Mapper.Map<Payment,PaymentViewModel>(payment);
             model._sessionRateDto = sessionRatesDto;
             model._sessionsAvailable = clientSessionsDto;
-            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
+            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
             model._deleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null));
             model.ParentId = client.EntityId;
             model._saveUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.Save(null));
-            return new CustomJsonResult{Data = model};
+            return new CustomJsonResult(model);
         }
 
         public ActionResult Display_Template(ViewModel input)
@@ -88,8 +90,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var client = _repository.Find<Client>(input.ParentId);
             var payment =  client.Payments.FirstOrDefault(x=>x.EntityId == input.EntityId);
             var model = Mapper.Map<Payment, PaymentViewModel>(payment);
-            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
-            return new CustomJsonResult { Data = model };
+            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
+            return new CustomJsonResult(model);
         }
 
         public CustomJsonResult Delete(ViewModel input)
@@ -104,10 +106,10 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 payment.Client = null;
                 _saveEntityService.ProcessSave(client);
                 var saveClientNotification = rulesResult.Finish();
-                return new CustomJsonResult { Data = saveClientNotification };
+                return new CustomJsonResult(saveClientNotification);
             }
             var notification = rulesResult.Finish();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
         }
 
         public CustomJsonResult DeleteMultiple(BulkActionViewModel input)
@@ -128,7 +130,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             });
             _saveEntityService.ProcessSave(client);
             var notification = validationManager.Finish();
-            return new CustomJsonResult { Data = notification};
+            return new CustomJsonResult(notification);
         }
 
         public CustomJsonResult Save(PaymentViewModel input)
@@ -149,7 +151,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var crudManager = _saveEntityService.ProcessSave(client);
 
             var notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
+            return new CustomJsonResult(notification){ ContentType = "text/plain" };
 
         }
 
@@ -169,6 +171,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             payment.PairTenPack = model.PairTenPack;
             payment.PairTenPackPrice = model.PairTenPack > 0 ? model.PairTenPackPrice / model.PairTenPack : 0;
             payment.PaymentTotal = model.PaymentTotal;
+            payment.Notes = model.Notes;
             return payment;
         }
     }
@@ -197,17 +200,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public int Pair { get; set; }
         public int PairTenPack { get; set; }
         public double PaymentTotal { get; set; }
-
         public double FullHourTenPackPrice { get; set; }
-
         public double FullHourPrice { get; set; }
-
         public double HalfHourTenPackPrice { get; set; }
-
         public double HalfHourPrice { get; set; }
-
         public double PairPrice { get; set; }
-
         public double PairTenPackPrice { get; set; }
+        [TextArea]
+        public string Notes { get; set; }
     }
 }   
