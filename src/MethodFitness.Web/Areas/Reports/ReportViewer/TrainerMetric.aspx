@@ -17,8 +17,8 @@
             Font-Size="8pt" 
             WaitMessageFont-Names="Verdana" 
             WaitMessageFont-Size="14pt"
-            Width="875px"
-            Height="875px">
+            Width="100%"
+            Height="100%">
             <LocalReport ReportPath="Areas\Reports\RDLC\TrainerMetric.rdlc" >
                 <DataSources>
                     <rsweb:ReportDataSource DataSourceId="SqlDataSource1" Name="TrainerMetric" />
