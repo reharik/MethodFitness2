@@ -127,7 +127,10 @@ namespace MethodFitness.Web.Controllers
             Client client;
             client = input.EntityId > 0 ? _repository.Find<Client>(input.EntityId) : new Client();
             client = mapToDomain(input, client);
-            associateWithUser(client);
+            if (client.IsNew())
+            {
+                associateWithUser(client);
+            }
 //            if (input.DeleteImage)
 //            {
 ////                _uploadedFileHandlerService.DeleteFile(client.ImageUrl);
@@ -148,10 +151,7 @@ namespace MethodFitness.Web.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var trainer = _repository.Find<User>(userEntityId);
-            if (trainer is User)
-            {
-                trainer.AddClient(client, trainer.ClientRateDefault);
-            }
+            trainer.AddClient(client, trainer.ClientRateDefault);
             _saveEntityService.ProcessSave(trainer);
         }
 

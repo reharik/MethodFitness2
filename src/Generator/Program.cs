@@ -44,7 +44,7 @@ namespace Generator
 
         private static string GetConnectionString()
         {
-            var xdoc = XDocument.Load(@"connectionstrings.config");
+            var xdoc = XDocument.Load(@"appSettings.config");
 //                var xdoc = XDocument.Load(@"..\..\..\..\connectionstrings.config");
             var connStrings = xdoc.Descendants("add").Where(x => x.Attribute("key").Value.StartsWith("constring_"));
             Console.WriteLine("Please select the database you would like to work with:");

@@ -29,7 +29,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
             loadComplete : function(){
                 var ids = $(this).getDataIDs();
                 var paymentRows =[];
-                that.options.paymentTotal = 0;
                 for (var i = 0, l = ids.length; i < l; i++) {
                     var rowId = ids[i];
                     var row;
@@ -55,7 +54,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
                         });
                     }
                 }
-                that.model.paymentAmount = ko.observable(that.options.paymentTotal);
                 that.model.eligableRows = ko.mapping.fromJS(paymentRows);
                 that.setupElements();
             }}
@@ -74,6 +72,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
     },
     setupElements:function(){
         if($("#filterArea").size()==0){
+            this.model.paymentAmount = ko.observable();
             $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
             $("[name='EndDate']",this.$el).datepicker();
@@ -84,6 +83,8 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
 
             ko.applyBindings(this.model,this.el);
         }
+        this.model.paymentAmount(0);
+        $(".paymentAmount").hide();
     },
 
     returnToParent:function(){
@@ -123,7 +124,6 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
     paymentCallback:function(result){
         if(result.Success){
             this.reloadGrid();
-            window.open(result.Variable);
             this.formCancel();
         }
     },
@@ -139,10 +139,10 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         var itemAmount = parseFloat(data.trainerPay());
 
         if (checkbox.is(":checked")) {
-            this.model.paymentAmount(this.model.paymentAmount() + itemAmount);
+            this.model.paymentAmount(Math.round((this.model.paymentAmount() + itemAmount)*100)/100);
             data._checked(true);
         } else {
-            this.model.paymentAmount(this.model.paymentAmount() - itemAmount);
+            this.model.paymentAmount(Math.round((this.model.paymentAmount() - itemAmount)*100)/100);
             data._checked(false);
         }
         if(this.model.paymentAmount()>0){
@@ -159,8 +159,9 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         if($(e.currentTarget).is(":checked")){
             _.each(this.model.eligableRows(),function(item){
                 item._checked(true);
-                this.model.paymentAmount(this.model.paymentAmount() +parseFloat(item.trainerPay()))
+                this.model.paymentAmount(this.model.paymentAmount() +parseFloat(item.trainerPay()));
             },this);
+            this.model.paymentAmount(Math.round(this.model.paymentAmount()*100)/100);
         }else{
             _.each(this.model.eligableRows(),function(item){
                 item._checked(false);
@@ -218,7 +219,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
                     }
                 }
 
-                that.model.paymentAmount = ko.observable(that.options.paymentTotal);
+                that.model.paymentAmount = ko.observable(Math.round(that.options.paymentTotal));
                 that.model.eligableRows = ko.mapping.fromJS(paymentRows);
                 that.setupElements();
             }}
@@ -253,11 +254,13 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         $("#" + this.options.gridId).trigger("reloadGrid");
     },
     acceptSessions:function(){
-        var model = ko.mapping.toJS(this.model);
-        model.EntityIds = _.pluck(model.eligableRows,"id");
-        var data = JSON.stringify(model);
-        var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
-        promise.done($.proxy(this.acceptSessionsCallback,this));
+        if (confirm("If you are sure that all of these appointments are correct please click 'OK'.")) {
+            var model = ko.mapping.toJS(this.model);
+            model.EntityIds = _.pluck(model.eligableRows,"id");
+            var data = JSON.stringify(model);
+            var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
+            promise.done($.proxy(this.acceptSessionsCallback,this));
+        }
     },
     acceptSessionsCallback:function(_result){
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
@@ -283,14 +286,14 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         }
     },
     alertAdmin:function(){
-        this.model.From = ko.observable(this.options.From);
-        this.model.To = ko.observable(this.options.To);
-        this.model.Subject = ko.observable(this.options.Subject);
-        this.model.Body = ko.observable(this.options.Body);
+        var model = {From: ko.observable(this.options.From)};
+        model.To = ko.observable(this.options.To);
+        model.Subject = ko.observable(this.options.Subject);
+        model.Body = ko.observable(this.options.Body);
         var builder = MF.Views.popupButtonBuilder.builder("trainerAlertAdminPopup");
         builder.addButton("Send", builder.getSaveFunc());
         builder.addCancelButton();
-        var data=this.model;
+        var data=model;
         var formOptions = {
             id: "trainerAlertAdminPopup",
             data:data,
@@ -300,21 +303,24 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         };
         this.templatePopup = new MF.Views.KOPopupView(formOptions);
         this.templatePopup.render();
+        this.templatePopup.successSelector = $("#messageContainer",this.templatePopup.el);
+
         this.storeChild(this.templatePopup);
     },
-    formSave:function(popupEl){
-//        var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel,this.errorSelector);
-//        if(!isValid){return;}
+    formSave:function(){
+        var popup = this.templatePopup;
+        var isValid = CC.ValidationRunner.runViewModel(popup.cid, popup.elementsViewmodel,popup.errorSelector);
+        if(!isValid){return;}
 
-        var model = ko.mapping.toJS(this.model);
+        var model = ko.mapping.toJS(popup.options.data);
         var data = JSON.stringify(model);
         var promise = MF.repository.ajaxPostModel(this.options.AlertAdminEmailUrl,data);
-        promise.done($.proxy(function(result){this.emailCallback(result, popupEl)},this));
+        promise.done($.proxy(this.emailCallback,this));
     },
-    emailCallback:function(_result, popupEl){
+    emailCallback:function(_result){
         var that = this;
-        this.successSelector=$("#messageContainer",this.el);
-        this.errorSelector=$("#popupMessageContainer",popupEl);
+        this.successSelector=$("#messageContainer");
+        this.errorSelector=$("#popupMessageContainer",this.templatePopup.$el);
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
         if(!result.Success){
             if(result.Message && !$.noty.getByViewIdAndElementId(this.cid)){
@@ -333,7 +339,6 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
                 $.noty.closeAllErrorsByViewId(this.cid);
             }
             MF.vent.trigger("form:"+this.id+":success",result);
-            if(!this.options.noBubbleUp){MF.WorkflowManager.returnParentView(result,true);}
             MF.vent.trigger("form:"+this.id+":success",result);
             this.formCancel();
         }
@@ -373,7 +378,6 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
                     that.options.paymentTotal += parseFloat(rowData.TrainerPay);
                 }
 
-                that.model.paymentAmount = ko.observable(that.options.paymentTotal);
                 that.setupElements();
             }}
     },
@@ -387,12 +391,19 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
     },
     setupElements:function(){
         if($("#filterArea").size()==0){
+            this.model.paymentAmount = ko.observable();
             $(this.el).find(".content-header").prepend($("#payTrainerSearchTemplate").tmpl());
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
             $("[name='EndDate']",this.$el).datepicker();
             this.model.EndDate= ko.observable( new XDate().toString("MM/dd/yyyy") );
             $("#payTrainerButton").hide();
             ko.applyBindings(this.model,this.el);
+        }
+        this.model.paymentAmount(Math.round(this.options.paymentTotal));
+        if(this.model.paymentAmount()<=0){
+            $(".paymentAmount").hide();
+        }else{
+            $(".paymentAmount").show();
         }
     }
 });

@@ -147,6 +147,25 @@ namespace MethodFitness.Core.Domain
             _trainerSessionVerifications.Add(trainerSessionVerification);
         }
         #endregion
+        public virtual void SessionVerification(IEnumerable<int> sessionsIds)
+        {
+            var verification = new TrainerSessionVerification { Trainer = this };
+            // call tolist because were gonna itterate
+            TrainerClientRates.ToList();
+            Sessions.Where(x => sessionsIds.Contains(x.EntityId)).ToList();
+            sessionsIds.ForEachItem(x =>
+            {
+                var session = Sessions.FirstOrDefault(y => y.EntityId == x);
+                if (session == null) return;
+                session.TrainerVerified = true;
+                verification.AddTrainerApprovedSessionItem(session);
+                var trainerClientRate = TrainerClientRates.FirstOrDefault(tcr => tcr.EntityId == session.Client.EntityId);
+                int percent = trainerClientRate != null ? trainerClientRate.Percent : ClientRateDefault;
+                verification.Total += session.Cost * (percent * .01);
+            });
+            AddTrainerSessionVerification(verification);
+        }
+
 
         public virtual TrainerPayment PayTrainer(IEnumerable<PaymentDetailsDto> items, double amount)
         {

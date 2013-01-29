@@ -42,7 +42,7 @@ namespace MethodFitness.Web
             fileNames.Add("jquery.miniColors.css");
             fileNames.Add("fullcalendar.css");
             fileNames.Add("token-input.css");
-            fileNames.Add("jquery-ui-1.8.16.custom.css");
+            fileNames.Add("smoothness/jquery-ui-1.10.0.custom.css");
             fileNames.Add("fileinput.css");
             fileNames.Add("ui.jqgrid.css");
             fileNames.Add("fg.menu.css");
@@ -55,8 +55,9 @@ namespace MethodFitness.Web
         public List<string> JavascriptFileList()
         {
             var fileNames = new List<String>();
-            fileNames.Add("jqueryPlugins/jquery-1.7.1.js");
-            fileNames.Add("jqueryPlugins/jquery-ui-1.8.22.custom.min.js");
+            fileNames.Add("jqueryPlugins/jquery-1.9.0.js");
+            fileNames.Add("jqueryPlugins/jquery-migrate-1.0.0.js");
+            fileNames.Add("jqueryPlugins/jquery-ui-1.10.0.custom.js");
             fileNames.Add("jqueryPlugins/cc.tokeninput2.js");
             fileNames.Add("jqueryPlugins/grid.locale-en.js");
             fileNames.Add("jqueryPlugins/jquery.jqGrid.src.js");

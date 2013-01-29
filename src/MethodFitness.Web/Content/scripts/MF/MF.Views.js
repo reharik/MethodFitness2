@@ -165,7 +165,6 @@ MF.Views.AjaxPopupFormModule  = MF.Views.View.extend({
         this.options.noBubbleUp=true;
         this.options.isPopup=true;
         this.popupForm = this.options.view && MF.Views[this.options.view] ? new MF.Views[this.options.view](this.options) : new MF.Views.AjaxFormView(this.options);
-        this.popupForm.errorSelector = "#popupMessageContainer";
 
         this.popupForm.render();
         this.storeChild(this.popupForm);
@@ -182,7 +181,6 @@ MF.Views.AjaxPopupFormModule  = MF.Views.View.extend({
          MF.vent.unbind("popup:"+this.id+":cancel");
         MF.vent.unbind("popup:"+this.id+":save");
         MF.vent.unbind("form:"+this.id+":success");
-        this.notification = null;
     },
     loadPopupView:function(formOptions){
         var buttons = formOptions.buttons?formOptions.buttons:MF.Views.popupButtonBuilder.builder(formOptions.id).standardEditButons();
@@ -250,6 +248,7 @@ MF.Views.AjaxPopupDisplayModule  = MF.Views.View.extend({
 
 MF.Views.PopupView = MF.Views.View.extend({
     render:function(){
+        var that = this;
         $(".ui-dialog").remove();
 
         $(this.el).dialog({
@@ -258,13 +257,10 @@ MF.Views.PopupView = MF.Views.View.extend({
             buttons:this.options.buttons,
             title: this.options.title,
             close:function(){
-                MF.vent.trigger("popup:"+id+":cancel");
+                MF.vent.trigger("popup:"+that.options.id+":cancel");
             }
         });
         return this;
-    },
-    close:function(){
-        $(this.el).dialog("close");
     }
 });
 
@@ -290,14 +286,21 @@ MF.Views.TemplatedPopupView = MF.Views.View.extend({
 });
 
 MF.Views.KOPopupView = MF.Views.View.extend({
-
     initialize: function(){
         this.options = $.extend({},MF.popupDefaults,this.options);
     },
     render:function(){
         var template = $(this.options.template).clone().show();
         $(this.el).append(template);
-         ko.applyBindings(this.options.data,this.el);
+        this.errorSelector = $("#popupMessageContainer",this.el);
+
+        ko.applyBindings(this.options.data,this.el);
+        this.elementsViewmodel = CC.elementService.getElementsViewmodel(this);
+        var collection = this.elementsViewmodel.collection;
+        for(var item in collection){
+            collection[item].render();
+        }
+
         var popupOptions = {
             id:this.id,
             el:this.el, // we pass the el here so we can call the popup on it
@@ -322,9 +325,8 @@ MF.Views.popupButtonBuilder = (function(){
         };
         var editFunc = function(event) {MF.vent.trigger("popup:"+id+":edit");};
         var cancelFunc = function(){
-                            MF.vent.trigger("popup:"+id+":cancel");
-                            $(this).dialog("close");
-                            $(".ui-dialog").remove();
+            $(this).dialog("close");
+            MF.vent.trigger("popup:"+id+":cancel");
                         };
         return{
             getButtons:function(){return buttons;},

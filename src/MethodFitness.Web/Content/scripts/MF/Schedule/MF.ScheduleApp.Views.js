@@ -24,6 +24,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.model = this.rawModel;
         this.model.id= this.model.CalendarDefinition.id = this.id;
         this.setupLegend();
+        $("div.form-scroll-inner").height(window.innerHeight-160);
         $("#calendar",this.el).asCalendar(this.model.CalendarDefinition);
         this.bindSpecificModelAndElements({Location:this.model.Location,
             _LocationList:this.model._LocationList,
@@ -32,8 +33,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         });
         //callback for render
         this.viewLoaded();
-        $("div.form-scroll-inner").height( $(window).height()-180);
-        $("#calendar",this.el).fullCalendar('option', 'height', $(window).height()-182);
+        $("#calendar",this.el).fullCalendar('option', 'height', $("div.form-scroll-inner").height());
         //general notification of pageloaded
         MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
         this.calendarBindings();
@@ -285,8 +285,8 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             });
     },
     onClose:function(){
-        MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
-        MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+        MF.vent.unbind("ClientsDtos:tokenizer:add");
+        MF.vent.unbind("ClientsDtos:tokenizer:remove");
                 
     },
     handleTimeChange:function() {
@@ -334,7 +334,6 @@ MF.Views.ClientFormView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         this._setupBindings();
-        $("div.form-scroll-inner").height( $(window).height()-180);
     },
      _setupBindings:function(){
          MF.vent.bind("delete:"+this.id+":success",this.deleteSuccess,this);
@@ -457,8 +456,12 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
                 that.model.Color(hex);
             }
         });
-         MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
         MF.vent.bind("popup:templatePopup:cancel",this.tokenCancel,this);
+    },
+    onClose:function(){
+        MF.vent.unbind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.unbind("popup:templatePopup:cancel",this.tokenCancel,this);
     },
     multiSelectModifier:function(ccElement){
         if(ccElement.name=="ClientsDtos"){
@@ -625,6 +628,7 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
 
 MF.Views.ClientGridView = MF.Views.View.extend({
     initialize:function(){
+        this.options.gridOptions ={multiselect:false};
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "defaultGridEventsMixin");

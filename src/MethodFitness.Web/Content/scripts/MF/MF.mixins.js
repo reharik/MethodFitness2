@@ -112,11 +112,11 @@ MF.mixins.reportMixin = {
         var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel,this.errorSelector);
         if(!isValid){return;}
         var url = this.createUrl();
-        $("#reportBody").attr("src",url);
+        window.open(url);
     },
     createUrl:function(data){
     }
-}
+};
 
 MF.mixins.formMixin = {
     events:{
@@ -191,7 +191,7 @@ MF.mixins.ajaxDisplayMixin = {
     },
     renderCallback:function(){
         this.bindModelAndElements();
-        $("div.form-scroll-inner").height( $(window).height()-180);
+        $("div.form-scroll-inner").height( window.innerHeight - 180);
         this.viewLoaded();
         MF.vent.trigger("display:"+this.id+":pageLoaded",this.options);
     }
@@ -204,7 +204,7 @@ MF.mixins.ajaxFormMixin = {
     },
     renderCallback:function(){
         this.bindModelAndElements();
-        $("div.form-scroll-inner").height( $(window).height()-180);
+        $("div.form-scroll-inner").height( window.innerHeight - 220);
         this.viewLoaded();
         MF.vent.trigger("form:"+this.id+":pageLoaded",this.options);
     }
@@ -219,8 +219,6 @@ MF.mixins.ajaxGridMixin = {
         $(this.el).html($("#gridTemplate").tmpl(result));
         $.extend(this.options,result,MF.gridDefaults);
         this.setupGrid();
-        $("div.form-scroll-inner").height( $(window).height()-180);
-        $("#"+this.options.gridId).setGridHeight($("div.form-scroll-inner").height()-36  );
         this.viewLoaded();
         MF.vent.trigger("grid:"+this.id+":pageLoaded",this.options);
 

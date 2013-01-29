@@ -462,10 +462,10 @@
     <Content Include="Views\Shared\_ReportLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Reports\Views\TrainerMetric\Display.cshtml" />
     <Content Include="Areas\Reports\XSD\DailyPayments.xsc">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
-    <Content Include="Areas\Reports\Views\TrainerMetric\Display.cshtml" />
     <None Include="Areas\Reports\XSD\DailyPayments.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

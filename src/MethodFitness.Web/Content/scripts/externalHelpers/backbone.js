@@ -5,7 +5,6 @@
 //     For all details and documentation:
 //     http://backbonejs.org
 
-/// <reference path="underscore.js"/>
 
 
 (function(){
