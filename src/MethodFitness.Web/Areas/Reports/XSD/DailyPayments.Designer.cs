@@ -26,6 +26,8 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
         
         private DailyPaymentsDataTable tableDailyPayments;
         
+        private PaymentDrillDownDataTable tablePaymentDrillDown;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -57,6 +59,9 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
                 if ((ds.Tables["DailyPayments"] != null)) {
                     base.Tables.Add(new DailyPaymentsDataTable(ds.Tables["DailyPayments"]));
                 }
+                if ((ds.Tables["PaymentDrillDown"] != null)) {
+                    base.Tables.Add(new PaymentDrillDownDataTable(ds.Tables["PaymentDrillDown"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -82,6 +87,16 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
         public DailyPaymentsDataTable _DailyPayments {
             get {
                 return this.tableDailyPayments;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public PaymentDrillDownDataTable PaymentDrillDown {
+            get {
+                return this.tablePaymentDrillDown;
             }
         }
         
@@ -155,6 +170,9 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
                 if ((ds.Tables["DailyPayments"] != null)) {
                     base.Tables.Add(new DailyPaymentsDataTable(ds.Tables["DailyPayments"]));
                 }
+                if ((ds.Tables["PaymentDrillDown"] != null)) {
+                    base.Tables.Add(new PaymentDrillDownDataTable(ds.Tables["PaymentDrillDown"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -194,6 +212,12 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
                     this.tableDailyPayments.InitVars();
                 }
             }
+            this.tablePaymentDrillDown = ((PaymentDrillDownDataTable)(base.Tables["PaymentDrillDown"]));
+            if ((initTable == true)) {
+                if ((this.tablePaymentDrillDown != null)) {
+                    this.tablePaymentDrillDown.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -206,11 +230,19 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableDailyPayments = new DailyPaymentsDataTable();
             base.Tables.Add(this.tableDailyPayments);
+            this.tablePaymentDrillDown = new PaymentDrillDownDataTable();
+            base.Tables.Add(this.tablePaymentDrillDown);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerialize_DailyPayments() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializePaymentDrillDown() {
             return false;
         }
         
@@ -272,6 +304,9 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void DailyPaymentsRowChangeEventHandler(object sender, DailyPaymentsRowChangeEvent e);
         
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void PaymentDrillDownRowChangeEventHandler(object sender, PaymentDrillDownRowChangeEvent e);
+        
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
@@ -286,6 +321,8 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
             private global::System.Data.DataColumn columnClient;
             
             private global::System.Data.DataColumn columnPaymentTotal;
+            
+            private global::System.Data.DataColumn columnEntityId;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -354,6 +391,14 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EntityIdColumn {
+                get {
+                    return this.columnEntityId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -395,10 +440,18 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
                         CreatedDate,
                         Trainer,
                         Client,
-                        PaymentTotal};
+                        PaymentTotal,
+                        null};
                 rowDailyPaymentsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDailyPaymentsRow);
                 return rowDailyPaymentsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public DailyPaymentsRow FindByEntityId(int EntityId) {
+                return ((DailyPaymentsRow)(this.Rows.Find(new object[] {
+                            EntityId})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -422,6 +475,7 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
                 this.columnTrainer = base.Columns["Trainer"];
                 this.columnClient = base.Columns["Client"];
                 this.columnPaymentTotal = base.Columns["PaymentTotal"];
+                this.columnEntityId = base.Columns["EntityId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -435,10 +489,20 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
                 base.Columns.Add(this.columnClient);
                 this.columnPaymentTotal = new global::System.Data.DataColumn("PaymentTotal", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPaymentTotal);
+                this.columnEntityId = new global::System.Data.DataColumn("EntityId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEntityId);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnEntityId}, true));
                 this.columnTrainer.ReadOnly = true;
                 this.columnTrainer.MaxLength = 511;
                 this.columnClient.ReadOnly = true;
                 this.columnClient.MaxLength = 511;
+                this.columnEntityId.AutoIncrement = true;
+                this.columnEntityId.AutoIncrementSeed = -1;
+                this.columnEntityId.AutoIncrementStep = -1;
+                this.columnEntityId.AllowDBNull = false;
+                this.columnEntityId.ReadOnly = true;
+                this.columnEntityId.Unique = true;
                 this.ExtendedProperties.Add("Generator_TablePropName", "_DailyPayments");
                 this.ExtendedProperties.Add("Generator_UserTableName", "DailyPayments");
             }
@@ -568,6 +632,450 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class PaymentDrillDownDataTable : global::System.Data.TypedTableBase<PaymentDrillDownRow> {
+            
+            private global::System.Data.DataColumn columnCreatedDate;
+            
+            private global::System.Data.DataColumn columnFullHour;
+            
+            private global::System.Data.DataColumn columnFullHourPrice;
+            
+            private global::System.Data.DataColumn columnFullHourTenPack;
+            
+            private global::System.Data.DataColumn columnFullHourTenPackPrice;
+            
+            private global::System.Data.DataColumn columnHalfHour;
+            
+            private global::System.Data.DataColumn columnHalfHourPrice;
+            
+            private global::System.Data.DataColumn columnHalfHourTenPack;
+            
+            private global::System.Data.DataColumn columnHalfHourTenPackPrice;
+            
+            private global::System.Data.DataColumn columnPair;
+            
+            private global::System.Data.DataColumn columnPairPrice;
+            
+            private global::System.Data.DataColumn columnPairTenPack;
+            
+            private global::System.Data.DataColumn columnPairTenPackPrice;
+            
+            private global::System.Data.DataColumn columnPaymentTotal;
+            
+            private global::System.Data.DataColumn columnNotes;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PaymentDrillDownDataTable() {
+                this.TableName = "PaymentDrillDown";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal PaymentDrillDownDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected PaymentDrillDownDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CreatedDateColumn {
+                get {
+                    return this.columnCreatedDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FullHourColumn {
+                get {
+                    return this.columnFullHour;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FullHourPriceColumn {
+                get {
+                    return this.columnFullHourPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FullHourTenPackColumn {
+                get {
+                    return this.columnFullHourTenPack;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FullHourTenPackPriceColumn {
+                get {
+                    return this.columnFullHourTenPackPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HalfHourColumn {
+                get {
+                    return this.columnHalfHour;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HalfHourPriceColumn {
+                get {
+                    return this.columnHalfHourPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HalfHourTenPackColumn {
+                get {
+                    return this.columnHalfHourTenPack;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HalfHourTenPackPriceColumn {
+                get {
+                    return this.columnHalfHourTenPackPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PairColumn {
+                get {
+                    return this.columnPair;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PairPriceColumn {
+                get {
+                    return this.columnPairPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PairTenPackColumn {
+                get {
+                    return this.columnPairTenPack;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PairTenPackPriceColumn {
+                get {
+                    return this.columnPairTenPackPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PaymentTotalColumn {
+                get {
+                    return this.columnPaymentTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NotesColumn {
+                get {
+                    return this.columnNotes;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PaymentDrillDownRow this[int index] {
+                get {
+                    return ((PaymentDrillDownRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event PaymentDrillDownRowChangeEventHandler PaymentDrillDownRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event PaymentDrillDownRowChangeEventHandler PaymentDrillDownRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event PaymentDrillDownRowChangeEventHandler PaymentDrillDownRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event PaymentDrillDownRowChangeEventHandler PaymentDrillDownRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddPaymentDrillDownRow(PaymentDrillDownRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PaymentDrillDownRow AddPaymentDrillDownRow(System.DateTime CreatedDate, int FullHour, double FullHourPrice, int FullHourTenPack, double FullHourTenPackPrice, int HalfHour, double HalfHourPrice, int HalfHourTenPack, double HalfHourTenPackPrice, int Pair, double PairPrice, int PairTenPack, double PairTenPackPrice, double PaymentTotal, string Notes) {
+                PaymentDrillDownRow rowPaymentDrillDownRow = ((PaymentDrillDownRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        CreatedDate,
+                        FullHour,
+                        FullHourPrice,
+                        FullHourTenPack,
+                        FullHourTenPackPrice,
+                        HalfHour,
+                        HalfHourPrice,
+                        HalfHourTenPack,
+                        HalfHourTenPackPrice,
+                        Pair,
+                        PairPrice,
+                        PairTenPack,
+                        PairTenPackPrice,
+                        PaymentTotal,
+                        Notes};
+                rowPaymentDrillDownRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowPaymentDrillDownRow);
+                return rowPaymentDrillDownRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                PaymentDrillDownDataTable cln = ((PaymentDrillDownDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new PaymentDrillDownDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnCreatedDate = base.Columns["CreatedDate"];
+                this.columnFullHour = base.Columns["FullHour"];
+                this.columnFullHourPrice = base.Columns["FullHourPrice"];
+                this.columnFullHourTenPack = base.Columns["FullHourTenPack"];
+                this.columnFullHourTenPackPrice = base.Columns["FullHourTenPackPrice"];
+                this.columnHalfHour = base.Columns["HalfHour"];
+                this.columnHalfHourPrice = base.Columns["HalfHourPrice"];
+                this.columnHalfHourTenPack = base.Columns["HalfHourTenPack"];
+                this.columnHalfHourTenPackPrice = base.Columns["HalfHourTenPackPrice"];
+                this.columnPair = base.Columns["Pair"];
+                this.columnPairPrice = base.Columns["PairPrice"];
+                this.columnPairTenPack = base.Columns["PairTenPack"];
+                this.columnPairTenPackPrice = base.Columns["PairTenPackPrice"];
+                this.columnPaymentTotal = base.Columns["PaymentTotal"];
+                this.columnNotes = base.Columns["Notes"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnCreatedDate = new global::System.Data.DataColumn("CreatedDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCreatedDate);
+                this.columnFullHour = new global::System.Data.DataColumn("FullHour", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFullHour);
+                this.columnFullHourPrice = new global::System.Data.DataColumn("FullHourPrice", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFullHourPrice);
+                this.columnFullHourTenPack = new global::System.Data.DataColumn("FullHourTenPack", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFullHourTenPack);
+                this.columnFullHourTenPackPrice = new global::System.Data.DataColumn("FullHourTenPackPrice", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFullHourTenPackPrice);
+                this.columnHalfHour = new global::System.Data.DataColumn("HalfHour", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHalfHour);
+                this.columnHalfHourPrice = new global::System.Data.DataColumn("HalfHourPrice", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHalfHourPrice);
+                this.columnHalfHourTenPack = new global::System.Data.DataColumn("HalfHourTenPack", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHalfHourTenPack);
+                this.columnHalfHourTenPackPrice = new global::System.Data.DataColumn("HalfHourTenPackPrice", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHalfHourTenPackPrice);
+                this.columnPair = new global::System.Data.DataColumn("Pair", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPair);
+                this.columnPairPrice = new global::System.Data.DataColumn("PairPrice", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPairPrice);
+                this.columnPairTenPack = new global::System.Data.DataColumn("PairTenPack", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPairTenPack);
+                this.columnPairTenPackPrice = new global::System.Data.DataColumn("PairTenPackPrice", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPairTenPackPrice);
+                this.columnPaymentTotal = new global::System.Data.DataColumn("PaymentTotal", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPaymentTotal);
+                this.columnNotes = new global::System.Data.DataColumn("Notes", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNotes);
+                this.columnNotes.MaxLength = 255;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PaymentDrillDownRow NewPaymentDrillDownRow() {
+                return ((PaymentDrillDownRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new PaymentDrillDownRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(PaymentDrillDownRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.PaymentDrillDownRowChanged != null)) {
+                    this.PaymentDrillDownRowChanged(this, new PaymentDrillDownRowChangeEvent(((PaymentDrillDownRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.PaymentDrillDownRowChanging != null)) {
+                    this.PaymentDrillDownRowChanging(this, new PaymentDrillDownRowChangeEvent(((PaymentDrillDownRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.PaymentDrillDownRowDeleted != null)) {
+                    this.PaymentDrillDownRowDeleted(this, new PaymentDrillDownRowChangeEvent(((PaymentDrillDownRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.PaymentDrillDownRowDeleting != null)) {
+                    this.PaymentDrillDownRowDeleting(this, new PaymentDrillDownRowChangeEvent(((PaymentDrillDownRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemovePaymentDrillDownRow(PaymentDrillDownRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DailyPayments ds = new DailyPayments();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "PaymentDrillDownDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class DailyPaymentsRow : global::System.Data.DataRow {
@@ -647,6 +1155,17 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int EntityId {
+                get {
+                    return ((int)(this[this.tableDailyPayments.EntityIdColumn]));
+                }
+                set {
+                    this[this.tableDailyPayments.EntityIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCreatedDateNull() {
                 return this.IsNull(this.tableDailyPayments.CreatedDateColumn);
             }
@@ -695,6 +1214,443 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class PaymentDrillDownRow : global::System.Data.DataRow {
+            
+            private PaymentDrillDownDataTable tablePaymentDrillDown;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal PaymentDrillDownRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablePaymentDrillDown = ((PaymentDrillDownDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime CreatedDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tablePaymentDrillDown.CreatedDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CreatedDate\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.CreatedDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int FullHour {
+                get {
+                    try {
+                        return ((int)(this[this.tablePaymentDrillDown.FullHourColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FullHour\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.FullHourColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double FullHourPrice {
+                get {
+                    try {
+                        return ((double)(this[this.tablePaymentDrillDown.FullHourPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FullHourPrice\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.FullHourPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int FullHourTenPack {
+                get {
+                    try {
+                        return ((int)(this[this.tablePaymentDrillDown.FullHourTenPackColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FullHourTenPack\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.FullHourTenPackColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double FullHourTenPackPrice {
+                get {
+                    try {
+                        return ((double)(this[this.tablePaymentDrillDown.FullHourTenPackPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FullHourTenPackPrice\' in table \'PaymentDrillDown\' is DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.FullHourTenPackPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int HalfHour {
+                get {
+                    try {
+                        return ((int)(this[this.tablePaymentDrillDown.HalfHourColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HalfHour\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.HalfHourColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double HalfHourPrice {
+                get {
+                    try {
+                        return ((double)(this[this.tablePaymentDrillDown.HalfHourPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HalfHourPrice\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.HalfHourPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int HalfHourTenPack {
+                get {
+                    try {
+                        return ((int)(this[this.tablePaymentDrillDown.HalfHourTenPackColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HalfHourTenPack\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.HalfHourTenPackColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double HalfHourTenPackPrice {
+                get {
+                    try {
+                        return ((double)(this[this.tablePaymentDrillDown.HalfHourTenPackPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HalfHourTenPackPrice\' in table \'PaymentDrillDown\' is DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.HalfHourTenPackPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Pair {
+                get {
+                    try {
+                        return ((int)(this[this.tablePaymentDrillDown.PairColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Pair\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.PairColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double PairPrice {
+                get {
+                    try {
+                        return ((double)(this[this.tablePaymentDrillDown.PairPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PairPrice\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.PairPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int PairTenPack {
+                get {
+                    try {
+                        return ((int)(this[this.tablePaymentDrillDown.PairTenPackColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PairTenPack\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.PairTenPackColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double PairTenPackPrice {
+                get {
+                    try {
+                        return ((double)(this[this.tablePaymentDrillDown.PairTenPackPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PairTenPackPrice\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.PairTenPackPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double PaymentTotal {
+                get {
+                    try {
+                        return ((double)(this[this.tablePaymentDrillDown.PaymentTotalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PaymentTotal\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.PaymentTotalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Notes {
+                get {
+                    try {
+                        return ((string)(this[this.tablePaymentDrillDown.NotesColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Notes\' in table \'PaymentDrillDown\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePaymentDrillDown.NotesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCreatedDateNull() {
+                return this.IsNull(this.tablePaymentDrillDown.CreatedDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCreatedDateNull() {
+                this[this.tablePaymentDrillDown.CreatedDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFullHourNull() {
+                return this.IsNull(this.tablePaymentDrillDown.FullHourColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFullHourNull() {
+                this[this.tablePaymentDrillDown.FullHourColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFullHourPriceNull() {
+                return this.IsNull(this.tablePaymentDrillDown.FullHourPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFullHourPriceNull() {
+                this[this.tablePaymentDrillDown.FullHourPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFullHourTenPackNull() {
+                return this.IsNull(this.tablePaymentDrillDown.FullHourTenPackColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFullHourTenPackNull() {
+                this[this.tablePaymentDrillDown.FullHourTenPackColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFullHourTenPackPriceNull() {
+                return this.IsNull(this.tablePaymentDrillDown.FullHourTenPackPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFullHourTenPackPriceNull() {
+                this[this.tablePaymentDrillDown.FullHourTenPackPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHalfHourNull() {
+                return this.IsNull(this.tablePaymentDrillDown.HalfHourColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHalfHourNull() {
+                this[this.tablePaymentDrillDown.HalfHourColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHalfHourPriceNull() {
+                return this.IsNull(this.tablePaymentDrillDown.HalfHourPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHalfHourPriceNull() {
+                this[this.tablePaymentDrillDown.HalfHourPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHalfHourTenPackNull() {
+                return this.IsNull(this.tablePaymentDrillDown.HalfHourTenPackColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHalfHourTenPackNull() {
+                this[this.tablePaymentDrillDown.HalfHourTenPackColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHalfHourTenPackPriceNull() {
+                return this.IsNull(this.tablePaymentDrillDown.HalfHourTenPackPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHalfHourTenPackPriceNull() {
+                this[this.tablePaymentDrillDown.HalfHourTenPackPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPairNull() {
+                return this.IsNull(this.tablePaymentDrillDown.PairColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPairNull() {
+                this[this.tablePaymentDrillDown.PairColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPairPriceNull() {
+                return this.IsNull(this.tablePaymentDrillDown.PairPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPairPriceNull() {
+                this[this.tablePaymentDrillDown.PairPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPairTenPackNull() {
+                return this.IsNull(this.tablePaymentDrillDown.PairTenPackColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPairTenPackNull() {
+                this[this.tablePaymentDrillDown.PairTenPackColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPairTenPackPriceNull() {
+                return this.IsNull(this.tablePaymentDrillDown.PairTenPackPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPairTenPackPriceNull() {
+                this[this.tablePaymentDrillDown.PairTenPackPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPaymentTotalNull() {
+                return this.IsNull(this.tablePaymentDrillDown.PaymentTotalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPaymentTotalNull() {
+                this[this.tablePaymentDrillDown.PaymentTotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNotesNull() {
+                return this.IsNull(this.tablePaymentDrillDown.NotesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNotesNull() {
+                this[this.tablePaymentDrillDown.NotesColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -714,6 +1670,40 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DailyPaymentsRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class PaymentDrillDownRowChangeEvent : global::System.EventArgs {
+            
+            private PaymentDrillDownRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PaymentDrillDownRowChangeEvent(PaymentDrillDownRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PaymentDrillDownRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -857,6 +1847,7 @@ namespace MethodFitness.Web.Areas.Reports.XSD.DailyPaymentsTableAdapters {
             tableMapping.ColumnMappings.Add("Trainer", "Trainer");
             tableMapping.ColumnMappings.Add("Client", "Client");
             tableMapping.ColumnMappings.Add("PaymentTotal", "PaymentTotal");
+            tableMapping.ColumnMappings.Add("EntityId", "EntityId");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -899,6 +1890,182 @@ namespace MethodFitness.Web.Areas.Reports.XSD.DailyPaymentsTableAdapters {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             DailyPayments.DailyPaymentsDataTable dataTable = new DailyPayments.DailyPaymentsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class PaymentDrillDownTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public PaymentDrillDownTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "PaymentDrillDown";
+            tableMapping.ColumnMappings.Add("CreatedDate", "CreatedDate");
+            tableMapping.ColumnMappings.Add("FullHour", "FullHour");
+            tableMapping.ColumnMappings.Add("FullHourPrice", "FullHourPrice");
+            tableMapping.ColumnMappings.Add("FullHourTenPack", "FullHourTenPack");
+            tableMapping.ColumnMappings.Add("FullHourTenPackPrice", "FullHourTenPackPrice");
+            tableMapping.ColumnMappings.Add("HalfHour", "HalfHour");
+            tableMapping.ColumnMappings.Add("HalfHourPrice", "HalfHourPrice");
+            tableMapping.ColumnMappings.Add("HalfHourTenPack", "HalfHourTenPack");
+            tableMapping.ColumnMappings.Add("HalfHourTenPackPrice", "HalfHourTenPackPrice");
+            tableMapping.ColumnMappings.Add("Pair", "Pair");
+            tableMapping.ColumnMappings.Add("PairPrice", "PairPrice");
+            tableMapping.ColumnMappings.Add("PairTenPack", "PairTenPack");
+            tableMapping.ColumnMappings.Add("PairTenPackPrice", "PairTenPackPrice");
+            tableMapping.ColumnMappings.Add("PaymentTotal", "PaymentTotal");
+            tableMapping.ColumnMappings.Add("Notes", "Notes");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = "Data Source=RHARIK-PC;Initial Catalog=MethodFitness_DEV;Integrated Security=True";
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "dbo.PaymentDrillDown";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EntityId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual DailyPayments.PaymentDrillDownDataTable GetData(global::System.Nullable<int> EntityId) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((EntityId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(EntityId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            DailyPayments.PaymentDrillDownDataTable dataTable = new DailyPayments.PaymentDrillDownDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }

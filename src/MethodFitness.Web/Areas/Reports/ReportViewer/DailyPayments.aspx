@@ -33,6 +33,17 @@
             <asp:QueryStringParameter Name="EndDate" DefaultValue="dbnull" QueryStringField="EndDate" Type="DateTime" />
         </SelectParameters>
     </asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
+        ConnectionString='<%$ appSettings:MethodFitness.sql_server_connection_string %>'
+        SelectCommand="PaymentDrillDown" SelectCommandType="StoredProcedure"> 
+        <SelectParameters>
+            <asp:QueryStringParameter Name="EntityId" QueryStringField="EntityId" Type="Int32" />
+        </SelectParameters>
+    </asp:SqlDataSource>        
+        
+        
+        
+
     
     </div>
         <asp:ScriptManager ID="ScriptManager1" runat="server">
