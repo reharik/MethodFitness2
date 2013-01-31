@@ -61,7 +61,7 @@
   </Target>
 
   <ItemGroup>
-    <UnitTestAssemblies Include="$(SourcePath)\MethodFitness.Tests\bin\Debug\MethodFitness.Tests.dll;" />
+    <UnitTestAssemblies Include="$(SourcePath)\MethodFitness.Tests\bin\Release\MethodFitness.Tests.dll;" />
   </ItemGroup>
   <Target Name="_unitTests">
     <NUnit Assemblies="@(UnitTestAssemblies)" ToolPath="$(NUnit)" />

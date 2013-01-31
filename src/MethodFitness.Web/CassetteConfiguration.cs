@@ -7,8 +7,6 @@ namespace MethodFitness.Web
     using System;
     using System.Collections.Generic;
 
-    using MethodFitness.Web.Config;
-
     /// <summary>
     /// Configures the Cassette asset bundles for the web application.
     /// </summary>

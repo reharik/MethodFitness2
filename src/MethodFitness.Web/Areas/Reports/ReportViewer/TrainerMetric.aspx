@@ -18,6 +18,7 @@
             WaitMessageFont-Names="Verdana" 
             WaitMessageFont-Size="14pt"
             Width="100%"
+            SizeToReportContent="True"
             Height="100%">
             <LocalReport ReportPath="Areas\Reports\RDLC\TrainerMetric.rdlc" >
                 <DataSources>
@@ -25,7 +26,7 @@
                 </DataSources>
             </LocalReport>
         </rsweb:ReportViewer>
-      <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+      <asp:SqlDataSource ID="SqlDataSource1" runat="server"
         ConnectionString='<%$ appSettings:MethodFitness.sql_server_connection_string %>'
         SelectCommand="TrainerMetric" SelectCommandType="StoredProcedure"> 
         <SelectParameters>
