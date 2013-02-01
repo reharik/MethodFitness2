@@ -1410,7 +1410,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Number Of Weeks</Value>
+                  <Value />
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -1474,7 +1474,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
@@ -1504,7 +1506,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
@@ -1534,7 +1538,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
@@ -1568,7 +1574,9 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
@@ -1624,11 +1632,13 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Avg(Fields!HoursPerWeek.Value, "TrainerMetric")</Value>
+                  <Value>=Round(Avg(Fields!HoursPerWeek.Value, "TrainerMetric"),2)</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
