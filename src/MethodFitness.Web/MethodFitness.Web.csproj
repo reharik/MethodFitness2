@@ -428,6 +428,7 @@
     <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Areas\Reports\RDLC\ClientPayment.rdlc" />
     <EmbeddedResource Include="Areas\Reports\RDLC\DailyPayments.rdlc" />
     <EmbeddedResource Include="Areas\Reports\RDLC\TrainerMetric.rdlc" />
   </ItemGroup>

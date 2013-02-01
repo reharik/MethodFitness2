@@ -5,9 +5,6 @@
  * Time: 11:30 PM
  * To change this template use File | Settings | File Templates.
  */
-
-
-
 MF.loadTemplateAndModel = function(view){
     var d = new $.Deferred();
     $.when(Backbone.Marionette.TemplateCache.get(view.options.route,view.options.templateUrl, view.options.data),
