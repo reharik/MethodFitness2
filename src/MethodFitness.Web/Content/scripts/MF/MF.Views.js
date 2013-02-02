@@ -327,7 +327,7 @@ MF.Views.popupButtonBuilder = (function(){
         var cancelFunc = function(){
             $(this).dialog("close");
             MF.vent.trigger("popup:"+id+":cancel");
-                        };
+        };
         return{
             getButtons:function(){return buttons;},
             getSaveFunc:function(){return saveFunc;},
