@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using MethodFitness.Core.Enumerations;
 using MethodFitness.Web.Areas.Billing.Controllers;
-using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Services.ViewOptions
 {
+    using MethodFitness.Web.Areas.Reporting.Controllers;
+
     public interface IRouteTokenConfig
     {
         IList<RouteToken> Build(bool withoutPermissions = false);

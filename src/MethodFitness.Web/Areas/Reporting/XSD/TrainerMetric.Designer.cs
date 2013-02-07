@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace MethodFitness.Web.Areas.Reports.XSD {
+namespace MethodFitness.Web.Areas.Reporting.XSD {
     
     
     /// <summary>
@@ -817,7 +817,7 @@ namespace MethodFitness.Web.Areas.Reports.XSD {
         }
     }
 }
-namespace MethodFitness.Web.Areas.Reports.XSD.TrainerMetricTableAdapters {
+namespace MethodFitness.Web.Areas.Reporting.XSD.TrainerMetricTableAdapters {
     
     
     /// <summary>
