@@ -19,7 +19,7 @@
             WaitMessageFont-Size="14pt"
             Width="875"
             Height="875">
-            <LocalReport ReportPath="Areas\Reports\RDLC\DailyPayments.rdlc">
+            <LocalReport ReportPath="Areas\Reporting\RDLC\DailyPayments.rdlc">
                 <DataSources>
                     <rsweb:ReportDataSource DataSourceId="SqlDataSource1" Name="DailyPayments" />
                 </DataSources>
