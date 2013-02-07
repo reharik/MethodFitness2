@@ -20,7 +20,7 @@
             Width="100%"
             SizeToReportContent="True"
             Height="100%">
-            <LocalReport ReportPath="Areas\Reports\RDLC\TrainerMetric.rdlc" >
+            <LocalReport ReportPath="Areas\Reporting\RDLC\TrainerMetric.rdlc" >
                 <DataSources>
                     <rsweb:ReportDataSource DataSourceId="SqlDataSource1" Name="TrainerMetric" />
                 </DataSources>
