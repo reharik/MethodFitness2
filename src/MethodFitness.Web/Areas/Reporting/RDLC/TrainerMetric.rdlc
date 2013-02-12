@@ -1247,7 +1247,7 @@
   <Width>11.09376in</Width>
   <Page>
     <PageFooter>
-      <Height>1in</Height>
+      <Height>1.04041in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1566,7 +1566,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Sum(Fields!Hour.Value, "TrainerMetric")+Sum(Fields!HalfHour.Value, "TrainerMetric")+Sum(Fields!Pair.Value, "TrainerMetric")</Value>
+                  <Value>=Sum(Fields!Hour.Value, "TrainerMetric")+(Sum(Fields!HalfHour.Value, "TrainerMetric")/2)+Sum(Fields!Pair.Value, "TrainerMetric")</Value>
                   <Style />
                 </TextRun>
                 <TextRun>
@@ -1632,7 +1632,12 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Round(Avg(Fields!HoursPerWeek.Value, "TrainerMetric"),2)</Value>
+                  <Value>=
+Round(
+(Sum(Fields!Hour.Value, "TrainerMetric")+(Sum(Fields!HalfHour.Value, "TrainerMetric")/2)+Sum(Fields!Pair.Value, "TrainerMetric"))
+/
+Min(Fields!NumberOfWeeks.Value,"TrainerMetric")
+,2)</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
