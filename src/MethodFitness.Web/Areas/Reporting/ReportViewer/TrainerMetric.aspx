@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TrainerMetric.aspx.cs" Inherits="MethodFitness.Web.Areas.Reports.Reports.TrainerMetric" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TrainerMetric.aspx.cs" Inherits="MethodFitness.Web.Areas.Reporting.ReportViewer.TrainerMetric" %>
 <%@ Register TagPrefix="rsweb" Namespace="Microsoft.Reporting.WebForms" Assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" %>
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
             Width="100%"
             SizeToReportContent="True"
             Height="100%">
-            <LocalReport ReportPath="Areas\Reports\RDLC\TrainerMetric.rdlc" >
+            <LocalReport ReportPath="Areas\Reporting\RDLC\TrainerMetric.rdlc" >
                 <DataSources>
                     <rsweb:ReportDataSource DataSourceId="SqlDataSource1" Name="TrainerMetric" />
                 </DataSources>

@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MethodFitness.Web.Areas.Reports.Reports {
+namespace MethodFitness.Web.Areas.Reporting.ReportViewer {
     
     
-    public partial class DailyPayments1 {
+    public partial class TrainerMetric {
         
         /// <summary>
         /// form2 control.
@@ -38,15 +38,6 @@ namespace MethodFitness.Web.Areas.Reports.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-        
-        /// <summary>
-        /// SqlDataSource2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
         
         /// <summary>
         /// ScriptManager1 control.
