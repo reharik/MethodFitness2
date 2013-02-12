@@ -194,7 +194,7 @@ span#login-links a.active {
     cursor: pointer;
 }
 
-.content-outer .content-header select {
+.content-outer .content-header .select {
     float: left;
     height: 23px;
     width: 140px;
