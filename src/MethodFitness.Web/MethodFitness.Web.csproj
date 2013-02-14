@@ -256,6 +256,11 @@
     <Compile Include="Config\AutomapperBootstrapper.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="CustomWebViewPage.cs" />
+    <Compile Include="DailyPaymentDrillDown.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DailyPaymentDrillDown.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Filters\AddUserToViewModelFilter.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
     <Compile Include="Grids\TrainerSessionVerificationListGrid.cs" />
@@ -428,7 +433,7 @@
     <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Reporting\RDLC\ClientPayment.rdlc" />
+    <EmbeddedResource Include="Areas\Reporting\RDLC\DailyPaymentDrillDown.rdlc" />
     <EmbeddedResource Include="Areas\Reporting\RDLC\DailyPayments.rdlc" />
     <EmbeddedResource Include="Areas\Reporting\RDLC\TrainerMetric.rdlc" />
   </ItemGroup>
@@ -485,6 +490,17 @@
     </None>
     <Content Include="Areas\Reporting\XSD\TrainerMetric.xss">
       <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Content>
+    <Content Include="DailyPaymentDrillDown.xsc">
+      <DependentUpon>DailyPaymentDrillDown.xsd</DependentUpon>
+    </Content>
+    <None Include="DailyPaymentDrillDown.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DailyPaymentDrillDown.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DailyPaymentDrillDown.xss">
+      <DependentUpon>DailyPaymentDrillDown.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\fucknutz.pubxml" />
   </ItemGroup>

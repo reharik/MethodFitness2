@@ -65,7 +65,7 @@
         
         </script>
     </head>
-    <body id="signin">
+  <body id="signin">
         <div id="outer-wrapper">
             <div class="content-outer">
                 <div class="content-header"></div>
@@ -73,12 +73,16 @@
                     <div id="messageContainer"></div> 
                     <div class="signin">
                         <div class="form">
-                        <label class="big">@WebLocalizationKeys.SIGN_IN</label>
                         <div class="row">
-                            @Html.SubmissionFor(x => x.UserName).Size("5").ToHtmlTag()
+                            <div class="span10">
+                                <label class="big">@WebLocalizationKeys.SIGN_IN</label>
+                            </div>
                         </div>
                         <div class="row">
-                            @Html.SubmissionFor(x => x.Password).Size("5").ToHtmlTag()
+                            @Html.SubmissionFor(x => x.UserName).Size("10").ToHtmlTag()
+                        </div>
+                        <div class="row">
+                            @Html.SubmissionFor(x => x.Password).Size("10").ToHtmlTag()
                         </div>
                         <div class="row">
                             @Html.SubmissionFor(x => x.RememberMe).Size("5").AddClassToInputRoot("reverse").AddClassToLabelRoot("ckbLabel").InlineReverse().ToHtmlTag()
@@ -86,7 +90,7 @@
                         </div>
                         
                         <div class="footer some-top-padding">
-                            @StandardButtonFor("save", WebLocalizationKeys.SIGN_IN).AddClass("save").AddClass("mf_submitButton").ToHtmlTag()
+                            @StandardButtonFor("save", WebLocalizationKeys.SIGN_IN).AddClass("save").AddClass("kyt_submitButton").ToHtmlTag()
                             <a href="#" id="forgotPassword">@WebLocalizationKeys.FORGOT_YOUR_PASSWORD</a>
                         </div>
                     </div>
