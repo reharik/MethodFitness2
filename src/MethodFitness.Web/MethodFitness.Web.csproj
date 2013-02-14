@@ -239,16 +239,6 @@
     <Compile Include="Areas\Reporting\ReportViewer\DailyPayments.aspx.designer.cs">
       <DependentUpon>DailyPayments.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Reporting\XSD\DailyPayments.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DailyPayments.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Reporting\XSD\TrainerMetric.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TrainerMetric.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
     <Compile Include="CassetteConfiguration.cs" />
     <Compile Include="Config\CustomJsonResult.cs" />
@@ -256,6 +246,11 @@
     <Compile Include="Config\AutomapperBootstrapper.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="CustomWebViewPage.cs" />
+    <Compile Include="DailyPayments.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Filters\AddUserToViewModelFilter.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
     <Compile Include="Grids\TrainerSessionVerificationListGrid.cs" />
@@ -293,6 +288,11 @@
     <Compile Include="Menus\HeaderMenu.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
+    <Compile Include="PaymentDetail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Services\IAuthenticationContext.cs" />
     <Compile Include="Services\ISecuritySetupService.cs">
       <SubType>Code</SubType>
@@ -300,6 +300,11 @@
     <Compile Include="Services\RouteTokens\IRouteTokenBuilder.cs" />
     <Compile Include="Services\RouteTokens\IRouteTokenConfig.cs" />
     <Compile Include="Services\RouteTokens\RouteToken.cs" />
+    <Compile Include="TrainerMetric.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Compile>
     <Compile Include="WebLocalizationKeys.cs" />
     <Compile Include="MFWebRegistry.cs" />
     <Compile Include="Global.asax.cs">
@@ -428,8 +433,8 @@
     <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Reporting\RDLC\ClientPayment.rdlc" />
     <EmbeddedResource Include="Areas\Reporting\RDLC\DailyPayments.rdlc" />
+    <EmbeddedResource Include="Areas\Reporting\RDLC\PaymentDetail.rdlc" />
     <EmbeddedResource Include="Areas\Reporting\RDLC\TrainerMetric.rdlc" />
   </ItemGroup>
   <ItemGroup>
@@ -464,29 +469,40 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Reporting\Views\TrainerMetric\Display.cshtml" />
-    <Content Include="Areas\Reporting\XSD\DailyPayments.xsc">
+    <Content Include="DailyPayments.xsc">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
-    <None Include="Areas\Reporting\XSD\DailyPayments.xsd">
-      <SubType>Designer</SubType>
+    <None Include="DailyPayments.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
-    <Content Include="Areas\Reporting\XSD\DailyPayments.xss">
+    <Content Include="DailyPayments.xss">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
-    <Content Include="Areas\Reporting\XSD\TrainerMetric.xsc">
-      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    <Content Include="PaymentDetail.xsc">
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
     </Content>
-    <None Include="Areas\Reporting\XSD\TrainerMetric.xsd">
-      <SubType>Designer</SubType>
+    <None Include="PaymentDetail.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>TrainerMetric.Designer.cs</LastGenOutput>
+      <LastGenOutput>PaymentDetail.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
-    <Content Include="Areas\Reporting\XSD\TrainerMetric.xss">
-      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    <Content Include="PaymentDetail.xss">
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\fucknutz.pubxml" />
+    <Content Include="TrainerMetric.xsc">
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Content>
+    <None Include="TrainerMetric.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TrainerMetric.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="TrainerMetric.xss">
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

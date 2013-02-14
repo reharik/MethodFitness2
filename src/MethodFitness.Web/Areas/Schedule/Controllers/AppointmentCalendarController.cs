@@ -65,7 +65,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             {
                 Trainers = trainersDto,
                 _LocationList = locations,
-                CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
+//                CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
                 CalendarDefinition = new CalendarDefinition
                 {
                     Url = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.Events(null), AreaName.Schedule),
