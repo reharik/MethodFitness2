@@ -55,7 +55,7 @@
     <Compile Include="Iteration2\20010_Add_Notes_Column_To_Appointment.cs" />
     <Compile Include="Iteration2\20030_Alter_TrainerMetric_Sproc.cs" />
     <Compile Include="Iteration2\20040_Alter_TrainerMetric_Sproc.cs" />
-    <Compile Include="Iteration2\20060_Alter_DailyPayments_Sproc.cs" />
+    <Compile Include="Iteration2\20050_Alter_TrainerMetric_Sproc.cs" />
     <Compile Include="Iteration_0\CreateInitialOperations.cs" />
     <Compile Include="Iteration_0\CreateInitialDB.cs" />
     <Compile Include="Iteration_0\CreateInitialPermissions.cs" />
@@ -66,7 +66,6 @@
     <Compile Include="Iteration_1\10060_Create_TrainerSession_View.cs" />
     <Compile Include="Iteration_1\10070_Create_DailyPayments_Sproc.cs" />
     <Compile Include="Iteration_1\10080_Create_TrainerMertic_Sproc.cs" />
-    <Compile Include="Iteration2\20050_Alter_TrainerMertic_Sproc.cs" />
     <Compile Include="Iteration_1\UpdateOperations.cs" />
     <Compile Include="Iteration_1\UpdatePermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
