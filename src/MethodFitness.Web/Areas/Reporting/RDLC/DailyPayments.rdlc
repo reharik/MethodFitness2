@@ -15,7 +15,7 @@
               <Width>1.25in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.03125in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -32,7 +32,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>Created Date</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -44,6 +46,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>CornflowerBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -62,7 +65,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>Trainer</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -74,6 +79,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>CornflowerBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -92,7 +98,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>Client</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -104,6 +112,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>CornflowerBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -122,7 +131,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>Payment Total</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -134,6 +145,7 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>CornflowerBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -157,43 +169,13 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=FormatDateTime(Fields!CreatedDate.Value,DateFormat.ShortDate)</Value>
-                              <ActionInfo>
-                                <Actions>
-                                  <Action>
-                                    <Drillthrough>
-                                      <ReportName>ClientPayment</ReportName>
-                                      <Parameters>
-                                        <Parameter Name="EntityId">
-                                          <Value>EntityId</Value>
-                                        </Parameter>
-                                      </Parameters>
-                                    </Drillthrough>
-                                  </Action>
-                                </Actions>
-                              </ActionInfo>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>CreatedDate</rd:DefaultName>
-                      <ActionInfo>
-                        <Actions>
-                          <Action>
-                            <Drillthrough>
-                              <ReportName>ClientPayment</ReportName>
-                              <Parameters>
-                                <Parameter Name="EntityId">
-                                  <Value>=Fields!EntityId.Value</Value>
-                                </Parameter>
-                              </Parameters>
-                            </Drillthrough>
-                          </Action>
-                        </Actions>
-                      </ActionInfo>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -205,7 +187,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -324,7 +305,9 @@
                         <TextRuns>
                           <TextRun>
                             <Value />
-                            <Style />
+                            <Style>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -336,6 +319,7 @@
                         <Color>LightGrey</Color>
                         <Style>Solid</Style>
                       </Border>
+                      <BackgroundColor>CornflowerBlue</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -412,6 +396,9 @@
                       <Value>=Fields!Client.Value</Value>
                     </SortExpression>
                   </SortExpressions>
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixMember>
@@ -422,11 +409,8 @@
         <FixedColumnHeaders>true</FixedColumnHeaders>
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>DailyPayments</DataSetName>
-        <PageBreak>
-          <BreakLocation>Start</BreakLocation>
-        </PageBreak>
         <Height>0.5in</Height>
-        <Width>4.45833in</Width>
+        <Width>4.48958in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -434,13 +418,91 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.5in</Height>
+    <Height>0.52274in</Height>
     <Style />
   </Body>
-  <Width>6.58208in</Width>
+  <Width>11.47916in</Width>
   <Page>
+    <PageHeader>
+      <Height>0.69792in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox8">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Payment Report</Value>
+                  <Style>
+                    <FontSize>16pt</FontSize>
+                    <Color>Blue</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox7</rd:DefaultName>
+          <Height>0.25in</Height>
+          <Width>2in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox10">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=IIf(First(Fields!StartDate.Value, "DailyPayments")&gt;CDate("1/1/1972") AND First(Fields!EndDate.Value, "DailyPayments")&gt;CDate("1/1/1972"),
+FormatDateTime(First(Fields!StartDate.Value, "DailyPayments"),DateFormat.ShortDate)
++" - "+
+FormatDateTime(First(Fields!EndDate.Value, "DailyPayments"),DateFormat.ShortDate),
+"")</Value>
+                  <Style>
+                    <FontSize>12pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox8</rd:DefaultName>
+          <Top>0.23924in</Top>
+          <Height>0.25in</Height>
+          <Width>3.26041in</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
     <PageFooter>
-      <Height>1in</Height>
+      <Height>0.92708in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -460,7 +522,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
           <Top>0.50917in</Top>
-          <Left>5.58208in</Left>
+          <Left>0.03125in</Left>
           <Height>0.25in</Height>
           <Width>1in</Width>
           <Visibility>
@@ -491,6 +553,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
+          <Top>0.025in</Top>
           <Left>3.45833in</Left>
           <Height>0.25in</Height>
           <Width>1.03125in</Width>
@@ -513,13 +576,16 @@
               <TextRuns>
                 <TextRun>
                   <Value>Payment Total: </Value>
-                  <Style />
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox6</rd:DefaultName>
+          <Top>0.025in</Top>
           <Left>0.03125in</Left>
           <Height>0.25in</Height>
           <Width>3.42708in</Width>
@@ -528,6 +594,7 @@
             <Border>
               <Style>None</Style>
             </Border>
+            <BackgroundColor>LimeGreen</BackgroundColor>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
             <PaddingTop>2pt</PaddingTop>
@@ -584,12 +651,20 @@
           <DataField>EntityId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="StartDate">
+          <DataField>StartDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="EndDate">
+          <DataField>EndDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DailyPayments</rd:DataSetName>
-        <rd:SchemaPath>C:\Development\CannibalCoder\MethodFitness\src\MethodFitness.Web\Areas\Reports\XSD\DailyPayments.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\Development\CannibalCoder\MethodFitness\src\MethodFitness.Web\DailyPayments.xsd</rd:SchemaPath>
         <rd:TableName>DailyPayments</rd:TableName>
-        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
         <rd:TableAdapterName>DailyPaymentsTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>

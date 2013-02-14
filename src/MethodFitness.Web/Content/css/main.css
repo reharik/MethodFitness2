@@ -414,29 +414,30 @@ body#signin {
 
 #signin .content-outer {
     height: 420px;
-    margin: 100px auto auto;
+    margin: -210px auto auto;
     position: relative;
+    top: 50%;
     width: 385px;
 }
 
 #signin .content-inner {
+    /* height: 320px; */
     min-height: 320px;
 }
 
 #signin .content-header {
-    background: url("../images/banner-short.jpg") no-repeat scroll 0 0
-        #8eb9ce;
+    background: url("../images/bg-header-signin.png") no-repeat scroll 0 0
+    #8eb9ce;
     height: 73px;
 }
 
-#signin .col {
-    width: 344px;
-    margin-left:30px;
+#signin input {
+    width: 280px;
+    height: 25px;
 }
 
-#signin .reverse {
-    float: left;
-    margin-right: 10px;
+#signin .form{
+    padding: 10px 0 3px 30px !important;
 }
 
 #signin .big {
@@ -447,8 +448,8 @@ body#signin {
     margin: 20px 0px;
 }
 
-#signin .footer {
-    padding-top: 30px;
+#signin div.fieldRow label.checkbox {
+    /*width: 80%;*/
 }
 
 #signin .footer a {
@@ -459,24 +460,18 @@ body#signin {
 }
 
 .signin div.editor_input input {
-	color: #666;
-	font-family: helvetica,sans-serif;
-	font-size: 13px;
-    height: 25px;
-}
-
-.signin .ckbLabel{
-    padding-top: 6px ;
+    color: #666;
+    font-family: helvetica,sans-serif;
+    font-size: 13px;
 }
 
 .signin button.save {
-	padding-bottom: 2px;
+    padding-bottom: 2px;
 }
 
 * html .signin button.save {
-	padding-bottom: 0px;
+    padding-bottom: 0px;
 }
-
 
 /*******   JQUERY UI DIALOG EXTENSIONS  **********/
 div.ui-dialog {
