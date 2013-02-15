@@ -467,7 +467,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.78473in</Height>
+    <Height>0.53473in</Height>
     <Style />
   </Body>
   <Width>11.27147in</Width>
@@ -1120,8 +1120,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.88542in</Top>
-          <Left>0.11187in</Left>
+          <Top>0.375in</Top>
+          <Left>1.34451in</Left>
           <Height>0.25in</Height>
           <Width>1.23264in</Width>
           <ZIndex>2</ZIndex>
@@ -1175,8 +1175,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.39583in</Top>
-          <Left>0.11187in</Left>
+          <Top>0.375in</Top>
+          <Left>2.57715in</Left>
           <Height>0.25in</Height>
           <Width>1.23264in</Width>
           <ZIndex>3</ZIndex>
@@ -1228,8 +1228,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.90625in</Top>
-          <Left>0.11187in</Left>
+          <Top>0.375in</Top>
+          <Left>3.80979in</Left>
           <Height>0.25in</Height>
           <Width>1.23264in</Width>
           <ZIndex>4</ZIndex>
@@ -1281,8 +1281,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.90625in</Top>
-          <Left>1.41396in</Left>
+          <Top>0.375in</Top>
+          <Left>5.04243in</Left>
           <Height>0.25in</Height>
           <Width>1.32292in</Width>
           <ZIndex>5</ZIndex>
@@ -1324,7 +1324,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Ave Hours Per Week</Value>
+                  <Value>Avg Hours/Week/Client</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1334,8 +1334,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.90625in</Top>
-          <Left>4.0651in</Left>
+          <Top>1.43332in</Top>
+          <Left>5.04243in</Left>
           <Height>0.25in</Height>
           <Width>1.67709in</Width>
           <ZIndex>6</ZIndex>
@@ -1439,8 +1439,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.14583in</Top>
-          <Left>0.11187in</Left>
+          <Top>0.63541in</Top>
+          <Left>1.34451in</Left>
           <Height>0.25in</Height>
           <Width>1.23264in</Width>
           <ZIndex>8</ZIndex>
@@ -1491,8 +1491,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.65625in</Top>
-          <Left>0.11187in</Left>
+          <Top>0.63542in</Top>
+          <Left>2.57715in</Left>
           <Height>0.25in</Height>
           <Width>1.23264in</Width>
           <ZIndex>9</ZIndex>
@@ -1547,8 +1547,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>2.16666in</Top>
-          <Left>0.11187in</Left>
+          <Top>0.63541in</Top>
+          <Left>3.80979in</Left>
           <Height>0.25in</Height>
           <Width>1.23264in</Width>
           <ZIndex>10</ZIndex>
@@ -1599,8 +1599,8 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>2.16666in</Top>
-          <Left>1.41396in</Left>
+          <Top>0.63332in</Top>
+          <Left>5.04243in</Left>
           <Height>0.25in</Height>
           <Width>1.32292in</Width>
           <ZIndex>11</ZIndex>
@@ -1657,8 +1657,8 @@ Round((Sum(Fields!Hour.Value, "TrainerMetric")
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>2.16666in</Top>
-          <Left>4.0651in</Left>
+          <Top>1.69373in</Top>
+          <Left>5.04243in</Left>
           <Height>0.25in</Height>
           <Width>1.67709in</Width>
           <ZIndex>12</ZIndex>
@@ -1709,8 +1709,8 @@ Round((Sum(Fields!Hour.Value, "TrainerMetric")
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>2.16666in</Top>
-          <Left>2.73966in</Left>
+          <Top>1.17082in</Top>
+          <Left>5.04243in</Left>
           <Height>0.25in</Height>
           <Width>1.32292in</Width>
           <ZIndex>13</ZIndex>
@@ -1761,8 +1761,8 @@ Round((Sum(Fields!Hour.Value, "TrainerMetric")
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.90625in</Top>
-          <Left>2.73966in</Left>
+          <Top>0.91041in</Top>
+          <Left>5.04243in</Left>
           <Height>0.25in</Height>
           <Width>1.32292in</Width>
           <ZIndex>14</ZIndex>

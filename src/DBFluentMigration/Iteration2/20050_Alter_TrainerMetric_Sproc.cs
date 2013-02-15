@@ -15,11 +15,11 @@ using FluentMigrator;
 namespace Migrations
 {
     [Migration(20050)]
-    public class Alter_TrainerMetric_Sproc_3 : Migration
+    public class Alter_TrainerMetric_Sproc_20050 : Migration
     {
         public override void Up()
         {
-            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\AlterTrainerMetricSproc3.sql");
+            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\Alter_TrainerMetric_Sproc_20050.sql");
             Execute.Sql(sql);
         }
 
