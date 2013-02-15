@@ -32,6 +32,8 @@
         <SelectParameters>
             <asp:QueryStringParameter Name="StartDate" DefaultValue="dbnull" QueryStringField="StartDate" Type="DateTime" />
             <asp:QueryStringParameter Name="EndDate" DefaultValue="dbnull" QueryStringField="EndDate" Type="DateTime" />
+            <asp:QueryStringParameter Name="TrainerId" QueryStringField="TrainerId" Type="Int32" />
+            <asp:QueryStringParameter Name="ClientId" QueryStringField="ClientId" Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
     
