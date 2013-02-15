@@ -23,7 +23,7 @@ namespace Migrations
     {
         public override void Up()
         {
-            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\AlterTrainerMetricSproc.sql");
+            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\AlterTrainerMetricSproc2.sql");
             Execute.Sql(sql);
         }
 
