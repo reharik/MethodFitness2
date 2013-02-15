@@ -1641,11 +1641,13 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Round((Sum(Fields!Hour.Value, "TrainerMetric")
+                  <Value>=IIf(CountRows("TrainerMetric")&gt;0 AND First(Fields!NumberOfWeeks.Value, "TrainerMetric")&gt;0,
+Round((Sum(Fields!Hour.Value, "TrainerMetric")
 	+(Sum(Fields!HalfHour.Value, "TrainerMetric")/2)
 	+Sum(Fields!Pair.Value, "TrainerMetric"))
 / First(Fields!NumberOfWeeks.Value, "TrainerMetric")
-/CountRows("TrainerMetric"),2)</Value>
+/ CountRows("TrainerMetric"),2)
+,"")</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
