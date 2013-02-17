@@ -20,7 +20,7 @@ MF.Views.TrainerMetricView = MF.Views.View.extend({
     },
     createUrl:function(){
         var startDate = this.model.StartDate()+" 00:01";
-        var endDate = this.model.EndDate()+"23:59";
+        var endDate = this.model.EndDate()+" 23:59";
         var trainerId = this.model.TrainerEntityId();
         return this.model.ReportUrl()+ "?TrainerId="+trainerId+"&EndDate="+endDate+"&StartDate="+startDate;
     }
