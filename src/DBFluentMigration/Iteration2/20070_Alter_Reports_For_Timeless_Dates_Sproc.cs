@@ -9,22 +9,20 @@
 //     Include Views:          `False`
 
 //     Factory Name:          `SqlClientFactory`
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Linq.Expressions;
+
 using FluentMigrator;
 
 namespace Migrations
 {
-    [Migration(20060)]
-    public class Alter_DailyPayments_Sproc_20060 : Migration
+    [Migration(20070)]
+    public class Alter_Reports_For_Timeless_Dates_Sproc : Migration
     {
         public override void Up()
         {
-            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\Alter_DailyPayments_Sproc_20060.sql");
-            Execute.Sql(sql);
+            string sql1 = System.IO.File.ReadAllText(@"src\dbfluentmigration\Alter_DailyPayment_Sproc_20070.sql");
+            string sql2 = System.IO.File.ReadAllText(@"src\dbfluentmigration\Alter_TrainerMetric_Sproc_20070.sql");
+            Execute.Sql(sql1);
+            Execute.Sql(sql2);
         }
 
         public override void Down()
