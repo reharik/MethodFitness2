@@ -24,7 +24,7 @@
               <Width>0.98959in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.44792in</Width>
+              <Width>0.55209in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.38667in</Width>
@@ -459,7 +459,7 @@
         <DataSetName>TrainerMetric</DataSetName>
         <Left>0.12708in</Left>
         <Height>0.25in</Height>
-        <Width>6.84136in</Width>
+        <Width>6.94553in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -467,10 +467,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.53473in</Height>
+    <Height>0.40973in</Height>
     <Style />
   </Body>
-  <Width>11.27147in</Width>
+  <Width>7.63618in</Width>
   <Page>
     <PageHeader>
       <Height>1.25538in</Height>
@@ -867,7 +867,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
           <Top>1.00538in</Top>
           <Left>5.13385in</Left>
           <Height>0.25in</Height>
-          <Width>0.44792in</Width>
+          <Width>0.55209in</Width>
           <ZIndex>8</ZIndex>
           <Style>
             <Border>
@@ -971,7 +971,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
           <Top>1.00538in</Top>
-          <Left>5.58177in</Left>
+          <Left>5.68177in</Left>
           <Height>0.25in</Height>
           <Width>1.38667in</Width>
           <ZIndex>10</ZIndex>
@@ -1018,38 +1018,6 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Textbox Name="Textbox33">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Globals!TotalPages</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox33</rd:DefaultName>
-          <Top>0.75in</Top>
-          <Left>3.47792in</Left>
-          <Height>0.25in</Height>
-          <Width>1in</Width>
-          <Visibility>
-            <Hidden>true</Hidden>
-          </Visibility>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
         <Textbox Name="Textbox34">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
@@ -1057,7 +1025,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Total Hours</Value>
+                  <Value>Hours</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1067,64 +1035,10 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.375in</Top>
-          <Left>0.11187in</Left>
+          <Top>0.23541in</Top>
+          <Left>2in</Left>
           <Height>0.25in</Height>
-          <Width>1.23264in</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-            <TopBorder>
-              <Color>Black</Color>
-              <Style>Solid</Style>
-              <Width>1pt</Width>
-            </TopBorder>
-            <BottomBorder>
-              <Color>Black</Color>
-              <Style>Solid</Style>
-              <Width>1pt</Width>
-            </BottomBorder>
-            <LeftBorder>
-              <Color>Black</Color>
-              <Style>Solid</Style>
-              <Width>1pt</Width>
-            </LeftBorder>
-            <RightBorder>
-              <Color>Black</Color>
-              <Style>Solid</Style>
-              <Width>1pt</Width>
-            </RightBorder>
-            <BackgroundColor>LimeGreen</BackgroundColor>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox35">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Total Half Hours</Value>
-                  <Style>
-                    <FontWeight>Bold</FontWeight>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.375in</Top>
-          <Left>1.34451in</Left>
-          <Height>0.25in</Height>
-          <Width>1.23264in</Width>
-          <ZIndex>2</ZIndex>
+          <Width>0.58541in</Width>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1163,7 +1077,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Total Pairs</Value>
+                  <Value>Pairs</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1175,11 +1089,11 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.375in</Top>
-          <Left>2.57715in</Left>
+          <Top>0.23541in</Top>
+          <Left>3.46718in</Left>
           <Height>0.25in</Height>
-          <Width>1.23264in</Width>
-          <ZIndex>3</ZIndex>
+          <Width>0.67708in</Width>
+          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1218,7 +1132,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Trainer's Hours </Value>
+                  <Value>Trainer Hours </Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1228,11 +1142,11 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.375in</Top>
-          <Left>3.80979in</Left>
+          <Top>0.23542in</Top>
+          <Left>4.14426in</Left>
           <Height>0.25in</Height>
-          <Width>1.23264in</Width>
-          <ZIndex>4</ZIndex>
+          <Width>0.9896in</Width>
+          <ZIndex>2</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1271,7 +1185,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Number Of Weeks</Value>
+                  <Value>Weeks</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1281,11 +1195,11 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.375in</Top>
-          <Left>5.04243in</Left>
+          <Top>0.24099in</Top>
+          <Left>5.13385in</Left>
           <Height>0.25in</Height>
-          <Width>1.32292in</Width>
-          <ZIndex>5</ZIndex>
+          <Width>0.55209in</Width>
+          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1324,7 +1238,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Avg Hours/Week/Client</Value>
+                  <Value>Avg  H/W/C</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1334,11 +1248,11 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.43332in</Top>
-          <Left>5.04243in</Left>
+          <Top>0.23541in</Top>
+          <Left>5.68594in</Left>
           <Height>0.25in</Height>
-          <Width>1.67709in</Width>
-          <ZIndex>6</ZIndex>
+          <Width>1.3825in</Width>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1387,63 +1301,11 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.63542in</Top>
-          <Left>0.11187in</Left>
+          <Top>0.49583in</Top>
+          <Left>2in</Left>
           <Height>0.25in</Height>
-          <Width>1.23264in</Width>
-          <ZIndex>7</ZIndex>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-            <TopBorder>
-              <Color>Black</Color>
-              <Style>Solid</Style>
-              <Width>1pt</Width>
-            </TopBorder>
-            <BottomBorder>
-              <Color>Black</Color>
-              <Style>Solid</Style>
-              <Width>1pt</Width>
-            </BottomBorder>
-            <LeftBorder>
-              <Color>Black</Color>
-              <Style>Solid</Style>
-              <Width>1pt</Width>
-            </LeftBorder>
-            <RightBorder>
-              <Color>Black</Color>
-              <Style>Solid</Style>
-              <Width>1pt</Width>
-            </RightBorder>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox41">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Sum(Fields!HalfHour.Value, "TrainerMetric")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.63541in</Top>
-          <Left>1.34451in</Left>
-          <Height>0.25in</Height>
-          <Width>1.23264in</Width>
-          <ZIndex>8</ZIndex>
+          <Width>0.58541in</Width>
+          <ZIndex>5</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1491,11 +1353,11 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.63542in</Top>
-          <Left>2.57715in</Left>
+          <Top>0.49583in</Top>
+          <Left>3.46718in</Left>
           <Height>0.25in</Height>
-          <Width>1.23264in</Width>
-          <ZIndex>9</ZIndex>
+          <Width>0.67708in</Width>
+          <ZIndex>6</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1547,11 +1409,11 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.63541in</Top>
-          <Left>3.80979in</Left>
+          <Top>0.49583in</Top>
+          <Left>4.14426in</Left>
           <Height>0.25in</Height>
-          <Width>1.23264in</Width>
-          <ZIndex>10</ZIndex>
+          <Width>0.9896in</Width>
+          <ZIndex>7</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1599,11 +1461,11 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.63332in</Top>
-          <Left>5.04243in</Left>
+          <Top>0.49931in</Top>
+          <Left>5.13385in</Left>
           <Height>0.25in</Height>
-          <Width>1.32292in</Width>
-          <ZIndex>11</ZIndex>
+          <Width>0.55209in</Width>
+          <ZIndex>8</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1657,11 +1519,11 @@ Round((Sum(Fields!Hour.Value, "TrainerMetric")
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.69373in</Top>
-          <Left>5.04243in</Left>
+          <Top>0.49582in</Top>
+          <Left>5.68594in</Left>
           <Height>0.25in</Height>
-          <Width>1.67709in</Width>
-          <ZIndex>12</ZIndex>
+          <Width>1.3825in</Width>
+          <ZIndex>9</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1709,11 +1571,11 @@ Round((Sum(Fields!Hour.Value, "TrainerMetric")
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>1.17082in</Top>
-          <Left>5.04243in</Left>
+          <Top>0.49582in</Top>
+          <Left>0.58541in</Left>
           <Height>0.25in</Height>
-          <Width>1.32292in</Width>
-          <ZIndex>13</ZIndex>
+          <Width>1.41459in</Width>
+          <ZIndex>10</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1761,11 +1623,11 @@ Round((Sum(Fields!Hour.Value, "TrainerMetric")
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.91041in</Top>
-          <Left>5.04243in</Left>
+          <Top>0.23541in</Top>
+          <Left>0.58541in</Left>
           <Height>0.25in</Height>
-          <Width>1.32292in</Width>
-          <ZIndex>14</ZIndex>
+          <Width>1.41459in</Width>
+          <ZIndex>11</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1798,17 +1660,155 @@ Round((Sum(Fields!Hour.Value, "TrainerMetric")
           </Style>
         </Textbox>
         <Line Name="Line2">
-          <Top>0.14145in</Top>
+          <Top>0.10395in</Top>
           <Left>0.28in</Left>
           <Height>0in</Height>
           <Width>6.47917in</Width>
-          <ZIndex>15</ZIndex>
+          <ZIndex>12</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
             </Border>
           </Style>
         </Line>
+        <Textbox Name="Textbox33">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!TotalPages</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox33</rd:DefaultName>
+          <Top>0.81526in</Top>
+          <Left>0.8334in</Left>
+          <Height>0.25in</Height>
+          <Width>1in</Width>
+          <ZIndex>13</ZIndex>
+          <Visibility>
+            <Hidden>true</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox35">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Half Hours</Value>
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox34</rd:DefaultName>
+          <Top>0.23541in</Top>
+          <Left>2.58541in</Left>
+          <Height>0.25in</Height>
+          <Width>0.88177in</Width>
+          <ZIndex>14</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+            </Border>
+            <TopBorder>
+              <Color>Black</Color>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Color>Black</Color>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Color>Black</Color>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Color>Black</Color>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </RightBorder>
+            <BackgroundColor>LimeGreen</BackgroundColor>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox41">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Sum(Fields!HalfHour.Value, "TrainerMetric")</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox34</rd:DefaultName>
+          <Top>0.49582in</Top>
+          <Left>2.58541in</Left>
+          <Height>0.25in</Height>
+          <Width>0.88177in</Width>
+          <ZIndex>15</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+            </Border>
+            <TopBorder>
+              <Color>Black</Color>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Color>Black</Color>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Color>Black</Color>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Color>Black</Color>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </RightBorder>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>
