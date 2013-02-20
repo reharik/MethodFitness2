@@ -4,12 +4,13 @@ using CC.Security;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
-using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 
 namespace MethodFitness.Web.Menus
 {
+    using MethodFitness.Web.Areas.Reporting.Controllers;
+
     public class MainMenu : IMenuConfig
     {
         private readonly IMenuBuilder _builder;

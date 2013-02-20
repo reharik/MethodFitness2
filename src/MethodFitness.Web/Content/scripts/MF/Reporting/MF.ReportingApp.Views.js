@@ -5,7 +5,10 @@ MF.Views.DailyPaymentsView = MF.Views.View.extend({
         MF.mixin(this, "reportMixin");
     },
     createUrl:function(){
-        return this.model.ReportUrl()+ "?StartDate="+this.model.StartDate()+"&EndDate="+this.model.EndDate();
+        var trainerId = this.model.Trainer()>0?this.model.Trainer():0;
+        var clientId = this.model.Client()>0?this.model.Client():0;
+        return this.model.ReportUrl()+ "?StartDate="+this.model.StartDate()+"&EndDate="+this.model.EndDate() +
+            "&TrainerId="+trainerId+"&ClientId="+clientId;
     }
 });
 

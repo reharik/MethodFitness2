@@ -54,6 +54,9 @@
     <Compile Include="Iteration2\20020_Alter_DailyPayments_Sproc.cs" />
     <Compile Include="Iteration2\20010_Add_Notes_Column_To_Appointment.cs" />
     <Compile Include="Iteration2\20030_Alter_TrainerMetric_Sproc.cs" />
+    <Compile Include="Iteration2\20050_Alter_TrainerMetric_Sproc.cs" />
+    <Compile Include="Iteration2\20060_Alter_DailyPayment_Sproc.cs" />
+    <Compile Include="Iteration2\20070_Alter_Reports_For_Timeless_Dates_Sproc.cs" />
     <Compile Include="Iteration_0\CreateInitialOperations.cs" />
     <Compile Include="Iteration_0\CreateInitialDB.cs" />
     <Compile Include="Iteration_0\CreateInitialPermissions.cs" />
