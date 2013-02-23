@@ -15,7 +15,7 @@
               <Width>1.38542in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.26042in</Width>
+              <Width>1.3125in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.97917in</Width>
@@ -704,7 +704,7 @@
         </TablixRowHierarchy>
         <DataSetName>Activity</DataSetName>
         <Height>1in</Height>
-        <Width>5.79167in</Width>
+        <Width>5.84375in</Width>
         <Style>
           <Border>
             <Style>None</Style>
