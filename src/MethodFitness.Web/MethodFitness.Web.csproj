@@ -212,6 +212,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Activity.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
     <Compile Include="Areas\Billing\Controllers\VerifiedTrainerSessionsController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationListController.cs" />
@@ -222,9 +227,17 @@
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentListController.cs" />
+    <Compile Include="Areas\Reporting\Controllers\ActivityController.cs" />
     <Compile Include="Areas\Reporting\Controllers\TrainerMetricController.cs" />
     <Compile Include="Areas\Reporting\Controllers\DailyPaymentsController.cs" />
     <Compile Include="Areas\Reporting\ReportingAreaRegistration.cs" />
+    <Compile Include="Areas\Reporting\ReportViewer\Activity.aspx.cs">
+      <DependentUpon>Activity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Areas\Reporting\ReportViewer\Activity.aspx.designer.cs">
+      <DependentUpon>Activity.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx.cs">
       <DependentUpon>TrainerMetric.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -263,6 +276,7 @@
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Config\Bootstrapper.cs" />
     <Compile Include="Config\CustomAuthorizationAttribute.cs" />
+    <Content Include="Areas\Reporting\ReportViewer\Activity.aspx" />
     <Content Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx" />
     <Content Include="Areas\Reporting\ReportViewer\DailyPayments.aspx" />
     <Compile Include="Config\ModelBinders.cs" />
@@ -433,8 +447,8 @@
     <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Areas\Reporting\RDLC\Activity.rdlc" />
     <EmbeddedResource Include="Areas\Reporting\RDLC\DailyPayments.rdlc" />
-    <EmbeddedResource Include="Areas\Reporting\RDLC\PaymentDetail.rdlc" />
     <EmbeddedResource Include="Areas\Reporting\RDLC\TrainerMetric.rdlc" />
   </ItemGroup>
   <ItemGroup>
@@ -471,6 +485,18 @@
     <Content Include="Areas\Reporting\Views\TrainerMetric\Display.cshtml" />
     <Content Include="DailyPayments.xsc">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Content>
+    <Content Include="Areas\Reporting\Views\Activity\Display.cshtml" />
+    <Content Include="Activity.xsc">
+      <DependentUpon>Activity.xsd</DependentUpon>
+    </Content>
+    <None Include="Activity.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Activity.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Activity.xss">
+      <DependentUpon>Activity.xsd</DependentUpon>
     </Content>
     <None Include="DailyPayments.xsd">
       <Generator>MSDataSetGenerator</Generator>
