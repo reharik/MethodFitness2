@@ -46,7 +46,6 @@ group by c.firstname, c.lastname, t.firstname, t.lastname, a.AppointmentType, l.
 having (SUM(case when s.appointmentType = 'Hour' then 1 else 0 end) 
 		+ CAST(SUM(case when s.appointmentType = 'Half Hour' then 1 else 0 end) as decimal(10,4))/2
 		+ SUM(case when s.appointmentType = 'Pair' then 1 else 0 end)) > 0
-
-order by c.LastName
+order by a.[date], t.lastname, c.LastName 
 END
 GO
