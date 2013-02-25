@@ -42,7 +42,7 @@
                   @WebLocalizationKeys.TRAINER_PAYMENT
               </td>
           </tr>
-          @foreach (var item in Model.TrainerPayment.TrainerPaymentSessionItems)
+          @foreach (var item in Model.TrainerPayment.TrainerPaymentSessionItems.OrderBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date))
           {
               <tr>
                   <td>

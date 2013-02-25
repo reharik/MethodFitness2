@@ -50,6 +50,7 @@ namespace MethodFitness.Web.Menus
                                 .HasChildren()
                                     .CreateTagNode<DailyPaymentsController>(WebLocalizationKeys.DAILY_PAYMENTS)
                                     .CreateTagNode<TrainerMetricController>(WebLocalizationKeys.TRAINER_METRIC)
+                                    .CreateTagNode<ActivityController>(WebLocalizationKeys.ACTIVITY)
                                 .EndChildren()
                         .EndChildren();
             var list = builder.MenuTree(user);

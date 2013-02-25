@@ -51,6 +51,7 @@ namespace MethodFitness.Web.Services.ViewOptions
 
             _builder.UrlForForm<DailyPaymentsController>(x => x.Display(null), AreaName.Reporting).ViewName("DailyPaymentsView").End();
             _builder.UrlForForm<TrainerMetricController>(x => x.Display(null), AreaName.Reporting).ViewName("TrainerMetricView").End();
+            _builder.UrlForForm<ActivityController>(x => x.Display(null), AreaName.Reporting).ViewName("ActivityView").End();
 
             return _builder.Items;
         }
