@@ -17,7 +17,7 @@ namespace MethodFitness.Web.Grids
 
         protected override Grid<TrainerSessionDto> BuildGrid()
         {
-            GridBuilder.DisplayFor(x => x.FullName);
+            GridBuilder.DisplayFor(x => x.FullName).SortOnProperty(x => x.LastName);
             GridBuilder.DisplayFor(x => x.AppointmentDate);
             GridBuilder.DisplayFor(x => x.Type);
             GridBuilder.DisplayFor(x => x.PricePerSession);
