@@ -19,7 +19,7 @@ namespace Migrations
     {
         public override void Up()
         {
-            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\Alter_DailyPayment_Sproc_20060.sql");
+            string sql = System.IO.File.ReadAllText(@"src\dbfluentmigration\Alter_DailyPayments_Sproc_20060.sql");
             Execute.Sql(sql);
         }
 
