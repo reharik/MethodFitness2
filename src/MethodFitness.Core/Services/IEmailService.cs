@@ -60,7 +60,7 @@ namespace MethodFitness.Core.Services
 
         private MailMessage ProcessEmailTemplate(EmailDTO input)
         {
-                var mergedEmailFactory = _container.GetInstance<IMergedEmailFactory>();
+                var mergedEmailFactory = new MergedEmailFactory(new TemplateParser());
                 MailMessage message = mergedEmailFactory
                     .WithTokenValues(input.TokenValues)
                     .WithSubject(input.Subject)
