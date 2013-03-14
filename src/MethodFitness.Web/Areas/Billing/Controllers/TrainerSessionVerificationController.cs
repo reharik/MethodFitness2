@@ -23,7 +23,6 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 {
     using System.Net.Mail;
 
-    using Castle.Core.Smtp;
 
     using xVal.ServerSide;
 
