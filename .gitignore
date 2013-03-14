@@ -16,3 +16,5 @@ CustomerDocuments
 [Ll]og/
 TestResult.xml
 connectionStrings.config
+packages/*
+!packages/repositories.config
