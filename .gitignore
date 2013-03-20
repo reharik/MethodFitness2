@@ -18,3 +18,4 @@ TestResult.xml
 connectionStrings.config
 src/packages/*
 !src/packages/repositories.config
+appSettings.config
