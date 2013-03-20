@@ -74,11 +74,11 @@
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DBFluentMigration\MigrateApp\FluentMigrator.dll</HintPath>
+      <HintPath>..\lib\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator.Runner, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DBFluentMigration\MigrateApp\FluentMigrator.Runner.dll</HintPath>
+      <HintPath>..\lib\FluentMigrator.Runner.dll</HintPath>
     </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
@@ -196,7 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBFluentMigration\DBFluentMigration.csproj">
-      <Project>{BD319DCA-9D65-4D7B-AAAD-B6A0C2838593}</Project>
+      <Project>{bd319dca-9d65-4d7b-aaad-b6a0c2838593}</Project>
       <Name>DBFluentMigration</Name>
     </ProjectReference>
     <ProjectReference Include="..\MethodFitness.Core\MethodFitness.Core.csproj">
