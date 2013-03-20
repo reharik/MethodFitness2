@@ -25,8 +25,10 @@ namespace Generator
                                  .GetInstance<ISessionFactoryConfiguration>();
                 ObjectFactory.Container.Inject(sessionFactoryConfiguration);
 
-                var commands = GetDesiredCommands();
-                commands.ForEachItem(x => x.Execute(args));
+                var command = ObjectFactory.GetNamedInstance<IGeneratorCommand>("migrator");
+                command.Execute(args);
+//                var commands = GetDesiredCommands();
+//                commands.ForEachItem(x => x.Execute(args));
 
             }
             catch (Exception ex)
@@ -44,15 +46,18 @@ namespace Generator
 
         private static string GetConnectionString()
         {
-            var xdoc = XDocument.Load(@"appSettings.config");
+            var xdoc = XDocument.Load(@"..\..\..\..\appSettings.config");
+//            var xdoc = XDocument.Load(@"appSettings.config");
             var connStrings = xdoc.Descendants("add").Where(x => x.Attribute("key").Value.StartsWith("constring_"));
-            Console.WriteLine("Please select the database you would like to work with:");
-            connStrings.ForEachItem(x => { Console.WriteLine(x.Attribute("key").Value.Replace("constring_", "")); });
             string connectionString = string.Empty;
-            while (connectionString.IsEmpty())
-            {
-                var database = Console.ReadLine();
-                var connStringNode = connStrings.FirstOrDefault(x => x.Attribute("key").Value == "constring_"+database);
+
+//            Console.WriteLine("Please select the database you would like to work with:");
+//            connStrings.ForEachItem(x => { Console.WriteLine(x.Attribute("key").Value.Replace("constring_", "")); });
+//            while (connectionString.IsEmpty())
+//            {
+//                var database = Console.ReadLine();
+//                var connStringNode = connStrings.FirstOrDefault(x => x.Attribute("key").Value == "constring_" + database);
+                var connStringNode = connStrings.FirstOrDefault(x => x.Attribute("key").Value == "constring_DEV");
                 if (connStringNode != null)
                 {
                     connectionString = connStringNode.Attribute("value").Value;
@@ -61,7 +66,7 @@ namespace Generator
                 {
                     Console.WriteLine("Please enter a valid database and remember it's case senstitive");
                 }
-            }
+//            }
             return connectionString;
         }
 
