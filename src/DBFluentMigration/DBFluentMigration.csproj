@@ -90,51 +90,7 @@
     <None Include="DBFluentMigration.dll.config" />
     <Compile Include="Iteration_1\10030_AddTrainerSessionVerification.cs" />
     <Compile Include="Iteration_1\10090_Add_Notes_Column_To_Payment.cs" />
-    <None Include="MigrateApp\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
-    <None Include="MigrateApp\Migrate.exe.config" />
-    <None Include="MigrateApp\policy.2.0.Npgsql.config" />
-    <None Include="MigrateApp\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MigrateApp\amd64\Microsoft.VC90.CRT\msvcr90.dll" />
-    <Content Include="MigrateApp\amd64\Microsoft.VC90.CRT\README_ENU.txt" />
-    <Content Include="MigrateApp\amd64\sqlceca40.dll" />
-    <Content Include="MigrateApp\amd64\sqlcecompact40.dll" />
-    <Content Include="MigrateApp\amd64\sqlceer40EN.dll" />
-    <Content Include="MigrateApp\amd64\sqlceme40.dll" />
-    <Content Include="MigrateApp\amd64\sqlceqp40.dll" />
-    <Content Include="MigrateApp\amd64\sqlcese40.dll" />
-    <Content Include="MigrateApp\FirebirdSql.Data.FirebirdClient.dll" />
-    <Content Include="MigrateApp\FluentMigrator.dll" />
-    <Content Include="MigrateApp\FluentMigrator.MSBuild.dll" />
-    <Content Include="MigrateApp\FluentMigrator.MSBuild.pdb" />
-    <Content Include="MigrateApp\FluentMigrator.NAnt.dll" />
-    <Content Include="MigrateApp\FluentMigrator.NAnt.pdb" />
-    <Content Include="MigrateApp\FluentMigrator.pdb" />
-    <Content Include="MigrateApp\FluentMigrator.Runner.dll" />
-    <Content Include="MigrateApp\FluentMigrator.Runner.pdb" />
-    <Content Include="MigrateApp\FluentMigrator.xml" />
-    <Content Include="MigrateApp\Migrate.exe" />
-    <Content Include="MigrateApp\Migrate.pdb" />
-    <Content Include="MigrateApp\Mono.Security.dll" />
-    <Content Include="MigrateApp\MySql.Data.dll" />
-    <Content Include="MigrateApp\Npgsql.dll" />
-    <Content Include="MigrateApp\Npgsql.pdb" />
-    <Content Include="MigrateApp\Npgsql.XML" />
-    <Content Include="MigrateApp\Oracle.DataAccess.dll" />
-    <Content Include="MigrateApp\policy.2.0.Npgsql.dll" />
-    <Content Include="MigrateApp\System.Data.SQLite.dll" />
-    <Content Include="MigrateApp\System.Data.SqlServerCe.dll" />
-    <Content Include="MigrateApp\System.Data.SqlServerCe.Entity.dll" />
-    <Content Include="MigrateApp\x86\Microsoft.VC90.CRT\msvcr90.dll" />
-    <Content Include="MigrateApp\x86\Microsoft.VC90.CRT\README_ENU.txt" />
-    <Content Include="MigrateApp\x86\sqlceca40.dll" />
-    <Content Include="MigrateApp\x86\sqlcecompact40.dll" />
-    <Content Include="MigrateApp\x86\sqlceer40EN.dll" />
-    <Content Include="MigrateApp\x86\sqlceme40.dll" />
-    <Content Include="MigrateApp\x86\sqlceqp40.dll" />
-    <Content Include="MigrateApp\x86\sqlcese40.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MethodFitness.Core\MethodFitness.Core.csproj">
