@@ -4,12 +4,13 @@ using CC.Security;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
-using MethodFitness.Web.Areas.Reports.Controllers;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 
 namespace MethodFitness.Web.Menus
 {
+    using MethodFitness.Web.Areas.Reporting.Controllers;
+
     public class MainMenu : IMenuConfig
     {
         private readonly IMenuBuilder _builder;
@@ -49,6 +50,7 @@ namespace MethodFitness.Web.Menus
                                 .HasChildren()
                                     .CreateTagNode<DailyPaymentsController>(WebLocalizationKeys.DAILY_PAYMENTS)
                                     .CreateTagNode<TrainerMetricController>(WebLocalizationKeys.TRAINER_METRIC)
+                                    .CreateTagNode<ActivityController>(WebLocalizationKeys.ACTIVITY)
                                 .EndChildren()
                         .EndChildren();
             var list = builder.MenuTree(user);

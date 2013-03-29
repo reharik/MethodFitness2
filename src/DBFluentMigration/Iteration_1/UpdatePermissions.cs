@@ -16,6 +16,13 @@ namespace DBFluentMigration.Iteration_1
         public void Update()
         {
             GrantTrainerPermissions();
+            GrantAdminPermissions();
+        }
+
+        private void GrantAdminPermissions()
+        {
+            _permissions.CreateControllerPermission(UserType.Administrator, "ActivityController");
+            _permissions.CreateMenuPermission(UserType.Administrator, "Reports/Activity");
         }
 
         private void GrantTrainerPermissions()

@@ -26,6 +26,9 @@ cc.grid.columnService = (function() {
                 if (item.editRules) {
                     item.editable = true;
                 }
+                if(item.sortable && item.sortColumn){
+                    item.index = item.sortColumn;
+                }
                 return item;
             });
             return map;

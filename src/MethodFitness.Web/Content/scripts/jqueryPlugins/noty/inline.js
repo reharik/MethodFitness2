@@ -1,3 +1,4 @@
+
 ;(function($) {
 
 	$.noty.layouts.inline = {

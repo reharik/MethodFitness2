@@ -22,6 +22,7 @@ namespace DBFluentMigration.Iteration_1
             _operations.CreateOperationForControllerType("TrainerSessionViewController");
             _operations.CreateOperationForControllerType("TrainerSessionVerificationListController");
             _operations.CreateOperationForControllerType("TrainerSessionVerificationController");
+            _operations.CreateOperationForControllerType("ActivityController");
         }
 
         public void CreateMenuItemOptions()
@@ -30,6 +31,7 @@ namespace DBFluentMigration.Iteration_1
             _operations.CreateOperationForMenuItem("SessionVerification");
             _operations.CreateOperationForMenuItem("SessionVerification/Historical");
             _operations.CreateOperationForMenuItem("SessionVerification/Current");
+            _operations.CreateOperationForMenuItem("Reports/Activity");
         }
     }
 }

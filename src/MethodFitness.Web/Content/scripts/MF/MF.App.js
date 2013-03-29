@@ -1,10 +1,26 @@
-/**
+/*
  * Created by JetBrains RubyMine.
  * User: Owner
  * Date: 2/26/12
  * Time: 10:53 AM
  * To change this template use File | Settings | File Templates.
  */
+
+
+/*
+ * Raif
+ * JavaScript Debug - v0.4 - 6/22/2010
+ * http://benalman.com/projects/javascript-debug-console-log/
+ * 
+ * Copyright (c) 2010 "Cowboy" Ben Alman
+ * Dual licensed under the MIT and GPL licenses.
+ * http://benalman.com/about/license/
+ * 
+ * With lots of help from Paul Irish!
+ * http://paulirish.com/
+ */
+
+
 
 var MF = new Backbone.Marionette.Application();
 

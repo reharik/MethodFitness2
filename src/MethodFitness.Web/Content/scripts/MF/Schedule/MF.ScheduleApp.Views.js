@@ -24,6 +24,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.model = this.rawModel;
         this.model.id= this.model.CalendarDefinition.id = this.id;
         this.setupLegend();
+        $("div.form-scroll-inner").height(window.innerHeight-160);
         $("#calendar",this.el).asCalendar(this.model.CalendarDefinition);
         this.bindSpecificModelAndElements({Location:this.model.Location,
             _LocationList:this.model._LocationList,
@@ -32,6 +33,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         });
         //callback for render
         this.viewLoaded();
+        $("#calendar",this.el).fullCalendar('option', 'height', $("div.form-scroll-inner").height());
         //general notification of pageloaded
         MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
         this.calendarBindings();
@@ -244,15 +246,15 @@ MF.Views.AppointmentView = MF.Views.View.extend({
     },
 
     setCurrentSelectionForAptType:function(isPair){
-        var currentSelection = $("[name='AppointmentType']").select2("val");
+        var currentSelection = $("[name='AppointmentType']").val();
         if(isPair){
             $("[name='AppointmentType']").data.previousSelection=currentSelection;
-            $("[name='AppointmentType']").select2("val","Pair");
+            $("[name='AppointmentType']").val("Pair");
             this.model.AppointmentType("Pair");
         }else{
             if(currentSelection == "Pair"){
                 var previousSelection = $("[name='AppointmentType']").data.previousSelection;
-                $("[name='AppointmentType']").select2("val",previousSelection);
+                $("[name='AppointmentType']").val(previousSelection);
                 this.model.AppointmentType(previousSelection);
             }
         }
@@ -283,8 +285,8 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             });
     },
     onClose:function(){
-        MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
-        MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+        MF.vent.unbind("ClientsDtos:tokenizer:add");
+        MF.vent.unbind("ClientsDtos:tokenizer:remove");
                 
     },
     handleTimeChange:function() {
@@ -449,20 +451,24 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         var that = this;
-        $('#color',this.el).miniColors({
+        $('#colorPickerInput',this.el).miniColors({
             change:function(hex){
                 that.model.Color(hex);
             }
         });
-         MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
         MF.vent.bind("popup:templatePopup:cancel",this.tokenCancel,this);
+    },
+    onClose:function(){
+        MF.vent.unbind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.unbind("popup:templatePopup:cancel",this.tokenCancel,this);
     },
     multiSelectModifier:function(ccElement){
         if(ccElement.name=="ClientsDtos"){
             ccElement.multiSelectOptions = {
                 internalTokenMarkup:function(){
                     var anchor = $("<a>").addClass("selectedItem").attr("data-bind",'text:display');
-                    var anchor2 = $("<a>").addClass("tokenEditor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
+                    var anchor2 = $("<a>").addClass("tokenEditor stdTxtColor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
                     return $("<p>").append(anchor).append(anchor2);
                 },
                 beforeTokenAddedFunction:$.proxy(this.beforeTokenAddedFunction,this)
@@ -622,6 +628,7 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
 
 MF.Views.ClientGridView = MF.Views.View.extend({
     initialize:function(){
+        this.options.gridOptions ={multiselect:false};
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "defaultGridEventsMixin");

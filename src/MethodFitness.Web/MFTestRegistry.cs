@@ -48,7 +48,6 @@ namespace MethodFitness.Web.Config
             For<ISessionFactoryConfiguration>().Singleton().Use<NullSqlServerSessionSourceConfiguration>();
             For<ISessionFactory>().Use<NullSessionFactory>();
 
-            For<ISession>().Use<NullSession>();
 //            For<ISession>().Use<NullSession>().Named("NoFiltersOrInterceptor");
 
 
@@ -64,7 +63,6 @@ namespace MethodFitness.Web.Config
             For<ILocalizationDataProvider>().Use<LocalizationDataProvider>();
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();
             For<IMenuConfig>().Use<MainMenu>();
-            For<IMergedEmailFactory>().LifecycleIs(new UniquePerRequestLifecycle()).Use<MergedEmailFactory>();
 
             For<IAuthorizationService>().HybridHttpOrThreadLocalScoped().Use<AuthorizationService>();
             For<IAuthorizationRepository>().HybridHttpOrThreadLocalScoped().Use<AuthorizationRepository>();

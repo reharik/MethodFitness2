@@ -1,103 +1,24 @@
 ﻿@using HtmlTags
 @using MethodFitness.Web
 @using MethodFitness.Web.Models
+
+@{
+    Bundles.Reference("content/css");
+    Bundles.Reference("content/scripts");
+}
 <!--[if IE]>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- [Else]>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- [endif]-->
+    <!-- [Else]>
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+        <!-- [endif]-->
+
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    @CSS("jquery.miniColors.css").ToHtmlTag()    
-     @CSS("fullcalendar.css").ToHtmlTag()
-    @CSS("token-input.css").ToHtmlTag()
-
-    @CSS("jquery-ui-1.8.16.custom.css").ToHtmlTag()
-    @CSS("ui.multiselect.css").ToHtmlTag()
-    @CSS("fileinput.css").ToHtmlTag()
-    @CSS("ui.jqgrid.css").ToHtmlTag()
-    <!--[if gt IE 7]>
-    @CSS("ie.css").ToHtmlTag()
-     <![endif]-->
-    @CSS("main.css").ToHtmlTag()
-    @CSS("token-input.css").ToHtmlTag()
-    @CSS("fg.menu.css").ToHtmlTag()
-@*   @CSS("select2.css").ToHtmlTag()*@
-    @CSS("fileInputEnhanced.css").ToHtmlTag()
-    @CSS("mobiscroll.core-2.0.1.css").ToHtmlTag()
-
-    @CSS("mf.css").ToHtmlTag()
-
+    @Bundles.RenderStylesheets()
     @RenderSection("ExtraCss", false)
 
-    @Script("jqueryPlugins/jquery-1.7.1.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.transform-0.9.3.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery-ui-1.8.22.custom.min.js").ToHtmlTag()
-    @Script("jqueryPlugins/cc.tokeninput2.js").ToHtmlTag()
-
-    @Script("jqueryPlugins/grid.locale-en.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.jqGrid.src.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery-tmpl.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.miniColors.js").ToHtmlTag()
-    @Script("jqueryPlugins/jquery.fileinput.js").ToHtmlTag()
-    @Script("jqueryPlugins/mobiscroll.core-2.0.1.js").ToHtmlTag()
-    @Script("jqueryPlugins/mobiscroll.datetime-2.0.1.js").ToHtmlTag()
-
-    @Script("jqueryPlugins/noty/jquery.noty.js").ToHtmlTag()    
-    @Script("jqueryPlugins/noty/inline.js").ToHtmlTag()    
-    @Script("jqueryPlugins/noty/default.js").ToHtmlTag()    
-    
-    @Script("externalHelpers/select2.js").ToHtmlTag()
-
-
-    @Script("externalHelpers/fullcalendar.js").ToHtmlTag()
-    @Script("externalHelpers/underscore.js").ToHtmlTag()
-    @Script("externalHelpers/backbone.js").ToHtmlTag()
-    @Script("externalHelpers/backbone.marionette.js").ToHtmlTag()
-    @Script("externalHelpers/knockout-2.1.0.debug.js").ToHtmlTag()    
-    @Script("externalHelpers/knockout.mapping-lastest.debug.js").ToHtmlTag()    
-
-    @Script("MF/MF.App.js").ToHtmlTag()
-    @Script("MF/MF.Controller.js").ToHtmlTag()
-    @Script("MF/MF.Mixins.js").ToHtmlTag()
-    @Script("MF/MF.Header.js").ToHtmlTag()
-    @Script("MF/MF.Views.js").ToHtmlTag()
-    @Script("MF/MF.Routing.js").ToHtmlTag()
-    @Script("MF/MF.State.js").ToHtmlTag()
-    @Script("MF/MF.Services.js").ToHtmlTag()
-    @Script("MF/MF.WorkflowManager.js").ToHtmlTag()
-    @Script("MF/Schedule/MF.ScheduleApp.js").ToHtmlTag()
-    @Script("MF/Schedule/MF.ScheduleApp.Menu.js").ToHtmlTag()
-    @Script("MF/Schedule/MF.ScheduleApp.Routing.js").ToHtmlTag()
-    @Script("MF/Schedule/MF.ScheduleApp.Views.js").ToHtmlTag()
-    @Script("MF/Billing/MF.BillingApp.Routing.js").ToHtmlTag()
-    @Script("MF/Billing/MF.BillingApp.Views.js").ToHtmlTag()
-
-    @Script("MF/Reporting/MF.ReportingApp.Routing.js").ToHtmlTag()
-    @Script("MF/Reporting/MF.ReportingApp.Views.js").ToHtmlTag()
-    
-    @Script("MF/CC.ModelBinding/CC.CustomBindings.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.Elements.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.NotificationService.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.ModelService.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.ValidationRules.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.ValidationRunner.js").ToHtmlTag()
-    @Script("MF/CC.ModelBinding/CC.AjaxFileUpload.js").ToHtmlTag()
-    
-    @Script("externalHelpers/superfish.js").ToHtmlTag()
-    @Script("externalHelpers/ba-debug.js").ToHtmlTag()
-    @Script("internalHelpers/cc.ccMenu.js").ToHtmlTag()
-    @Script("internalHelpers/jquery.cc.grid.js").ToHtmlTag()
-    @Script("internalHelpers/cc.grid.columnService.js").ToHtmlTag()
-    @Script("internalHelpers/cc.gridHelpers.js").ToHtmlTag()
-    @Script("internalHelpers/mf.gridSearch.js").ToHtmlTag()
-    @Script("internalHelpers/MF.repository.js").ToHtmlTag()
-    @Script("internalHelpers/jquery.mf.calendar.js").ToHtmlTag()
-
-    @Script("internalHelpers/cc.utilities.js").ToHtmlTag()
-    @Script("externalHelpers/json2.js").ToHtmlTag()
-    @Script("externalHelpers/xdate.js").ToHtmlTag()
+    @Bundles.RenderScripts()
     
     <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
     @RenderSection("HeaderScripts", false)
@@ -109,7 +30,7 @@
      </script>
     </head>
 
-    <body id="methodFitness" class="mf_dyn">
+    <body id="methodFitness" >
     <div id="ajaxLoading" style="z-index: 1000">&nbsp;</div>
         @Html.Action("MethodFitnessHeader", "Orthogonal")
         <div id="top-separator"></div>
@@ -140,15 +61,16 @@
             <button style="display:none" class="return" title="@WebLocalizationKeys.RETURN"></button>
             <span class="title-name">${_Title}</span>
         </div>
-        <div id="contentArea" class="content-inner">
-            {{if EntityId}}
-            <input id="EntityId" type="hidden" value="${EntityId}"/>
-            {{/if}}
-            {{if ParentId}}
-            <input id="ParentId" type="hidden" value="${ParentId}"/>
-            {{/if}}
-            <table id="gridContainer" class="scroll"></table>
-            <div id="pager" class="scroll" style="text-align:center;"></div>
+        <div class="form-scroll-inner">
+            <div id="contentArea" class="content-inner">
+                {{if EntityId}}
+                <input id="EntityId" type="hidden" value="${EntityId}"/>
+                {{/if}}
+                {{if ParentId}}
+                <input id="ParentId" type="hidden" value="${ParentId}"/>
+                {{/if}}
+                <table id="gridContainer" class="scroll"></table>
+            </div>
         </div>
     </script>
     
@@ -171,8 +93,8 @@
         </div>
     </script>
     
-    <div style="display:none" id="emailTemplate" >
-        @Html.Partial("EmailTemplate", new EmailViewModel())
-    </div>
+@*    <div style="display:none" id="emailTemplate" >*@
+@*        @Html.Partial("EmailTemplate", new EmailViewModel())*@
+@*    </div>*@
 
 </html>

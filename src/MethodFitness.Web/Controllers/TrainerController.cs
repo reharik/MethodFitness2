@@ -67,7 +67,7 @@ namespace MethodFitness.Web.Controllers
             else
             {
                 trainer = new User();
-                trainer.ClientRateDefault = Int32.Parse(SiteConfig.Settings().TrainerClientRateDefault);
+                trainer.ClientRateDefault = Int32.Parse(Site.Config.TrainerClientRateDefault);
             }
             var clients = _repository.FindAll<Client>();
             var model = Mapper.Map<User, TrainerViewModel>(trainer);

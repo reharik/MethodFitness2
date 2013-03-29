@@ -25,6 +25,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,49 +46,53 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Alpinely.TownCrier, Version=1.1.0.13346, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AjaxMin, Version=4.60.4609.17023, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Alpinely.TownCrier.dll</HintPath>
+      <HintPath>..\packages\AjaxMin.4.60.4609.17023\lib\net20\AjaxMin.dll</HintPath>
     </Reference>
-    <Reference Include="Antlr3.Runtime, Version=3.1.3.42154, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
+    <Reference Include="Alpinely.TownCrier, Version=1.1.0.20141, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\fluentnhibernate\Antlr3.Runtime.dll</HintPath>
+      <HintPath>..\packages\TownCrier.1.1\lib\Alpinely.TownCrier.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+    <Reference Include="AutoMapper, Version=2.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\AutoMapper.dll</HintPath>
+      <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Components.Validator, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Cassette, Version=2.0.0.17974, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Castle.Components.Validator.dll</HintPath>
+      <HintPath>..\packages\Cassette.2.0.0\lib\net40-client\Cassette.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Cassette.Aspnet, Version=2.0.0.17975, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\fluentnhibernate\Castle.Core.dll</HintPath>
+      <HintPath>..\packages\Cassette.Aspnet.2.0.0\lib\net40\Cassette.Aspnet.dll</HintPath>
     </Reference>
-    <Reference Include="CC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Cassette.Views, Version=2.0.0.17975, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\CC.Core.dll</HintPath>
+      <HintPath>..\packages\Cassette.Views.2.0.0\lib\net40\Cassette.Views.dll</HintPath>
     </Reference>
-    <Reference Include="CC.Core.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Castle.Components.Validator, Version=2.5.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\CC.Core.Utilities.dll</HintPath>
+      <HintPath>..\packages\Castle.Components.Validator.2.5.0\lib\NET40\Castle.Components.Validator.dll</HintPath>
     </Reference>
-    <Reference Include="CC.Security, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\CC.Security.dll</HintPath>
+    <Reference Include="CC.Core">
+      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CC.UI.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\CC.UI.Helpers.dll</HintPath>
+    <Reference Include="CC.Core.Utilities">
+      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Core.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Elmah.dll</HintPath>
+    <Reference Include="CC.Security">
+      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Security.dll</HintPath>
     </Reference>
-    <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+    <Reference Include="CC.UI.Helpers">
+      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.UI.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\fluentnhibernate\FluentNHibernate.dll</HintPath>
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=1.3.0.733, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
     </Reference>
     <Reference Include="HibernatingRhinos.Profiler.Appender, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -96,16 +102,27 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\HibernatingRhinos.Profiler.Appender.NHibernateLog4Net.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\CC.Core.1.0.0.22\lib\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\fluentnhibernate\Iesi.Collections.dll</HintPath>
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="ImageResizer.Mvc">
-      <HintPath>..\lib\ImageResizer.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+    <Reference Include="ImageResizer, Version=3.3.3.123, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\log4net.dll</HintPath>
+      <HintPath>..\packages\ImageResizer.3.3.3\lib\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer.Mvc, Version=3.3.3.123, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ImageResizer.Mvc.3.3.3\lib\ImageResizer.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0ecfe41405c30fb3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -114,23 +131,15 @@
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\fluentnhibernate\NHibernate.dll</HintPath>
+      <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\fluentnhibernate\NHibernate.ByteCode.Castle.dll</HintPath>
-    </Reference>
-    <Reference Include="Remotion.Data.Linq, Version=1.13.41.2, Culture=neutral, PublicKeyToken=cab60358ab4081ea, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\fluentnhibernate\Remotion.Data.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap, Version=2.6.1.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\StructureMap.dll</HintPath>
+      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Helpers">
       <Private>True</Private>
@@ -200,6 +209,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Activity.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
     <Compile Include="Areas\Billing\Controllers\VerifiedTrainerSessionsController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationListController.cs" />
@@ -210,39 +224,43 @@
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentListController.cs" />
-    <Compile Include="Areas\Reports\Controllers\TrainerMetricController.cs" />
-    <Compile Include="Areas\Reports\Controllers\DailyPaymentsController.cs" />
-    <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
-    <Compile Include="Areas\Reports\ReportViewer\TrainerMetric.aspx.cs">
+    <Compile Include="Areas\Reporting\Controllers\ActivityController.cs" />
+    <Compile Include="Areas\Reporting\Controllers\TrainerMetricController.cs" />
+    <Compile Include="Areas\Reporting\Controllers\DailyPaymentsController.cs" />
+    <Compile Include="Areas\Reporting\ReportingAreaRegistration.cs" />
+    <Compile Include="Areas\Reporting\ReportViewer\Activity.aspx.cs">
+      <DependentUpon>Activity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Areas\Reporting\ReportViewer\Activity.aspx.designer.cs">
+      <DependentUpon>Activity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx.cs">
       <DependentUpon>TrainerMetric.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Areas\Reports\ReportViewer\TrainerMetric.aspx.designer.cs">
+    <Compile Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx.designer.cs">
       <DependentUpon>TrainerMetric.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Reports\ReportViewer\DailyPayments.aspx.cs">
+    <Compile Include="Areas\Reporting\ReportViewer\DailyPayments.aspx.cs">
       <DependentUpon>DailyPayments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Areas\Reports\ReportViewer\DailyPayments.aspx.designer.cs">
+    <Compile Include="Areas\Reporting\ReportViewer\DailyPayments.aspx.designer.cs">
       <DependentUpon>DailyPayments.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Reports\XSD\DailyPayments.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DailyPayments.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Reports\XSD\TrainerMetric.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TrainerMetric.xsd</DependentUpon>
     </Compile>
     <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
+    <Compile Include="CassetteConfiguration.cs" />
     <Compile Include="Config\CustomJsonResult.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
     <Compile Include="Config\AutomapperBootstrapper.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="CustomWebViewPage.cs" />
+    <Compile Include="DailyPayments.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Filters\AddUserToViewModelFilter.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
     <Compile Include="Grids\TrainerSessionVerificationListGrid.cs" />
@@ -255,9 +273,10 @@
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Config\Bootstrapper.cs" />
     <Compile Include="Config\CustomAuthorizationAttribute.cs" />
-    <Content Include="Areas\Reports\ReportViewer\TrainerMetric.aspx" />
-    <Content Include="Areas\Reports\ReportViewer\DailyPayments.aspx" />
-    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Areas\Reporting\ReportViewer\Activity.aspx" />
+    <Content Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx" />
+    <Content Include="Areas\Reporting\ReportViewer\DailyPayments.aspx" />
     <Compile Include="Config\ModelBinders.cs" />
     <Compile Include="Config\ModelBindingBootstaper.cs" />
     <Compile Include="Controllers\ClientController.cs" />
@@ -281,6 +300,11 @@
     <Compile Include="Menus\HeaderMenu.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
+    <Compile Include="PaymentDetail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Services\IAuthenticationContext.cs" />
     <Compile Include="Services\ISecuritySetupService.cs">
       <SubType>Code</SubType>
@@ -288,6 +312,11 @@
     <Compile Include="Services\RouteTokens\IRouteTokenBuilder.cs" />
     <Compile Include="Services\RouteTokens\IRouteTokenConfig.cs" />
     <Compile Include="Services\RouteTokens\RouteToken.cs" />
+    <Compile Include="TrainerMetric.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Compile>
     <Compile Include="WebLocalizationKeys.cs" />
     <Compile Include="MFWebRegistry.cs" />
     <Compile Include="Global.asax.cs">
@@ -295,108 +324,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\dci.css" />
-    <Content Include="Content\css\fg.menu.css" />
-    <Content Include="Content\css\fileinput.css" />
-    <Content Include="Content\css\ie.css" />
-    <Content Include="Content\css\Jcrop.gif" />
-    <Content Include="Content\css\jquery-ui-1.8.16.custom.css" />
-    <Content Include="Content\css\jquery.cluetip.css" />
-    <Content Include="Content\css\jquery.Jcrop.css" />
-    <Content Include="Content\css\main.css" />
-    <Content Include="Content\css\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\css\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
-    <Content Include="Content\css\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
-    <Content Include="Content\css\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
-    <Content Include="Content\css\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\css\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
-    <Content Include="Content\css\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
-    <Content Include="Content\css\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
-    <Content Include="Content\css\redmond\images\ui-icons_217bc0_256x240.png" />
-    <Content Include="Content\css\redmond\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\css\redmond\images\ui-icons_469bdd_256x240.png" />
-    <Content Include="Content\css\redmond\images\ui-icons_6da8d5_256x240.png" />
-    <Content Include="Content\css\redmond\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\css\redmond\images\ui-icons_d8e7f3_256x240.png" />
-    <Content Include="Content\css\redmond\images\ui-icons_f9bd01_256x240.png" />
-    <Content Include="Content\css\redmond\jquery-ui-1.8.12.custom.css" />
-    <Content Include="Content\css\token-input.css" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_228ef1_256x240.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_ef8c08_256x240.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Content\css\ui-lightness\jquery-ui-1.8.7.custom.css" />
-    <Content Include="Content\css\ui.jqgrid.css" />
-    <Content Include="Content\css\ui.multiselect.css" />
-    <Content Include="Content\scripts\externalHelpers\backbone.js" />
-    <Content Include="Content\scripts\externalHelpers\dark-blue.js" />
-    <Content Include="Content\scripts\externalHelpers\highcharts.js" />
-    <Content Include="Content\scripts\externalHelpers\json2.js" />
-    <Content Include="Content\scripts\externalHelpers\knockout-1.2.1.debug.js" />
-    <Content Include="Content\scripts\externalHelpers\knockout-1.2.1.js" />
-    <Content Include="Content\scripts\externalHelpers\knockout.mapping.js" />
-    <Content Include="Content\scripts\externalHelpers\modernizr-2.0.min.js" />
-    <Content Include="Content\scripts\externalHelpers\respond.js" />
-    <Content Include="Content\scripts\externalHelpers\respond.min.js" />
-    <Content Include="Content\scripts\externalHelpers\superfish.js" />
-    <Content Include="Content\scripts\externalHelpers\underscore.js" />
-    <Content Include="Content\scripts\internalHelpers\cc.ccMenu.js" />
-    <Content Include="Content\scripts\internalHelpers\cc.crudForm.js" />
-    <Content Include="Content\scripts\internalHelpers\cc.grid.columnService.js" />
-    <Content Include="Content\scripts\internalHelpers\cc.gridHelpers.js" />
-    <Content Include="Content\scripts\internalHelpers\cc.utilities.js" />
-    <Content Include="Content\scripts\internalHelpers\jquery.cc.grid.js" />
-    <Content Include="Content\scripts\internalHelpers\jquery.mf.calendar.js" />
-    <Content Include="Content\scripts\internalHelpers\mf.gridSearch.js" />
-    <Content Include="Content\scripts\internalHelpers\mf.mediaHandler.js" />
-    <Content Include="Content\scripts\internalHelpers\mf.multiItemRepeater.js" />
-    <Content Include="Content\scripts\internalHelpers\mf.popupCrud.js" />
-    <Content Include="Content\scripts\internalHelpers\mf.repeatableInputSection.js" />
-    <Content Include="Content\scripts\internalHelpers\mf.repository.js" />
-    <Content Include="Content\scripts\internalHelpers\multiRowRepeater.js" />
-    <Content Include="Content\scripts\jqueryPlugins\grid.locale-en.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery-1.6.2.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery-tmpl.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery-ui-1.8.16.custom.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.address-1.4.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.address-1.4.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.CenterInClient.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.cleditor.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.cleditor.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.cluetip.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.dotdotdot-1.2.0.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.form.2.63.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.form.2.83.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.form.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.hoverIntent.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.ie-select-style.pack.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.Jcrop.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.Jcrop.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.jqGrid.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.jqGrid.src.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.jqPrint.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.maskedinput.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.metadata.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.pubsub.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.template.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.toDictionary.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.tokeninput.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.transform-0.9.3.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.validate.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.validate.min-vsdoc.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.validate.min.js" />
-    <Content Include="Content\scripts\jqueryPlugins\jquery.validate.pack.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\themes\base\jquery-ui.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -431,10 +358,9 @@
   <ItemGroup>
     <Folder Include="Areas\Billing\Models\" />
     <Folder Include="Areas\Billing\Views\Shared\" />
-    <Folder Include="Areas\Reports\Models\" />
+    <Folder Include="Areas\Reporting\Models\" />
     <Folder Include="Areas\Schedule\Views\Shared\" />
     <Folder Include="Logs\" />
-    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_popupLayout.cshtml" />
@@ -461,15 +387,6 @@
     <Content Include="Views\Orthogonal\MainMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\UserProfile\UserProfile.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\UserProfile\EmailUnconfirmed.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\UserProfile\EmailConfirmed.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\AddressTemplate.cshtml" />
     <Content Include="Views\Shared\EmailTemplate.cshtml" />
     <Content Include="Views\Shared\PhoneTemplate.cshtml" />
@@ -480,9 +397,6 @@
       <Name>MethodFitness.Core</Name>
       <Private>True</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_FormLayout.cshtml" />
@@ -524,14 +438,15 @@
     <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Reports\RDLC\DailyPayments.rdlc" />
-    <EmbeddedResource Include="Areas\Reports\RDLC\TrainerMetric.rdlc" />
+    <EmbeddedResource Include="Areas\Reporting\RDLC\Activity.rdlc" />
+    <EmbeddedResource Include="Areas\Reporting\RDLC\DailyPayments.rdlc" />
+    <EmbeddedResource Include="Areas\Reporting\RDLC\TrainerMetric.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Reports\Views\Web.config" />
+    <Content Include="Areas\Reporting\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Reports\Views\Shared\_ReportLayout.cshtml" />
+    <Content Include="Areas\Reporting\Views\Shared\_ReportLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Billing\Views\Web.config" />
@@ -552,33 +467,58 @@
     <Content Include="Areas\Billing\Views\PayTrainer\TrainerReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Reports\Views\DailyPayments\Display.cshtml" />
+    <Content Include="Areas\Reporting\Views\DailyPayments\Display.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_ReportLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Reports\XSD\DailyPayments.xsc">
+    <Content Include="Areas\Reporting\Views\TrainerMetric\Display.cshtml" />
+    <Content Include="DailyPayments.xsc">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
-    <Content Include="Areas\Reports\Views\TrainerMetric\Display.cshtml" />
-    <None Include="Areas\Reports\XSD\DailyPayments.xsd">
+    <Content Include="Areas\Reporting\Views\Activity\Display.cshtml" />
+    <Content Include="Activity.xsc">
+      <DependentUpon>Activity.xsd</DependentUpon>
+    </Content>
+    <None Include="Activity.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Activity.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </None>
+    <Content Include="Activity.xss">
+      <DependentUpon>Activity.xsd</DependentUpon>
+    </Content>
+    <None Include="DailyPayments.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
-    <Content Include="Areas\Reports\XSD\DailyPayments.xss">
+    <Content Include="DailyPayments.xss">
       <DependentUpon>DailyPayments.xsd</DependentUpon>
     </Content>
-    <Content Include="Areas\Reports\XSD\TrainerMetric.xsc">
+    <Content Include="PaymentDetail.xsc">
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
+    </Content>
+    <Content Include="packages.config" />
+    <None Include="PaymentDetail.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PaymentDetail.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="PaymentDetail.xss">
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\fucknutz.pubxml" />
+    <Content Include="TrainerMetric.xsc">
       <DependentUpon>TrainerMetric.xsd</DependentUpon>
     </Content>
-    <None Include="Areas\Reports\XSD\TrainerMetric.xsd">
-      <SubType>Designer</SubType>
+    <None Include="TrainerMetric.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>TrainerMetric.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
-    <Content Include="Areas\Reports\XSD\TrainerMetric.xss">
+    <Content Include="TrainerMetric.xss">
       <DependentUpon>TrainerMetric.xsd</DependentUpon>
     </Content>
   </ItemGroup>
@@ -617,4 +557,5 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

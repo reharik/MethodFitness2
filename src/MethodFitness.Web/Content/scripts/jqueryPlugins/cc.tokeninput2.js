@@ -31,6 +31,8 @@ var DEFAULT_SETTINGS = {
     onAdd: null,
     onDelete: null,
     idPrefix: "token-input-",
+    // this is overwritten in the views.tokenview and ko.bindingHandlers.MultiSelect
+    // and in the views.  bit messy
     internalTokenMarkup:function(item){return "<p>"+ item.name +"</p>";},
     afterTokenSelectedFunction:function(){},
     beforeTokenAddedFunction:function(){}

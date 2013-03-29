@@ -72,14 +72,12 @@ namespace MethodFitness.Web
             For<IRepository>().Add<NoInterceptorNoFiltersRepository>().Named("NoInterceptorNoFilters");
 
 
-            For<IMergedEmailFactory>().Use<MergedEmailFactory>();
             For<ITemplateParser>().Use<TemplateParser>();
 
             For<ILocalizationDataProvider>().Use<LocalizationDataProvider>();
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();
 
             For<IMenuConfig>().Use<MainMenu>();
-            For<IMergedEmailFactory>().LifecycleIs(new UniquePerRequestLifecycle()).Use<MergedEmailFactory>();
 
             For<IAuthorizationService>().HybridHttpOrThreadLocalScoped().Use<AuthorizationService>();
             For<IAuthorizationRepository>().HybridHttpOrThreadLocalScoped().Use<CustomAuthorizationRepository>();

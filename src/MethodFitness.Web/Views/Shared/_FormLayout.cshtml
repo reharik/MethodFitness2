@@ -1,14 +1,9 @@
 ﻿@using MethodFitness.Web;
-@using HtmlTags
 
 <script>
     @RenderSection("ExtraCss", false)
-
     @RenderSection("HeaderScripts", false)
-
-    var contentArea;
-    var extraFormOptions = { };
-        @RenderSection("HeaderJavascript", false)
+    @RenderSection("HeaderJavascript", false)
 </script>
 
    <div class="content-header">
@@ -20,11 +15,13 @@
             <span class="title-added">@WebLocalizationKeys.DATE_ADDED.ToFormat(Model.Item.CreateDate.ToLongDateString())</span>
         }
     </div>
-    <div id="contentArea" class="content-inner">
+<div id="contentArea" class="content-inner">
+    <div class="form-scroll-inner form">
         <div class="required_style"><span>* @WebLocalizationKeys.REQUIRED</span></div>
         @RenderBody()
-        <div class="footer">
-            @StandardButtonFor("save", WebLocalizationKeys.SAVE).AddClass("save").ToHtmlTag()
-            @StandardButtonFor("cancel", WebLocalizationKeys.CANCEL).AddClass("cancel").ToHtmlTag()
-        </div>
     </div>
+    <div class="footer">
+        @StandardButtonFor("save", WebLocalizationKeys.SAVE).AddClass("save").ToHtmlTag()
+        @StandardButtonFor("cancel", WebLocalizationKeys.CANCEL).AddClass("cancel").ToHtmlTag()
+    </div>
+</div>
