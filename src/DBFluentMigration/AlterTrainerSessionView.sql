@@ -6,7 +6,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[TrainerSessions]')) 
-drop procedure [dbo].[TrainerSessions]
+drop view [dbo].[TrainerSessions]
 go
 
 CREATE VIEW [dbo].[TrainerSessions]
