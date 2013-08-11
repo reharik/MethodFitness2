@@ -218,6 +218,7 @@
     <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISessionContext.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />
+    <Compile Include="Services\SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
