@@ -6,6 +6,7 @@ using MethodFitness.Core.Services;
 using MethodFitness.Web.Areas.Billing.Controllers;
 using MethodFitness.Web.Config;
 using MethodFitness.Web.Areas.Schedule.Controllers;
+using MethodFitness.Web.Controllers;
 
 namespace MethodFitness.Web.Menus
 {
@@ -45,6 +46,8 @@ namespace MethodFitness.Web.Menus
                         .EndChildren()
                         .CreateNode(WebLocalizationKeys.ADMIN_TOOLS, "tools")
                         .HasChildren()
+                            .CreateTagNode<LocationListController>(WebLocalizationKeys.LOCATIONS)
+                            .CreateTagNode<BaseSessionRateController>(WebLocalizationKeys.BASE_RATES)
                             .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS)
                             .CreateNode(WebLocalizationKeys.REPORTS)
                                 .HasChildren()

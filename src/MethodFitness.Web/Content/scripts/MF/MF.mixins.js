@@ -253,6 +253,8 @@ MF.mixins.defaultGridEventsMixin = {
         'click .new': 'addNew',
         'click .delete': 'deleteItems'
     },
+    successSelector:"#messageContainer",
+    errorSelector:"#messageContainer",
     setupBindings: function () {
         MF.vent.bind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
         MF.vent.bind(this.options.gridId + ":DisplayItem", this.displayItem, this);
@@ -280,9 +282,38 @@ MF.mixins.defaultGridEventsMixin = {
         if (confirm("Are you sure you would like to delete this Item?")) {
             var ids = cc.gridMultiSelect.getCheckedBoxes(this.options.gridId);
             MF.repository.ajaxGet(this.options.deleteMultipleUrl, $.param({ "EntityIds": ids }, true))
-                .done($.proxy(function () { this.reloadGrid() }, this));
+                .done($.proxy(function (result) { this.successHandler(result) }, this));
         }
     },
+    successHandler:function(_result){
+        var that = this;
+        var result = typeof _result =="string" ? JSON.parse(_result) : _result;
+        if(!result.Success){
+            if(result.Message && !$.noty.getByViewIdAndElementId(this.cid)){
+                var note = $(that.errorSelector).noty({type: "error", text: result.Message, viewId:that.cid});
+                note.setAnimationSpeed(1000);
+                note.setTimeout(3000);
+                $.noty.closeAllErrorsByViewId(this.cid);
+            }
+            if(result.Errors && !$.noty.getByViewIdAndElementId(this.cid)){
+                _.each(result.Errors,function(item){
+                    var note = $(that.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:that.cid});
+                    note.setAnimationSpeed(1000);
+                    note.setTimeout(3000);
+                    $.noty.closeAllErrorsByViewId(this.cid);
+                })
+            }
+        }else{
+            if(result.Message){
+                var note = $(that.successSelector).noty({type: "success", text:result.Message, viewId:this.cid});
+                note.setAnimationSpeed(1000);
+                note.setTimeout(3000);
+                $.noty.closeAllErrorsByViewId(this.cid);
+            }
+        }
+        $.proxy(function () { this.reloadGrid() }, this);
+    },
+
     reloadGrid: function () {
         MF.vent.unbind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
         MF.vent.unbind(this.options.gridId + ":DisplayItem", this.displayItem, this);
