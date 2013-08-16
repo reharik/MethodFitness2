@@ -51,19 +51,20 @@ namespace MethodFitness.Web.Controllers
         public ActionResult AddUpdate(ViewModel input)
         {
             Client client;
+            var baseSessionRate = _repository.Query<BaseSessionRate>().FirstOrDefault();
             if (input.EntityId > 0)
             {
                 client = _repository.Find<Client>(input.EntityId);
-                client.SessionRates.FullHour = client.SessionRates.FullHour > 0 ? client.SessionRates.FullHour : client.SessionRates.ResetFullHourRate();
-                client.SessionRates.HalfHour = client.SessionRates.HalfHour > 0 ? client.SessionRates.HalfHour : client.SessionRates.ResetHalfHourRate();
-                client.SessionRates.FullHourTenPack = client.SessionRates.FullHourTenPack > 0 ? client.SessionRates.FullHourTenPack : client.SessionRates.ResetFullHourTenPackRate();
-                client.SessionRates.HalfHourTenPack = client.SessionRates.HalfHourTenPack > 0 ? client.SessionRates.HalfHourTenPack : client.SessionRates.ResetHalfHourTenPackRate();
-                client.SessionRates.Pair = client.SessionRates.Pair > 0 ? client.SessionRates.Pair : client.SessionRates.ResetPairRate();
-                client.SessionRates.PairTenPack = client.SessionRates.PairTenPack > 0 ? client.SessionRates.PairTenPack : client.SessionRates.ResetPairTenPackRate();
+                client.SessionRates.FullHour = client.SessionRates.FullHour > 0 ? client.SessionRates.FullHour : baseSessionRate.FullHour;
+                client.SessionRates.HalfHour = client.SessionRates.HalfHour > 0 ? client.SessionRates.HalfHour : baseSessionRate.HalfHour;
+                client.SessionRates.FullHourTenPack = client.SessionRates.FullHourTenPack > 0 ? client.SessionRates.FullHourTenPack : baseSessionRate.FullHourTenPack;
+                client.SessionRates.HalfHourTenPack = client.SessionRates.HalfHourTenPack > 0 ? client.SessionRates.HalfHourTenPack : baseSessionRate.HalfHourTenPack;
+                client.SessionRates.Pair = client.SessionRates.Pair > 0 ? client.SessionRates.Pair : baseSessionRate.Pair;
+                client.SessionRates.PairTenPack = client.SessionRates.PairTenPack > 0 ? client.SessionRates.PairTenPack : baseSessionRate.PairTenPack;
             }
             else
             {
-                client = new Client { StartDate = DateTime.Now, SessionRates = new SessionRates(true) };
+                client = new Client { StartDate = DateTime.Now, SessionRates = new SessionRates(baseSessionRate) };
             }
             //hijacking sessionratesdto since I need exact same object just different name
             var clientSessionsDto = new SessionRatesDto
@@ -172,7 +173,11 @@ namespace MethodFitness.Web.Controllers
             client.StartDate = clientModel.StartDate;
             client.SecondaryPhone = clientModel.SecondaryPhone;
             client.BirthDate = clientModel.BirthDate;
-            if (client.SessionRates == null) {client.SessionRates = new SessionRates(true);}
+            if (client.SessionRates == null)
+            {
+                var baseSessionRate = _repository.Query<BaseSessionRate>().FirstOrDefault();
+                client.SessionRates = new SessionRates(baseSessionRate);
+            }
             if (clientModel.SessionRatesFullHour > 0) client.SessionRates.FullHour = clientModel.SessionRatesFullHour;
             if(clientModel.SessionRatesHalfHour>0) client.SessionRates.HalfHour = clientModel.SessionRatesHalfHour;
             if(clientModel.SessionRatesFullHourTenPack>0) client.SessionRates.FullHourTenPack = clientModel.SessionRatesFullHourTenPack;
