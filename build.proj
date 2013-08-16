@@ -17,11 +17,11 @@
   <Target Name="Build" DependsOnTargets="_build;_unitTests" />
   <!--  <Target Name="Stage" DependsOnTargets="_build;_minifyJSandCss;_outputWebFiles;" />-->
 <!--  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />-->
-  <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToQA;" />
+  <Target Name="Push" DependsOnTargets="_build;_pushToQA;" />
   
- <Target Name="_pushToQA" >
+ <Target Name="_pushToPROD" >
    <PropertyGroup>
-     <OutputDirectory>f:\WebSites\MethodFitness_QA</OutputDirectory>
+     <OutputDirectory>f:\WebSites\MethodFitness_PreRelease</OutputDirectory>
    </PropertyGroup>
    
    <ItemGroup>
@@ -51,7 +51,7 @@
    <MakeDir Directories="$(OutputDirectory)"  />
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
    <Zip Files="@(WebFiles)"
-     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
+     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_PreRelease"
      ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
      ZipLevel="9" />
  </Target>
