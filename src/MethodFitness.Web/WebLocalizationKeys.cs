@@ -119,7 +119,9 @@ namespace MethodFitness.Web
         public static readonly StringToken SELECT_AT_LEAST_ONE_CLIENT = new WebLocalizationKeys("SELECT_AT_LEAST_ONE_CLIENT", "You must select at least one Client.");
         public static readonly StringToken SELECT_AT_LEAST_ONE_USER_ROLE = new WebLocalizationKeys("SELECT_AT_LEAST_ONE_USER_ROLE", "You must select at least one User Role.");
         public static readonly StringToken MUST_HAVE_TRAINER_USER_ROLE = new WebLocalizationKeys("MUST_HAVE_TRAINER_USER_ROLE", "A Trainer must have the User Role of Trainer.");
+        public static readonly StringToken LOCATION_INFORMATION = new WebLocalizationKeys("LOCATION_INFORMATION", "Location Information");
         public static readonly StringToken LOCATION = new WebLocalizationKeys("LOCATION", "Location");
+        public static readonly StringToken LOCATIONS = new WebLocalizationKeys("LOCATIONS", "Locations");
         public static readonly StringToken DATE_ADDED = new WebLocalizationKeys("DATE_ADDED", "Date Added {0}");
 
         public static readonly StringToken YOU_CAN_NOT_DELETE_RETROACTIVELY = new WebLocalizationKeys("YOU_CAN_NOT_DELETE_RETROACTIVELY", "You can not delete appointments Retroactively");
@@ -172,6 +174,7 @@ namespace MethodFitness.Web
         public static readonly StringToken DAILY_PAYMENTS = new WebLocalizationKeys("DAILY_PAYMENTS", "Daily Payments");
         public static readonly StringToken TRAINER_METRIC = new WebLocalizationKeys("TRAINER_METRIC", "Trainer Metric");
         public static readonly StringToken ACTIVITY = new WebLocalizationKeys("ACTIVITY", "Activity");
+        public static readonly StringToken BASE_RATES = new WebLocalizationKeys("BASE_RATES", "Base Rates");
 
 
         public static readonly StringToken NO_SESSIONS_TO_VERIFY = new WebLocalizationKeys("NO_SESSIONS_TO_VERIFY", "You have no eligible sessions to verify");

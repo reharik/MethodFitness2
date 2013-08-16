@@ -10,7 +10,6 @@ using CC.Security.Interfaces;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 using xVal.ServerSide;
 
 namespace MethodFitness.Core.Domain

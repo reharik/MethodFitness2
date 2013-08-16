@@ -1,4 +1,15 @@
 
+cc.gridMultiSelect = (function(){
+    return {
+        getCheckedBoxes: function(gridContainerName) {
+            var name = gridContainerName?"#"+gridContainerName: "#gridContainer";
+            var ids = [];
+            $($(name).jqGrid('getGridParam', 'selarrrow')).each(function(idx, item) { ids.push(item) });
+            return ids;
+        }
+    }
+}());
+
 cc.gridHelper= (function(){
     return {
         adjustSize: function($gridSelector){

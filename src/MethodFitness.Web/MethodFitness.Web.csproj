@@ -215,6 +215,7 @@
       <DependentUpon>Activity.xsd</DependentUpon>
     </Compile>
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
+    <Compile Include="Areas\Billing\Controllers\BaseSessionRateController.cs" />
     <Compile Include="Areas\Billing\Controllers\VerifiedTrainerSessionsController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationListController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationController.cs" />
@@ -254,6 +255,8 @@
     <Compile Include="Config\CustomJsonResult.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
     <Compile Include="Config\AutomapperBootstrapper.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\LocationListController.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="CustomWebViewPage.cs" />
     <Compile Include="DailyPayments.Designer.cs">
@@ -263,6 +266,7 @@
     </Compile>
     <Compile Include="Filters\AddUserToViewModelFilter.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
+    <Compile Include="Grids\LocationListGrid.cs" />
     <Compile Include="Grids\TrainerSessionVerificationListGrid.cs" />
     <Compile Include="Grids\SessionVerificationListGrid.cs" />
     <Compile Include="Grids\TrainerPaymentListGrid.cs" />
@@ -339,6 +343,9 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Views\Location\AddUpdate.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -489,6 +496,7 @@
     <Content Include="Activity.xss">
       <DependentUpon>Activity.xsd</DependentUpon>
     </Content>
+    <Content Include="Areas\Billing\Views\BaseSessionRate\AddUpdate.cshtml" />
     <None Include="DailyPayments.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>
