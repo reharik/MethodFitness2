@@ -109,6 +109,9 @@ namespace MethodFitness.Core.Domain
             _clients.ForEachItem(appointment.AddClient);
             return appointment;
         }
+        
+        // this one may no longer be necessary
+
         //christ this was a hard one to name. 
         // if there were changes to type or clients return the sessions to client.
         // if sessions were returned to clients we need to re apply them for this appointment.

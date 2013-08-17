@@ -11,14 +11,14 @@ namespace Generator
         void Load();
     }
 
-    public class QaDataLoader : IQADataLoader
+    public class QADataLoader : IQADataLoader
     {
         private readonly IRepository _repository;
         private readonly ISecurityDataService _securityDataService;
         private User _admin1;
         private User _admin2;
 
-        public QaDataLoader(IRepository repository,
+        public QADataLoader(IRepository repository,
             ISecurityDataService securityDataService)
         {
             _repository = repository;

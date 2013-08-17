@@ -11,7 +11,6 @@ using CC.Security.Services;
 using CC.UI.Helpers;
 using CC.UI.Helpers.Configuration;
 using CC.UI.Helpers.Tags;
-using KnowYourTurf.Core.Domain.Tools;
 using MethodFitness.Core;
 using MethodFitness.Core.Config;
 using MethodFitness.Core.CoreViewModelAndDTOs;

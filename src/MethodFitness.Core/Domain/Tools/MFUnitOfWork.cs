@@ -1,7 +1,7 @@
 ﻿using CC.Core.DomainTools;
 using NHibernate;
 
-namespace KnowYourTurf.Core.Domain.Tools
+namespace MethodFitness.Core.Domain.Tools
 {
     public class MFUnitOfWork : UnitOfWork
     {
