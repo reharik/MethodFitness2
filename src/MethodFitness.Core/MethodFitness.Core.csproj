@@ -198,6 +198,8 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="Config\NullSqlServerSessionSourceConfiguration.cs" />
     <Compile Include="NamedQueries\TrainerSessionQuery.cs" />
+    <Compile Include="Rules\NoTrainerHasBeenPaidForPaymentSessions.cs" />
+    <Compile Include="Rules\DeletePaymentRules.cs" />
     <Compile Include="Security\IOperations.cs" />
     <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\DeleteTrainerRules.cs" />

@@ -102,14 +102,26 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var rulesResult = rulesEngineBase.ExecuteRules(payment);
             if (rulesResult.GetLastValidationReport().Success)
             {
+                removeSessionsByPayment(client, payment);
                 client.RemovePayment(payment);
                 payment.Client = null;
-                _saveEntityService.ProcessSave(client);
-                var saveClientNotification = rulesResult.Finish();
+                var validationManager = _saveEntityService.ProcessSave(client);
+                var saveClientNotification = validationManager.Finish();
                 return new CustomJsonResult(saveClientNotification);
             }
             var notification = rulesResult.Finish();
             return new CustomJsonResult(notification);
+        }
+
+        private void removeSessionsByPayment(Client client, Payment payment)
+        {
+            var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString());
+            sessions.Where(x => x.SessionUsed).ForEachItem(y =>
+            {
+                y.InArrears = true;
+                y.PurchaseBatchNumber = string.Empty;
+            });
+            sessions.Where(x => !x.SessionUsed).ForEachItem(client.RemoveSession);
         }
 
         public CustomJsonResult DeleteMultiple(BulkActionViewModel input)
@@ -117,6 +129,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var client = _repository.Find<Client>(input.ParentId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
             IValidationManager validationManager = new ValidationManager(_repository);
+            
             input.EntityIds.ForEachItem(x =>
             {
                 var payment = client.Payments.FirstOrDefault(i => i.EntityId == x);
@@ -124,11 +137,17 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 var report = validationManager.GetLastValidationReport();
                 if (report.Success)
                 {
+                    removeSessionsByPayment(client, payment);
                     client.RemovePayment(payment);
                     payment.Client = null;
                 }
             });
-            _saveEntityService.ProcessSave(client);
+            if (validationManager.GetLastValidationReport().Success)
+            {
+                var processSave = _saveEntityService.ProcessSave(client);
+                var saveClientNotification = processSave.Finish();
+                return new CustomJsonResult(saveClientNotification);
+            }
             var notification = validationManager.Finish();
             return new CustomJsonResult(notification);
         }

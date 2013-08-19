@@ -280,8 +280,12 @@ MF.mixins.defaultGridEventsMixin = {
         if (confirm("Are you sure you would like to delete this Item?")) {
             var ids = cc.gridMultiSelect.getCheckedBoxes(this.options.gridId);
             MF.repository.ajaxGet(this.options.deleteMultipleUrl, $.param({ "EntityIds": ids }, true))
-                .done($.proxy(function () { this.reloadGrid() }, this));
+                .done($.proxy(function (result) { this.bulkDeleteSuccess(result) }, this));
         }
+    },
+    bulkDeleteSuccess:function(result){
+
+        this.reloadGrid();
     },
     reloadGrid: function () {
         MF.vent.unbind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
