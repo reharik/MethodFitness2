@@ -43,6 +43,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 _Title = WebLocalizationKeys.CLIENTS.ToString()
             };
             model.headerButtons.Add("new");
+            model.headerButtons.Add("delete");
             return new CustomJsonResult(model);
         }
 
