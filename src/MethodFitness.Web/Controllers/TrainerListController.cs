@@ -35,6 +35,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
                 gridDef = _trainerListGrid.GetGridDefinition(url,user)
             };
             model.headerButtons.Add("new");
+            model.headerButtons.Add("delete");
             return new CustomJsonResult(model);
         }
 

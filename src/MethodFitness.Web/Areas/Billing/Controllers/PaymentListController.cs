@@ -41,6 +41,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 ParentId = input.EntityId
             };
             model.headerButtons.Add("new");
+            model.headerButtons.Add("delete");
             return new CustomJsonResult(model);
         }
 
