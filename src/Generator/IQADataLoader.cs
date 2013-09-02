@@ -11,7 +11,7 @@ namespace Generator
         void Load();
     }
 
-    public class QaDataLoader : IQADataLoader
+    public class QADataLoader : IQADataLoader
     {
         private readonly IRepository _repository;
         private readonly ISecurityDataService _securityDataService;
@@ -19,7 +19,7 @@ namespace Generator
         private User _admin2;
         private BaseSessionRate _baseSessionRate;
 
-        public QaDataLoader(IRepository repository,
+        public QADataLoader(IRepository repository,
             ISecurityDataService securityDataService)
         {
             _repository = repository;
@@ -29,9 +29,9 @@ namespace Generator
         public void Load()
         {
             createCompany();
+            createUser();
             createLocations();
             createBaseSessionRates();
-            createUser();
             CreateClients();
             _repository.Commit();
         }

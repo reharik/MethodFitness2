@@ -63,7 +63,7 @@ namespace MethodFitness.Core.Domain
         {
             Clients.ForEachItem(x =>
             {
-                var sessions = x.Sessions.Where(s => s.Appointment == null && s.AppointmentType == AppointmentType);
+                var sessions = x.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == AppointmentType);
                 if (sessions.Any())
                 {
                     var session = sessions.OrderBy(s => s.CreatedDate).First();
@@ -108,6 +108,9 @@ namespace MethodFitness.Core.Domain
             _clients.ForEachItem(appointment.AddClient);
             return appointment;
         }
+        
+        // this one may no longer be necessary
+
         //christ this was a hard one to name. 
         // if there were changes to type or clients return the sessions to client.
         // if sessions were returned to clients we need to re apply them for this appointment.
