@@ -164,17 +164,17 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             {
                 return Json(notification, JsonRequestBehavior.AllowGet);
             }
-            // check if new or there were any changes.
-            // if so clear all sessions.
-            var applySessionsForClients = appointment.CheckForChangesAndReturnNeedToSetSessions(input.ClientsDtos.selectedItems, input.AppointmentType);
+//            // check if new or there were any changes.
+//            // if so clear all sessions.
+//            var applySessionsForClients = appointment.CheckForChangesAndReturnNeedToSetSessions(input.ClientsDtos.selectedItems, input.AppointmentType);
             // map or remap values
             mapToDomain(input, appointment);
             // apply or reapply the sessions
-            if (applySessionsForClients)
-            {
-                appointment.SetSessionsForClients();
-            }
-            
+//            if (applySessionsForClients)
+//            {
+//                appointment.SetSessionsForClients();
+//            }
+//            
             var crudManager = _saveEntityService.ProcessSave(appointment);
             notification = crudManager.Finish();
             return new CustomJsonResult(notification);
@@ -182,6 +182,8 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
 
         private Notification validateAppointment(User user, AppointmentViewModel input)
         {
+            //TODO When we check here for retro we must update sessions since at this point they 
+            //TODO have already been deducted or should be deducted
             var notification = new Notification { Success = true };
             var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var startTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.StartTimeString);

@@ -202,6 +202,8 @@
     <Compile Include="NamedQueries\TrainerSessionQuery.cs" />
     <Compile Include="Rules\LocationHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\DeleteLocationRules.cs" />
+    <Compile Include="Rules\NoTrainerHasBeenPaidForPaymentSessions.cs" />
+    <Compile Include="Rules\DeletePaymentRules.cs" />
     <Compile Include="Security\IOperations.cs" />
     <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\DeleteTrainerRules.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISessionContext.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />
+    <Compile Include="Services\SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

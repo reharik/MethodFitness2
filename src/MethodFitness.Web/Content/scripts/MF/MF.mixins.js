@@ -314,6 +314,10 @@ MF.mixins.defaultGridEventsMixin = {
         $.proxy(function () { this.reloadGrid() }, this);
     },
 
+    bulkDeleteSuccess:function(result){
+
+        this.reloadGrid();
+    },
     reloadGrid: function () {
         MF.vent.unbind(this.options.gridId + ":AddUpdateItem", this.editItem, this);
         MF.vent.unbind(this.options.gridId + ":DisplayItem", this.displayItem, this);
