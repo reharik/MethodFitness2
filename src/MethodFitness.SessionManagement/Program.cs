@@ -1,4 +1,5 @@
 ﻿using System;
+using CC.Core.DomainTools;
 using MethodFitness.Core.Services;
 using StructureMap;
 
@@ -6,18 +7,20 @@ namespace MethodFitness.SessionManagement
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Initialize();
             var sessionManager = ObjectFactory.Container.GetInstance<ISessionManager>();
+            var repository = ObjectFactory.Container.GetInstance<IRepository>();
             sessionManager.CompleteAppointments();
+            repository.Commit();
             Console.ReadLine();
         }
 
         private static void Initialize()
         {
             // Bootstrapper.Restart();
-//            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
+            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
 
             ObjectFactory.Initialize(x =>
             {

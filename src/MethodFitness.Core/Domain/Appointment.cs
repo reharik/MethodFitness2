@@ -64,7 +64,7 @@ namespace MethodFitness.Core.Domain
         {
             Clients.ForEachItem(x =>
             {
-                var sessions = x.Sessions.Where(s => s.Appointment == null && s.AppointmentType == AppointmentType);
+                var sessions = x.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == AppointmentType);
                 if (sessions.Any())
                 {
                     var session = sessions.OrderBy(s => s.CreatedDate).First();

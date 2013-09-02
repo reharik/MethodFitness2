@@ -28,8 +28,8 @@ namespace Generator
         public void Load()
         {
             createCompany();
-            createLocations();
             createUser();
+            createLocations();
             CreateClients();
             _repository.Commit();
         }
