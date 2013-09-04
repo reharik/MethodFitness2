@@ -14,7 +14,6 @@ namespace MethodFitness.SessionManagement
             var repository = ObjectFactory.Container.GetInstance<IRepository>();
             sessionManager.CompleteAppointments();
             repository.Commit();
-            Console.ReadLine();
         }
 
         private static void Initialize()
