@@ -36,8 +36,9 @@
 						 src\MethodFitness.Web\Logs\**; 		 "
                 />
      <SessionCompleteTaskFiles Include="src\MethodFitness.SessionManagement\bin\debug\*.*;"
-                               Exclude="src\MethodFitness.SessionManagement\bin\debug\MethodFitness.SessionManagement.exe.config; />"</ItemGroup>
-   <Time>
+                               Exclude="src\MethodFitness.SessionManagement\bin\debug\MethodFitness.SessionManagement.exe.config;" />
+  </ItemGroup>
+  <Time>
       <Output TaskParameter="Month" PropertyName="Month" />
       <Output TaskParameter="Day" PropertyName="Day" />
       <Output TaskParameter="Year" PropertyName="Year" />
