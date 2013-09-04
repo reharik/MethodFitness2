@@ -38,6 +38,8 @@
 						 src\MethodFitness.Web\connectionstrings.config;
 						 src\MethodFitness.Web\Logs\**; 		 "
                 />
+     <SessionCompleteTaskFiles Include="src\MethodFitness.SessionManagement\bin\debug\*.*;" />
+
    </ItemGroup>
    <Time>
       <Output TaskParameter="Month" PropertyName="Month" />
@@ -49,12 +51,17 @@
 
    
    <MakeDir Directories="$(OutputDirectory)"  />
+   <MakeDir Directories="$(OutputDirectory)\Tasks"  />
+   <MakeDir Directories="$(OutputDirectory)\Tasks\SessionManagement"  />
+
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
+   <Copy SourceFiles="@(SessionCompleteTaskFiles)" DestinationFolder="$(OutputDirectory)\Tasks\SessionManagement\%(RecursiveDir)" />
+
    <Zip Files="@(WebFiles)"
      WorkingDirectory="f:\WebSites\BackUp\MethodFitness_PROD"
      ZipFileName="f:\WebSites\BackUp\MethodFitness_PROD\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
      ZipLevel="9" />
- </Target>
+  </Target>
 
   <Target Name="_build">
     <MSBuild Projects="$(SourcePath)\MethodFitness_build.sln" Properties="Configuration=Release" ContinueOnError="false" />
