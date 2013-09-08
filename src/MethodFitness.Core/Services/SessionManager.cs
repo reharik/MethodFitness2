@@ -43,7 +43,7 @@ namespace MethodFitness.Core.Services
         public void CompleteAppointments()
         {
             IValidationManager validationManager = new ValidationManager(_repository);
-            var appointments = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now.AddDays(2) && !x.Completed).ToList();
+            var appointments = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).ToList();
             appointments.ToList().ForEachItem(x =>
                 {
                     x.SetSessionsForClients();

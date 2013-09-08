@@ -60,7 +60,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
 //            var trainer = _repository.Query<User>(x=>x.EntityId == input.ParentId).FetchMany(x=>x.Sessions).ThenFetch(x=>x.Appointment).ThenFetchMany(x=>x.Clients).FirstOrDefault();
 //            var sessions = trainer.Sessions.Where(x => !x.TrainerPaid).OrderBy(x=>x.InArrears).ThenBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date);
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
-            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.ParentId && x.AppointmentDate <= endDate);
+            var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.ParentId && x.AppointmentDate <= endDate && !x.TrainerPaid);
             var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos, input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, user);
             return new CustomJsonResult(gridItemsViewModel);

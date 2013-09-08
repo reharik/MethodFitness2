@@ -46,7 +46,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 .FetchMany(x => x.TrainerPayments)
                 .ThenFetchMany(x => x.TrainerPaymentSessionItems)
                 .ThenFetch(x=>x.Appointment)    
-                .ThenFetchMany(x=>x.Clients).FirstOrDefault();
+                .ThenFetchMany(x=>x.Clients).ToList().FirstOrDefault();
             var payment = trainer.TrainerPayments.FirstOrDefault(x => x.EntityId == input.EntityId);
             var model = new TrainerReceiptViewModel
                                               {
