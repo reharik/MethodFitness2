@@ -301,6 +301,11 @@ namespace MethodFitness.Web.Controllers
             remove.ForEachItem(trainer.RemoveClient);
             return trainer;
         }
+
+        public ActionResult SetActiveStatus(ViewModel input)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TrainerViewModel:ViewModel

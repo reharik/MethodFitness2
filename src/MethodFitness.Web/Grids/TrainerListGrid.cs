@@ -28,7 +28,8 @@ namespace MethodFitness.Web.Areas.Schedule.Grids
                 .ToPerformAction(ColumnAction.Redirect).ImageName("pay_trainer.png");
             GridBuilder.SetSearchField(x => x.LastName);
             GridBuilder.SetDefaultSortColumn(x => x.LastName);
-
+            GridBuilder.ImageButtonColumn().ForAction<TrainerController>(x => x.SetActiveStatus(null))
+                .ToPerformAction(ColumnAction.Other).ImageName("pay_trainer.png");
             return this;
         }
     }

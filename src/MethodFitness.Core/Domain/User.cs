@@ -35,7 +35,7 @@ namespace MethodFitness.Core.Domain
         public virtual string ImageUrl { get; set; }
         public virtual string Color { get; set; }
         public virtual int ClientRateDefault { get; set; }
-        
+        public virtual bool IsActive { get; set; }
         public virtual UserLoginInfo UserLoginInfo { get; set; }
         public virtual string FullNameLNF
         {
