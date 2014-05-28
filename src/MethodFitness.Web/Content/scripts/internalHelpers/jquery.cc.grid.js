@@ -37,6 +37,7 @@ if (typeof cc.grid == 'undefined') {
                 $(this).find(".cbox").parent().addClass("jqg_cb");
                 $("div.form-scroll-inner").height( window.innerHeight-180);
                 $(this).setGridHeight($("div.form-scroll-inner").height()-36  );
+                MF.vent.trigger("gridComplete");
             },
             sortorder: "asc",
             sortname:gridDefinition.DefaultSortColumn ? gridDefinition.DefaultSortColumn :"", //  cc.grid.columnService.defaultSortColumnName(gridDefinition),
