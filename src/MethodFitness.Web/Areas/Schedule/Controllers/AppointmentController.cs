@@ -105,7 +105,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             if (_userPermissionService.IsAllowed("/Calendar/SetAppointmentForOthers"))
             {
-                var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
+                var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Name == "Trainer"));
                 model._TrainerEntityIdList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true);
             }else
             {

@@ -34,24 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CC.Core">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.Core.Utilities">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Core.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.Security">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.UI.Helpers">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.UI.Helpers.dll</HintPath>
-    </Reference>
     <Reference Include="FluentMigrator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\FluentMigrator.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlTags">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -74,6 +59,7 @@
     <Compile Include="Iteration2\20080_Create_Activity_Report_Sproc.cs" />
     <Compile Include="Iteration2\20090_Alter_TrainerSession_View.cs" />
     <Compile Include="Iteration2\20100_Create_BaseSessionRate.cs" />
+    <Compile Include="Iteration2\20110_Add_IsActive_Column_To_Users_and_clients.cs" />
     <Compile Include="Iteration_0\CreateInitialOperations.cs" />
     <Compile Include="Iteration_0\CreateInitialDB.cs" />
     <Compile Include="Iteration_0\CreateInitialPermissions.cs" />
@@ -89,12 +75,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="DBFluentMigration.dll.config" />
     <Compile Include="Iteration_1\10030_AddTrainerSessionVerification.cs" />
     <Compile Include="Iteration_1\10090_Add_Notes_Column_To_Payment.cs" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CC.Core\CC.Core.csproj">
+      <Project>{5E0B0CA2-BD5E-4953-A336-2AADC00CD81B}</Project>
+      <Name>CC.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MethodFitness.Core\MethodFitness.Core.csproj">
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
       <Name>MethodFitness.Core</Name>

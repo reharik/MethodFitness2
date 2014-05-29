@@ -1,5 +1,4 @@
 ﻿using CC.Core.DomainTools;
-using CC.Security.Interfaces;
 using DBFluentMigration.Iteration_0;
 using KnowYourTurf.Web.Security;
 using MethodFitness.Core;

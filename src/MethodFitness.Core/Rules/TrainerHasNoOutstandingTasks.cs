@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
@@ -22,7 +23,7 @@ namespace MethodFitness.Core.Rules
         {
             var result = new ValidationReport { Success = true };
             var _trainer = trainer as User;
-            var appointments = _repository.Query<Appointment>(x => x.Trainer == _trainer);
+            var appointments = _trainer.Appointments.Where(x=>x.StartTime> DateTime.Now);
             if (appointments.Any())
             {
                 result.Success = false;
