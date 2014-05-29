@@ -316,12 +316,13 @@ namespace MethodFitness.Web.Controllers
                 {
                     trainer.Archived = true;
                 }
+                validationManager = _saveEntityService.ProcessSave(trainer, validationManager);
             }
             else
             {
                 trainer.Archived = false;
+                validationManager = _saveEntityService.ProcessSave(trainer);
             }
-            validationManager = _saveEntityService.ProcessSave(trainer, validationManager);
             var notification = validationManager.Finish();
             return new CustomJsonResult(notification);
         }
