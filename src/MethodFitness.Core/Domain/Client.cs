@@ -38,7 +38,7 @@ namespace MethodFitness.Core.Domain
         [ValidateNonEmpty]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
-        public virtual bool InActive { get; set; }
+        public virtual bool Archived { get; set; }
         public virtual string FullNameLNF
         {
             get { return LastName + ", " + FirstName; }
