@@ -8,14 +8,14 @@ namespace DefaultNamespace
     {
         public override void Up()
         {
-            Create.Column("IsActive").OnTable("User").AsBoolean();
-            Create.Column("IsActive").OnTable("Client").AsBoolean();
+            Create.Column("InActive").OnTable("User").AsBoolean();
+            Create.Column("InActive").OnTable("Client").AsBoolean();
         }
 
         public override void Down()
         {
-            Delete.Column("IsActive").FromTable("User");
-            Delete.Column("IsActive").FromTable("Client");
+            Delete.Column("InActive").FromTable("User");
+            Delete.Column("InActive").FromTable("Client");
         }
     }
 }

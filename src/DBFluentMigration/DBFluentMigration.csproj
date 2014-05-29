@@ -74,7 +74,7 @@
     <Compile Include="Iteration2\20080_Create_Activity_Report_Sproc.cs" />
     <Compile Include="Iteration2\20090_Alter_TrainerSession_View.cs" />
     <Compile Include="Iteration2\20100_Create_BaseSessionRate.cs" />
-    <Compile Include="Iteration2\Copy of 20010_Add_IsActive_Column_To_Users_and_clients.cs" />
+    <Compile Include="Iteration2\20110_Add_IsActive_Column_To_Users_and_clients.cs" />
     <Compile Include="Iteration_0\CreateInitialOperations.cs" />
     <Compile Include="Iteration_0\CreateInitialDB.cs" />
     <Compile Include="Iteration_0\CreateInitialPermissions.cs" />
