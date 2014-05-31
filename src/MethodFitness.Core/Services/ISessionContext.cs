@@ -90,8 +90,15 @@ namespace MethodFitness.Core.Services
     }
 
 
-    public class DataLoaderSessionContext : ISessionContext, ICCSessionContext
+    public class SystemSessionContext : ISessionContext, ICCSessionContext
     {
+        private readonly IRepository _repository;
+
+        public SystemSessionContext(IRepository repository)
+        {
+            _repository = repository;
+        }
+
         public int GetCompanyId()
         {
             return 1;
@@ -134,7 +141,7 @@ namespace MethodFitness.Core.Services
 
         public IUser GetCurrentUser()
         {
-            throw new NotImplementedException();
+            return _repository.Load<User>(GetUserId());
         }
 
         public string MapPath(string url)

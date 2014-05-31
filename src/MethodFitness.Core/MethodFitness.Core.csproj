@@ -42,24 +42,12 @@
     <Reference Include="Castle.Components.Validator">
       <HintPath>..\packages\Castle.Components.Validator.2.5.0\lib\NET40\Castle.Components.Validator.dll</HintPath>
     </Reference>
-    <Reference Include="CC.Core">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.Core.Utilities">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Core.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.Security">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.UI.Helpers">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.UI.Helpers.dll</HintPath>
+    <Reference Include="CC.Security, Version=1.0.0.22, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CC.Security\bin\Debug\CC.Security.dll</HintPath>
     </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlTags, Version=1.0.0.22, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
@@ -144,6 +132,7 @@
     <Compile Include="CoreViewModelAndDTOs\MembershipDto.cs" />
     <Compile Include="CoreViewModelAndDTOs\TrainerSessionDto.cs" />
     <Compile Include="Domain\Appointment.cs" />
+    <Compile Include="Domain\BaseSessionRate.cs" />
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\Client.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
@@ -152,6 +141,7 @@
     <Compile Include="Domain\Persistence\CompanyMap.cs" />
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
+    <Compile Include="Domain\Persistence\BaseSessionRateMap.cs" />
     <Compile Include="Domain\Persistence\TrainerSessionMap.cs" />
     <Compile Include="Domain\Persistence\TrainerSessionVerificationMap.cs" />
     <Compile Include="Domain\Persistence\OperationsMap.cs" />
@@ -198,6 +188,10 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="Config\NullSqlServerSessionSourceConfiguration.cs" />
     <Compile Include="NamedQueries\TrainerSessionQuery.cs" />
+    <Compile Include="Rules\LocationHasNoOutstandingTasks.cs" />
+    <Compile Include="Rules\DeleteLocationRules.cs" />
+    <Compile Include="Rules\NoTrainerHasBeenPaidForPaymentSessions.cs" />
+    <Compile Include="Rules\DeletePaymentRules.cs" />
     <Compile Include="Security\IOperations.cs" />
     <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
     <Compile Include="Rules\DeleteTrainerRules.cs" />
@@ -218,11 +212,13 @@
     <Compile Include="Services\IPermissionService.cs" />
     <Compile Include="Services\ISessionContext.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />
+    <Compile Include="Services\SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Scripts\jquery-1.9.1.min.map" />
   </ItemGroup>
@@ -230,6 +226,16 @@
     <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CC.Core\CC.Core.csproj">
+      <Project>{5E0B0CA2-BD5E-4953-A336-2AADC00CD81B}</Project>
+      <Name>CC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HtmlTags\HtmlTags\HtmlTags.csproj">
+      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
+      <Name>HtmlTags</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

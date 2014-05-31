@@ -237,3 +237,7 @@ div.headerInput input{
 .thumbsLeft{
     padding: 10px 10px 10px 0px;
 }
+
+.ui-jqgrid tr.gridRowGrey td{
+    background-color: #e9e9e3 !important;
+}

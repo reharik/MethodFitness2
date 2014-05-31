@@ -1,3 +1,4 @@
+using CC.Core.Domain;
 using CC.Core.Services;
 
 namespace MethodFitness.Core.Rules
@@ -11,7 +12,7 @@ namespace MethodFitness.Core.Rules
             _systemClock = systemClock;
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : class
+        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : Entity
         {
             var result = new ValidationReport { Success = true };
 //            var count = 0;

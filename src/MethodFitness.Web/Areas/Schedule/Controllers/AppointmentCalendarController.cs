@@ -55,7 +55,7 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var trainersDto = new List<TrainerLegendDto>();
             if(user.UserRoles.Any(x=>x.Name==UserType.Administrator.ToString()))
             {
-                var trainers = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == UserType.Trainer.ToString()));
+                var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Name == UserType.Trainer.ToString()));
                 trainersDto = trainers.Select(x=> new TrainerLegendDto {Name=processTrainerName(x),
                     Color=x.Color,
                 EntityId = x.EntityId}).ToList();

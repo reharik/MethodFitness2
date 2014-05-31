@@ -35,8 +35,10 @@
 						 src\MethodFitness.Web\connectionstrings.config;
 						 src\MethodFitness.Web\Logs\**; 		 "
                 />
-   </ItemGroup>
-   <Time>
+     <SessionCompleteTaskFiles Include="src\MethodFitness.SessionManagement\bin\debug\*.*;"
+                               Exclude="src\MethodFitness.SessionManagement\bin\debug\MethodFitness.SessionManagement.exe.config;" />
+  </ItemGroup>
+  <Time>
       <Output TaskParameter="Month" PropertyName="Month" />
       <Output TaskParameter="Day" PropertyName="Day" />
       <Output TaskParameter="Year" PropertyName="Year" />
@@ -46,7 +48,11 @@
 
    
    <MakeDir Directories="$(OutputDirectory)"  />
+   <MakeDir Directories="$(OutputDirectory)\Tasks"  />
+   <MakeDir Directories="$(OutputDirectory)\Tasks\SessionManagement"  />
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
+   <Copy SourceFiles="@(SessionCompleteTaskFiles)" DestinationFolder="$(OutputDirectory)\Tasks\SessionManagement\%(RecursiveDir)" />
+
    <Zip Files="@(WebFiles)"
      WorkingDirectory="f:\WebSites\BackUp\MethodFitness_QA"
      ZipFileName="f:\WebSites\BackUp\MethodFitness_QA\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"

@@ -74,18 +74,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Castle.Components.Validator.2.5.0\lib\NET40\Castle.Components.Validator.dll</HintPath>
     </Reference>
-    <Reference Include="CC.Core">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.Core.Utilities">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Core.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.Security">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="CC.UI.Helpers">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\CC.UI.Helpers.dll</HintPath>
-    </Reference>
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
@@ -101,9 +89,6 @@
     <Reference Include="HibernatingRhinos.Profiler.Appender.NHibernateLog4Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\HibernatingRhinos.Profiler.Appender.NHibernateLog4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlTags">
-      <HintPath>..\packages\CC.Core.1.0.0.22\lib\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -215,6 +200,7 @@
       <DependentUpon>Activity.xsd</DependentUpon>
     </Compile>
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
+    <Compile Include="Areas\Billing\Controllers\BaseSessionRateController.cs" />
     <Compile Include="Areas\Billing\Controllers\VerifiedTrainerSessionsController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationListController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationController.cs" />
@@ -254,6 +240,8 @@
     <Compile Include="Config\CustomJsonResult.cs" />
     <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
     <Compile Include="Config\AutomapperBootstrapper.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\LocationListController.cs" />
     <Compile Include="Controllers\ScheduledTasksController.cs" />
     <Compile Include="CustomWebViewPage.cs" />
     <Compile Include="DailyPayments.Designer.cs">
@@ -263,6 +251,7 @@
     </Compile>
     <Compile Include="Filters\AddUserToViewModelFilter.cs" />
     <Compile Include="Grids\ClientListGrid.cs" />
+    <Compile Include="Grids\LocationListGrid.cs" />
     <Compile Include="Grids\TrainerSessionVerificationListGrid.cs" />
     <Compile Include="Grids\SessionVerificationListGrid.cs" />
     <Compile Include="Grids\TrainerPaymentListGrid.cs" />
@@ -339,6 +328,9 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Views\Location\AddUpdate.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -392,6 +384,18 @@
     <Content Include="Views\Shared\PhoneTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CC.Core\CC.Core.csproj">
+      <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
+      <Name>CC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Security\CC.Security.csproj">
+      <Project>{DBA372FE-3D52-45B3-AF82-B37696328764}</Project>
+      <Name>CC.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.UI.Helpers\CC.UI.Helpers.csproj">
+      <Project>{0DBFB19C-E106-4807-AA4B-FC8D128A3438}</Project>
+      <Name>CC.UI.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MethodFitness.Core\MethodFitness.Core.csproj">
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
       <Name>MethodFitness.Core</Name>
@@ -489,6 +493,7 @@
     <Content Include="Activity.xss">
       <DependentUpon>Activity.xsd</DependentUpon>
     </Content>
+    <Content Include="Areas\Billing\Views\BaseSessionRate\AddUpdate.cshtml" />
     <None Include="DailyPayments.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>

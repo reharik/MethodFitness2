@@ -38,6 +38,7 @@ namespace MethodFitness.Core.Domain
         [ValidateNonEmpty]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
+        public virtual bool Archived { get; set; }
         public virtual string FullNameLNF
         {
             get { return LastName + ", " + FirstName; }
@@ -91,6 +92,8 @@ namespace MethodFitness.Core.Domain
             Source = self.Source;
             StartDate = self.StartDate;
         }
+
+        // this may not be necessary anymore
 
         public virtual void RestoreSession(Session session)
         {

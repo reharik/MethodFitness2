@@ -11,14 +11,15 @@ namespace Generator
         void Load();
     }
 
-    public class QaDataLoader : IQADataLoader
+    public class QADataLoader : IQADataLoader
     {
         private readonly IRepository _repository;
         private readonly ISecurityDataService _securityDataService;
         private User _admin1;
         private User _admin2;
+        private BaseSessionRate _baseSessionRate;
 
-        public QaDataLoader(IRepository repository,
+        public QADataLoader(IRepository repository,
             ISecurityDataService securityDataService)
         {
             _repository = repository;
@@ -28,10 +29,25 @@ namespace Generator
         public void Load()
         {
             createCompany();
-            createLocations();
             createUser();
+            createLocations();
+            createBaseSessionRates();
             CreateClients();
             _repository.Commit();
+        }
+
+        private void createBaseSessionRates()
+        {
+            _baseSessionRate = new BaseSessionRate
+                {
+                    FullHour = 65,
+                    HalfHour = 40,
+                    FullHourTenPack = 600,
+                    HalfHourTenPack = 350,
+                    Pair = 45,
+                    PairTenPack = 400
+                };
+            _repository.Save(_baseSessionRate);
         }
 
 
@@ -122,7 +138,7 @@ namespace Generator
                                            MobilePhone = "512.228.6069",
                                            StartDate = DateTime.Now,
                                            CreatedDate = DateTime.Now,
-                                           SessionRates = new SessionRates(true)
+                                           SessionRates = new SessionRates(_baseSessionRate)
                                        };
                         var client2 = new Client
                         {
@@ -137,7 +153,7 @@ namespace Generator
                             MobilePhone = "512.228.6069",
                             StartDate = DateTime.Now,
                             CreatedDate = DateTime.Now,
-                            SessionRates = new SessionRates(true)
+                            SessionRates = new SessionRates(_baseSessionRate)
                         };
                         var client3 = new Client
                         {
@@ -152,7 +168,7 @@ namespace Generator
                             MobilePhone = "512.228.6069",
                             StartDate = DateTime.Now,
                             CreatedDate = DateTime.Now,
-                            SessionRates = new SessionRates(true)
+                            SessionRates = new SessionRates(_baseSessionRate)
                         };
                         var client4 = new Client
                         {
@@ -167,7 +183,7 @@ namespace Generator
                             MobilePhone = "512.228.6069",
                             StartDate = DateTime.Now,
                             CreatedDate = DateTime.Now,
-                            SessionRates = new SessionRates(true)
+                            SessionRates = new SessionRates(_baseSessionRate)
                         };
                         var client5 = new Client
                         {
@@ -182,7 +198,7 @@ namespace Generator
                             MobilePhone = "512.228.6069",
                             StartDate = DateTime.Now,
                             CreatedDate = DateTime.Now,
-                            SessionRates = new SessionRates(true)
+                            SessionRates = new SessionRates(_baseSessionRate)
                         };
                         _admin1.AddClient(client1, _admin1.ClientRateDefault);
                         _admin1.AddClient(client2, _admin1.ClientRateDefault);

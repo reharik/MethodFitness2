@@ -611,15 +611,34 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
     viewLoaded:function(){
         this.setupBindings();
         MF.vent.bind(this.options.gridId+":Redirect",this.showPayGrid,this);
+        MF.vent.bind(this.options.gridId+":Other",this.archiveTrainer,this);
     },
     _setupBindings:function(){
-         MF.vent.bind("Redirect",this.showPayGrid,this);
+        MF.vent.bind("Redirect",this.showPayGrid,this);
+        MF.vent.bind("gridComplete",this.modifyArchiveColumn,this);
+//        MF.vent.bind("grid:"+this.id+":pageLoaded",this.modifyArchiveColumn,this);
     },
     _unbindBindings:function(){
          MF.vent.bind("Redirect",this.showPayGrid,this);
     },
+    modifyArchiveColumn:function(){
+        var grid = $("#" + this.options.gridId);
+        var rows = grid.jqGrid('getRowData');
+        grid.find("tr").not('.jqgfirstrow').each(function(idx,row){
+            var span = $($(row).find("td").last().find("span"));
+            if(span.text().indexOf('True')>-1){
+                span.text('UnArchive');
+                $(row).addClass("gridRowGrey");
+            }else{
+                span.text('Archive');
+            }
+        });
+    },
     showPayGrid:function(id){
         MF.vent.trigger("route","paytrainerlist/"+id,true);
+    },
+    archiveTrainer:function(id){
+        MF.repository.ajaxGet(this.options.ArchiveTrainerUrl,{EntityId:id}).done($.proxy(this.successHandler,this));
     },
     onClose:function(){
         this.unbindBindings();

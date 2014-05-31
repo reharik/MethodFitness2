@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using CC.Core.CoreViewModelAndDTOs;
 using MethodFitness.Core;
+using MethodFitness.Core.Domain;
 using MethodFitness.Web.Areas.Schedule.Controllers;
 
 namespace MethodFitness.Web.Models

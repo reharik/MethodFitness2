@@ -14,6 +14,7 @@ namespace MethodFitness.Web.Config
             Mapper.CreateMap<Payment, PaymentViewModel>();
             Mapper.CreateMap<Appointment, AppointmentViewModel>();
             Mapper.CreateMap<User, TrainerViewModel>();
+            Mapper.CreateMap<Location, LocationViewModel>();
         }
 
         public static void Bootstrap()

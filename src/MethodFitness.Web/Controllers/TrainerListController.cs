@@ -29,12 +29,14 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             var user = _sessionContext.GetCurrentUser();
             var url = UrlContext.GetUrlForAction<TrainerListController>(x => x.Trainers(null));
-            var model = new ListViewModel()
+            var model = new TrainerListViewModel()
             {
+                ArchiveTrainerUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.TrainerStatus(null)),
                 addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
                 gridDef = _trainerListGrid.GetGridDefinition(url,user)
             };
             model.headerButtons.Add("new");
+            model.headerButtons.Add("delete");
             return new CustomJsonResult(model);
         }
 
@@ -46,5 +48,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             var gridItemsViewModel = _trainerListGrid.GetGridItemsViewModel(input.PageSortFilter, items,user);
             return new CustomJsonResult(gridItemsViewModel);
         }
+    }
+
+    public class TrainerListViewModel : ListViewModel
+    {
+        public string ArchiveTrainerUrl { get; set; }
     }
 }

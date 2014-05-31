@@ -45,15 +45,19 @@ namespace Generator
                                                .Ctor<SqlServerSessionSourceConfiguration>("connectionStr");
             For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory());
 
-            For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());
+            For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession(new SystemSaveUpdateInterceptor()));
 
             For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Use<UnitOfWork>();
 
             For<IRepository>().Use<Repository>();
-            // no idea why this pos needs to be declared explicitly. very annoying
-            For<IQADataLoader>().Use<QaDataLoader>();
 
-            For<ISessionContext>().Use<DataLoaderSessionContext>();
+            // no idea why this pos needs to be declared explicitly. very annoying
+            // looks like it was because of the capital A.  I renamed it then commented it out.
+            // if no problem then I can delete this whole mess.
+            //            For<IQADataLoader>().Use<QaDataLoader>();
+//            For<IQADataLoader>().Use<QADataLoader>();
+
+            For<ISessionContext>().Use<SystemSessionContext>();
 
             For<ILocalizationDataProvider>().Use<LocalizationDataProvider>();
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();

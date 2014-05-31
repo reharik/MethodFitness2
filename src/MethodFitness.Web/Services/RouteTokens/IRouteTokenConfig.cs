@@ -53,6 +53,11 @@ namespace MethodFitness.Web.Services.ViewOptions
             _builder.UrlForForm<TrainerMetricController>(x => x.Display(null), AreaName.Reporting).ViewName("TrainerMetricView").End();
             _builder.UrlForForm<ActivityController>(x => x.Display(null), AreaName.Reporting).ViewName("ActivityView").End();
 
+            _builder.UrlForList<LocationListController>(x => x.ItemList(null)).End();
+            _builder.UrlForForm<LocationController>(x => x.AddUpdate(null)).End();
+
+            _builder.UrlForForm<BaseSessionRateController>(x => x.AddUpdate(null), AreaName.Billing).NoBubbleUp().End();
+
             return _builder.Items;
         }
     }

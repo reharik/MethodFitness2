@@ -19,6 +19,7 @@ using MethodFitness.Web.Areas.Portfolio.Models.BulkAction;
 using MethodFitness.Web.Config;
 using StructureMap;
 using xVal.ServerSide;
+using NHibernate.Linq;
 
 namespace MethodFitness.Web.Controllers
 {
@@ -300,6 +301,30 @@ namespace MethodFitness.Web.Controllers
             }
             remove.ForEachItem(trainer.RemoveClient);
             return trainer;
+        }
+
+        public ActionResult TrainerStatus(ViewModel input)
+        {
+            var trainers = _repository.Query<User>(x=>x.EntityId == input.EntityId).FetchMany(x=>x.Appointments);
+            var trainer = trainers.FirstOrDefault();
+            IValidationManager validationManager = null;
+            if (!trainer.Archived)
+            {
+                var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteTrainerRules");
+                validationManager = rulesEngineBase.ExecuteRules(trainer);
+                if (validationManager.GetLastValidationReport().Success)
+                {
+                    trainer.Archived = true;
+                }
+                validationManager = _saveEntityService.ProcessSave(trainer, validationManager);
+            }
+            else
+            {
+                trainer.Archived = false;
+                validationManager = _saveEntityService.ProcessSave(trainer);
+            }
+            var notification = validationManager.Finish();
+            return new CustomJsonResult(notification);
         }
     }
 
