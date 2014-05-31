@@ -61,19 +61,22 @@ namespace MethodFitness.Core.Domain
         
         public virtual void SetSessionsForClients()
         {
-            Clients.ForEachItem(x =>
+            Clients.ForEachItem(SetSessionForClient);
+        }
+
+        private void SetSessionForClient(Client client)
+        {
+            var sessions = client.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == AppointmentType);
+            if (sessions.Any())
             {
-                var sessions = x.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == AppointmentType);
-                if (sessions.Any())
-                {
-                    var session = sessions.OrderBy(s => s.CreatedDate).First();
-                    session.Appointment = this;
-                    session.Trainer = Trainer;
-                    session.SessionUsed = true;
-                }
-                else
-                {
-                    var session = new Session
+                var session = sessions.OrderBy(s => s.CreatedDate).First();
+                session.Appointment = this;
+                session.Trainer = Trainer;
+                session.SessionUsed = true;
+            }
+            else
+            {
+                var session = new Session
                     {
                         Appointment = this,
                         Trainer = Trainer,
@@ -81,10 +84,9 @@ namespace MethodFitness.Core.Domain
                         AppointmentType = AppointmentType,
                         SessionUsed = true
                     };
-                    x.AddSession(session);
-                    AddSession(session);
-                }
-            });
+                client.AddSession(session);
+                AddSession(session);
+            }
         }
 
         public virtual void RestoreSessionsToClients()
@@ -109,19 +111,30 @@ namespace MethodFitness.Core.Domain
             return appointment;
         }
         
-        // this one may no longer be necessary
-
-        //christ this was a hard one to name. 
-        // if there were changes to type or clients return the sessions to client.
-        // if sessions were returned to clients we need to re apply them for this appointment.
-        public virtual bool CheckForChangesAndReturnNeedToSetSessions(IEnumerable<TokenInputDto> selectedItems, string appointmentType)
+        public virtual void SettleChangesToPastAppointment(IEnumerable<int> newListOfClientIds, string appointmentType,IRepository repository)
         {
-            if (IsNew()) return true;
+            if (IsNew()) return;
+            if (HandleChangeOfAptTypeInPastApt(appointmentType)) return;
+            HandleChangeOfClientsOnPastApt(newListOfClientIds, repository);
+        }
+
+        private void HandleChangeOfClientsOnPastApt(IEnumerable<int> newListOfClientIds, IRepository repository)
+        {
             var currentClientsIds = Clients.Select(x => x.EntityId);
-            var newClientsIds = selectedItems.Select(x => Int32.Parse(x.id));
-            if(AppointmentType != appointmentType || currentClientsIds.Except(newClientsIds).Any())
+            var clientIdsNewToAppointment = currentClientsIds.Except(newListOfClientIds);
+
+            if (clientIdsNewToAppointment.Any())
+            {
+                clientIdsNewToAppointment.ForEachItem(x => SetSessionForClient(repository.Find<Client>(x)));
+            }
+        }
+
+        private bool HandleChangeOfAptTypeInPastApt(string appointmentType)
+        {
+            if (AppointmentType != appointmentType)
             {
                 RestoreSessionsToClients();
+                Completed = false;
                 return true;
             }
             return false;

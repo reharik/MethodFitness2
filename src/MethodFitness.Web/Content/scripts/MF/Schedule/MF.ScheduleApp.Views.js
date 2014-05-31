@@ -628,6 +628,7 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
             var span = $($(row).find("td").last().find("span"));
             if(span.text().indexOf('True')>-1){
                 span.text('UnArchive');
+                $(row).addClass("gridRowGrey");
             }else{
                 span.text('Archive');
             }
