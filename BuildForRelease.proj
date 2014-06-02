@@ -22,7 +22,6 @@
  <Target Name="_pushToProd" >
    <PropertyGroup>
      <OutputDirectory>f:\WebSites\MethodFitness_PreRelease</OutputDirectory>
-     <ConsoleOutputDirectory>f:\ConsoleApps</ConsoleOutputDirectory>
    </PropertyGroup>
    
    <ItemGroup>
@@ -56,7 +55,7 @@
    <MakeDir Directories="$(OutputDirectory)\Tasks\SessionManagement"  />
 
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
-   <Copy SourceFiles="@(SessionCompleteTaskFiles)" DestinationFolder="$(ConsoleOutputDirectory)\SessionManagement\%(RecursiveDir)" />
+   <Copy SourceFiles="@(SessionCompleteTaskFiles)" DestinationFolder="$(OutputDirectory)\Tasks\SessionManagement\%(RecursiveDir)" />
 
    <Zip Files="@(WebFiles)"
      WorkingDirectory="f:\WebSites\BackUp\MethodFitness_PROD"
