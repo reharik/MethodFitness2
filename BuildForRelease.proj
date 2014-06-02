@@ -39,7 +39,7 @@
 						 src\MethodFitness.Web\connectionstrings.config;
 						 src\MethodFitness.Web\Logs\**; 		 "
                 />
-     <SessionCompleteTaskFiles Include="src\MethodFitness.SessionManagement\bin\release\*.*;" />
+     <SessionCompleteTaskFiles Include="src\MethodFitness.SessionManagement\bin\debug\*.*;" />
 
    </ItemGroup>
    <Time>
