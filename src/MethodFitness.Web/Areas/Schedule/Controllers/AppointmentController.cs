@@ -168,9 +168,10 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             }
             if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time"))
             {
-                appointment.SettleChangesToPastAppointment(input.ClientsDtos.selectedItems.Select(x => Int32.Parse(x.id))
-                                                           ,input.AppointmentType
-                                                           ,_repository);
+                appointment.SettleChangesToPastAppointment(input.ClientsDtos.selectedItems.Select(x => Int32.Parse(x.id)),
+                                                           input.AppointmentType,
+                                                           _repository,
+                                                           _saveEntityService);
             }
             // map or remap values
             mapToDomain(input, appointment);

@@ -6,6 +6,7 @@ using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
 using CC.Core.Localization;
+using CC.Core.Services;
 using CC.Security.Interfaces;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
@@ -110,23 +111,38 @@ namespace MethodFitness.Core.Domain
             _clients.ForEachItem(appointment.AddClient);
             return appointment;
         }
-        
-        public virtual void SettleChangesToPastAppointment(IEnumerable<int> newListOfClientIds, string appointmentType,IRepository repository)
+
+        public virtual void SettleChangesToPastAppointment(IEnumerable<int> newListOfClientIds,
+                                                            string appointmentType,
+                                                            IRepository repository,
+                                                            ISaveEntityService saveEntityService)
         {
             if (IsNew()) return;
             if (HandleChangeOfAptTypeInPastApt(appointmentType)) return;
-            HandleChangeOfClientsOnPastApt(newListOfClientIds, repository);
+            HandleNewClientsOnPastApt(newListOfClientIds, repository);
+            HandleRemovedClientsOnPastApt(newListOfClientIds, saveEntityService);
         }
 
-        private void HandleChangeOfClientsOnPastApt(IEnumerable<int> newListOfClientIds, IRepository repository)
+        private void HandleNewClientsOnPastApt(IEnumerable<int> newListOfClientIds, IRepository repository)
         {
             var currentClientsIds = Clients.Select(x => x.EntityId);
-            var clientIdsNewToAppointment = currentClientsIds.Except(newListOfClientIds);
+            var clientIdsNewToAppointment = newListOfClientIds.Except(currentClientsIds);
+            clientIdsNewToAppointment.ForEachItem(x => SetSessionForClient(repository.Find<Client>(x)));
+        }
 
-            if (clientIdsNewToAppointment.Any())
-            {
-                clientIdsNewToAppointment.ForEachItem(x => SetSessionForClient(repository.Find<Client>(x)));
-            }
+        private void HandleRemovedClientsOnPastApt(IEnumerable<int> newListOfClientIds, ISaveEntityService saveEntityService)
+        {
+            var currentClientsIds = Clients.Select(x => x.EntityId);
+            var clientIdsRemovedFromAppointment = currentClientsIds.Except(newListOfClientIds);
+
+            clientIdsRemovedFromAppointment.ForEachItem(x =>
+                {
+                    var session = Sessions.FirstOrDefault(s => s.Client.EntityId == x);
+                    var client = Clients.FirstOrDefault(c => c.EntityId == x);
+                    RemoveSession(session);
+                    client.RestoreSession(session);
+                    saveEntityService.ProcessSave(client);
+                });
         }
 
         private bool HandleChangeOfAptTypeInPastApt(string appointmentType)
