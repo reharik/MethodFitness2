@@ -93,10 +93,9 @@ namespace MethodFitness.Core.Domain
             StartDate = self.StartDate;
         }
 
-        // this may not be necessary anymore
-
         public virtual void RestoreSession(Session session)
         {
+            if(session == null) return;
             if(session.InArrears)
             {
                 RemoveSession(session);
