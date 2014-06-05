@@ -119,8 +119,8 @@ namespace MethodFitness.Core.Domain
         {
             if (IsNew()) return;
             if (HandleChangeOfAptTypeInPastApt(appointmentType)) return;
-            HandleNewClientsOnPastApt(newListOfClientIds, repository);
             HandleRemovedClientsOnPastApt(newListOfClientIds, saveEntityService);
+            HandleNewClientsOnPastApt(newListOfClientIds, repository);
         }
 
         private void HandleNewClientsOnPastApt(IEnumerable<int> newListOfClientIds, IRepository repository)

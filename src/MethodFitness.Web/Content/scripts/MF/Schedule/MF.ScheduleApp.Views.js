@@ -254,6 +254,9 @@ MF.Views.AppointmentView = MF.Views.View.extend({
         }else{
             if(currentSelection == "Pair"){
                 var previousSelection = $("[name='AppointmentType']").data.previousSelection;
+                if(previousSelection == "Pair"){
+                    previousSelection = "Hour";
+                }
                 $("[name='AppointmentType']").val(previousSelection);
                 this.model.AppointmentType(previousSelection);
             }

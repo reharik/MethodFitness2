@@ -145,7 +145,7 @@ MF.mixins.formMixin = {
             var promise = MF.repository.ajaxPostModel(this.model._saveUrl(),data);
             promise.done($.proxy(this.successHandler,this));
         }
-        this.$el.find("#save").attr("disabled","disabled");
+            this.$el.find("#save").attr("disabled","disabled");
     },
     cancel:function(){
         MF.vent.trigger("form:"+this.id+":cancel");
@@ -172,7 +172,7 @@ MF.mixins.formMixin = {
             MF.vent.trigger("form:"+this.id+":success",result);
             if(!this.options.noBubbleUp){MF.WorkflowManager.returnParentView(result,true);}
         }
-        this.$el.find("#save").removeAttr("disabled");
+            this.$el.find("#save").removeAttr("disabled");
     }
 };
 
