@@ -18,6 +18,7 @@ namespace MethodFitness.Core.Domain.Persistence
             Map(x => x.Type);
             Map(x => x.PricePerSession);
             Map(x => x.TrainerPercentage);
+            Map(x => x.TrainerPaid);
             Map(x => x.InArrears);
             Map(x => x.TrainerVerified);
         } 
