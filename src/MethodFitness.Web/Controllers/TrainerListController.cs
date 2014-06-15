@@ -29,14 +29,15 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
         {
             var user = _sessionContext.GetCurrentUser();
             var url = UrlContext.GetUrlForAction<TrainerListController>(x => x.Trainers(null));
-            var model = new ListViewModel()
+            var model = new TrainerListViewModel()
             {
+                ArchiveTrainerUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.TrainerStatus(null)),
                 addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)),
-                gridDef = _trainerListGrid.GetGridDefinition(url,user),
-                searchField = "LastName"
+                gridDef = _trainerListGrid.GetGridDefinition(url,user)
             };
             model.headerButtons.Add("new");
-            return new CustomJsonResult { Data = model };
+            model.headerButtons.Add("delete");
+            return new CustomJsonResult(model);
         }
 
         public JsonResult Trainers(GridItemsRequestModel input)
@@ -45,7 +46,12 @@ namespace MethodFitness.Web.Areas.Schedule.Controllers
             //TODO find way to deal with string here
             var items = _dynamicExpressionQuery.PerformQuery<User>(input.filters, x=>x.UserRoles.Any(r=>r.Name == "Trainer" ));
             var gridItemsViewModel = _trainerListGrid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult { Data = gridItemsViewModel };
+            return new CustomJsonResult(gridItemsViewModel);
         }
+    }
+
+    public class TrainerListViewModel : ListViewModel
+    {
+        public string ArchiveTrainerUrl { get; set; }
     }
 }

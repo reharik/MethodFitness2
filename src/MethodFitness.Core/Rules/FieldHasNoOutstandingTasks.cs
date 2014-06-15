@@ -1,3 +1,4 @@
+using CC.Core.Domain;
 using CC.Core.Services;
 using MethodFitness.Core.Domain;
 using MethodFitness.Core.Services;
@@ -10,7 +11,7 @@ namespace MethodFitness.Core.Rules
         {
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : class
+        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : Entity
         {
             var result = new ValidationReport { Success = true };
 //            var _field = field as Field;

@@ -76,8 +76,8 @@ namespace MethodFitness.Web
 
         protected void Application_EndRequest()
         {
-//            var unitOfWork = ObjectFactory.Container.GetInstance<IUnitOfWork>();
-//            unitOfWork.Dispose();
+            var unitOfWork = ObjectFactory.Container.GetInstance<IUnitOfWork>();
+            unitOfWork.Dispose();
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)

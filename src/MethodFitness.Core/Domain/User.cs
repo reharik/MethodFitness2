@@ -33,10 +33,9 @@ namespace MethodFitness.Core.Domain
         public virtual string Notes { get; set; }
         public virtual DateTime? BirthDate { get; set; }
         public virtual string ImageUrl { get; set; }
-        [ValueOf(typeof(Status))]
-        public virtual string Status { get; set; }
-       
-        
+        public virtual string Color { get; set; }
+        public virtual int ClientRateDefault { get; set; }
+        public virtual bool Archived { get; set; }
         public virtual UserLoginInfo UserLoginInfo { get; set; }
         public virtual string FullNameLNF
         {
@@ -60,40 +59,7 @@ namespace MethodFitness.Core.Domain
             if (_userRoles.Contains(userRole)) return;
             _userRoles.Add(userRole);
         }
-        #endregion
 
-        public virtual SecurityInfo SecurityInfo
-        {
-            get { return new SecurityInfo(FullNameLNF, EntityId); }
-        }
-    }
-
-    public class UserLoginInfo : DomainEntity
-    {
-        [ValidateNonEmpty]
-        public virtual string LoginName { get; set; }
-        [ValidateNonEmpty]
-        public virtual string Password { get; set; }
-        [ValidateSqlDateTime]
-        public virtual string Salt { get; set; }
-        public virtual bool CanLogin { get; set; }
-        [ValidateSqlDateTime]
-        public virtual DateTime? LastVisitDate { get; set; }
-        public virtual Guid ByPassToken { get; set; }
-
-        #region Collections
-        #endregion
-    }
-
-    public class Administrator : User
-    {
-    }
-
-    public class Trainer:User
-    {
-        public virtual string Color { get; set; }
-        public virtual int ClientRateDefault { get; set; }
-        #region
         private IList<Client> _clients = new List<Client>();
         public virtual void EmptyClients() { _clients.Clear(); }
         public virtual IEnumerable<Client> Clients { get { return _clients; } }
@@ -111,7 +77,7 @@ namespace MethodFitness.Core.Domain
             else
             {
                 _clients.Add(client);
-                AddTrainerClientRate(new TrainerClientRate { User = this, Client = client, Percent = clientRate });
+                AddTrainerClientRate(new TrainerClientRate { Trainer = this, Client = client, Percent = clientRate });
             }
         }
 
@@ -141,6 +107,19 @@ namespace MethodFitness.Core.Domain
             _sessions.Add(session);
         }
 
+        private IList<Appointment> _appointments = new List<Appointment>();
+        public virtual void EmptyAppointments() { _appointments.Clear(); }
+        public virtual IEnumerable<Appointment> Appointments { get { return _appointments; } }
+        public virtual void RemoveAppointment(Appointment appointment)
+        {
+            _appointments.Remove(appointment);
+        }
+        public virtual void AddAppointment(Appointment appointment)
+        {
+            if (_appointments.Contains(appointment)) return;
+            _appointments.Add(appointment);
+        }
+
         private IList<TrainerPayment> _trainerPayments = new List<TrainerPayment>();
         public virtual void EmptyTrainerPayments() { _trainerPayments.Clear(); }
         public virtual IEnumerable<TrainerPayment> TrainerPayments { get { return _trainerPayments; } }
@@ -155,7 +134,38 @@ namespace MethodFitness.Core.Domain
             if (_trainerPayments.Contains(trainerPayment)) return;
             _trainerPayments.Add(trainerPayment);
         }
+
+        private IList<TrainerSessionVerification> _trainerSessionVerifications = new List<TrainerSessionVerification>();
+        public virtual IEnumerable<TrainerSessionVerification> TrainerSessionVerifications { get { return _trainerSessionVerifications; } }
+        public virtual void RemoveTrainerSessionVerification(TrainerSessionVerification trainerSessionVerification)
+        {
+            _trainerSessionVerifications.Remove(trainerSessionVerification);
+        }
+        public virtual void AddTrainerSessionVerification(TrainerSessionVerification trainerSessionVerification)
+        {
+            if (_trainerSessionVerifications.Contains(trainerSessionVerification)) return;
+            _trainerSessionVerifications.Add(trainerSessionVerification);
+        }
         #endregion
+        public virtual void SessionVerification(IEnumerable<int> sessionsIds)
+        {
+            var verification = new TrainerSessionVerification { Trainer = this };
+            // call tolist because were gonna itterate
+            TrainerClientRates.ToList();
+            Sessions.Where(x => sessionsIds.Contains(x.EntityId)).ToList();
+            sessionsIds.ForEachItem(x =>
+            {
+                var session = Sessions.FirstOrDefault(y => y.EntityId == x);
+                if (session == null) return;
+                session.TrainerVerified = true;
+                verification.AddTrainerApprovedSessionItem(session);
+                var trainerClientRate = TrainerClientRates.FirstOrDefault(tcr => tcr.EntityId == session.Client.EntityId);
+                int percent = trainerClientRate != null ? trainerClientRate.Percent : ClientRateDefault;
+                verification.Total += session.Cost * (percent * .01);
+            });
+            AddTrainerSessionVerification(verification);
+        }
+
 
         public virtual TrainerPayment PayTrainer(IEnumerable<PaymentDetailsDto> items, double amount)
         {
@@ -180,5 +190,25 @@ namespace MethodFitness.Core.Domain
             AddTrainerPayment(trainerPayment);
             return trainerPayment;
         }
+
+        public virtual SecurityInfo SecurityInfo
+        {
+            get { return new SecurityInfo(FullNameLNF, EntityId); }
+        }
+    }
+
+    public class UserLoginInfo : DomainEntity
+    {
+        [ValidateNonEmpty]
+        public virtual string LoginName { get; set; }
+        [ValidateNonEmpty]
+        public virtual string Password { get; set; }
+        public virtual string Salt { get; set; }
+        [ValidateSqlDateTime]
+        public virtual DateTime? LastVisitDate { get; set; }
+        public virtual Guid ByPassToken { get; set; }
+
+        #region Collections
+        #endregion
     }
 }

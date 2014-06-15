@@ -25,7 +25,7 @@ namespace MethodFitness.Web.Controllers
                                                           {
                                                               s.SessionUsed = true;
                                                               s.Trainer = x.Trainer;
-                                                              x.Trainer.AddSession(s);
+                                                              x.Trainer.AddAppointment(x);
                                                           });
                                       _repository.Save(x);
                                   });

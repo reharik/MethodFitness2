@@ -5,6 +5,9 @@ using HtmlTags;
 
 namespace MethodFitness.Core.Html.Expressions
 {
+    using System.IO;
+    using System.Linq;
+
     public class ScriptReferenceExpression
     {
         private string _baseUrl;
@@ -13,7 +16,7 @@ namespace MethodFitness.Core.Html.Expressions
 
         public ScriptReferenceExpression(string fileName)
         {
-            _baseUrl = SiteConfig.Settings().ScriptsPath;
+            _baseUrl = Site.Config.ScriptsPath;
             _indentation = "";
             _fileName = fileName;
         }
@@ -30,8 +33,9 @@ namespace MethodFitness.Core.Html.Expressions
             return this;
         }
 
-        public HtmlTag ToHtmlTag()
+        public HtmlTag ToHtmlTag(bool findMinJs = false)
         {
+          
             var fullUrl = UrlContext.Combine(_baseUrl, _fileName).ToFullUrl();
             return new HtmlTag("script").Attr("src", fullUrl).Attr("type", "text/javascript");
         }

@@ -20,13 +20,16 @@ namespace MethodFitness.Web.Grids
             GridBuilder.LinkColumnFor(x => x.LastName)
                 .ForAction<ClientController>(x => x.AddUpdate(null))
                 .ToPerformAction(ColumnAction.AddUpdateItem)
-                .ToolTip(WebLocalizationKeys.EDIT_ITEM)
-                .DefaultSortColumn();
+                .ToolTip(WebLocalizationKeys.EDIT_ITEM);
             GridBuilder.DisplayFor(x => x.FirstName);
             GridBuilder.DisplayFor(x => x.Email);
             GridBuilder.DisplayFor(x => x.MobilePhone);
             GridBuilder.ImageButtonColumn().ForAction<PaymentListController>(x => x.ItemList(null))
                 .ToPerformAction(ColumnAction.Redirect).ImageName("client_payment.png");
+            GridBuilder.SetSearchField(x => x.LastName);
+            GridBuilder.SetDefaultSortColumn(x => x.LastName);
+            
+
             return this;
         }
     }

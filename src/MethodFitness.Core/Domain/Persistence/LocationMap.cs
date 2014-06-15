@@ -1,5 +1,4 @@
 using FluentNHibernate.Mapping;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 
 namespace MethodFitness.Core.Domain.Persistence
 {

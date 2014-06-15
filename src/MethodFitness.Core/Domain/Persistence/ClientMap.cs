@@ -1,4 +1,5 @@
 using FluentNHibernate.Mapping;
+using MethodFitness.Core.Config;
 
 namespace MethodFitness.Core.Domain.Persistence
 {

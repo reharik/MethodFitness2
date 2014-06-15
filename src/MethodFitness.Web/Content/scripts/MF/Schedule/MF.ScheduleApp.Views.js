@@ -24,6 +24,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.model = this.rawModel;
         this.model.id= this.model.CalendarDefinition.id = this.id;
         this.setupLegend();
+        $("div.form-scroll-inner").height(window.innerHeight-160);
         $("#calendar",this.el).asCalendar(this.model.CalendarDefinition);
         this.bindSpecificModelAndElements({Location:this.model.Location,
             _LocationList:this.model._LocationList,
@@ -32,6 +33,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         });
         //callback for render
         this.viewLoaded();
+        $("#calendar",this.el).fullCalendar('option', 'height', $("div.form-scroll-inner").height());
         //general notification of pageloaded
         MF.vent.trigger("calendar:"+this.id+":pageLoaded",this.options);
         this.calendarBindings();
@@ -46,6 +48,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.vent.bind("ajaxPopupFormModule:editModule:cancel",this.formCancel,this);
         MF.vent.bind("ajaxPopupDisplayModule:displayModule:cancel",this.displayCancel,this);
         MF.vent.bind("popup:displayModule:edit",this.displayEdit,this);
+        MF.vent.bind("module:displayModule:cancel",this.displayCancel,this);
 
     },
     onClose:function(){
@@ -57,6 +60,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.vent.unbind("ajaxPopupFormModule:editModule:cancel");
         MF.vent.unbind("ajaxPopupDisplayModule:displayModule:cancel");
         MF.vent.unbind("popup:displayModule:edit");
+        MF.vent.unbind("module:displayModule:cancel");
     },
     setupLegend:function(){
          if(this.model.Trainers.length<=0){
@@ -71,7 +75,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "ScheduledDate":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")};
-        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
+        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
     },
     eventResize:function( event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
         var data = {"EntityId":event.EntityId,
@@ -79,7 +83,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
             "StartTime":$.fullCalendar.formatDate( event.start,"M/d/yyyy hh:mm TT"),
             "EndTime":$.fullCalendar.formatDate( event.end,"M/d/yyyy hh:mm TT")
         };
-        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(this.changeEventCallback,this));
+        MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
         if(new XDate(date,true).diffHours(new XDate(true))>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
@@ -90,6 +94,11 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
     },
     eventClick:function(calEvent, jsEvent, view) {
+        if(this.displayAppointmentDisabled == true ){
+            return;
+        }
+        this.displayAppointmentDisabled  = true;
+
         if(calEvent.trainerId!= this.model.CalendarDefinition.TrainerId && !this.model.CalendarDefinition.CanSeeOthersAppointments){
             return;
         }
@@ -98,7 +107,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         var data = {"EntityId": calEvent.EntityId};
         var builder = MF.Views.popupButtonBuilder.builder("displayModule");
         builder.addButton("Delete", $.proxy(this.deleteItem,this));
-        builder.addEditButton();
+        builder.addButton("Edit", $.proxy(this.editItem,this));
         builder.addButton("Copy Event",$.proxy(this.copyItem,this));
         builder.addCancelButton();
 
@@ -116,9 +125,13 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.ajaxPopupDisplay.render();
         this.storeChild(this.ajaxPopupDisplay);
         $(this.el).append(this.ajaxPopupDisplay.el);
-
+        this.displayAppointmentDisabled  = false;
     },
     editEvent:function(url, data){
+        if(this.appointmentViewDisabled == true ){
+            return;
+        }
+        this.appointmentViewDisabled = true;
         var formOptions = {
            id: "editModule",
             route: this.model.CalendarDefinition.AddUpdateRoute,
@@ -132,6 +145,8 @@ MF.Views.CalendarView = MF.Views.View.extend({
         this.ajaxPopupFormModule.render();
         this.storeChild(this.ajaxPopupFormModule);
         $(this.el).append(this.ajaxPopupFormModule.el);
+        this.dayClickDisabled=false;
+        this.eventClickDisabled=false;
     },
 
     changeEventCallback:function(result,revertFunc){
@@ -142,13 +157,21 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     copyItem:function(){
+        this.appointmentViewDisabled = false;
         var data = {"EntityId":this.currentEventId,"Copy":true};
         this.editEvent(this.model.CalendarDefinition.AddUpdateUrl,data);
         this.ajaxPopupDisplay.close();
     },
 
+    editItem:function(){
+        this.appointmentViewDisabled = false;
+        MF.vent.trigger("popup:displayModule:edit");
+        this.ajaxPopupDisplay.close();
+    },
+
     deleteItem: function(){
         if (confirm("Are you sure you would like to delete this Item?")) {
+            this.appointmentViewDisabled = false;
             MF.repository.ajaxGet(this.model.CalendarDefinition.DeleteUrl,{"EntityId":this.currentEventId}).done($.proxy(function(result){
                 this.ajaxPopupDisplay.close();
                 if(!result.Success){
@@ -170,7 +193,8 @@ MF.Views.CalendarView = MF.Views.View.extend({
 
     resetCalendar:function(){
         var locId = this.viewModel.Location();
-        var ids="";
+        var
+            ids="";
         $(".legendLabel").each(function(i,item){
             if($(item).hasClass("showing")){
                 ids+= $("#trainerId",$(item).parent()).val()+",";
@@ -178,7 +202,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         });
         if(ids){
             ids = ids.substr(0,ids.length-1);
-        }else if( $(".legendLabel").is("visible")){
+        }else if( $(".legend").is(":visible")){
             ids="NONE";
         }
         this.replaceSource({url : this.model.CalendarDefinition.Url, data:{Loc:locId, TrainerIds:ids} });
@@ -218,6 +242,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
     formCancel:function(){
         this.ajaxPopupFormModule.close();
+        this.appointmentViewDisabled = false;
     },
     displayCancel:function(){
         this.ajaxPopupDisplay.close();
@@ -244,15 +269,18 @@ MF.Views.AppointmentView = MF.Views.View.extend({
     },
 
     setCurrentSelectionForAptType:function(isPair){
-        var currentSelection = $("[name='AppointmentType']").select2("val");
+        var currentSelection = $("[name='AppointmentType']").val();
         if(isPair){
             $("[name='AppointmentType']").data.previousSelection=currentSelection;
-            $("[name='AppointmentType']").select2("val","Pair");
+            $("[name='AppointmentType']").val("Pair");
             this.model.AppointmentType("Pair");
         }else{
             if(currentSelection == "Pair"){
                 var previousSelection = $("[name='AppointmentType']").data.previousSelection;
-                $("[name='AppointmentType']").select2("val",previousSelection);
+                if(previousSelection == "Pair"){
+                    previousSelection = "Hour";
+                }
+                $("[name='AppointmentType']").val(previousSelection);
                 this.model.AppointmentType(previousSelection);
             }
         }
@@ -283,8 +311,8 @@ MF.Views.AppointmentView = MF.Views.View.extend({
             });
     },
     onClose:function(){
-        MF.vent.unbind("ClientsDtos:tokenizer:add", this.clientChange, this);
-        MF.vent.unbind("ClientsDtos:tokenizer:remove", this.clientChange, this);
+        MF.vent.unbind("ClientsDtos:tokenizer:add");
+        MF.vent.unbind("ClientsDtos:tokenizer:remove");
                 
     },
     handleTimeChange:function() {
@@ -448,16 +476,25 @@ MF.Views.TrainerFormView = MF.Views.View.extend({
         'click .tokenEditor' : 'tokenEditor'
     },
     viewLoaded:function(){
-        $('#color',this.el).miniColors();
-         MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
+        var that = this;
+        $('#colorPickerInput',this.el).miniColors({
+            change:function(hex){
+                that.model.Color(hex);
+            }
+        });
+        MF.vent.bind("popup:templatePopup:save",this.tokenSave,this);
         MF.vent.bind("popup:templatePopup:cancel",this.tokenCancel,this);
+    },
+    onClose:function(){
+        MF.vent.unbind("popup:templatePopup:save",this.tokenSave,this);
+        MF.vent.unbind("popup:templatePopup:cancel",this.tokenCancel,this);
     },
     multiSelectModifier:function(ccElement){
         if(ccElement.name=="ClientsDtos"){
             ccElement.multiSelectOptions = {
                 internalTokenMarkup:function(){
                     var anchor = $("<a>").addClass("selectedItem").attr("data-bind",'text:display');
-                    var anchor2 = $("<a>").addClass("tokenEditor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
+                    var anchor2 = $("<a>").addClass("tokenEditor stdTxtColor").text(" --Edit").attr("href",'javascript:void(0);').attr("data-bind",'attr:{rel:percentage}');
                     return $("<p>").append(anchor).append(anchor2);
                 },
                 beforeTokenAddedFunction:$.proxy(this.beforeTokenAddedFunction,this)
@@ -600,15 +637,34 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
     viewLoaded:function(){
         this.setupBindings();
         MF.vent.bind(this.options.gridId+":Redirect",this.showPayGrid,this);
+        MF.vent.bind(this.options.gridId+":Other",this.archiveTrainer,this);
     },
     _setupBindings:function(){
-         MF.vent.bind("Redirect",this.showPayGrid,this);
+        MF.vent.bind("Redirect",this.showPayGrid,this);
+        MF.vent.bind("gridComplete",this.modifyArchiveColumn,this);
+//        MF.vent.bind("grid:"+this.id+":pageLoaded",this.modifyArchiveColumn,this);
     },
     _unbindBindings:function(){
          MF.vent.bind("Redirect",this.showPayGrid,this);
     },
+    modifyArchiveColumn:function(){
+        var grid = $("#" + this.options.gridId);
+        var rows = grid.jqGrid('getRowData');
+        grid.find("tr").not('.jqgfirstrow').each(function(idx,row){
+            var span = $($(row).find("td").last().find("span"));
+            if(span.text().indexOf('True')>-1){
+                span.text('UnArchive');
+                $(row).addClass("gridRowGrey");
+            }else{
+                span.text('Archive');
+            }
+        });
+    },
     showPayGrid:function(id){
         MF.vent.trigger("route","paytrainerlist/"+id,true);
+    },
+    archiveTrainer:function(id){
+        MF.repository.ajaxGet(this.options.ArchiveTrainerUrl,{EntityId:id}).done($.proxy(this.successHandler,this));
     },
     onClose:function(){
         this.unbindBindings();
@@ -617,6 +673,7 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
 
 MF.Views.ClientGridView = MF.Views.View.extend({
     initialize:function(){
+        this.options.gridOptions ={multiselect:false};
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "defaultGridEventsMixin");

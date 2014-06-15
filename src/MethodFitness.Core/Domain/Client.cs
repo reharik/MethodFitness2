@@ -31,8 +31,6 @@ namespace MethodFitness.Core.Domain
         public virtual string Notes { get; set; }
         public virtual DateTime? BirthDate { get; set; }
         public virtual string ImageUrl { get; set; }
-        [ValueOf(typeof(Status))]
-        public virtual string Status { get; set; }
         [ValueOf(typeof(Source))]
         public virtual string Source { get; set; }
         [TextArea]
@@ -40,6 +38,7 @@ namespace MethodFitness.Core.Domain
         [ValidateNonEmpty]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
+        public virtual bool Archived { get; set; }
         public virtual string FullNameLNF
         {
             get { return LastName + ", " + FirstName; }
@@ -89,7 +88,6 @@ namespace MethodFitness.Core.Domain
             MobilePhone = self.MobilePhone;
             SecondaryPhone = self.SecondaryPhone;
             Notes = self.Notes;
-            Status = self.State;
             ImageUrl = self.ImageUrl;
             Source = self.Source;
             StartDate = self.StartDate;
@@ -97,6 +95,7 @@ namespace MethodFitness.Core.Domain
 
         public virtual void RestoreSession(Session session)
         {
+            if(session == null) return;
             if(session.InArrears)
             {
                 RemoveSession(session);
@@ -108,6 +107,7 @@ namespace MethodFitness.Core.Domain
             {
                 session.SessionUsed = false;
                 session.Trainer = null;
+                session.Appointment = null;
             }else
             {
                 //switch app and trainer over to the session since the app that origionally

@@ -6,6 +6,7 @@
 // Documentation and Full License Available at:
 // http://github.com/derickbailey/backbone.marionette
 
+
 Backbone.Marionette = (function(Backbone, _, $){
   var Marionette = {};
 

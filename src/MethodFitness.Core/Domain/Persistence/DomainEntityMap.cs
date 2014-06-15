@@ -23,7 +23,7 @@ namespace MethodFitness.Core.Domain.Persistence
             References(x => x.ChangedBy).LazyLoad().Class<User>();
             References(x => x.CreatedBy).LazyLoad().Class<User>();
             Map(x => x.IsDeleted);
-            ApplyFilter<DeletedConditionFilter>("Archived= :Archived");
+            ApplyFilter<IsDeletedConditionFilter>("IsDeleted= :IsDeleted");
         }
     }
 }

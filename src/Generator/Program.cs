@@ -2,46 +2,34 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Linq;
 using CC.Core;
-using MethodFitness.Core;
-using MethodFitness.Web;
+using MethodFitness.Core.Domain;
 using StructureMap;
 
 namespace Generator
 {
     static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
 
             try
             {
-                //if (args.Length >= 2 && args[1] == "production")
-                //{
-                //    ObjectFactory.Profile = "productionProfile";
-                //}
-                //ObjectFactory.Profile = "productionProfile";
-                //ObjectFactory.Profile = "devProfile";
+                args = new[] {GetConnectionString()};
 
                 Initialize();
-                //   ObjectFactory.Profile = "productionProfile";
-                //  ObjectFactory.Profile = "devProfile";
-                //                var command = new EnterStringsCommand(ObjectFactory.GetInstance<ILocalizedStringLoader>(), ObjectFactory.GetInstance<IRepository>());
-                //var command = new RebuildDatabaseCommand(ObjectFactory.GetInstance<ISessionSource>(), ObjectFactory.GetInstance<IRepository>(), ObjectFactory.GetInstance<ILocalizedStringLoader>(),ObjectFactory.GetInstance<PersistenceModel>());
+                var sessionFactoryConfiguration =
+                    ObjectFactory.Container.With("connectionStr")
+                                 .EqualTo(args[0])
+                                 .GetInstance<ISessionFactoryConfiguration>();
+                ObjectFactory.Container.Inject(sessionFactoryConfiguration);
 
-                IGeneratorCommand command;
-                var commands = ObjectFactory.GetAllInstances<IGeneratorCommand>();
-                if (args.Length == 0)
-                {
-                    //                    command = ObjectFactory.Container.GetInstance<IGeneratorCommand>("rebuilddatabase");
-                    command = ObjectFactory.Container.GetInstance<IGeneratorCommand>("defaultsecuritysetup");
-                }
-                else
-                {
-                    command = commands.FirstOrDefault(c => c.toCanonicalCommandName() == args[0].toCanonicalCommandName());
-                }
-                if (command == null) displayHelpAndExit(args, commands);
-                command.Execute(args);
+//                var command = ObjectFactory.GetNamedInstance<IGeneratorCommand>("migrator");
+//                command.Execute(args);
+                var commands = GetDesiredCommands();
+                commands.ForEachItem(x => x.Execute(args));
+
             }
             catch (Exception ex)
             {
@@ -56,18 +44,67 @@ namespace Generator
             }
         }
 
-        private static void displayHelpAndExit(string[] args, IEnumerable<IGeneratorCommand> commands)
+        private static string GetConnectionString()
         {
-            if (args.Length > 0) Console.WriteLine("Unrecognized Command:" + args[0]);
-            Console.WriteLine("Valid Commands are: ");
+//            var xdoc = XDocument.Load(@"..\..\..\..\appSettings.config");
+            var xdoc = XDocument.Load(@"appSettings.config");
+            var connStrings = xdoc.Descendants("add").Where(x => x.Attribute("key").Value.StartsWith("constring_"));
+            string connectionString = string.Empty;
 
-            var maxLength = commands.Max(c=>c.toCanonicalCommandName().Length);
+            Console.WriteLine("Please select the database you would like to work with:");
+            connStrings.ForEachItem(x => { Console.WriteLine(x.Attribute("key").Value.Replace("constring_", "")); });
+            while (connectionString.IsEmpty())
+            {
+                var database = Console.ReadLine();
+                var connStringNode = connStrings.FirstOrDefault(x => x.Attribute("key").Value == "constring_" + database);
+//                var connStringNode = connStrings.FirstOrDefault(x => x.Attribute("key").Value == "constring_DEV");
+                if (connStringNode != null)
+                {
+                    connectionString = connStringNode.Attribute("value").Value;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid database and remember it's case senstitive");
+                }
+            }
+            return connectionString;
+        }
 
-            commands.ForEachItem(
-                c =>
-                Console.WriteLine("    {0, " + (maxLength + 1) + "} -> {1}", c.toCanonicalCommandName(), c.Description));
+        private static List<IGeneratorCommand> GetDesiredCommands()
+        {
+            IGeneratorCommand command;
+            var commands = ObjectFactory.GetAllInstances<IGeneratorCommand>();
 
-            Environment.Exit(-1);
+            Console.WriteLine("Please select the commands to execute.  Use a comma deliniated string:");
+
+            commands.ForEachItem(x => Console.WriteLine(x.toCanonicalCommandName()));
+
+            bool validEntry = false;
+            var selectedCommands = new List<IGeneratorCommand>();
+
+            while (!validEntry)
+            {
+                var commandNames = Console.ReadLine();
+                var selectedCommandNames = commandNames.Split(',');
+                validEntry = getCommandsFromList(commands, selectedCommandNames, selectedCommands);
+            }
+            return selectedCommands;
+        }
+
+        private static bool getCommandsFromList(IList<IGeneratorCommand> commandNames, string[] selectedCommandNames, List<IGeneratorCommand> selectedCommands)
+        {
+            foreach (var x in selectedCommandNames)
+            {
+                var command = commandNames.FirstOrDefault(c => c.toCanonicalCommandName() == x.Trim());
+                if (command == null)
+                {
+                    Console.WriteLine(x + " is not a valid command name");
+                    selectedCommands.Clear();
+                    return false;
+                }
+                selectedCommands.Add(command);
+            }
+            return true;
         }
 
         private static void Initialize()

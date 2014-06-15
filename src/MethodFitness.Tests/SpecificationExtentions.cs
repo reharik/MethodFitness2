@@ -12,11 +12,11 @@ using NUnit.Framework.Constraints;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Interfaces;
-using Is = NUnit.Framework.SyntaxHelpers.Is;
-using Text = NUnit.Framework.SyntaxHelpers.Text;
 
 namespace MethodFitness.Tests
 {
+    using Is = NUnit.Framework.Is;
+
     public delegate void MethodThatThrows();
 
     public static class SpecificationExtensions
@@ -55,7 +55,7 @@ namespace MethodFitness.Tests
 
         public static void ShouldMatch(this string actual, string pattern)
         {
-            Assert.That(actual, Text.Matches(pattern));
+            Assert.That(actual, Is.StringMatching(pattern));
         }
 
         public static XmlElement AttributeShouldEqual(this XmlElement element, string attributeName, object expected)

@@ -8,22 +8,23 @@ namespace Generator.Commands
 {
     public class DropReaddDatabaseCommand : IGeneratorCommand
     {
-        private readonly ILocalizedStringLoader _loader;
-        private readonly IRepository _repository;
+        private readonly ISessionFactory _sessionFactory;
 
-        public DropReaddDatabaseCommand(IRepository repository, ILocalizedStringLoader loader)
+        public DropReaddDatabaseCommand(ISessionFactory sessionFactory)
         {
-            _loader = loader;
-            _repository = repository;
+            _sessionFactory = sessionFactory;
         }
 
         public string Description { get { return "Rebuilds the db and data"; } }
 
         public void Execute(string[] args)
         {
-            ObjectFactory.Configure(x => x.For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory()));
-            var sessionFactory = ObjectFactory.GetInstance<ISessionFactory>();
-            SqlServerHelper.DeleteReaddDb(sessionFactory);
+            SqlServerHelper.DeleteReaddDb(_sessionFactory);
+            var sessionFactoryConfiguration =
+                    ObjectFactory.Container.With("connectionStr")
+                                 .EqualTo(args[0])
+                                 .GetInstance<ISessionFactoryConfiguration>();
+            ObjectFactory.Container.Inject(sessionFactoryConfiguration);
         }
     }
 }

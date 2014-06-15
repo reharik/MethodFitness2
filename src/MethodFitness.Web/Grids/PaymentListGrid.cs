@@ -19,12 +19,15 @@ namespace MethodFitness.Web.Grids
             GridBuilder.LinkColumnFor(x => x.CreatedDate)
                 .ToPerformAction(ColumnAction.AddUpdateItem)
                 .ToolTip(WebLocalizationKeys.EDIT_ITEM)
-                .DefaultSortColumn().SecurityOperation("/Payment/AddUpdate");
+                .SecurityOperation("/Payment/AddUpdate");
             GridBuilder.LinkColumnFor(x => x.CreatedDate)
                 .ToPerformAction(ColumnAction.DisplayItem)
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
-                .DefaultSortColumn().SecurityOperation("/Payment/Display");
+                .SecurityOperation("/Payment/Display");
             GridBuilder.DisplayFor(x => x.PaymentTotal);
+            GridBuilder.SetSearchField(x => x.CreatedDate);
+            GridBuilder.SetDefaultSortColumn(x => x.CreatedDate);
+
             return this;
         }
     }

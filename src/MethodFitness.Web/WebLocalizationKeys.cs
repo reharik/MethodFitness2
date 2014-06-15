@@ -119,7 +119,9 @@ namespace MethodFitness.Web
         public static readonly StringToken SELECT_AT_LEAST_ONE_CLIENT = new WebLocalizationKeys("SELECT_AT_LEAST_ONE_CLIENT", "You must select at least one Client.");
         public static readonly StringToken SELECT_AT_LEAST_ONE_USER_ROLE = new WebLocalizationKeys("SELECT_AT_LEAST_ONE_USER_ROLE", "You must select at least one User Role.");
         public static readonly StringToken MUST_HAVE_TRAINER_USER_ROLE = new WebLocalizationKeys("MUST_HAVE_TRAINER_USER_ROLE", "A Trainer must have the User Role of Trainer.");
+        public static readonly StringToken LOCATION_INFORMATION = new WebLocalizationKeys("LOCATION_INFORMATION", "Location Information");
         public static readonly StringToken LOCATION = new WebLocalizationKeys("LOCATION", "Location");
+        public static readonly StringToken LOCATIONS = new WebLocalizationKeys("LOCATIONS", "Locations");
         public static readonly StringToken DATE_ADDED = new WebLocalizationKeys("DATE_ADDED", "Date Added {0}");
 
         public static readonly StringToken YOU_CAN_NOT_DELETE_RETROACTIVELY = new WebLocalizationKeys("YOU_CAN_NOT_DELETE_RETROACTIVELY", "You can not delete appointments Retroactively");
@@ -127,15 +129,16 @@ namespace MethodFitness.Web
         public static readonly StringToken VIEW_REPORT = new WebLocalizationKeys("VIEW_REPORT", "View Report");
 
         public static readonly StringToken OTHER = new WebLocalizationKeys("OTHER", "Other");
+        public static readonly StringToken CLIENT_PAYMENTS = new WebLocalizationKeys("PAYMENTS", "Payments for {0}");
         public static readonly StringToken PAYMENTS = new WebLocalizationKeys("PAYMENTS", "Payments");
-        public static readonly StringToken PAYMENT_INFORMATION = new WebLocalizationKeys("PAYMENT_INFORMATION", "Payment Information");
+        public static readonly StringToken PAYMENT_INFORMATION = new WebLocalizationKeys("PAYMENT_INFORMATION", "Payment Information For {0}");
         public static readonly StringToken MAKE_PAYMENT = new WebLocalizationKeys("MAKE_PAYMENT", "Make Payment");
         public static readonly StringToken CURRENT_CLIENT_INVENTORY = new WebLocalizationKeys("CURRENT_CLIENT_INVENTORY", "Current Client Inventory");
         public static readonly StringToken CLIENT_PURCHASE = new WebLocalizationKeys("CLIENT_PURCHASE", "Client Purchase");
         public static readonly StringToken PRICE_SESSION = new WebLocalizationKeys("PRICE_SESSION", "Price/Session");
         public static readonly StringToken TRAINER_PERCENTAGE_FOR_CLIENT = new WebLocalizationKeys("TRAINER_PERCENTAGE_FOR_CLIENT", "Enter percentage for ${name}");
         public static readonly StringToken PAYMENT_AMOUNT = new WebLocalizationKeys("PAYMENT_AMOUNT", "Payment Amount: $");
-        public static readonly StringToken YOU_MUST_SELECT_AT_ONE_SESSION = new WebLocalizationKeys("YOU_MUST_SELECT_AT_ONE_SESSION", "You must select at least one session for payment");
+        public static readonly StringToken YOU_MUST_SELECT_AT_LEAST_ONE_SESSION = new WebLocalizationKeys("YOU_MUST_SELECT_AT_LEAST_ONE_SESSION", "You must select at least one session for payment");
 
         public static readonly StringToken CLIENT_NAME = new WebLocalizationKeys("CLIENT_NAME", "Client Name");
         public static readonly StringToken DATE = new WebLocalizationKeys("DATE", "Date");
@@ -156,6 +159,27 @@ namespace MethodFitness.Web
         public static readonly StringToken HALF_HOUR_TEN_PACK = new WebLocalizationKeys("HALF_HOUR_TEN_PACK", "Half Hour 10 Pack");
         public static readonly StringToken PAIR = new WebLocalizationKeys("PAIR", "Pair");
         public static readonly StringToken PAIR_TEN_PACK = new WebLocalizationKeys("PAIR_TEN_PACK", "Pairs 10 Pack");
+
+        public static readonly StringToken SESSION_REPORT = new WebLocalizationKeys("SESSION_REPORT", "Session Report");
+        public static readonly StringToken SESSION_VERIFICATION = new WebLocalizationKeys("SESSION_VERIFICATION", "Session Verification");
+        public static readonly StringToken HISTORICAL = new WebLocalizationKeys("HISTORICAL", "Historical");
+        public static readonly StringToken CURRENT = new WebLocalizationKeys("CURRENT", "Current");
+
+
+        public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT", "There is a problem with my sessions for this pay period");
+        public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT_BODY = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT_BODY", "There is a problem with my sessions for this pay period.  Please look at the following:");
+        public static readonly StringToken EMAIL_SENT_SUCCESSFULLY = new WebLocalizationKeys("EMAIL_SENT_SUCCESSFULLY", "Email Sent Successfully");
+
+        public static readonly StringToken REPORTS = new WebLocalizationKeys("REPORTS", "Reports");
+        public static readonly StringToken DAILY_PAYMENTS = new WebLocalizationKeys("DAILY_PAYMENTS", "Daily Payments");
+        public static readonly StringToken TRAINER_METRIC = new WebLocalizationKeys("TRAINER_METRIC", "Trainer Metric");
+        public static readonly StringToken ACTIVITY = new WebLocalizationKeys("ACTIVITY", "Activity");
+        public static readonly StringToken BASE_RATES = new WebLocalizationKeys("BASE_RATES", "Base Rates");
+
+
+        public static readonly StringToken NO_SESSIONS_TO_VERIFY = new WebLocalizationKeys("NO_SESSIONS_TO_VERIFY", "You have no eligible sessions to verify");
+
+        public static readonly StringToken TRAINER_SESSIONS_VERIFIED = new WebLocalizationKeys("TRAINER_SESSIONS_VERIFIED", "Trainer {0} has verified his appointments.");
 
 
     }

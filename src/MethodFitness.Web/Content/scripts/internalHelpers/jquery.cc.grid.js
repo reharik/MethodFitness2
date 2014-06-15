@@ -17,12 +17,13 @@ if (typeof cc.grid == 'undefined') {
             mtype: 'GET',
             colNames: cc.grid.columnService.columnNames(gridDefinition),
             colModel: cc.grid.columnService.columnModel(gridDefinition),
-            rowNum: 100,
-            multiselect: true,
-            scrollOffset:0,
+            rowNum: 10000,
+            scroll:false,
             altRows:true,
-            height:"100%",
+//            height:"100%",
+            width:"100%",
             autowidth:true,
+            multiselect: true,
             // here we move the value of the entityId to ParentId since it's the Id of the containing element
             // and set EntityId to RowId as RowId is for the Particular entity we want to change
             beforeSubmitCell: function(rowid, celname, value, iRow, iCol) { return { RootId: rootId, ParentId: entityId, EntityId: rowid, rowId: rowid, cellName: celname, cellValue: value} },
@@ -32,9 +33,14 @@ if (typeof cc.grid == 'undefined') {
             },
             loadtext:"",
             //emptyrecords:"aint go nothin",
-            gridComplete:function(){$(this).find(".cbox").parent().addClass("jqg_cb");},
+            gridComplete:function(){
+                $(this).find(".cbox").parent().addClass("jqg_cb");
+                $("div.form-scroll-inner").height( window.innerHeight-180);
+                $(this).setGridHeight($("div.form-scroll-inner").height()-36  );
+                MF.vent.trigger("gridComplete");
+            },
             sortorder: "asc",
-            sortname:cc.grid.columnService.defaultSortColumnName(gridDefinition),
+            sortname:gridDefinition.DefaultSortColumn ? gridDefinition.DefaultSortColumn :"", //  cc.grid.columnService.defaultSortColumnName(gridDefinition),
             onSortCol:function(index,iCol,sortorder) {cc.gridHelper.adjustSortStyles(index,iCol,sortorder);},
             jsonReader: {
                 repeatitems: true,

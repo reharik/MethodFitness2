@@ -2,6 +2,7 @@
 
 namespace MethodFitness.Core.Config
 {
+
     public class CompanyConditionFilter : FilterDefinition
     {
         public CompanyConditionFilter()
@@ -11,12 +12,21 @@ namespace MethodFitness.Core.Config
         }
     }
 
-    public class DeletedConditionFilter : FilterDefinition
+    public class IsDeletedConditionFilter : FilterDefinition
     {
-        public DeletedConditionFilter()
+        public IsDeletedConditionFilter()
         {
-            WithName("DeletedConditionFilter")
-                .AddParameter("Archived", NHibernate.NHibernateUtil.Boolean);
+            WithName("IsDeletedConditionFilter")
+                .AddParameter("IsDeleted", NHibernate.NHibernateUtil.Boolean);
+        }
+    }
+    public class StatusConditionFilter : FilterDefinition
+    {
+        public StatusConditionFilter()
+        {
+            WithName("StatusConditionFilter")
+                .AddParameter("condition", NHibernate.NHibernateUtil.String);
         }
     }
 }
+

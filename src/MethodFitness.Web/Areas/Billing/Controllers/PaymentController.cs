@@ -18,6 +18,8 @@ using StructureMap;
 
 namespace MethodFitness.Web.Areas.Billing.Controllers
 {
+    using CC.Core.CustomAttributes;
+
     public class PaymentController : MFController
     {
         private readonly IRepository _repository;
@@ -45,15 +47,16 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         {
 //            var payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
             var client = _repository.Find<Client>(input.ParentId);
-            var payment = input.EntityId>0 ?client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId):new Payment();
+            var baseSessionRate = _repository.Query<BaseSessionRate>().FirstOrDefault();
+            var payment = input.EntityId > 0 ? client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId) : new Payment();
             var sessionRatesDto = new SessionRatesDto
                                       {
-                                          FullHour = client.SessionRates.FullHour > 0 ? client.SessionRates.FullHour : client.SessionRates.ResetFullHourRate(),
-                                          HalfHour = client.SessionRates.HalfHour > 0 ? client.SessionRates.HalfHour : client.SessionRates.ResetHalfHourRate(),
-                                          FullHourTenPack = client.SessionRates.FullHourTenPack > 0 ? client.SessionRates.FullHourTenPack : client.SessionRates.ResetFullHourTenPackRate(),
-                                          HalfHourTenPack = client.SessionRates.HalfHourTenPack > 0 ? client.SessionRates.HalfHourTenPack : client.SessionRates.ResetHalfHourTenPackRate(),
-                                          Pair = client.SessionRates.Pair > 0 ? client.SessionRates.Pair : client.SessionRates.ResetPairRate(),
-                                          PairTenPack = client.SessionRates.PairTenPack > 0 ? client.SessionRates.PairTenPack : client.SessionRates.ResetPairTenPackRate(),
+                                        FullHour = client.SessionRates.FullHour > 0 ? client.SessionRates.FullHour : baseSessionRate.FullHour,
+                                        HalfHour = client.SessionRates.HalfHour > 0 ? client.SessionRates.HalfHour : baseSessionRate.HalfHour,
+                                        FullHourTenPack = client.SessionRates.FullHourTenPack > 0 ? client.SessionRates.FullHourTenPack : baseSessionRate.FullHourTenPack,
+                                        HalfHourTenPack = client.SessionRates.HalfHourTenPack > 0 ? client.SessionRates.HalfHourTenPack : baseSessionRate.HalfHourTenPack,
+                                        Pair = client.SessionRates.Pair > 0 ? client.SessionRates.Pair : baseSessionRate.Pair,
+                                        PairTenPack = client.SessionRates.PairTenPack > 0 ? client.SessionRates.PairTenPack : baseSessionRate.PairTenPack
                                       };
             //hijacking sessionratesdto since I need exact same object just different name
             var clientSessionsDto = new SessionRatesDto
@@ -71,11 +74,11 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var model = Mapper.Map<Payment,PaymentViewModel>(payment);
             model._sessionRateDto = sessionRatesDto;
             model._sessionsAvailable = clientSessionsDto;
-            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
+            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
             model._deleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null));
             model.ParentId = client.EntityId;
             model._saveUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.Save(null));
-            return new CustomJsonResult{Data = model};
+            return new CustomJsonResult(model);
         }
 
         public ActionResult Display_Template(ViewModel input)
@@ -88,8 +91,8 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var client = _repository.Find<Client>(input.ParentId);
             var payment =  client.Payments.FirstOrDefault(x=>x.EntityId == input.EntityId);
             var model = Mapper.Map<Payment, PaymentViewModel>(payment);
-            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToString();
-            return new CustomJsonResult { Data = model };
+            model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
+            return new CustomJsonResult(model);
         }
 
         public CustomJsonResult Delete(ViewModel input)
@@ -100,14 +103,26 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var rulesResult = rulesEngineBase.ExecuteRules(payment);
             if (rulesResult.GetLastValidationReport().Success)
             {
+                removeSessionsByPayment(client, payment);
                 client.RemovePayment(payment);
                 payment.Client = null;
-                _saveEntityService.ProcessSave(client);
-                var saveClientNotification = rulesResult.Finish();
-                return new CustomJsonResult { Data = saveClientNotification };
+                var validationManager = _saveEntityService.ProcessSave(client);
+                var saveClientNotification = validationManager.Finish();
+                return new CustomJsonResult(saveClientNotification);
             }
             var notification = rulesResult.Finish();
-            return new CustomJsonResult { Data = notification };
+            return new CustomJsonResult(notification);
+        }
+
+        private void removeSessionsByPayment(Client client, Payment payment)
+        {
+            var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString());
+            sessions.Where(x => x.SessionUsed).ForEachItem(y =>
+            {
+                y.InArrears = true;
+                y.PurchaseBatchNumber = string.Empty;
+            });
+            sessions.Where(x => !x.SessionUsed).ForEachItem(client.RemoveSession);
         }
 
         public CustomJsonResult DeleteMultiple(BulkActionViewModel input)
@@ -115,6 +130,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var client = _repository.Find<Client>(input.ParentId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
             IValidationManager validationManager = new ValidationManager(_repository);
+            
             input.EntityIds.ForEachItem(x =>
             {
                 var payment = client.Payments.FirstOrDefault(i => i.EntityId == x);
@@ -122,13 +138,19 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
                 var report = validationManager.GetLastValidationReport();
                 if (report.Success)
                 {
+                    removeSessionsByPayment(client, payment);
                     client.RemovePayment(payment);
                     payment.Client = null;
                 }
             });
-            _saveEntityService.ProcessSave(client);
+            if (validationManager.GetLastValidationReport().Success)
+            {
+                var processSave = _saveEntityService.ProcessSave(client);
+                var saveClientNotification = processSave.Finish();
+                return new CustomJsonResult(saveClientNotification);
+            }
             var notification = validationManager.Finish();
-            return new CustomJsonResult { Data = notification};
+            return new CustomJsonResult(notification);
         }
 
         public CustomJsonResult Save(PaymentViewModel input)
@@ -149,7 +171,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             var crudManager = _saveEntityService.ProcessSave(client);
 
             var notification = crudManager.Finish();
-            return new CustomJsonResult { Data = notification, ContentType = "text/plain" };
+            return new CustomJsonResult(notification){ ContentType = "text/plain" };
 
         }
 
@@ -169,6 +191,7 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
             payment.PairTenPack = model.PairTenPack;
             payment.PairTenPackPrice = model.PairTenPack > 0 ? model.PairTenPackPrice / model.PairTenPack : 0;
             payment.PaymentTotal = model.PaymentTotal;
+            payment.Notes = model.Notes;
             return payment;
         }
     }
@@ -197,17 +220,13 @@ namespace MethodFitness.Web.Areas.Billing.Controllers
         public int Pair { get; set; }
         public int PairTenPack { get; set; }
         public double PaymentTotal { get; set; }
-
         public double FullHourTenPackPrice { get; set; }
-
         public double FullHourPrice { get; set; }
-
         public double HalfHourTenPackPrice { get; set; }
-
         public double HalfHourPrice { get; set; }
-
         public double PairPrice { get; set; }
-
         public double PairTenPackPrice { get; set; }
+        [TextArea]
+        public string Notes { get; set; }
     }
 }   

@@ -34,7 +34,7 @@ li.token-input-token {
     margin: 4px 0 4px 0;
     padding: 3px 5px;
     background-color: #bfd9e5;
-    color: #000;
+    color: #666666;
     font-weight: bold;
     cursor: default;
     display: block;
@@ -49,7 +49,7 @@ li.token-input-token p {
 
 li.token-input-token span {
     /*background: url("../images/blank-blue.png") no-repeat scroll 0 0 transparent;*/
-    color: #000000;
+    color: #666666;
     cursor: pointer;
     clear: none;
     float: right;
@@ -63,7 +63,7 @@ li.token-input-token span {
 
 li.token-input-selected-token {
     background-color: #bdb76b;
-    color: #fff !important;
+    color: #9da1ff !important;
 }
 
 li.token-input-selected-token span {

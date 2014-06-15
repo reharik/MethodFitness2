@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CC.Core;
+using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
 using CC.Core.Localization;
+using CC.Core.Services;
 using CC.Security.Interfaces;
 using Castle.Components.Validator;
 using MethodFitness.Core.Domain.Tools.CustomAttributes;
 using MethodFitness.Core.Enumerations;
-using MethodFitness.Web.Areas.Schedule.Controllers;
 using xVal.ServerSide;
 
 namespace MethodFitness.Core.Domain
@@ -25,7 +26,7 @@ namespace MethodFitness.Core.Domain
         [ValidateNonEmpty]
         public virtual Location Location { get; set; }
         [ValidateNonEmpty]
-        public virtual Trainer Trainer { get; set; }
+        public virtual User Trainer { get; set; }
         [TextArea]
         public virtual string Notes { get; set; }
         [ValueOf(typeof(AppointmentType))]
@@ -58,42 +59,25 @@ namespace MethodFitness.Core.Domain
             _sessions.Add(session);
         }
         #endregion
-  
-        public virtual Notification CheckPermissions(User user, IAuthorizationService authorizationService, Notification notification)
-        {
-            var convertTime = TimeZoneInfo.ConvertTime(DateTime.Now,TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-            if (StartTime < convertTime && !authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
-            {
-                notification.Success = false;
-                notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
-            }
-            return notification;
-
-        } 
-        public virtual Notification CheckForClients(Notification notification)
-        {
-            if (!Clients.Any())
-            {
-                notification = new Notification { Success = false };
-                notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
-            }
-            return notification;
-        }
+        
         public virtual void SetSessionsForClients()
         {
-            Clients.ForEachItem(x =>
+            Clients.ForEachItem(SetSessionForClient);
+        }
+
+        private void SetSessionForClient(Client client)
+        {
+            var sessions = client.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == AppointmentType);
+            if (sessions.Any())
             {
-                var sessions = x.Sessions.Where(s => s.Appointment == null && s.AppointmentType == AppointmentType);
-                if (sessions.Any())
-                {
-                    var session = sessions.OrderBy(s => s.CreatedDate).First();
-                    session.Appointment = this;
-                    session.Trainer = Trainer;
-                    session.SessionUsed = true;
-                }
-                else
-                {
-                    var session = new Session
+                var session = sessions.OrderBy(s => s.CreatedDate).First();
+                session.Appointment = this;
+                session.Trainer = Trainer;
+                session.SessionUsed = true;
+            }
+            else
+            {
+                var session = new Session
                     {
                         Appointment = this,
                         Trainer = Trainer,
@@ -101,13 +85,12 @@ namespace MethodFitness.Core.Domain
                         AppointmentType = AppointmentType,
                         SessionUsed = true
                     };
-                    x.AddSession(session);
-                    AddSession(session);
-                }
-            });
+                client.AddSession(session);
+                AddSession(session);
+            }
         }
 
-        public virtual void RestoreSessionsToClientWhenDeleted()
+        public virtual void RestoreSessionsToClients()
         {
             Sessions.ForEachItem(x => x.Client.RestoreSession(x));
         }
@@ -129,6 +112,48 @@ namespace MethodFitness.Core.Domain
             return appointment;
         }
 
+        public virtual void SettleChangesToPastAppointment(IEnumerable<int> newListOfClientIds,
+                                                            string appointmentType,
+                                                            IRepository repository,
+                                                            ISaveEntityService saveEntityService)
+        {
+            if (IsNew()) return;
+            if (HandleChangeOfAptTypeInPastApt(appointmentType)) return;
+            HandleRemovedClientsOnPastApt(newListOfClientIds, saveEntityService);
+            HandleNewClientsOnPastApt(newListOfClientIds, repository);
+        }
 
+        private void HandleNewClientsOnPastApt(IEnumerable<int> newListOfClientIds, IRepository repository)
+        {
+            var currentClientsIds = Clients.Select(x => x.EntityId);
+            var clientIdsNewToAppointment = newListOfClientIds.Except(currentClientsIds);
+            clientIdsNewToAppointment.ForEachItem(x => SetSessionForClient(repository.Find<Client>(x)));
+        }
+
+        private void HandleRemovedClientsOnPastApt(IEnumerable<int> newListOfClientIds, ISaveEntityService saveEntityService)
+        {
+            var currentClientsIds = Clients.Select(x => x.EntityId);
+            var clientIdsRemovedFromAppointment = currentClientsIds.Except(newListOfClientIds);
+
+            clientIdsRemovedFromAppointment.ForEachItem(x =>
+                {
+                    var session = Sessions.FirstOrDefault(s => s.Client.EntityId == x);
+                    var client = Clients.FirstOrDefault(c => c.EntityId == x);
+                    RemoveSession(session);
+                    client.RestoreSession(session);
+                    saveEntityService.ProcessSave(client);
+                });
+        }
+
+        private bool HandleChangeOfAptTypeInPastApt(string appointmentType)
+        {
+            if (AppointmentType != appointmentType)
+            {
+                RestoreSessionsToClients();
+                Completed = false;
+                return true;
+            }
+            return false;
+        }
     }
 }

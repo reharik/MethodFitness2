@@ -2,7 +2,9 @@ using System;
 using System.Data;
 using System.IO;
 using MethodFitness.Core.Config;
+using MethodFitness.Core.Domain;
 using NHibernate;
+using StructureMap;
 
 namespace Generator
 {
@@ -46,16 +48,31 @@ DEALLOCATE FK_KILLER
 
         public static void DeleteReaddDb(ISessionFactory source)
         {
+            var connstring = "";
             using (ISession session = source.OpenSession())
             {
                 var sql =
                     "USE [master] alter database MethodFitness_DEV set single_user with rollback immediate DROP DATABASE MethodFitness_DEV CREATE DATABASE MethodFitness_DEV";
-
+                connstring = session.Connection.ConnectionString;
                 IDbConnection conn = session.Connection;
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = sql;
                 cmd.ExecuteNonQuery();
             }
+
+            ObjectFactory.Container.Dispose();
+            ObjectFactory.Initialize(x =>
+            {
+                x.AddRegistry(new GenRegistry());
+                x.AddRegistry(new CommandRegistry());
+            });
+
+            var sessionFactoryConfiguration =
+                 ObjectFactory.Container.With("connectionStr")
+                              .EqualTo(connstring)
+                              .GetInstance<ISessionFactoryConfiguration>();
+            ObjectFactory.Container.Inject(sessionFactoryConfiguration);
+
         }
 
         public static void killRhinoSecurity(ISessionFactory source)

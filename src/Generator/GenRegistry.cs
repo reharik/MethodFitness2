@@ -41,24 +41,29 @@ namespace Generator
             For<INHSetupConfig>().Use<MFNHSetupConfig>();
 
             For<ISessionFactoryConfiguration>().Singleton()
-               .Use<SqlServerSessionSourceConfiguration>()
-               .Ctor<SqlServerSessionSourceConfiguration>("connectionStr")
-               .EqualToAppSetting("MethodFitness.sql_server_connection_string");
+                                               .Use<SqlServerSessionSourceConfiguration>()
+                                               .Ctor<SqlServerSessionSourceConfiguration>("connectionStr");
             For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory());
 
-            For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());
+            For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession(new SystemSaveUpdateInterceptor()));
 
             For<IUnitOfWork>().HybridHttpOrThreadLocalScoped().Use<UnitOfWork>();
 
             For<IRepository>().Use<Repository>();
 
-            For<ISessionContext>().Use<DataLoaderSessionContext>();
+            // no idea why this pos needs to be declared explicitly. very annoying
+            // looks like it was because of the capital A.  I renamed it then commented it out.
+            // if no problem then I can delete this whole mess.
+            //            For<IQADataLoader>().Use<QaDataLoader>();
+//            For<IQADataLoader>().Use<QADataLoader>();
+
+            For<ISessionContext>().Use<SystemSessionContext>();
 
             For<ILocalizationDataProvider>().Use<LocalizationDataProvider>();
             For<IAuthenticationContext>().Use<WebAuthenticationContext>();
 
             For<IMenuConfig>().Use<MainMenu>();
-            For<IViewOptionConfig>().Add<ScheduleViewOptionList>();
+            For<IRouteTokenConfig>().Add<ScheduleRouteTokenList>();
 
             For<IAuthorizationService>().HybridHttpOrThreadLocalScoped().Use<AuthorizationService>();
             For<IAuthorizationRepository>().HybridHttpOrThreadLocalScoped().Use<CustomAuthorizationRepository>();

@@ -31,8 +31,16 @@ namespace MethodFitness.Core.Enumerations
     {
         public static readonly AreaName Empty = new AreaName { IsActive = false, Key = "" };
         public static readonly AreaName Schedule = new AreaName { IsActive = true, Key = "Schedule" };
-        public static readonly AreaName Reports = new AreaName { IsActive = true, Key = "Reports" };
+        public static readonly AreaName Reporting = new AreaName { IsActive = true, Key = "Reporting" };
         public static readonly AreaName Billing = new AreaName { IsActive = true, Key = "Billing" };
+    }
+
+    [Serializable]
+    public class UserType : Enumeration
+    {
+        public static readonly UserType Empty = new UserType { IsActive = false, Key = "" };
+        public static readonly UserType Administrator = new UserType { IsActive = true, Key = "Administrator" };
+        public static readonly UserType Trainer = new UserType { IsActive = true, Key = "Trainer" };
     }
 
     [Serializable]
@@ -42,6 +50,7 @@ namespace MethodFitness.Core.Enumerations
         public static readonly SecurityUserGroups Administrator = new SecurityUserGroups { IsActive = true, Key = "Administrator" };
         public static readonly SecurityUserGroups Trainer = new SecurityUserGroups { IsActive = true, Key = "Trainer" };
     }
+
 
     [Serializable]
     public class AppointmentLength : Enumeration
