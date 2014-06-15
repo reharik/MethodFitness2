@@ -14,14 +14,14 @@
 
 <!-- ____________PUBLIC TASKS_______________  -->
 
-  <Target Name="Build" DependsOnTargets="_build;_unitTests" />
+  <Target Name="Build" DependsOnTargets="_build;" />
   <!--  <Target Name="Stage" DependsOnTargets="_build;_minifyJSandCss;_outputWebFiles;" />-->
 <!--  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />-->
   <Target Name="Push" DependsOnTargets="_build;_pushToProd;" />
   
  <Target Name="_pushToProd" >
    <PropertyGroup>
-     <OutputDirectory>f:\WebSites\MethodFitness_PreRelease</OutputDirectory>
+     <OutputDirectory>c:\WebSites\MethodFitness_PreRelease</OutputDirectory>
    </PropertyGroup>
    
    <ItemGroup>
@@ -57,10 +57,7 @@
    <Copy SourceFiles="@(WebFiles)" DestinationFolder="$(OutputDirectory)\%(RecursiveDir)" />
    <Copy SourceFiles="@(SessionCompleteTaskFiles)" DestinationFolder="$(OutputDirectory)\Tasks\SessionManagement\%(RecursiveDir)" />
 
-   <Zip Files="@(WebFiles)"
-     WorkingDirectory="f:\WebSites\BackUp\MethodFitness_PROD"
-     ZipFileName="f:\WebSites\BackUp\MethodFitness_PROD\MFWeb$(Month).$(Day).$(Year)-$(Hour).$(Minute).zip"
-     ZipLevel="9" />
+ 
   </Target>
 
   <Target Name="_build">
@@ -70,8 +67,5 @@
   <ItemGroup>
     <UnitTestAssemblies Include="$(SourcePath)\MethodFitness.Tests\bin\Release\MethodFitness.Tests.dll;" />
   </ItemGroup>
-  <Target Name="_unitTests">
-    <NUnit Assemblies="@(UnitTestAssemblies)" ToolPath="$(NUnit)" />
-  </Target>
 
 </Project>
