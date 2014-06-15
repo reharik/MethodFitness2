@@ -321,6 +321,10 @@ MF.Views.popupButtonBuilder = (function(){
         var buttons = {};
         var _addButton = function(name,func){ buttons[name] = func; };
         var saveFunc = function() {
+            if ($(this).hasClass("disabled"))
+                return;
+
+            $(this).addClass("disabled");
             MF.vent.trigger("popup:"+id+":save", this);
         };
         var editFunc = function(event) {MF.vent.trigger("popup:"+id+":edit");};

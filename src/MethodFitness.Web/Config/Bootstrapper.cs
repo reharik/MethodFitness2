@@ -52,7 +52,7 @@ namespace MethodFitness.Web.Config
             ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator());
             // sets MVCDependencyResolver to use the CSL
             DependencyResolver.SetResolver(new StructureMapServiceLocator());
-            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
+//            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
 
             XmlConfigurator.ConfigureAndWatch(new FileInfo(locateFileAsAbsolutePath("log4net.config")));
 
