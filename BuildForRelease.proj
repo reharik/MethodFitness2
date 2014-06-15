@@ -17,7 +17,7 @@
   <Target Name="Build" DependsOnTargets="_build;_unitTests" />
   <!--  <Target Name="Stage" DependsOnTargets="_build;_minifyJSandCss;_outputWebFiles;" />-->
 <!--  <Target Name="Stage" DependsOnTargets="_build;_unitTests;_outputWebFiles;" />-->
-  <Target Name="Push" DependsOnTargets="_build;_unitTests;_pushToProd;" />
+  <Target Name="Push" DependsOnTargets="_build;_pushToProd;" />
   
  <Target Name="_pushToProd" >
    <PropertyGroup>
