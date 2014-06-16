@@ -358,9 +358,6 @@
     <Content Include="Views\Shared\_popupLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="log4net.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Permissions\ShowPermissions.cshtml" />
   </ItemGroup>
   <ItemGroup>
