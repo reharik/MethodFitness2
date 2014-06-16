@@ -1,0 +1,19 @@
+﻿@using MethodFitness.Web;
+@using HtmlTags
+
+<script>
+    @RenderSection("ExtraCss", false)
+
+    @RenderSection("HeaderScripts", false)
+
+    var contentArea;
+    var extraFormOptions = { };
+        @RenderSection("HeaderJavascript", false)
+</script>
+
+   <div class="content-header">
+        <span class="title-name">@Model.Title</span>
+    </div>
+    <div id="contentArea" class="content-inner">
+        @RenderBody()
+    </div>

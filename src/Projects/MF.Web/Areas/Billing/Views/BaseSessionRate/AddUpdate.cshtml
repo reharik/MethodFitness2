@@ -1,0 +1,36 @@
+﻿@using CC.Core.Html.CCUI
+@using MethodFitness.Web
+@model MF.Web.Areas.Billing.Controllers.BaseSessionRateViewModel
+
+@{
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+
+
+<div class="row">
+@*-----------Left Column-------------*@
+    <div class="span10">
+        <div class="row">
+            <h5 class="stdTxtColor ml2 span8">@WebLocalizationKeys.BASE_RATES</h5>
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.FullHour).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.HalfHour).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.FullHourTenPack).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.HalfHourTenPack).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.Pair).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.PairTenPack).Size("5").ToHtmlTag()
+        </div>
+    </div>
+</div>
+

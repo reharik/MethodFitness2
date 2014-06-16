@@ -1,0 +1,78 @@
+﻿@using MethodFitness.Web
+@model MF.Web.Areas.Billing.Controllers.TrainerReceiptViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "";
+}
+<html>
+    <head>
+           <script src="/content/scripts/jqueryPlugins/jquery-1.7.1.js" type="text/javascript"></script>
+           <script src="/content/scripts/jqueryPlugins/jquery.jqPrint.js" type="text/javascript"></script>
+        <script>
+            $(function () {
+                $("#print").on("click", function () {
+                    $('#paymentForm').jqprint();
+                });
+            })
+        </script>
+    </head>
+    <body>
+        <div>
+            <button id="print">Print</button>
+        </div>
+      <div id="paymentForm">
+        Payment for @Model.Trainer.FullNameFNF on @Model.TrainerPayment.CreatedDate.Value.ToLongDateString()
+        <br/>
+      <table border="2">
+          <tr>
+              <td>
+                  @WebLocalizationKeys.CLIENT_NAME
+              </td>
+              <td>
+                  @WebLocalizationKeys.DATE
+              </td>
+              <td>
+                  @WebLocalizationKeys.TIME
+              </td>
+              <td>
+                  @WebLocalizationKeys.CLIENT_COST
+              </td>
+              <td>
+                  @WebLocalizationKeys.TRAINER_PAYMENT
+              </td>
+          </tr>
+          @foreach (var item in Model.TrainerPayment.TrainerPaymentSessionItems.OrderBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date))
+          {
+              <tr>
+                  <td>
+                      @item.Client.FullNameLNF
+                  </td>
+                  <td>
+                      @item.Appointment.Date.Value.ToShortDateString()
+                  </td>
+                  <td>
+                      @item.Appointment.StartTime.Value.ToShortTimeString().Substring(0, @item.Appointment.StartTime.Value.ToShortTimeString().Length-3)
+                      -
+                      @item.Appointment.EndTime.Value.ToShortTimeString()
+                  </td>
+                  <td>
+                      $@item.AppointmentCost
+                  </td>
+                  <td>
+                      $@item.TrainerPay
+                  </td>
+              </tr>
+          }
+          <tr>
+              <td colspan="4">
+                  <span style="float: right;">@WebLocalizationKeys.TOTAL</span> 
+              </td>
+              <td>
+                  $@Model.TrainerPayment.Total
+              </td>
+          </tr>
+      </table>
+      </div>
+    </body>
+</html>

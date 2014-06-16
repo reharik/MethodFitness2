@@ -1,0 +1,32 @@
+﻿@using CC.Core.Html.CCUI
+@using MethodFitness.Core.Services
+@using MethodFitness.Web
+@model MF.Web.Controllers.LocationViewModel
+
+@{
+    this.Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+
+
+<div class="row">
+    <h5 class="stdTxtColor ml2 span8">@WebLocalizationKeys.LOCATION_INFORMATION</h5>
+</div>
+<div class="row">
+@*-----------Left Column-------------*@
+    <div class="span10">
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.Name).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.Address1).Size("5").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.Address2).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @this.Html.SubmissionFor(x => x.City).Size("5").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.State).Size("2").ToHtmlTag()
+            @this.Html.SubmissionFor(x => x.Zip).Size("3").ToHtmlTag()
+        </div>
+    </div>
+</div>
+
+    

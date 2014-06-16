@@ -1,0 +1,32 @@
+﻿@model MF.Web.Models.CalendarViewModel
+@using CC.Core.Html.CCUI
+@using MethodFitness.Web
+@using MethodFitness.Web.Models
+
+
+<div class="content-header">
+    @Html.SubmissionFor(x => x.Location).HideLabel().AddClassToRoot("narrow").ToHtmlTag()
+    <span class="title-name">@Model._Title</span>
+</div>
+<div id="contentArea" class="content-inner">
+    <div class="form-scroll-inner calendar">
+        <div id="legend" class="legend">
+            <span class="legendHeader">@WebLocalizationKeys.TRAINERS</span>
+            <ul id="legendItems"></ul>
+        </div>
+        <div class="calendarContainer">
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="legendTemplate" type="text/x-jquery-tmpl"> 
+    <li class="legendItem">
+        <div class="legendLabel" style="color: ${Color}">${Name}</div>
+        <input type="hidden" id="trainerId" value="${EntityId}"/>
+    </li>
+    
+</script> 
+
+

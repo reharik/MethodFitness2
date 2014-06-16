@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>FluentMigrator.Runner</id>
+    <version>1.1.1.26</version>
+    <title>FluentMigrator.Runner</title>
+    <authors>Sean Chambers</authors>
+    <owners>Sean Chambers</owners>
+    <projectUrl>https://github.com/schambers/fluentmigrator</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Lightweight variant of the FluentMigrator.Tools package which installs just FluentMigrator.Runner (referencing it automatically, unlike the mainline FluentMigrator.Tools package).</description>
+    <copyright>Copyright - Sean Chambers 2008-2013</copyright>
+    <dependencies>
+      <dependency id="FluentMigrator" version="1.1.1.0" />
+    </dependencies>
+  </metadata>
+</package>

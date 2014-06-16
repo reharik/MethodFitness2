@@ -1,0 +1,92 @@
+﻿
+
+input, textarea, .uneditable-input {
+    width: 100%;
+}
+
+label, input, button, select, textarea {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+    color: #666666;
+}
+
+
+input,
+button,
+select,
+textarea {
+    font-family: helvetica,sans-serif;
+}
+
+label {
+    display: block;
+    margin-bottom: 2;
+}
+
+
+select, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 4px 4px 4px 4px;
+    color: #838383;
+    display: inline-block;
+    font-size: 13px;
+    height: 25px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+
+/* textarea without height*/
+textarea{
+    border-radius: 4px 4px 4px 4px;
+    color: #838383;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+
+select {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    width: 100%;
+}
+
+.stdTxtColor{
+    color:#666666;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 12px;
+}
+
+#colorPickerInput{
+    width: 100px;
+}
+
+.blank{
+    height: 20px;
+}
+
+.ml2{
+    margin-left: 2px;
+}
+
+.tokenEditor{
+    text-decoration: none;
+}
+
+.fc-header-title {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 9pt !important;
+}
+
+.fc-header .fc-button {
+    margin: 4px 0;
+    vertical-align: top;
+}
