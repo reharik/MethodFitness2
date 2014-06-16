@@ -1,6 +1,5 @@
 ﻿using System;
-using CC.Core.Utilities;
-using Microsoft.Practices.ServiceLocation;
+using CC.Core.Reflection;
 using StructureMap;
 
 namespace CC.UI.Helpers.Configuration

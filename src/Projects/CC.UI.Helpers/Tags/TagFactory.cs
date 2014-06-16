@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CC.Core.Utilities;
 using CC.UI.Helpers.Configuration;
 using HtmlTags;
+
 
 namespace CC.UI.Helpers.Tags
 {
     public class TagFactory
     {
-        private readonly Cache<AccessorDef, Func<ElementRequest, HtmlTag>> _creators =
-            new Cache<AccessorDef, Func<ElementRequest, HtmlTag>>();
+        private readonly CC.Core.Reflection.Cache<AccessorDef, Func<ElementRequest, HtmlTag>> _creators =
+            new CC.Core.Reflection.Cache<AccessorDef, Func<ElementRequest, HtmlTag>>();
 
         private readonly IList<IElementModifier> _modifiers = new List<IElementModifier>();
         private readonly IList<IElementBuilder> _sources = new List<IElementBuilder>();

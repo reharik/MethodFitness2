@@ -307,18 +307,7 @@ namespace CC.Utility
 //            return UrlContext.GetFullUrl(formattedUrl);
 //        }
         
-//        public static Type GetTypeWhenProxy(this object possibleProxy)
-//        {
-//            if (possibleProxy is INHibernateProxy)
-//            {
-//                var lazyInitialiser = ((INHibernateProxy)possibleProxy).HibernateLazyInitializer;
-//                return lazyInitialiser.PersistentClass;
-//            }
-//            else
-//            {
-//                return possibleProxy.GetType();
-//            }
-//        }
+
 
         public static DateTime SetTime(this DateTime date, string time)
         {

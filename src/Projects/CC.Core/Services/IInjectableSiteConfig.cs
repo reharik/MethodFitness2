@@ -1,3 +1,5 @@
+using CC.Utility;
+
 namespace CC.Core.Services
 {
     using System;

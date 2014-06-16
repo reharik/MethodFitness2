@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using CC.Core;
 using CC.Core.DomainTools;
-using CC.Core.Services;
 using CC.Core.ValidationServices;
 using CC.Utility;
 using MF.Core.Domain;

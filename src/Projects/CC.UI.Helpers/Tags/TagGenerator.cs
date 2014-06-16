@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using CC.Core.Utilities;
+using CC.Core.Reflection;
 using CC.UI.Helpers.Configuration;
 using HtmlTags;
 using Microsoft.Practices.ServiceLocation;

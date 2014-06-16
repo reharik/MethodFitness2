@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CC.Core.Utilities;
+using CC.Core.Reflection;
 
 namespace CC.UI.Helpers
 {

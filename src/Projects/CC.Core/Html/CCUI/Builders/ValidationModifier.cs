@@ -1,7 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using CC.Core.Enumerations;
+using CC.Core.Reflection;
 using CC.UI.Helpers.Configuration;
+using CC.Utility;
+using HtmlTags;
 
 namespace CC.Core.Html.CCUI.Builders
 {
@@ -37,79 +40,79 @@ namespace CC.Core.Html.CCUI.Builders
     }
 
    
-
-    public class PasswordConfirmModifier : IElementModifier
-    {
-        public TagModifier CreateModifier(AccessorDef accessorDef)
-        {
-            if (!accessorDef.Accessor.HasAttribute<ValidateSameAsAttribute>()) return null;
-            TagModifier modifier = (request, tag) =>
-                                   tag.AddValidationHelper("equalTo:'[name$=\"Password\"]'",
-                                                           "equalTo: '" +
-                                                           CCCoreLocalizationKeys.CONFIRMATION_PASSWORD_MUST_MATCH.ToString() + "'");
-            return modifier;
-        }
-    }
-
-    public class UrlModifier : IElementModifier
-    {
-        public TagModifier CreateModifier(AccessorDef accessorDef)
-        {
-            if (!accessorDef.Accessor.HasAttribute<ValidateUrlAttribute>()) return null;
-            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Url.ToString());
-            
+//
+//    public class PasswordConfirmModifier : IElementModifier
+//    {
+//        public TagModifier CreateModifier(AccessorDef accessorDef)
+//        {
+//            if (!accessorDef.Accessor.HasAttribute<ValidateSameAsAttribute>()) return null;
 //            TagModifier modifier = (request, tag) =>
-//                                   tag.AddValidationHelper(ValidationRule.Url + ":true",
-//                                                           ValidationRule.Url + ": '" +
-//                                                           CoreLocalizationKeys.VALID_URL_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
-            return modifier;
-        }
-    }
-
-    public class EmailModifier : IElementModifier
-    {
-        public TagModifier CreateModifier(AccessorDef accessorDef)
-        {
-            if (!accessorDef.Accessor.HasAttribute<ValidateEmailAttribute>()) return null;
-            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Email.ToString());
+//                                   tag.AddValidationHelper("equalTo:'[name$=\"Password\"]'",
+//                                                           "equalTo: '" +
+//                                                           CCCoreLocalizationKeys.CONFIRMATION_PASSWORD_MUST_MATCH.ToString() + "'");
+//            return modifier;
+//        }
+//    }
+//
+//    public class UrlModifier : IElementModifier
+//    {
+//        public TagModifier CreateModifier(AccessorDef accessorDef)
+//        {
+//            if (!accessorDef.Accessor.HasAttribute<ValidateUrlAttribute>()) return null;
+//            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Url.ToString());
 //            
+////            TagModifier modifier = (request, tag) =>
+////                                   tag.AddValidationHelper(ValidationRule.Url + ":true",
+////                                                           ValidationRule.Url + ": '" +
+////                                                           CoreLocalizationKeys.VALID_URL_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
+//            return modifier;
+//        }
+//    }
+//
+//    public class EmailModifier : IElementModifier
+//    {
+//        public TagModifier CreateModifier(AccessorDef accessorDef)
+//        {
+//            if (!accessorDef.Accessor.HasAttribute<ValidateEmailAttribute>()) return null;
+//            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Email.ToString());
+////            
+////            TagModifier modifier = (request, tag) =>
+////                                   tag.AddValidationHelper(ValidationRule.Email + ":true",
+////                                                           ValidationRule.Email + ": '" +
+////                                                           CoreLocalizationKeys.VALID_EMAIL_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
+//            return modifier;
+//        }
+//    }
+
+//    public class DateModifier : IElementModifier
+//    {
+//        public TagModifier CreateModifier(AccessorDef accessorDef)
+//        {
+//            if (!accessorDef.Accessor.HasAttribute<ValidateSqlDateTimeAttribute>()) return null;
+//            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Date.ToString());
+//
+////            TagModifier modifier = (request, tag) =>
+////                                   tag.AddValidationHelper(ValidationRule.Date + ":true",
+////                                                           ValidationRule.Date + ": '" +
+////                                                           CoreLocalizationKeys.VALID_DATE_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
+//            return modifier;
+//        }
+//    }
+//
+//    public class RangeModifier : IElementModifier
+//    {
+//        public TagModifier CreateModifier(AccessorDef accessorDef)
+//        {
+//            if (!accessorDef.Accessor.HasAttribute<ValidateMFRangeAttribute>()) return null;
+//            var maxInt = accessorDef.Accessor.GetAttribute<ValidateMFRangeAttribute>().MaxInt;
+//            var minInt = accessorDef.Accessor.GetAttribute<ValidateMFRangeAttribute>().MinInt;
 //            TagModifier modifier = (request, tag) =>
-//                                   tag.AddValidationHelper(ValidationRule.Email + ":true",
-//                                                           ValidationRule.Email + ": '" +
-//                                                           CoreLocalizationKeys.VALID_EMAIL_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
-            return modifier;
-        }
-    }
-
-    public class DateModifier : IElementModifier
-    {
-        public TagModifier CreateModifier(AccessorDef accessorDef)
-        {
-            if (!accessorDef.Accessor.HasAttribute<ValidateSqlDateTimeAttribute>()) return null;
-            TagModifier modifier = (request, tag) => tag.AddClass(ValidationRule.Date.ToString());
-
-//            TagModifier modifier = (request, tag) =>
-//                                   tag.AddValidationHelper(ValidationRule.Date + ":true",
-//                                                           ValidationRule.Date + ": '" +
-//                                                           CoreLocalizationKeys.VALID_DATE_FORMAT.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase()) + "'");
-            return modifier;
-        }
-    }
-
-    public class RangeModifier : IElementModifier
-    {
-        public TagModifier CreateModifier(AccessorDef accessorDef)
-        {
-            if (!accessorDef.Accessor.HasAttribute<ValidateMFRangeAttribute>()) return null;
-            var maxInt = accessorDef.Accessor.GetAttribute<ValidateMFRangeAttribute>().MaxInt;
-            var minInt = accessorDef.Accessor.GetAttribute<ValidateMFRangeAttribute>().MinInt;
-            TagModifier modifier = (request, tag) =>
-                                   tag.AddValidationHelper(ValidationRule.Range + ":["+minInt+","+maxInt+"]",
-                                                           ValidationRule.Range + ": '" +
-                                                           CCCoreLocalizationKeys.VALID_RANGE.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase(),minInt,maxInt) + "'");
-            return modifier;
-        }
-    }
+//                                   tag.AddValidationHelper(ValidationRule.Range + ":["+minInt+","+maxInt+"]",
+//                                                           ValidationRule.Range + ": '" +
+//                                                           CCCoreLocalizationKeys.VALID_RANGE.ToFormat(request.Accessor.FieldName.ToSeperateWordsFromPascalCase(),minInt,maxInt) + "'");
+//            return modifier;
+//        }
+//    }
 
     public class NumberModifier : IElementModifier
     {

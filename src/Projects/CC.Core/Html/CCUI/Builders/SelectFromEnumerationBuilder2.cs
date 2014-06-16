@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using CC.Core.Html.CCUI.HtmlConventionRegistries;
 using CC.Core.Localization;
+using CC.Core.Reflection;
 using CC.UI.Helpers.Configuration;
 using HtmlTags;
 

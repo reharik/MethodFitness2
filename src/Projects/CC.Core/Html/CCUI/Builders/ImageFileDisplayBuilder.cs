@@ -1,5 +1,6 @@
 using System;
 using CC.UI.Helpers.Configuration;
+using CC.Utility;
 using HtmlTags;
 
 namespace CC.Core.Html.CCUI.Builders

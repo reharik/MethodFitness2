@@ -1,5 +1,5 @@
 ﻿using System;
-using CC.Core.Utilities;
+using CC.Core.Reflection;
 
 namespace CC.UI.Helpers.Configuration
 {

@@ -1,4 +1,6 @@
-﻿namespace CC.Core.CoreViewModelAndDTOs
+﻿using CC.Utility;
+
+namespace CC.Core.CoreViewModelAndDTOs
 {
     public class PhotoDto
     {

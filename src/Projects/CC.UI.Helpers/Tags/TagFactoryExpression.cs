@@ -1,5 +1,5 @@
 ﻿using System;
-using CC.Core.Utilities;
+using CC.Core.Reflection;
 using CC.UI.Helpers.Configuration;
 using HtmlTags;
 

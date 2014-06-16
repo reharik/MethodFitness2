@@ -2,6 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using CC.Core.Services;
+using CC.Utility;
 using HtmlTags;
 
 namespace CC.Core.Html.Grid

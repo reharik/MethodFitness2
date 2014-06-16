@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using CC.UI.Helpers.Configuration;
+using CC.Utility;
 using HtmlTags;
 
 namespace CC.Core.Html.CCUI.Builders
