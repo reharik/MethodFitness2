@@ -37,7 +37,8 @@ namespace MF.Web.Areas.Billing.Controllers
                 return new CustomJsonResult(notification);
             }
             var crudManager = _saveEntityService.ProcessSave(trainer);
-            notification = crudManager.Finish();
+            var continuation = crudManager.Finish();
+            notification = new Notification(continuation);
             notification.Variable = UrlContext.GetUrlForAction<PayTrainerController>(x => x.TrainerReceipt(null),AreaName.Billing)+"/"+trainerPayment.EntityId+"?ParentId="+trainer.EntityId;
             return new CustomJsonResult(notification);
         }

@@ -2,7 +2,7 @@ using System;
 
 namespace CC.Core.Domain
 {
-    public interface ILocalizedItem : IPersistableObject
+    public interface ILocalizedItem 
     {
         string Name { get; }
         string Culture { get; }

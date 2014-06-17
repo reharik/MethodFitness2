@@ -21,7 +21,7 @@ namespace CC.Core.Services
                             TokenInputViewModel tokenInputViewModel,
                             Action<ENTITY> addEntity,
                             Action<ENTITY> removeEntity,
-            LambdaComparer<ENTITY> comparer = null) where ENTITY : Entity, IPersistableObject;
+            LambdaComparer<ENTITY> comparer = null) where ENTITY : Entity;
     }
 
     public class UpdateCollectionService : IUpdateCollectionService
@@ -65,7 +65,7 @@ namespace CC.Core.Services
             TokenInputViewModel tokenInputViewModel,
             Action<ENTITY> addEntity,
             Action<ENTITY> removeEntity,
-            LambdaComparer<ENTITY> comparer = null) where ENTITY : Entity, IPersistableObject
+            LambdaComparer<ENTITY> comparer = null) where ENTITY : Entity
         {
             if (comparer == null)
             {

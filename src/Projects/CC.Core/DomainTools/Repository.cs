@@ -48,17 +48,17 @@ namespace CC.Core.DomainTools
             return _unitOfWork.CurrentSession;
         }
 
-        public void Save<ENTITY>(ENTITY entity) where ENTITY : IPersistableObject
+        public void Save<ENTITY>(ENTITY entity) where ENTITY : Entity
         {
             _unitOfWork.CurrentSession.SaveOrUpdate(entity);
         }
 
-        public IEnumerable<T> FindAll<T>() where T : IReadableObject
+        public IEnumerable<T> FindAll<T>() where T : Entity
         {
             return _unitOfWork.CurrentSession.Query<T>();
         }
 
-        public void Delete<ENTITY>(ENTITY entity) where ENTITY : IPersistableObject
+        public void Delete<ENTITY>(ENTITY entity) where ENTITY : Entity
         {
             entity.IsDeleted = true;
             _unitOfWork.CurrentSession.SaveOrUpdate(entity);
@@ -69,12 +69,12 @@ namespace CC.Core.DomainTools
             _unitOfWork.CurrentSession.Delete(target);
         }
 
-        public ENTITY Load<ENTITY>(int id) where ENTITY : IReadableObject
+        public ENTITY Load<ENTITY>(int id) where ENTITY : Entity
         {
             return _unitOfWork.CurrentSession.Load<ENTITY>(id);
         }
 
-        public IQueryable<ENTITY> Query<ENTITY>() where ENTITY : IReadableObject
+        public IQueryable<ENTITY> Query<ENTITY>() where ENTITY : Entity
         {
             return _unitOfWork.CurrentSession.Query<ENTITY>();
         }
@@ -84,12 +84,12 @@ namespace CC.Core.DomainTools
             return _unitOfWork.CurrentSession.Query<ENTITY>().Where(where);
         }
 
-        public IEnumerable<ENTITY> ExecuteQueryOver<ENTITY>(QueryOver<ENTITY> query) where ENTITY : IReadableObject
+        public IEnumerable<ENTITY> ExecuteQueryOver<ENTITY>(QueryOver<ENTITY> query) where ENTITY : Entity
         {
             return query.GetExecutableQueryOver(_unitOfWork.CurrentSession).List();
         }
 
-        public IFutureValue<ENTITY> CreateQueryOverFuture<ENTITY>(QueryOver<ENTITY> query) where ENTITY : IReadableObject
+        public IFutureValue<ENTITY> CreateQueryOverFuture<ENTITY>(QueryOver<ENTITY> query) where ENTITY : Entity
         {
             return query.GetExecutableQueryOver(_unitOfWork.CurrentSession).FutureValue();
         }
@@ -108,12 +108,12 @@ namespace CC.Core.DomainTools
             return _unitOfWork.CurrentSession.Query<T>().FirstOrDefault(where);
         }
 
-        public T Find<T>(int id) where T : IReadableObject
+        public T Find<T>(int id) where T : Entity
         {
             return _unitOfWork.CurrentSession.Get<T>(id);
         }
 
-        public IList<ENTITY> ExecuteCriteria<ENTITY>(DetachedCriteria criteria) where ENTITY : IReadableObject
+        public IList<ENTITY> ExecuteCriteria<ENTITY>(DetachedCriteria criteria) where ENTITY : Entity
         {
             ICriteria executableCriteria = criteria.GetExecutableCriteria(_unitOfWork.CurrentSession);
             return executableCriteria.List<ENTITY>();

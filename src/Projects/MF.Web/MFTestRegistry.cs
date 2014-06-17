@@ -4,6 +4,7 @@ using CC.Core.Html.CCUI.HtmlConventionRegistries;
 using CC.Core.Html.Grid;
 using CC.Core.Localization;
 using CC.Core.Services;
+using CC.Core.ValidationServices;
 using CC.Security.Interfaces;
 using CC.Security.Services;
 using CC.UI.Helpers;
@@ -41,7 +42,6 @@ namespace MethodFitness.Web.Config
             For<IElementNamingConvention>().Use<CCElementNamingConvention>();
             For(typeof (ITagGenerator<>)).Use(typeof (TagGenerator<>));
             For<TagProfileLibrary>().Singleton();
-            For<ICastleValidationRunner>().Use<DummyCastleValidationRunnerSuccess>();
             For<ISaveEntityServiceWithoutPrincipal>().Use<NullSaveEntityServiceWithoutPrincipal>();
             For<INHSetupConfig>().Use<NullNHSetupConfig>();
 

@@ -20,7 +20,7 @@ namespace MF.Core.Rules
             _repository = repository;
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY trainer) where ENTITY : IPersistableObject
+        public ValidationReport Execute<ENTITY>(ENTITY trainer) where ENTITY : Entity
         {
             var result = new ValidationReport { Success = true };
             var _trainer = trainer as User;

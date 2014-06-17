@@ -9,6 +9,8 @@ using CC.Core.Html;
 using CC.Core.Html.Grid;
 using CC.Core.Services;
 using CC.Core.ValidationServices;
+using CC.DataValidation;
+using CC.Utility;
 using MF.Core.CoreViewModelAndDTOs;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
@@ -20,7 +22,6 @@ using MF.Web.Controllers;
 using MethodFitness.Web;
 using StructureMap;
 using System.Net.Mail;
-using xVal.ServerSide;
 
 namespace MF.Web.Areas.Billing.Controllers
 {

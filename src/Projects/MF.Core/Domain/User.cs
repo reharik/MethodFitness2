@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CC.Core.Domain;
 using CC.Core.Enumerations;
 using CC.Core.Localization;
 using CC.Security;
@@ -10,7 +11,7 @@ using MF.Core.CoreViewModelAndDTOs;
 
 namespace MF.Core.Domain
 {
-    public class  User : DomainEntity, IUser//, IPersistableObject
+    public class  User : DomainEntity, IUser, IPersistableObject
     {
         [Required]
         public virtual string FirstName { get; set; }

@@ -16,6 +16,7 @@ namespace CC.Core.ValidationServices
         void AddValidationReport(ValidationReport validationReport);
         Continuation Finish(string successMessage = "");
         bool HasFailed();
+        Continuation FinishWithAction(string successMessage = "");
     }
 
     public class ValidationManager : IValidationManager
@@ -123,8 +124,8 @@ namespace CC.Core.ValidationServices
 
     public class ValidationReport
     {
-        public IPersistableObject entity { get; set; }
-        public Action<IPersistableObject> SuccessAction { get; set; }
+        public Entity entity { get; set; }
+        public Action<Entity> SuccessAction { get; set; }
         public bool Success { get; set; }
         #region Collections
         private readonly IList<ErrorInfo> _errorInfos = new List<ErrorInfo>();

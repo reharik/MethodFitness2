@@ -13,7 +13,7 @@ namespace MF.Core.Rules
             _systemClock = systemClock;
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : IPersistableObject
+        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : Entity
         {
             var result = new ValidationReport { Success = true };
 //            var count = 0;

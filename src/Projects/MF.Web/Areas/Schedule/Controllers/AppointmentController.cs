@@ -9,6 +9,7 @@ using CC.Core.Enumerations;
 using CC.Core.Html;
 using CC.Core.Services;
 using CC.Core.ValidationServices;
+using CC.DataValidation;
 using CC.Security.Interfaces;
 using Castle.Components.Validator;
 using MF.Core;
@@ -18,7 +19,6 @@ using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
 using MethodFitness.Web;
-using xVal.ServerSide;
 using CC.Core.CustomAttributes;
 
 namespace MF.Web.Areas.Schedule.Controllers
@@ -178,8 +178,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             mapToDomain(input, appointment);
             
             var crudManager = _saveEntityService.ProcessSave(appointment);
-            notification = crudManager.Finish();
-            return new CustomJsonResult(notification);
+            var continuation = crudManager.Finish();
+            return new CustomJsonResult(new Notification(continuation));
         }
 
         private Notification validateAppointment(User user, AppointmentViewModel input)

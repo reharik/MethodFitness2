@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using CC.Core.ValidationServices;
 using CC.DataValidation;
 
 namespace CC.Core.DomainTools
@@ -19,6 +20,14 @@ namespace CC.Core.DomainTools
             Success = report.Success;
             Errors = report.Errors;
             //Target = continuation.Target;
+        }
+
+        public Notification(Continuation report)
+        {
+            Errors = new List<ErrorInfo>();
+            Message = report.Message;
+            Success = report.Success;
+            Errors = report.Errors;
         }
 
         public List<ErrorInfo> Errors;

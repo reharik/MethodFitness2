@@ -19,7 +19,7 @@ namespace CC.Core.Services
 
         IEnumerable<SelectListItem> CreateList<ENTITY>(Expression<Func<ENTITY, object>> text,
                                                        Expression<Func<ENTITY, object>> value, bool addSelectItem)
-            where ENTITY : IPersistableObject;
+            where ENTITY : Entity;
 
 
         IEnumerable<SelectListItem> SetSelectedItemByValue(IEnumerable<SelectListItem> entityList,
@@ -37,7 +37,7 @@ namespace CC.Core.Services
                                                                            string seperator,
                                                                            Expression<Func<ENTITY, object>> value,
                                                                            bool addSelectItem)
-            where ENTITY : IPersistableObject;
+            where ENTITY : Entity;
 
         IEnumerable<SelectListItem> CreateLookupList<ENTITY>(IEnumerable<ENTITY> entityList,
                                                              Expression<Func<ENTITY, object>> text,
@@ -119,14 +119,14 @@ namespace CC.Core.Services
 
         public IEnumerable<SelectListItem> CreateListWithConcatinatedText<ENTITY>(
             Expression<Func<ENTITY, object>> text1, Expression<Func<ENTITY, object>> text2, string seperator,
-            Expression<Func<ENTITY, object>> value, bool addSelectItem) where ENTITY : IPersistableObject
+            Expression<Func<ENTITY, object>> value, bool addSelectItem) where ENTITY : Entity
         {
             var enumerable = _repository.FindAll<ENTITY>();
             return CreateListWithConcatinatedText(enumerable, text1, text2, seperator, value, addSelectItem);
         }
 
         public IEnumerable<SelectListItem> CreateList<ENTITY>(Expression<Func<ENTITY, object>> text,
-                                                              Expression<Func<ENTITY, object>> value, bool addSelectItem) where ENTITY : IPersistableObject
+                                                              Expression<Func<ENTITY, object>> value, bool addSelectItem) where ENTITY : Entity
         {
             var enumerable = _repository.FindAll<ENTITY>();
             return CreateList(enumerable, text, value, addSelectItem);

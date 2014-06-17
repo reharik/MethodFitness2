@@ -9,6 +9,7 @@ using CC.Core.Html;
 using CC.Core.Services;
 using CC.Core.ValidationServices;
 using CC.Security.Interfaces;
+using CC.Utility;
 using MF.Core;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
@@ -109,8 +110,8 @@ namespace MF.Web.Areas.Schedule.Controllers
                 return new CustomJsonResult(notification);
             }
             var crudManager = _saveEntityService.ProcessSave(appointment);
-            notification = crudManager.Finish();
-            return new CustomJsonResult(notification);
+            var continuation = crudManager.Finish();
+            return new CustomJsonResult(new Notification(continuation));
         }
 
         private Notification validateAppointment(User user, AppointmentChangedViewModel input)

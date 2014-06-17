@@ -10,7 +10,9 @@ using CC.Core.Enumerations;
 using CC.Core.Html;
 using CC.Core.Services;
 using CC.Core.ValidationServices;
+using CC.DataValidation;
 using CC.Security.Interfaces;
+using CC.Utility;
 using Castle.Components.Validator;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
@@ -20,7 +22,6 @@ using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
 using MethodFitness.Web;
 using StructureMap;
-using xVal.ServerSide;
 using NHibernate.Linq;
 
 namespace MF.Web.Controllers

@@ -84,7 +84,7 @@ namespace CC.Core.Html.Grid
         }
     }
 
-    public interface IGridEnabledClass:IReadableObject
+    public interface IGridEnabledClass 
     {
         int EntityId { get; set; }
     }

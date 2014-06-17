@@ -30,10 +30,10 @@ namespace MF.SessionManagement
 
             For<INHSetupConfig>().Use<MFNHSetupConfig>();
 
-            For<ISessionFactoryConfiguration>().Singleton()
-                                               .Use<SqlServerSessionSourceConfiguration>()
-                                               .Ctor<SqlServerSessionSourceConfiguration>("connectionStr")
-                                                .EqualToAppSetting("MethodFitness.sql_server_connection_string");
+//            For<ISessionFactoryConfiguration>().Singleton()
+//                                               .Use<SqlServerSessionSourceConfiguration>()
+//                                               .Ctor<SqlServerSessionSourceConfiguration>("connectionStr")
+//                                                .EqualToAppSetting("MethodFitness.sql_server_connection_string");
             For<ISessionFactory>().Singleton().Use(ctx => ctx.GetInstance<ISessionFactoryConfiguration>().CreateSessionFactory());
 
             For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession(new SystemSaveUpdateInterceptor()));

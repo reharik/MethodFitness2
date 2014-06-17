@@ -13,24 +13,24 @@ namespace CC.Core.DomainTools
         ISession CurrentSession();
 
         void Save<ENTITY>(ENTITY entity)
-            where ENTITY : IPersistableObject;
+            where ENTITY : Entity;
 
         ENTITY Load<ENTITY>(int id)
-            where ENTITY : IReadableObject;
+            where ENTITY : Entity;
 
         IQueryable<ENTITY> Query<ENTITY>()
-            where ENTITY : IReadableObject;
+            where ENTITY : Entity;
 
         IQueryable<T> Query<T>(Expression<Func<T, bool>> where);
-        IEnumerable<ENTITY> ExecuteQueryOver<ENTITY>(QueryOver<ENTITY> query) where ENTITY : IReadableObject;
+        IEnumerable<ENTITY> ExecuteQueryOver<ENTITY>(QueryOver<ENTITY> query) where ENTITY : Entity;
 
         T FindBy<T>(Expression<Func<T, bool>> where);
 
-        T Find<T>(int id) where T : IReadableObject;
+        T Find<T>(int id) where T : Entity;
 
-        IEnumerable<T> FindAll<T>() where T : IReadableObject;
+        IEnumerable<T> FindAll<T>() where T : Entity;
 
-        void Delete<ENTITY>(ENTITY entity) where ENTITY : IPersistableObject;
+        void Delete<ENTITY>(ENTITY entity) where ENTITY : Entity;
 
         void HardDelete(object target);
 
@@ -38,13 +38,13 @@ namespace CC.Core.DomainTools
         void Commit();
         void Rollback();
         void Initialize();
-        IList<ENTITY> ExecuteCriteria<ENTITY>(DetachedCriteria criteria) where ENTITY : IReadableObject;
+        IList<ENTITY> ExecuteCriteria<ENTITY>(DetachedCriteria criteria) where ENTITY : Entity;
 
         IList<T> GetNamedQuery<T>(string sprocName);
         void DisableFilter(string FilterName);
         void EnableFilter(string FilterName, string field, object value);
         IUnitOfWork UnitOfWork { get; set; }
-        IFutureValue<ENTITY> CreateQueryOverFuture<ENTITY>(QueryOver<ENTITY> query) where ENTITY : IReadableObject;
+        IFutureValue<ENTITY> CreateQueryOverFuture<ENTITY>(QueryOver<ENTITY> query) where ENTITY : Entity;
         IEnumerable<ENTITY> ExecuteSproc<ENTITY>();
     }
 }

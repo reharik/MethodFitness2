@@ -10,7 +10,7 @@ namespace MF.Core.Rules
         {
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : IPersistableObject
+        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : Entity
         {
             var result = new ValidationReport { Success = true };
 //            var _field = field as Field;

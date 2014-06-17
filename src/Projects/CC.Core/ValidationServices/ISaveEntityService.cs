@@ -5,8 +5,8 @@ namespace CC.Core.ValidationServices
 {
     public interface ISaveEntityService
     {
-        IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager validationManager) where DOMAINMODEL : IPersistableObject;
-        IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject;
+        IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager validationManager) where DOMAINMODEL : Entity;
+        IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
     }
 
     public class SaveEntityService : ISaveEntityService
@@ -20,17 +20,17 @@ namespace CC.Core.ValidationServices
             _validationRunner = validationRunner;
         }
 
-        public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject
+        public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
         {
             var crudManager = new ValidationManager(_repository);
             return ProcessSave(model, crudManager);
         }
 
         public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager validationManager)
-            where DOMAINMODEL : IPersistableObject
+            where DOMAINMODEL : Entity
         {
-            var entity = model as Entity;
-            var report = _validationRunner.Validate(entity);
+           
+            var report = _validationRunner.Validate(model);
             if (report.Success)
             {
                 _repository.Save(model);
@@ -46,7 +46,7 @@ namespace CC.Core.ValidationServices
     // constructor injected so you screwed must use one that doesn't have it in the constructor
     public interface ISaveEntityServiceWithoutPrincipal
     {
-        IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject;
+        IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity;
     }
 
     public class NullSaveEntityServiceWithoutPrincipal : ISaveEntityServiceWithoutPrincipal
@@ -58,7 +58,7 @@ namespace CC.Core.ValidationServices
             _validationRunner = validationRunner;
         }
 
-        public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : IPersistableObject
+        public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model) where DOMAINMODEL : Entity
         {
             throw new System.NotImplementedException();
         }
