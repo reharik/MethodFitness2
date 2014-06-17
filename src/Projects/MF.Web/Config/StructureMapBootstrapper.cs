@@ -14,16 +14,12 @@ namespace MF.Web.Config
                                          {
                                              x.AddRegistry(new MFWebRegistry());
                                          });
-            ObjectFactory.AssertConfigurationIsValid();
+            ObjectFactory.Container.AssertConfigurationIsValid();
         }
 
         public static void Restart()
         {
-            if (_hasStarted)
-            {
-                ObjectFactory.ResetDefaults();
-            }
-            else
+            if (!_hasStarted)
             {
                 Bootstrap();
                 _hasStarted = true;
@@ -51,11 +47,7 @@ namespace MF.Web.Config
 
         public static void Restart()
         {
-            if (_hasStarted)
-            {
-                ObjectFactory.ResetDefaults();
-            }
-            else
+            if (!_hasStarted)
             {
                 Bootstrap();
                 _hasStarted = true;

@@ -10,7 +10,7 @@ using MF.Core.Enumerations;
 
 namespace MF.Core.Domain
 {
-    public class Client : DomainEntity, IPersistableObject
+    public class Client : DomainEntity
     {
         [Required]
         public virtual string FirstName { get; set; }

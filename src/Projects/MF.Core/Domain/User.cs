@@ -11,7 +11,7 @@ using MF.Core.CoreViewModelAndDTOs;
 
 namespace MF.Core.Domain
 {
-    public class  User : DomainEntity, IUser, IPersistableObject
+    public class  User : DomainEntity, IUser
     {
         [Required]
         public virtual string FirstName { get; set; }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using CC.Core;
+using CC.Utility;
 using MF.Core.Config;
 using StructureMap;
 
@@ -86,7 +87,7 @@ namespace Generator
             {
                 var commandNames = Console.ReadLine();
                 var selectedCommandNames = commandNames.Split(',');
-                validEntry = getCommandsFromList(commands, selectedCommandNames, selectedCommands);
+                validEntry = getCommandsFromList(commands.ToList(), selectedCommandNames, selectedCommands);
             }
             return selectedCommands;
         }

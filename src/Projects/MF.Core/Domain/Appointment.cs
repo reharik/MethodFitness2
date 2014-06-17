@@ -14,7 +14,7 @@ using MF.Core.Enumerations;
 
 namespace MF.Core.Domain
 {
-    public class Appointment : DomainEntity, IPersistableObject
+    public class Appointment : DomainEntity
     {
         [Required]
         public virtual DateTime? Date { get; set; }

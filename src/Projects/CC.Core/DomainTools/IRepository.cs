@@ -18,8 +18,7 @@ namespace CC.Core.DomainTools
         ENTITY Load<ENTITY>(int id)
             where ENTITY : Entity;
 
-        IQueryable<ENTITY> Query<ENTITY>()
-            where ENTITY : Entity;
+        IQueryable<ENTITY> Query<ENTITY>();
 
         IQueryable<T> Query<T>(Expression<Func<T, bool>> where);
         IEnumerable<ENTITY> ExecuteQueryOver<ENTITY>(QueryOver<ENTITY> query) where ENTITY : Entity;

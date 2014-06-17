@@ -19,7 +19,9 @@ using MF.Web.Services;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using StructureMap.Configuration.DSL;
+using StructureMap.Graph;
 using StructureMap.Pipeline;
+using StructureMap.Web;
 
 namespace MethodFitness.Web.Config
 {

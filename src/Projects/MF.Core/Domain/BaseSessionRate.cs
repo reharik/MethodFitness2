@@ -3,7 +3,7 @@ using CC.Core.Domain;
 
 namespace MF.Core.Domain
 {
-    public class BaseSessionRate : DomainEntity, IPersistableObject
+    public class BaseSessionRate : DomainEntity
     {
         [Required]
         public virtual double FullHour { get; set; }

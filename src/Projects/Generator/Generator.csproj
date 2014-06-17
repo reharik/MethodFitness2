@@ -99,6 +99,9 @@
     <Reference Include="StructureMap.Net4">
       <HintPath>..\..\Solutions\packages\structuremap.3.0.3.116\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap.Web">
+      <HintPath>..\..\Solutions\packages\structuremap.web.3.0.0.108\lib\net40\StructureMap.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
@@ -181,9 +184,25 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CC.Core.Utils\CC.Core.Reflection.csproj">
+      <Project>{54970d60-6123-4227-9c72-04ca09baf7b9}</Project>
+      <Name>CC.Core.Reflection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CC.Core\CC.Core.csproj">
       <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
       <Name>CC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Security\CC.Security.csproj">
+      <Project>{DBA372FE-3D52-45B3-AF82-B37696328764}</Project>
+      <Name>CC.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.UI.Helpers\CC.UI.Helpers.csproj">
+      <Project>{0DBFB19C-E106-4807-AA4B-FC8D128A3438}</Project>
+      <Name>CC.UI.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Utility\CC.Utility.csproj">
+      <Project>{2BB959DA-4F45-4ED5-9D7C-066242F2B124}</Project>
+      <Name>CC.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\DBFluentMigration\DBFluentMigration.csproj">
       <Project>{bd319dca-9d65-4d7b-aaad-b6a0c2838593}</Project>

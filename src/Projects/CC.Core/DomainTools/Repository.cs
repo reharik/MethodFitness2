@@ -74,7 +74,7 @@ namespace CC.Core.DomainTools
             return _unitOfWork.CurrentSession.Load<ENTITY>(id);
         }
 
-        public IQueryable<ENTITY> Query<ENTITY>() where ENTITY : Entity
+        public IQueryable<ENTITY> Query<ENTITY>() 
         {
             return _unitOfWork.CurrentSession.Query<ENTITY>();
         }

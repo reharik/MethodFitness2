@@ -14,7 +14,7 @@ namespace CC.Core.Services
     {
         IQueryable<ENTITY> PerformQuery<ENTITY>(string json = null,
                                                 Expression<Func<ENTITY, bool>> extraFilters = null,
-                                                bool isNullCheck = false) where ENTITY : Entity;
+                                                bool isNullCheck = false) where ENTITY : IGridEnabledClass;
 
         Expression<Func<ENTITY, bool>> PrepareExpression<ENTITY>(string json,
                                                                  Expression<Func<ENTITY, bool>> extraFilters = null);
@@ -37,9 +37,10 @@ namespace CC.Core.Services
 
         public IQueryable<ENTITY> PerformQuery<ENTITY>(string json = null,
                                                         Expression<Func<ENTITY, bool>> extraFilters = null,
-                                                        bool isNullCheck = false) where ENTITY : Entity
+                                                        bool isNullCheck = false) where ENTITY : IGridEnabledClass
         {
             var expression = PrepareExpression(json, extraFilters);
+
             return expression == null ? _repository.Query<ENTITY>() : _repository.Query(expression);
         }
         public IQueryable<ENTITY> PerformQuery<ENTITY>(IEnumerable<ENTITY> items, string json = null,

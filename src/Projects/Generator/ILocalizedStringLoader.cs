@@ -12,10 +12,10 @@ using System.Xml.Serialization;
 using CC.Core;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
-using CC.Core.Utilities;
+using CC.Utility;
 using NHibernate;
 using StructureMap;
-
+using CC.Core.Reflection;
 
 namespace Generator
 {

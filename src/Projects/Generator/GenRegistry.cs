@@ -14,9 +14,10 @@ using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Menus;
 using MF.Web.Services;
 using MF.Web.Services.RouteTokens;
-using MethodFitness.Web.Config;
 using NHibernate;
 using StructureMap.Configuration.DSL;
+using StructureMap.Graph;
+using StructureMap.Web;
 using Log4NetLogger = MF.Core.Log4NetLogger;
 
 namespace Generator

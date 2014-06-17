@@ -7,6 +7,7 @@ using System.Xml;
 using CC.Core;
 using CC.Core.Domain;
 using CC.Core.Reflection;
+using CC.Utility;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using Rhino.Mocks;

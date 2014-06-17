@@ -17,11 +17,7 @@ namespace MF.Web.Config
 
         public static void Restart()
         {
-            if (_hasStarted)
-            {
-                ObjectFactory.ResetDefaults();
-            }
-            else
+            if (!_hasStarted)
             {
                 Bootstrap();
                 _hasStarted = true;

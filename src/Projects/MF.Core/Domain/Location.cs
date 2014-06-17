@@ -2,7 +2,7 @@ using CC.Core.Domain;
 
 namespace MF.Core.Domain
 {
-    public class Location : DomainEntity, IPersistableObject
+    public class Location : DomainEntity
     {
         public virtual string Name { get; set; }
         public virtual string Address1 { get; set; }
