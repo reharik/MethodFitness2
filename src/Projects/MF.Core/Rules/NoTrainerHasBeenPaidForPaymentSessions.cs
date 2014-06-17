@@ -1,6 +1,7 @@
 using CC.Core.Domain;
 using CC.Core.DomainTools;
 using CC.Core.Services;
+using CC.Core.ValidationServices;
 
 namespace MF.Core.Rules
 {
@@ -15,7 +16,7 @@ namespace MF.Core.Rules
             _repository = repository;
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY trainer) where ENTITY : Entity
+        public ValidationReport Execute<ENTITY>(ENTITY trainer) where ENTITY : IPersistableObject
         {
             var result = new ValidationReport { Success = true };
 //            var _trainer = trainer as User;

@@ -9,6 +9,8 @@ using MF.Core.Services;
 using NHibernate;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
+using StructureMap.Pipeline;
+using StructureMap.Web;
 using Log4NetLogger = MF.Core.Log4NetLogger;
 
 namespace MF.SessionManagement

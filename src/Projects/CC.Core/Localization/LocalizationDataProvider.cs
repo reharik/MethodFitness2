@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using CC.Core.Reflection;
+using CC.Utility;
 
 namespace CC.Core.Localization
 {

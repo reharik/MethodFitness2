@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CC.Core.Enumerations;
 using CC.Core.Reflection;
+using CC.Utility;
 
 namespace CC.Core.Localization
 {

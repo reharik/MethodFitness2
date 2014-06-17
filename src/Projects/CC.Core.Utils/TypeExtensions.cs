@@ -65,7 +65,7 @@ namespace CC.Core.Reflection
                        : pluggedType.BaseType.FindInterfaceThatCloses(templateType);
         }
 
-        public static bool IsNullable(this Type type)
+        public static bool IsNullableType(this Type type)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Nullable<>);
         }

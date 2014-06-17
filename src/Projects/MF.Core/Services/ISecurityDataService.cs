@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Web.Security;
 using CC.Core;
 using CC.Core.DomainTools;
+using CC.Utility;
 using MF.Core.Domain;
 
 namespace MF.Core.Services

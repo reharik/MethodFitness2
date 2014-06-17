@@ -8,6 +8,7 @@ using CC.Core.Reflection;
 using CC.UI.Helpers;
 using CC.UI.Helpers.Configuration;
 using CC.UI.Helpers.Tags;
+using CC.Utility;
 using HtmlTags;
 
 namespace CC.Core.Html.CCUI.HtmlConventionRegistries
@@ -111,12 +112,12 @@ namespace CC.Core.Html.CCUI.HtmlConventionRegistries
         private void validationAttributes()
         {
             Editors.Modifier<RequiredModifier>();
-            Editors.Modifier<PasswordConfirmModifier>();
-            Editors.Modifier<EmailModifier>();
+//            Editors.Modifier<PasswordConfirmModifier>();
+//            Editors.Modifier<EmailModifier>();
             Editors.Modifier<NumberModifier>();
-            Editors.Modifier<UrlModifier>();
-            Editors.Modifier<DateModifier>();
-            Editors.Modifier<RangeModifier>();
+//            Editors.Modifier<UrlModifier>();
+//            Editors.Modifier<DateModifier>();
+//            Editors.Modifier<RangeModifier>();
         }
 
         public static bool IsIntegerBased(Type type)

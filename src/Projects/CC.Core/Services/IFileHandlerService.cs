@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using CC.Utility;
+using ImageResizer;
 
 namespace CC.Core.Services
 {

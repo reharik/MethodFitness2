@@ -129,6 +129,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers">
       <Private>True</Private>
     </Reference>
@@ -383,6 +384,10 @@
     <ProjectReference Include="..\CC.UI.Helpers\CC.UI.Helpers.csproj">
       <Project>{0DBFB19C-E106-4807-AA4B-FC8D128A3438}</Project>
       <Name>CC.UI.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Utility\CC.Utility.csproj">
+      <Project>{2bb959da-4f45-4ed5-9d7c-066242f2b124}</Project>
+      <Name>CC.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\MF.Core\MF.Core.csproj">
       <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>

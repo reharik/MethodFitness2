@@ -32,8 +32,8 @@ namespace MF.Core.Html.Expressions
 
         public HtmlTag ToHtmlTag(bool findMinJs = false)
         {
-          
-            var fullUrl = UrlContext.Combine(_baseUrl, _fileName).ToFullUrl();
+
+            var fullUrl = UrlContext.GetFullUrl(UrlContext.Combine(_baseUrl, _fileName));
             return new HtmlTag("script").Attr("src", fullUrl).Attr("type", "text/javascript");
         }
     }

@@ -1,4 +1,5 @@
 ﻿using MF.Core.Enumerations;
+using MF.Core.Security;
 
 namespace DBFluentMigration.Iteration_0
 {

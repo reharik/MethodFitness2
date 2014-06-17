@@ -1,5 +1,6 @@
 using CC.Core.Domain;
 using CC.Core.Services;
+using CC.Core.ValidationServices;
 
 namespace MF.Core.Rules
 {
@@ -12,7 +13,7 @@ namespace MF.Core.Rules
             _systemClock = systemClock;
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : Entity
+        public ValidationReport Execute<ENTITY>(ENTITY field) where ENTITY : IPersistableObject
         {
             var result = new ValidationReport { Success = true };
 //            var count = 0;

@@ -4,6 +4,7 @@ using System.Linq;
 using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
+using CC.Utility;
 
 namespace CC.Core.Services
 {

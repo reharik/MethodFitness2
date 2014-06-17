@@ -29,7 +29,8 @@ namespace CC.Core.ValidationServices
         public IValidationManager ProcessSave<DOMAINMODEL>(DOMAINMODEL model, IValidationManager validationManager)
             where DOMAINMODEL : IPersistableObject
         {
-            var report = _validationRunner.Validate(model);
+            var entity = model as Entity;
+            var report = _validationRunner.Validate(entity);
             if (report.Success)
             {
                 _repository.Save(model);

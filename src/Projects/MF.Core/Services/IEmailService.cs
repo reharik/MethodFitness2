@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using Alpinely.TownCrier;
 using CC.Core;
+using CC.Utility;
 using StructureMap;
 
 namespace MF.Core.Services

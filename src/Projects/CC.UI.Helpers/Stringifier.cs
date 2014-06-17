@@ -16,7 +16,7 @@ namespace CC.UI.Helpers
         {
             _converters.OnMissing = (type =>
                 {
-                    if (type.IsNullable())
+                    if (type.IsNullableType())
                         return
                             (Func<object, string>)
                             (instance =>

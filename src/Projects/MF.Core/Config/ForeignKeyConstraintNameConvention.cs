@@ -1,4 +1,5 @@
 ﻿using CC.Core;
+using CC.Utility;
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 

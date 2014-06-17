@@ -42,7 +42,7 @@ namespace MF.Core.Config
                 .Mappings(_config.MappingConfiguration())
                 .ExposeConfiguration(x=>
                 {
-                    Security.Configure<User>(x, SecurityTableStructure.Prefix);
+                    CC.Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
                     _config.ClusteredIndexOnManyToMany(x);
                     _config.GenerateSchema(x);
                     x.SetProperty("adonet.batch_size", "100");
@@ -61,7 +61,7 @@ namespace MF.Core.Config
                 .Mappings(_config.MappingConfiguration())
                 .ExposeConfiguration(x =>
                 {
-                    Security.Configure<User>(x, SecurityTableStructure.Prefix);
+                    CC.Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
                     x.SetProperty("adonet.batch_size", "100");
                     x.SetProperty("generate_statistics", "true");
                 })

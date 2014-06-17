@@ -2,6 +2,8 @@ using System.Linq;
 using CC.Core.Domain;
 using CC.Core.DomainTools;
 using CC.Core.Services;
+using CC.Core.ValidationServices;
+using CC.DataValidation;
 using MF.Core.Domain;
 
 namespace MF.Core.Rules
@@ -17,7 +19,7 @@ namespace MF.Core.Rules
             _repository = repository;
         }
 
-        public ValidationReport Execute<ENTITY>(ENTITY location) where ENTITY : Entity
+        public ValidationReport Execute<ENTITY>(ENTITY location) where ENTITY : IPersistableObject
         {
             var result = new ValidationReport { Success = true,entity = location};
             var _location = location as Location;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CC.Core;
 using CC.Core.Html;
+using CC.Utility;
 using HtmlTags;
 using MF.Core.Domain;
 
@@ -83,7 +84,7 @@ namespace MF.Core.Html.Expressions
         public HtmlTag ToHtmlTag()
         {
             if (_baseUrl.IsNotEmpty())
-                _href = UrlContext.Combine(_baseUrl, _href).ToFullUrl();
+                _href = UrlContext.GetFullUrl(UrlContext.Combine(_baseUrl, _href));
             HtmlAttributes.Add("href",_href);
             var root = new HtmlTag("link");
             addClassesAndAttributesToRoot(root);

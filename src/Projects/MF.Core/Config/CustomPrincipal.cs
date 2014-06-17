@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Security.Principal;
 using CC.Core;
+using CC.Utility;
 
 namespace MF.Core.Config
 {

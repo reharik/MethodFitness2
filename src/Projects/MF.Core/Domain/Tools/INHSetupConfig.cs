@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using CC.Core;
+using CC.Utility;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
