@@ -64,12 +64,6 @@ namespace Generator
                                             v => { TargetAssembly = v; }
                                             },
                                         {
-                                            "provider=|dbType=|db=",
-                                            string.Format("REQUIRED. The kind of database you are migrating against. Available choices are: {0}.",
-                                                          ProcessorFactory.ListAvailableProcessorTypes()),
-                                            v => { ProcessorType = v; }
-                                            },
-                                        {
                                             "connectionString=|connection=|conn=|c=",
                                             "The name of the connection string (falls back to machine name) or the connection string itself to the server and database you want to execute your migrations against."
                                             ,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -11,7 +12,6 @@ using CC.Core.Services;
 using CC.Core.ValidationServices;
 using CC.DataValidation;
 using CC.Security.Interfaces;
-using Castle.Components.Validator;
 using MF.Core;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
@@ -220,9 +220,9 @@ namespace MF.Web.Areas.Schedule.Controllers
 
     public class AppointmentViewModel : ViewModel
     {
-        [ValidateNonEmpty]
+        [Required]
         public bool Copy { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public TokenInputViewModel ClientsDtos { get; set; }
         public IEnumerable<SelectListItem> _LocationEntityIdList { get; set; }
         public IEnumerable<SelectListItem> _TrainerEntityIdList { get; set; }
@@ -230,17 +230,17 @@ namespace MF.Web.Areas.Schedule.Controllers
         public IEnumerable<SelectListItem> _AppointmentTypeList { get; set; }
 
         public string TrainerFullNameFNF { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public int LocationEntityId { get; set; }
         public string LocationName { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public int TrainerEntityId { get; set; }
         public string AppointmentType { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public DateTime Date { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string StartTimeString { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string EndTimeString { get; set; }
         [TextArea]
         public string Notes { get; set; }

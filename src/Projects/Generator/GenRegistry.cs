@@ -16,8 +16,6 @@ using MF.Web.Services;
 using MF.Web.Services.RouteTokens;
 using NHibernate;
 using StructureMap.Configuration.DSL;
-using StructureMap.Graph;
-using StructureMap.Web;
 using Log4NetLogger = MF.Core.Log4NetLogger;
 
 namespace Generator

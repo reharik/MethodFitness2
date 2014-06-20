@@ -38,12 +38,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="HibernatingRhinos.Profiler.Appender">
-      <HintPath>..\lib\HibernatingRhinos.Profiler.Appender.dll</HintPath>
-    </Reference>
-    <Reference Include="HibernatingRhinos.Profiler.Appender.NHibernateLog4Net">
-      <HintPath>..\lib\HibernatingRhinos.Profiler.Appender.NHibernateLog4Net.dll</HintPath>
-    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
@@ -52,15 +46,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.Net4">
-      <HintPath>..\..\Solutions\packages\structuremap.3.0.3.116\lib\net40\StructureMap.Net4.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.Web">
-      <HintPath>..\..\Solutions\packages\structuremap.web.3.0.0.108\lib\net40\StructureMap.Web.dll</HintPath>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\Solutions\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

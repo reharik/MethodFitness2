@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -13,7 +14,6 @@ using CC.Core.ValidationServices;
 using CC.DataValidation;
 using CC.Security.Interfaces;
 using CC.Utility;
-using Castle.Components.Validator;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Rules;
@@ -341,11 +341,11 @@ namespace MF.Web.Controllers
 
         public bool DeleteImage { get; set; }
         public string Password { get; set; }
-        [ValidateSameAs("Password")]
+//        [ValidateSameAs("Password")]
         public string PasswordConfirmation { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string FirstName { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Address1 { get; set; }
@@ -355,9 +355,9 @@ namespace MF.Web.Controllers
         public string ZipCode { get; set; }
         public string Color { get; set; }
         public string UserLoginInfoLoginName { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string Email { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string PhoneMobile { get; set; }
         public string SecondaryPhone { get; set; }
         public int ClientRateDefault { get; set; }

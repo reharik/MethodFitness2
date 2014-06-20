@@ -1,4 +1,5 @@
-﻿using MF.Core.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using MF.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,6 @@ using System.Web.Mvc;
 using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.DomainTools;
 using CC.Core.Services;
-using Castle.Components.Validator;
 using MF.Web.Config;
 using MF.Web.Controllers;
 using MethodFitness.Web;
@@ -51,9 +51,9 @@ namespace MF.Web.Areas.Reporting.Controllers
         public int Trainer { get; set; }
         public IEnumerable<SelectListItem> _ClientList { get; set; }
         public int Client { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public DateTime StartDate { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public DateTime EndDate { get; set; }
         public string ReportUrl { get; set; }
     }

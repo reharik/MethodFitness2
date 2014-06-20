@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using AutoMapper;
 using CC.Core;
@@ -10,7 +11,6 @@ using CC.Core.Localization;
 using CC.Core.Services;
 using CC.Core.ValidationServices;
 using CC.Utility;
-using Castle.Components.Validator;
 using MF.Core.Domain;
 using MF.Core.Rules;
 using MF.Web.Areas.Schedule.Models.BulkAction;
@@ -109,7 +109,7 @@ namespace MF.Web.Controllers
     public class LocationViewModel : ViewModel
     {
         public string _deleteUrl { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string Name { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

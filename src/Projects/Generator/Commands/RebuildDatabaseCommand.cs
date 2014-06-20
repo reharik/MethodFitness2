@@ -8,12 +8,12 @@ namespace Generator.Commands
 {
     public class RebuildDatabaseCommand : IGeneratorCommand
     {
-        private readonly ILocalizedStringLoader _loader;
+//        private readonly ILocalizedStringLoader _loader;
         private  IRepository _repository;
 
-        public RebuildDatabaseCommand(ILocalizedStringLoader loader)
+        public RebuildDatabaseCommand()//ILocalizedStringLoader loader)
         {
-            _loader = loader;
+//            _loader = loader;
         }
 
         public string Description { get { return "Rebuilds the db and data"; } }

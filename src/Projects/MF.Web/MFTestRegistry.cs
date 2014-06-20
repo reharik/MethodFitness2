@@ -3,7 +3,6 @@ using CC.Core.DomainTools;
 using CC.Core.Html.CCUI.HtmlConventionRegistries;
 using CC.Core.Html.Grid;
 using CC.Core.Localization;
-using CC.Core.Services;
 using CC.Core.ValidationServices;
 using CC.Security.Interfaces;
 using CC.Security.Services;
@@ -19,9 +18,6 @@ using MF.Web.Services;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using StructureMap.Configuration.DSL;
-using StructureMap.Graph;
-using StructureMap.Pipeline;
-using StructureMap.Web;
 
 namespace MethodFitness.Web.Config
 {

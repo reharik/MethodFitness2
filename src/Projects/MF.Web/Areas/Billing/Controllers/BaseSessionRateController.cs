@@ -1,11 +1,10 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 using CC.Core.CoreViewModelAndDTOs;
 using CC.Core.DomainTools;
 using CC.Core.Html;
-using CC.Core.Services;
 using CC.Core.ValidationServices;
-using Castle.Components.Validator;
 using MF.Core.Domain;
 using MF.Web.Config;
 using MF.Web.Controllers;
@@ -64,17 +63,17 @@ namespace MF.Web.Areas.Billing.Controllers
 
     public class BaseSessionRateViewModel:ViewModel
     {
-        [ValidateNonEmpty]
+        [Required]
         public virtual double FullHour { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public virtual double HalfHour { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public virtual double FullHourTenPack { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public virtual double HalfHourTenPack { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public virtual double Pair { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public virtual double PairTenPack { get; set; }
     }
 }

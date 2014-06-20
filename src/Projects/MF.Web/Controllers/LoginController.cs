@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using System.Web.Security;
 using CC.Core;
@@ -8,7 +9,6 @@ using CC.Core.Html;
 using CC.Core.Services;
 using CC.Core.ValidationServices;
 using CC.Utility;
-using Castle.Components.Validator;
 using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Web.Config;
@@ -121,9 +121,9 @@ namespace MF.Web.Controllers
 
     public class LoginViewModel : ViewModel
     {
-        [ValidateNonEmpty]
+        [Required]
         public string UserName { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string Password { get; set; }
         public bool RememberMe { get; set; }
         public string ForgotPasswordUrl { get; set; }

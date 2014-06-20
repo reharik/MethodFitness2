@@ -18,7 +18,7 @@ namespace MF.SessionManagement
         private static void Initialize()
         {
             // Bootstrapper.Restart();
-            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
+//            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
 
             ObjectFactory.Initialize(x =>
             {

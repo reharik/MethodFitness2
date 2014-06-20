@@ -1,18 +1,18 @@
-﻿using CC.Core.CustomAttributes;
-using Castle.Components.Validator;
+﻿using System.ComponentModel.DataAnnotations;
+using CC.Core.CustomAttributes;
 
 namespace MF.Web.Models
 {
     public class EmailViewModel
     {
-        [ValidateNonEmpty]
+        [Required]
         public string From { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string To { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string Subject { get; set; }
         [TextArea]
-        [ValidateNonEmpty]
+        [Required]
         public string Body { get; set; } 
     }
 }

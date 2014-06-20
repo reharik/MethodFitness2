@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -12,7 +13,6 @@ using CC.Core.Localization;
 using CC.Core.Services;
 using CC.Core.ValidationServices;
 using CC.Utility;
-using Castle.Components.Validator;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Rules;
@@ -194,9 +194,9 @@ namespace MF.Web.Controllers
     {
         public string _deleteUrl { get; set; }
         public string _paymentListUrl { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string FirstName { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Address1 { get; set; }
@@ -206,16 +206,16 @@ namespace MF.Web.Controllers
         public string State { get; set; }
         public IEnumerable<SelectListItem> _StateList { get; set; }
         public string ZipCode { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string Email { get; set; }
-        [ValidateNonEmpty]
+        [Required]
         public string MobilePhone { get; set; }
         public string SecondaryPhone { get; set; }
         [ValueOf(typeof(Source))]
         public string Source { get; set; }
         public IEnumerable<SelectListItem> _SourceList { get; set; }
 
-        [ValidateNonEmpty]
+        [Required]
         public DateTime StartDate { get; set; }
         public string SourceOther { get; set; }
         [TextArea]

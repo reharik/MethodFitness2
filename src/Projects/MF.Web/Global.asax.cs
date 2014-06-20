@@ -7,49 +7,18 @@ using System.Web.Security;
 using CC.Core.DomainTools;
 using MF.Core.Config;
 using MF.Web.Config;
-using MethodFitness.Web.Config;
-using Elmah;
 using StructureMap;
 
-namespace MethodFitness.Web
+namespace MF.Web
 {
-
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
     public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new ElmahHandledErrorLoggerFilter());
             filters.Add(new HandleErrorAttribute());
         }
-        // ELMAH Filtering
-        protected void ErrorLog_Filtering(object sender, ExceptionFilterEventArgs e)
-        {
-            FilterError404(e);
-        }
-
-        protected void ErrorMail_Filtering(object sender, ExceptionFilterEventArgs e)
-        {
-            FilterError404(e);
-        }
-
-        // Dismiss 404 errors for ELMAH
-        private void FilterError404(ExceptionFilterEventArgs e)
-        {
-            if (e.Exception.GetBaseException() is HttpException)
-            {
-                HttpException ex = (HttpException)e.Exception.GetBaseException();
-                    
-                if (ex.GetHttpCode() == 404)
-                    e.Dismiss();
-            }
-//            if (e.Exception.Source != "CATCH RAISED")
-//            {
-//                Response.Redirect(@"/Error/Trouble"); //...nothing seems to get to error page anyway    
-//            }
-        }
-        //end Elmah
 
         public static void RegisterRoutes(RouteCollection routes)
         {
@@ -95,13 +64,5 @@ namespace MethodFitness.Web
         }
     }
 
-    public class ElmahHandledErrorLoggerFilter : IExceptionFilter
-    {
-        public void OnException(ExceptionContext context)
-        {
-            // Long only handled exceptions, because all other will be caught by ELMAH anyway.
-            if (context.ExceptionHandled)
-                ErrorSignal.FromCurrentContext().Raise(context.Exception);
-        }
-    }
+    
 }
