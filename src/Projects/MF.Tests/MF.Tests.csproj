@@ -97,7 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CC.Core.Utils\CC.Core.Reflection.csproj">
+    <ProjectReference Include="..\CC.Core.Reflection\CC.Core.Reflection.csproj">
       <Project>{54970d60-6123-4227-9c72-04ca09baf7b9}</Project>
       <Name>CC.Core.Reflection</Name>
     </ProjectReference>

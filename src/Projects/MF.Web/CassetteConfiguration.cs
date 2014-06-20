@@ -1,4 +1,5 @@
 using Cassette;
+using Cassette.Configuration;
 using Cassette.Scripts;
 using Cassette.Stylesheets;
 
@@ -10,9 +11,9 @@ namespace MF.Web
     /// <summary>
     /// Configures the Cassette asset bundles for the web application.
     /// </summary>
-    public class CassetteBundleConfiguration : IConfiguration<BundleCollection>
+   public class CassetteConfiguration : ICassetteConfiguration
     {
-        public void Configure(BundleCollection bundles)
+        public void Configure(BundleCollection bundles, CassetteSettings settings)
         {
             // TODO: Configure your bundles here...
             // Please read http://getcassette.net/documentation/configuration
@@ -22,7 +23,7 @@ namespace MF.Web
             // So you probably want to tweak these defaults!
 
             bundles.Add<ScriptBundle>("content/scripts", this.JavascriptFileList());
-            bundles.Add<StylesheetBundle>("Content/css", CssFileList(), bundle => bundle.EmbedImages());
+            bundles.Add<StylesheetBundle>("Content/css", CssFileList());
 
             // To combine files, try something like this instead:
             //   bundles.Add<StylesheetBundle>("Content");
