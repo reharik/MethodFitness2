@@ -15,7 +15,6 @@ namespace CC.Core.Services
     {
         public virtual void Initialize()
         {
-            BuildNumber = ConfigurationSettings.AppSettings["BuildNumber"];
             Debug = ConfigurationSettings.AppSettings["Debug"].IsNotEmpty() ? bool.Parse(ConfigurationSettings.AppSettings["Debug"]) : false;
             Name = ConfigurationSettings.AppSettings["Name"];
             Host = ConfigurationSettings.AppSettings["Host"];
