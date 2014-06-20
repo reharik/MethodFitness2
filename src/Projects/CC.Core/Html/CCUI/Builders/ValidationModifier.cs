@@ -21,23 +21,23 @@ namespace CC.Core.Html.CCUI.Builders
         }
     }
 
-    public class FileRequiredModifier : IElementModifier
-    {
-        public TagModifier CreateModifier(AccessorDef accessorDef)
-        {
-            if (!accessorDef.Accessor.HasAttribute<RequiredAttribute>()) return null;
-            // dig down in tag and find input type=file to add class to 
-            TagModifier modifier = (request, tag) =>
-                                       {
-                                           var fileInput = tag.Children[1].Children[0];
-                                           if(fileInput!=null)
-                                           {
-                                               fileInput.AddClass(ValidationRule.FileRequired.ToString());
-                                           }
-                                       };
-            return modifier;
-        }
-    }
+//    public class FileRequiredModifier : IElementModifier
+//    {
+//        public TagModifier CreateModifier(AccessorDef accessorDef)
+//        {
+//            if (!accessorDef.Accessor.HasAttribute<FileNotEmptyValidator>()) return null;
+//            // dig down in tag and find input type=file to add class to 
+//            TagModifier modifier = (request, tag) =>
+//                                       {
+//                                           var fileInput = tag.Children[1].Children[0];
+//                                           if(fileInput!=null)
+//                                           {
+//                                               fileInput.AddClass(ValidationRule.FileRequired.ToString());
+//                                           }
+//                                       };
+//            return modifier;
+//        }
+//    }
 
    
 //

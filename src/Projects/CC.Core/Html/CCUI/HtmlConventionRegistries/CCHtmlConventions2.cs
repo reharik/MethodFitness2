@@ -105,7 +105,7 @@ namespace CC.Core.Html.CCUI.HtmlConventionRegistries
         {
             Editors.Modifier<RequiredModifier>();
             Editors.Modifier<NumberModifier>();
-            Editors.Modifier<FileRequiredModifier>();
+//            Editors.Modifier<FileRequiredModifier>();
         }
 
         public static bool IsIntegerBased(Type type)
