@@ -568,7 +568,7 @@ FormatDateTime(First(Fields!EndDate.Value, "DailyPayments"),DateFormat.ShortDate
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DailyPayments</rd:DataSetName>
-        <rd:SchemaPath>D:\Development\CannibalCoder\MethodFitness\src\MethodFitness.Web\DailyPayments.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\Development\CannibalCoder\MethodFitness\src\MF.Web\DailyPayments.xsd</rd:SchemaPath>
         <rd:TableName>DailyPayments</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

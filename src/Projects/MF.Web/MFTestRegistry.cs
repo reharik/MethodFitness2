@@ -19,7 +19,7 @@ using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using StructureMap.Configuration.DSL;
 
-namespace MethodFitness.Web.Config
+namespace MF.Web.Config
 {
     public class MFTestRegistry : Registry
     {

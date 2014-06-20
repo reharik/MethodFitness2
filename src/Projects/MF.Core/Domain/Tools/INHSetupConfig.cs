@@ -28,7 +28,7 @@ namespace MF.Core.Domain.Tools
         public Action<MappingConfiguration> MappingConfiguration()
         {
             //m => m.AutoMappings.Add(AutoMap.AssemblyOf<User>()
-            //                                    .Where(ns => ns.Namespace == "MethodFitness.Core.Domain")
+            //                                    .Where(ns => ns.Namespace == "MF.Core.Domain")
             //                                        .IgnoreBase(typeof(DomainEntity))))
             return (m => m.FluentMappings.AddFromAssemblyOf<User>()
                              .Conventions.Add(ForeignKey.EndsWith("Id"))

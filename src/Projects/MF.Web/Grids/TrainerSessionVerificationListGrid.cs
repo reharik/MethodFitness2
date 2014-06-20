@@ -1,7 +1,7 @@
 ﻿using CC.Core.Html.Grid;
 using MF.Core.Domain;
 using MF.Web.Areas.Schedule.Grids;
-using MethodFitness.Web;
+using MF.Web;
 
 namespace MF.Web.Grids
 {

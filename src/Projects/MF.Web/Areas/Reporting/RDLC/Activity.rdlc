@@ -915,7 +915,7 @@ FormatDateTime(First(Fields!EndDate.Value, "Activity"),DateFormat.ShortDate),
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>Activity</rd:DataSetName>
-        <rd:SchemaPath>C:\Development\CannibalCoder\MethodFitness\src\MethodFitness.Web\Activity.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Development\CannibalCoder\MF\src\MF.Web\Activity.xsd</rd:SchemaPath>
         <rd:TableName>Activity</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

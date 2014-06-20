@@ -9,7 +9,7 @@ using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 using NHibernate.Linq;
 
 namespace MF.Web.Areas.Billing.Controllers

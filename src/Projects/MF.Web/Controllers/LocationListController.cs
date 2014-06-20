@@ -7,7 +7,7 @@ using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
-using MethodFitness.Web;
+using MF.Web;
 
 namespace MF.Web.Controllers
 {

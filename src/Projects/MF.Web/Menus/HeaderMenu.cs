@@ -3,7 +3,7 @@ using CC.Core.Html.Menu;
 using CC.Security;
 using MF.Core.Services;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 
 namespace MF.Web.Menus
 {

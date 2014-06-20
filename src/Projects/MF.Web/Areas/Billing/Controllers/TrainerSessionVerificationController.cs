@@ -19,7 +19,7 @@ using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 using StructureMap;
 using System.Net.Mail;
 

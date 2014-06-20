@@ -9,7 +9,7 @@ using CC.Core.DomainTools;
 using CC.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 
 namespace MF.Web.Areas.Reporting.Controllers
 {

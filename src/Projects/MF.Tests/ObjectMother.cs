@@ -1,6 +1,6 @@
 ﻿using MF.Core.Domain;
 
-namespace MethodFitness.Tests
+namespace MF.Tests
 {
     public static class ObjectMother
     {

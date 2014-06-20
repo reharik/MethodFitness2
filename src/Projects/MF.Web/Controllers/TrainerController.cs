@@ -20,7 +20,7 @@ using MF.Core.Rules;
 using MF.Core.Services;
 using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
-using MethodFitness.Web;
+using MF.Web;
 using StructureMap;
 using NHibernate.Linq;
 

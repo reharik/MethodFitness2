@@ -17,7 +17,7 @@ using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
 using MF.Web.Models;
-using MethodFitness.Web;
+using MF.Web;
 using NHibernate.Linq;
 
 namespace MF.Web.Areas.Schedule.Controllers

@@ -1,9 +1,8 @@
-﻿namespace MethodFitness.Tests
+﻿using System;
+using NUnit.Framework;
+
+namespace MF.Tests
 {
-    using System;
-
-    using NUnit.Framework;
-
     public class Harness
     {
     }

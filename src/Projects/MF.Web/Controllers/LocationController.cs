@@ -15,7 +15,7 @@ using MF.Core.Domain;
 using MF.Core.Rules;
 using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
-using MethodFitness.Web;
+using MF.Web;
 using StructureMap;
 
 namespace MF.Web.Controllers

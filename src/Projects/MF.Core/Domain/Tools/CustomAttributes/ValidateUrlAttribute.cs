@@ -2,7 +2,7 @@
 //using System.Text.RegularExpressions;
 //using Castle.Components.Validator;
 //
-//namespace MethodFitness.Core.Domain.Tools.CustomAttributes
+//namespace MF.Core.Domain.Tools.CustomAttributes
 //{
 //
 //    [AttributeUsage(AttributeTargets.Property | AttributeTargets.ReturnValue | AttributeTargets.Parameter,

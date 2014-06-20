@@ -2,7 +2,7 @@ using Cassette;
 using Cassette.Scripts;
 using Cassette.Stylesheets;
 
-namespace MethodFitness.Web
+namespace MF.Web
 {
     using System;
     using System.Collections.Generic;

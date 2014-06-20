@@ -8,7 +8,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 
 namespace MF.Web.Areas.Billing.Controllers
 {

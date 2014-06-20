@@ -18,7 +18,7 @@ using MF.Core.Enumerations;
 using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 using CC.Core.CustomAttributes;
 
 namespace MF.Web.Areas.Schedule.Controllers

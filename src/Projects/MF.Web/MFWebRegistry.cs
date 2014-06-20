@@ -5,6 +5,7 @@ using CC.Core.Html.CCUI.HtmlConventionRegistries;
 using CC.Core.Html.Grid;
 using CC.Core.Localization;
 using CC.Core.Services;
+using CC.DataValidation;
 using CC.Security;
 using CC.Security.Interfaces;
 using CC.Security.Services;
@@ -28,7 +29,7 @@ using NHibernate;
 using StructureMap.Configuration.DSL;
 using Log4NetLogger = MF.Core.Log4NetLogger;
 
-namespace MethodFitness.Web
+namespace MF.Web
 {
     public class MFWebRegistry : Registry
     {
@@ -38,6 +39,7 @@ namespace MethodFitness.Web
             {
                 x.TheCallingAssembly();
                 x.AssemblyContainingType<MergedEmailFactory>();
+                x.AssemblyContainingType<IValidationRunner>();
                 x.AssemblyContainingType<CoreLocalizationKeys>();
                 x.AssemblyContainingType<Entity>();
                 x.AssemblyContainingType<IUser>();

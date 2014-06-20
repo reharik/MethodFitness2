@@ -2,7 +2,7 @@
 //using System.Data.SqlTypes;
 //using Castle.Components.Validator;
 //
-//namespace MethodFitness.Core.Domain.Tools.CustomAttributes
+//namespace MF.Core.Domain.Tools.CustomAttributes
 //{
 //    [CLSCompliant(false)]
 //    [Serializable]

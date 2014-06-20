@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Mvc;
-using CC.Core;
 using CC.Utility;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Services;
 using NUnit.Framework;
 
-namespace MethodFitness.Tests.Services
+namespace MF.Tests.Services
 {
     public class ClientPaymentToSessionsTester
     {

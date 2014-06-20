@@ -1,6 +1,6 @@
 using CC.Core.Localization;
 
-namespace MethodFitness.Web
+namespace MF.Web
 {
     public class WebLocalizationKeys: StringToken
     {

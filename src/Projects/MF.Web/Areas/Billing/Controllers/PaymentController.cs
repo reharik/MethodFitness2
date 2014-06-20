@@ -16,7 +16,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 using StructureMap;
 using CC.Core.CustomAttributes;
 

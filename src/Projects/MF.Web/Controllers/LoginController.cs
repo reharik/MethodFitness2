@@ -13,7 +13,7 @@ using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Services;
-using MethodFitness.Web;
+using MF.Web;
 using StructureMap;
 
 namespace MF.Web.Controllers

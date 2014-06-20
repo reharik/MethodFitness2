@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml;
-using CC.Core;
 using CC.Core.Domain;
 using CC.Core.Reflection;
 using CC.Utility;
@@ -13,11 +12,10 @@ using NUnit.Framework.Constraints;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
 using Rhino.Mocks.Interfaces;
+using Is = NUnit.Framework.Is;
 
-namespace MethodFitness.Tests
+namespace MF.Tests
 {
-    using Is = NUnit.Framework.Is;
-
     public delegate void MethodThatThrows();
 
     public static class SpecificationExtensions

@@ -7,7 +7,7 @@ using MF.Core.Enumerations;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 using StructureMap;
 
 namespace MF.Web.Areas.Billing.Controllers

@@ -5,7 +5,7 @@ using CC.Core.Html.Menu;
 using CC.Core.Localization;
 using MF.Core.Html.Expressions;
 
-namespace MethodFitness.Web
+namespace MF.Web
 {
     public abstract class CustomWebViewPage<T> : WebViewPage<T>
     {

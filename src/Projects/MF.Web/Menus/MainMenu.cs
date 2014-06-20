@@ -6,7 +6,7 @@ using MF.Web.Areas.Billing.Controllers;
 using MF.Web.Areas.Reporting.Controllers;
 using MF.Web.Areas.Schedule.Controllers;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 
 namespace MF.Web.Menus
 {

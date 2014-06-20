@@ -12,7 +12,7 @@ using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
 using MF.Web.Grids;
-using MethodFitness.Web;
+using MF.Web;
 
 namespace MF.Web.Areas.Billing.Controllers
 {

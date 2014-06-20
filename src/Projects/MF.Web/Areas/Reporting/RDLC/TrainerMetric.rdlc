@@ -1342,7 +1342,7 @@ FormatDateTime(First(Fields!EndDate.Value, "TrainerMetric"),DateFormat.ShortDate
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>TrainerMetric</rd:DataSetName>
-        <rd:SchemaPath>C:\Development\CannibalCoder\MethodFitness\src\MethodFitness.Web\TrainerMetric.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Development\CannibalCoder\MethodFitness\src\MF.Web\TrainerMetric.xsd</rd:SchemaPath>
         <rd:TableName>TrainerMetric</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

@@ -1,9 +1,8 @@
 ﻿using MF.Core.Domain;
+using NUnit.Framework;
 
-namespace MethodFitness.Tests.Services
+namespace MF.Tests.Services
 {
-    using NUnit.Framework;
-
     public class SiteConfigTester
     {
     }

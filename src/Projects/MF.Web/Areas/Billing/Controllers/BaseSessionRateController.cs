@@ -8,7 +8,7 @@ using CC.Core.ValidationServices;
 using MF.Core.Domain;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MethodFitness.Web;
+using MF.Web;
 
 namespace MF.Web.Areas.Billing.Controllers
 {

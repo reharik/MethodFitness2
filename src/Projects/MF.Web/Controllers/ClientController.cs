@@ -20,7 +20,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Billing.Controllers;
 using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
-using MethodFitness.Web;
+using MF.Web;
 using StructureMap;
 using CC.Core.CustomAttributes;
 using AreaName = MF.Core.Enumerations.AreaName;

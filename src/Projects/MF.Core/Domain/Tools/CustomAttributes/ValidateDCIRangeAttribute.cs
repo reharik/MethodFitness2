@@ -1,7 +1,7 @@
 ﻿//using System;
 //using Castle.Components.Validator;
 //
-//namespace MethodFitness.Core.Domain.Tools.CustomAttributes
+//namespace MF.Core.Domain.Tools.CustomAttributes
 //{
 //    public class ValidateMFRangeAttribute : ValidateRangeAttribute
 //    {

@@ -1,5 +1,4 @@
-using MethodFitness.Web;
-using MethodFitness.Web.Config;
+using MF.Web.Config;
 using StructureMap;
 
 namespace MF.Web.Config
