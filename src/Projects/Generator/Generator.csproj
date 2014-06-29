@@ -194,6 +194,10 @@
       <Project>{3cbc320b-ecd3-4a3c-a6a3-704a23e6d1d7}</Project>
       <Name>MF.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MF.Web\MF.Web.csproj">
+      <Project>{67429fbb-eaac-4e70-a9b5-9591e8e3bcd2}</Project>
+      <Name>MF.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

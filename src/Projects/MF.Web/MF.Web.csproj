@@ -409,12 +409,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -574,6 +568,9 @@
     </Content>
     <Content Include="Areas\Billing\Views\BaseSessionRate\AddUpdate.cshtml" />
     <Content Include="Content\css\main.css.orig" />
+    <None Include="Web.config.hbs">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DailyPayments.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>
