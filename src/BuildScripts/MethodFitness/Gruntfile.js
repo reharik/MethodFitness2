@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     grunt.option('buildConfig',grunt.option('buildConfig') || 'Debug');
     grunt.option('target',grunt.option('target') || 'QA');
     grunt.option('slnFile','../../Solutions/'+grunt.option('solutionName')+'/'+grunt.option('solutionName')+'.sln');
-    grunt.option('deployFolder','/WebSites/2MethodFitness_'+grunt.option('target'));
+    grunt.option('deployFolder','/WebSites/MethodFitness_'+grunt.option('target'));
     grunt.option('startTime',new Date());
 
     grunt.option( 'QA',{
