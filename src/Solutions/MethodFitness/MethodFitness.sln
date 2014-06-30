@@ -24,17 +24,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{584A08
 		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.Core", "..\..\Projects\CC.Core\CC.Core.csproj", "{5E0B0CA2-BD5E-4953-A336-2AADC00CD81B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.Utility", "..\..\Projects\CC.Utility\CC.Utility.csproj", "{2BB959DA-4F45-4ED5-9D7C-066242F2B124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.Core.Reflection", "..\..\Projects\CC.Core.Reflection\CC.Core.Reflection.csproj", "{54970D60-6123-4227-9C72-04CA09BAF7B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.Security", "..\..\Projects\CC.Security\CC.Security.csproj", "{DBA372FE-3D52-45B3-AF82-B37696328764}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.UI.Helpers", "..\..\Projects\CC.UI.Helpers\CC.UI.Helpers.csproj", "{0DBFB19C-E106-4807-AA4B-FC8D128A3438}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.DataValidation", "..\..\Projects\CC.DataValidation\CC.DataValidation.csproj", "{3CEE8F62-87F5-435C-B05E-3F469057935D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlTags", "..\..\Projects\HtmlTags\HtmlTags.csproj", "{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.Core", "..\..\Projects\CC.Core\CC.Core.csproj", "{5E0B0CA2-BD5E-4953-A336-2AADC00CD81B}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBFluentMigration", "..\..\Projects\DBFluentMigration\DBFluentMigration.csproj", "{BD319DCA-9D65-4D7B-AAAD-B6A0C2838593}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "..\..\Projects\Generator\Generator.csproj", "{E40B313E-1001-41D6-825F-F87B3CB68E2F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlTags", "..\..\Projects\HtmlTags\HtmlTags.csproj", "{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MF.Core", "..\..\Projects\MF.Core\MF.Core.csproj", "{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}"
 EndProject
@@ -42,12 +48,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MF.Tests", "..\..\Projects\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MF.Web", "..\..\Projects\MF.Web\MF.Web.csproj", "{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.DataValidation", "..\..\Projects\CC.DataValidation\CC.DataValidation.csproj", "{3CEE8F62-87F5-435C-B05E-3F469057935D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.Utility", "..\..\Projects\CC.Utility\CC.Utility.csproj", "{2BB959DA-4F45-4ED5-9D7C-066242F2B124}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CC.Core.Reflection", "..\..\Projects\CC.Core.Reflection\CC.Core.Reflection.csproj", "{54970D60-6123-4227-9C72-04CA09BAF7B9}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
