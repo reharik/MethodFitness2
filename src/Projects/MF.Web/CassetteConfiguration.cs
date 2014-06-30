@@ -1,19 +1,17 @@
+using System;
+using System.Collections.Generic;
 using Cassette;
-using Cassette.Configuration;
 using Cassette.Scripts;
 using Cassette.Stylesheets;
 
 namespace MF.Web
 {
-    using System;
-    using System.Collections.Generic;
-
     /// <summary>
     /// Configures the Cassette asset bundles for the web application.
     /// </summary>
-   public class CassetteConfiguration : ICassetteConfiguration
+    public class CassetteBundleConfiguration : IConfiguration<BundleCollection>
     {
-        public void Configure(BundleCollection bundles, CassetteSettings settings)
+        public void Configure(BundleCollection bundles)
         {
             // TODO: Configure your bundles here...
             // Please read http://getcassette.net/documentation/configuration
@@ -21,10 +19,8 @@ namespace MF.Web
             // This default configuration treats each file as a separate 'bundle'.
             // In production the content will be minified, but the files are not combined.
             // So you probably want to tweak these defaults!
-
             bundles.Add<ScriptBundle>("content/scripts", this.JavascriptFileList());
             bundles.Add<StylesheetBundle>("Content/css", CssFileList());
-
             // To combine files, try something like this instead:
             //   bundles.Add<StylesheetBundle>("Content");
             // In production mode, all of ~/Content will be combined into a single bundle.
@@ -50,7 +46,7 @@ namespace MF.Web
             fileNames.Add("CC.css");
 
             return fileNames;
-        } 
+        }
         public List<string> JavascriptFileList()
         {
             var fileNames = new List<String>();

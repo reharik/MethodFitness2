@@ -66,6 +66,24 @@ module.exports = function(grunt) {
                 dest: grunt.option('deployFolder')
             }
         },
+//        concat: {
+//            js: {
+//                src: grunt.option('destFolder')+'/Content/scripts/**/*.js',
+//                dest: grunt.option('destFolder')+'/Content/scripts/concat.js'
+//            },
+//            css: {
+//                src: grunt.option('destFolder')+'/Content/css/**/*.css',
+//                dest: grunt.option('destFolder')+'/Content/css/concat.css'
+//            }
+//        },
+        uglify: {
+            my_target: {
+                files: [{
+                    src:  grunt.option('destFolder')+'/Content/scripts/**/*.js',
+                    dest:  grunt.option('destFolder')+'/Content/scripts/concat.min.js'
+                }]
+            }
+        },
 
         hbsconfigpoke:{
             compile:{
@@ -105,7 +123,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-cleanempty');
     grunt.loadNpmTasks('grunt-hbs-configpoke');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask('default', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'cleanempty', 'hbsconfigpoke','logEnd']);
+    grunt.registerTask('default', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'uglify', 'cleanempty', 'hbsconfigpoke','logEnd']);
     grunt.registerTask('deploy', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
 };
