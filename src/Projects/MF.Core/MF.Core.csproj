@@ -191,6 +191,7 @@
     <Compile Include="Services\CustomAuthorizationRepository.cs" />
     <Compile Include="Services\DateTimeUtilities.cs" />
     <Compile Include="Services\IClientPaymentToSessions.cs" />
+    <Compile Include="Services\IClientSessionService.cs" />
     <Compile Include="Services\IEmailService.cs" />
     <Compile Include="Services\IGetCompanyId.cs" />
     <Compile Include="Services\IMFPermissionsService.cs" />

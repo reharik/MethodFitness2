@@ -59,40 +59,6 @@ namespace MF.Core.Domain
         }
         #endregion
         
-        public virtual void SetSessionsForClients()
-        {
-            Clients.ForEachItem(SetSessionForClient);
-        }
-
-        private void SetSessionForClient(Client client)
-        {
-            var sessions = client.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == AppointmentType);
-            if (sessions.Any())
-            {
-                var session = sessions.OrderBy(s => s.CreatedDate).First();
-                session.Appointment = this;
-                session.Trainer = Trainer;
-                session.SessionUsed = true;
-            }
-            else
-            {
-                var session = new Session
-                    {
-                        Appointment = this,
-                        Trainer = Trainer,
-                        InArrears = true,
-                        AppointmentType = AppointmentType,
-                        SessionUsed = true
-                    };
-                client.AddSession(session);
-                AddSession(session);
-            }
-        }
-
-        public virtual void RestoreSessionsToClients()
-        {
-            Sessions.ForEachItem(x => x.Client.RestoreSession(x));
-        }
 
         public override Entity CloneSelf()
         {
@@ -111,48 +77,5 @@ namespace MF.Core.Domain
             return appointment;
         }
 
-        public virtual void SettleChangesToPastAppointment(IEnumerable<int> newListOfClientIds,
-                                                            string appointmentType,
-                                                            IRepository repository,
-                                                            ISaveEntityService saveEntityService)
-        {
-            if (IsNew()) return;
-            if (HandleChangeOfAptTypeInPastApt(appointmentType)) return;
-            HandleRemovedClientsOnPastApt(newListOfClientIds, saveEntityService);
-            HandleNewClientsOnPastApt(newListOfClientIds, repository);
-        }
-
-        private void HandleNewClientsOnPastApt(IEnumerable<int> newListOfClientIds, IRepository repository)
-        {
-            var currentClientsIds = Clients.Select(x => x.EntityId);
-            var clientIdsNewToAppointment = newListOfClientIds.Except(currentClientsIds);
-            clientIdsNewToAppointment.ForEachItem(x => SetSessionForClient(repository.Find<Client>(x)));
-        }
-
-        private void HandleRemovedClientsOnPastApt(IEnumerable<int> newListOfClientIds, ISaveEntityService saveEntityService)
-        {
-            var currentClientsIds = Clients.Select(x => x.EntityId);
-            var clientIdsRemovedFromAppointment = currentClientsIds.Except(newListOfClientIds);
-
-            clientIdsRemovedFromAppointment.ForEachItem(x =>
-                {
-                    var session = Sessions.FirstOrDefault(s => s.Client.EntityId == x);
-                    var client = Clients.FirstOrDefault(c => c.EntityId == x);
-                    RemoveSession(session);
-                    client.RestoreSession(session);
-                    saveEntityService.ProcessSave(client);
-                });
-        }
-
-        private bool HandleChangeOfAptTypeInPastApt(string appointmentType)
-        {
-            if (AppointmentType != appointmentType)
-            {
-                RestoreSessionsToClients();
-                Completed = false;
-                return true;
-            }
-            return false;
-        }
     }
 }

@@ -19,13 +19,16 @@ namespace MF.Core.Services
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
         private readonly ILogger _logger;
+        private readonly IClientSessionService _clientSessionService;
         private IQueryable<Appointment> _appointments;
 
-        public SessionManager(IRepository repository, ISaveEntityService saveEntityService, ILogger logger)
+        public SessionManager(IRepository repository, ISaveEntityService saveEntityService, ILogger logger,
+                              IClientSessionService clientSessionService)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
             _logger = logger;
+            _clientSessionService = clientSessionService;
         }
 
         public void GatherAppointmentsDue()
@@ -46,7 +49,8 @@ namespace MF.Core.Services
             var appointments = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).ToList();
             appointments.ToList().ForEachItem(x =>
                 {
-                    x.SetSessionsForClients();
+                    _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(x.EntityId));
+                    _clientSessionService.SetSessionsForClients(x);
                     x.Completed = true;
                     validationManager = _saveEntityService.ProcessSave(x, validationManager);
                 });

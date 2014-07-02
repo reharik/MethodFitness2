@@ -32,6 +32,7 @@ namespace MF.Web.Areas.Schedule.Controllers
         private readonly IUserPermissionService _userPermissionService;
         private readonly IUpdateCollectionService _updateCollectionService;
         private readonly IAuthorizationService _authorizationService;
+        private readonly IClientSessionService _clientSessionService;
 
         public AppointmentController(IRepository repository,
             ISelectListItemService selectListItemService,
@@ -39,7 +40,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             ISessionContext sessionContext,
             IUserPermissionService userPermissionService,
             IUpdateCollectionService updateCollectionService,
-            IAuthorizationService authorizationService)
+            IAuthorizationService authorizationService,
+            IClientSessionService clientSessionService)
         {
             _repository = repository;
             _selectListItemService = selectListItemService;
@@ -48,6 +50,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             _userPermissionService = userPermissionService;
             _updateCollectionService = updateCollectionService;
             _authorizationService = authorizationService;
+            _clientSessionService = clientSessionService;
         }
 
         public ActionResult AddUpdate_Template(AddEditAppointmentViewModel input)
@@ -147,7 +150,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                     var notification = new Notification { Message = WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString() };
                     return Json(notification, JsonRequestBehavior.AllowGet);
                 }
-                appointment.RestoreSessionsToClients();
+                _clientSessionService.RestoreSessionsToClients(appointment.Sessions);
                 // first save app to save the clients and sessions that have been restored
                 _repository.Save(appointment);
             }
@@ -169,10 +172,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             }
             if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time"))
             {
-                appointment.SettleChangesToPastAppointment(input.ClientsDtos.selectedItems.Select(x => Int32.Parse(x.id)),
-                                                           input.AppointmentType,
-                                                           _repository,
-                                                           _saveEntityService);
+                var newListOfClientIds = input.ClientsDtos.selectedItems.Select(x => Int32.Parse(x.id));
+                _clientSessionService.SettleChangesToPastAppointment(newListOfClientIds, appointment, input.AppointmentType);
             }
             // map or remap values
             mapToDomain(input, appointment);
