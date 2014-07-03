@@ -458,9 +458,6 @@
     <Content Include="Views\Shared\_DetailLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_EmptyLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\Schedule\Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
