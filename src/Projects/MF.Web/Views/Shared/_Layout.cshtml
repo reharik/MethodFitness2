@@ -15,9 +15,17 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        // Debug mode is enabled in Web.config.
+    }
     @Bundles.RenderStylesheets()
     @RenderSection("ExtraCss", false)
-
+    
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        // Debug mode is enabled in Web.config.
+    }
     @Bundles.RenderScripts()
     
     <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
