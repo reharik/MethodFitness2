@@ -36,7 +36,10 @@ module.exports = function(grunt) {
 // tasks
         clean: {
             build: [grunt.option('destFolder')],
-            deploy: [grunt.option('deployFolder')]
+            deploy:{
+                options:{force:true},
+                src:[grunt.option('deployFolder')]
+            }
         },
         msbuild: {
             src: [grunt.option('slnFile')],
