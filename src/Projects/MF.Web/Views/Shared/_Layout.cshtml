@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    @Html.Partial("_CssScriptsDebugFalse")
+    @Html.Partial("_CssScriptsDebugTrue")
     @RenderSection("ExtraCss", false)
     
     @Html.Partial("_JavascriptDebug"+HttpContext.Current.IsDebuggingEnabled)

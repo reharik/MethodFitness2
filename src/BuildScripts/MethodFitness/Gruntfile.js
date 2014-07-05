@@ -15,8 +15,8 @@ module.exports = function(grunt) {
         host_Name:'http://mfqa.methodfit.net',
         admin_Email:'methodfit_qa@methodfit.com',
         environment:grunt.option('target'),
-        customErrors:"On",
-        debug:"true",
+        customErrors:"Off",
+        debug:"false",
         version:grunt.file.readJSON('package.json').version
     });
 
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
        host_Name:'http://methodfit.net',
        admin_Email:'methodfit@methodfit.com',
         environment:grunt.option('target'),
-        customErrors:"Off",
+        customErrors:"RemoteOnly",
         debug:"false",
         version:grunt.file.readJSON('package.json').version
     });
