@@ -87,7 +87,14 @@ module.exports = function(grunt) {
         uglify: {
             js: {
                 files: [{
-                    src:  grunt.option('destFolder')+'/Content/scripts/**/*.js',
+                    src:  [grunt.option('destFolder')+'/Content/scripts/jqueryPlugins/**/*.js',
+                        grunt.option('destFolder')+'/Content/scripts/externalHelpers/**/*.js',
+                        grunt.option('destFolder')+'/Content/scripts/MF/*.js',
+                        grunt.option('destFolder')+'/Content/scripts/MF/Schedule/**/*.js',
+                        grunt.option('destFolder')+'/Content/scripts/MF/Billing/**/*.js',
+                        grunt.option('destFolder')+'/Content/scripts/MF/Reporting/**/*.js',
+                        grunt.option('destFolder')+'/Content/scripts/MF/CC.ModelBinding/**/*.js',
+                        grunt.option('destFolder')+'/Content/scripts/internalHelpers/**/*.js'],
                     dest:  grunt.option('destFolder')+'/Content/scripts/concat.min.'+grunt.file.readJSON('package.json').version+'.js'
                 }]
             }
