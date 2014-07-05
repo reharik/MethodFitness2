@@ -87,11 +87,7 @@
     </authentication>
     <httpHandlers>
       <add path="Reserved.ReportViewerWebControl.axd" verb="*" type="Microsoft.Reporting.WebForms.HttpHandler, Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" validate="false" />
-      <add path="cassette.axd" verb="*" type="Cassette.Aspnet.CassetteHttpHandler, Cassette.Aspnet" />
     </httpHandlers>
-    <httpModules>
-      <add name="CassetteHttpModule" type="Cassette.Aspnet.CassetteHttpModule, Cassette.Aspnet" />
-    </httpModules>
   </system.web>
   <system.webServer>
     <validation validateIntegratedModeConfiguration="false" />
