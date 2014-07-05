@@ -13,19 +13,26 @@ module.exports = function(grunt) {
     grunt.option( 'QA',{
         connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_QA;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
         host_Name:'http://mfqa.methodfit.net',
-        admin_Email:'methodfit_qa@methodfit.com'
+        admin_Email:'methodfit_qa@methodfit.com',
+        environment:grunt.option('target'),
+        customErrors:"On",
+        debug:"true",
+        version:grunt.file.readJSON('package.json').version
     });
 
     grunt.option( 'PROD',{
-           connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
-           host_Name:'http://methodfit.net',
-           admin_Email:'methodfit@methodfit.com'
+       connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
+       host_Name:'http://methodfit.net',
+       admin_Email:'methodfit@methodfit.com',
+        environment:grunt.option('target'),
+        customErrors:"Off",
+        debug:"false",
+        version:grunt.file.readJSON('package.json').version
     });
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         destFolder: grunt.option('destFolder'),
-
 // tasks
         clean: {
             build: [grunt.option('destFolder')]
@@ -53,7 +60,8 @@ module.exports = function(grunt) {
                     '!**/*.csproj',
                     '!**/*.csproj.*',
                     '!Web.config',
-                    '!Web.config.hbs'
+                    '!Web.config.hbs',
+                    '!*.hbs'
 
                 ],
                 dest: grunt.option('destFolder')
@@ -77,11 +85,23 @@ module.exports = function(grunt) {
 //            }
 //        },
         uglify: {
-            my_target: {
+            js: {
                 files: [{
                     src:  grunt.option('destFolder')+'/Content/scripts/**/*.js',
-                    dest:  grunt.option('destFolder')+'/Content/scripts/concat.min.js'
+                    dest:  grunt.option('destFolder')+'/Content/scripts/concat.min.'+grunt.file.readJSON('package.json').version+'.js'
                 }]
+            }
+        },
+        concat: {
+            css: {
+                src: [grunt.option('destFolder')+'/Content/css/**/*.css'],
+                dest: grunt.option('destFolder')+'/Content/css/concat.min.css'
+            }
+        },
+        cssmin: {
+            minify: {
+                src: [ grunt.option('destFolder')+'/Content/css/concat.min.css'],
+                dest: 'concat.min.version.css'
             }
         },
 
@@ -91,7 +111,9 @@ module.exports = function(grunt) {
                     context:grunt.option(grunt.option('target'))
                 },
                 files:{
-                    '<%=destFolder%>/Web.config': grunt.option('srcFolder')+'/Web.config.hbs'
+                    '<%=destFolder%>/Web.config': grunt.option('srcFolder')+'/Web.config.hbs',
+                    '<%=destFolder%>/views/shared/_JavascriptDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_javascriptDebugFalse.hbs',
+                    '<%=destFolder%>/views/shared/_CssScriptsDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_CssScriptstDebugFalse.hbs'
                 }
             }
         },
@@ -123,9 +145,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-cleanempty');
     grunt.loadNpmTasks('grunt-hbs-configpoke');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    grunt.registerTask('default', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'uglify', 'cleanempty', 'hbsconfigpoke','logEnd']);
+    grunt.registerTask('default', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'uglify','concat', 'cssmin', 'cleanempty', 'hbsconfigpoke','logEnd']);
     grunt.registerTask('deploy', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
 };
