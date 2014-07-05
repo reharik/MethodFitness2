@@ -35,7 +35,8 @@ module.exports = function(grunt) {
         destFolder: grunt.option('destFolder'),
 // tasks
         clean: {
-            build: [grunt.option('destFolder')]
+            build: [grunt.option('destFolder')],
+            deploy: [grunt.option('deployFolder')]
         },
         msbuild: {
             src: [grunt.option('slnFile')],
@@ -149,6 +150,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    grunt.registerTask('default', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','logEnd']);
-    grunt.registerTask('deploy', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
+    grunt.registerTask('default', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','logEnd']);
+    grunt.registerTask('deploy', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','clean:deploy', 'copy:deploy','logEnd']);
 };
