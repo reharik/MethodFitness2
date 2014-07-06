@@ -154,5 +154,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('default', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','logEnd']);
-    grunt.registerTask('deploy', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','clean:deploy', 'copy:deploy','logEnd']);
+    grunt.registerTask('deploy', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
 };
