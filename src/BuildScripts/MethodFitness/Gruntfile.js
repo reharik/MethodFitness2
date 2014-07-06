@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         admin_Email:'methodfit_qa@methodfit.com',
         environment:grunt.option('target'),
         customErrors:"Off",
-        debug:"false",
+        debug:"true",
         version:grunt.file.readJSON('package.json').version
     });
 
