@@ -526,9 +526,7 @@
     <Content Include="Areas\Billing\Views\BaseSessionRate\AddUpdate.cshtml" />
     <Content Include="Content\css\main.css.orig" />
     <Content Include="Views\Shared\_CssScriptsDebugFalse.cshtml" />
-    <Content Include="Views\Shared\_CssScriptsDebugTrue.cshtml" />
-    <None Include="Views\Shared\_JavascriptDebugFalse.hbs" />
-    <Content Include="Views\Shared\_JavascriptDebugTrue.cshtml" />
+    <Content Include="Views\Shared\_JavascriptDebugFalse.cshtml" />
     <None Include="Web.config.hbs">
       <SubType>Designer</SubType>
     </None>

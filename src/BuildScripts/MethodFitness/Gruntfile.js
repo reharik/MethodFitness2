@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         admin_Email:'methodfit_qa@methodfit.com',
         environment:grunt.option('target'),
         customErrors:"Off",
-        debug:"true",
+        debug:"false",
         version:grunt.file.readJSON('package.json').version
     });
 
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
        admin_Email:'methodfit@methodfit.com',
         environment:grunt.option('target'),
         customErrors:"RemoteOnly",
-        debug:"true",
+        debug:"false",
         version:grunt.file.readJSON('package.json').version
     });
 
@@ -115,9 +115,9 @@ module.exports = function(grunt) {
                     context:grunt.option(grunt.option('target'))
                 },
                 files:{
-                    '<%=destFolder%>/Web.config': grunt.option('srcFolder')+'/Web.config.hbs',
-                    '<%=destFolder%>/views/shared/_JavascriptDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_javascriptDebugFalse.hbs',
-                    '<%=destFolder%>/views/shared/_CssScriptsDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_CssScriptstDebugFalse.hbs'
+                    '<%=destFolder%>/Web.config': grunt.option('srcFolder')+'/Web.config.hbs'//,
+//                    '<%=destFolder%>/views/shared/_JavascriptDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_javascriptDebugFalse.hbs',
+//                    '<%=destFolder%>/views/shared/_CssScriptsDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_CssScriptstDebugFalse.hbs'
                 }
             }
         },
@@ -154,5 +154,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('default', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','logEnd']);
-    grunt.registerTask('deploy', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
+    grunt.registerTask('deploy', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
 };

@@ -14,7 +14,8 @@
     @Html.Partial("_CssScriptsDebugTrue")
     @RenderSection("ExtraCss", false)
     
-    @Html.Partial("_JavascriptDebug"+HttpContext.Current.IsDebuggingEnabled)
+    @Html.Partial("_JavascriptDebugFalse")
+@*    @Html.Partial("_JavascriptDebug"+HttpContext.Current.IsDebuggingEnabled)*@
 
     
     <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
