@@ -38,7 +38,7 @@ module.exports = function(grunt) {
             build: [grunt.option('destFolder')],
             deploy:{
                 options:{force:true},
-                src:[grunt.option('deployFolder')]
+                src:[grunt.option('deployFolder')+'/**']
             }
         },
         msbuild: {
