@@ -1,6 +1,7 @@
 ﻿using CC.Core.Domain;
 using CC.Core.DomainTools;
 using CC.Core.Localization;
+using CC.DataValidation;
 using CC.Security;
 using MF.Core;
 using MF.Core.Config;
@@ -19,7 +20,8 @@ namespace MF.SessionManagement
             Scan(x =>
             {
                 x.TheCallingAssembly();
-                x.AssemblyContainingType(typeof(CoreLocalizationKeys));
+                x.AssemblyContainingType<IValidationRunner>();
+                x.AssemblyContainingType<CoreLocalizationKeys>();
                 x.AssemblyContainingType<Entity>();
                 x.AssemblyContainingType<IUser>();
                 x.WithDefaultConventions();
