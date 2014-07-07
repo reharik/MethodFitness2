@@ -13,11 +13,17 @@ module.exports = function(grunt) {
     grunt.option('startTime',new Date());
 
     grunt.option( 'QA',{
-        connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_QA;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;'
+        connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_QA;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
+        environment:grunt.option('target'),
+        customErrors:"Off",
+        debug:"false"
     });
 
     grunt.option( 'PROD',{
-        connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;'
+        connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
+        environment:grunt.option('target'),
+        customErrors:"RemoteOnly",
+        debug:"false"
     });
 
     grunt.initConfig({
