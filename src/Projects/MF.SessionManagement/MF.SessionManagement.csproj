@@ -46,7 +46,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
+    <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -75,6 +76,10 @@
     <ProjectReference Include="..\CC.Core\CC.Core.csproj">
       <Project>{5E0B0CA2-BD5E-4953-A336-2AADC00CD81B}</Project>
       <Name>CC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.DataValidation\CC.DataValidation.csproj">
+      <Project>{3cee8f62-87f5-435c-b05e-3f469057935d}</Project>
+      <Name>CC.DataValidation</Name>
     </ProjectReference>
     <ProjectReference Include="..\CC.Security\CC.Security.csproj">
       <Project>{DBA372FE-3D52-45B3-AF82-B37696328764}</Project>
