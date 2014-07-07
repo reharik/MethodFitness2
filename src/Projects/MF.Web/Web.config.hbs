@@ -6,7 +6,6 @@
 <configuration>
   <configSections>
     <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" requirePermission="false" />
-    <section name="cassette" type="Cassette.CassetteConfigurationSection, Cassette" requirePermission="false" />
   </configSections>
   <appSettings>
     <add key="MethodFitness.sql_server_connection_string" value="{{{connection_String}}}" />
@@ -55,7 +54,8 @@
     </root>
   </log4net>
   <system.web>
-    <compilation debug="true" targetFramework="4.5">
+    <customErrors mode="{{{customErrors}}}"/>
+    <compilation debug="{{{debug}}}" targetFramework="4.5">
       <assemblies>
         <add assembly="System.Web.Abstractions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
         <add assembly="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
@@ -79,7 +79,6 @@
         <add namespace="System.Web.Mvc.Html" />
         <add namespace="System.Web.Routing" />
         <add namespace="System.Web.WebPages" />
-        <add namespace="Cassette.Views" />
       </namespaces>
     </pages>
     <authentication mode="Forms">
@@ -93,10 +92,8 @@
     <validation validateIntegratedModeConfiguration="false" />
     <handlers>
       <add name="ReportViewerWebControlHandler" preCondition="integratedMode" verb="*" path="Reserved.ReportViewerWebControl.axd" type="Microsoft.Reporting.WebForms.HttpHandler, Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
-      <add name="CassetteHttpHandler" path="cassette.axd" preCondition="integratedMode" verb="*" allowPathInfo="true" type="Cassette.Aspnet.CassetteHttpHandler, Cassette.Aspnet" />
     </handlers>
     <modules>
-      <add name="CassetteHttpModule" type="Cassette.Aspnet.CassetteHttpModule, Cassette.Aspnet" />
     </modules>
   </system.webServer>
   <runtime>
@@ -164,6 +161,4 @@
     </assemblyBinding>
   </runtime>
 
-  <!-- For configuration options: http://getcassette.net/documentation/v2/web-config -->
-  <cassette />
 </configuration>

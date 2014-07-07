@@ -1,93 +1,169 @@
 using System;
+using System.Collections.Generic;
 using NHibernate;
-using StructureMap;
 
 namespace CC.Core.DomainTools
 {
     public class UnitOfWork : IUnitOfWork
     {
-        protected ITransaction _transaction;
+        protected ITransaction Transaction;
         private bool _isDisposed;
-        protected ISession _session;
+        protected ISessionFactory SessionFactory;
         private bool _isInitialized;
 
+        protected readonly List<Tuple<string, string, object>> EnabledFilterList;
+        protected readonly List<string> DisabledFilterList;
+
+        public ISession CurrentSession { get; private set; }
+        public IStatelessSession CurrentStatelessSession { get; private set; }
         protected UnitOfWork()
         {
         }
-
-        public UnitOfWork(ISession session)
+        public UnitOfWork(ISessionFactory sessionFactory)
         {
-            _session = session;
+            SessionFactory = sessionFactory;
+             
+            EnabledFilterList = new List<Tuple<string, string, object>>();
+            DisabledFilterList = new List<string>();
         }
 
-        public void DisableFilter(string FilterName)
+        public void DisableFilter(string filterName)
         {
-            _session.DisableFilter(FilterName);
+            // store it in the DisableFilters collection
+            if (!DisabledFilterList.Contains(filterName))
+                DisabledFilterList.Add(filterName);
+
+            // then disable it
+            CurrentSession.DisableFilter(filterName);
         }
 
-        public void EnableFilter(string FilterName, string field, object value)
+        public void EnableFilter(string filterName, string field, object value)
         {
-            var enableFilter = _session.EnableFilter(FilterName);
+            // store it in EnabledFilters collection
+            var tuple = new Tuple<string, string, object>(filterName, field, value);
+            if (!EnabledFilterList.Contains(tuple))
+                EnabledFilterList.Add(tuple);
+
+            // then apply it
+            ApplyEnableFilter(filterName, field, value);
+        }
+
+        protected void ApplyEnableFilter(string filterName, string field, object value)
+        {
+            var enableFilter = CurrentSession.EnableFilter(filterName);
             enableFilter.SetParameter(field, value);
         }
+
+        protected virtual void ReestablishFilters()
+        {
+            // loop through list of filters and reestablish them on the (likely recently replaced) CurrentSession
+            EnabledFilterList.ForEach(tuple => ApplyEnableFilter(tuple.Item1, tuple.Item2, tuple.Item3));
+            DisabledFilterList.ForEach(CurrentSession.DisableFilter);
+        }
+
+        public bool IsInitialized()
+        {
+            return _isInitialized;
+        }
+
         public void Initialize()
         {
             should_not_currently_be_disposed();
             if (_isInitialized) return;
-          
-            CurrentSession = _session;
-            begin_new_transaction();
+
+            CreateNewCurrentSession();
 
             _isInitialized = true;
         }
-
-        public ISession CurrentSession { get; private set; }
 
         public void Commit()
         {
             should_not_currently_be_disposed();
             should_be_initialized_first();
 
-            _transaction.Commit();
-
+            // create a transaction for all pending changes in CurrentSession
             begin_new_transaction();
-        }
 
-        private void begin_new_transaction()
-        {
-            if( _transaction != null )
+            try
             {
-                _transaction.Dispose();
+                Transaction.Commit();
             }
-
-            _transaction = CurrentSession.BeginTransaction();
+            catch (Exception)
+            {
+                Transaction.Rollback();
+                throw;
+            }
         }
 
+        /// <summary>
+        /// Clear all pending changes for the UnitOfWork
+        /// </summary>
+        /// <remarks>
+        /// NOTE: Any deferred IQueryables or IEnumerables established with the previous session will blow up!
+        /// It is safe, however, to get new Queries from the same Repository that previously got the now-defunct Queries.
+        /// </remarks>
         public void Rollback()
         {
             should_not_currently_be_disposed();
             should_be_initialized_first();
 
-            _transaction.Rollback();
+            // no need to rollback anything, nothing's been pushed to the DB yet
+            // just create a new CurrentSession
+            CreateNewCurrentSession();
+        }
 
-            begin_new_transaction();
+        protected void CreateNewCurrentSession()
+        {
+            if (CurrentSession != null)
+            {
+                CurrentSession.Clear();
+                CurrentSession.Close();
+            }
+
+            if (CurrentStatelessSession != null)
+            {
+                CurrentStatelessSession.Close();
+            }
+
+            var session = SessionFactory.OpenSession();
+            // should probably make this value somehow injected or modifyable
+            session.FlushMode = FlushMode.Commit;
+            CurrentSession = session;
+            CurrentStatelessSession = SessionFactory.OpenStatelessSession();
+
+            // reestablish the filters on this new session
+            ReestablishFilters();
+        }
+
+        private void begin_new_transaction()
+        {
+            if (Transaction != null)
+            {
+                Transaction.Dispose();
+            }
+
+            Transaction = CurrentSession.BeginTransaction();
         }
 
         private void should_not_currently_be_disposed()
         {
-            if( _isDisposed ) throw new ObjectDisposedException(GetType().Name);
+            if (_isDisposed) throw new ObjectDisposedException(GetType().Name);
         }
 
         private void should_be_initialized_first()
         {
-            if( ! _isInitialized ) throw new InvalidOperationException("Must initialize (call Initialize()) on NHibernateUnitOfWork before commiting or rolling back");
+            if (!_isInitialized) throw new InvalidOperationException("Must initialize (call Initialize()) on NHibernateUnitOfWork before commiting or rolling back");
         }
 
         public void Dispose()
         {
-            if (_isDisposed || ! _isInitialized) return;
-            _transaction.Dispose();
-            CurrentSession.Dispose();
+            if (_isDisposed || !_isInitialized) return;
+            if (Transaction != null)
+                Transaction.Dispose();
+            if (CurrentSession != null)
+                CurrentSession.Dispose();
+            if (CurrentStatelessSession != null)
+                CurrentStatelessSession.Dispose();
             _isDisposed = true;
         }
     }

@@ -49,10 +49,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxMin, Version=4.84.4790.14405, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\AjaxMin.4.84.4790.14417\lib\net40\AjaxMin.dll</HintPath>
-    </Reference>
     <Reference Include="Alpinely.TownCrier, Version=1.1.0.20141, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\TownCrier.1.1\lib\Alpinely.TownCrier.dll</HintPath>
@@ -63,17 +59,6 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\..\Solutions\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Cassette, Version=2.4.2.13844, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Cassette.2.4.2\lib\net40-client\Cassette.dll</HintPath>
-    </Reference>
-    <Reference Include="Cassette.Aspnet">
-      <HintPath>..\..\Solutions\packages\Cassette.Aspnet.2.4.2\lib\net40\Cassette.Aspnet.dll</HintPath>
-    </Reference>
-    <Reference Include="Cassette.Views, Version=2.4.2.13844, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Cassette.Views.2.4.2\lib\net40\Cassette.Views.dll</HintPath>
     </Reference>
     <Reference Include="FluentNHibernate, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -541,9 +526,7 @@
     <Content Include="Areas\Billing\Views\BaseSessionRate\AddUpdate.cshtml" />
     <Content Include="Content\css\main.css.orig" />
     <Content Include="Views\Shared\_CssScriptsDebugFalse.cshtml" />
-    <Content Include="Views\Shared\_CssScriptsDebugTrue.cshtml" />
-    <None Include="Views\Shared\_JavascriptDebugFalse.hbs" />
-    <Content Include="Views\Shared\_JavascriptDebugTrue.cshtml" />
+    <Content Include="Views\Shared\_JavascriptDebugFalse.cshtml" />
     <None Include="Web.config.hbs">
       <SubType>Designer</SubType>
     </None>

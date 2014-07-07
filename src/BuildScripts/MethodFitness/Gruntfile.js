@@ -15,8 +15,8 @@ module.exports = function(grunt) {
         host_Name:'http://mfqa.methodfit.net',
         admin_Email:'methodfit_qa@methodfit.com',
         environment:grunt.option('target'),
-        customErrors:"On",
-        debug:"true",
+        customErrors:"Off",
+        debug:"false",
         version:grunt.file.readJSON('package.json').version
     });
 
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
        host_Name:'http://methodfit.net',
        admin_Email:'methodfit@methodfit.com',
         environment:grunt.option('target'),
-        customErrors:"Off",
+        customErrors:"RemoteOnly",
         debug:"false",
         version:grunt.file.readJSON('package.json').version
     });
@@ -35,7 +35,11 @@ module.exports = function(grunt) {
         destFolder: grunt.option('destFolder'),
 // tasks
         clean: {
-            build: [grunt.option('destFolder')]
+            build: [grunt.option('destFolder')],
+            deploy:{
+                options:{force:true},
+                src:[grunt.option('deployFolder')+'/**']
+            }
         },
         msbuild: {
             src: [grunt.option('slnFile')],
@@ -87,7 +91,7 @@ module.exports = function(grunt) {
         uglify: {
             js: {
                 files: [{
-                    src:  grunt.option('destFolder')+'/Content/scripts/**/*.js',
+                    src:  [grunt.option('destFolder')+'/Content/scripts/**/*.js'],
                     dest:  grunt.option('destFolder')+'/Content/scripts/concat.min.'+grunt.file.readJSON('package.json').version+'.js'
                 }]
             }
@@ -111,9 +115,9 @@ module.exports = function(grunt) {
                     context:grunt.option(grunt.option('target'))
                 },
                 files:{
-                    '<%=destFolder%>/Web.config': grunt.option('srcFolder')+'/Web.config.hbs',
-                    '<%=destFolder%>/views/shared/_JavascriptDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_javascriptDebugFalse.hbs',
-                    '<%=destFolder%>/views/shared/_CssScriptsDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_CssScriptstDebugFalse.hbs'
+                    '<%=destFolder%>/Web.config': grunt.option('srcFolder')+'/Web.config.hbs'//,
+//                    '<%=destFolder%>/views/shared/_JavascriptDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_javascriptDebugFalse.hbs',
+//                    '<%=destFolder%>/views/shared/_CssScriptsDebugFalse.cshtml': grunt.option('srcFolder')+'/views/shared/_CssScriptstDebugFalse.hbs'
                 }
             }
         },
@@ -149,6 +153,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    grunt.registerTask('default', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'uglify','concat', 'cssmin', 'cleanempty', 'hbsconfigpoke','logEnd']);
-    grunt.registerTask('deploy', ['logStart', 'clean', 'msbuild', 'copy:buildArtifacts', 'cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
+    grunt.registerTask('default', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','logEnd']);
+    grunt.registerTask('deploy', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
 };
