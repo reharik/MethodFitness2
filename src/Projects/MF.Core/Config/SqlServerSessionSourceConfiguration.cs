@@ -62,6 +62,7 @@ namespace MF.Core.Config
                 .ExposeConfiguration(x =>
                 {
                     CC.Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
+                    x.SetInterceptor(new SaveUpdateInterceptor());
                     x.SetProperty("adonet.batch_size", "100");
                     x.SetProperty("generate_statistics", "true");
                 })

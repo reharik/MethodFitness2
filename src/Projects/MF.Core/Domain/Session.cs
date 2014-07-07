@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using CC.Core.Localization;
+using CC.DataValidation.Attributes;
 using MF.Core.Enumerations;
 
 namespace MF.Core.Domain
@@ -14,9 +15,11 @@ namespace MF.Core.Domain
         [Required]
         [ValueOf(typeof(AppointmentType))]
         public virtual string AppointmentType { get; set; }
+        [DoNotValidate]
         [Required]
         public virtual Client Client { get; set; }
         public virtual Appointment Appointment { get; set; }
+        [DoNotValidate]
         public virtual User Trainer { get; set; }
         public virtual bool SessionUsed { get; set; }
         public virtual bool TrainerPaid { get; set; }

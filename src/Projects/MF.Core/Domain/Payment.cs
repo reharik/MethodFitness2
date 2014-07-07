@@ -1,10 +1,12 @@
 using System;
+using CC.DataValidation.Attributes;
 
 namespace MF.Core.Domain
 {
     public class Payment:DomainEntity
     {
         public virtual Guid PaymentBatchId { get; set; }
+        [DoNotValidate]
         public virtual Client Client { get; set; }
         public virtual int FullHour { get; set; }
         public virtual double FullHourPrice { get; set; }

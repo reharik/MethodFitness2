@@ -152,6 +152,7 @@ MF.mixins.formMixin = {
         if(!this.options.noBubbleUp) {MF.WorkflowManager.returnParentView();}
     },
     successHandler:function(_result){
+        var that = this;
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
         if(!result.Success){
             if(result.Message && !$.noty.getByViewIdAndElementId(this.cid)){
@@ -159,7 +160,7 @@ MF.mixins.formMixin = {
             }
             if(result.Errors && !$.noty.getByViewIdAndElementId(this.cid)){
                 _.each(result.Errors,function(item){
-                    $(this.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:this.cid});
+                    $(that.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:that.cid});
                 })
             }
         }else{

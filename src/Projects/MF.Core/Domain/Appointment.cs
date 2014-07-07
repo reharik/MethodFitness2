@@ -8,6 +8,7 @@ using CC.Core.DomainTools;
 using CC.Core.Localization;
 using CC.Core.Services;
 using CC.Core.ValidationServices;
+using CC.DataValidation.Attributes;
 using CC.Utility;
 using MF.Core.Domain.Tools.CustomAttributes;
 using MF.Core.Enumerations;
@@ -24,6 +25,7 @@ namespace MF.Core.Domain
         public virtual DateTime? StartTime { get; set; }
         [Required]
         public virtual Location Location { get; set; }
+        [DoNotValidate]
         [Required]
         public virtual User Trainer { get; set; }
         [TextArea]
@@ -35,6 +37,7 @@ namespace MF.Core.Domain
         #region Collections
         private IList<Client> _clients = new List<Client>();
         public virtual void EmptyClients() { _clients.Clear(); }
+        [DoNotValidate]
         public virtual IEnumerable<Client> Clients { get { return _clients; } }
         public virtual void RemoveClient(Client client)
         {
@@ -47,6 +50,7 @@ namespace MF.Core.Domain
         }
         private IList<Session> _sessions = new List<Session>();
         public virtual void EmptySessions() { _sessions.Clear(); }
+        [DoNotValidate]
         public virtual IEnumerable<Session> Sessions { get { return _sessions; } }
         public virtual void RemoveSession(Session session)
         {

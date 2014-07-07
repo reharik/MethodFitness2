@@ -1,6 +1,7 @@
 using System;
 using CC.Core.CustomAttributes;
 using CC.Core.Html.Grid;
+using CC.DataValidation.Attributes;
 using CC.Security;
 
 namespace CC.Core.Domain
@@ -8,11 +9,12 @@ namespace CC.Core.Domain
     public class Entity :  IGridEnabledClass, IEquatable<Entity>
     {
         public virtual int EntityId { get; set; }
-
+        [DoNotValidate]
         public virtual IUser CreatedBy { get; set; }
 //        [ValidateSqlDateTime]
         public virtual DateTime? CreatedDate { get; set; }
 
+        [DoNotValidate]
         public virtual IUser ChangedBy { get; set; }
 //        [ValidateSqlDateTime]
         public virtual DateTime? ChangedDate { get; set; }

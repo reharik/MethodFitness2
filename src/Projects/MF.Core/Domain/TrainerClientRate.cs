@@ -1,12 +1,15 @@
 using System;
 using CC.Core;
 using CC.Core.Domain;
+using CC.DataValidation.Attributes;
 
 namespace MF.Core.Domain
 {
     public class TrainerClientRate :DomainEntity, IEquatable<TrainerClientRate>
     {
+        [DoNotValidate]
         public virtual Client Client { get; set; }
+        [DoNotValidate]
         public virtual User Trainer { get; set; }
         public virtual int Percent { get; set; }
 

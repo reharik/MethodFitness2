@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using CC.DataValidation.Attributes;
 
 namespace MF.Core.Domain
 {
     public class TrainerSessionVerification:DomainEntity
     {
+        [DoNotValidate]
         public virtual User Trainer { get; set; }
         public virtual double Total { get; set; }
         private IList<Session> _trainerApprovedSessionItems = new List<Session>();

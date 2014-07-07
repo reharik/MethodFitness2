@@ -1,53 +1,44 @@
 module.exports = function(grunt) {
 
     grunt.option('destFolder','build_artifacts');
-    grunt.option('projectName','XO.BC.Publishing');
+    grunt.option('projectName','XO.Console.BulkImport');
     grunt.option('target',grunt.option('target') || 'QA');
     grunt.option('buildConfig',grunt.option('buildConfig') || 'Debug');
     grunt.option('srcFolder', '../../Projects/'+grunt.option('projectName')+'/');
     grunt.option('srcTarget', '../../Projects/'+grunt.option('projectName')+'/bin/'+grunt.option('buildConfig')+'/');
-    grunt.option('slnFile','../../Solutions/'+grunt.option('projectName')+'/'+grunt.option('projectName')+'.sln');
- 	grunt.option('outputConfigFile',grunt.option('destFolder')+'/'+grunt.option('projectName')+'.dll.config');
+    grunt.option('slnFile','../../Solutions/XO.Local.BulkImport/XO.Local.BulkImport.sln');
+    grunt.option('outputConfigFile',grunt.option('destFolder')+'/'+grunt.option('projectName')+'.exe.config');
     grunt.option('startTime',new Date());
 
     grunt.option( 'QA',{
-		Connection_String:'Data Source=ITGLSSQL01;Initial Catalog=Partners;Integrated Security=SSPI',
-		nsbFileShareDataBus:'D:\\\\NSBFileShareDataBus',
-		Appender_File:'D:\\\\logs\\\\partners\\\\BC_Publishing.log',
-        Journal_Appender_File:'D:\\\\logs\\\\partners\\\\journaling\\\\xo_bc.Publishing.Journal.log',
-        Logging_Level:'ERROR',
-        max_concurrency_level: 50
+        BC_Utility_Server:'@qalocalutil01.theknot.com',
+        Partners_Connection_String:'Data Source=ITGLSSQL01;Initial Catalog=Partners;Integrated Security=SSPI;Application Name=XO.Console.BulkImport',
+        NSB_DataBus_FileShare:'\\\\\\\\qalocalutil01\\\\d$\\\\NSBFileShareDataBus'
     });
 
     grunt.option( 'STAGE',{
-		Connection_String:'Data Source=STGLSSQL01;Initial Catalog=Partners;Integrated Security=SSPI',
-		nsbFileShareDataBus:'D:\\\\NSBFileShareDataBus',
-		Appender_File:'D:\\\\logs\\\\partners\\\\BC_Publishing.log',
-        Journal_Appender_File:'D:\\\\logs\\\\partners\\\\journaling\\\\xo_bc.Publishing.Journal.log',
-        Logging_Level:'ERROR',
-        max_concurrency_level: 50
+        BC_Utility_Server:'@stglocalutil01.theknot.com',
+        Partners_Connection_String:'Data Source=STGLSSQL01;Initial Catalog=Partners;Integrated Security=SSPI;Application Name=XO.Console.BulkImport',
+        NSB_DataBus_FileShare:'\\\\\\\\stglocalutil01\\\\d$\\\\NSBFileShareDataBus'
     });
 
     grunt.option( 'PROD',{
-		Connection_String:'Data Source=PRDLOCALCLSDB01.theknot.com;Initial Catalog=Partners;Integrated Security=SSPI',
-		nsbFileShareDataBus:'D:\\\\NSBFileShareDataBus',
-		Appender_File:'D:\\\\logs\\\\partners\\\\BC_Publishing.log',
-        Journal_Appender_File:'D:\\\\logs\\\\partners\\\\journaling\\\\xo_bc.Publishing.Journal.log',
-        Logging_Level:'ERROR',
-        max_concurrency_level: 50
+        BC_Utility_Server:'@prdlocalutil02.theknot.com',
+        Partners_Connection_String:'Data Source=PRDLOCALCLSDB01;Initial Catalog=Partners;Integrated Security=SSPI;Application Name=XO.Console.BulkImport',
+        NSB_DataBus_FileShare:'\\\\\\\\prdlocalutil02\\\\d$\\\\NSBFileShareDataBus'
     });
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         destFolder: grunt.option('destFolder'),
-		outputConfigFile: grunt.option('outputConfigFile'),
+        outputConfigFile: grunt.option('outputConfigFile'),
 
 // tasks
         clean: {
             build: [grunt.option('destFolder')]
         },
-        
-		msbuild: {
+
+        msbuild: {
             src: [grunt.option('slnFile')],
 
             options: {
@@ -58,12 +49,12 @@ module.exports = function(grunt) {
                 verbosity: 'quiet'
             }
         },
-        
-		xunit_runner:{
+
+        xunit_runner:{
             run:{
                 options: { xUnit : "xunit.console.clr4.exe", workingDir:"../../tools/xUnit" },
                 files:{
-                    dlls: ['../../Projects/XO.Local.Publishing.Test/bin/debug/XO.Local.Publishing.Test.dll']
+                    dlls: ['../../Projects/XO.Local.BulkImport.Tests/bin/debug/XO.Local.BulkImport.Tests.dll']
                 }
             }
         },
@@ -79,11 +70,13 @@ module.exports = function(grunt) {
                     '!**/*.vb',
                     '!**/*.csproj',
                     '!**/*.csproj.*',
-					'!App.config',
-					'!App.config.hbs',
-					'!*.dll.config',
-					'!**/*.xml',
-					'!**/*.pdb'
+                    '!App.config',
+                    '!App.config.hbs',
+                    '!*.dll.config',
+                    '!*.exe.config',
+                    '!**/*.xml',
+                    '!**/*.pdb'
+
                 ],
                 dest: grunt.option('destFolder')
             }
@@ -95,7 +88,7 @@ module.exports = function(grunt) {
                     context:grunt.option(grunt.option('target'))
                 },
                 files:{
-					'<%=outputConfigFile%>' : grunt.option('srcFolder') + '/App.config.hbs'
+                    '<%=outputConfigFile%>': grunt.option('srcFolder')+'/App.config.hbs'
                 }
             }
         },
@@ -115,7 +108,7 @@ module.exports = function(grunt) {
         grunt.log.writeln(grunt.option('buildConfig'));
         grunt.log.writeln(grunt.option('target'));
         grunt.log.writeln(grunt.option('outputConfigFile'));
-		grunt.log.writeln(grunt.option('slnFile'));
+        grunt.log.writeln(grunt.option('slnFile'));
     });
 
     grunt.registerTask('logEnd', 'End time and build params.', function() {
