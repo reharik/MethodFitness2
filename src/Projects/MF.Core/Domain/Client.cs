@@ -93,29 +93,6 @@ namespace MF.Core.Domain
             StartDate = self.StartDate;
         }
 
-        public virtual void RestoreSession(Session session)
-        {
-            if(session == null) return;
-            if(session.InArrears)
-            {
-                RemoveSession(session);
-                return;
-            }
 
-            var arrear = Sessions.FirstOrDefault(x => x.InArrears && x.AppointmentType == session.AppointmentType);
-            if(arrear==null)
-            {
-                session.SessionUsed = false;
-                session.Trainer = null;
-                session.Appointment = null;
-            }else
-            {
-                //switch app and trainer over to the session since the app that origionally
-                //had the session will be deleted.
-                session.Appointment = arrear.Appointment;
-                session.Trainer = arrear.Trainer;
-                RemoveSession(arrear);
-            }
-        }
     }
 }   

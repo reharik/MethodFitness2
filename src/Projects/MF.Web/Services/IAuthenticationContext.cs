@@ -21,7 +21,10 @@ namespace MF.Web.Services
                                                        rememberMe, userData);
             string encTicket = FormsAuthentication.Encrypt(ticket);
             var faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+            if (rememberMe)
+                faCookie.Expires = DateTime.Now.AddYears(1); // good for one year
             HttpContext.Current.Response.Cookies.Add(faCookie);
+            
             return FormsAuthentication.GetRedirectUrl(user.FullNameLNF, false);
         }
 

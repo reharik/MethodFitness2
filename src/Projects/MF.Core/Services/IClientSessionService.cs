@@ -13,7 +13,8 @@ namespace MF.Core.Services
         void SetSessionsForClients(Appointment apt);
         void SettleChangesToPastAppointment(IEnumerable<int> newListOfClientIds, Appointment apt, string appointmentType);
 
-        void RestoreSessionsToClients(IEnumerable<Session> sessions);
+        void RestoreSessionsFromAppointment(Appointment apt);
+        void RestoreSessionToClient(Client client, Session session);
     }
 
     public class ClientSessionService : IClientSessionService
@@ -58,17 +59,43 @@ namespace MF.Core.Services
                     SessionUsed = true
                 };
                 client.AddSession(session);
-                apt.AddSession(session);
             }
         }
 
-        public virtual void RestoreSessionsToClients(IEnumerable<Session> sessions)
+        public virtual void RestoreSessionsFromAppointment(Appointment apt)
         {
-            sessions.ForEachItem(x =>
-                {
-                    _logger.LogInfo("Restoring Session to Client. ClientId:{0}, SessionId:{1}".ToFormat(x.Client.EntityId,x.EntityId));
-                    x.Client.RestoreSession(x);
-                });
+            apt.Clients.ForEachItem(x =>
+            {
+                var session = x.Sessions.FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
+                _logger.LogInfo("Restoring Session to Client. ClientId:{0}, SessionId:{1}".ToFormat(x.EntityId, session != null ? session.EntityId : 0));
+                RestoreSessionToClient(x,session);
+            });
+        }
+
+        public virtual void RestoreSessionToClient(Client client, Session session)
+        {
+            if (session == null) return;
+            if (session.InArrears)
+            {
+                client.RemoveSession(session);
+                return;
+            }
+
+            var arrear = client.Sessions.FirstOrDefault(x => x.InArrears && x.AppointmentType == session.AppointmentType);
+            if (arrear == null)
+            {
+                session.SessionUsed = false;
+                session.Trainer = null;
+                session.Appointment = null;
+            }
+            else
+            {
+                //switch app and trainer over to the session since the app that origionally
+                //had the session will be deleted.
+                session.Appointment = arrear.Appointment;
+                session.Trainer = arrear.Trainer;
+                client.RemoveSession(arrear);
+            }
         }
 
         public virtual void SettleChangesToPastAppointment(IEnumerable<int> newListOfClientIds, Appointment apt, string appointmentType)
@@ -84,21 +111,29 @@ namespace MF.Core.Services
             var currentClientsIds = apt.Clients.Select(x => x.EntityId);
             var clientIdsNewToAppointment = newListOfClientIds.Except(currentClientsIds);
             _logger.LogInfo("New clientIds for past apt. apt.id:{0}, clientIds:{1}".ToFormat(apt.EntityId,clientIdsNewToAppointment));
-            clientIdsNewToAppointment.ForEachItem(x => SetSessionForClient(_repository.Find<Client>(x),apt));
+            clientIdsNewToAppointment.ForEachItem(x =>
+                {
+                    var client = _repository.Find<Client>(x);
+                    SetSessionForClient(client, apt);
+                    apt.AddClient(client);
+                });
         }
 
         private void HandleRemovedClientsOnPastApt(IEnumerable<int> newListOfClientIds, Appointment apt)
         {
-            var currentClientsIds = apt.Clients.Select(x => x.EntityId);
+            var currentClientsIds = apt.Clients.Select(x => x.EntityId).ToList();
             var clientIdsRemovedFromAppointment = currentClientsIds.Except(newListOfClientIds);
             _logger.LogInfo("Removed clientIds for past apt. apt.id:{0}, clientIds:{1}".ToFormat(apt.EntityId, clientIdsRemovedFromAppointment));
             clientIdsRemovedFromAppointment.ForEachItem(x =>
             {
-                var session = apt.Sessions.FirstOrDefault(s => s.Client.EntityId == x);
                 var client = apt.Clients.FirstOrDefault(c => c.EntityId == x);
-                apt.RemoveSession(session);
-                client.RestoreSession(session);
-                _saveEntityService.ProcessSave(client);
+                if (client != null)
+                {
+                    var session = client.Sessions.FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
+                    apt.RemoveClient(client);
+                    RestoreSessionToClient(client,session);
+                    _saveEntityService.ProcessSave(client);
+                }
             });
         }
 
@@ -106,7 +141,7 @@ namespace MF.Core.Services
         {
             if (apt.AppointmentType == appointmentType){return false;}
 
-            RestoreSessionsToClients(apt.Sessions);
+            RestoreSessionsFromAppointment(apt);
             apt.Completed = false;
             return true;
         }
