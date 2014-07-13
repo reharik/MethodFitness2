@@ -150,7 +150,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                     var notification = new Notification { Message = WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString() };
                     return Json(notification, JsonRequestBehavior.AllowGet);
                 }
-                _clientSessionService.RestoreSessionsToClients(appointment.Sessions);
+                _clientSessionService.RestoreSessionsFromAppointment(appointment);
                 // first save app to save the clients and sessions that have been restored
                 _repository.Save(appointment);
             }
@@ -170,7 +170,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             {
                 return Json(notification, JsonRequestBehavior.AllowGet);
             }
-            if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time"))
+            if (appointment.Completed
+                && appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time"))
             {
                 var newListOfClientIds = input.ClientsDtos.selectedItems.Select(x => Int32.Parse(x.id));
                 _clientSessionService.SettleChangesToPastAppointment(newListOfClientIds, appointment, input.AppointmentType);
