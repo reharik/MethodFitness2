@@ -170,7 +170,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             {
                 return Json(notification, JsonRequestBehavior.AllowGet);
             }
-            if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time"))
+            if (appointment.Completed
+                && appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time"))
             {
                 var newListOfClientIds = input.ClientsDtos.selectedItems.Select(x => Int32.Parse(x.id));
                 _clientSessionService.SettleChangesToPastAppointment(newListOfClientIds, appointment, input.AppointmentType);
