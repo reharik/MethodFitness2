@@ -48,19 +48,19 @@ namespace MF.Core.Domain
             if (_clients.Contains(client)) return;
             _clients.Add(client);
         }
-        private IList<Session> _sessions = new List<Session>();
-        public virtual void EmptySessions() { _sessions.Clear(); }
-        [DoNotValidate]
-        public virtual IEnumerable<Session> Sessions { get { return _sessions; } }
-        public virtual void RemoveSession(Session session)
-        {
-            _sessions.Remove(session);
-        }
-        public virtual void AddSession(Session session)
-        {
-            if (_sessions.Contains(session)) return;
-            _sessions.Add(session);
-        }
+//        private IList<Session> _sessions = new List<Session>();
+//        public virtual void EmptySessions() { _sessions.Clear(); }
+//        [DoNotValidate]
+//        public virtual IEnumerable<Session> Sessions { get { return _sessions; } }
+//        public virtual void RemoveSession(Session session)
+//        {
+//            _sessions.Remove(session);
+//        }
+//        public virtual void AddSession(Session session)
+//        {
+//            if (_sessions.Contains(session)) return;
+//            _sessions.Add(session);
+//        }
         #endregion
         
 
