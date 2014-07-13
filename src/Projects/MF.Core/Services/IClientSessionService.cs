@@ -38,6 +38,7 @@ namespace MF.Core.Services
 
         private void SetSessionForClient(Client client, Appointment apt)
         {
+            if (client.Sessions.Any(s => s.Appointment == apt)) { return; }
             var sessions = client.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == apt.AppointmentType);
             if (sessions.Any())
             {
