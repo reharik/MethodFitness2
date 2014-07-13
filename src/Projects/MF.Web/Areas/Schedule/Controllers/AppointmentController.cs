@@ -177,7 +177,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             }
             // map or remap values
             mapToDomain(input, appointment);
-            
+            // check here to see if session that is removed (or possibly client that is removed) is still on apt
             var crudManager = _saveEntityService.ProcessSave(appointment);
             var continuation = crudManager.Finish();
             return new CustomJsonResult(new Notification(continuation));
