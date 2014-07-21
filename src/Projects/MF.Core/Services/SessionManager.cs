@@ -45,6 +45,8 @@ namespace MF.Core.Services
 
         public void CompleteAppointments()
         {
+            _logger.LogInfo("Beginning CompleteAppointments Process.");
+
             IValidationManager validationManager = new ValidationManager(_repository);
             var appointments = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).ToList();
             appointments.ToList().ForEachItem(x =>
