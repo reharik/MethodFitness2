@@ -1,0 +1,59 @@
+﻿@using CC.Core.Html.CCUI
+@using MF.Core.Services
+@using MF.Core.Services
+@using MF.Web
+@using MF.Web.Areas.Schedule.Controllers
+@model MF.Web.Areas.Schedule.Controllers.AppointmentViewModel
+@{
+    Layout = "~/Views/Shared/_popupLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="span10">
+       @Html.SubmissionFor(x => x.LocationEntityId).LabelDisplay(WebLocalizationKeys.LOCATION).ToHtmlTag()
+    </div>
+</div>
+<div class="row">
+    <div class="span10">
+        @if (@UserPermissionService.Allow("/Calendar/SetAppointmentForOthers"))
+            {
+                @Html.SubmissionFor(x => x.TrainerEntityId).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
+            }
+            else
+            {
+                @Html.ViewFor(x => x.TrainerFullNameFNF).LabelDisplay(WebLocalizationKeys.TRAINER).ToHtmlTag()
+@*                @Html.SubmissionFor(x => x.TrainerEntityId).HideRoot().ToHtmlTag()*@
+            }
+    </div>
+</div>
+<div class="row">
+    <div class="span10">
+         @Html.SubmissionFor(x => x.ClientsDtos).ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
+    </div>
+</div>
+<div class="row">
+    <div class="span10">
+       @Html.SubmissionFor(x => x.AppointmentType).ToHtmlTag()
+    </div>
+</div>
+<div class="row">
+    <div class="span10">
+        @Html.SubmissionFor(x => x.Date).ToHtmlTag()
+    </div>
+</div>
+<div class="row">
+    <div class="span10">
+        @Html.SubmissionFor(x => x.StartTimeString).LabelDisplay(WebLocalizationKeys.STARTTIME).ToHtmlTag()
+    </div>
+</div>
+<div class="row">
+    <div class="span10">
+         @Html.ViewFor(x => x.EndTimeString).LabelDisplay(WebLocalizationKeys.ENDTIME).ToHtmlTag()
+    </div>
+</div>
+<div class="row">
+    <div class="span10">
+         @Html.SubmissionFor(x => x.Notes).ToHtmlTag()
+    </div>
+</div>

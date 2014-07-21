@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BD319DCA-9D65-4D7B-AAAD-B6A0C2838593}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DBFluentMigration</RootNamespace>
+    <AssemblyName>DBFluentMigration</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentMigrator">
+      <HintPath>..\..\Solutions\packages\FluentMigrator.1.2.0.0\lib\40\FluentMigrator.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\Solutions\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\Solutions\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Iteration2\20020_Alter_DailyPayments_Sproc.cs" />
+    <Compile Include="Iteration2\20010_Add_Notes_Column_To_Appointment.cs" />
+    <Compile Include="Iteration2\20030_Alter_TrainerMetric_Sproc.cs" />
+    <Compile Include="Iteration2\20050_Alter_TrainerMetric_Sproc.cs" />
+    <Compile Include="Iteration2\20060_Alter_DailyPayment_Sproc.cs" />
+    <Compile Include="Iteration2\20070_Alter_Reports_For_Timeless_Dates_Sproc.cs" />
+    <Compile Include="Iteration2\20080_Create_Activity_Report_Sproc.cs" />
+    <Compile Include="Iteration2\20090_Alter_TrainerSession_View.cs" />
+    <Compile Include="Iteration2\20100_Create_BaseSessionRate.cs" />
+    <Compile Include="Iteration2\20110_Add_IsActive_Column_To_Users_and_clients.cs" />
+    <Compile Include="Iteration_0\CreateInitialOperations.cs" />
+    <Compile Include="Iteration_0\CreateInitialDB.cs" />
+    <Compile Include="Iteration_0\CreateInitialPermissions.cs" />
+    <Compile Include="Iteration_1\10010_Drop_User_Type_Column_From_UserTable.cs" />
+    <Compile Include="Iteration_1\10020_Change_Trainer_Client_To_User_Client.cs" />
+    <Compile Include="Iteration_1\10040_Add_TrainerVerified_To_Session.cs" />
+    <Compile Include="Iteration_1\10050_Remove_UserId_From_trainerclientrate.cs" />
+    <Compile Include="Iteration_1\10060_Create_TrainerSession_View.cs" />
+    <Compile Include="Iteration_1\10070_Create_DailyPayments_Sproc.cs" />
+    <Compile Include="Iteration_1\10080_Create_TrainerMertic_Sproc.cs" />
+    <Compile Include="Iteration_1\UpdateOperations.cs" />
+    <Compile Include="Iteration_1\UpdatePermissions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="DBFluentMigration.dll.config" />
+    <Compile Include="Iteration_1\10030_AddTrainerSessionVerification.cs" />
+    <Compile Include="Iteration_1\10090_Add_Notes_Column_To_Payment.cs" />
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CC.Core\CC.Core.csproj">
+      <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
+      <Name>CC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MF.Core\MF.Core.csproj">
+      <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
+      <Name>MF.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
