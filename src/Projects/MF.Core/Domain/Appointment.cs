@@ -80,6 +80,7 @@ namespace MF.Core.Domain
             _clients.ForEachItem(appointment.AddClient);
             return appointment;
         }
-
     }
+
+    
 }

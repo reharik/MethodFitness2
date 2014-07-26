@@ -67,13 +67,13 @@ namespace MF.Core.Services
             apt.Clients.ForEachItem(x =>
             {
                 var session = x.Sessions.FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
-                _logger.LogInfo("Restoring Session to Client. ClientId:{0}, SessionId:{1}".ToFormat(x.EntityId, session != null ? session.EntityId : 0));
                 RestoreSessionToClient(x,session);
             });
         }
 
         public virtual void RestoreSessionToClient(Client client, Session session)
         {
+            _logger.LogInfo("Restoring Session to Client. ClientId:{0}, SessionId:{1}".ToFormat(client.EntityId, session != null ? session.EntityId : 0));
             if (session == null) return;
             if (session.InArrears)
             {

@@ -92,7 +92,5 @@ namespace MF.Core.Domain
             Source = self.Source;
             StartDate = self.StartDate;
         }
-
-
     }
 }   

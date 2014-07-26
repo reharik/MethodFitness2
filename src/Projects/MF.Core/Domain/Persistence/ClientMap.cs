@@ -26,6 +26,6 @@ namespace MF.Core.Domain.Persistence
             HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore).Cascade.AllDeleteOrphan();
             HasMany(x => x.Payments).Access.CamelCaseField(Prefix.Underscore).Cascade.AllDeleteOrphan();
 
-        } 
+        }
     }
 }
