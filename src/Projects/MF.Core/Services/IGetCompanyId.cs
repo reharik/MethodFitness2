@@ -18,7 +18,7 @@ namespace MF.Core.Services
         {
             var httpContext = HttpContext.Current;
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
-            return customPrincipal != null ? customPrincipal.CompanyId : 0;
+            return customPrincipal != null ? customPrincipal.CompanyId : 1;
         }
     }
 

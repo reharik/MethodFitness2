@@ -106,7 +106,7 @@ namespace MF.Core.Services
 
         public int GetUserId()
         {
-            return 1;
+            return 666;
         }
 
         public object RetrieveSessionObject(Guid sessionKey)

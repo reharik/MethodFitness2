@@ -14,7 +14,7 @@ namespace MF.Core.Domain.Persistence
             Map(x => x.Notes);
             References(x => x.Location);
             References(x => x.Trainer);
-            HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore).Cascade.None();
+            HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore).Cascade.SaveUpdate();
 //            HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore).Cascade.None();
         } 
     }
