@@ -182,6 +182,7 @@ namespace MF.Core
 
         public Log4NetLogger(Type type)
         {
+            log4net.Config.XmlConfigurator.Configure(); 
             _log = LogManager.GetLogger(type.Assembly, type);
         }
 

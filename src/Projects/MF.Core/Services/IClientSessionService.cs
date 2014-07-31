@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CC.Core.DomainTools;
 using CC.Core.ValidationServices;
@@ -64,16 +65,23 @@ namespace MF.Core.Services
 
         public virtual void RestoreSessionsFromAppointment(Appointment apt)
         {
-            apt.Clients.ForEachItem(x =>
+            try
             {
-                var session = x.Sessions.FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
-                _logger.LogInfo("Restoring Session to Client. ClientId:{0}, SessionId:{1}".ToFormat(x.EntityId, session != null ? session.EntityId : 0));
-                RestoreSessionToClient(x,session);
-            });
+                apt.Clients.ForEachItem(x =>
+                    {
+                        var session = x.Sessions.Where(s=>s.SessionUsed).FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
+                        RestoreSessionToClient(x, session);
+                    });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public virtual void RestoreSessionToClient(Client client, Session session)
         {
+            _logger.LogInfo("Restoring Session to Client. ClientId:{0}, SessionId:{1}".ToFormat(client.EntityId, session != null ? session.EntityId : 0));
             if (session == null) return;
             if (session.InArrears)
             {

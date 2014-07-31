@@ -104,7 +104,7 @@ namespace MF.Core.Config
                 }
                 if ("CompanyId".Equals(propertyNames[i]))
                 {
-                    state[i] = sessionContext.GetCompanyId();
+                    state[i] = 1; //sessionContext.GetCompanyId();
                 }
                 if (domainEntity.CreatedBy == null && "CreatedBy".Equals(propertyNames[i]))
                 {

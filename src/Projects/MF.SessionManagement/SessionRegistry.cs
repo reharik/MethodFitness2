@@ -41,8 +41,7 @@ namespace MF.SessionManagement
 
             For<ISessionContext>().Use<SystemSessionContext>();
             For<ILocalizationDataProvider>().Use<LocalizationDataProvider>();
-            For<ILogger>().Use(() => new Log4NetLogger(typeof(string)));
-
+            For<ILogger>().AlwaysUnique().TheDefault.Is.ConstructedBy(s => s.ParentType == null ? new Log4NetLogger(s.BuildStack.Current.ConcreteType) : new Log4NetLogger(s.ParentType));
         }
     }
 }
