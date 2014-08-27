@@ -15,7 +15,7 @@ namespace Generator.Commands
             new MigratorConsole(new[]
                 {
                     "-a",
-                    @"src\generator\bin\debug\DBFluentMigration.dll",
+                    @"src\projects\generator\bin\debug\DBFluentMigration.dll",
                     "-db",
                     "sqlserver2008",
                     "--conn",

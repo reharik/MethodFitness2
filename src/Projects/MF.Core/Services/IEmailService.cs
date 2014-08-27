@@ -17,11 +17,8 @@ namespace MF.Core.Services
 
     public class EmailService : IEmailService
     {
-        private readonly IContainer _container;
-
-        public EmailService(IContainer container)
+        public EmailService()
         {
-            _container = container;
         }
 
         public string SendEmail(EmailDTO input)

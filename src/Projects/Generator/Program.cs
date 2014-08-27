@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
@@ -48,20 +49,26 @@ namespace Generator
         private static string GetConnectionString()
         {
 //            var xdoc = XDocument.Load(@"..\..\..\..\appSettings.config");
-            var xdoc = XDocument.Load(@"appSettings.config");
-            var connStrings = xdoc.Descendants("add").Where(x => x.Attribute("key").Value.StartsWith("constring_"));
+//            var xdoc = XDocument.Load(@"appSettings.config");
+//            var connStrings = xdoc.Descendants("add").Where(x => x.Attribute("key").Value.StartsWith("constring_"));
+            var connStrings = new Dictionary<string,string>
+                {
+                    {"DEV",ConfigurationManager.AppSettings["constring_DEV"]},
+                    {"CANNIBAL_QA",ConfigurationManager.AppSettings["constring_CANNIBAL_QA"]},
+                    {"CANNIBAL_PROD",ConfigurationManager.AppSettings["constring_CANNIBAL_PROD"]}
+                };
             string connectionString = string.Empty;
 
             Console.WriteLine("Please select the database you would like to work with:");
-            connStrings.ForEachItem(x => { Console.WriteLine(x.Attribute("key").Value.Replace("constring_", "")); });
+            connStrings.Keys.ForEachItem(x => Console.WriteLine(x));
             while (connectionString.IsEmpty())
             {
                 var database = Console.ReadLine();
-                var connStringNode = connStrings.FirstOrDefault(x => x.Attribute("key").Value == "constring_" + database);
+                var connStringNode = connStrings.FirstOrDefault(x => x.Key == database);
 //                var connStringNode = connStrings.FirstOrDefault(x => x.Attribute("key").Value == "constring_DEV");
-                if (connStringNode != null)
+                if (connStringNode.Value != null)
                 {
-                    connectionString = connStringNode.Attribute("value").Value;
+                    connectionString = connStringNode.Value;
                 }
                 else
                 {
