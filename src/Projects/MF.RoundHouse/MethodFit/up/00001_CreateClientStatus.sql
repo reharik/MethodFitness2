@@ -1,5 +1,3 @@
-USE [MethodFitness_QA]
-GO
 
 /****** Object:  Table [dbo].[ClientStatus]    Script Date: 8/31/2014 12:01:01 PM ******/
 SET ANSI_NULLS ON
