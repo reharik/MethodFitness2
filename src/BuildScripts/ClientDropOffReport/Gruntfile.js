@@ -79,7 +79,7 @@ module.exports = function(grunt) {
                     context:grunt.option(grunt.option('target'))
                 },
                 files:{
-                    'build_artifacts/MF.SessionManagement.exe.config' : grunt.option('srcFolder') + '/App.config.hbs'
+                    'build_artifacts/MF.ClientDropOffReport.exe.config' : grunt.option('srcFolder') + '/App.config.hbs'
                 }
             }
         },
