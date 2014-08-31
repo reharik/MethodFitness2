@@ -7,6 +7,7 @@ using CC.Core.Services;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
+using NHibernate.Transform;
 using StructureMap;
 
 namespace CC.Core.DomainTools
@@ -67,6 +68,22 @@ namespace CC.Core.DomainTools
         public void HardDelete(object target)
         {
             _unitOfWork.CurrentSession.Delete(target);
+        }
+
+        public IList<T> CreateSQLQuery<T>(string sql, object properties) where T : class
+        {
+            return CreateSQLQuery<T>(sql, properties, 30);
+        }
+
+        public IList<T> CreateSQLQuery<T>(string sql, object properties, int setTimeoutSeconds) where T : class
+        {
+            // stored proc syntax is: "exec proc_name :param1, :param2"
+            var query = _unitOfWork.CurrentSession.CreateSQLQuery(sql)
+                .SetProperties(properties)
+                .SetTimeout(setTimeoutSeconds)
+                .SetResultTransformer(Transformers.AliasToBean<T>())
+                .List<T>();
+            return query;
         }
 
         public ENTITY Load<ENTITY>(int id) where ENTITY : Entity

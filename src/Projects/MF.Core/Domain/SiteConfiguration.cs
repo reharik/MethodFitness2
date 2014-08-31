@@ -12,11 +12,15 @@ namespace MF.Core.Domain
              TrainerClientRateDefault = ConfigurationSettings.AppSettings["TrainerClientRateDefault"];
              LastDayOfPayWeek = ConfigurationSettings.AppSettings["LastDayOfPayWeek"];
              AdminEmail = ConfigurationSettings.AppSettings["AdminEmail"];
+             SMTPServer = ConfigurationSettings.AppSettings["SMTPServer"];
+             SMTPUN = ConfigurationSettings.AppSettings["SMTPUN"];
+             SMTPPW = ConfigurationSettings.AppSettings["SMTPPW"];
         }
 
         public virtual string TrainerClientRateDefault { get; set; }
         public virtual string LastDayOfPayWeek { get; set; }
         public virtual string AdminEmail { get; set; }
+        public virtual string SMTPServer { get; set; }
         public virtual string SMTPUN { get; set; }
         public virtual string SMTPPW { get; set; }
     }

@@ -67,6 +67,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <Private>True</Private>
     </Reference>
@@ -118,6 +119,7 @@
     <Compile Include="CoreViewModelAndDTOs\TrainerSessionDto.cs" />
     <Compile Include="Domain\Appointment.cs" />
     <Compile Include="Domain\BaseSessionRate.cs" />
+    <Compile Include="Domain\ClientStatus.cs" />
     <Compile Include="Domain\Company.cs" />
     <Compile Include="Domain\Client.cs" />
     <Compile Include="Domain\DomainEntity.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="Domain\Persistence\AppointmentMap.cs" />
     <Compile Include="Domain\Persistence\ClientMap.cs" />
     <Compile Include="Domain\Persistence\BaseSessionRateMap.cs" />
+    <Compile Include="Domain\Persistence\ClientStatusMap.cs" />
     <Compile Include="Domain\Persistence\TrainerSessionMap.cs" />
     <Compile Include="Domain\Persistence\TrainerSessionVerificationMap.cs" />
     <Compile Include="Domain\Persistence\OperationsMap.cs" />
