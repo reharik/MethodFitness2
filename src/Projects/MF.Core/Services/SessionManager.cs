@@ -54,6 +54,7 @@ namespace MF.Core.Services
                     _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(x.EntityId));
                     _clientSessionService.SetSessionsForClients(x);
                     x.Completed = true;
+                    x.Clients.Where(c =>c.ClientStatus!=null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
                     validationManager = _saveEntityService.ProcessSave(x, validationManager);
                 });
             var notification = validationManager.Finish();

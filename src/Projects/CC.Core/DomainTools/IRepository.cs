@@ -32,7 +32,8 @@ namespace CC.Core.DomainTools
         void Delete<ENTITY>(ENTITY entity) where ENTITY : Entity;
 
         void HardDelete(object target);
-
+        IList<T> CreateSQLQuery<T>(string sql, object properties) where T : class;
+        IList<T> CreateSQLQuery<T>(string sql, object properties, int setTimeoutSeconds) where T : class;
 
         void Commit();
         void Rollback();
