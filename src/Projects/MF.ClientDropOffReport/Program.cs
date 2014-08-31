@@ -16,7 +16,7 @@ namespace MF.ClientDropOffReport
             Initialize();
             var service = ObjectFactory.Container.GetInstance<IGetDroppedClients>();
             var droppedClients = service.GetClients();
-//            if (!droppedClients.Any()) { return; }
+            if (!droppedClients.Any()) { return; }
             var email = service.CreateEmail(droppedClients);
             service.SendEmail(email);
             service.UpdateClients(droppedClients);
