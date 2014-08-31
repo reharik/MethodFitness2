@@ -89,7 +89,7 @@ and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
                 Body = email,
                 Subject = "Here is your emailed report",
                 From = new MailAddress("methodfit@gmail.com"),
-                To = new MailAddress("reharik@gmail.com")
+                To = new MailAddress("methodfit@gmail.com")
             };
             _emailService.SendEmail(emailDto);
         }
