@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using Alpinely.TownCrier;
 using CC.Core;
 using CC.Utility;
+using MF.Core.Domain;
 using StructureMap;
 
 namespace MF.Core.Services
@@ -37,14 +39,17 @@ namespace MF.Core.Services
                 else
                 {
                     message.Body = input.Body;
+                    message.Subject = input.Subject;
                 }
 
                 message.From = input.From;
                 message.To.AddRange(addresses);
                 if(input.ReplyTo != null){message.ReplyToList.Add(input.ReplyTo);}
-                
-                var smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.Credentials = new System.Net.NetworkCredential("methodfit@gmail.com", "methgoo69");
+
+                var smtpClient = new SmtpClient(Site.Config.SMTPServer, 587);
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.Credentials = new System.Net.NetworkCredential(Site.Config.SMTPUN, Site.Config.SMTPPW);
                 smtpClient.EnableSsl = true;
                 smtpClient.Send(message);
             }

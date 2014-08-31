@@ -14,6 +14,7 @@ namespace MF.ClientDropOffReport
         IEnumerable<DroppedClientDto> GetClients();
         string CreateEmail(IEnumerable<DroppedClientDto> clients);
         void SendEmail(string email);
+        void UpdateClients(IEnumerable<DroppedClientDto> clients);
     }
 
     public class GetDroppedClients : IGetDroppedClients
@@ -87,10 +88,21 @@ and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
             {
                 Body = email,
                 Subject = "Here is your emailed report",
-                From = new MailAddress("LapsedClients@MethodFit.com"),
+                From = new MailAddress("methodfit@gmail.com"),
                 To = new MailAddress("reharik@gmail.com")
             };
             _emailService.SendEmail(emailDto);
+        }
+
+        public void UpdateClients(IEnumerable<DroppedClientDto> clients)
+        {
+            clients.ForEachItem(x =>
+                {
+                    var client = _repository.Find<Client>(x.EntityId);
+                    client.ClientStatus.AdminAlerted = true;
+                    _repository.Save(client);
+                });
+            _repository.Commit();
         }
     }
     public class DroppedClientDto

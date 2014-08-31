@@ -38,7 +38,12 @@ namespace MF.Core.Domain
         [Required]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
-        public virtual ClientStatus ClientStatus { get; set; }
+        public virtual ClientStatus ClientStatus
+        {
+            get { return _clientStatus??new ClientStatus(); }
+            set { _clientStatus = value; }
+        }
+
         public virtual bool Archived { get; set; }
         public virtual string FullNameLNF
         {
@@ -61,6 +66,7 @@ namespace MF.Core.Domain
             _sessions.Add(session);
         }
         private IList<Payment> _payments = new List<Payment>();
+        private ClientStatus _clientStatus;
         public virtual IEnumerable<Payment> Payments { get { return _payments; } }
 
         public virtual void RemovePayment(Payment payment)
