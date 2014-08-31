@@ -34,10 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CC.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MF.Core\bin\Debug\CC.Utility.dll</HintPath>
-    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\Solutions\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -75,6 +71,10 @@
     <ProjectReference Include="..\CC.Core\CC.Core.csproj">
       <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
       <Name>CC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Utility\CC.Utility.csproj">
+      <Project>{2bb959da-4f45-4ed5-9d7c-066242f2b124}</Project>
+      <Name>CC.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\MF.Core\MF.Core.csproj">
       <Project>{3cbc320b-ecd3-4a3c-a6a3-704a23e6d1d7}</Project>
