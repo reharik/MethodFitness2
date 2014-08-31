@@ -1,0 +1,23 @@
+{
+  "name": "MyAccount",
+  "version": "0.0.71",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "grunt": "~0.4.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.11",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-hbs-configpoke": "~0.1.0",
+    "grunt-bump": "0.0.13",
+    "async": "~0.2.10",
+    "grunt-roundhouse": "~0.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause"
+}
