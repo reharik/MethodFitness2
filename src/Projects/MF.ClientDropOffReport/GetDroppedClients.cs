@@ -99,6 +99,7 @@ and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
             clients.ForEachItem(x =>
                 {
                     var client = _repository.Find<Client>(x.EntityId);
+                    if(client.ClientStatus==null){client.ClientStatus=new ClientStatus();}
                     client.ClientStatus.AdminAlerted = true;
                     _repository.Save(client);
                 });
