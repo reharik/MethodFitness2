@@ -6,6 +6,7 @@ using CC.Core.DomainTools;
 using CC.Utility;
 using MF.Core.Domain;
 using MF.Core.Services;
+using System.Linq;
 
 namespace MF.ClientDropOffReport
 {
@@ -62,7 +63,7 @@ and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
         public string CreateEmail(IEnumerable<DroppedClientDto> clients)
         {
             var email = new StringBuilder("");
-            clients.ForEachItem(x =>
+            clients.OrderBy(x=>x.LastDate).ForEachItem(x =>
                 {
                     email.Append(x.FirstName);
                     email.Append(" ");
