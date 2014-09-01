@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         roundhouse:{
             run:{
                 options:{
-                    RH:'../../Solutions/shared/roundhouse/rh.exe',
+                    RH:'../../Solutions/lib/roundhouse/rh.exe',
                     connstring:grunt.option(grunt.option('target')).ConnectionString,
                     output:grunt.option('srcFolder')+'Output',
                     versionfile:'package.json',

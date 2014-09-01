@@ -38,11 +38,7 @@ namespace MF.Core.Domain
         [Required]
         public virtual DateTime StartDate { get; set; }
         public virtual SessionRates SessionRates { get; set; }
-        public virtual ClientStatus ClientStatus
-        {
-            get { return _clientStatus??new ClientStatus(); }
-            set { _clientStatus = value; }
-        }
+        public virtual ClientStatus ClientStatus { get; set; }
 
         public virtual bool Archived { get; set; }
         public virtual string FullNameLNF

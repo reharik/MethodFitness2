@@ -5,5 +5,5 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER TABLE [dbo].[Client] ADD [ClientStatusId]
+ALTER TABLE [dbo].[Client] ADD [ClientStatusId] int null
 GO

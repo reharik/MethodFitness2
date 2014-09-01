@@ -69,7 +69,7 @@ namespace MF.Core.Services
             {
                 apt.Clients.ForEachItem(x =>
                     {
-                        var session = x.Sessions.Where(s=>s.SessionUsed).FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
+                        var session = x.Sessions.Where(s => s.Appointment!=null).FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
                         RestoreSessionToClient(x, session);
                     });
             }
