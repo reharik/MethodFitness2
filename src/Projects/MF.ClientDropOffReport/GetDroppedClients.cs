@@ -89,9 +89,9 @@ and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
             var emailDto = new EmailDTO
             {
                 Body = email,
-                Subject = "Here is your emailed report",
+                Subject = "absentee report",
                 From = new MailAddress(Site.Config.EmailReportAddress),
-                To = new MailAddress("reharik@gmail.com")
+                To = new MailAddress(Site.Config.AdminEmail)
             };
             _emailService.SendEmail(emailDto);
         }
