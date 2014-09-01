@@ -6,6 +6,7 @@ using CC.Core.DomainTools;
 using CC.Utility;
 using MF.Core.Domain;
 using MF.Core.Services;
+using System.Linq;
 
 namespace MF.ClientDropOffReport
 {
@@ -22,7 +23,8 @@ namespace MF.ClientDropOffReport
         private readonly IRepository _repository;
         private readonly IEmailService _emailService;
 
-        public GetDroppedClients(IRepository repository, IEmailService emailService)
+        public GetDroppedClients(IRepository repository,
+            IEmailService emailService)
         {
             _repository = repository;
             _emailService = emailService;
@@ -61,7 +63,7 @@ and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
         public string CreateEmail(IEnumerable<DroppedClientDto> clients)
         {
             var email = new StringBuilder("");
-            clients.ForEachItem(x =>
+            clients.OrderBy(x=>x.LastDate).ForEachItem(x =>
                 {
                     email.Append(x.FirstName);
                     email.Append(" ");
@@ -88,8 +90,8 @@ and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
             {
                 Body = email,
                 Subject = "Here is your emailed report",
-                From = new MailAddress("methodfit@gmail.com"),
-                To = new MailAddress("methodfit@gmail.com")
+                From = new MailAddress(Site.Config.EmailReportAddress),
+                To = new MailAddress("reharik@gmail.com")
             };
             _emailService.SendEmail(emailDto);
         }

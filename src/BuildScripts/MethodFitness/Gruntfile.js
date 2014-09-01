@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     grunt.option( 'QA',{
         connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_QA;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
         host_Name:'http://mfqa.methodfit.net',
-        admin_Email:'methodfit_qa@methodfit.com',
+        AdminEmail:'methodfit_qa@methodfit.com',
         environment:grunt.option('target'),
         customErrors:"Off",
         debug:"false",
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     grunt.option( 'PROD',{
        connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
        host_Name:'http://methodfit.net',
-       admin_Email:'methodfit@methodfit.com',
+        AdminEmail:'methodfit@methodfit.com',
         environment:grunt.option('target'),
         customErrors:"RemoteOnly",
         debug:"false",
