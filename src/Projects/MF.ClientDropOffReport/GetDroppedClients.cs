@@ -22,7 +22,8 @@ namespace MF.ClientDropOffReport
         private readonly IRepository _repository;
         private readonly IEmailService _emailService;
 
-        public GetDroppedClients(IRepository repository, IEmailService emailService)
+        public GetDroppedClients(IRepository repository,
+            IEmailService emailService)
         {
             _repository = repository;
             _emailService = emailService;
@@ -88,8 +89,8 @@ and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
             {
                 Body = email,
                 Subject = "Here is your emailed report",
-                From = new MailAddress("methodfit@gmail.com"),
-                To = new MailAddress("methodfit@gmail.com")
+                From = new MailAddress(Site.Config.EmailReportAddress),
+                To = new MailAddress("reharik@gmail.com")
             };
             _emailService.SendEmail(emailDto);
         }

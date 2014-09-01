@@ -15,6 +15,7 @@ namespace MF.Core.Domain
              SMTPServer = ConfigurationSettings.AppSettings["SMTPServer"];
              SMTPUN = ConfigurationSettings.AppSettings["SMTPUN"];
              SMTPPW = ConfigurationSettings.AppSettings["SMTPPW"];
+             EmailReportAddress = ConfigurationSettings.AppSettings["EmailReportAddress"];
         }
 
         public virtual string TrainerClientRateDefault { get; set; }
@@ -23,6 +24,7 @@ namespace MF.Core.Domain
         public virtual string SMTPServer { get; set; }
         public virtual string SMTPUN { get; set; }
         public virtual string SMTPPW { get; set; }
+        public virtual string EmailReportAddress { get; set; }
     }
 
     public class Site

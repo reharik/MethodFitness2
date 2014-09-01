@@ -16,14 +16,18 @@ module.exports = function(grunt) {
         connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_QA;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
         environment:grunt.option('target'),
         customErrors:"Off",
-        debug:"false"
+        debug:"false",
+        AdminEmail:"methodfit@gmail.com",
+        EmailReportAddress:"methodfit@gmail.com"
     });
 
     grunt.option( 'PROD',{
         connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
         environment:grunt.option('target'),
         customErrors:"RemoteOnly",
-        debug:"false"
+        debug:"false",
+        AdminEmail:"methodfit@gmail.com",
+        EmailReportAddress:"methodfit@gmail.com"
     });
 
     grunt.initConfig({
