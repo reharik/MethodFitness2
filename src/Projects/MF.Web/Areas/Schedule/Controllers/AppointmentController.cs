@@ -143,7 +143,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var user = _repository.Find<User>(userEntityId);
             var appointment = _repository.Find<Appointment>(input.EntityId);
 
-            if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time"))
+            if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time").AddHours(6))
             {
                 if (!_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
                 {
@@ -189,7 +189,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var notification = new Notification { Success = true };
             var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var startTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.StartTimeString);
-            if (startTime < convertTime && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            if (startTime < convertTime.AddHours(6) && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
