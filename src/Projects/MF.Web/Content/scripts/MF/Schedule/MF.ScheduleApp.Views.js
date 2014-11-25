@@ -86,7 +86,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
         MF.repository.ajaxGet(this.model.CalendarDefinition.EventChangedUrl,data).done($.proxy(function(result){this.changeEventCallback(result,revertFunc)},this));
     },
     dayClick:function(date, allDay, jsEvent, view) {
-        if(new XDate(date,true).diffHours(new XDate(true))>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
+        if(new XDate(date,true).diffHours(new XDate(true).addHours(6))>0 && !this.model.CalendarDefinition.CanEnterRetroactiveAppointments){
             alert("That period is closed");
             return;
         }
