@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8F7F8B80-2DAB-497A-B5A0-6F0B2FD58EB5}</ProjectGuid>
+    <ProjectGuid>{C4D30153-DBFE-4C0F-A711-BF8D4EEAAC9F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MF.ClientDropOffReport</RootNamespace>
-    <AssemblyName>MF.ClientDropOffReport</AssemblyName>
+    <RootNamespace>MF.ClientDropOffReport.Service</RootNamespace>
+    <AssemblyName>MF.ClientDropOffReport.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Solutions\MF.ClientDropOffReport\</SolutionDir>
@@ -33,27 +33,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\..\Solutions\packages\Common.Logging.2.3.1\lib\net40\Common.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentNHibernate">
-      <HintPath>..\..\Solutions\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi.Collections">
-      <HintPath>..\..\Solutions\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\..\Solutions\packages\NHibernate.3.3.1.4000\lib\Net35\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="Quartz">
-      <HintPath>..\..\Solutions\packages\Quartz.2.3\lib\net40\Quartz.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
-      <HintPath>..\..\Solutions\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\..\Solutions\packages\structuremap.3.1.4.143\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -67,35 +52,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientDropOffRegistry.cs" />
-    <Compile Include="IClientDropOffReport.cs" />
-    <Compile Include="GetDroppedClients.cs" />
-    <Compile Include="ClientDropOffJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="App.config.hbs" />
-    <None Include="job_scheduling_data_2_0.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CC.Core\CC.Core.csproj">
-      <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
-      <Name>CC.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CC.Utility\CC.Utility.csproj">
-      <Project>{2bb959da-4f45-4ed5-9d7c-066242f2b124}</Project>
-      <Name>CC.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MF.Core\MF.Core.csproj">
-      <Project>{3cbc320b-ecd3-4a3c-a6a3-704a23e6d1d7}</Project>
-      <Name>MF.Core</Name>
+    <ProjectReference Include="..\MF.ClientDropOffReport\MF.ClientDropOffReport.csproj">
+      <Project>{8F7F8B80-2DAB-497A-B5A0-6F0B2FD58EB5}</Project>
+      <Name>MF.ClientDropOffReport</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

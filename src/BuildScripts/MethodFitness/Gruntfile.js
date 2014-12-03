@@ -14,6 +14,7 @@ module.exports = function(grunt) {
         connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_QA;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
         host_Name:'http://mfqa.methodfit.net',
         AdminEmail:'methodfit_qa@methodfit.com',
+        EmailReportAddress:'',
         environment:grunt.option('target'),
         customErrors:"Off",
         debug:"false",
@@ -25,6 +26,7 @@ module.exports = function(grunt) {
        host_Name:'http://methodfit.net',
         AdminEmail:'methodfit@methodfit.com',
         environment:grunt.option('target'),
+        EmailReportAddress:'',
         customErrors:"RemoteOnly",
         debug:"false",
         version:grunt.file.readJSON('package.json').version
