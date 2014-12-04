@@ -55,7 +55,7 @@ GROUP   BY c.entityid ,c.entityId,
 having max(a.date) < DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -10) 
 and max(a.date) > DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -90)
 and a.Completed = 1
-and cs.AdminAlerted is null OR cs.AdminAlerted = 0";
+and (cs.AdminAlerted is null OR cs.AdminAlerted = 0)";
              var droppedClientDtos = _repository.CreateSQLQuery<DroppedClientDto>(sql, new List<object>());
             return droppedClientDtos;
          }
