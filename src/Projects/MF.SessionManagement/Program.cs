@@ -1,6 +1,7 @@
 ﻿using CC.Core.DomainTools;
 using MF.Core.Services;
 using StructureMap;
+using Topshelf;
 
 namespace MF.SessionManagement
 {
@@ -9,10 +10,15 @@ namespace MF.SessionManagement
         private static void Main(string[] args)
         {
             Initialize();
-            var sessionManager = ObjectFactory.Container.GetInstance<ISessionManager>();
-            var repository = ObjectFactory.Container.GetInstance<IRepository>();
-            sessionManager.CompleteAppointments();
-            repository.Commit();
+            HostFactory.Run(x =>
+            {
+                x.Service(ObjectFactory.GetInstance<IScheduleSetup>);
+                x.RunAsLocalSystem();
+
+                x.SetDescription("MF.ClientSessionManager");
+                x.SetDisplayName("MF.ClientSessionManager");
+                x.SetServiceName("MF.ClientSessionManager");
+            });                        
         }
 
         private static void Initialize()

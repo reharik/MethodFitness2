@@ -31,18 +31,6 @@ namespace MF.Core.Services
             _clientSessionService = clientSessionService;
         }
 
-//        public void GatherAppointmentsDue()
-//        {
-//            // don't know what this is for
-//            // I don't know why this is a field.
-//            _appointments = _repository.Query<Appointment>(x=>x.EndTime < DateTime.Now && x.Completed)
-//                .FetchMany(x=>x.Clients).ThenFetch(x=>x.Sessions);
-//            _appointments.ForEachItem(x =>
-//                {
-////                    do somthing
-//                });
-//        }
-
         public void CompleteAppointments()
         {
             _logger.LogInfo("Beginning CompleteAppointments Process.");

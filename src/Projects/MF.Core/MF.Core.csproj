@@ -102,6 +102,9 @@
     <Reference Include="System.Xml">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Topshelf">
+      <HintPath>..\..\Solutions\packages\Topshelf.3.1.4\lib\net40-full\Topshelf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\FilterDefinitions.cs" />
