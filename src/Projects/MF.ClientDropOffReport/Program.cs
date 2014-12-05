@@ -14,8 +14,8 @@ namespace MF.ClientDropOffReport
                 x.RunAsLocalSystem();                            
 
                 x.SetDescription("Client Drop Off Report");
-                x.SetDisplayName("ClientDropOffReport");
-                x.SetServiceName("ClientDropOffReport");                       
+                x.SetDisplayName("MF.ClientDropOffReport");
+                x.SetServiceName("MF.ClientDropOffReport");                       
             });                                                  
         }
 
