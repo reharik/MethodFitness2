@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
     grunt.option('destFolder','build_artifacts');
-    grunt.option('solutionName','SessionManagement');
+    grunt.option('solutionName','MF.SessionManagement');
     grunt.option('projectName','MF.SessionManagement');
     grunt.option('buildConfig',grunt.option('buildConfig') || 'Debug');
     grunt.option('srcFolder', '../../Projects/'+grunt.option('projectName')+'/');
