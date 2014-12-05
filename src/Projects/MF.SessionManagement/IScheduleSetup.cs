@@ -36,9 +36,8 @@ namespace MF.SessionManagement
             // Trigger the job to run now, and then repeat every 10 seconds
             var trigger = TriggerBuilder.Create()
                 .WithIdentity("trigger1", "group1")
-                .StartAt(new DateTimeOffset(startTime))
-                .WithDailyTimeIntervalSchedule(x => 
-                    x.WithIntervalInMinutes(30).StartingDailyAt(new TimeOfDay(4,10)).EndingDailyAt(new TimeOfDay(23,11)))
+                .WithCronSchedule("0 10,40 4-22 * * ?")
+                .StartNow()
                 .Build();
 
             // Tell quartz to schedule the job using our trigger
