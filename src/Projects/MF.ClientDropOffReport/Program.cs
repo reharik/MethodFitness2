@@ -1,7 +1,7 @@
 ﻿using StructureMap;
 using Topshelf;
 
-namespace MF.ClientDropOffReport
+namespace MF.ClientAbsenteeReport
 {
     class Program
     {
@@ -10,12 +10,12 @@ namespace MF.ClientDropOffReport
             Initialize();
             HostFactory.Run(x =>                                 
             {
-                x.Service(ObjectFactory.GetInstance<IClientDropOffReport>);
+                x.Service(ObjectFactory.GetInstance<IClientAbsenteeReport>);
                 x.RunAsLocalSystem();                            
 
                 x.SetDescription("Client Drop Off Report");
-                x.SetDisplayName("MF.ClientDropOffReport");
-                x.SetServiceName("MF.ClientDropOffReport");                       
+                x.SetDisplayName("MF.ClientAbsenteeReport");
+                x.SetServiceName("MF.ClientAbsenteeReport");                       
             });                                                  
         }
 
@@ -24,7 +24,7 @@ namespace MF.ClientDropOffReport
             // Bootstrapper.Restart();
             //            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
 
-            ObjectFactory.Initialize(x => x.AddRegistry(new ClientDropOffRegistry()));
+            ObjectFactory.Initialize(x => x.AddRegistry(new ClientAbsenteeRegistry()));
             //            ObjectFactory.AssertConfigurationIsValid();
             // HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
 

@@ -9,11 +9,11 @@ using NHibernate;
 using StructureMap.Configuration.DSL;
 using Log4NetLogger = MF.Core.Log4NetLogger;
 
-namespace MF.ClientDropOffReport
+namespace MF.ClientAbsenteeReport
 {
-    public class ClientDropOffRegistry: Registry
+    public class ClientAbsenteeRegistry: Registry
     {
-        public ClientDropOffRegistry()
+        public ClientAbsenteeRegistry()
         {
             Scan(x =>
             {

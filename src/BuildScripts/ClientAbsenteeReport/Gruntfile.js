@@ -1,8 +1,8 @@
 module.exports = function(grunt) {
 
     grunt.option('destFolder','build_artifacts');
-    grunt.option('solutionName','MF.ClientDropOffReport');
-    grunt.option('projectName','MF.ClientDropOffReport');
+    grunt.option('solutionName','MF.ClientAbsenteeReport');
+    grunt.option('projectName','MF.ClientAbsenteeReport');
     grunt.option('buildConfig',grunt.option('buildConfig') || 'Debug');
     grunt.option('srcFolder', '../../Projects/'+grunt.option('projectName')+'/');
     grunt.option('srcTarget', '../../Projects/'+grunt.option('projectName')+'/bin/'+grunt.option('buildConfig')+'/');

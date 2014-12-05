@@ -4,9 +4,9 @@ using MF.Core;
 using Quartz;
 using StructureMap;
 
-namespace MF.ClientDropOffReport
+namespace MF.ClientAbsenteeReport
 {
-    public class ClientDropOffJob : IJob
+    public class ClientAbsenteeJob : IJob
     {
         public void Execute(IJobExecutionContext context)
         {

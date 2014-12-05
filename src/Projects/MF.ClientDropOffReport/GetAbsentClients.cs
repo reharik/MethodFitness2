@@ -8,7 +8,7 @@ using MF.Core.Domain;
 using MF.Core.Services;
 using System.Linq;
 
-namespace MF.ClientDropOffReport
+namespace MF.ClientAbsenteeReport
 {
     public interface IGetDroppedClients
     {

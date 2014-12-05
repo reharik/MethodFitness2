@@ -2,16 +2,16 @@
 using Quartz.Impl;
 using Topshelf;
 
-namespace MF.ClientDropOffReport
+namespace MF.ClientAbsenteeReport
 {
-    public interface IClientDropOffReport : ServiceControl
+    public interface IClientAbsenteeReport : ServiceControl
     {
         void Execute();
     }
 
-    public class ClientDropOffReport : IClientDropOffReport
+    public class ClientAbsenteeReport : IClientAbsenteeReport
     {
-        public ClientDropOffReport()
+        public ClientAbsenteeReport()
         {
             Execute();
         }
@@ -21,7 +21,7 @@ namespace MF.ClientDropOffReport
             var scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
 
-            var job = JobBuilder.Create<ClientDropOffJob>()
+            var job = JobBuilder.Create<ClientAbsenteeJob>()
                 .WithIdentity("job1", "group1")
                 .Build();
 
