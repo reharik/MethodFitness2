@@ -1,4 +1,5 @@
-﻿using StructureMap;
+﻿using Quartz;
+using StructureMap;
 using Topshelf;
 
 namespace MF.ClientAbsenteeReport
@@ -8,6 +9,9 @@ namespace MF.ClientAbsenteeReport
         static void Main(string[] args)
         {
             Initialize();
+            var job = new ClientAbsenteeJob();
+            job.Execute(null);
+            return;
             HostFactory.Run(x =>                                 
             {
                 x.Service(ObjectFactory.GetInstance<IClientAbsenteeReport>);
