@@ -13,11 +13,11 @@ namespace MF.ClientAbsenteeReport
             var service = ObjectFactory.Container.GetInstance<IGetDroppedClients>();
             var logger = ObjectFactory.Container.GetInstance<ILogger>();
             var droppedClients = service.GetClients();
-//            if (!droppedClients.Any())
-//            {
-//                logger.LogDebug("No new dropped clients on: "+ DateTime.Now.ToString());
-//                return;
-//            }
+            if (!droppedClients.Any())
+            {
+                logger.LogDebug("No new dropped clients on: "+ DateTime.Now.ToString());
+                return;
+            }
             var email = service.CreateEmail(droppedClients);
             service.SendEmail(email);
             service.UpdateClients(droppedClients);
