@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         environment:grunt.option('target'),
         customErrors:"Off",
         debug:"false",
-        AdminEmail:"methodfit@gmail.com",
+        AdminEmail:"vze122tb2@verizon.net",
         EmailReportAddress:"methodfit@gmail.com"
     });
 
@@ -26,8 +26,8 @@ module.exports = function(grunt) {
         environment:grunt.option('target'),
         customErrors:"RemoteOnly",
         debug:"false",
-        AdminEmail:"methodfit@gmail.com",
-        EmailReportAddress:"methodfit@gmail.com"
+        AdminEmail:"vze122tb2@verizon.net",
+        EmailReportAddress:"reharik@gmail.com"
     });
 
     grunt.initConfig({
