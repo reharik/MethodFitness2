@@ -60,6 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="SendGridMail">
+      <HintPath>..\..\Solutions\packages\Sendgrid.5.0.0\lib\SendGridMail.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\Solutions\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>

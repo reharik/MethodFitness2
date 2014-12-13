@@ -38,7 +38,6 @@ namespace MF.Core.Services
                 }
                 else
                 {
-                    message.Body = input.Body;
                     message.Subject = input.Subject;
                     message.IsBodyHtml = true;
                 }
@@ -47,9 +46,9 @@ namespace MF.Core.Services
                 message.To.AddRange(addresses);
                 if(input.ReplyTo != null){message.ReplyToList.Add(input.ReplyTo);}
 
-                var smtpClient = new SmtpClient(Site.Config.SMTPServer, 465); // needs hole in firewall use port 80
-//                smtpClient.UseDefaultCredentials = false;
-//                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                var smtpClient = new SmtpClient(Site.Config.SMTPServer, 587); // needs hole in firewall use port 80
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpClient.Credentials = new System.Net.NetworkCredential(Site.Config.SMTPUN, Site.Config.SMTPPW);
                 smtpClient.EnableSsl = true;
                 smtpClient.Send(message);
