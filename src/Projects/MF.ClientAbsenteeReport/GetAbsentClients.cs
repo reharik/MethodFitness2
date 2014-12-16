@@ -16,6 +16,8 @@ namespace MF.ClientAbsenteeReport
         string CreateEmail(IEnumerable<DroppedClientDto> clients);
         void SendEmail(string email);
         void UpdateClients(IEnumerable<DroppedClientDto> clients);
+        IEnumerable<DroppedClientDto> GetWeeklyClients();
+        string CreateWeeklyEmail(IEnumerable<DroppedClientDto> clients);
     }
 
     public class GetDroppedClients : IGetDroppedClients
@@ -60,6 +62,35 @@ and (cs.AdminAlerted is null OR cs.AdminAlerted = 0)";
             return droppedClientDtos;
          }
 
+        public IEnumerable<DroppedClientDto> GetWeeklyClients()
+        {
+            var sql = @"SELECT  c.EntityId, 
+		c.FirstName,
+		c.LastName,
+		c.Email,
+		c.MobilePhone,
+		MAX(a.date) LastDate
+FROM    client c
+        INNER JOIN appointment_client ac
+            ON c.entityid = ac.clientid
+        INNER JOIN appointment a 
+            ON ac.appointmentid = a.entityid
+		left JOIN ClientStatus cs 
+			ON c.ClientStatusId = cs.EntityId
+GROUP   BY c.entityid ,c.entityId, 
+		c.firstName,
+		c.lastName,
+		c.email,
+		c.mobilephone,
+        a.Completed,
+		cs.AdminAlerted
+having max(a.date) < DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -10) 
+and max(a.date) > DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -17)
+and a.Completed = 1";
+            var droppedClientDtos = _repository.CreateSQLQuery<DroppedClientDto>(sql, new List<object>());
+            return droppedClientDtos;
+        }
+
         public string CreateEmail(IEnumerable<DroppedClientDto> clients)
         {
             var email = new StringBuilder("");
@@ -81,6 +112,31 @@ and (cs.AdminAlerted is null OR cs.AdminAlerted = 0)";
                     email.Append(Environment.NewLine);
 
                 });
+            return email.ToString();
+        }
+
+        public string CreateWeeklyEmail(IEnumerable<DroppedClientDto> clients)
+        {
+            var email = new StringBuilder("Weekly absentee report for {0} - {1}".ToFormat(DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-17)));
+            clients.OrderBy(x => x.LastDate).ForEachItem(x =>
+            {
+                email.Append(Environment.NewLine);
+                email.Append(x.FirstName);
+                email.Append(" ");
+                email.Append(x.LastName);
+                email.Append("'s Last Appointment was on ");
+                email.Append(x.LastDate.ToShortDateString());
+                email.Append(". Their Phone number is ");
+                email.Append(x.MobilePhone);
+                email.Append(". Their Email is ");
+                email.Append("<a href='mailto:");
+                email.Append(x.Email);
+                email.Append("'>");
+                email.Append(x.Email);
+                email.Append("</a>");
+                email.Append(Environment.NewLine);
+
+            });
             return email.ToString();
         }
 

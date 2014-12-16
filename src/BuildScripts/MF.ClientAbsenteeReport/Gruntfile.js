@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         environment:grunt.option('target'),
         customErrors:"Off",
         debug:"false",
-        AdminEmail:"admin.prov@methodfit.com",
+        AdminEmail:"info.prov@methodfit.com",
         EmailReportAddress:"methodfit@gmail.com"
     });
 
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         customErrors:"RemoteOnly",
         debug:"false",
         EmailReportAddress:"methodfit@gmail.com",
-        AdminEmail:"admin.prov@methodfit.com"
+        AdminEmail:"info.prov@methodfit.com"
     });
 
     grunt.initConfig({

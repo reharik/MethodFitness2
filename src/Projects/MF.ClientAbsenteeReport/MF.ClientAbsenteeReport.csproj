@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientAbsenteeRegistry.cs" />
+    <Compile Include="WeeklyClientAbsenteeJob.cs" />
     <Compile Include="IClientAbsenteeReport.cs" />
     <Compile Include="GetAbsentClients.cs" />
     <Compile Include="ClientAbsenteeJob.cs" />
