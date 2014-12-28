@@ -16,8 +16,7 @@ namespace MF.ClientAbsenteeReport
 
             var email = service.CreateWeeklyEmail(droppedClients);
             service.SendEmail(email, "weekly absentee report");
-            logger.LogDebug("Weekly Job Processed at: " + DateTime.Now.ToString());
-            logger.LogDebug("Job returned {0} clients", droppedClients.Count());
+            logger.LogInfo("Weekly Job Processed at: " + DateTime.Now.ToString());
             logger.LogDebug("{0}", email);
         }
     }

@@ -15,14 +15,13 @@ namespace MF.ClientAbsenteeReport
             var droppedClients = service.GetClients();
             if (!droppedClients.Any())
             {
-                logger.LogDebug("No new dropped clients on: "+ DateTime.Now.ToString());
+                logger.LogInfo("No new dropped clients on: " + DateTime.Now.ToString());
                 return;
             }
             var email = service.CreateEmail(droppedClients);
             service.SendEmail(email, "absentee report");
             service.UpdateClients(droppedClients);
-            logger.LogDebug("Job Processed at: "+ DateTime.Now.ToString());
-            logger.LogDebug("Job returned {0} clients", droppedClients.Count());
+            logger.LogInfo("Job Processed at: "+ DateTime.Now.ToString());
             logger.LogDebug("{0}", email);
         }
     }
