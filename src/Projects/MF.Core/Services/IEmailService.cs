@@ -40,6 +40,7 @@ namespace MF.Core.Services
                 {
                     message.Subject = input.Subject;
                     message.IsBodyHtml = true;
+                    message.Body = input.Body;
                 }
 
                 message.From = input.From;
