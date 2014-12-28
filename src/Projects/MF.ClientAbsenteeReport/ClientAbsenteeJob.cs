@@ -23,6 +23,7 @@ namespace MF.ClientAbsenteeReport
             service.UpdateClients(droppedClients);
             logger.LogDebug("Job Processed at: "+ DateTime.Now.ToString());
             logger.LogDebug("Job returned {0} clients", droppedClients.Count());
+            logger.LogDebug("{0}", email);
         }
     }
 }
