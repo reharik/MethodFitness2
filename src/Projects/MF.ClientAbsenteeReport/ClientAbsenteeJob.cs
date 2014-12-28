@@ -19,9 +19,10 @@ namespace MF.ClientAbsenteeReport
                 return;
             }
             var email = service.CreateEmail(droppedClients);
-            service.SendEmail(email);
+            service.SendEmail(email, "absentee report");
             service.UpdateClients(droppedClients);
             logger.LogDebug("Job Processed at: "+ DateTime.Now.ToString());
+            logger.LogDebug("Job returned {0} clients", droppedClients.Count());
         }
     }
 }

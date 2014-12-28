@@ -14,7 +14,7 @@ namespace MF.ClientAbsenteeReport
     {
         IEnumerable<DroppedClientDto> GetClients();
         string CreateEmail(IEnumerable<DroppedClientDto> clients);
-        void SendEmail(string email);
+        void SendEmail(string email, string subject);
         void UpdateClients(IEnumerable<DroppedClientDto> clients);
         IEnumerable<DroppedClientDto> GetWeeklyClients();
         string CreateWeeklyEmail(IEnumerable<DroppedClientDto> clients);
@@ -140,12 +140,12 @@ and a.Completed = 1";
             return email.ToString();
         }
 
-        public void SendEmail(string email)
+        public void SendEmail(string email, string subject)
         {
             var emailDto = new EmailDTO
             {
                 Body = email,
-                Subject = "absentee report",
+                Subject = subject,
                 From = new MailAddress(Site.Config.EmailReportAddress),
                 To = new MailAddress(Site.Config.AdminEmail)
             };
