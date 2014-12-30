@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-
-using CC.Core.Html.Menu;
-using CC.Core.Localization;
+using CC.Core.Core.Html.Menu;
+using CC.Core.Core.Localization;
 using MF.Core.Html.Expressions;
 
 namespace MF.Web

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using CC.Core.Localization;
-using CC.DataValidation.Attributes;
+using CC.Core.Core.Localization;
+using CC.Core.DataValidation.Attributes;
 using MF.Core.Enumerations;
 
 namespace MF.Core.Domain

@@ -1,4 +1,4 @@
-using CC.Core.Domain;
+using CC.Core.Core.Domain;
 
 namespace MF.Core.Domain
 {

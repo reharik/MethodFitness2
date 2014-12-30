@@ -1,5 +1,4 @@
-﻿using CC.Core.DomainTools;
-using MF.Core.Config;
+﻿using MF.Core.Config;
 using NHibernate;
 using StructureMap;
 

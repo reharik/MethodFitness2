@@ -1,4 +1,4 @@
-﻿using CC.Security.Interfaces;
+﻿using CC.Core.Security.Interfaces;
 
 namespace MF.Core.Services
 {

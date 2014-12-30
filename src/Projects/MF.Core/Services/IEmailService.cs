@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Mail;
 using Alpinely.TownCrier;
 using CC.Core;
-using CC.Utility;
+using CC.Core.Utilities;
 using MF.Core.Domain;
 using StructureMap;
 

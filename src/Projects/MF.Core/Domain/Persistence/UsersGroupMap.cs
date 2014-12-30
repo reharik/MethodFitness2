@@ -1,4 +1,4 @@
-﻿using CC.Security.Model;
+﻿using CC.Core.Security.Model;
 using FluentNHibernate.Mapping;
 
 namespace MF.Core.Domain.Persistence

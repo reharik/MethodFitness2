@@ -1,5 +1,4 @@
-﻿using CC.Core.Domain;
-
+﻿
 namespace MF.Core.Domain
 {
     public class Company:DomainEntity

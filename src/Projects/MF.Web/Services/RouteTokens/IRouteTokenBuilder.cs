@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using CC.Core;
-using CC.Core.DomainTools;
-using CC.Core.Html;
-using CC.Security.Interfaces;
-using CC.Utility;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Enumerations;
+using CC.Core.Core.Html.Menu;
+using CC.Core.Security.Interfaces;
+using CC.Core.Utilities;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Services;

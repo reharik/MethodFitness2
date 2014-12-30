@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using CC.Core.CustomAttributes;
+using CC.Core.Core.CustomAttributes;
 
 namespace MF.Web.Models
 {

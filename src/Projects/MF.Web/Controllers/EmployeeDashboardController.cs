@@ -1,5 +1,5 @@
 using System.Web.Mvc;
-using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.Core.CoreViewModelAndDTOs;
 
 namespace MF.Web.Controllers
 {

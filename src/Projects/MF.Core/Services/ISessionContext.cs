@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web;
-using CC.Core.DomainTools;
-using CC.Core.Services;
-using CC.Security;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Services;
+using CC.Core.Security;
 using MF.Core.Config;
 using MF.Core.Domain;
 

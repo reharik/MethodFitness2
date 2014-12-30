@@ -1,5 +1,5 @@
 ﻿using System;
-using CC.Core.Html.Grid;
+using CC.Core.Core.Html.Grid;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 using StructureMap.Pipeline;

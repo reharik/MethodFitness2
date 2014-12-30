@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using CC.Core.Domain;
-using CC.Core.Enumerations;
-using CC.Core.Localization;
-using CC.Security;
+using CC.Core.Core.Enumerations;
+using CC.Core.Core.Localization;
+using CC.Core.Security;
 using System.Linq;
-using CC.Utility;
+using CC.Core.Utilities;
 using MF.Core.CoreViewModelAndDTOs;
 
 namespace MF.Core.Domain

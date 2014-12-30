@@ -1,5 +1,5 @@
-﻿using CC.Core.DomainTools;
-using CC.Security.Interfaces;
+﻿using CC.Core.Core.DomainTools;
+using CC.Core.Security.Interfaces;
 using MF.Core.Domain;
 using StructureMap;
 

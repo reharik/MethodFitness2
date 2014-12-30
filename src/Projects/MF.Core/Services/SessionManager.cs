@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
-using CC.Core.DomainTools;
-using CC.Core.ValidationServices;
-using CC.Utility;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.ValidationServices;
+using CC.Core.Utilities;
 using MF.Core.Domain;
-using NHibernate.Linq;
 
 namespace MF.Core.Services
 {

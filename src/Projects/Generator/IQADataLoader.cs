@@ -1,5 +1,5 @@
 using System;
-using CC.Core.DomainTools;
+using CC.Core.Core.DomainTools;
 using MF.Core.Domain;
 using MF.Core.Services;
 

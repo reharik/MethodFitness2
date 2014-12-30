@@ -1,7 +1,7 @@
 using System;
-using CC.Core;
-using CC.Core.Domain;
-using CC.DataValidation.Attributes;
+using CC.Core.Core;
+using CC.Core.Core.Domain;
+using CC.Core.DataValidation.Attributes;
 
 namespace MF.Core.Domain
 {

@@ -1,4 +1,4 @@
-﻿using CC.Core.Services;
+﻿using CC.Core.Core.Services;
 using MF.Core.Domain;
 using MF.Core.Services;
 using NHibernate;

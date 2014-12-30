@@ -1,15 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using CC.Core;
-using CC.Core.Domain;
-using CC.Core.DomainTools;
-using CC.Core.Localization;
-using CC.Core.Services;
-using CC.Core.ValidationServices;
-using CC.DataValidation.Attributes;
-using CC.Utility;
+using CC.Core.Core.Domain;
+using CC.Core.Core.Localization;
+using CC.Core.DataValidation.Attributes;
+using CC.Core.Utilities;
 using MF.Core.Domain.Tools.CustomAttributes;
 using MF.Core.Enumerations;
 

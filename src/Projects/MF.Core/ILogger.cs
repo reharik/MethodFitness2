@@ -1,6 +1,6 @@
 ﻿using System;
 using CC.Core;
-using CC.Utility;
+using CC.Core.Utilities;
 using log4net;
 
 namespace MF.Core

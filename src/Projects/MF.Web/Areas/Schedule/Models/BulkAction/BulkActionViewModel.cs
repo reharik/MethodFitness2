@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CC.Core.CoreViewModelAndDTOs;
+using CC.Core.Core.CoreViewModelAndDTOs;
 
 namespace MF.Web.Areas.Schedule.Models.BulkAction
 {

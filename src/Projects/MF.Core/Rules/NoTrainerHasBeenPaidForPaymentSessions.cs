@@ -1,7 +1,7 @@
-using CC.Core.Domain;
-using CC.Core.DomainTools;
-using CC.Core.Services;
-using CC.Core.ValidationServices;
+using CC.Core.Core.Domain;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Services;
+using CC.Core.Core.ValidationServices;
 
 namespace MF.Core.Rules
 {

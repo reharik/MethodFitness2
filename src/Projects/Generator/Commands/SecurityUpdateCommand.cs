@@ -1,4 +1,4 @@
-﻿using CC.Core.DomainTools;
+﻿using CC.Core.Core.DomainTools;
 using DBFluentMigration.Iteration_1;
 using MF.Core.Security;
 

@@ -1,9 +1,9 @@
 using System.Linq;
-using CC.Core.Domain;
-using CC.Core.DomainTools;
-using CC.Core.Services;
-using CC.Core.ValidationServices;
-using CC.DataValidation;
+using CC.Core.Core.Domain;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Services;
+using CC.Core.Core.ValidationServices;
+using CC.Core.DataValidation;
 using MF.Core.Domain;
 
 namespace MF.Core.Rules

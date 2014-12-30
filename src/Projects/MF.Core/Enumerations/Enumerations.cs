@@ -1,5 +1,5 @@
 using System;
-using CC.Core.Localization;
+using CC.Core.Core.Localization;
 
 namespace MF.Core.Enumerations
 {
@@ -24,15 +24,6 @@ namespace MF.Core.Enumerations
         public static readonly DocumentFileType Document = new DocumentFileType { IsActive = true, Key = "Document" };
         public static readonly DocumentFileType Image = new DocumentFileType { IsActive = true, Key = "Image"};
         public static readonly DocumentFileType Headshot = new DocumentFileType { IsActive = true, Key = "Headshot"};
-    }
-
-    [Serializable]
-    public class AreaName : CC.Core.Enumerations.AreaName
-    {
-        public static readonly AreaName Empty = new AreaName { IsActive = false, Key = "" };
-        public static readonly AreaName Schedule = new AreaName { IsActive = true, Key = "Schedule" };
-        public static readonly AreaName Reporting = new AreaName { IsActive = true, Key = "Reporting" };
-        public static readonly AreaName Billing = new AreaName { IsActive = true, Key = "Billing" };
     }
 
     [Serializable]

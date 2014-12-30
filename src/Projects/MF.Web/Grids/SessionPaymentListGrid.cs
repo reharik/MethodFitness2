@@ -1,4 +1,4 @@
-﻿using CC.Core.Html.Grid;
+﻿using CC.Core.Core.Html.Grid;
 using MF.Core.CoreViewModelAndDTOs;
 using MF.Web.Areas.Schedule.Grids;
 

@@ -1,4 +1,3 @@
-using CC.Core.DomainTools;
 using NHibernate;
 using StructureMap;
 

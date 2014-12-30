@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using CC.Core.DomainTools;
-using CC.Core.Html.Menu;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Html.Menu;
 using MF.Core;
 using MF.Core.Domain;
 using MF.Core.Services;

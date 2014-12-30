@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using CC.Core;
-using CC.Core.Localization;
-using CC.Utility;
-using HtmlTags;
+using CC.Core.Core.Localization;
+using CC.Core.HtmlTags;
+using CC.Core.Utilities;
 
 namespace MF.Core.Html.Expressions
 {

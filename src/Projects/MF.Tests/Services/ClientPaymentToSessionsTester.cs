@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using CC.Utility;
+using CC.Core.Utilities;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Services;

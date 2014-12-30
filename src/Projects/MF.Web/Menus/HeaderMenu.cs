@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using CC.Core.Html.Menu;
-using CC.Security;
+using CC.Core.Core.Html.Menu;
+using CC.Core.Security;
 using MF.Core.Services;
 using MF.Web.Controllers;
-using MF.Web;
 
 namespace MF.Web.Menus
 {

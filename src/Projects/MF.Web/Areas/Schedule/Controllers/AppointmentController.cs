@@ -4,22 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
-using CC.Core.CoreViewModelAndDTOs;
-using CC.Core.DomainTools;
-using CC.Core.Enumerations;
-using CC.Core.Html;
-using CC.Core.Services;
-using CC.Core.ValidationServices;
-using CC.DataValidation;
-using CC.Security.Interfaces;
+using CC.Core.Core.CoreViewModelAndDTOs;
+using CC.Core.Core.CustomAttributes;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Enumerations;
+using CC.Core.Core.Html.Menu;
+using CC.Core.Core.Services;
+using CC.Core.Core.ValidationServices;
+using CC.Core.DataValidation;
+using CC.Core.Security.Interfaces;
 using MF.Core;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
-using MF.Web;
-using CC.Core.CustomAttributes;
 
 namespace MF.Web.Areas.Schedule.Controllers
 {

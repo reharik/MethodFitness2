@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using CC.Security.Interfaces;
-using CC.Security.Model;
+using CC.Core.Security.Interfaces;
+using CC.Core.Security.Model;
 using MF.Core.Enumerations;
 
 namespace MF.Core.Security

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CC.DataValidation.Attributes;
+using CC.Core.DataValidation.Attributes;
 
 namespace MF.Core.Domain
 {

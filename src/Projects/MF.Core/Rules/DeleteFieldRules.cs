@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CC.Core.Services;
+using CC.Core.Core.Services;
 
 namespace MF.Core.Rules
 {

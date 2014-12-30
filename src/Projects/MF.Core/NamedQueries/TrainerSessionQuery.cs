@@ -1,5 +1,5 @@
 ﻿using System;
-using CC.Core.Html.Grid;
+using CC.Core.Core.Html.Grid;
 
 namespace MF.Core.NamedQueries
 {

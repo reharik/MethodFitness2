@@ -1,4 +1,4 @@
-using CC.Core.Localization;
+using CC.Core.Core.Localization;
 
 namespace MF.Web
 {

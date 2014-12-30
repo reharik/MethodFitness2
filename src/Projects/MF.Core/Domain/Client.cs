@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using CC.Core.Domain;
-using CC.Core.Enumerations;
-using CC.Core.Localization;
+using CC.Core.Core.Domain;
+using CC.Core.Core.Enumerations;
+using CC.Core.Core.Localization;
 using MF.Core.Domain.Tools.CustomAttributes;
 using MF.Core.Enumerations;
 

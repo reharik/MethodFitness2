@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using CC.Core.CoreViewModelAndDTOs;
-using CC.Core.Html.Grid;
-using CC.Security;
+using CC.Core.Core.CoreViewModelAndDTOs;
+using CC.Core.Core.Html.Grid;
+using CC.Core.Security;
 
 namespace MF.Web.Areas.Schedule.Grids
 {

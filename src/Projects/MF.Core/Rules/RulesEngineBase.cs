@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CC.Core.Domain;
-using CC.Core.DomainTools;
-using CC.Core.ValidationServices;
-using CC.Utility;
+using CC.Core.Core.Domain;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.ValidationServices;
+using CC.Core.Utilities;
 using StructureMap;
 
 namespace MF.Core.Rules

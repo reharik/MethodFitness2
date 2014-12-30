@@ -2,18 +2,16 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using System.Web.Security;
-using CC.Core;
-using CC.Core.CoreViewModelAndDTOs;
-using CC.Core.DomainTools;
-using CC.Core.Html;
-using CC.Core.Services;
-using CC.Core.ValidationServices;
-using CC.Utility;
+using CC.Core.Core.CoreViewModelAndDTOs;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Html;
+using CC.Core.Core.Html.Menu;
+using CC.Core.Core.ValidationServices;
+using CC.Core.Utilities;
 using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Services;
-using MF.Web;
 using StructureMap;
 
 namespace MF.Web.Controllers

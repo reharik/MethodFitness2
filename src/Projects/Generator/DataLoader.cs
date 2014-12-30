@@ -1,7 +1,7 @@
 using System;
-using CC.Core.DomainTools;
-using CC.Core.Services;
-using CC.Security.Interfaces;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Services;
+using CC.Core.Security.Interfaces;
 using MF.Core.Domain;
 using MF.Core.Services;
 using StructureMap;

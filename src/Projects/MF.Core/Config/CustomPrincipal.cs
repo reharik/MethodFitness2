@@ -1,8 +1,7 @@
 using System;
 using System.Linq;
 using System.Security.Principal;
-using CC.Core;
-using CC.Utility;
+using CC.Core.Utilities;
 
 namespace MF.Core.Config
 {

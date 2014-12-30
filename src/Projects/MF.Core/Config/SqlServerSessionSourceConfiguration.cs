@@ -1,5 +1,5 @@
 using System;
-using CC.Security;
+using CC.Core.Security;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using MF.Core.Domain;
@@ -42,7 +42,7 @@ namespace MF.Core.Config
                 .Mappings(_config.MappingConfiguration())
                 .ExposeConfiguration(x=>
                 {
-                    CC.Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
+                    CC.Core.Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
                     _config.ClusteredIndexOnManyToMany(x);
                     _config.GenerateSchema(x);
                     x.SetProperty("adonet.batch_size", "100");
@@ -61,7 +61,7 @@ namespace MF.Core.Config
                 .Mappings(_config.MappingConfiguration())
                 .ExposeConfiguration(x =>
                 {
-                    CC.Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
+                    CC.Core.Security.Security.Configure<User>(x, SecurityTableStructure.Prefix);
                     x.SetInterceptor(new SaveUpdateInterceptor());
                     x.SetProperty("adonet.batch_size", "100");
                     x.SetProperty("generate_statistics", "true");

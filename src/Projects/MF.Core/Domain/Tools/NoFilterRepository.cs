@@ -1,4 +1,4 @@
-using CC.Core.DomainTools;
+using CC.Core.Core.DomainTools;
 using StructureMap;
 
 namespace MF.Core.Domain.Tools

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CC.Security.Interfaces;
-using CC.Security.Model;
+using CC.Core.Security.Interfaces;
+using CC.Core.Security.Model;
 using System.Linq;
 
 namespace MF.Core.Security

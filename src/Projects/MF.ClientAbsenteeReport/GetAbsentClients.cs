@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
-using CC.Core.DomainTools;
-using CC.Utility;
+using CC.Core.Core.DomainTools;
+using CC.Core.Utilities;
 using MF.Core.Domain;
 using MF.Core.Services;
 using System.Linq;

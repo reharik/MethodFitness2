@@ -1,8 +1,7 @@
-﻿using CC.Core.Html.Grid;
+﻿using CC.Core.Core.Html.Grid;
 using MF.Core.Domain;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Controllers;
-using MF.Web;
 
 namespace MF.Web.Grids
 {

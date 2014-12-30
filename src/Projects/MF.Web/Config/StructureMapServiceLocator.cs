@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CC.Core;
-using CC.Utility;
+using CC.Core.Utilities;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 

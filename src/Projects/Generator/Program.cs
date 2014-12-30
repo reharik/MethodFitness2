@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
-using System.Xml.Linq;
-using CC.Core;
-using CC.Utility;
+using CC.Core.Utilities;
 using MF.Core.Config;
 using StructureMap;
 

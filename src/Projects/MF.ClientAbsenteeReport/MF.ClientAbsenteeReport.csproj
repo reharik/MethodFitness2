@@ -93,10 +93,6 @@
       <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
       <Name>CC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CC.Utility\CC.Utility.csproj">
-      <Project>{2bb959da-4f45-4ed5-9d7c-066242f2b124}</Project>
-      <Name>CC.Utility</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MF.Core\MF.Core.csproj">
       <Project>{3cbc320b-ecd3-4a3c-a6a3-704a23e6d1d7}</Project>
       <Name>MF.Core</Name>

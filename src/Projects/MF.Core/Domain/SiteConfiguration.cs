@@ -1,5 +1,5 @@
 ﻿using System.Configuration;
-using CC.Core.Services;
+using CC.Core.Core.Services;
 using System;
 
 namespace MF.Core.Domain

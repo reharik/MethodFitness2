@@ -230,22 +230,6 @@
       <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
       <Name>CC.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CC.DataValidation\CC.DataValidation.csproj">
-      <Project>{3cee8f62-87f5-435c-b05e-3f469057935d}</Project>
-      <Name>CC.DataValidation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CC.Security\CC.Security.csproj">
-      <Project>{dba372fe-3d52-45b3-af82-b37696328764}</Project>
-      <Name>CC.Security</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CC.Utility\CC.Utility.csproj">
-      <Project>{2bb959da-4f45-4ed5-9d7c-066242f2b124}</Project>
-      <Name>CC.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
-      <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>
-      <Name>HtmlTags</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CC.Core.Html.Menu;
+using CC.Core.Core.Html.Menu;
 
 namespace MF.Web.Menus
 {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using CC.Security.Model;
-using CC.Security.Services;
+using CC.Core.Security.Model;
+using CC.Core.Security.Services;
 using NHibernate;
 
 namespace MF.Core.Services
