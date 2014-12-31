@@ -9,9 +9,9 @@ namespace MF.ClientAbsenteeReport
         static void Main(string[] args)
         {
             Initialize();
-//            var job = new WeeklyClientAbsenteeJob();
-//            job.Execute(null);
-//            return;
+            var job = new WeeklyClientAbsenteeJob();
+            job.Execute(null);
+            return;
             HostFactory.Run(x =>                                 
             {
                 x.Service(ObjectFactory.GetInstance<IClientAbsenteeReport>);
