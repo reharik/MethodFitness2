@@ -1,8 +1,7 @@
 ﻿@model MF.Web.Controllers.LoginViewModel
-@using CC.Core.Html.CCUI
+@using CC.Core.Core.Html.CCUI
+@using CC.Core.HtmlTags
 @using MF.Web
-@using MF.Web.Controllers
-@using HtmlTags
 
 @{
     Layout = "";
@@ -86,7 +85,7 @@
                         </div>
                         <div class="row">
                             @Html.SubmissionFor(x => x.RememberMe).Size("5").AddClassToInputRoot("reverse").AddClassToLabelRoot("ckbLabel").InlineReverse().ToHtmlTag()
-                        </div>
+                       </div>
                         </div>
                         
                         <div class="footer some-top-padding">
