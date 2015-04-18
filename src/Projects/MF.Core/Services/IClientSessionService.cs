@@ -47,6 +47,7 @@ namespace MF.Core.Services
                 session.Appointment = apt;
                 session.Trainer = apt.Trainer;
                 session.SessionUsed = true;
+                _logger.LogDebug("Updating session: {0}", session.EntityId);
             }
             else
             {
@@ -59,6 +60,7 @@ namespace MF.Core.Services
                     SessionUsed = true
                 };
                 client.AddSession(session);
+                _logger.LogDebug("Added InArrears session: {0} for Client: {1}", session.EntityId, client.EntityId);
             }
         }
 
@@ -69,6 +71,7 @@ namespace MF.Core.Services
                 apt.Clients.ForEachItem(x =>
                     {
                         var session = x.Sessions.Where(s => s.Appointment!=null).FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
+                        _logger.LogDebug("Restoring session: {0}, to Client: {1} for Appointment: {2}",session.EntityId,x.EntityId,apt.EntityId);
                         RestoreSessionToClient(x, session);
                     });
             }
@@ -80,11 +83,11 @@ namespace MF.Core.Services
 
         public virtual void RestoreSessionToClient(Client client, Session session)
         {
-            _logger.LogInfo("Restoring Session to Client. ClientId:{0}, SessionId:{1}".ToFormat(client.EntityId, session != null ? session.EntityId : 0));
             if (session == null) return;
             if (session.InArrears)
             {
                 client.RemoveSession(session);
+                _logger.LogDebug("Removing InArrears Session: {0} for Client: {1}",session.EntityId,client.EntityId);
                 return;
             }
 
@@ -94,6 +97,7 @@ namespace MF.Core.Services
                 session.SessionUsed = false;
                 session.Trainer = null;
                 session.Appointment = null;
+                _logger.LogDebug("Restoring Session: {0} to unused for Client: {1}", session.EntityId, client.EntityId);
             }
             else
             {
