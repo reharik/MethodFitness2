@@ -1,4 +1,5 @@
 ﻿using System;
+using MF.Core;
 using Quartz;
 using Quartz.Impl;
 using Topshelf;
@@ -11,13 +12,18 @@ namespace MF.SessionManagement
 
     public class ScheduleSetup : IScheduleSetup
     {
-        public ScheduleSetup()
+        private readonly ILogger _logger;
+
+        public ScheduleSetup(ILogger logger)
         {
+            _logger = logger;
             Execute();
         }
 
         public void Execute()
         {
+            _logger.LogDebug("Scheduling setup");
+
             var scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
             // define the job and tie it to our HelloJob class

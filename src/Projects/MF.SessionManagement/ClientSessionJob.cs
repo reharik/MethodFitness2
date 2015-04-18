@@ -14,7 +14,6 @@ namespace MF.SessionManagement
             var sessionManager = ObjectFactory.Container.GetInstance<ISessionManager>();
             var repository = ObjectFactory.Container.GetInstance<IRepository>();
             var logger = ObjectFactory.Container.GetInstance<ILogger>();
-
             sessionManager.CompleteAppointments();
 //            repository.Commit();
             repository.Rollback();
