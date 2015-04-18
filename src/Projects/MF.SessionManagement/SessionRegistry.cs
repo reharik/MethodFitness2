@@ -1,8 +1,8 @@
-﻿using CC.Core.Domain;
-using CC.Core.DomainTools;
-using CC.Core.Localization;
-using CC.DataValidation;
-using CC.Security;
+﻿using CC.Core.Core.Domain;
+using CC.Core.Core.DomainTools;
+using CC.Core.Core.Localization;
+using CC.Core.DataValidation;
+using CC.Core.Security;
 using MF.Core;
 using MF.Core.Config;
 using MF.Core.Domain.Tools;

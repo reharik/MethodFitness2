@@ -1,6 +1,4 @@
-﻿using CC.Core.DomainTools;
-using MF.Core.Services;
-using StructureMap;
+﻿using StructureMap;
 using Topshelf;
 
 namespace MF.SessionManagement
