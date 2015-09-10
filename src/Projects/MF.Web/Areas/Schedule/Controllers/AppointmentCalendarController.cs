@@ -106,7 +106,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             appointment.StartTime = input.StartTime;
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var notification = validateAppointment(user, originalStartTime, originalStartDate);
+            var notification = validateAppointment(user, input, originalStartTime, originalStartDate);
             if (!notification.Success)
             {
                 return new CustomJsonResult(notification);
@@ -116,13 +116,13 @@ namespace MF.Web.Areas.Schedule.Controllers
             return new CustomJsonResult(new Notification(continuation));
         }
 
-        private Notification validateAppointment(User user, DateTime? ost, DateTime? osd)
+        private Notification validateAppointment(User user, AppointmentChangedViewModel input, DateTime? ost, DateTime? osd)
         {
             var notification = new Notification {Success = true};
             // nice to pull this off user
             var currentTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var original = new DateTime(osd.Value.Year, osd.Value.Month, osd.Value.Day, ost.Value.Hour, ost.Value.Minute, 0);
-            if (original < currentTime.AddHours(8)
+            if ((original < currentTime.AddHours(8) || input.StartTime < currentTime.AddHours(8))
                 && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;
