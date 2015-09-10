@@ -99,12 +99,14 @@ namespace MF.Web.Areas.Schedule.Controllers
         public CustomJsonResult EventChanged(AppointmentChangedViewModel input)
         {
             var appointment = _repository.Find<Appointment>(input.EntityId);
+            var originalStartDate = appointment.StartTime;
+            var originalStartTime = appointment.Date;
             appointment.Date = input.ScheduledDate;
             appointment.EndTime = input.EndTime;
             appointment.StartTime = input.StartTime;
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var notification = validateAppointment(user, input);
+            var notification = validateAppointment(user, originalStartTime, originalStartDate);
             if (!notification.Success)
             {
                 return new CustomJsonResult(notification);
@@ -114,12 +116,14 @@ namespace MF.Web.Areas.Schedule.Controllers
             return new CustomJsonResult(new Notification(continuation));
         }
 
-        private Notification validateAppointment(User user, AppointmentChangedViewModel input)
+        private Notification validateAppointment(User user, DateTime? ost, DateTime? osd)
         {
-            var notification = new Notification { Success = true };
+            var notification = new Notification {Success = true};
             // nice to pull this off user
             var currentTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
-            if (input.StartTime < currentTime.AddHours(6) && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            var original = new DateTime(osd.Value.Year, osd.Value.Month, osd.Value.Day, ost.Value.Hour, ost.Value.Minute, 0);
+            if (original < currentTime.AddHours(8)
+                && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
