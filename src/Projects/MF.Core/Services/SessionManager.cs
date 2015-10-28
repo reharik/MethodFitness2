@@ -44,9 +44,10 @@ namespace MF.Core.Services
                     x.Clients.Where(c =>c.ClientStatus!=null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
                     validationManager = _saveEntityService.ProcessSave(x, validationManager);
                 });
-//            var notification = validationManager.Finish();
-//            var status = notification.Success?"Successful": "Failed :" +string.Join(", ", notification.Errors.Select(y=>y.ErrorMessage));
-//            _logger.LogInfo("Session Manger Complete Appointments: " + status);
+         // I found following three lines commented out.  no idea why, going to deploy and see wtf
+            var notification = validationManager.Finish();
+            var status = notification.Success?"Successful": "Failed :" +string.Join(", ", notification.Errors.Select(y=>y.ErrorMessage));
+            _logger.LogInfo("Session Manger Complete Appointments: " + status);
         }
     }
 }

@@ -15,8 +15,11 @@ namespace MF.SessionManagement
             var repository = ObjectFactory.Container.GetInstance<IRepository>();
             var logger = ObjectFactory.Container.GetInstance<ILogger>();
             sessionManager.CompleteAppointments();
-//            repository.Commit();
-            repository.Rollback();
+            // ok I have nfi what's going on here I found commit commented out and rollback live.
+            // I also found code in the completeappointments class that calles validation manager.finish
+            // commented out.  I'm going to un comment that shit and see what happens.
+            //            repository.Commit();
+//            repository.Rollback();
             logger.LogDebug("Session Manager fired at: "+DateTime.Now.ToString());
         }
     }
