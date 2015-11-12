@@ -99,8 +99,8 @@ namespace MF.Web.Areas.Schedule.Controllers
         public CustomJsonResult EventChanged(AppointmentChangedViewModel input)
         {
             var appointment = _repository.Find<Appointment>(input.EntityId);
-            var originalStartDate = appointment.StartTime;
-            var originalStartTime = appointment.Date;
+            var originalStartTime = appointment.StartTime;
+            var originalStartDate = appointment.Date;
             appointment.Date = input.ScheduledDate;
             appointment.EndTime = input.EndTime;
             appointment.StartTime = input.StartTime;
