@@ -71,11 +71,11 @@ namespace MF.Core.Services
                 apt.Clients.ForEachItem(x =>
                     {
                         var session = x.Sessions.Where(s => s.Appointment!=null).FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
-//                        if (session != null)
-//                        {
+                        if (session != null)
+                        {
                             _logger.LogDebug("Restoring session: {0}, to Client: {1} for Appointment: {2}",session.EntityId,x.EntityId,apt.EntityId);
                             RestoreSessionToClient(x, session);
-//                        }
+                        }
                     });
             }
             catch (Exception ex)
