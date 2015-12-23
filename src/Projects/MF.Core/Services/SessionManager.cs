@@ -45,9 +45,10 @@ namespace MF.Core.Services
                     validationManager = _saveEntityService.ProcessSave(x, validationManager);
                 });
          // I found following three lines commented out.  no idea why, going to deploy and see wtf
-            var notification = validationManager.Finish();
-            var status = notification.Success?"Successful": "Failed :" +string.Join(", ", notification.Errors.Select(y=>y.ErrorMessage));
-            _logger.LogInfo("Session Manger Complete Appointments: " + status);
+        // here;s what I think happened. this was never live and the rollback/commit was toggled in session management.
+            // var notification = validationManager.Finish();
+            //var status = notification.Success?"Successful": "Failed :" +string.Join(", ", notification.Errors.Select(y=>y.ErrorMessage));
+            //_logger.LogInfo("Session Manger Complete Appointments: " + status);
         }
     }
 }
