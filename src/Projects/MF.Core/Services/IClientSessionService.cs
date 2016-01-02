@@ -60,7 +60,7 @@ namespace MF.Core.Services
                     SessionUsed = true
                 };
                 client.AddSession(session);
-                _logger.LogDebug("Added InArrears session: {0} for Client: {1}", session.EntityId, client.EntityId);
+                _logger.LogDebug("Added InArrears session: {0} for Client: {1} with sessions: {2}", session.EntityId, client.EntityId, client.Sessions.OrderByDescending(x=>x.CreatedDate).Take(10));
             }
         }
 
