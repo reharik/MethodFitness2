@@ -41,7 +41,7 @@ namespace MF.Core.Services
         {
             if (client.Sessions.Any(s => s.Appointment == apt)) { return; }
             var sessions = client.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == apt.AppointmentType);
-            if (sessions.Any())
+            if (sessions.Count()>0)
             {
                 var session = sessions.OrderBy(s => s.CreatedDate).First();
                 session.Appointment = apt;
