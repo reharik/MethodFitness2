@@ -39,7 +39,11 @@ namespace MF.Core.Services
 
         private void SetSessionForClient(Client client, Appointment apt)
         {
-            if (client.Sessions.Any(s => s.Appointment == apt)) { return; }
+            var existingSession = client.Sessions.firstOrDefault(s => s.Appointment == apt);
+            if (existingSession) {
+                _logger.LogDebug("Client {0} has a session: {1} that is already associated with an appointment: {2}".ToFormat(client.EntityId, existingSession.entityId, apt.EntityId));
+                return; 
+            }
             var sessions = client.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == apt.AppointmentType);
             if (sessions.Count()>0)
             {
@@ -60,7 +64,7 @@ namespace MF.Core.Services
                     SessionUsed = true
                 };
                 client.AddSession(session);
-                _logger.LogDebug("Added InArrears session: {0} for Client: {1} with sessions: {2}", session.EntityId, client.EntityId, client.Sessions.OrderByDescending(x=>x.CreatedDate).Take(10));
+                _logger.LogDebug("Added InArrears session: {0} for Client: {1} with sessions: {2}", session.EntityId, client.EntityId, client.Sessions.OrderByDescending(x=>x.CreatedDate).Take(10).ToList());
             }
         }
 

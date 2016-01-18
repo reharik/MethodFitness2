@@ -270,7 +270,6 @@
     <Compile Include="UI.Helpers\Tags\TagProfileLibrary.cs" />
     <Compile Include="Utilities\BasicExtensions.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

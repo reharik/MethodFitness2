@@ -1,4 +1,4 @@
-﻿using StructureMap;
+using StructureMap;
 using Topshelf;
 
 namespace MF.SessionManagement
@@ -6,7 +6,8 @@ namespace MF.SessionManagement
     class Program
     {
         private static void Main(string[] args)
-        {
+        {App_Start.NHibernateProfilerBootstrapper.PreStart();
+
             Initialize();
             HostFactory.Run(x =>
             {
@@ -38,3 +39,4 @@ namespace MF.SessionManagement
 
     }
 }
+

@@ -12,7 +12,7 @@ namespace MF.SessionManagement
         public void Execute(IJobExecutionContext context)
         {
             var sessionManager = ObjectFactory.Container.GetInstance<ISessionManager>();
-            var repository = ObjectFactory.Container.GetInstance<IRepository>();
+            //var repository = ObjectFactory.Container.GetInstance<IRepository>();
             var logger = ObjectFactory.Container.GetInstance<ILogger>();
             sessionManager.CompleteAppointments();
             // ok I have nfi what's going on here I found commit commented out and rollback live.
