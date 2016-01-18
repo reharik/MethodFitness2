@@ -6,8 +6,7 @@ namespace MF.SessionManagement
     class Program
     {
         private static void Main(string[] args)
-        {App_Start.NHibernateProfilerBootstrapper.PreStart();
-
+        {
             Initialize();
             HostFactory.Run(x =>
             {

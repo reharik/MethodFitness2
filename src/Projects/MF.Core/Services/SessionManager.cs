@@ -36,19 +36,19 @@ namespace MF.Core.Services
 
             IValidationManager validationManager = new ValidationManager(_repository);
             var appointments = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).ToList();
-            appointments.ToList().ForEachItem(x =>
-                {
-                    _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(x.EntityId));
-                    _clientSessionService.SetSessionsForClients(x);
-                    x.Completed = true;
-                    x.Clients.Where(c =>c.ClientStatus!=null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
-                    validationManager = _saveEntityService.ProcessSave(x, validationManager);
-                });
-         // I found following three lines commented out.  no idea why, going to deploy and see wtf
-        // here;s what I think happened. this was never live and the rollback/commit was toggled in session management.
-            // var notification = validationManager.Finish();
-            //var status = notification.Success?"Successful": "Failed :" +string.Join(", ", notification.Errors.Select(y=>y.ErrorMessage));
-            //_logger.LogInfo("Session Manger Complete Appointments: " + status);
+          
+            var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
+            while (appointment != null)
+            {
+                _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(appointment.EntityId));
+                _clientSessionService.SetSessionsForClients(appointment);
+                appointment.Completed = true;
+                appointment.Clients.Where(c => c.ClientStatus != null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
+                validationManager = _saveEntityService.ProcessSave(appointment, validationManager);
+                _logger.LogDebug("about to complete session");
+                validationManager.Finish();
+                appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
+            }
         }
     }
 }
