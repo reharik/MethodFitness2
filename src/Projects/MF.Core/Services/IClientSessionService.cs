@@ -39,11 +39,6 @@ namespace MF.Core.Services
 
         private void SetSessionForClient(Client client, Appointment apt)
         {
-            var existingSession = client.Sessions.firstOrDefault(s => s.Appointment == apt);
-            if (existingSession) {
-                _logger.LogDebug("Client {0} has a session: {1} that is already associated with an appointment: {2}".ToFormat(client.EntityId, existingSession.entityId, apt.EntityId));
-                return; 
-            }
             var sessions = client.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == apt.AppointmentType);
             if (sessions.Count()>0)
             {
