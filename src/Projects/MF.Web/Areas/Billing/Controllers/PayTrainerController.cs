@@ -44,6 +44,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 trainerPayment.AddTrainerPaymentSessionItem(new TrainerPaymentSessionItem
                 {
                     Appointment = session.Appointment,
+                    Session = session,
                     AppointmentCost = session.Cost,
                     Client = session.Client,
                     TrainerPay = x.trainerPay
