@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.ValidationServices;
 using CC.Core.Utilities;
@@ -39,18 +40,20 @@ namespace MF.Core.Services
 
         private void SetSessionForClient(Client client, Appointment apt)
         {
+            _logger.LogDebug("Client name for appt {0}: {1}".ToFormat(apt.EntityId, client.FullNameFNF));
             var sessions = client.Sessions.Where(s => !s.SessionUsed && s.AppointmentType == apt.AppointmentType);
-            if (sessions.Count()>0)
+            var session = new Session();
+            if (sessions.Any())
             {
-                var session = sessions.OrderBy(s => s.CreatedDate).First();
+                session = sessions.OrderBy(s => s.CreatedDate).First();
                 session.Appointment = apt;
                 session.Trainer = apt.Trainer;
                 session.SessionUsed = true;
-                _logger.LogDebug("Updating session: {0}", session.EntityId);
+                _logger.LogDebug("Updating session: {0}, for appointment: {1}, and client: {2}", session.EntityId, apt.EntityId, client.FullNameFNF);
             }
             else
             {
-                var session = new Session
+                session = new Session
                 {
                     Appointment = apt,
                     Trainer = apt.Trainer,
@@ -59,8 +62,9 @@ namespace MF.Core.Services
                     SessionUsed = true
                 };
                 client.AddSession(session);
-                _logger.LogDebug("Added InArrears session: {0} for Client: {1} with sessions: {2}", session.EntityId, client.EntityId, client.Sessions.OrderByDescending(x=>x.CreatedDate).Take(10).ToList());
+                _logger.LogDebug("Added InArrears session: {0} for Client: {1} with sessions: {2}", session.EntityId, client.EntityId, client.Sessions.OrderByDescending(x=>x.CreatedDate).Take(10).Select(x=>x.EntityId).ToList());
             }
+            _logger.LogDebug("Proceessed Appointment: {0}, Session: {1}, client: {2}".ToFormat(apt.EntityId,session.EntityId,client.FullNameFNF));
         }
 
         public virtual void RestoreSessionsFromAppointment(Appointment apt)

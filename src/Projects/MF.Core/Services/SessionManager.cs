@@ -35,7 +35,6 @@ namespace MF.Core.Services
             _logger.LogInfo("Beginning CompleteAppointments Process.");
 
             IValidationManager validationManager = new ValidationManager(_repository);
-            var appointments = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).ToList();
           
             var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
             while (appointment != null)
@@ -45,7 +44,7 @@ namespace MF.Core.Services
                 appointment.Completed = true;
                 appointment.Clients.Where(c => c.ClientStatus != null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
                 validationManager = _saveEntityService.ProcessSave(appointment, validationManager);
-                _logger.LogDebug("about to complete session");
+                _logger.LogDebug("about to save appointment: {0}".ToFormat(appointment.EntityId));
                 validationManager.Finish();
                 appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
             }
