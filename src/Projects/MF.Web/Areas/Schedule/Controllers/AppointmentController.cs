@@ -13,6 +13,7 @@ using CC.Core.Core.Services;
 using CC.Core.Core.ValidationServices;
 using CC.Core.DataValidation;
 using CC.Core.Security.Interfaces;
+using CC.Core.Utilities;
 using MF.Core;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
@@ -32,6 +33,7 @@ namespace MF.Web.Areas.Schedule.Controllers
         private readonly IUpdateCollectionService _updateCollectionService;
         private readonly IAuthorizationService _authorizationService;
         private readonly IClientSessionService _clientSessionService;
+        private readonly ILogger _logger;
 
         public AppointmentController(IRepository repository,
             ISelectListItemService selectListItemService,
@@ -40,7 +42,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             IUserPermissionService userPermissionService,
             IUpdateCollectionService updateCollectionService,
             IAuthorizationService authorizationService,
-            IClientSessionService clientSessionService)
+            IClientSessionService clientSessionService,
+            ILogger logger)
         {
             _repository = repository;
             _selectListItemService = selectListItemService;
@@ -50,6 +53,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             _updateCollectionService = updateCollectionService;
             _authorizationService = authorizationService;
             _clientSessionService = clientSessionService;
+            _logger = logger;
         }
 
         public ActionResult AddUpdate_Template(AddEditAppointmentViewModel input)
@@ -141,7 +145,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             var appointment = _repository.Find<Appointment>(input.EntityId);
-
+            _logger.LogInfo("deleting appointmentId: {0}, date: {1}, trainer: {2}, clientIds: {3}, For: {4} "
+                .ToFormat(appointment.EntityId, appointment.Date, appointment.Trainer.EntityId, appointment.Clients.Select(x=>x.EntityId).ToString(),user.EntityId));
             if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time").AddHours(6))
             {
                 if (!_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
@@ -149,6 +154,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                     var notification = new Notification { Message = WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString() };
                     return Json(notification, JsonRequestBehavior.AllowGet);
                 }
+                _logger.LogInfo("appointmentId: {0}, being deleted happened in the past".ToFormat(appointment.EntityId));
                 _clientSessionService.RestoreSessionsFromAppointment(appointment);
                 // first save app to save the clients and sessions that have been restored
                 _repository.Save(appointment);
@@ -172,6 +178,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             if (appointment.Completed
                 && appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time"))
             {
+                _logger.LogInfo("updating AppointmentId: {0}, that was already completed".ToFormat(appointment.EntityId));
                 var newListOfClientIds = input.ClientsDtos.selectedItems.Select(x => Int32.Parse(x.id));
                 _clientSessionService.SettleChangesToPastAppointment(newListOfClientIds, appointment, input.AppointmentType);
             }
