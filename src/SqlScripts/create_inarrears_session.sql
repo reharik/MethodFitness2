@@ -37,13 +37,13 @@ insert into [session]
 	0,
 
 
-	'Pair',
+	'Half Hour',
 --	trainerid,
-	5,
+	8,
 --	appointmentid,
-	24457,
+	25847,
 --	clientid,
-	2297
+	2400
 
 
 	)
