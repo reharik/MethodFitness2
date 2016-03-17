@@ -8,6 +8,7 @@ using CC.Core.Core.DomainTools;
 using CC.Core.Core.Html.Menu;
 using CC.Core.Core.ValidationServices;
 using CC.Core.Utilities;
+using MF.Core;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Rules;
@@ -25,16 +26,19 @@ namespace MF.Web.Areas.Billing.Controllers
         private readonly ISaveEntityService _saveEntityService;
         private readonly ISessionContext _sessionContext;
         private readonly IClientPaymentToSessions _clientPaymentToSessions;
+        private readonly ILogger _logger;
 
         public PaymentController(IRepository repository,
             ISaveEntityService saveEntityService,
             ISessionContext sessionContext,
-            IClientPaymentToSessions clientPaymentToSessions)
+            IClientPaymentToSessions clientPaymentToSessions,
+            ILogger logger)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
             _sessionContext = sessionContext;
             _clientPaymentToSessions = clientPaymentToSessions;
+            _logger = logger;
         }
 
         public ActionResult AddUpdate_Template(ViewModel input)
@@ -96,6 +100,7 @@ namespace MF.Web.Areas.Billing.Controllers
 
         public CustomJsonResult Delete(ViewModel input)
         {
+            _logger.LogInfo("Delete request for PaymentId {0}".ToFormat(input.EntityId));   
             var client = _repository.Find<Client>(input.ParentId);
             var payment = client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
@@ -115,6 +120,7 @@ namespace MF.Web.Areas.Billing.Controllers
 
         private void removeSessionsByPayment(Client client, Payment payment)
         {
+            _logger.LogInfo("Removing Sessions for ClientId: {0}, by paymentId: {1}", client.EntityId, payment.EntityId);
             var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString());
             sessions.Where(x => x.SessionUsed).ForEachItem(y =>
             {
@@ -167,6 +173,8 @@ namespace MF.Web.Areas.Billing.Controllers
             payment = mapToDomain(input, payment);
             client = _clientPaymentToSessions.Execute(client, payment);
             client.AddPayment(payment);
+            _logger.LogInfo("Creating Purchase for clientId: {0} paymentBatchId: {1} purchased hours:{2}, hour-ten-pack:{3}, half-hours:{4}, half-hour-ten-pack:{5} ,pairs:{6}, pairs-ten-pack:{7} "
+                .ToFormat(client.EntityId,payment.PaymentBatchId, payment.FullHour, payment.FullHourTenPack, payment.HalfHour,payment.HalfHourTenPack, payment.Pair, payment.PairTenPack ));
             var crudManager = _saveEntityService.ProcessSave(client);
 
             var notification = crudManager.Finish();

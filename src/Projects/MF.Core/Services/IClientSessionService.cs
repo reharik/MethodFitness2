@@ -109,6 +109,8 @@ namespace MF.Core.Services
             {
                 //switch app and trainer over to the session since the app that origionally
                 //had the session will be deleted.
+                _logger.LogDebug("Moving inarrears session:{0} for appointmentId: {1} to session: {2} with original appointment: {3}"
+                    .ToFormat(arrear.EntityId,arrear.Appointment.EntityId,session.EntityId,session.Appointment!=null?session.Appointment.EntityId:0));
                 session.Appointment = arrear.Appointment;
                 session.Trainer = arrear.Trainer;
                 client.RemoveSession(arrear);
@@ -147,6 +149,7 @@ namespace MF.Core.Services
                 if (client != null)
                 {
                     var session = client.Sessions.FirstOrDefault(s => s.Appointment.EntityId == apt.EntityId);
+                    _logger.LogDebug("SessionId: {0} being updated because client removed from appointmentId: {1}".ToFormat(session.EntityId,apt.EntityId));
                     apt.RemoveClient(client);
                     RestoreSessionToClient(client,session);
                     _saveEntityService.ProcessSave(client);
