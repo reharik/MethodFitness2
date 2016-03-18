@@ -8,7 +8,7 @@ using CC.Core.Core.DomainTools;
 using MF.Core.Config;
 using MF.Web.Config;
 using StructureMap;
-
+using MF.Core;
 namespace MF.Web
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -34,6 +34,14 @@ namespace MF.Web
                 new { controller = "Login", action = "Login", EntityId = UrlParameter.Optional } // Parameter defaults
             );
         }
+
+        void Application_Error(Object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError().GetBaseException();
+            var logger = ObjectFactory.GetInstance<ILogger>();
+            logger.LogError(ex.Message, ex);
+        }
+
 
         protected void Application_Start()
         {
