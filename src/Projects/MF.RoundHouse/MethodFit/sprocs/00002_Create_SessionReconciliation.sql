@@ -1,4 +1,3 @@
-GO
 /****** Object:  StoredProcedure [dbo].[SessionReconciliation]    Script Date: 3/18/2016 6:03:33 PM ******/
 SET ANSI_NULLS ON
 GO
