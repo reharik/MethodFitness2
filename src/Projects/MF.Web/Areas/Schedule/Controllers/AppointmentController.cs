@@ -146,7 +146,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var user = _repository.Find<User>(userEntityId);
             var appointment = _repository.Find<Appointment>(input.EntityId);
             _logger.LogInfo("deleting appointmentId: {0}, date: {1}, trainer: {2}, clientIds: {3}, For: {4} "
-                .ToFormat(appointment.EntityId, appointment.Date, appointment.Trainer.EntityId, String.Join(",",appointment.Clients.Select(x=>x.EntityId).ToString(),user.EntityId)));
+                .ToFormat(appointment.EntityId, appointment.Date, appointment.Trainer.EntityId, String.Join(",",appointment.Clients.Select(x=>x.EntityId)),user.EntityId));
             if (appointment.StartTime < DateTime.Now.LocalizedDateTime("Eastern Standard Time").AddHours(6))
             {
                 if (!_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
