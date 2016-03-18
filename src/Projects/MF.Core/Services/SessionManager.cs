@@ -34,20 +34,21 @@ namespace MF.Core.Services
         {
             _logger.LogInfo("Beginning CompleteAppointments Process.");
 
-            IValidationManager validationManager = new ValidationManager(_repository);
+            _repository.CreateSQLQuery<DomainEntity>("exec SessionReconciliation", null, 30);
+            //IValidationManager validationManager = new ValidationManager(_repository);
           
-            var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
-            while (appointment != null)
-            {
-                _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(appointment.EntityId));
-                _clientSessionService.SetSessionsForClients(appointment);
-                appointment.Completed = true;
-                appointment.Clients.Where(c => c.ClientStatus != null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
-                validationManager = _saveEntityService.ProcessSave(appointment, validationManager);
-                _logger.LogDebug("about to save appointment: {0}".ToFormat(appointment.EntityId));
-                validationManager.Finish();
-                appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
-            }
+            //var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
+            //while (appointment != null)
+            //{
+            //    _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(appointment.EntityId));
+            //    _clientSessionService.SetSessionsForClients(appointment);
+            //    appointment.Completed = true;
+            //    appointment.Clients.Where(c => c.ClientStatus != null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
+            //    validationManager = _saveEntityService.ProcessSave(appointment, validationManager);
+            //    _logger.LogDebug("about to save appointment: {0}".ToFormat(appointment.EntityId));
+            //    validationManager.Finish();
+            //    appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
+            //}
         }
     }
 }
