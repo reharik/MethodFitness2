@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Configuration;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.ValidationServices;
 using CC.Core.Utilities;
 using MF.Core.Domain;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MF.Core.Services
 {
@@ -28,13 +31,26 @@ namespace MF.Core.Services
             _saveEntityService = saveEntityService;
             _logger = logger;
             _clientSessionService = clientSessionService;
+
         }
 
         public void CompleteAppointments()
         {
             _logger.LogInfo("Beginning CompleteAppointments Process.");
 
-            _repository.CreateSQLQuery<DomainEntity>("exec SessionReconciliation", null, 30);
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["MethodFitness.sql_server_connection_string"])){
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "SessionReconciliation";
+                command.CommandType = CommandType.StoredProcedure;
+                
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+        }
+
+
+        //    _repository.CreateSQLQuery<DomainEntity>("exec SessionReconciliation", null, 30);
             //IValidationManager validationManager = new ValidationManager(_repository);
           
             //var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
