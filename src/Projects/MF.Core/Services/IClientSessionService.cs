@@ -62,7 +62,7 @@ namespace MF.Core.Services
                     SessionUsed = true
                 };
                 client.AddSession(session);
-                _logger.LogDebug("Added InArrears session: {0} for Client: {1} with sessions: {2}", session.EntityId, client.EntityId, client.Sessions.OrderByDescending(x=>x.CreatedDate).Take(10).Select(x=>x.EntityId).ToList());
+                _logger.LogDebug("Added InArrears session: {0} for Client: {1} with sessions: {2}", session.EntityId, client.EntityId, String.Join(",", client.Sessions.OrderByDescending(x=>x.CreatedDate).Take(10).Select(x=>x.EntityId).ToList()));
             }
             _logger.LogDebug("Proceessed Appointment: {0}, Session: {1}, client: {2}".ToFormat(apt.EntityId,session.EntityId,client.FullNameFNF));
         }

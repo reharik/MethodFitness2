@@ -29,5 +29,6 @@ namespace MF.Core.Domain
         public virtual Client Client { get; set; }
         public virtual double AppointmentCost { get; set; }
         public virtual double TrainerPay { get; set; }
+        public virtual Session Session { get; set; }
     }
 }

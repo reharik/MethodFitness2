@@ -20,6 +20,7 @@ namespace MF.Core.Domain.Persistence
             Map(x => x.TrainerPay);
             References(x => x.Client);
             References(x => x.Appointment);
+            References(x => x.Session);
         }
     }
 }

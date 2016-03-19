@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Configuration;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.ValidationServices;
 using CC.Core.Utilities;
 using MF.Core.Domain;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MF.Core.Services
 {
@@ -28,26 +31,41 @@ namespace MF.Core.Services
             _saveEntityService = saveEntityService;
             _logger = logger;
             _clientSessionService = clientSessionService;
+
         }
 
         public void CompleteAppointments()
         {
             _logger.LogInfo("Beginning CompleteAppointments Process.");
 
-            IValidationManager validationManager = new ValidationManager(_repository);
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["MethodFitness.sql_server_connection_string"])){
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "SessionReconciliation";
+                command.CommandType = CommandType.StoredProcedure;
+                
+                connection.Open();
+                var rowsAffected = command.ExecuteNonQuery();
+                connection.Close();
+                _logger.LogInfo("Number of sessions affected: {0}", rowsAffected);
+        }
+
+
+        //    _repository.CreateSQLQuery<DomainEntity>("exec SessionReconciliation", null, 30);
+            //IValidationManager validationManager = new ValidationManager(_repository);
           
-            var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
-            while (appointment != null)
-            {
-                _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(appointment.EntityId));
-                _clientSessionService.SetSessionsForClients(appointment);
-                appointment.Completed = true;
-                appointment.Clients.Where(c => c.ClientStatus != null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
-                validationManager = _saveEntityService.ProcessSave(appointment, validationManager);
-                _logger.LogDebug("about to save appointment: {0}".ToFormat(appointment.EntityId));
-                validationManager.Finish();
-                appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
-            }
+            //var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
+            //while (appointment != null)
+            //{
+            //    _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(appointment.EntityId));
+            //    _clientSessionService.SetSessionsForClients(appointment);
+            //    appointment.Completed = true;
+            //    appointment.Clients.Where(c => c.ClientStatus != null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
+            //    validationManager = _saveEntityService.ProcessSave(appointment, validationManager);
+            //    _logger.LogDebug("about to save appointment: {0}".ToFormat(appointment.EntityId));
+            //    validationManager.Finish();
+            //    appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
+            //}
         }
     }
 }
