@@ -45,8 +45,9 @@ namespace MF.Core.Services
                 command.CommandType = CommandType.StoredProcedure;
                 
                 connection.Open();
-                command.ExecuteNonQuery();
+                var rowsAffected = command.ExecuteNonQuery();
                 connection.Close();
+                _logger.LogInfo("Number of sessions affected: {0}", rowsAffected);
         }
 
 
