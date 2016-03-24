@@ -5,21 +5,28 @@
 --   select * from client where lastname = 'Lewis'
 --   select * from client where firstname = 'Jessica'
 
+/*
+select * from Session where EntityId =27186
+select * from Session where AppointmentId =25841
+select * from Appointment a inner join Appointment_Client ac on a.EntityId = ac.AppointmentId where EntityId =25841
+*/
 
 
 update session set sessionused =1,
- appointmentId = 25751, 
- trainerId =3
- where entityid = 26964
+ appointmentId = 25330, 
+-- trainerpaid = 1,
+ trainerId =8
+ where entityid = 27501
 
  select * from appointment a inner join Appointment_Client ac on a.entityid = ac.AppointmentId where a.Completed =1 
- and ac.clientid = 2400 and not exists (select 1 from session s where a.EntityId = s.AppointmentId) order by a.date desc
+ and ac.clientid = 2464 and not exists (select 1 from session s where a.EntityId = s.AppointmentId) order by a.date desc
 
 
 select * from session 
-where clientid = 2400 -- and appointmenttype = 'Pair'
+where clientid = 2464 -- and appointmenttype = 'Pair'
 order by changeddate desc
 
+-- select * from TrainerPaymentSessionItem where appointmentid = 25330
 
 /*
 select * 
