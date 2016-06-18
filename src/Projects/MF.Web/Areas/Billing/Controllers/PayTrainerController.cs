@@ -12,7 +12,8 @@ using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
 using NHibernate.Linq;
-
+using MoreLinq;
+using System.Collections.Generic;
 namespace MF.Web.Areas.Billing.Controllers
 {
     public class PayTrainerController:MFController
@@ -79,12 +80,19 @@ namespace MF.Web.Areas.Billing.Controllers
                 .FetchMany(x => x.TrainerPayments)
                 .ThenFetchMany(x => x.TrainerPaymentSessionItems)
                 .ThenFetch(x=>x.Appointment)    
-                .ThenFetchMany(x=>x.Clients).ToList().FirstOrDefault();
+                .ThenFetchMany(x=>x.Clients).ToList()
+                .FirstOrDefault();
             var payment = trainer.TrainerPayments.FirstOrDefault(x => x.EntityId == input.EntityId);
+            var sessionItems = payment
+              .TrainerPaymentSessionItems
+              .ToList().DistinctBy(x => x.Client.EntityId + x.Appointment.Date.ToString())
+              .OrderBy(x => x.Client.LastName)
+              .ThenBy(x => x.Appointment.Date);
             var model = new TrainerReceiptViewModel
                                               {
                                                   Trainer = trainer,
-                                                  TrainerPayment = payment
+                                                  TrainerPayment = payment,
+                                                  SessionItems = sessionItems 
                                               };
             return View(model);
         }
@@ -94,5 +102,6 @@ namespace MF.Web.Areas.Billing.Controllers
     {
         public User Trainer { get; set; }
         public TrainerPayment TrainerPayment { get; set; }
+        public IEnumerable<TrainerPaymentSessionItem> SessionItems { get; set; }
     }
 }
