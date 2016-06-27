@@ -1,4 +1,5 @@
 ﻿@using MF.Web
+@using MoreLinq;
 @model MF.Web.Areas.Billing.Controllers.TrainerReceiptViewModel
 
 @{
@@ -29,7 +30,7 @@
               <td>
                   @WebLocalizationKeys.CLIENT_NAME
               </td>
-              <td>
+              <td>()
                   @WebLocalizationKeys.DATE
               </td>
               <td>
@@ -42,8 +43,7 @@
                   @WebLocalizationKeys.TRAINER_PAYMENT
               </td>
           </tr>
-          @foreach (var item in Model.TrainerPayment.TrainerPaymentSessionItems.OrderBy(x=>x.Client.LastName).ThenBy(x=>x.Appointment.Date))
-          {
+          @foreach (var item in Model.SessionItems)          {
               <tr>
                   <td>
                       @item.Client.FullNameLNF

@@ -4,15 +4,15 @@
 
 
 update session set SessionUsed = 1, 
-AppointmentId = 25455, 
-trainerid = 14 
-where entityid = 25517
+AppointmentId = 26274, 
+trainerid = 8
+where entityid = 27346
 
 delete session 
-where entityid = 25588
+where entityid = 27355
 
-select * from session 
-where clientid = 2468
+select EntityId, AppointmentType, SessionUsed, InArrears, AppointmentId, TrainerId, ClientId from session 
+where clientid = 2451
 order by changeddate desc
 
 

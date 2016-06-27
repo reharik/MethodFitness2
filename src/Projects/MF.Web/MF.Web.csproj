@@ -292,6 +292,7 @@
     <Compile Include="Menus\HeaderMenu.cs" />
     <Compile Include="Models\CalendarViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
+    <Compile Include="MoreLinq\MoreEnumerable.DistinctBy.cs" />
     <Compile Include="PaymentDetail.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

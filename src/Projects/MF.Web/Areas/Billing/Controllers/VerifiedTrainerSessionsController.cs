@@ -44,7 +44,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 EntityId = user.EntityId,
                 _Title = "Created on: " + trainerSessionVerification.CreatedDate.Value.ToShortDateString()+".  Total Verfied: $"+trainerSessionVerification.Total
             };
-            return new CustomJsonResult(model);
+            return new CustomJsonResult(model); 
         }
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)

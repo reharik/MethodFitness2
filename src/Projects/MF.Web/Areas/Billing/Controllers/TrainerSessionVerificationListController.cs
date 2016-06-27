@@ -11,6 +11,7 @@ using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
 using MF.Web.Controllers;
 using StructureMap;
+using System.Linq;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
@@ -42,7 +43,7 @@ namespace MF.Web.Areas.Billing.Controllers
         public JsonResult Items(GridItemsRequestModel input)
         {
             var user = (User) input.User;
-            var items = _dynamicExpressionQuery.PerformQuery(user.TrainerSessionVerifications, input.filters);
+            var items = _dynamicExpressionQuery.PerformQuery(user.TrainerSessionVerifications.OrderBy(x=>x.CreatedDate), input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
             return new CustomJsonResult(gridItemsViewModel);
         }

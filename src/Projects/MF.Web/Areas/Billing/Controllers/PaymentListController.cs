@@ -10,6 +10,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using System.Linq;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
@@ -51,7 +52,7 @@ namespace MF.Web.Areas.Billing.Controllers
         {
             var user = _sessionContext.GetCurrentUser();
             var client = _repository.Find<Client>(input.ParentId);
-            var items = _dynamicExpressionQuery.PerformQuery(client.Payments, input.filters);
+            var items = _dynamicExpressionQuery.PerformQuery(client.Payments.OrderBy(x=>x.CreatedDate), input.filters);
             var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items,user);
             return new CustomJsonResult(gridItemsViewModel);
         }
