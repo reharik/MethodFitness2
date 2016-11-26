@@ -40,3 +40,17 @@ MF.Views.ActivityView = MF.Views.View.extend({
             "&TrainerId="+trainerId+"&ClientId="+clientId+"&LocationId="+locationId;
     }
 });
+
+MF.Views.ManagerView = MF.Views.View.extend({
+    initialize: function(){
+        MF.mixin(this, "ajaxFormMixin");
+        MF.mixin(this, "modelAndElementsMixin");
+        MF.mixin(this, "reportMixin");
+    },
+    createUrl:function(){
+        var trainerId = this.model.Trainer()>0?this.model.Trainer():0;
+        var clientId = this.model.Client()>0?this.model.Client():0;
+        return this.model.ReportUrl()+ "?StartDate="+this.model.StartDate()+"&EndDate="+this.model.EndDate() +
+            "&TrainerId="+trainerId+"&ClientId="+clientId;
+    }
+});

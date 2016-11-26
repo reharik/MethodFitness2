@@ -48,6 +48,7 @@ namespace MF.Web.Menus
                             .CreateTagNode<TrainerListController>(WebLocalizationKeys.TRAINERS)
                             .CreateNode(WebLocalizationKeys.REPORTS)
                                 .HasChildren()
+                                    .CreateTagNode<ManagerController>(WebLocalizationKeys.MANAGER_REPORT)
                                     .CreateTagNode<DailyPaymentsController>(WebLocalizationKeys.DAILY_PAYMENTS)
                                     .CreateTagNode<TrainerMetricController>(WebLocalizationKeys.TRAINER_METRIC)
                                     .CreateTagNode<ActivityController>(WebLocalizationKeys.ACTIVITY)
