@@ -29,6 +29,7 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
     <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -214,18 +215,10 @@
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PaymentListController.cs" />
-    <Compile Include="Areas\Reporting\Controllers\ManagerReport.cs" />
     <Compile Include="Areas\Reporting\Controllers\ActivityController.cs" />
     <Compile Include="Areas\Reporting\Controllers\TrainerMetricController.cs" />
     <Compile Include="Areas\Reporting\Controllers\DailyPaymentsController.cs" />
     <Compile Include="Areas\Reporting\ReportingAreaRegistration.cs" />
-    <Compile Include="Areas\Reporting\ReportViewer\ManagerReport.aspx.cs">
-      <DependentUpon>ManagerReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Areas\Reporting\ReportViewer\ManagerReport.aspx.designer.cs">
-      <DependentUpon>ManagerReport.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Reporting\ReportViewer\Activity.aspx.cs">
       <DependentUpon>Activity.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -274,7 +267,6 @@
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Areas\Reporting\RDLC\Config\Bootstrapper.cs" />
     <Compile Include="Areas\Reporting\RDLC\Config\CustomAuthorizationAttribute.cs" />
-    <Content Include="Areas\Reporting\ReportViewer\ManagerReport.aspx" />
     <Content Include="Areas\Reporting\ReportViewer\Activity.aspx" />
     <Content Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx" />
     <Content Include="Areas\Reporting\ReportViewer\DailyPayments.aspx" />
@@ -289,11 +281,6 @@
     <Compile Include="Areas\Schedule\Controllers\AppointmentCalendarController.cs" />
     <Compile Include="Controllers\TrainerListController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerPaymentListController.cs" />
-    <Compile Include="ManagerReport.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ManagerReport.xsd</DependentUpon>
-    </Compile>
     <Compile Include="MFTestRegistry.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\IMenuConfig.cs" />
@@ -500,9 +487,6 @@
     <Content Include="Views\ClientList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Reporting\RDLC\ManagerReport.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Areas\Reporting\RDLC\Activity.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -561,17 +545,6 @@
     <Content Include="Views\Shared\_CssScriptsDebugFalse.cshtml" />
     <Content Include="Views\Shared\_JavascriptDebugFalse.cshtml" />
     <Content Include="Areas\Reporting\Views\Manager\Display.cshtml" />
-    <Content Include="ManagerReport.xsc">
-      <DependentUpon>ManagerReport.xsd</DependentUpon>
-    </Content>
-    <None Include="ManagerReport.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ManagerReport.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="ManagerReport.xss">
-      <DependentUpon>ManagerReport.xsd</DependentUpon>
-    </Content>
     <None Include="Web.config.hbs">
       <SubType>Designer</SubType>
     </None>

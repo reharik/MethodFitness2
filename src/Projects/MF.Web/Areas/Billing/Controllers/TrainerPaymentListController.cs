@@ -37,8 +37,8 @@ namespace MF.Web.Areas.Billing.Controllers
         public ActionResult ItemList(ViewModel input)
         {
             var user = _sessionContext.GetCurrentUser();
-
-            var trainer = _repository.Find<User>(input.EntityId);
+            var userId = input.EntityId > 0 ? input.EntityId : user.EntityId;
+            var trainer = _repository.Find<User>(userId);
             var url = UrlContext.GetUrlForAction<TrainerPaymentListController>(x => x.TrainerPayments(null),AreaName.Billing) + "?ParentId="+input.EntityId;
             var model = new TrainersPaymentListViewModel()
             {
@@ -54,8 +54,8 @@ namespace MF.Web.Areas.Billing.Controllers
         public JsonResult TrainerPayments(GridItemsRequestModel input)
         {
             var user = _sessionContext.GetCurrentUser();
-
-            var trainer = _repository.Query<User>(x=>x.EntityId==input.ParentId).FetchMany(x=>x.TrainerPayments).ToList().FirstOrDefault();
+            var userId = input.ParentId > 0 ? input.ParentId : user.EntityId;
+            var trainer = _repository.Query<User>(x=>x.EntityId==userId).FetchMany(x=>x.TrainerPayments).ToList().FirstOrDefault();
             var items = _dynamicExpressionQuery.PerformQuery(trainer.TrainerPayments,input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
             return new CustomJsonResult(gridItemsViewModel);

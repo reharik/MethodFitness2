@@ -164,6 +164,7 @@ namespace MF.Web
         public static readonly StringToken SESSION_VERIFICATION = new WebLocalizationKeys("SESSION_VERIFICATION", "Session Verification");
         public static readonly StringToken HISTORICAL = new WebLocalizationKeys("HISTORICAL", "Historical");
         public static readonly StringToken CURRENT = new WebLocalizationKeys("CURRENT", "Current");
+        public static readonly StringToken PAYMENT_HISTORY = new WebLocalizationKeys("PAYMENT_HISTORY", "Payment History");
 
 
         public static readonly StringToken PROBLEM_WITH_SESSIONS_ALERT = new WebLocalizationKeys("PROBLEM_WITH_SESSIONS_ALERT", "There is a problem with my sessions for this pay period");

@@ -49,7 +49,7 @@ namespace MF.Web.Services.RouteTokens
             _builder.UrlForList<TrainerPaymentListController>(x => x.ItemList(null), AreaName.Billing).ViewName("TrainerPaymentListGridView").IsChild().End();
             _builder.UrlForForm<TrainerPaymentController>(x => x.Display(null), AreaName.Billing).End();
 
-            _builder.UrlForForm<ManagerController>(x => x.Display(null), AreaName.Reporting).ViewName("ManagerView").End();
+            //_builder.UrlForForm<ManagerController>(x => x.Display(null), AreaName.Reporting).ViewName("ManagerView").End();
             _builder.UrlForForm<DailyPaymentsController>(x => x.Display(null), AreaName.Reporting).ViewName("DailyPaymentsView").End();
             _builder.UrlForForm<TrainerMetricController>(x => x.Display(null), AreaName.Reporting).ViewName("TrainerMetricView").End();
             _builder.UrlForForm<ActivityController>(x => x.Display(null), AreaName.Reporting).ViewName("ActivityView").End();
