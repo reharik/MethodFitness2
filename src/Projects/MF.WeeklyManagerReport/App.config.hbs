@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" requirePermission="false" />
+    </configSections>
+    <appSettings>
+        <add key="MethodFitness.sql_server_connection_string" value="{{{connection_String}}}" />
+        <add key="SMTPServer" value="in-v3.mailjet.com" />
+        <add key="SMTPUN" value="e9ffae42245c183a30d3942f0a110bed" />
+        <add key="SMTPPW" value="964159bf2fb0e2353e559aff4a32d255" />
+        <add key="EmailReportAddress" value="{{{EmailReportAddress}}}" />
+        <add key="AdminEmail" value="{{{AdminEmail}}}" />
+    </appSettings>
+    <log4net>
+        <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+            <file value="..\\..\\Logs\\{{{environment}}}\Services\\WeeklyManagerReport.log" />
+            <appendToFile value="true" />
+            <rollingStyle value="Size" />
+            <datePattern value="yyyy.MM.dd" />
+            <maxSizeRollBackups value="30" />
+            <maximumFileSize value="20MB" />
+            <layout type="log4net.Layout.PatternLayout">
+                <conversionPattern value="%timestamp %date (%property{log4net:HostName})[%thread] %-5level %logger [%method(%line)] - %message %exception%newline" />
+            </layout>
+        </appender>
+        <logger name="NHibernate" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="NHibernateFileLog" />
+        </logger>
+        <logger name="NHibernate.SQL" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="NHibernateFileLog" />
+        </logger>
+        <root>
+            <level value="DEBUG" />
+            <appender-ref ref="RollingLogFileAppender" />
+        </root>
+    </log4net>
+    <startup>
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
+    </startup>
+    <runtime>
+        <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+            <dependentAssembly>
+                <assemblyIdentity name="System" publicKeyToken="b77a5c561934e089" culture="neutral" />
+                <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="System.Core" publicKeyToken="b77a5c561934e089" culture="neutral" />
+                <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="System.Xml" publicKeyToken="b77a5c561934e089" culture="neutral" />
+                <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="System.Web" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+                <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="System.Data" publicKeyToken="b77a5c561934e089" culture="neutral" />
+                <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+            </dependentAssembly>
+            <dependentAssembly>
+                <assemblyIdentity name="System.Xml.Linq" publicKeyToken="b77a5c561934e089" culture="neutral" />
+                <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+            </dependentAssembly>
+        </assemblyBinding>
+    </runtime>
+</configuration>

@@ -1,14 +1,14 @@
 module.exports = function(grunt) {
 
     grunt.option('destFolder','build_artifacts');
-    grunt.option('solutionName','MF.DailyPaymentReport');
-    grunt.option('projectName','MF.DailyPaymentReport');
+    grunt.option('solutionName','MF.WeeklyManagerReport');
+    grunt.option('projectName','MF.WeeklyManagerReport');
     grunt.option('buildConfig',grunt.option('buildConfig') || 'Debug');
     grunt.option('srcFolder', '../../Projects/'+grunt.option('projectName')+'/');
     grunt.option('srcTarget', '../../Projects/'+grunt.option('projectName')+'/bin/'+grunt.option('buildConfig')+'/');
     grunt.option('target',grunt.option('target') || 'QA');
     grunt.option('slnFile','../../Solutions/'+grunt.option('solutionName')+'/'+grunt.option('solutionName')+'.sln');
-    grunt.option('deployFolder','/Services/MF.DailyPaymentReport_'+grunt.option('target'));
+    grunt.option('deployFolder','/Services/MF.WeeklyManagerReport_'+grunt.option('target'));
     grunt.option('outputConfigFile',grunt.option('destFolder')+'/'+grunt.option('projectName')+'.exe.config');
     grunt.option('startTime',new Date());
 
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
                     context:grunt.option(grunt.option('target'))
                 },
                 files:{
-                    'build_artifacts/MF.DailyPaymentReport.exe.config' : grunt.option('srcFolder') + '/App.config.hbs'
+                    'build_artifacts/MF.WeeklyManagerReport.exe.config' : grunt.option('srcFolder') + '/App.config.hbs'
                 }
             }
         },
