@@ -13,6 +13,7 @@ namespace MF.DailyPaymentReport
             var service = ObjectFactory.Container.GetInstance<IGetDailyPayments>();
             var logger = ObjectFactory.Container.GetInstance<ILogger>();
             var payments = service.GetPayments();
+            logger.LogInfo(string.Format("looked up payments, resulted in: {0}", payments));
             if (!payments.Any())
             {
                 logger.LogInfo("No payments on: " + DateTime.Now.ToString());
