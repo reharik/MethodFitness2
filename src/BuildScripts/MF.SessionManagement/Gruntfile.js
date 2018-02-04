@@ -50,17 +50,8 @@ module.exports = function(grunt) {
                 expand: true,
                 deleteEmptyFolders:true,
                 cwd:grunt.option('srcTarget'),
-                src: ['**',
-                    '!**/obj/**',
-                    '!**/*.cs',
-                    '!**/*.vb',
-                    '!**/*.csproj',
-                    '!**/*.csproj.*',
-                    '!App.config',
-                    '!App.config.hbs',
-                    '!*.exe.config',
-                    '!**/*.xml',
-                    '!**/*.pdb'
+                src: ['MF.SessionManagement.exe',
+                    'MF.SessionManagement.exe.config'
                 ],
                 dest: grunt.option('destFolder')
             },
