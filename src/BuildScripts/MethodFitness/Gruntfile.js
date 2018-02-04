@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     grunt.option('buildConfig',grunt.option('buildConfig') || 'Debug');
     grunt.option('target',grunt.option('target') || 'QA');
     grunt.option('slnFile','../../Solutions/'+grunt.option('solutionName')+'/'+grunt.option('solutionName')+'.sln');
-    grunt.option('deployFolder','/WebSites/MethodFitness_'+grunt.option('target'));
+    grunt.option('deployFolder','/MethodFitness/WebSites/MethodFitness_'+grunt.option('target'));
     grunt.option('startTime',new Date());
 
     grunt.option( 'QA',{
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     });
 
     grunt.option( 'PROD',{
-       connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
+       connection_String:'Server=cannibalserver;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0df1t;Connection Timeout=30;',
        host_Name:'http://methodfit.net',
         AdminEmail:'methodfit@methodfit.com',
         environment:grunt.option('target'),
