@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     grunt.option('srcTarget', '../../Projects/'+grunt.option('projectName')+'/bin/'+grunt.option('buildConfig')+'/');
     grunt.option('target',grunt.option('target') || 'QA');
     grunt.option('slnFile','../../Solutions/'+grunt.option('solutionName')+'/'+grunt.option('solutionName')+'.sln');
-    grunt.option('deployFolder','MethodFitness/Services/MF.WeeklyManagerReport_'+grunt.option('target'));
+    grunt.option('deployFolder','/MethodFitness/Services/MF.WeeklyManagerReport_'+grunt.option('target'));
     grunt.option('outputConfigFile',grunt.option('destFolder')+'/'+grunt.option('projectName')+'.exe.config');
     grunt.option('startTime',new Date());
 
