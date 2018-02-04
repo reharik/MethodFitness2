@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     grunt.option('srcTarget', '../../Projects/'+grunt.option('projectName')+'/bin/'+grunt.option('buildConfig')+'/');
     grunt.option('target',grunt.option('target') || 'QA');
     grunt.option('slnFile','../../Solutions/'+grunt.option('solutionName')+'/'+grunt.option('solutionName')+'.sln');
-    grunt.option('deployFolder','/Services/MF.SessionManagement_'+grunt.option('target'));
+    grunt.option('deployFolder','MethodFitness/Services/MF.SessionManagement_'+grunt.option('target'));
     grunt.option('outputConfigFile',grunt.option('destFolder')+'/'+grunt.option('projectName')+'.exe.config');
     grunt.option('startTime',new Date());
 
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     });
 
     grunt.option( 'PROD',{
-        connection_String:'Server=cannibalcoder.cloudapp.net;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0d;Connection Timeout=30;',
+        connection_String:'Server=cannibalserver;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0df1t;Connection Timeout=30;',
         environment:grunt.option('target'),
         customErrors:"RemoteOnly",
         debug:"false"
