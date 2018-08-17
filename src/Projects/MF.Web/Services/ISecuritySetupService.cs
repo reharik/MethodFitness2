@@ -133,8 +133,10 @@ namespace MF.Web.Services
             var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == UserType.Administrator.ToString()));
             admins.ForEachItem(x =>
                 _authorizationRepository.AssociateUserWith(x, UserType.Administrator.ToString()));
-            var manager = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == UserType.Manager.ToString());
-            employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, UserType.Manager.ToString())); 
+            
+            var manager = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == UserType.Manager.ToString()));
+            manager.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, UserType.Manager.ToString())); 
+            
             var employees = _repository.FindAll<User>();
             employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, UserType.Trainer.ToString()));
             
@@ -155,8 +157,5 @@ namespace MF.Web.Services
                 _authorizationRepository.CreateUsersGroup(UserType.Manager.ToString());
             }
         }
-
-       
-
     }
 }
