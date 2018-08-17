@@ -32,6 +32,7 @@ namespace MF.Core.Enumerations
         public static readonly UserType Empty = new UserType { IsActive = false, Key = "" };
         public static readonly UserType Administrator = new UserType { IsActive = true, Key = "Administrator" };
         public static readonly UserType Trainer = new UserType { IsActive = true, Key = "Trainer" };
+        public static readonly UserType Manager = new UserType { IsActive = true, Key = "Manager" };
     }
 
     [Serializable]
@@ -40,6 +41,7 @@ namespace MF.Core.Enumerations
         public static readonly SecurityUserGroups Empty = new SecurityUserGroups { IsActive = false, Key = "" };
         public static readonly SecurityUserGroups Administrator = new SecurityUserGroups { IsActive = true, Key = "Administrator" };
         public static readonly SecurityUserGroups Trainer = new SecurityUserGroups { IsActive = true, Key = "Trainer" };
+        public static readonly SecurityUserGroups Manager = new SecurityUserGroups { IsActive = true, Key = "Manager" };
     }
 
 

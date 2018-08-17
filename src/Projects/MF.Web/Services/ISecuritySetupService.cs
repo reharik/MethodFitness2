@@ -53,6 +53,7 @@ namespace MF.Web.Services
             CreateOperationsForAllMenuItems();
             CreateMiscellaneousOperations();
             _permissionsService.GrantDefaultAdminPermissions("Administrator");
+            _permissionsService.GrantDefaultAdminPermissions("Manager");
             _permissionsService.GrantDefaultTrainersPermissions();
             _repository.UnitOfWork.Commit();
         }
@@ -134,6 +135,8 @@ namespace MF.Web.Services
                 _authorizationRepository.AssociateUserWith(x, UserType.Administrator.ToString()));
             var employees = _repository.FindAll<User>();
             employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, UserType.Trainer.ToString()));
+            var manager = _repository.FindAll<User>();
+            employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, UserType.Manager.ToString()));
         }
 
         public void CreateUserGroups()
@@ -145,6 +148,10 @@ namespace MF.Web.Services
             if (_authorizationRepository.GetUsersGroupByName(UserType.Trainer.ToString()) == null)
             {
                 _authorizationRepository.CreateUsersGroup(UserType.Trainer.ToString());
+            }
+            if (_authorizationRepository.GetUsersGroupByName(UserType.Manager.ToString()) == null)
+            {
+                _authorizationRepository.CreateUsersGroup(UserType.Manager.ToString());
             }
         }
 
