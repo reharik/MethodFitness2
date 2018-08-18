@@ -6,15 +6,19 @@ using MF.Web.Areas.Billing.Controllers;
 using MF.Web.Areas.Reporting.Controllers;
 using MF.Web.Areas.Schedule.Controllers;
 using MF.Web.Controllers;
-
+using CC.Core.Security.Interfaces;
+using CC.Core.Security.Model;
+using MF.Core;
 namespace MF.Web.Menus
 {
     public class MainMenu : IMenuConfig
     {
         private readonly IMenuBuilder _builder;
         private readonly ISessionContext _sessionContext;
+		private readonly IAuthorizationRepository authorizationRepository;
+        private readonly ILogger logger;
 
-        public MainMenu(IMenuBuilder builder, ISessionContext sessionContext)
+        public MainMenu(IMenuBuilder builder, ISessionContext sessionContext, IAuthorizationRepository authorizationRepository, ILogger logger)
         {
             _builder = builder;
             _sessionContext = sessionContext;
@@ -31,6 +35,11 @@ namespace MF.Web.Menus
             if (!withoutPermissions)
             {
                 user = _sessionContext.GetCurrentUser();
+                UsersGroup[] usersGroups = authorizationRepository.GetAssociatedUsersGroupFor(user);
+                foreach (var x in usersGroups)
+                {
+                    logger.LogInfo(x.Name);
+                }
             }
             var builder =
                 _builder.CreateTagNode<AppointmentCalendarController>(WebLocalizationKeys.CALENDAR).Route("calendar")

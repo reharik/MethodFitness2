@@ -66,18 +66,7 @@ namespace CC.Core.Security.Services
 
 		#endregion
 
-        public void Logger(System.String lines)
-        {
 
-            // Write the string to a file.append mode is enabled so that the log
-            // lines get appended to  test.txt than wiping content and writing the log
-
-            System.IO.StreamWriter file = new System.IO.StreamWriter("\testxxx.txt", true);
-            file.WriteLine(lines);
-
-            file.Close();
-
-        }
 		private void AddPermissionDescriptionToAuthorizationInformation(string operation,
 		                                                                         AuthorizationInformation info,
 		                                                                         IUser user, Permission[] permissions)
@@ -85,13 +74,7 @@ namespace CC.Core.Security.Services
 			if (permissions.Length == 0)
 			{
 				UsersGroup[] usersGroups = authorizationRepository.GetAssociatedUsersGroupFor(user);
-                foreach (var x in usersGroups)
-	            {
-                    Logger(x.Name);
-		 
-	            }
- 
-                info.AddDeny(Resources.PermissionForOperationNotGrantedToUser,
+					info.AddDeny(Resources.PermissionForOperationNotGrantedToUser,
 					             operation,
 					             user.SecurityInfo.Name,
 					             Strings.Join(usersGroups)
