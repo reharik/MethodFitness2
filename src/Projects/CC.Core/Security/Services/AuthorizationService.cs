@@ -85,8 +85,13 @@ namespace CC.Core.Security.Services
 			if (permissions.Length == 0)
 			{
 				UsersGroup[] usersGroups = authorizationRepository.GetAssociatedUsersGroupFor(user);
-                Logger(UserGroups.map(x => x.Name).join(','));
-					info.AddDeny(Resources.PermissionForOperationNotGrantedToUser,
+                foreach (var x in usersGroups)
+	            {
+                    Logger(x.Name);
+		 
+	            }
+ 
+                info.AddDeny(Resources.PermissionForOperationNotGrantedToUser,
 					             operation,
 					             user.SecurityInfo.Name,
 					             Strings.Join(usersGroups)
