@@ -16,12 +16,13 @@ namespace MF.Web.Menus
         private readonly IMenuBuilder _builder;
         private readonly ISessionContext _sessionContext;
 		private readonly IAuthorizationRepository authorizationRepository;
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public MainMenu(IMenuBuilder builder, ISessionContext sessionContext, IAuthorizationRepository authorizationRepository, ILogger logger)
         {
             _builder = builder;
             _sessionContext = sessionContext;
+            _logger=logger
         }
 
         public IList<MenuItem> Build(bool withoutPermissions = false)
@@ -38,7 +39,7 @@ namespace MF.Web.Menus
                 UsersGroup[] usersGroups = authorizationRepository.GetAssociatedUsersGroupFor(user);
                 foreach (var x in usersGroups)
                 {
-                    logger.LogInfo(x.Name);
+                    _logger.LogInfo(x.Name);
                 }
             }
             var builder =
