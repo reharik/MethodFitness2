@@ -22,7 +22,7 @@ namespace MF.Web.Menus
         {
             _builder = builder;
             _sessionContext = sessionContext;
-            _logger=logger
+            _logger = logger;
         }
 
         public IList<MenuItem> Build(bool withoutPermissions = false)
