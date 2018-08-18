@@ -14,14 +14,14 @@ namespace CC.Core.Security.Services
 		private readonly IAuthorizationRepository authorizationRepository;
 
 		private readonly IPermissionsService permissionsService;
-
+        private readonly ILogger logger;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AuthorizationService"/> class.
 		/// </summary>
 		/// <param name="permissionsService">The permissions service.</param>
 		/// <param name="authorizationRepository">The authorization editing service.</param>
 		public AuthorizationService(IPermissionsService permissionsService,
-		                            IAuthorizationRepository authorizationRepository)
+		                            IAuthorizationRepository authorizationRepository, ILogger logger)
 		{
 			this.permissionsService = permissionsService;
 			this.authorizationRepository = authorizationRepository;
@@ -74,6 +74,7 @@ namespace CC.Core.Security.Services
 			if (permissions.Length == 0)
 			{
 				UsersGroup[] usersGroups = authorizationRepository.GetAssociatedUsersGroupFor(user);
+                logger.LogInfo(usersGroups);
 					info.AddDeny(Resources.PermissionForOperationNotGrantedToUser,
 					             operation,
 					             user.SecurityInfo.Name,

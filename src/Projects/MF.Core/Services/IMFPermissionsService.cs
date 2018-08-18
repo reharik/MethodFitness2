@@ -37,6 +37,23 @@ namespace MF.Core.Services
             _permissionsBuilderService.Deny("/Payment/Display").For(type).OnEverything().Level(11).Save();
         }
 
+        public void GrantDefaultManagerPermissions(string type)
+        {
+            var operations = ((CustomAuthorizationRepository)_authorizationRepository).GetAllOperations();
+            foreach (var operation in operations)
+            {
+                //this is a fucking hack obviously
+                if (operation.Name != "/MFAdmin" && operation.Name != "/Payment/Display" & operation.Name != "/TrainerPayment/Display")
+                    _permissionsBuilderService
+                        .Allow(operation)
+                        .For(type)
+                        .OnEverything()
+                        .Level(10)
+                        .Save();
+            }
+            _permissionsBuilderService.Deny("/Payment/Display").For(type).OnEverything().Level(11).Save();
+        }
+
         public void GrantDefaultTrainersPermissions()
         {
             _permissionsBuilderService.Allow("/AppointmentCalendarController").For("Trainer").OnEverything().Level(1).Save();
