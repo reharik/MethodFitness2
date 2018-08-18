@@ -14,14 +14,14 @@ namespace CC.Core.Security.Services
 		private readonly IAuthorizationRepository authorizationRepository;
 
 		private readonly IPermissionsService permissionsService;
-        private readonly ILogger logger;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AuthorizationService"/> class.
 		/// </summary>
 		/// <param name="permissionsService">The permissions service.</param>
 		/// <param name="authorizationRepository">The authorization editing service.</param>
 		public AuthorizationService(IPermissionsService permissionsService,
-		                            IAuthorizationRepository authorizationRepository, ILogger logger)
+		                            IAuthorizationRepository authorizationRepository)
 		{
 			this.permissionsService = permissionsService;
 			this.authorizationRepository = authorizationRepository;
@@ -66,7 +66,18 @@ namespace CC.Core.Security.Services
 
 		#endregion
 
+        public void Logger(String lines)
+        {
 
+            // Write the string to a file.append mode is enabled so that the log
+            // lines get appended to  test.txt than wiping content and writing the log
+
+            System.IO.StreamWriter file = new System.IO.StreamWriter("c:\\test.txt", true);
+            file.WriteLine(lines);
+
+            file.Close();
+
+        }
 		private void AddPermissionDescriptionToAuthorizationInformation(string operation,
 		                                                                         AuthorizationInformation info,
 		                                                                         IUser user, Permission[] permissions)
@@ -74,7 +85,7 @@ namespace CC.Core.Security.Services
 			if (permissions.Length == 0)
 			{
 				UsersGroup[] usersGroups = authorizationRepository.GetAssociatedUsersGroupFor(user);
-                logger.LogInfo(usersGroups);
+                Logger(UserGroups.map(x => x.Name).join(','));
 					info.AddDeny(Resources.PermissionForOperationNotGrantedToUser,
 					             operation,
 					             user.SecurityInfo.Name,
