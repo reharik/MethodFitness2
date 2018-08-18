@@ -66,7 +66,7 @@ namespace CC.Core.Security.Services
 
 		#endregion
 
-        public void Logger(String lines)
+        public void Logger(System.String lines)
         {
 
             // Write the string to a file.append mode is enabled so that the log
