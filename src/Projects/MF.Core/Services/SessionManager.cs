@@ -55,7 +55,7 @@ namespace MF.Core.Services
                         _logger.LogInfo("Session Mananger completed aptId:{0}".ToFormat(reader.GetInt64(0)));
                         if (reader.GetBoolean(1) == true)
                         {
-                            _logger.LogInfo("Client:{0} was in arrears".ToFormat(reader.GetString(2)));
+                            _logger.LogInfo("Client:{0}, ID:{1} was in arrears".ToFormat(reader.GetString(3), reader.GetInt64(2)));
                         }
                     }
                 }
