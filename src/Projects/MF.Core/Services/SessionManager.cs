@@ -12,7 +12,7 @@ namespace MF.Core.Services
 {
     public interface ISessionManager
     {
-//        void GatherAppointmentsDue();
+        //        void GatherAppointmentsDue();
         void CompleteAppointments();
     }
 
@@ -38,35 +38,48 @@ namespace MF.Core.Services
         {
             _logger.LogInfo("Beginning CompleteAppointments Process.");
 
-        //    using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["MethodFitness.sql_server_connection_string"])){
-        //        SqlCommand command = new SqlCommand();
-        //        command.Connection = connection;
-        //        command.CommandText = "SessionReconciliation";
-        //        command.CommandType = CommandType.StoredProcedure;
-                
-        //        connection.Open();
-        //        var rowsAffected = command.ExecuteNonQuery();
-        //        connection.Close();
-        //        _logger.LogInfo("Number of sessions affected: {0}", rowsAffected);
-        //}
-
-
-        //    _repository.CreateSQLQuery<DomainEntity>("exec SessionReconciliation", null, 30);
-            IValidationManager validationManager = new ValidationManager(_repository);
-          
-            var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
-            while (appointment != null)
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["MethodFitness.sql_server_connection_string"]))
             {
-                _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(appointment.EntityId));
-                _clientSessionService.SetSessionsForClients(appointment);
-                appointment.Completed = true;
-                appointment.Clients.Where(c => c.ClientStatus != null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
-                validationManager = _saveEntityService.ProcessSave(appointment, validationManager);
-                _logger.LogDebug("about to save appointment: {0}".ToFormat(appointment.EntityId));
-                validationManager.Finish();
-                appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "SessionReconciliation";
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                int count = 0;
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        count++;
+                        _logger.LogInfo("Session Mananger completed aptId:{0}".ToFormat(reader.GetInt64(0)));
+                        if (reader.GetBoolean(1) == true)
+                        {
+                            _logger.LogInfo("Client:{0} was in arrears".ToFormat(reader.GetString(2)));
+                        }
+                    }
+                }
+
+                connection.Close();
+                _logger.LogInfo("Number of sessions affected: {0}", count);
+
             }
+
+
+            //_repository.CreateSQLQuery<DomainEntity>("exec SessionReconciliation", null, 30);
+            //IValidationManager validationManager = new ValidationManager(_repository);
+
+            //var appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
+            //while (appointment != null)
+            //{
+            //    _logger.LogInfo("Session Mananger Processing aptId:{0}".ToFormat(appointment.EntityId));
+            //    _clientSessionService.SetSessionsForClients(appointment);
+            //    appointment.Completed = true;
+            //    appointment.Clients.Where(c => c.ClientStatus != null && c.ClientStatus.AdminAlerted).ForEachItem(c => c.ClientStatus.AdminAlerted = false);
+            //    validationManager = _saveEntityService.ProcessSave(appointment, validationManager);
+            //    _logger.LogDebug("about to save appointment: {0}".ToFormat(appointment.EntityId));
+            //    validationManager.Finish();
+            //    appointment = _repository.Query<Appointment>(x => x.EndTime < DateTime.Now && !x.Completed).Take(1).FirstOrDefault();
         }
     }
 }
-
