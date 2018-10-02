@@ -67,7 +67,7 @@ namespace MF.Core.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex);
+                _logger.LogError(ex.Message, ex);
             }
 
 
