@@ -37,33 +37,39 @@ namespace MF.Core.Services
         public void CompleteAppointments()
         {
             _logger.LogInfo("Beginning CompleteAppointments Process.");
-
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["MethodFitness.sql_server_connection_string"]))
+            try
             {
-                SqlCommand command = new SqlCommand();
-                command.Connection = connection;
-                command.CommandText = "SessionReconciliation";
-                command.CommandType = CommandType.StoredProcedure;
-
-                connection.Open();
-                int count = 0;
-                using (IDataReader reader = command.ExecuteReader())
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["MethodFitness.sql_server_connection_string"]))
                 {
-                    while (reader.Read())
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "SessionReconciliation";
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    int count = 0;
+                    using (IDataReader reader = command.ExecuteReader())
                     {
-                        count++;
-                        _logger.LogInfo("Session Mananger completed aptId:{0}".ToFormat(reader.GetInt64(0)));
-                        if (reader.GetBoolean(1) == true)
+                        while (reader.Read())
                         {
-                            _logger.LogInfo("Client:{0}, ID:{1} was in arrears".ToFormat(reader.GetString(3), reader.GetInt64(2)));
+                            count++;
+                            _logger.LogInfo("Session Mananger completed aptId:{0}".ToFormat(reader.GetInt64(0)));
+                            if (reader.GetBoolean(1) == true)
+                            {
+                                _logger.LogInfo("Client:{0}, ID:{1} was in arrears".ToFormat(reader.GetString(3), reader.GetInt64(2)));
+                            }
                         }
                     }
+
+                    connection.Close();
+                    _logger.LogInfo("Number of sessions affected: {0}", count);
                 }
-
-                connection.Close();
-                _logger.LogInfo("Number of sessions affected: {0}", count);
-
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex);
+            }
+
 
 
             //_repository.CreateSQLQuery<DomainEntity>("exec SessionReconciliation", null, 30);
