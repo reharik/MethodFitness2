@@ -53,10 +53,10 @@ namespace MF.Core.Services
                         while (reader.Read())
                         {
                             count++;
-                            _logger.LogInfo("Session Mananger completed aptId:{0}".ToFormat(reader.GetInt64(0)));
+                            _logger.LogInfo("Session Mananger completed aptId:{0} for trainer:{1}".ToFormat(reader.GetInt32(0),reader.GetString(3)));
                             if (reader.GetBoolean(1) == true)
                             {
-                                _logger.LogInfo("Client:{0}, ID:{1} was in arrears".ToFormat(reader.GetString(3), reader.GetInt64(2)));
+                                _logger.LogInfo("Client:{0}, ID:{1} was in arrears".ToFormat(reader.GetString(4), reader.GetInt32(2)));
                             }
                         }
                     }
