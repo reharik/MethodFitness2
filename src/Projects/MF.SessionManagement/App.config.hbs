@@ -9,7 +9,7 @@
   </appSettings>
  <log4net>
     <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
-      <file value="..\\..\\Logs\{{{environment}}}\\Services\\SessionManagement.log" />
+      <file value="..\\..\\Logs\\PROD\\Services\\SessionManagement.log" />
       <appendToFile value="true" />
       <preserveLogFileNameExtension value="true"/>
       <rollingStyle value="Size"/>      
@@ -21,7 +21,7 @@
       </layout>
     </appender>
     <appender name="NHibernateFileLog" type="log4net.Appender.RollingFileAppender">
-      <file value="..\\..\\Logs\\{{{environment}}}\\Services\\SessionManagementNH.log" />
+      <file value="..\\..\\Logs\\PROD\\Services\\SessionManagementNH.log" />
       <appendToFile value="true" />
       <preserveLogFileNameExtension value="true"/>
       <rollingStyle value="Size"/>      
