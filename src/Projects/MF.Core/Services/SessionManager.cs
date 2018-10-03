@@ -53,7 +53,7 @@ namespace MF.Core.Services
                         while (reader.Read())
                         {
                             count++;
-                            _logger.LogInfo("completed {0}, aptId:{1} for trainer:{2}-{3} and client:{4}-{5} on date: {6}".ToFormat(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2),reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6)));
+                            _logger.LogInfo("completed {0}, aptId:{1} for trainer:{2}-{3} and client:{4}-{5} on date: {6}".ToFormat(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2),reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetDateTime(6).ToString()));
                             if (reader.GetBoolean(7) == true)
                             {
                                 _logger.LogInfo("Client:{0}, ID:{1} was in arrears".ToFormat(reader.GetString(5), reader.GetInt32(4)));
