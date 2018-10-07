@@ -10,7 +10,7 @@
 namespace MF.Web.Areas.Reporting.ReportViewer {
     
     
-    public partial class Activity {
+    public partial class DailyPayments1 {
         
         /// <summary>
         /// form2 control.
