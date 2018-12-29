@@ -44,6 +44,10 @@
       <HintPath>..\..\Solutions\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net-loggly, Version=8.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\log4net-loggly.8.0.1\lib\net40\log4net-loggly.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\Solutions\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>

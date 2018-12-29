@@ -55,6 +55,11 @@
         <conversionPattern value="%timestamp %date (%property{log4net:HostName})[%thread] %-5level %logger [%method(%line)] - %message %exception%newline" />
       </layout>
     </appender>
+    <appender name="LogglyAppender" type="log4net.loggly.LogglyAppender, log4net-loggly">
+      <rootUrl value="https://logs-01.loggly.com/" />
+      <inputKey value="282a8581-13b3-4c55-94f3-106fd3fb8508" />
+      <tag value="log4net" />
+    </appender>
     <logger name="NHibernate" additivity="false">
       <level value="ERROR" />
       <appender-ref ref="NHibernateFileLog" />
