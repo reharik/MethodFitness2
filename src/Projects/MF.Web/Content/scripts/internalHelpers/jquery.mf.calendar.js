@@ -16,9 +16,12 @@
             slotMinutes:15,
             minTime:4,
             maxTime:22,
-            events: {
-                url:calendarDefinition.Url,
-                data: { Loc: $("[name=Location]").val() }
+
+            events: function(start, end, callback) {
+                mf.repository.ajaxGet(calendarDefinition.Url,
+                    { Loc: $("[name=Location]").val(),
+                        start, end})
+                    .then((response)=> callback(response) );
             },
             dayClick: function(date, allDay, jsEvent, view){ MF.vent.trigger("calendar:"+calendarDefinition.id+":dayClick", date, allDay, jsEvent, view);},
             eventClick: function(calEvent, jsEvent, view){ MF.vent.trigger("calendar:"+calendarDefinition.id+":eventClick", calEvent, jsEvent, view);},

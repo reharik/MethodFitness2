@@ -205,7 +205,25 @@ MF.Views.CalendarView = MF.Views.View.extend({
         }else if( $(".legend").is(":visible")){
             ids="NONE";
         }
-        this.replaceSource({url : this.model.CalendarDefinition.Url, data:{Loc:locId, TrainerIds:ids} });
+
+        let url = this.model.CalendarDefinition.Url
+        let model = this.model;
+
+        let source = function(start, end, callback) {
+            MF.repository.ajaxGet(url, {
+                    Loc:locId,
+                    TrainerIds:ids,
+                    start: ~~(start.getTime()/1000),
+                    end: ~~(end.getTime()/1000)
+                })
+            .then(response => {
+                model.blocked = response;
+                MF.blockedTimes(response);
+                callback(response)
+            })
+        }
+
+        this.replaceSource({events:source});
         this.reload();
     },
     reload:function(){
