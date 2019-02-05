@@ -65,7 +65,8 @@ namespace MF.Web.Models
         public string url { get; set; }
         public string className { get; set; }
         public string color { get; set; }
-
+        public int locationId { get; set; }
+        public string appointmentType { get; set; }
         public int trainerId { get; set; }
     }
 }

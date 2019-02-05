@@ -193,8 +193,67 @@ namespace MF.Web.Areas.Schedule.Controllers
         private Notification validateAppointment(User user, AppointmentViewModel input)
         {
             var notification = new Notification { Success = true };
-            var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var startTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.StartTimeString);
+            var endTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.EndTimeString);
+            var surroundingApts = _repository.Query<Appointment>(x => x.StartTime < endTime
+                && x.EndTime > startTime).ToList();
+
+            var map = new {
+            _15 = 0,
+            _30 = 0,
+            _45 = 0,
+            _60 = 0
+        };
+            var length = 0;
+            var slots = 1;
+            switch(input.AppointmentType) {
+                case "Hour": {
+                    length = 4;
+                    break;
+                }
+                case "Half Hour": {
+                    length = 2;
+                    break;
+                }
+                case "Pair": {
+                    length = 4;
+                    slots = 2;
+                    break;
+                }
+            }
+            _logger.LogWarn("length: " + length.ToString());
+            _logger.LogWarn("slots: " + slots.ToString());
+            surroundingApts.ForEach(x =>
+            {
+                for (int i = 0; i <= length; i++)
+                {
+                    var st = new DateTime(startTime.Ticks).AddMinutes(15 * i);
+                    _logger.LogWarn("st: " + st.ToString());
+                    _logger.LogWarn("x.startTime: " + x.StartTime.ToString());
+                    _logger.LogWarn("x.EndTime: " + x.EndTime.ToString());
+
+                    if (x.StartTime <= st && x.EndTime > st)
+                    {
+                        var propInfo = map.GetType().GetProperty("_" + (15 * (i + 1)).ToString());
+                        propInfo.SetValue(map, (int)propInfo.GetValue(map,null) + slots);
+                        _logger.LogWarn("map: " + map);
+                        
+                    }
+                }
+            });
+            _logger.LogWarn("map15: " + map._15);
+            _logger.LogWarn("map30: " + map._30);
+            _logger.LogWarn("map45: " + map._45);
+            _logger.LogWarn("map60: " + map._60);
+
+            var count = input.LocationEntityId == 2 ? 6 : 2;
+            if(map._15>=count || map._30>=count || map._45>=count || map._60>=count) {
+                notification.Success = false;
+                notification.Message = CoreLocalizationKeys.LOCATION_HAS_NO_SPACE_AVAILABLE.ToString();
+                return notification;
+            }
+
+            var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             if (startTime < convertTime.AddHours(6) && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;

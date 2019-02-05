@@ -3,10 +3,10 @@
     $.fn.asCalendar = function(calendarDefinition, userOptions) {
         var calendarDefaultOptions = {
             header: {
-				left: 'prev,next today',
+                left: 'prev,next today',
                 center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
+                right: 'month,agendaWeek,agendaDay'
+            },
             defaultView: 'agendaWeek',
             editable:true,
             theme:true,
@@ -18,7 +18,7 @@
             maxTime:22,
 
             events: function(start, end, callback) {
-                mf.repository.ajaxGet(calendarDefinition.Url,
+                MF.repository.ajaxGet(calendarDefinition.Url,
                     { Loc: $("[name=Location]").val(),
                         start, end})
                     .then((response)=> callback(response) );

@@ -167,7 +167,9 @@ namespace MF.Web.Areas.Schedule.Controllers
                                         start = x.StartTime.ToString(),
                                         end = x.EndTime.ToString(),
                                         color = x.Trainer.Color,
-                                        trainerId = x.Trainer.EntityId
+                                        trainerId = x.Trainer.EntityId,
+                                        locationId = x.Location.EntityId,
+                                        appointmentType = x.AppointmentType
                                     };
             if(x.Clients.Count()>1)
             {
