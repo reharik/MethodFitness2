@@ -95,17 +95,18 @@ MF.Views.CalendarView = MF.Views.View.extend({
         const targetDateString = targetDate.toString('M/d/yyyy h:mm ss TT');
 
         const block = MF.blockedTimes.shouldBlockAppointment(this.model.blocked, targetDateString, this.model.location);
-        if(block.block) {
+        if(block.blockedMsg !== '') {
             alert(block.blockedMsg);
+        }
+        if(block.block === true) {
             return;
         }
-        if(block === false) {
-            var data = {
-                "ScheduledDate": new XDate(date).toString("M/d/yyyy"),
-                "ScheduledStartTime": new XDate(date).toString("hh:mm TT")
-            };
-            this.editEvent(this.model.CalendarDefinition.AddUpdateUrl, data);
-        }
+        var data = {
+            "ScheduledDate": new XDate(date).toString("M/d/yyyy"),
+            "ScheduledStartTime": new XDate(date).toString("hh:mm TT")
+        };
+        this.editEvent(this.model.CalendarDefinition.AddUpdateUrl, data);
+
     },
     eventClick:function(calEvent, jsEvent, view) {
         if(this.displayAppointmentDisabled == true ){
@@ -206,7 +207,6 @@ MF.Views.CalendarView = MF.Views.View.extend({
     },
 
     resetCalendar:function(){
-        console.log(this.viewModel.Location());
         let model = this.model;
         model.location = this.viewModel.Location();
 
@@ -225,15 +225,15 @@ MF.Views.CalendarView = MF.Views.View.extend({
         let url = model.CalendarDefinition.Url;
         let source = function(start, end, callback) {
             MF.repository.ajaxGet(url, {
-                Loc:model.location,
-                TrainerIds:ids,
-                start: ~~(start.getTime()/1000),
-                end: ~~(end.getTime()/1000)
-            })
-            .then(response => {
+                    Loc:model.location,
+                    TrainerIds:ids,
+                    start: ~~(start.getTime()/1000),
+                    end: ~~(end.getTime()/1000)
+                })
+                .then(response => {
                 model.blocked = MF.blockedTimes.calculate(response, model.location);
-                callback(response)
-            })
+            callback(response)
+        })
         };
 
         this.replaceSource({events:source});

@@ -198,12 +198,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var surroundingApts = _repository.Query<Appointment>(x => x.StartTime < endTime
                 && x.EndTime > startTime).ToList();
 
-            var map = new {
-            _15 = 0,
-            _30 = 0,
-            _45 = 0,
-            _60 = 0
-        };
+            var map = new TimeMap();
             var length = 0;
             var slots = 1;
             switch(input.AppointmentType) {
@@ -231,11 +226,34 @@ namespace MF.Web.Areas.Schedule.Controllers
                     _logger.LogWarn("st: " + st.ToString());
                     _logger.LogWarn("x.startTime: " + x.StartTime.ToString());
                     _logger.LogWarn("x.EndTime: " + x.EndTime.ToString());
+                    _logger.LogWarn("x.StartTime <= st && x.EndTime > st :" + (x.StartTime <= st && x.EndTime > st).ToString());
 
                     if (x.StartTime <= st && x.EndTime > st)
                     {
-                        var propInfo = map.GetType().GetProperty("_" + (15 * (i + 1)).ToString());
-                        propInfo.SetValue(map, (int)propInfo.GetValue(map,null) + slots);
+                        var time = 15 * (i + 1);
+                        switch (time)
+                        {
+                            case 15:
+                                {
+                                    map._15 = map._15 + slots;
+                                    break;
+                                }
+                            case 30:
+                                {
+                                    map._30 = map._30 + slots;
+                                    break;
+                                }
+                            case 45:
+                                {
+                                    map._45 = map._45 + slots;
+                                    break;
+                                }
+                            case 60:
+                                {
+                                    map._60 = map._60 + slots;
+                                    break;
+                                }
+                        }
                         _logger.LogWarn("map: " + map);
                         
                     }
@@ -323,5 +341,13 @@ namespace MF.Web.Areas.Schedule.Controllers
         public DateTime? ScheduledDate { get; set; }
 
         public bool AsAdmin { get; set; }
+    }
+
+    public class TimeMap
+    {
+        public int _15 { get; set; }
+        public int _30 { get; set; }
+        public int _45 { get; set; }
+        public int _60 { get; set; }
     }
 }

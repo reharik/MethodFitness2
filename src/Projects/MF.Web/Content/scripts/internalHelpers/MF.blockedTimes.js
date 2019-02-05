@@ -25,7 +25,7 @@ MF.blockedTimes= (function(){
             addAppt(appts[i],
                 appts[i].locationId === 2 ? provoHash : egHash,
                 appts[i].locationId === 2 ? provoBlocked : egBlocked,
-                appts[i].locationId === 2 ? 6 : 2)
+                appts[i].locationId === 2 ? 7: 3)
         }
 
         return {2:provoBlocked, 1:egBlocked};
@@ -33,8 +33,12 @@ MF.blockedTimes= (function(){
 
     const shouldBlockAppointment = (blockedTimes, targetSlot, location) => {
         let block = false;
-        if(location == null || location === 0){
-            let blockedMsg = '';
+        let blockedMsg = '';
+        if(blockedTimes == null) {
+            return {block:false};
+        }
+
+        if(location == null || location === "0"){
             provoBlockedMsg = 'There are no appointments left at the Providence location';
             egBlockedMsg = 'There are no appointments left at the East Side location';
             const provoBlocked = blockedTimes[2].indexOf(targetSlot) > -1
