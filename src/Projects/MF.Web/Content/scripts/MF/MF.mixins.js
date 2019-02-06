@@ -145,7 +145,7 @@ MF.mixins.formMixin = {
             var promise = MF.repository.ajaxPostModel(this.model._saveUrl(),data);
             promise.done($.proxy(this.successHandler,this));
         }
-            this.$el.find("#save").attr("disabled","disabled");
+        this.$el.find("#save").attr("disabled","disabled");
     },
     cancel:function(){
         MF.vent.trigger("form:"+this.id+":cancel");
@@ -156,11 +156,11 @@ MF.mixins.formMixin = {
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
         if(!result.Success){
             if(result.Message && !$.noty.getByViewIdAndElementId(this.cid)){
-                $(this.errorSelector).noty({type: "error", text: result.Message, viewId:this.cid});
+                $(this.errorSelector).noty({type: "error", text: result.Message, viewId:this.cid, closeWith:['button']});
             }
             if(result.Errors && !$.noty.getByViewIdAndElementId(this.cid)){
                 _.each(result.Errors,function(item){
-                    $(that.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:that.cid});
+                    $(that.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:that.cid, closeWith:['button']});
                 })
             }
         }else{
@@ -173,7 +173,7 @@ MF.mixins.formMixin = {
             MF.vent.trigger("form:"+this.id+":success",result);
             if(!this.options.noBubbleUp){MF.WorkflowManager.returnParentView(result,true);}
         }
-            this.$el.find("#save").removeAttr("disabled");
+        this.$el.find("#save").removeAttr("disabled");
     }
 };
 
@@ -190,7 +190,7 @@ MF.mixins.displayMixin = {
 MF.mixins.ajaxDisplayMixin = {
     render:function(){
         $.when(MF.loadTemplateAndModel(this))
-         .done($.proxy(this.renderCallback,this));
+            .done($.proxy(this.renderCallback,this));
     },
     renderCallback:function(){
         this.bindModelAndElements();
@@ -203,7 +203,7 @@ MF.mixins.ajaxDisplayMixin = {
 MF.mixins.ajaxFormMixin = {
     render:function(){
         $.when(MF.loadTemplateAndModel(this))
-         .done($.proxy(this.renderCallback,this));
+            .done($.proxy(this.renderCallback,this));
     },
     renderCallback:function(){
         this.bindModelAndElements();
@@ -293,14 +293,14 @@ MF.mixins.defaultGridEventsMixin = {
         var result = typeof _result =="string" ? JSON.parse(_result) : _result;
         if(!result.Success){
             if(result.Message && !$.noty.getByViewIdAndElementId(this.cid)){
-                var note = $(that.errorSelector).noty({type: "error", text: result.Message, viewId:that.cid});
+                var note = $(that.errorSelector).noty({type: "error", text: result.Message, viewId:that.cid, closeWith:['button']});
                 note.setAnimationSpeed(1000);
                 note.setTimeout(3000);
                 $.noty.closeAllErrorsByViewId(this.cid);
             }
             if(result.Errors && !$.noty.getByViewIdAndElementId(this.cid)){
                 _.each(result.Errors,function(item){
-                    var note = $(that.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:that.cid});
+                    var note = $(that.errorSelector).noty({type: "error", text:item.ErrorMessage, viewId:that.cid, closeWith:['button']});
                     note.setAnimationSpeed(1000);
                     note.setTimeout(3000);
                     $.noty.closeAllErrorsByViewId(this.cid);

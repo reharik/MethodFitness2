@@ -192,11 +192,36 @@ namespace MF.Web.Areas.Schedule.Controllers
 
         private Notification validateAppointment(User user, AppointmentViewModel input)
         {
-            var notification = new Notification { Success = true };
             var startTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.StartTimeString);
             var endTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.EndTimeString);
+
+            var notification = validateOverBooking(user, input, startTime, endTime);
+
+            var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
+            if (startTime < convertTime.AddHours(6) && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            {
+                notification.Success = false;
+                notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
+                return notification;
+            }
+
+            if (input.ClientsDtos==null || !input.ClientsDtos.selectedItems.Any())
+            {
+                notification = new Notification { Success = false };
+                notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
+            }
+            return notification;
+        }
+
+        private Notification validateOverBooking(User user, AppointmentViewModel input, DateTime startTime, DateTime endTime)
+        {
+            var notification = new Notification { Success = true };
+            if (user.UserRoles.Exists(x => x.Name == "Administrator"))
+            {
+                return notification;
+            }
             var surroundingApts = _repository.Query<Appointment>(x => x.StartTime < endTime
-                && x.EndTime > startTime).ToList();
+                && x.EndTime > startTime).Where(x => x.Location.EntityId == input.LocationEntityId).ToList();
 
             var map = new TimeMap();
             var length = 0;
@@ -254,8 +279,6 @@ namespace MF.Web.Areas.Schedule.Controllers
                                     break;
                                 }
                         }
-                        _logger.LogWarn("map: " + map);
-                        
                     }
                 }
             });
@@ -268,23 +291,9 @@ namespace MF.Web.Areas.Schedule.Controllers
             if(map._15>=count || map._30>=count || map._45>=count || map._60>=count) {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.LOCATION_HAS_NO_SPACE_AVAILABLE.ToString();
+            }
                 return notification;
-            }
 
-            var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
-            if (startTime < convertTime.AddHours(6) && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
-            {
-                notification.Success = false;
-                notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
-                return notification;
-            }
-
-            if (input.ClientsDtos==null || !input.ClientsDtos.selectedItems.Any())
-            {
-                notification = new Notification { Success = false };
-                notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
-            }
-            return notification;
         }
 
         private void mapToDomain(AppointmentViewModel model, Appointment appointment)
