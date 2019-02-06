@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     });
 
     grunt.option( 'PROD',{
-       connection_String:'Server=cannibalserver;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0df1t;Connection Timeout=30;',
+       connection_String:'Server=localhost;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0df1t;Connection Timeout=30;',
        host_Name:'http://methodfit.net',
         AdminEmail:'methodfit@methodfit.com',
         environment:grunt.option('target'),
