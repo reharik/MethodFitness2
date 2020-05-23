@@ -1,6 +1,7 @@
 ﻿using Quartz;
 using StructureMap;
 using Topshelf;
+using MF.Core;
 
 namespace MF.ClientAbsenteeReport
 {
@@ -12,6 +13,8 @@ namespace MF.ClientAbsenteeReport
 //            var job = new WeeklyClientAbsenteeJob();
 //            job.Execute(null);
 //            return;
+            var logger = ObjectFactory.Container.GetInstance<ILogger>();
+            logger.LogError("In Main Program.cs");
             HostFactory.Run(x =>                                 
             {
                 x.Service(ObjectFactory.GetInstance<IClientAbsenteeReport>);

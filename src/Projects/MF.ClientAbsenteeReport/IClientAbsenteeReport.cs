@@ -2,6 +2,8 @@
 using Quartz;
 using Quartz.Impl;
 using Topshelf;
+using MF.Core;
+using StructureMap;
 
 namespace MF.ClientAbsenteeReport
 {
@@ -14,6 +16,8 @@ namespace MF.ClientAbsenteeReport
     {
         public ClientAbsenteeReport()
         {
+            var logger = ObjectFactory.Container.GetInstance<ILogger>();
+            logger.LogError("About to exectute clientAbsenteeReport");
             Execute();
         }
 

@@ -12,6 +12,7 @@ namespace MF.ClientAbsenteeReport
         {
             var service = ObjectFactory.Container.GetInstance<IGetDroppedClients>();
             var logger = ObjectFactory.Container.GetInstance<ILogger>();
+            logger.LogError("about to check for clients");
             var droppedClients = service.GetClients();
             if (!droppedClients.Any())
             {
