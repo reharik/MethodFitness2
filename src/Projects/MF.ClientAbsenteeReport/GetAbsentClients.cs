@@ -69,7 +69,7 @@ and a.Completed = 1
 and (cs.AdminAlerted is null OR cs.AdminAlerted = 0)
 order by u.lastname, u.FirstName ";
              var droppedClientDtos = _repository.CreateSQLQuery<DroppedClientDto>(sql, new List<object>());
-             _logger.LogDebug(droppedClientDtos);
+             _logger.LogDebug("droppedClients", droppedClientDtos);
             return droppedClientDtos;
          }
 
