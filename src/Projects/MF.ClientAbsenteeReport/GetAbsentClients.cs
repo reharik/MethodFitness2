@@ -6,6 +6,7 @@ using CC.Core.Core.DomainTools;
 using CC.Core.Utilities;
 using MF.Core.Domain;
 using MF.Core.Services;
+using MF.Core;
 using System.Linq;
 
 namespace MF.ClientAbsenteeReport
@@ -24,16 +25,19 @@ namespace MF.ClientAbsenteeReport
     {
         private readonly IRepository _repository;
         private readonly IEmailService _emailService;
+        private readonly ILogger _logger;
 
         public GetDroppedClients(IRepository repository,
-            IEmailService emailService)
+            IEmailService emailService, ILogger logger)
         {
             _repository = repository;
             _emailService = emailService;
+            _logger = logger;
         }
 
         public IEnumerable<DroppedClientDto> GetClients()
          {
+             _logger.LogDebug("about to get clients");
              var sql = @"SELECT  c.EntityId, 
 		c.FirstName,
 		c.LastName,
@@ -65,6 +69,7 @@ and a.Completed = 1
 and (cs.AdminAlerted is null OR cs.AdminAlerted = 0)
 order by u.lastname, u.FirstName ";
              var droppedClientDtos = _repository.CreateSQLQuery<DroppedClientDto>(sql, new List<object>());
+             _logger.LogDebug(droppedClientDtos);
             return droppedClientDtos;
          }
 
