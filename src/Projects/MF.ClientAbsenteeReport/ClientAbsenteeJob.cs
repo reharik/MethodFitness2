@@ -10,8 +10,6 @@ namespace MF.ClientAbsenteeReport
     {
         public void Execute(IJobExecutionContext context)
         {
-            try
-            {
                 var logger = ObjectFactory.Container.GetInstance<ILogger>();
                 var service = ObjectFactory.Container.GetInstance<IGetDroppedClients>();
                 logger.LogError("about to check for clients");
@@ -26,11 +24,6 @@ namespace MF.ClientAbsenteeReport
                 service.UpdateClients(droppedClients);
                 logger.LogInfo("Job Processed at: " + DateTime.Now.ToString());
                 logger.LogDebug("{0}", email);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError("error", ex);
-            }
         }
     }
 }
