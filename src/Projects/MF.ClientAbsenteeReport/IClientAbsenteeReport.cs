@@ -35,7 +35,8 @@ namespace MF.ClientAbsenteeReport
                             .Build();
 
             var trigger = TriggerBuilder.Create()
-                .WithIdentity("trigger1", "group1").WithCronSchedule("0 0 2 * * ?")
+                .WithIdentity("trigger1", "group1")
+                .WithCronSchedule("0 0/2 * * * ?")
                 .StartNow()
                 .Build();
 
