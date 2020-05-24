@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         environment:grunt.option('target'),
         customErrors:"RemoteOnly",
         debug:"false",
-        EmailReportAddress:"methodfit@gmail.com",
+        EmailReportAddress:"harik.raif@gmail.com",
         AdminEmail:"info.prov@methodfit.com"
     });
 
