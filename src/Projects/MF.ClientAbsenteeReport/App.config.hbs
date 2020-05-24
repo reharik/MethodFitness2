@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <configSections>
+    <sectionGroup name="common">
+      <section name="logging" type="Common.Logging.ConfigurationSectionHandler, Common.Logging" />
+    </sectionGroup>
     <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" requirePermission="false" />
   </configSections>
   <appSettings>
@@ -11,6 +14,13 @@
     <add key="EmailReportAddress" value="{{{EmailReportAddress}}}"/>
     <add key="AdminEmail" value="{{{AdminEmail}}}"/>
   </appSettings>
+  <common>
+    <logging>
+       <factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4net">
+        <arg key="configType" value="INLINE" />
+      </factoryAdapter>
+    </logging>
+  </common>
   <log4net>
     <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
       <file value="..\\..\\Logs\\{{{environment}}}\Services\\ClientAbsentee.log" />
