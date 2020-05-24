@@ -10,9 +10,9 @@ namespace MF.ClientAbsenteeReport
     {
         public void Execute(IJobExecutionContext context)
         {
-            var logger = ObjectFactory.Container.GetInstance<ILogger>();
             try
             {
+                var logger = ObjectFactory.Container.GetInstance<ILogger>();
                 var service = ObjectFactory.Container.GetInstance<IGetDroppedClients>();
                 logger.LogError("about to check for clients");
                 var droppedClients = service.GetClients();
