@@ -68,7 +68,7 @@ and max(a.date) > DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -90)
 and a.Completed = 1
 and (cs.AdminAlerted is null OR cs.AdminAlerted = 0)
 order by u.lastname, u.FirstName ";
-             var droppedClientDtos = _repository.CreateSQLQuery<DroppedClientDto>(sql, new List<object>());
+             var droppedClientDtos = _repository.CreateSQLQuery<DroppedClientDto>(sql, new List<object>(), 120);
              _logger.LogDebug("droppedClients", droppedClientDtos);
             return droppedClientDtos;
          }
