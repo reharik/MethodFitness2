@@ -10,7 +10,6 @@ namespace MF.ClientAbsenteeReport
     {
         public void Execute(IJobExecutionContext context)
         {
-            throw new Exception("fuck me");
             var logger = ObjectFactory.Container.GetInstance<ILogger>();
             try
             {
