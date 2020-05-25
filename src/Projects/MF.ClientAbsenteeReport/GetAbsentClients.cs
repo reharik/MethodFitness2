@@ -58,6 +58,7 @@ namespace MF.ClientAbsenteeReport
                      {
                          while (reader.Read())
                          {
+                             _logger.LogDebug(reader.GetString(5));
                             var droppedClientDto = new DroppedClientDto();
                             droppedClientDto.EntityId = reader.GetInt32(0);
                             droppedClientDto.TrainerFirstName = reader.GetString(1);
@@ -154,6 +155,7 @@ order by u.lastname, u.FirstName ";
 
         public string CreateEmail(IEnumerable<DroppedClientDto> clients)
         {
+            _logger.LogDebug("About to Create Email");
             var grouped = clients.GroupBy(c => c.TrainerLastName + ", " + c.TrainerFirstName, c => c,
                               (key, g) => new { Trainer = key, Clients = g.ToList() });
             var email = new StringBuilder("<b>Daily absentee report for {0} </b>".ToFormat(DateTime.Now.AddDays(-10)));
@@ -221,7 +223,7 @@ order by u.lastname, u.FirstName ";
                             email.Append("<br />");
                         });
                 });
-
+            _logger.LogDebug(email.ToString());
             return email.ToString();
         }
 
