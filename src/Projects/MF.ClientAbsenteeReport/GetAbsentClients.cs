@@ -50,6 +50,7 @@ namespace MF.ClientAbsenteeReport
                      command.Connection = connection;
                      command.CommandText = "DailyClientAbsenteeReport";
                      command.CommandType = CommandType.StoredProcedure;
+                     command.CommandTimeout = 180;
 
                      connection.Open();
                      int count = 0;
