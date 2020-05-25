@@ -33,6 +33,18 @@
         <conversionPattern value="%timestamp %date (%property{log4net:HostName})[%thread] %-5level %logger [%method(%line)] - %message %exception%newline" />
       </layout>
     </appender>
+       <appender name="NHibernateFileLog" type="log4net.Appender.RollingFileAppender">
+      <file value="..\\..\\Logs\\{{{environment}}}\\Services\\ClientAbsenteeNH.log" />
+      <appendToFile value="true" />
+      <preserveLogFileNameExtension value="true"/>
+      <rollingStyle value="Size"/>      
+      <datePattern value="yyyy.MM.dd" />
+      <maxSizeRollBackups value="-1" />
+      <maximumFileSize value="20MB" />
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%timestamp %date (%property{log4net:HostName})[%thread] %-5level %logger [%method(%line)] - %message %exception%newline" />
+      </layout>
+    </appender>
     <logger name="NHibernate" additivity="false">
       <level value="ERROR" />
       <appender-ref ref="NHibernateFileLog" />
