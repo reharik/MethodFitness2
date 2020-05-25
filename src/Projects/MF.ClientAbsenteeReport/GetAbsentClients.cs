@@ -187,6 +187,8 @@ order by u.lastname, u.FirstName ";
                     email.Append("<br />");
                 });
             });
+            _logger.LogDebug(email.ToString());
+
             return email.ToString();
         }
 
@@ -236,11 +238,14 @@ order by u.lastname, u.FirstName ";
                 From = new MailAddress(Site.Config.EmailReportAddress),
                 To = new MailAddress(Site.Config.AdminEmail)
             };
+            _logger.LogDebug("about to send Email");
             _emailService.SendEmail(emailDto);
         }
 
         public void UpdateClients(IEnumerable<DroppedClientDto> clients)
         {
+            _logger.LogDebug("about to updateClients");
+
             clients.ForEachItem(x =>
                 {
                     var client = _repository.Find<Client>(x.EntityId);
