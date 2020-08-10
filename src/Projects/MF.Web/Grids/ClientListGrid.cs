@@ -26,7 +26,9 @@ namespace MF.Web.Grids
                 .ToPerformAction(ColumnAction.Redirect).ImageName("client_payment.png");
             GridBuilder.SetSearchField(x => x.LastName);
             GridBuilder.SetDefaultSortColumn(x => x.LastName);
-            
+            GridBuilder.LinkColumnFor(x => x.Archived)
+               .ToPerformAction(ColumnAction.Other).DisplayHeader("Archive")
+               .SecurityOperation("/Archive/Client");
 
             return this;
         }
