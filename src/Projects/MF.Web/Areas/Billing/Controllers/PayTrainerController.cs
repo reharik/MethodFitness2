@@ -85,7 +85,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var payment = trainer.TrainerPayments.FirstOrDefault(x => x.EntityId == input.EntityId);
             var sessionItems = payment
               .TrainerPaymentSessionItems
-              .ToList().DistinctBy(x => x.Client.EntityId + x.Appointment.StartTime.ToString())
+              .ToList().DistinctBy(x => x.session.entityId)
               .OrderBy(x => x.Client.LastName)
               .ThenBy(x => x.Appointment.Date);
             var model = new TrainerReceiptViewModel
