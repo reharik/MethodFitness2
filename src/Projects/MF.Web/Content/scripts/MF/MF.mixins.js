@@ -235,7 +235,7 @@ MF.mixins.setupGridMixin = {
         }, this));
         // if we have more then one grid, jqgrid doesn't scope so we need different names.
         if (this.options.gridId) {
-            this.$el.find("#gridContainer").attr("id", this.options.gridId);
+            this.$el.find("#gridContainer").attr("id", this.options.gridId)
         } else {
             this.options.gridId = "gridContainer";
         }

@@ -55,10 +55,10 @@ namespace MF.Web.Controllers
             IQueryable<Client> items;
             if (trainer.UserRoles.Any(x => x.Name == "Administrator"))
             {
-                items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters, x=> x.Archived != true);
+                items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters, x=> !x.Archived);
             }else
             {
-                items = _dynamicExpressionQuery.PerformQuery(trainer.Clients, input.filters, x => x.Archived != true);
+                items = _dynamicExpressionQuery.PerformQuery(trainer.Clients, input.filters, x => !x.Archived);
             }
             var gridItemsViewModel = _clientListGrid.GetGridItemsViewModel(input.PageSortFilter, items, trainer);
             return new CustomJsonResult(gridItemsViewModel);
