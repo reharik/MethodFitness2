@@ -185,6 +185,30 @@ namespace MF.Web.Controllers
             if(clientModel.SessionRatesPairTenPack>0)client.SessionRates.PairTenPack = clientModel.SessionRatesPairTenPack;
             return client;
         }
+
+        public ActionResult ClientStatus(ViewModel input)
+        {
+            var clients = _repository.Query<Client>(x => x.EntityId == input.EntityId);
+            var client = clients.FirstOrDefault();
+            IValidationManager validationManager = null;
+            if (!client.Archived)
+            {
+                var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
+                validationManager = rulesEngineBase.ExecuteRules(client);
+                if (validationManager.GetLastValidationReport().Success)
+                {
+                    client.Archived = true;
+                }
+                validationManager = _saveEntityService.ProcessSave(client, validationManager);
+            }
+            else
+            {
+                client.Archived = false;
+                validationManager = _saveEntityService.ProcessSave(client);
+            }
+            var notification = validationManager.Finish();
+            return new CustomJsonResult(notification);
+        }
     }
 
     public class ClientViewModel:ViewModel

@@ -10,20 +10,19 @@ namespace MF.ClientAbsenteeReport
     {
         public void Execute(IJobExecutionContext context)
         {
-            var service = ObjectFactory.Container.GetInstance<IGetDroppedClients>();
-            var logger = ObjectFactory.Container.GetInstance<ILogger>();
-            logger.LogError("about to check for clients");
-            var droppedClients = service.GetClients();
-            if (!droppedClients.Any())
-            {
-                logger.LogInfo("No new dropped clients on: " + DateTime.Now.ToString());
-                return;
-            }
-            var email = service.CreateEmail(droppedClients);
-            service.SendEmail(email, "absentee report");
-            service.UpdateClients(droppedClients);
-            logger.LogInfo("Job Processed at: "+ DateTime.Now.ToString());
-            logger.LogDebug("{0}", email);
+                var logger = ObjectFactory.Container.GetInstance<ILogger>();
+                var service = ObjectFactory.Container.GetInstance<IGetDroppedClients>();
+                var droppedClients = service.GetClients();
+                if (!droppedClients.Any())
+                {
+                    logger.LogInfo("No new dropped clients on: " + DateTime.Now.ToString());
+                    return;
+                }
+                var email = service.CreateEmail(droppedClients);
+                service.SendEmail(email, "absentee report");
+                service.UpdateClients(droppedClients);
+                logger.LogInfo("Job Processed at: " + DateTime.Now.ToString());
+                logger.LogDebug("{0}", email);
         }
     }
 }

@@ -19,8 +19,11 @@ namespace MF.Core.Services
 
     public class EmailService : IEmailService
     {
-        public EmailService()
+        private readonly ILogger _logger;
+
+        public EmailService(ILogger logger)
         {
+            _logger = logger;
         }
 
         public string SendEmail(EmailDTO input)
@@ -56,6 +59,7 @@ namespace MF.Core.Services
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return ex.Message;
             }
             return string.Empty;

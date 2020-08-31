@@ -34,11 +34,12 @@ namespace MF.Web.Controllers
         {
             var user = _sessionContext.GetCurrentUser();
             var url = UrlContext.GetUrlForAction<ClientListController>(x => x.Clients(null));
-            var model = new ListViewModel()
+            var model = new ClientListViewModel()
             {
                 addUpdateUrl = UrlContext.GetUrlForAction<ClientController>(x => x.AddUpdate(null)),
                 deleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
-               // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
+                ArchiveClientUrl = UrlContext.GetUrlForAction<ClientController>(x => x.ClientStatus(null)),
+                // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
                 gridDef = _clientListGrid.GetGridDefinition(url,user),
                 _Title = WebLocalizationKeys.CLIENTS.ToString()
             };
@@ -54,14 +55,18 @@ namespace MF.Web.Controllers
             IQueryable<Client> items;
             if (trainer.UserRoles.Any(x => x.Name == "Administrator"))
             {
-                items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
+                items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters, x=> !x.Archived);
             }else
             {
-                items = _dynamicExpressionQuery.PerformQuery(trainer.Clients, input.filters);
+                items = _dynamicExpressionQuery.PerformQuery(trainer.Clients, input.filters, x => !x.Archived);
             }
             var gridItemsViewModel = _clientListGrid.GetGridItemsViewModel(input.PageSortFilter, items, trainer);
             return new CustomJsonResult(gridItemsViewModel);
         }
     }
-    
+
+    public class ClientListViewModel : ListViewModel
+    {
+        public string ArchiveClientUrl { get; set; }
+    }
 }

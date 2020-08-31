@@ -8,6 +8,9 @@ using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Core;
 using System.Linq;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
 
 namespace MF.ClientAbsenteeReport
 {
@@ -37,41 +40,83 @@ namespace MF.ClientAbsenteeReport
 
         public IEnumerable<DroppedClientDto> GetClients()
          {
-             _logger.LogDebug("about to get clients");
-             var sql = @"SELECT  c.EntityId, 
-		c.FirstName,
-		c.LastName,
-		c.Email,
-		c.MobilePhone,
-		MAX(a.date) LastDate,
-				u.FirstName as TrainerFirstName,
-				u.LastName as TrainerLastName
-FROM    client c
-        INNER JOIN appointment_client ac
-            ON c.entityid = ac.clientid
-        INNER JOIN appointment a 
-            ON ac.appointmentid = a.entityid
-		left join [user] u on a.trainerid = u.entityId
-        left JOIN ClientStatus cs 
-			ON c.ClientStatusId = cs.EntityId
-GROUP   BY c.entityid ,c.entityId, 
-		c.firstName,
-		c.lastName,
-		c.email,
-		c.mobilephone,
-        a.Completed,
-		cs.AdminAlerted,
-				u.FirstName,
-				u.LastName
-having max(a.date) < DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -10) 
-and max(a.date) > DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -90)
-and a.Completed = 1
-and (cs.AdminAlerted is null OR cs.AdminAlerted = 0)
-order by u.lastname, u.FirstName ";
-             var droppedClientDtos = _repository.CreateSQLQuery<DroppedClientDto>(sql, new List<object>());
-             _logger.LogDebug(droppedClientDtos);
-            return droppedClientDtos;
+             _logger.LogInfo("Beginning GetClients Process.");
+             var droppedClientDtoList = new List<DroppedClientDto>();
+             try
+             {
+                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.AppSettings["MethodFitness.sql_server_connection_string"]))
+                 {
+                     SqlCommand command = new SqlCommand();
+                     command.Connection = connection;
+                     command.CommandText = "DailyClientAbsenteeReport";
+                     command.CommandType = CommandType.StoredProcedure;
+                     command.CommandTimeout = 180;
+
+                     connection.Open();
+                     int count = 0;
+                     using (IDataReader reader = command.ExecuteReader())
+                     {
+                         while (reader.Read())
+                         {
+                             _logger.LogDebug(reader.GetString(5));
+                            var droppedClientDto = new DroppedClientDto();
+                            droppedClientDto.EntityId = reader.GetInt32(0);
+                            droppedClientDto.TrainerFirstName = reader.GetString(1);
+                            droppedClientDto.TrainerLastName = reader.GetString(2);
+                            droppedClientDto.FirstName = reader.GetString(3);
+                            droppedClientDto.LastName  = reader.GetString(4);
+                            droppedClientDto.Email = reader.GetString(5);
+                            droppedClientDto.MobilePhone = reader.GetString(6);
+                            droppedClientDto.LastDate = reader.GetDateTime(7);
+                            droppedClientDtoList.Add(droppedClientDto);                             
+                        }
+                     }
+                     connection.Close();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 _logger.LogError(ex.Message, ex);
+             }
+             return droppedClientDtoList;
          }
+
+
+
+
+//             _logger.LogDebug("about to get clients");
+//             var sql = @"SELECT  c.EntityId, 
+//		c.FirstName,
+//		c.LastName,
+//		c.Email,
+//		c.MobilePhone,
+//		MAX(a.date) LastDate,
+//				u.FirstName as TrainerFirstName,
+//				u.LastName as TrainerLastName
+//FROM    client c
+//        INNER JOIN appointment_client ac
+//            ON c.entityid = ac.clientid
+//        INNER JOIN appointment a 
+//            ON ac.appointmentid = a.entityid
+//		left join [user] u on a.trainerid = u.entityId
+//        left JOIN ClientStatus cs 
+//			ON c.ClientStatusId = cs.EntityId
+//GROUP   BY c.entityid ,c.entityId, 
+//		c.firstName,
+//		c.lastName,
+//		c.email,
+//		c.mobilephone,
+//        a.Completed,
+//		cs.AdminAlerted,
+//				u.FirstName,
+//				u.LastName
+//having max(a.date) < DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -10) 
+//and max(a.date) > DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), -90)
+//and a.Completed = 1
+//and (cs.AdminAlerted is null OR cs.AdminAlerted = 0)
+//order by u.lastname, u.FirstName ";
+//             var droppedClientDtos = _repository.CreateSQLQuery<DroppedClientDto>(sql, new List<object>(), 120000);
+//             _logger.LogDebug("droppedClients", droppedClientDtos);
 
         public IEnumerable<DroppedClientDto> GetWeeklyClients()
         {
@@ -110,6 +155,7 @@ order by u.lastname, u.FirstName ";
 
         public string CreateEmail(IEnumerable<DroppedClientDto> clients)
         {
+            _logger.LogDebug("About to Create Email");
             var grouped = clients.GroupBy(c => c.TrainerLastName + ", " + c.TrainerFirstName, c => c,
                               (key, g) => new { Trainer = key, Clients = g.ToList() });
             var email = new StringBuilder("<b>Daily absentee report for {0} </b>".ToFormat(DateTime.Now.AddDays(-10)));
@@ -141,6 +187,8 @@ order by u.lastname, u.FirstName ";
                     email.Append("<br />");
                 });
             });
+            _logger.LogDebug(email.ToString());
+
             return email.ToString();
         }
 
@@ -177,7 +225,7 @@ order by u.lastname, u.FirstName ";
                             email.Append("<br />");
                         });
                 });
-
+            _logger.LogDebug(email.ToString());
             return email.ToString();
         }
 
@@ -190,11 +238,14 @@ order by u.lastname, u.FirstName ";
                 From = new MailAddress(Site.Config.EmailReportAddress),
                 To = new MailAddress(Site.Config.AdminEmail)
             };
+            _logger.LogDebug("about to send Email");
             _emailService.SendEmail(emailDto);
         }
 
         public void UpdateClients(IEnumerable<DroppedClientDto> clients)
         {
+            _logger.LogDebug("about to updateClients");
+
             clients.ForEachItem(x =>
                 {
                     var client = _repository.Find<Client>(x.EntityId);
