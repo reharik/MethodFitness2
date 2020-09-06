@@ -676,17 +676,18 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
 //        MF.vent.bind("grid:"+this.id+":pageLoaded",this.modifyArchiveColumn,this);
     },
     _unbindBindings:function(){
-        MF.vent.bind("Redirect",this.showPayGrid,this);
+        MF.vent.unbind("Redirect",this.showPayGrid,this);
+        MF.vent.unbind("gridComplete",this.modifyArchiveColumn,this);
     },
     modifyArchiveColumn:function(){
         var grid = $("#" + this.options.gridId);
         var rows = grid.jqGrid('getRowData');
         grid.find("tr").not('.jqgfirstrow').each(function(idx,row){
             var span = $($(row).find("td").last().find("span"));
-            if(span.text().indexOf('True')>-1){
+            if(span.text() === 'True' || span.text() === "UnArchive"){
                 span.text('UnArchive');
                 $(row).addClass("gridRowGrey");
-            }else{
+            }else if(span.text() === 'False' || span.text() === "Archive"){
                 span.text('Archive');
             }
         });

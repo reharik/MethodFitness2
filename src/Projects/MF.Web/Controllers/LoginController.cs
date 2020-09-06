@@ -60,7 +60,7 @@ namespace MF.Web.Controllers
                 {
                     var redirectUrl = string.Empty;
                     var user = _securityDataService.AuthenticateForUserId(input.UserName, input.Password);
-                    if (user != null)
+                    if (user != null && user.Archived != true)
                     {
                         redirectUrl = _authenticationContext.ThisUserHasBeenAuthenticated(user, input.RememberMe);
                         notification.Success = true;
