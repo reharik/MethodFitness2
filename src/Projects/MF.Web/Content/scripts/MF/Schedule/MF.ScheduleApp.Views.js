@@ -666,19 +666,18 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
         MF.vent.trigger("route",MF.generateRoute(this.options.addUpdate,id,parentId),true);
     },
     viewLoaded:function(){
-        this.setupBindings();
+        //this.setupBindings();
         MF.vent.bind(this.options.gridId+":Redirect",this.showPayGrid,this);
         MF.vent.bind(this.options.gridId+":Other",this.archiveTrainer,this);
     },
     _setupBindings:function(){
-        MF.vent.bind("Redirect",this.showPayGrid,this);
-        MF.vent.bind("gridComplete",this.modifyArchiveColumn,this);
+        //MF.vent.bind("Redirect",this.showPayGrid,this);
+        //MF.vent.bind("gridComplete",this.modifyArchiveColumn,this);
 //        MF.vent.bind("grid:"+this.id+":pageLoaded",this.modifyArchiveColumn,this);
     },
     _unbindBindings:function(){
-        MF.vent.unbind("Redirect",this.showPayGrid,this);
-        MF.vent.unbind("gridComplete",this.modifyArchiveColumn,this);
-    },
+        MF.vent.unbind(this.options.gridId+":Redirect",this.showPayGrid,this);
+        MF.vent.unbind(this.options.gridId+":Other",this.archiveTrainer,this);    },
     modifyArchiveColumn:function(){
         var grid = $("#" + this.options.gridId);
         var rows = grid.jqGrid('getRowData');
