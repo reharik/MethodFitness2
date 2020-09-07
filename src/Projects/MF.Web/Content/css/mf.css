@@ -100,10 +100,10 @@ button.cancel:hover {
 /*********** Overrides to make menu wider ********************/
 
 #left-navigation {
-	width: 222px;
+	width: 187px;
 }
 #main-content {
-	margin: 10px 16px 0 222px;
+	margin: 10px 16px 0 187px;
 }
 .ui-icon {
 	width: 17px;
