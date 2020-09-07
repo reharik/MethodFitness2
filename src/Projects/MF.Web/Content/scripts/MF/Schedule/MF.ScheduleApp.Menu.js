@@ -29,7 +29,7 @@ MF.ScheduleApp.Menu = (function(MF, Backbone, $){
             }
             $(this.el).html(result);
             MF.vent.bind("menuItem", this.menuItemClick,this);
-            $(this.el).find(".ccMenu").ccMenu({ backLink: false, width : 220 });
+            $(this.el).find(".ccMenu").ccMenu({ backLink: false, width : 185 });
             return this;
         },
         menuItemClick:function(name){

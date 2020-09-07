@@ -31,7 +31,7 @@ function CCMenu(_caller, _options){
 	var content = $(caller).parent().hide();
     var options = jQuery.extend({
 		content: content.html(),
-		width: 220, // width of menu container, must be set or passed in to calculate widths of child menus
+		width: 185, // width of menu container, must be set or passed in to calculate widths of child menus
 		maxHeight: 400, // max height of menu (if a drilldown: height does not include breadcrumb)
 		positionOpts: {
 			posX: 'left',

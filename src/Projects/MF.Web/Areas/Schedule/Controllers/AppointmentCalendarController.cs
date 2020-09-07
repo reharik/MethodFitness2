@@ -152,7 +152,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                 else
                 {
                     IEnumerable<int> ids = input.TrainerIds.Split(',').Select(Int32.Parse).ToList();
-                    appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId));
+                    appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId) || x.Trainer.Archived);
                 }
             }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));

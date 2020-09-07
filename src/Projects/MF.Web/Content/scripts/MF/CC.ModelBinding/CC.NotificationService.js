@@ -105,7 +105,8 @@ $.extend(CC.NotificationService.prototype,{
             }
         }else{
             if(result.Message){
-                that.add(new CC.NotificationMessage("",cid, result.Message,"success",true),"success");
+               // removing success message because it moves page down and annoys amahl
+                // that.add(new CC.NotificationMessage("",cid, result.Message,"success",true),"success");
                 that.removeAllErrorsByViewId(cid);
             }
         }
