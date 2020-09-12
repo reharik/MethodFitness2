@@ -254,7 +254,8 @@ MF.mixins.setupGridMixin = {
 MF.mixins.defaultGridEventsMixin = {
     events: {
         'click .new': 'addNew',
-        'click .delete': 'deleteItems'
+        'click .delete': 'deleteItems',
+        'click .toggleArchive': 'toggleArchived'
     },
     successSelector:"#messageContainer",
     errorSelector:"#messageContainer",
@@ -287,6 +288,12 @@ MF.mixins.defaultGridEventsMixin = {
             MF.repository.ajaxGet(this.options.deleteMultipleUrl, $.param({ "EntityIds": ids }, true))
                 .done($.proxy(function (result) { this.successHandler(result) }, this));
         }
+    },
+    toggleArchived: function (show) {
+        var filter = {"group": "AND", rules: [{"op":"toggle", "field": "Archived", "data": show ? "showAll" : "hide"}]};
+        var obj = {"filters":""  + JSON.stringify(filter) + ""};
+        $("#"+this.options.gridId).jqGrid('setGridParam',{postData:obj});
+        this.reloadGrid();
     },
     successHandler:function(_result){
         var that = this;

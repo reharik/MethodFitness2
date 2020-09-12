@@ -92,7 +92,11 @@ namespace CC.Core.Core.Services
             {
                 return getItemsWithIdsNOTInEnumerableExpression(left, item.listOfIds);
             }
-            return item.data.IsNotEmpty() ? getBinaryExpression(left, pi, item.data):null;
+            if(item.op == "toggle")
+            {
+                return getToggleExpression(left, pi, item.data);
+            }
+            return item.data.IsNotEmpty() ? getBinaryExpression(left, pi, item.data) : null;
         }
 
         private Expression getItemsWithIdsInEnumerableExpression(MemberExpression left, IEnumerable<int> data)
@@ -170,6 +174,21 @@ namespace CC.Core.Core.Services
             Expression right = createExpressionConstantForData(pi, data);
             BinaryExpression binaryExpression = Expression.Equal(left, right);
             return binaryExpression;
+        }
+
+        private Expression getToggleExpression(MemberExpression left, PropertyInfo pi, string data)
+        {
+            if (data == "showAll") {
+                BinaryExpression binaryExpression = Expression.Equal(left, left);
+                return binaryExpression;
+            }
+            else if (data == "hide")
+            {
+                Expression right = createExpressionConstantForData(pi, "true");
+                BinaryExpression binaryExpression = Expression.NotEqual(left, right);
+                return binaryExpression;
+            }
+            return null;
         }
 
         public T? GetNullable<T>(string s) where T : struct
