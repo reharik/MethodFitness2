@@ -290,7 +290,7 @@ MF.mixins.defaultGridEventsMixin = {
         }
     },
     toggleArchived: function () {
-        var currentState = =$(".toggleArchived").attr("data-toggleState");
+        var currentState = $(".toggleArchived").attr("data-toggleState");
         var action;
         if(currentState === "showAll"){
             action = "hide";
