@@ -289,10 +289,12 @@ MF.mixins.defaultGridEventsMixin = {
                 .done($.proxy(function (result) { this.successHandler(result) }, this));
         }
     },
-    toggleArchived: function (show) {
-        var filter = {"group": "AND", rules: [{"op":"toggle", "field": "Archived", "data": show ? "showAll" : "hide"}]};
+    toggleArchived: function () {
+        const action = $(".toggleArchived").data("toggleState");
+        var filter = {"group": "AND", rules: [{"op":"toggle", "field": "Archived", "data": action ? "showAll" : "hide"}]};
         var obj = {"filters":""  + JSON.stringify(filter) + ""};
         $("#"+this.options.gridId).jqGrid('setGridParam',{postData:obj});
+        $(".toggleArchived").data("toggleState", action ? "hide" : "showAll");
         this.reloadGrid();
     },
     successHandler:function(_result){
