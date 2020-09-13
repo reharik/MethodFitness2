@@ -290,7 +290,7 @@ MF.mixins.defaultGridEventsMixin = {
         }
     },
     toggleArchived: function () {
-        var currentState = $(".toggleArchived").attr("data-toggleState");
+        var currentState = $(".toggleArchived").attr("data-togglestate");
         var action;
         if(currentState === "showAll"){
             action = "hide";
@@ -301,7 +301,7 @@ MF.mixins.defaultGridEventsMixin = {
         var obj = {"filters":""  + JSON.stringify(filter) + ""};
         $("#"+this.options.gridId).jqGrid('setGridParam',{postData:obj});
         this.reloadGrid();
-        $(".toggleArchived").attr("data-toggleState", action || "showAll" );
+        $(".toggleArchived").attr("data-togglestate", action || "showAll" );
     },
     successHandler:function(_result){
         var that = this;
