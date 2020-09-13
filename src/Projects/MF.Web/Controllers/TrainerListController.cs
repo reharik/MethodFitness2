@@ -37,7 +37,7 @@ namespace MF.Web.Controllers
             };
             model.headerButtons.Add("new");
             model.headerButtons.Add("delete");
-            model.headerButtons.Add("toggleArchive");
+            model.headerButtons.Add("toggleArchived");
             return new CustomJsonResult(model);
         }
 

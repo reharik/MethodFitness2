@@ -255,7 +255,7 @@ MF.mixins.defaultGridEventsMixin = {
     events: {
         'click .new': 'addNew',
         'click .delete': 'deleteItems',
-        'click .toggleArchive': 'toggleArchived'
+        'click .toggleArchived': 'toggleArchived'
     },
     successSelector:"#messageContainer",
     errorSelector:"#messageContainer",
