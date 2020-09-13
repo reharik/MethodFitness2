@@ -221,6 +221,10 @@ span#login-links a.active {
     margin: 8px 0 0 6px;
 }
 
+.content-outer .content-header button.toggleArchived{
+    width:100px;
+}
+
 .content-outer .content-header button.return{
     background: url(../images/return_button.jpg) no-repeat scroll 0 0
         transparent;

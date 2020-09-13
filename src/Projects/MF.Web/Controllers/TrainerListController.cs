@@ -43,6 +43,9 @@ namespace MF.Web.Controllers
 
         public JsonResult Trainers(GridItemsRequestModel input)
         {
+            if(input.filters == null) {
+                input.filters = "{'group': 'AND', rules: [{'op':'toggle', 'field': 'Archived', 'data': 'hide' }]}";
+            }
             var user = _sessionContext.GetCurrentUser();
             //TODO find way to deal with string here
             var items = _dynamicExpressionQuery.PerformQuery<User>(input.filters, x=>x.UserRoles.Any(r=>r.Name == "Trainer" ));
