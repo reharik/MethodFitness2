@@ -22,6 +22,7 @@ namespace MF.Core.Domain.Persistence
             Map(x => x.ImageUrl);
             Map(x => x.Source);
             Map(x => x.SourceOther);
+            Map(x => x.Archived);
             References(x => x.SessionRates);
             References(x => x.ClientStatus);
             HasMany(x => x.Sessions).Access.CamelCaseField(Prefix.Underscore).Cascade.AllDeleteOrphan();
