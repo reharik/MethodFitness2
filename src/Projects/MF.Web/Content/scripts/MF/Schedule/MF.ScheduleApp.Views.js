@@ -677,7 +677,9 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
     },
     _unbindBindings:function(){
         MF.vent.unbind(this.options.gridId+":Redirect",this.showPayGrid,this);
-        MF.vent.unbind(this.options.gridId+":Other",this.archiveTrainer,this);    },
+        MF.vent.unbind(this.options.gridId+":Other",this.archiveTrainer,this);
+        MF.vent.unbind("gridComplete",this.modifyArchiveColumn,this);
+    },
     modifyArchiveColumn:function(){
         var grid = $("#" + this.options.gridId);
         var rows = grid.jqGrid('getRowData');
@@ -712,7 +714,31 @@ MF.Views.ClientGridView = MF.Views.View.extend({
     },
     viewLoaded:function(){
         MF.vent.bind(this.options.gridId+":Redirect",this.showPayGrid,this);
+        MF.vent.bind(this.options.gridId+":Other",this.archiveClient,this);
         this.setupBindings();
+    },
+    _setupBindings:function(){
+        MF.vent.bind("gridComplete",this.modifyArchiveColumn,this);
+    },
+    _unbindBindings:function(){
+        MF.vent.unbind(this.options.gridId+":Other",this.archiveClient,this);
+        MF.vent.unbind("gridComplete",this.modifyArchiveColumn,this);
+    },
+    modifyArchiveColumn:function(){
+        var grid = $("#" + this.options.gridId);
+        var rows = grid.jqGrid('getRowData');
+        grid.find("tr").not('.jqgfirstrow').each(function(idx,row){
+            var span = $($(row).find("td").last().find("span"));
+            if(span.text() === 'True' || span.text() === "UnArchive"){
+                span.text('UnArchive');
+                $(row).addClass("gridRowGrey");
+            }else if(span.text() === 'False' || span.text() === "Archive"){
+                span.text('Archive');
+            }
+        });
+    },
+    archiveClient:function(id){
+        MF.repository.ajaxGet(this.options.ArchiveClientUrl,{EntityId:id}).done($.proxy(this.successHandler,this));
     },
     onClose:function(){
         MF.vent.unbind(this.options.gridId+":Redirect",this.showPayGrid,this);
