@@ -703,7 +703,6 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
         this.unbindBindings();
     }
 });
-
 MF.Views.ClientGridView = MF.Views.View.extend({
     initialize:function(){
         this.options.gridOptions ={multiselect:false};
