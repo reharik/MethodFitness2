@@ -70,8 +70,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             var userEntityId = _sessionContext.GetUserId();
             var trainer = _repository.Find<User>(userEntityId);
             IEnumerable<Client> clients = !this._authorizationService.IsAllowed(trainer, "/Clients/CanScheduleAllClients")
-                    ? trainer.Clients.Where(x => !x.Archived)
-                    : this._repository.Query<Client>(x => !x.Archived);
+                    ? trainer.Clients
+                    : this._repository.FindAll<Client>();
             var _availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF});
             var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
 
