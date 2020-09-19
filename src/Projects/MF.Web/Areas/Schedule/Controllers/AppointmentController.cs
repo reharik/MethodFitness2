@@ -68,7 +68,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             appointment.StartTime = input.ScheduledStartTime.HasValue ? input.ScheduledStartTime.Value : appointment.StartTime;
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserId();
-            var trainer = _repository.Find<User>(userEntityId);
+            dynamic trainer = _repository.Find<User>(userEntityId);
             IEnumerable<Client> clients = !this._authorizationService.IsAllowed(trainer, "/Clients/CanScheduleAllClients")
                     ? trainer.Clients
                     : this._repository.FindAll<Client>();
