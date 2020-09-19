@@ -4,6 +4,7 @@ using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Html;
 using CC.Core.Core.Html.Menu;
+using CC.Core.Security.Interfaces;
 using CC.Core.Core.Services;
 using MF.Core.Domain;
 using MF.Core.Services;
@@ -18,12 +19,15 @@ namespace MF.Web.Controllers
         private readonly IEntityListGrid<Client> _clientListGrid;
         private readonly ISessionContext _sessionContext;
         private readonly IRepository _repository;
+        private readonly IAuthorizationService _authorizationService;
 
-        public ClientListController(IDynamicExpressionQuery dynamicExpressionQuery,
+        public ClientListController(IAuthorizationService authorizationService, 
+            IDynamicExpressionQuery dynamicExpressionQuery,
             IEntityListGrid<Client> clientListGrid,
             ISessionContext sessionContext,
             IRepository repository)
         {
+            _authorizationService = authorizationService;
             _dynamicExpressionQuery = dynamicExpressionQuery;
             _clientListGrid = clientListGrid;
             _sessionContext = sessionContext;
@@ -34,8 +38,9 @@ namespace MF.Web.Controllers
         {
             var user = _sessionContext.GetCurrentUser();
             var url = UrlContext.GetUrlForAction<ClientListController>(x => x.Clients(null));
-            var model = new ListViewModel()
+            var model = new ClientListViewModel()
             {
+                ArchiveClientUrl = UrlContext.GetUrlForAction<ClientController>(x => x.ClientStatus(null)),
                 addUpdateUrl = UrlContext.GetUrlForAction<ClientController>(x => x.AddUpdate(null)),
                 deleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
                // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
@@ -44,6 +49,10 @@ namespace MF.Web.Controllers
             };
             model.headerButtons.Add("new");
             model.headerButtons.Add("delete");
+            if (_authorizationService.IsAllowed(user, "/ArchiveClient"))
+            {
+                model.headerButtons.Add("toggleArchived");
+            }
             return new CustomJsonResult(model);
         }
 
@@ -63,5 +72,8 @@ namespace MF.Web.Controllers
             return new CustomJsonResult(gridItemsViewModel);
         }
     }
-    
+    public class ClientListViewModel : ListViewModel
+    {
+        public string ArchiveClientUrl { get; set; }
+    }   
 }

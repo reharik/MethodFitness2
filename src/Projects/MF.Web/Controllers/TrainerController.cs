@@ -72,10 +72,10 @@ namespace MF.Web.Controllers
                 trainer = new User();
                 trainer.ClientRateDefault = Int32.Parse(Site.Config.TrainerClientRateDefault);
             }
-            var clients = _repository.FindAll<Client>();
+            var clients = _repository.Query<Client>(x => !x.Archived);
             var model = Mapper.Map<User, TrainerViewModel>(trainer);
             var _availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
-            var selectedClients = trainer.Clients.Select(x =>
+            IEnumerable<TCRTokenInputDto> selectedClients = trainer.Clients.Where(x => !x.Archived).Select(x =>
                                                              {
                                                                  var tcr = trainer.TrainerClientRates.FirstOrDefault(c => c.Client == x);
                                                                  var percentage = tcr!=null ? tcr.Percent:trainer.ClientRateDefault;
