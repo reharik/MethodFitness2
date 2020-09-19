@@ -75,7 +75,7 @@ namespace MF.Web.Controllers
             var clients = _repository.Query<Client>(x => !x.Archived);
             var model = Mapper.Map<User, TrainerViewModel>(trainer);
             var _availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
-            IEnumerable<TCRTokenInputDto> selectedClients = trainer.Clients.Where(x => !x.Archived).Select(x =>
+            var selectedClients = trainer.Clients.Select(x =>
                                                              {
                                                                  var tcr = trainer.TrainerClientRates.FirstOrDefault(c => c.Client == x);
                                                                  var percentage = tcr!=null ? tcr.Percent:trainer.ClientRateDefault;
