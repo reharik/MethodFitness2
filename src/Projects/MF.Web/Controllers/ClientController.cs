@@ -203,8 +203,12 @@ namespace MF.Web.Controllers
                 _logger.LogError(trainers.First().LastName);
                 trainers.ForEach(x =>
                 {
+                    _logger.LogError("in loop");
+                    var TCR = x.TrainerClientRates.First<TrainerClientRate>(z => z.Client == client);
+                    _logger.LogError(TCR.Client.LastName);
                     x.RemoveClient(client);
-                    x.RemoveTrainerClientRate(x.TrainerClientRates.First<TrainerClientRate>(z => z.Client == client));
+                    _logger.LogError("after clinet");
+                    x.RemoveTrainerClientRate(TCR);
                     _logger.LogError("here");
                     validationManager = _saveEntityService.ProcessSave(client, validationManager);
                 });
