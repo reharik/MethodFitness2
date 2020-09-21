@@ -275,9 +275,10 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
             }
         }else{
             if(result.Message){
-                var note = $(this.successSelector).noty({type: "success", text:result.Message, viewId:this.cid});
-                note.setAnimationSpeed(1000);
-                note.setTimeout(3000);
+                // removing success message because it moves page down and annoys amahl
+                //var note = $(this.successSelector).noty({type: "success", text:result.Message, viewId:this.cid});
+                //note.setAnimationSpeed(1000);
+                //note.setTimeout(3000);
                 $.noty.closeAllErrorsByViewId(this.cid);
             }
             this.model.paymentAmount(0);
@@ -333,9 +334,10 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
             }
         }else{
             if(result.Message){
-                var note = $(this.successSelector).noty({type: "success", text:result.Message, viewId:this.cid});
-                note.setAnimationSpeed(1000);
-                note.setTimeout(3000);
+                // removing success message because it moves page down and annoys amahl
+                //var note = $(this.successSelector).noty({type: "success", text:result.Message, viewId:this.cid});
+                //note.setAnimationSpeed(1000);
+                //note.setTimeout(3000);
                 $.noty.closeAllErrorsByViewId(this.cid);
             }
             MF.vent.trigger("form:"+this.id+":success",result);

@@ -42,6 +42,7 @@ namespace MF.Web.Controllers
             _saveEntityService = saveEntityService;
             _sessionContext = sessionContext;
             _selectListItemService = selectListItemService;
+            _logger = logger;
         }
 
         public ActionResult AddUpdate_Template(ViewModel input)
