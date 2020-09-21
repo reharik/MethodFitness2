@@ -72,7 +72,7 @@ namespace MF.Web.Controllers
                 trainer = new User();
                 trainer.ClientRateDefault = Int32.Parse(Site.Config.TrainerClientRateDefault);
             }
-            var clients = _repository.Query<Client>(x => !x.Archived);
+            var clients = _repository.Query<Client>(x => !x.Archived).ToList();
             var model = Mapper.Map<User, TrainerViewModel>(trainer);
             var _availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
             var selectedClients = trainer.Clients.Select(x =>
