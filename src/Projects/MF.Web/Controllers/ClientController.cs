@@ -20,6 +20,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Billing.Controllers;
 using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
+using MF.Core;
 using StructureMap;
 
 namespace MF.Web.Controllers
@@ -30,11 +31,12 @@ namespace MF.Web.Controllers
         private readonly ISaveEntityService _saveEntityService;
         private readonly ISessionContext _sessionContext;
         private readonly ISelectListItemService _selectListItemService;
+        private readonly ILogger _logger;
 
         public ClientController(IRepository repository,
             ISaveEntityService saveEntityService,
             ISessionContext sessionContext,
-            ISelectListItemService selectListItemService)
+            ISelectListItemService selectListItemService, ILogger logger)
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
@@ -197,10 +199,12 @@ namespace MF.Web.Controllers
                 client.Archived = true;
                 validationManager = _saveEntityService.ProcessSave(client);
                 var trainers = _repository.Query<User>(x => x.Clients.Any(y => y.EntityId == client.EntityId)).ToList();
+                _logger.LogError(trainers.First().LastName);
                 trainers.ForEach(x =>
                 {
                     x.RemoveClient(client);
                     x.RemoveTrainerClientRate(x.TrainerClientRates.First<TrainerClientRate>(z => z.Client == client));
+                    _logger.LogError("here");
                     validationManager = _saveEntityService.ProcessSave(client, validationManager);
                 });
             }
