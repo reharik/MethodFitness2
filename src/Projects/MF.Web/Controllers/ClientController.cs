@@ -32,7 +32,7 @@ namespace MF.Web.Controllers
         private readonly ISelectListItemService _selectListItemService;
 
         public ClientController(IRepository repository,
-            ISaveEntityService saveEntityService, 
+            ISaveEntityService saveEntityService,
             ISessionContext sessionContext,
             ISelectListItemService selectListItemService)
         {
@@ -70,7 +70,7 @@ namespace MF.Web.Controllers
             {
                 FullHour = client.Sessions.Any(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
                     ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears)
-                    : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString()&&!x.SessionUsed),
+                    : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString() && !x.SessionUsed),
                 HalfHour = client.Sessions.Any(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears)
                     ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears)
                     : client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && !x.SessionUsed),
@@ -78,14 +78,14 @@ namespace MF.Web.Controllers
                     ? -client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears)
                     : client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && !x.SessionUsed),
             };
-            var model = Mapper.Map<Client,ClientViewModel>(client);
+            var model = Mapper.Map<Client, ClientViewModel>(client);
 
             model._Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString();
-            model._deleteUrl = UrlContext.GetUrlForAction<ClientController>(x=>x.Delete(null));
-            model._paymentListUrl = UrlContext.GetUrlForAction<PaymentListController>(x=>x.ItemList(null),AreaName.Billing)+"?ParentId="+client.EntityId;
+            model._deleteUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Delete(null));
+            model._paymentListUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null), AreaName.Billing) + "?ParentId=" + client.EntityId;
             model._sessionsAvailable = clientSessionsDto;
             model._saveUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Save(null));
-            model._StateList = _selectListItemService.CreateList<State>(); 
+            model._StateList = _selectListItemService.CreateList<State>();
             model._SourceList = _selectListItemService.CreateList<Source>();
             return new CustomJsonResult(model);
         }
@@ -131,20 +131,20 @@ namespace MF.Web.Controllers
             {
                 associateWithUser(client);
             }
-//            if (input.DeleteImage)
-//            {
-////                _uploadedFileHandlerService.DeleteFile(client.ImageUrl);
-//                client.ImageUrl = string.Empty;
-//            }
-//            
-//            var file = _uploadedFileHandlerService.RetrieveUploadedFile();
-////            var serverDirectory = "/CustomerPhotos/" + _sessionContext.GetCompanyId() + "/Clients";
-//            client.ImageUrl = _uploadedFileHandlerService.GetUrlForFile(file, client.FirstName + "_" + client.LastName);
+            //            if (input.DeleteImage)
+            //            {
+            ////                _uploadedFileHandlerService.DeleteFile(client.ImageUrl);
+            //                client.ImageUrl = string.Empty;
+            //            }
+            //            
+            //            var file = _uploadedFileHandlerService.RetrieveUploadedFile();
+            ////            var serverDirectory = "/CustomerPhotos/" + _sessionContext.GetCompanyId() + "/Clients";
+            //            client.ImageUrl = _uploadedFileHandlerService.GetUrlForFile(file, client.FirstName + "_" + client.LastName);
             var crudManager = _saveEntityService.ProcessSave(client);
 
-//            _uploadedFileHandlerService.SaveUploadedFile(file, client.FirstName + "_" + client.LastName);
+            //            _uploadedFileHandlerService.SaveUploadedFile(file, client.FirstName + "_" + client.LastName);
             var notification = crudManager.Finish();
-            return new CustomJsonResult(notification){ ContentType = "text/plain" };
+            return new CustomJsonResult(notification) { ContentType = "text/plain" };
         }
 
         private void associateWithUser(Client client)
@@ -178,24 +178,31 @@ namespace MF.Web.Controllers
                 client.SessionRates = new SessionRates(baseSessionRate);
             }
             if (clientModel.SessionRatesFullHour > 0) client.SessionRates.FullHour = clientModel.SessionRatesFullHour;
-            if(clientModel.SessionRatesHalfHour>0) client.SessionRates.HalfHour = clientModel.SessionRatesHalfHour;
-            if(clientModel.SessionRatesFullHourTenPack>0) client.SessionRates.FullHourTenPack = clientModel.SessionRatesFullHourTenPack;
-            if(clientModel.SessionRatesHalfHourTenPack>0)client.SessionRates.HalfHourTenPack = clientModel.SessionRatesHalfHourTenPack;
-            if(clientModel.SessionRatesPair>0) client.SessionRates.Pair = clientModel.SessionRatesPair;
-            if(clientModel.SessionRatesPairTenPack>0)client.SessionRates.PairTenPack = clientModel.SessionRatesPairTenPack;
+            if (clientModel.SessionRatesHalfHour > 0) client.SessionRates.HalfHour = clientModel.SessionRatesHalfHour;
+            if (clientModel.SessionRatesFullHourTenPack > 0) client.SessionRates.FullHourTenPack = clientModel.SessionRatesFullHourTenPack;
+            if (clientModel.SessionRatesHalfHourTenPack > 0) client.SessionRates.HalfHourTenPack = clientModel.SessionRatesHalfHourTenPack;
+            if (clientModel.SessionRatesPair > 0) client.SessionRates.Pair = clientModel.SessionRatesPair;
+            if (clientModel.SessionRatesPairTenPack > 0) client.SessionRates.PairTenPack = clientModel.SessionRatesPairTenPack;
             return client;
         }
 
         public ActionResult ClientStatus(ViewModel input)
         {
-            var clients = _repository.Query<Client>(x=>x.EntityId == input.EntityId);
+            var clients = _repository.Query<Client>(x => x.EntityId == input.EntityId);
             var client = clients.FirstOrDefault();
             IValidationManager validationManager = null;
+
             if (!client.Archived)
             {
-               
                 client.Archived = true;
                 validationManager = _saveEntityService.ProcessSave(client);
+                var trainers = _repository.Query<User>(x => x.Clients.Any(y => y.EntityId == client.EntityId)).ToList();
+                trainers.ForEach(x =>
+                {
+                    x.RemoveClient(client);
+                    x.RemoveTrainerClientRate(x.TrainerClientRates.First<TrainerClientRate>(z => z.Client == client));
+                    validationManager = _saveEntityService.ProcessSave(client, validationManager);
+                });
             }
             else
             {

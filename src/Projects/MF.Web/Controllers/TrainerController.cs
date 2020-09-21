@@ -72,7 +72,7 @@ namespace MF.Web.Controllers
                 trainer = new User();
                 trainer.ClientRateDefault = Int32.Parse(Site.Config.TrainerClientRateDefault);
             }
-            var clients = _repository.FindAll<Client>();
+            var clients = _repository.Query<Client>(x => !x.Archived);
             var model = Mapper.Map<User, TrainerViewModel>(trainer);
             var _availableClients = clients.Select(x => new TCRTokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
             var selectedClients = trainer.Clients.Select(x =>
@@ -83,9 +83,10 @@ namespace MF.Web.Controllers
                                                                              {
                                                                                  id = x.EntityId.ToString(),
                                                                                  name = x.FullNameLNF,
-                                                                                 percentage = percentage
+                                                                                 percentage = percentage,
+                                                                                 archived = x.Archived
                                                                              };
-                                                             });
+                                                             }).Where<TCRTokenInputDto>(x => !x.archived);
             model.ClientsDtos = new TCRTokenInputViewModel { _availableItems = _availableClients, selectedItems = selectedClients.OrderBy(x=>x.name) };
 
             var userRoles = _repository.FindAll<UserRole>();
@@ -365,6 +366,7 @@ namespace MF.Web.Controllers
     {
         public int percentage { get; set; }
         public string display { get { return name + "(" + percentage + ")"; } }
+        public bool archived { get; set; }
 
     }
 
