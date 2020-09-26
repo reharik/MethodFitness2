@@ -170,7 +170,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
 
-            var notification = validateAppointment(user, input);
+            var notification = validateAppointment(user, appointment, input);
             if (!notification.Success)
             {
                 return Json(notification, JsonRequestBehavior.AllowGet);
@@ -190,15 +190,21 @@ namespace MF.Web.Areas.Schedule.Controllers
             return new CustomJsonResult(new Notification(continuation));
         }
 
-        private Notification validateAppointment(User user, AppointmentViewModel input)
+        private Notification validateAppointment(User user, Appointment appointment, AppointmentViewModel input)
         {
             var startTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.StartTimeString);
             var endTime = DateTime.Parse(input.Date.ToShortDateString() + " " + input.EndTimeString);
-
             var notification = validateOverBooking(user, input, startTime, endTime);
 
             var convertTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
-            if (startTime < convertTime.AddHours(6) && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
+            var cutOff = convertTime.AddHours(6);
+            var canActRetro = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments");
+
+            if ((appointment != null 
+                && appointment.StartTime < cutOff 
+                && startTime != appointment.StartTime
+                && !canActRetro) ||
+            (startTime < cutOff && !canActRetro))
             {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.YOU_CAN_NOT_CREATE_RETROACTIVE_APPOINTMENTS.ToString();
