@@ -202,7 +202,6 @@ namespace MF.Web.Areas.Schedule.Controllers
 
             if ((appointment != null 
                 && appointment.StartTime < cutOff 
-                && startTime != appointment.StartTime
                 && !canActRetro) ||
             (startTime < cutOff && !canActRetro))
             {
