@@ -58,6 +58,10 @@ namespace MF.Web.Controllers
 
         public JsonResult Clients(GridItemsRequestModel input)
         {
+            if (input.filters == null)
+            {
+                input.filters = "{'group': 'AND', rules: [{'op':'toggle', 'field': 'Archived', 'data': 'hide' }]}";
+            }
             var userEntityId = _sessionContext.GetUserId();
             var trainer = _repository.Find<User>(userEntityId);
             IQueryable<Client> items;

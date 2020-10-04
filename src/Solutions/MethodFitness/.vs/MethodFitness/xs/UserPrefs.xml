@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}|">
+  <MonoDevelop.Ide.ItemProperties.MF.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projects/MF.Web/Controllers/ClientListController.cs">
+    <Files>
+      <File FileName="../../Projects/MF.Web/Areas/Billing/Controllers/PaymentController.cs" Line="4" Column="7" />
+      <File FileName="../../Projects/MF.Web/Controllers/TrainerListController.cs" Line="39" Column="47" />
+      <File FileName="../../Projects/MF.Web/Controllers/ClientListController.cs" Line="62" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MethodFitness" expanded="True">
+            <Node name="MF.Web" expanded="True">
+              <Node name="Areas" expanded="True">
+                <Node name="Billing" expanded="True">
+                  <Node name="Controllers" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Controllers" expanded="True">
+                <Node name="ClientListController.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
