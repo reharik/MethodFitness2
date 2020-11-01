@@ -631,7 +631,11 @@
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
+    <MonoDevelop>
+      <Properties>
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+      </Properties>
+    </MonoDevelop>
   </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Import Project="..\..\Solutions\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\..\Solutions\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
 </Project>
