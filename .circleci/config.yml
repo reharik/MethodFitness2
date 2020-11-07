@@ -11,7 +11,9 @@
        - checkout
        - run:
            name: "npm install"
-           command: npm install
+           command: |
+             cd \src\BuildScripts\MethodFitness
+             npm install
        - run:
            name: "grunt build"
            command: |
