@@ -12,10 +12,10 @@
        - run:
            name: "npm install"
            command: |
-             cd \src\BuildScripts\MethodFitness
+             cd src\BuildScripts\MethodFitness
              npm install
        - run:
            name: "grunt build"
            command: |
-             cd \src\buildscripts\methodfitness
+             cd src\buildscripts\methodfitness
              grunt --target PROD --buildConfig release -v
