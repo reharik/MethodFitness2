@@ -17,4 +17,3 @@
              - command: |
                 cd \src\buildscripts\methodfitness
                 grunt --target PROD --buildConfig release -v
-~                                                                            
