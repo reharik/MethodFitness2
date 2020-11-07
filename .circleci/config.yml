@@ -14,6 +14,6 @@
            command: npm install
        - run:
            name: "grunt build"
-             - command: |
-                cd \src\buildscripts\methodfitness
-                grunt --target PROD --buildConfig release -v
+           command: |
+             cd \src\buildscripts\methodfitness
+             grunt --target PROD --buildConfig release -v
