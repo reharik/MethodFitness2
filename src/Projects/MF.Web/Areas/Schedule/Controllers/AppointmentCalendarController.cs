@@ -53,22 +53,22 @@ namespace MF.Web.Areas.Schedule.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var locations = _selectListItemService.CreateList<Location>(x=>x.Name,x=>x.EntityId,false).ToList();
-            locations.Insert(0,new SelectListItem{Text=WebLocalizationKeys.ALL.ToString(),Value = "0"});
+            var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, false).ToList();
+            locations.Insert(0, new SelectListItem { Text = WebLocalizationKeys.ALL.ToString(), Value = "0" });
             var trainersDto = new List<TrainerLegendDto>();
-            if(user.UserRoles.Any(x=>x.Name==UserType.Administrator.ToString()))
+            if (user.UserRoles.Any(x => x.Name == UserType.Administrator.ToString()))
             {
                 var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Name == UserType.Trainer.ToString()));
-                trainersDto = trainers.Select(x=> new TrainerLegendDto {Name=processTrainerName(x),
-                    Color=x.Color,
-                EntityId = x.EntityId}).ToList();
+                trainersDto = trainers.Select(x => new TrainerLegendDto { Name = processTrainerName(x),
+                    Color = x.Color,
+                    EntityId = x.EntityId }).ToList();
             }
 
             var model = new CalendarViewModel
             {
                 Trainers = trainersDto,
                 _LocationList = locations,
-//                CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
+                //                CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
                 CalendarDefinition = new CalendarDefinition
                 {
                     Url = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.Events(null), AreaName.Schedule),
@@ -89,7 +89,7 @@ namespace MF.Web.Areas.Schedule.Controllers
         public string processTrainerName(User trainer)
         {
             var name = trainer.LastName + ", " + trainer.FirstName[0];
-            if(name.Length>12)
+            if (name.Length > 12)
             {
                 name = name.Substring(0, 12);
             }
@@ -118,7 +118,7 @@ namespace MF.Web.Areas.Schedule.Controllers
 
         private Notification validateAppointment(User user, AppointmentChangedViewModel input, DateTime? ost, DateTime? osd)
         {
-            var notification = new Notification {Success = true};
+            var notification = new Notification { Success = true };
             // nice to pull this off user
             var currentTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var original = new DateTime(osd.Value.Year, osd.Value.Month, osd.Value.Day, ost.Value.Hour, ost.Value.Minute, 0);
@@ -140,9 +140,9 @@ namespace MF.Web.Areas.Schedule.Controllers
             var events = new List<CalendarEvent>();
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
-            var appointments = input.Loc<=0
+            var appointments = input.Loc <= 0
                 ? _repository.Query<Appointment>(x => x.StartTime >= startDateTime && x.Date <= endDateTime).Fetch(x => x.Clients).Fetch(x => x.Trainer).AsEnumerable()
-                : _repository.Query<Appointment>(x => x.StartTime >= startDateTime 
+                : _repository.Query<Appointment>(x => x.StartTime >= startDateTime
                                                 && x.Date <= endDateTime
                                                 && x.Location.EntityId == input.Loc).Fetch(x => x.Clients).Fetch(x => x.Trainer).AsEnumerable();
             if (input.TrainerIds.IsNotEmpty())
@@ -155,38 +155,129 @@ namespace MF.Web.Areas.Schedule.Controllers
                     appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId) || x.Trainer.Archived);
                 }
             }
+            if (!canSeeOthers)
+            {
+                var blockedEvents = CalculateBlockedAppointments(appointments, userEntityId);
+                events.Concat(blockedEvents);
+            }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
             return new CustomJsonResult(events);
         }
 
         private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)
         {
-            var calendarEvent = new CalendarEvent
-                                    {
-                                        EntityId = x.EntityId,
-                                        start = x.StartTime.ToString(),
-                                        end = x.EndTime.ToString(),
-                                        color = x.Trainer.Color,
-                                        trainerId = x.Trainer.EntityId,
-                                        locationId = x.Location.EntityId,
-                                        appointmentType = x.AppointmentType
-                                    };
-            if(x.Clients.Count()>1)
+            if (x.Trainer == user || canSeeOthers)
             {
-                calendarEvent.title = x.Location.Name + ": Multiple";
-            }else if(x.Clients.Count()==1)
-            {
-                calendarEvent.title = x.Location.Name + ": " +x.Clients.FirstOrDefault().FullNameLNF;
-            }
+                var calendarEvent = new CalendarEvent
+                {
+                    EntityId = x.EntityId,
+                    start = x.StartTime.ToString(),
+                    end = x.EndTime.ToString(),
+                    color = x.Trainer.Color,
+                    trainerId = x.Trainer.EntityId,
+                    locationId = x.Location.EntityId,
+                    appointmentType = x.AppointmentType
+                };
+                if (x.Clients.Count() > 1)
+                {
+                    calendarEvent.title = x.Location.Name + ": Multiple";
+                }
+                else if (x.Clients.Count() == 1)
+                {
+                    calendarEvent.title = x.Location.Name + ": " + x.Clients.FirstOrDefault().FullNameLNF;
+                }
 
-            if (x.Trainer != user && !canSeeOthers)
-            {
-                return;
-                calendarEvent.color = "#fffff";
-                calendarEvent.title = string.Empty;
-                calendarEvent.className = "hiddenEvent";
+                events.Add(calendarEvent);
             }
-            events.Add(calendarEvent);
+        }
+
+        private void AddAppt(Appointment appt, IDictionary<string, int> tracking, IDictionary<string, bool> blocked, int cutOff )
+        {
+            var startD = appt.StartTime.GetValueOrDefault();
+            var endD = appt.EndTime.GetValueOrDefault();
+            TimeSpan ts = endD - startD;
+            var minutes = ts.TotalMinutes;
+            while(minutes > 0)
+            {
+                var dateStr = startD.ToString("G");
+                var spots = appt.AppointmentType == "Pair" ? 2 : 1;
+                tracking[dateStr] = tracking.ContainsKey(dateStr) ? tracking[dateStr] + spots : spots;
+                if(tracking[dateStr] >= cutOff)
+                {
+                    blocked[dateStr] = true;
+                }
+                startD.AddMinutes(15);
+                ts = endD - startD;
+                minutes = ts.TotalMinutes;
+            }
+        }
+
+        private IEnumerable<CalendarEvent> CreateEventsForBlocked(Dictionary<int, Dictionary<string, bool>> blockeByLoc,IEnumerable<Location> locations)
+        {
+            List<CalendarEvent> newEvents = new List<CalendarEvent>();
+
+            blockeByLoc.ForEach(location =>
+              {
+                  var locationEntity = locations.First(x => x.EntityId == location.Key);
+                  var name = locationEntity.Name;
+                  DateTime? previousDate = null;
+                  CalendarEvent currentEvent = new CalendarEvent();
+                  location.Value.ForEach(slotDateStr => {
+                      var slotDate = DateTime.Parse(slotDateStr.Key);
+                      if (previousDate == null)
+                      {
+                          currentEvent.start = slotDate.ToString();
+                          currentEvent.locationId = location.Key;
+                          currentEvent.color = "#fffff";
+                          currentEvent.title = name;
+                          currentEvent.className = "hiddenEvent";
+                      } else {
+                          var ts = slotDate - previousDate;
+                          if (ts.Value.TotalMinutes >= 15)
+                          {
+                              currentEvent.end = previousDate.ToString();
+                              newEvents.Add(currentEvent);
+                              previousDate = null;
+                              currentEvent = new CalendarEvent();
+                          }
+                          else
+                          {
+                              previousDate = slotDate;
+                          }
+                      }
+                  });
+              });
+
+            return newEvents;
+        }
+        public IEnumerable<CalendarEvent> CalculateBlockedAppointments(IEnumerable<Appointment> allEvents, int trainerId)
+        {
+            var locations = _repository.FindAll<Location>();
+            var tracking = new Dictionary<int, IDictionary<string, int>>();
+            var blockedByLocationAndTime = new Dictionary<int, Dictionary<string, bool>>();
+            var maxAppointments = new Dictionary<int, int>(){{2, 4},{3, 2}};
+            var othersAppointmens = allEvents.Where(x => x.Trainer.EntityId != trainerId);
+            othersAppointmens.ForEach(appt =>
+            {
+                var locationId = appt.Location.EntityId;
+                if (maxAppointments.ContainsKey(locationId))
+                {
+                    if (!tracking.ContainsKey(appt.Location.EntityId))
+                    {
+                        var timeSlots = new Dictionary<string, int>();
+                        tracking.Add(locationId, timeSlots);
+                    }
+                    if (!blockedByLocationAndTime.ContainsKey(locationId))
+                    {
+                        var isBlocked = new Dictionary<string, bool>();
+                        blockedByLocationAndTime.Add(locationId, isBlocked);
+                    }
+
+                    AddAppt(appt, tracking[locationId], blockedByLocationAndTime[locationId], maxAppointments[locationId]);
+                }
+            });
+
+            return CreateEventsForBlocked(blockedByLocationAndTime, locations);
         }
     }
 

@@ -1,30 +1,12 @@
 ﻿<Properties StartupConfiguration="{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}|">
   <MonoDevelop.Ide.ItemProperties.MF.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projects/MF.Web/Areas/Schedule/Controllers/AppointmentCalendarController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projects/MF.Web/Views/Shared/_Layout.cshtml">
     <Files>
-      <File FileName="../../Projects/MF.Web/Areas/Billing/Controllers/PaymentController.cs" Line="4" Column="7" />
-      <File FileName="../../Projects/MF.Web/Controllers/TrainerListController.cs" Line="39" Column="47" />
-      <File FileName="../../Projects/MF.Web/Controllers/ClientListController.cs" Line="62" Column="1" />
-      <File FileName="../../Projects/MF.Web/Areas/Schedule/Controllers/AppointmentController.cs" Line="341" Column="38" />
-      <File FileName=".nuget/NuGet.Config" Line="1" Column="1" />
-      <File FileName=".nuget/NuGet.targets" Line="8" Column="9" />
-      <File FileName="../../Projects/CC.Core/packages.config" Line="11" Column="12" />
-      <File FileName="../../Projects/CC.Core/app.config" Line="11" Column="17" />
-      <File FileName="../../Projects/CC.Core/CC.Core.csproj" Line="1" Column="25" />
-      <File FileName="../NuGet.Config" Line="6" Column="17" />
-      <File FileName="../../Projects/MF.Core/packages.config" Line="1" Column="1" />
-      <File FileName="../../Projects/MF.Core/app.config" Line="1" Column="1" />
-      <File FileName="../../Projects/MF.Core/MF.Core.csproj" Line="258" Column="11" />
-      <File FileName="../../Projects/DBFluentMigration/DBFluentMigration.csproj" Line="119" Column="12" />
-      <File FileName="../../Projects/MF.Web/MF.Web.csproj" Line="641" Column="11" />
-      <File FileName="../../Projects/Generator/Generator.csproj" Line="204" Column="10" />
-      <File FileName="../../Projects/MF.Tests/MF.Tests.csproj" Line="24" Column="51" />
-      <File FileName="../../Projects/MF.Web/Web.config" Line="14" Column="109" />
-      <File FileName="../../Projects/MF.Web/Areas/Schedule/Views/Web.config" Line="12" Column="87" />
-      <File FileName="../../Projects/MF.Web/Areas/Billing/Views/Web.config" Line="12" Column="94" />
-      <File FileName="../../Projects/MF.Web/Areas/Reporting/Views/Web.config" Line="12" Column="94" />
-      <File FileName="../../Projects/MF.Web/Views/Web.config" Line="14" Column="48" />
-      <File FileName="../../Projects/MF.Web/Areas/Schedule/Controllers/AppointmentCalendarController.cs" Line="1" Column="1" />
+      <File FileName="../../Projects/MF.Web/Areas/Schedule/Controllers/AppointmentCalendarController.cs" Line="245" Column="55" />
+      <File FileName="../../Projects/MF.Web/Areas/Schedule/Controllers/AppointmentController.cs" Line="291" Column="50" />
+      <File FileName="../../Projects/MF.Core/Domain/Location.cs" Line="4" Column="18" />
+      <File FileName="../../Projects/MF.Web/Views/_ViewStart.cshtml" Line="1" Column="1" />
+      <File FileName="../../Projects/MF.Web/Views/Shared/_Layout.cshtml" Line="58" Column="19" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -34,18 +16,22 @@
             <Node name="CC.Core" expanded="True">
               <Node name="References" expanded="True" />
             </Node>
-            <Node name="MF.Core" expanded="True" />
+            <Node name="MF.Core" expanded="True">
+              <Node name="Domain" expanded="True" />
+            </Node>
             <Node name="MF.Web" expanded="True">
               <Node name="Areas" expanded="True">
                 <Node name="Schedule" expanded="True">
-                  <Node name="Controllers" expanded="True">
-                    <Node name="AppointmentCalendarController.cs" selected="True" />
-                  </Node>
+                  <Node name="Controllers" expanded="True" />
                   <Node name="Views" expanded="True" />
                 </Node>
               </Node>
               <Node name="Controllers" expanded="True" />
-              <Node name="Views" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="Shared" expanded="True">
+                  <Node name="_Layout.cshtml" selected="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>
