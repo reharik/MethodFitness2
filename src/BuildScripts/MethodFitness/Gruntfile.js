@@ -65,7 +65,7 @@ module.exports = function (grunt) {
 				platform: "Any CPU",
 				targets: ["Clean", "Build"],
 				version: 4.0,
-				verbosity: "detailed",
+				verbosity: "diagnostic",
 				inferMsbuildPath: true
 			},
 		},
