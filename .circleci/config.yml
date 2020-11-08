@@ -18,6 +18,7 @@
            name: "grunt build"
            command: |
              cd src\Solutions\MethodFitness
-             dotnet restore
+             nuget restore
              dotnet build
-             #yarn grunt
+             cd src\BuildScripts\MethodFitness
+             yarn grunt

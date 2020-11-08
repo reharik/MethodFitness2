@@ -63,9 +63,9 @@ module.exports = function (grunt) {
 			options: {
 				projectConfiguration: grunt.option("buildConfig"),
 				platform: "Any CPU",
-				targets: ["restore", "Build"],
+				targets: ["Rebuild"],
 				version: 4.0,
-				verbosity: "diagnostic",
+				verbosity: "detailed",
 				inferMsbuildPath: true,
 			},
 		},
