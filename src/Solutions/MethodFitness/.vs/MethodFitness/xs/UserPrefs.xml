@@ -1,18 +1,27 @@
 ﻿<Properties StartupConfiguration="{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}|">
   <MonoDevelop.Ide.ItemProperties.MF.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="config.yml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projects/MF.Web/MF.Web.csproj">
     <Files>
       <File FileName="../../Projects/MF.Web/Areas/Schedule/Controllers/AppointmentCalendarController.cs" Line="245" Column="55" />
       <File FileName="../../Projects/MF.Web/Areas/Schedule/Controllers/AppointmentController.cs" Line="291" Column="50" />
       <File FileName="../../Projects/MF.Core/Domain/Location.cs" Line="4" Column="18" />
       <File FileName="../../Projects/MF.Web/Views/_ViewStart.cshtml" Line="1" Column="1" />
       <File FileName="../../Projects/MF.Web/Views/Shared/_Layout.cshtml" Line="58" Column="19" />
-      <File FileName="config.yml" Line="12" Column="27" />
+      <File FileName="../../Projects/MF.Web/MF.Web.csproj" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="MethodFitness" expanded="True" selected="True" />
+          <Node name="MethodFitness" expanded="True" selected="True">
+            <Node name="MF.Web" expanded="True">
+              <Node name="References" expanded="True" />
+              <Node name="Areas" expanded="True">
+                <Node name="Schedule" expanded="True">
+                  <Node name="Controllers" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
