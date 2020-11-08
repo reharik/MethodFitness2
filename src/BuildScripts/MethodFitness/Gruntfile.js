@@ -190,9 +190,9 @@ module.exports = function (grunt) {
 	grunt.registerTask("default", [
 		"logStart",
 		"clean:build",
-		"msbuild",
+		//"msbuild",
 		"copy:buildArtifacts",
-		"uglify",
+		//"uglify",
 		"cleanempty",
 		"hbsconfigpoke",
 		"logEnd",
