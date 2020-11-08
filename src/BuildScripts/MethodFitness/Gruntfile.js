@@ -66,7 +66,7 @@ module.exports = function (grunt) {
 				targets: ["restore", "Build"],
 				version: 4.0,
 				verbosity: "diagnostic",
-				inferMsbuildPath: true
+				inferMsbuildPath: true,
 			},
 		},
 		copy: {
@@ -200,11 +200,11 @@ module.exports = function (grunt) {
 	grunt.registerTask("deploy", [
 		"logStart",
 		"clean:build",
-		"msbuild",
+		// "msbuild",
 		"copy:buildArtifacts",
 		"cleanempty",
 		"hbsconfigpoke",
-		"copy:deploy",
+		// "copy:deploy",
 		"logEnd",
 	]);
 };

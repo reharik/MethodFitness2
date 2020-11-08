@@ -57,3 +57,5 @@ Backup*/
 UpgradeLog*.XML
 
 src/logs
+
+.history
