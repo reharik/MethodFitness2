@@ -280,7 +280,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 	},
 
 	resetCalendar: function () {
-		let _model = this.model;
+		var _model = this.model;
 		_model.location = this.viewModel.Location();
 
 		var ids = "";
