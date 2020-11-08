@@ -19,6 +19,6 @@
            command: |
              cd src\Solutions\MethodFitness
              nuget restore
-             #dotnet build
+             dotnet build
              #cd src\BuildScripts\MethodFitness
              #yarn grunt
