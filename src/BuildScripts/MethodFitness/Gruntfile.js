@@ -192,7 +192,7 @@ module.exports = function (grunt) {
 		"clean:build",
 		//"msbuild",
 		"copy:buildArtifacts",
-		//"uglify",
+		"uglify",
 		"cleanempty",
 		"hbsconfigpoke",
 		"logEnd",
