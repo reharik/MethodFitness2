@@ -15,10 +15,13 @@
              cd src\BuildScripts\MethodFitness
              npm install
        - run:
-           name: "grunt build"
+           name: "nuget and msbuild"
            command: |
              cd src\Solutions\MethodFitness
              nuget restore
              dotnet build
+       - run:
+           name: "grunt copy"
+           command: |
              cd src\BuildScripts\MethodFitness
              yarn grunt
