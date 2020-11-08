@@ -5,15 +5,17 @@
 
  jobs:
    build:
-     executor: win/default     
+     executor: win/default
 
      steps:
        - checkout
        - run:
            name: "npm install"
-           command: npm install           
-       - run: 
+           command: |
+             cd src\BuildScripts\MethodFitness
+             npm install
+       - run:
            name: "grunt build"
-             - command: |
-                cd \src\buildscripts\methodfitness
-               yarn grunt
+           command: |
+             cd src\buildscripts\methodfitness
+             yarn grunt
