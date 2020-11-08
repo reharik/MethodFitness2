@@ -280,8 +280,8 @@ MF.Views.CalendarView = MF.Views.View.extend({
 	},
 
 	resetCalendar: function () {
-		let model = this.model;
-		model.location = this.viewModel.Location();
+		let _model = this.model;
+		_model.location = this.viewModel.Location();
 
 		var ids = "";
 		$(".legendLabel").each(function (i, item) {
@@ -295,17 +295,17 @@ MF.Views.CalendarView = MF.Views.View.extend({
 			ids = "NONE";
 		}
 
-		let url = model.CalendarDefinition.Url;
+		let url = _model.CalendarDefinition.Url;
 		let source = function (start, end, callback) {
 			MF.repository
 				.ajaxGet(url, {
-					Loc: model.location,
+					Loc: _model.location,
 					TrainerIds: ids,
 					start: ~~(start.getTime() / 1000),
 					end: ~~(end.getTime() / 1000),
 				})
 				.then((response) => {
-					model.blockedByLocationAndTime = MF.blockedTimes.calculate(response);
+					_model.blockedByLocationAndTime = MF.blockedTimes.calculate(response);
 					callback(response);
 				});
 		};
