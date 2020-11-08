@@ -17,5 +17,7 @@
        - run:
            name: "grunt build"
            command: |
-             cd src\buildscripts\methodfitness
-             yarn grunt
+             cd src\Solutions\MethodFitness
+             dotnet restore
+             dotnet build
+             #yarn grunt
