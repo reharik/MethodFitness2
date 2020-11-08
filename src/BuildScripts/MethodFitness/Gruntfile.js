@@ -66,6 +66,7 @@ module.exports = function (grunt) {
 				targets: ["Clean", "Build"],
 				version: 4.0,
 				verbosity: "quiet",
+				inferMsbuildPath: true
 			},
 		},
 		copy: {
