@@ -3,8 +3,8 @@ if (typeof MF == "undefined") {
 }
 
 MF.blockedTimes = (function () {
-	const locationMap = { 2: "Providence", 3: "East Greenwhich" };
-	const maxAppointments = { 2: 4, 3: 2 };
+	const locationMap = { 2: "Providence", 1: "East Greenwhich" };
+	const maxAppointments = { 2: 4, 1: 2 };
 	const blockedByLocationAndTime = {};
 	const hash = {};
 	const addAppt = (appt, hash, blocked, cutOff) => {
@@ -12,8 +12,7 @@ MF.blockedTimes = (function () {
 		const endD = new XDate(appt.end);
 		while (startD.diffMinutes(endD) > 0) {
 			const dateStr = startD.toString("M/d/yyyy h:mm ss TT");
-			const spots = appt.appointmentType === "Pair" ? 2 : 1;
-			hash[dateStr] = dateStr in hash ? hash[dateStr] + spots : spots;
+			hash[dateStr] = dateStr in hash ? hash[dateStr] + 1 : 1;
 			if (hash[dateStr] >= cutOff) {
 				blocked[dateStr] = true;
 			}
