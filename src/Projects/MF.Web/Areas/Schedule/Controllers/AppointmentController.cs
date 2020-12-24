@@ -231,7 +231,16 @@ namespace MF.Web.Areas.Schedule.Controllers
             var map = new TimeMap();
             var length = 0;
             var slots = 1;
-            switch(input.AppointmentType) {
+            var locationSlots = 999;
+            if(input.LocationEntityId == 2)
+            {
+                locationSlots = 4;
+            }
+            if(input.LocationEntityId == 1)
+            {
+                locationSlots = 2;
+            }
+            switch (input.AppointmentType) {
                 case "Hour": {
                     length = 4;
                     break;
@@ -242,7 +251,6 @@ namespace MF.Web.Areas.Schedule.Controllers
                 }
                 case "Pair": {
                     length = 4;
-                    slots = 2;
                     break;
                 }
             }
@@ -292,8 +300,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             _logger.LogWarn("map45: " + map._45);
             _logger.LogWarn("map60: " + map._60);
 
-            var count = input.LocationEntityId == 2 ? 6 : 2;
-            if(map._15>=count || map._30>=count || map._45>=count || map._60>=count) {
+            if(map._15>= locationSlots || map._30>= locationSlots || map._45>= locationSlots || map._60>= locationSlots)
+            {
                 notification.Success = false;
                 notification.Message = CoreLocalizationKeys.LOCATION_HAS_NO_SPACE_AVAILABLE.ToString();
             }

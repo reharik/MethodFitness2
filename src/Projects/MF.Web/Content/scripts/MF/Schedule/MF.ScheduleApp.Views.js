@@ -154,7 +154,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 			targetDateString,
 			this.model.location
 		);
-		if (blockedMsg) {
+		if (blockedMsg.length > 0) {
 			alert(blockedMsg);
 		}
 		var data = {
