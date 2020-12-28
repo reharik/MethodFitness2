@@ -1,8 +1,10 @@
+using System;
 using System.Security.Principal;
 using System.Web.Security;
 
 namespace MF.Core.Config
 {
+    [Serializable]
     public class CustomIdentitiy : IIdentity
     {
         private readonly FormsAuthenticationTicket _authTicket;

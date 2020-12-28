@@ -5,6 +5,7 @@ using CC.Core.Utilities;
 
 namespace MF.Core.Config
 {
+    [Serializable]
     public class CustomPrincipal : IPrincipal
     {
         private readonly IIdentity _identity;
