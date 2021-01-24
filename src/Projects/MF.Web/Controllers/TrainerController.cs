@@ -235,14 +235,21 @@ namespace MF.Web.Controllers
 
         private void addSecurityUserGroups(User trainer)
         {
-            _authorizationRepository.AssociateUserWith(trainer,UserType.Trainer.ToString());
-            if(trainer.UserRoles.Any(x=>x.Name==UserType.Administrator.ToString()))
+
+            var trainerGroup = _authorizationRepository.GetUsersGroupByName(UserType.Trainer.ToString());
+            var adminGroup = _authorizationRepository.GetUsersGroupByName(UserType.Administrator.ToString());
+            _authorizationRepository.AssociateUserWith(trainer, UserType.Trainer.ToString());
+            if (trainer.UserRoles.Any(x => x.Name == UserType.Administrator.ToString()))
             {
                 _authorizationRepository.AssociateUserWith(trainer, UserType.Administrator.ToString());
-            }else
+            }
+            else
             {
                 _authorizationRepository.DetachUserFromGroup(trainer, UserType.Administrator.ToString());
             }
+
+            _authorizationRepository.UpdateUsersGroup(trainerGroup);
+            _authorizationRepository.UpdateUsersGroup(adminGroup);
         }
 
         private void handlePassword(TrainerViewModel input, User origional)
