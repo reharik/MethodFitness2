@@ -58,3 +58,4 @@ UpgradeLog*.XML
 
 src/logs
 .vs
+.history
