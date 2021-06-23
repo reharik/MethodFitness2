@@ -6,6 +6,8 @@ using Newtonsoft.Json.Converters;
 
 namespace MF.Web.Config
 {
+    
+  [Serializable]
     public class CustomJsonResult : JsonResult
     {
         public CustomJsonResult(object input)

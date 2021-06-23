@@ -1,0 +1,94 @@
+﻿<Properties StartupConfiguration="{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}|">
+  <MonoDevelop.Ide.ItemProperties.MF.Web PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Projects/MF.Web/Areas/Reporting/RDLC/Config/CustomJsonResult.cs">
+    <Files>
+      <File FileName="../../Projects/MF.Web/CustomWebViewPage.cs" Line="9" Column="50" />
+      <File FileName="../../Projects/CC.Core/DataValidation/DataValidationRegistry.cs" Line="1" Column="1" />
+      <File FileName="../../Projects/CC.Core/UI.Helpers/Tags/TagGenerator.cs" Line="57" Column="31" />
+      <File FileName="../../Projects/CC.Core/Utilities/BasicExtensions.cs" Line="80" Column="1" />
+      <File FileName="../../Projects/CC.Core/HtmlTags/JsonUtil.cs" Line="39" Column="20" />
+      <File FileName="../../Projects/CC.Core/Core/DomainTools/Repository.cs" Line="129" Column="47" />
+      <File FileName="../../Projects/CC.Core/Core/Localization/LocalizationManager.cs" Line="18" Column="63" />
+      <File FileName="../../Projects/MF.Web/Areas/Reporting/RDLC/Config/Bootstrapper.cs" Line="58" Column="1" />
+      <File FileName="../../Projects/MF.Web/Areas/Billing/Controllers/PaymentController.cs" Line="107" Column="35" />
+      <File FileName="../../Projects/MF.Core/Rules/RulesEngineBase.cs" Line="31" Column="2" />
+      <File FileName="../../Projects/MF.Core/Rules/DeleteEmployeeRules.cs" Line="12" Column="35" />
+      <File FileName="../../Projects/MF.Web/MFWebRegistry.cs" Line="91" Column="70" />
+      <File FileName="../../Projects/MF.Web/Controllers/ClientController.cs" Line="12" Column="33" />
+      <File FileName=".nuget/NuGet.Config" Line="1" Column="1" />
+      <File FileName=".nuget/NuGet.targets" Line="1" Column="1" />
+      <File FileName="../../Projects/MF.Web/Web.config.hbs" Line="1" Column="1" />
+      <File FileName="../../Projects/MF.Web/Global.asax.cs" Line="69" Column="24" />
+      <File FileName="../../Projects/MF.Web/Areas/Reporting/RDLC/Config/StructureMapServiceLocator.cs" Line="17" Column="1" />
+      <File FileName="../../../../../../../usr/lib/mono/msbuild/15.0/bin/Microsoft.Common.CurrentVersion.targets" Line="2106" Column="7" />
+      <File FileName="../../Projects/MF.Web/Content/scripts/MF/MF.App.js" Line="22" Column="2" />
+      <File FileName="../../Projects/MF.Core/Config/CustomPrincipal.cs" Line="1" Column="1" />
+      <File FileName="../../Projects/MF.Core/Domain/SiteConfiguration.cs" Line="24" Column="31" />
+      <File FileName="../../Projects/MF.Core/Domain/User.cs" Line="1" Column="14" />
+      <File FileName="../../Projects/CC.Core/Security/SecurityInfo.cs" Line="10" Column="18" />
+      <File FileName="../../Projects/CC.Core/Security/Interfaces/IAuthorizationService.cs" Line="1" Column="1" />
+      <File FileName="../../Projects/CC.Core/Security/Interfaces/IAuthorizationRepository.cs" Line="153" Column="28" />
+      <File FileName="../../Projects/MF.Core/Enumerations/Enumerations.cs" Line="30" Column="18" />
+      <File FileName="../../Projects/CC.Core/Security/Services/AuthorizationRepository.cs" Line="19" Column="27" />
+      <File FileName="../../Projects/MF.Web/Views/_ViewStart.cshtml" Line="2" Column="38" />
+      <File FileName="../../Projects/MF.Web/Views/Shared/_Layout.cshtml" Line="1" Column="1" />
+      <File FileName="Source Not Available" />
+      <File FileName="../../Projects/MF.Web/Areas/Reporting/RDLC/Config/AutomapperBootstrapper.cs" Line="13" Column="1" />
+      <File FileName="../../Projects/MF.Web/Controllers/LocationController.cs" Line="52" Column="24" />
+      <File FileName="../../Projects/MF.Core/Config/ForeignKeyConstraintNameConvention.cs" Line="22" Column="1" />
+      <File FileName="../../Projects/CC.Core/Core/Html/Grid/GridBuilder.cs" Line="44" Column="1" />
+      <File FileName="../../Projects/MF.Core/ILogger.cs" Line="185" Column="1" />
+      <File FileName="../../Projects/MF.Web/Controllers/TrainerController.cs" Line="254" Column="1" />
+      <File FileName="../../Projects/MF.Core/Config/SqlServerSessionSourceConfiguration.cs" Line="56" Column="1" />
+      <File FileName="../../Projects/MF.Core/Domain/Persistence/PaymentMap.cs" Line="18" Column="1" />
+      <File FileName="../../Projects/MF.Web/Areas/Reporting/RDLC/Config/CustomJsonResult.cs" Line="47" Column="64" />
+      <File FileName="../../Projects/MF.Core/Domain/Persistence/UserMap.cs" Line="31" Column="1" />
+      <File FileName="../../Projects/MF.Core/Services/IMFPermissionsService.cs" Line="16" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MethodFitness" expanded="True">
+            <Node name="MF.Core" expanded="True">
+              <Node name="Config" expanded="True" />
+              <Node name="Domain" expanded="True">
+                <Node name="Persistence" expanded="True" />
+              </Node>
+              <Node name="Services" expanded="True" />
+            </Node>
+            <Node name="MF.Web" expanded="True">
+              <Node name="Areas" expanded="True">
+                <Node name="Reporting" expanded="True">
+                  <Node name="RDLC" expanded="True">
+                    <Node name="Config" expanded="True">
+                      <Node name="CustomJsonResult.cs" selected="True" />
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="Controllers" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>../../Projects/DBFluentMigration/DBFluentMigration.csproj</String>
+    <String>../../Projects/Generator/Generator.csproj</String>
+    <String>../../Projects/MF.Tests/MF.Tests.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Catchpoint enabled="false" exceptionName="System.Exception" includeSubclasses="True" />
+      <Breakpoint file="/home/raif/Development/methodfitness2/src/Projects/MF.Web/Config/CustomJsonResult.cs" line="45" column="1" />
+      <Breakpoint file="/home/raif/Development/methodfitness2/src/Projects/MF.Web/Areas/Reporting/RDLC/Config/CustomJsonResult.cs" line="48" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -146,17 +146,17 @@ MF.Views.CalendarView = MF.Views.View.extend({
 			alert("That period is closed");
 			return;
 		}
+		// taking out slot blocking because it's all messed up with serverside
+		// const targetDateString = targetDate.toString("M/d/yyyy h:mm ss TT");
 
-		const targetDateString = targetDate.toString("M/d/yyyy h:mm ss TT");
-
-		const blockedMsg = MF.blockedTimes.shouldBlockAppointment(
-			this.model.blockedByLocationAndTime,
-			targetDateString,
-			this.model.location
-		);
-		if (blockedMsg.length > 0) {
-			alert(blockedMsg);
-		}
+		// const blockedMsg = MF.blockedTimes.shouldBlockAppointment(
+		// 	this.model.blockedByLocationAndTime,
+		// 	targetDateString,
+		// 	this.model.location
+		// );
+		// if (blockedMsg.length > 0) {
+		// 	alert(blockedMsg);
+		// }
 		var data = {
 			ScheduledDate: new XDate(date).toString("M/d/yyyy"),
 			ScheduledStartTime: new XDate(date).toString("hh:mm TT"),
@@ -268,6 +268,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 				);
 		}
 	},
+
 	displayEdit: function (event) {
 		if (!this.model.CalendarDefinition.canEdit) {
 			alert("you can't edit retroactively");
