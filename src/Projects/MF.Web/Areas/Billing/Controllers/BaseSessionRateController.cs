@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Html;
@@ -10,6 +9,7 @@ using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
@@ -44,7 +44,7 @@ namespace MF.Web.Areas.Billing.Controllers
                     _Title = WebLocalizationKeys.BASE_RATES.ToString(),
                     _saveUrl = UrlContext.GetUrlForAction<BaseSessionRateController>(x => x.Save(null))
                 };
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public ActionResult Save(BaseSessionRateViewModel input)
@@ -58,7 +58,7 @@ namespace MF.Web.Areas.Billing.Controllers
             orig.PairTenPack = input.PairTenPack;
             var crudManager = _saveEntityService.ProcessSave(orig);
             var notification = crudManager.Finish();
-            return new CustomJsonResult(notification){ ContentType = "text/plain" };
+            return new JsonResult(notification){ ContentType = "text/plain" };
         }
     }
 

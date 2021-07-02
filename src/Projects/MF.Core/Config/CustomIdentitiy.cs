@@ -1,5 +1,4 @@
 using System.Security.Principal;
-using System.Web.Security;
 
 namespace MF.Core.Config
 {

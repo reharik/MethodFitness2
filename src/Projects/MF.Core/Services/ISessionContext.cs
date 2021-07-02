@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Web;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Services;
 using CC.Core.Security;
 using MF.Core.Config;
 using MF.Core.Domain;
+using Microsoft.AspNetCore.Http;
 
 namespace MF.Core.Services
 {
@@ -38,53 +38,53 @@ namespace MF.Core.Services
 
         public int GetCompanyId()
         {
-            var httpContext = HttpContext.Current;
+            var httpContext = HttpContextHelper.Current;
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
             return customPrincipal != null ? customPrincipal.CompanyId : 0;
         }
 
         public int GetUserId()
         {
-            var httpContext = HttpContext.Current;
+            var httpContext = HttpContextHelper.Current;
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
             return customPrincipal != null ? customPrincipal.UserId : 0;
         }
 
         public object RetrieveSessionObject(Guid sessionKey)
         {
-            SessionItem item = (SessionItem)HttpContext.Current.Session[sessionKey.ToString()];
+            SessionItem item = (SessionItem)HttpContextHelper.Current.Session[sessionKey.ToString()];
             return item.SessionObject;
         }
 
         public object RetrieveSessionObject(string sessionKey)
         {
-            SessionItem item = (SessionItem)HttpContext.Current.Session[sessionKey];
+            SessionItem item = (SessionItem)HttpContextHelper.Current.Session[sessionKey];
             return item != null ? item.SessionObject : null;
         }
 
         public SessionItem RetrieveSessionItem(string sessionKey)
         {
-            return (SessionItem)HttpContext.Current.Session[sessionKey];
+            return (SessionItem)HttpContextHelper.Current.Session[sessionKey];
         }
 
         public void AddUpdateSessionItem(SessionItem item)
         {
-            HttpContext.Current.Session[item.SessionKey] = item;
+            HttpContextHelper.Current.Session[item.SessionKey] = item;
         }
 
         public void RemoveSessionItem(Guid sessionKey)
         {
-            HttpContext.Current.Session.Remove(sessionKey.ToString());
+            HttpContextHelper.Current.Session.Remove(sessionKey.ToString());
         }
 
         public void RemoveSessionItem(string sessionKey)
         {
-            HttpContext.Current.Session.Remove(sessionKey);
+            HttpContextHelper.Current.Session.Remove(sessionKey);
         }
 
         public string MapPath(string url)
         {
-            return HttpContext.Current.Server.MapPath(url);
+            return HttpContextHelper.Current.Server.MapPath(url);
         }
 
     }

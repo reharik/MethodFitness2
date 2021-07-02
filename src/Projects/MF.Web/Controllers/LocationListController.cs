@@ -1,5 +1,4 @@
-﻿using System.Web.Mvc;
-using CC.Core.Core.CoreViewModelAndDTOs;
+﻿using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Html;
 using CC.Core.Core.Html.Menu;
@@ -7,7 +6,7 @@ using CC.Core.Core.Services;
 using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
-using MF.Web.Config;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MF.Web.Controllers
 {
@@ -43,7 +42,7 @@ namespace MF.Web.Controllers
             };
             model.headerButtons.Add("new");
             model.headerButtons.Add("delete");
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public JsonResult Locations(GridItemsRequestModel input)
@@ -52,7 +51,7 @@ namespace MF.Web.Controllers
             var user = _repository.Find<User>(userEntityId);
             var items = _dynamicExpressionQuery.PerformQuery<Location>(input.filters);
             var gridItemsViewModel = _locationListGrid.GetGridItemsViewModel(input.PageSortFilter, items, user);
-            return new CustomJsonResult(gridItemsViewModel);
+            return new JsonResult(gridItemsViewModel);
         }
     }
 

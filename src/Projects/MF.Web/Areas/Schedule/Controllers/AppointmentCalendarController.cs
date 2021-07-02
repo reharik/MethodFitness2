@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Enumerations;
@@ -18,7 +17,9 @@ using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
 using MF.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 using NHibernate.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MF.Web.Areas.Schedule.Controllers
 {
@@ -84,7 +85,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                     TrainerId = user.EntityId
                 }
             };
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
         public string processTrainerName(User trainer)
         {
@@ -96,7 +97,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             return name;
         }
 
-        public CustomJsonResult EventChanged(AppointmentChangedViewModel input)
+        public JsonResult EventChanged(AppointmentChangedViewModel input)
         {
             var appointment = _repository.Find<Appointment>(input.EntityId);
             var originalStartTime = appointment.StartTime;
@@ -109,16 +110,16 @@ namespace MF.Web.Areas.Schedule.Controllers
             var notification = validateAppointment(user, input, originalStartTime, originalStartDate);
             if (!notification.Success)
             {
-                return new CustomJsonResult(notification);
+                return new JsonResult(notification);
             }
             var crudManager = _saveEntityService.ProcessSave(appointment);
             var continuation = crudManager.Finish();
-            return new CustomJsonResult(new Notification(continuation));
+            return new JsonResult(new Notification(continuation));
         }
 
         private Notification validateAppointment(User user, AppointmentChangedViewModel input, DateTime? ost, DateTime? osd)
         {
-            var notification = new Notification {Success = true};
+            var notification = new Notification (true, "");
             // nice to pull this off user
             var currentTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var original = new DateTime(osd.Value.Year, osd.Value.Month, osd.Value.Day, ost.Value.Hour, ost.Value.Minute, 0);
@@ -132,7 +133,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             return notification;
         }
 
-        public CustomJsonResult Events(GetEventsViewModel input)
+        public JsonResult Events(GetEventsViewModel input)
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
@@ -156,7 +157,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                 }
             }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
-            return new CustomJsonResult(events);
+            return new JsonResult(events);
         }
 
         private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)

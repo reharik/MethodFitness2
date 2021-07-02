@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Enumerations;
@@ -14,6 +13,8 @@ using MF.Web.Controllers;
 using NHibernate.Linq;
 using MoreLinq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+
 namespace MF.Web.Areas.Billing.Controllers
 {
     public class PayTrainerController:MFController
@@ -28,7 +29,7 @@ namespace MF.Web.Areas.Billing.Controllers
             _saveEntityService = saveEntityService;
         }
 
-        public CustomJsonResult PayTrainer(PayTrainerViewModel input)
+        public JsonResult PayTrainer(PayTrainerViewModel input)
         {
             Notification notification;
             var trainer = _repository.Find<User>(input.EntityId);
@@ -57,8 +58,8 @@ namespace MF.Web.Areas.Billing.Controllers
             
             if (trainerPayment == null)
             {
-                notification = new Notification { Success = false, Message = WebLocalizationKeys.YOU_MUST_SELECT_AT_LEAST_ONE_SESSION.ToString() };
-                return new CustomJsonResult(notification);
+                notification = new Notification(false, WebLocalizationKeys.YOU_MUST_SELECT_AT_LEAST_ONE_SESSION.ToString());
+                return new JsonResult(notification);
             } 
             trainer.AddTrainerPayment(trainerPayment);
 
@@ -71,7 +72,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var continuation = crudManager2.Finish();
             notification = new Notification(continuation);
             notification.Variable = UrlContext.GetUrlForAction<PayTrainerController>(x => x.TrainerReceipt(null),AreaName.Billing)+"/"+trainerPayment.EntityId+"?ParentId="+trainer.EntityId;
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
         public ActionResult TrainerReceipt(ViewModel input)

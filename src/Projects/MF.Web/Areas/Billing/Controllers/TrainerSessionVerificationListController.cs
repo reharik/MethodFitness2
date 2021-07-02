@@ -1,4 +1,3 @@
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.Enumerations;
 using CC.Core.Core.Html;
@@ -10,6 +9,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using StructureMap;
 using System.Linq;
 
@@ -37,7 +37,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 _Title = WebLocalizationKeys.PAYMENTS.ToString(),
                 displayUrl = UrlContext.GetUrlForAction<VerifiedTrainerSessionsController>(x => x.ItemList(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
             };
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public JsonResult Items(GridItemsRequestModel input)
@@ -45,7 +45,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var user = (User) input.User;
             var items = _dynamicExpressionQuery.PerformQuery(user.TrainerSessionVerifications.OrderBy(x=>x.CreatedDate), input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult(gridItemsViewModel);
+            return new JsonResult(gridItemsViewModel);
         }
     }
 }

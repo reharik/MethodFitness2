@@ -1,10 +1,10 @@
 using System;
 using System.Linq.Expressions;
-using System.Web;
-using System.Web.Mvc;
 using CC.Core.Core.Enumerations;
 using CC.Core.Reflection;
 using CC.Core.Utilities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace CC.Core.Core.Html.Menu
 {
@@ -49,10 +49,10 @@ namespace CC.Core.Core.Html.Menu
             };
             ToFull = path =>
             {
-                var baseUri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+                var baseUri = new Uri(HttpContextHelper.Current.Request.Url.AbsoluteUri);
                 return new Uri(baseUri, ToAbsolute(path)).ToString();
             };
-            ToPhysicalPath = HttpContext.Current.Server.MapPath;
+            ToPhysicalPath = HttpContextHelper.Current.Server.MapPath;
         }
 
         public static Func<string, string, string> Combine { get; private set; }

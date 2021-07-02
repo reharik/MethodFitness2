@@ -1,0 +1,631 @@
+2021-07-01 14:52:49.298 +00:00 [INF] Loaded 3 extensions
+2021-07-01 14:52:51.097 +00:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.301\
+2021-07-01 14:52:58.929 +00:00 [INF] Initializing upgrade step Select an entrypoint
+2021-07-01 14:53:27.044 +00:00 [INF] Applying upgrade step Select an entrypoint
+2021-07-01 14:53:41.169 +00:00 [INF] Upgrade step Select an entrypoint applied successfully
+2021-07-01 14:53:53.076 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 14:53:53.159 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\CC.Core\CC.Core.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\CC.Core\CC.Core.csproj
+2021-07-01 14:53:53.170 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj
+2021-07-01 14:53:53.193 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj
+2021-07-01 14:53:53.196 +00:00 [INF] No projects need upgraded for selected entrypoint
+2021-07-01 14:53:53.197 +00:00 [INF] Initializing upgrade step Finalize upgrade
+2021-07-01 14:54:50.208 +00:00 [INF] Applying upgrade step Finalize upgrade
+2021-07-01 14:54:50.212 +00:00 [INF] Upgrade step Finalize upgrade applied successfully
+2021-07-01 14:54:55.978 +00:00 [INF] Upgrade has completed. Please review any changes.
+2021-07-01 14:54:55.987 +00:00 [INF] No state to save
+2021-07-01 14:59:31.871 +00:00 [INF] Loaded 3 extensions
+2021-07-01 14:59:32.723 +00:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.301\
+2021-07-01 14:59:35.875 +00:00 [INF] Initializing upgrade step Select an entrypoint
+2021-07-01 14:59:38.880 +00:00 [INF] Applying upgrade step Select an entrypoint
+2021-07-01 14:59:44.808 +00:00 [INF] Upgrade step Select an entrypoint applied successfully
+2021-07-01 14:59:47.834 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 14:59:47.879 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\CC.Core\CC.Core.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\CC.Core\CC.Core.csproj
+2021-07-01 14:59:47.888 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj
+2021-07-01 14:59:47.911 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj
+2021-07-01 14:59:47.914 +00:00 [INF] No projects need upgraded for selected entrypoint
+2021-07-01 14:59:47.917 +00:00 [INF] Initializing upgrade step Finalize upgrade
+2021-07-01 15:09:10.493 +00:00 [INF] Saving upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:09:17.472 +00:00 [INF] Loaded 3 extensions
+2021-07-01 15:09:19.691 +00:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.301\
+2021-07-01 15:09:28.334 +00:00 [INF] Loading upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:09:28.645 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 15:09:28.674 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\CC.Core\CC.Core.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\CC.Core\CC.Core.csproj
+2021-07-01 15:09:28.684 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj
+2021-07-01 15:09:28.697 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj
+2021-07-01 15:09:28.700 +00:00 [INF] No projects need upgraded for selected entrypoint
+2021-07-01 15:09:28.711 +00:00 [INF] Initializing upgrade step Finalize upgrade
+2021-07-01 15:11:29.637 +00:00 [INF] Saving upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:11:32.127 +00:00 [INF] Loaded 3 extensions
+2021-07-01 15:11:33.281 +00:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.301\
+2021-07-01 15:11:36.143 +00:00 [INF] Loading upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:11:36.440 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 15:11:47.534 +00:00 [INF] Applying upgrade step Select project to upgrade
+2021-07-01 15:11:47.552 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj
+2021-07-01 15:11:47.565 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj cannot be loaded: The imported project "c:\Dev\MethodFitness2\src\Projects\.nuget\nuget.targets" was not found. Confirm that the expression in the Import declaration "..\\.nuget\nuget.targets" is correct, and that the file exists on disk.  c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj
+2021-07-01 15:14:25.764 +00:00 [INF] Saving upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:14:29.654 +00:00 [INF] Loaded 3 extensions
+2021-07-01 15:14:30.745 +00:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.301\
+2021-07-01 15:14:33.585 +00:00 [INF] Loading upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:14:33.906 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 15:14:37.937 +00:00 [INF] Applying upgrade step Select project to upgrade
+2021-07-01 15:14:37.947 +00:00 [ERR] Support for Web Forms is limited to .NET Full Framework. To learn more please read: https://aka.ms/migrate-web-forms
+2021-07-01 15:14:37.949 +00:00 [ERR] Project c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj uses feature(s) that are not supported.
+If you would like to upgrade-assistant to continue anways please use the "--ignore-unsupported-features" option.
+2021-07-01 15:15:38.916 +00:00 [INF] Upgrade step Select project to upgrade applied successfully
+2021-07-01 15:15:39.979 +00:00 [WRN] Upgrade process was canceled. Quitting....
+2021-07-01 15:15:39.991 +00:00 [INF] Saving upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:16:50.989 +00:00 [INF] Loaded 3 extensions
+2021-07-01 15:16:52.116 +00:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.301\
+2021-07-01 15:16:54.508 +00:00 [INF] Loading upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:16:54.837 +00:00 [INF] Initializing upgrade step Back up project
+2021-07-01 15:17:24.992 +00:00 [INF] Applying upgrade step Back up project
+2021-07-01 15:17:32.678 +00:00 [INF] Backing up c:\Dev\MethodFitness2\src\Projects\CC.Core to c:\Dev\MethodFitness2\src\Solutions\MethodFitness.backup\CC.Core
+2021-07-01 15:17:39.269 +00:00 [INF] Project backed up to c:\Dev\MethodFitness2\src\Solutions\MethodFitness.backup\CC.Core
+2021-07-01 15:17:39.272 +00:00 [INF] Upgrade step Back up project applied successfully
+2021-07-01 15:17:41.249 +00:00 [INF] Initializing upgrade step Convert project file to SDK style
+2021-07-01 15:17:45.264 +00:00 [INF] Applying upgrade step Convert project file to SDK style
+2021-07-01 15:17:45.269 +00:00 [INF] Converting project file format with try-convert, version 0.7.226301
+2021-07-01 15:17:45.737 +00:00 [INF] [dotnet] c:\Dev\MethodFitness2\src\Projects\CC.Core\CC.Core.csproj contains a reference to System.Web, which is not supported on .NET Core. You may have significant work ahead of you to fully port this project.
+2021-07-01 15:17:48.374 +00:00 [INF] [dotnet] Conversion complete!
+2021-07-01 15:17:49.966 +00:00 [INF] Project file converted successfully! The project may require additional changes to build successfully against the new .NET target.
+2021-07-01 15:17:55.127 +00:00 [INF] Upgrade step Convert project file to SDK style applied successfully
+2021-07-01 15:18:02.318 +00:00 [INF] Initializing upgrade step Clean up NuGet package references
+2021-07-01 15:18:04.321 +00:00 [INF] Marking package log4net for removal because it appears to be a transitive dependency
+2021-07-01 15:18:04.331 +00:00 [INF] Marking package Microsoft.ReportViewer.Runtime.Common for removal because it appears to be a transitive dependency
+2021-07-01 15:18:04.335 +00:00 [INF] Marking package Newtonsoft.Json for removal because it appears to be a transitive dependency
+2021-07-01 15:18:04.812 +00:00 [INF] Reference to .NET Upgrade Assistant analyzer package (Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, version 0.2.233001) needs added
+2021-07-01 15:18:04.828 +00:00 [INF] Packages to be removed: log4net, Version=2.0.8
+Microsoft.ReportViewer.Runtime.Common, Version=12.0.2402.15
+Newtonsoft.Json, Version=10.0.3
+2021-07-01 15:18:04.834 +00:00 [INF] Packages to be added: Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, Version=0.2.233001
+2021-07-01 15:18:08.160 +00:00 [INF] Applying upgrade step Clean up NuGet package references
+2021-07-01 15:18:08.172 +00:00 [INF] Removing outdated package reference: log4net, Version=2.0.8
+2021-07-01 15:18:08.175 +00:00 [INF] Removing outdated package reference: Microsoft.ReportViewer.Runtime.Common, Version=12.0.2402.15
+2021-07-01 15:18:08.177 +00:00 [INF] Removing outdated package reference: Newtonsoft.Json, Version=10.0.3
+2021-07-01 15:18:08.181 +00:00 [INF] Adding package reference: Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, Version=0.2.233001
+2021-07-01 15:18:11.708 +00:00 [INF] Upgrade step Clean up NuGet package references applied successfully
+2021-07-01 15:18:23.949 +00:00 [INF] Initializing upgrade step Update TFM
+2021-07-01 15:18:23.962 +00:00 [INF] TFM needs updated to net5.0
+2021-07-01 15:18:31.335 +00:00 [INF] Applying upgrade step Update TFM
+2021-07-01 15:18:56.840 +00:00 [INF] Updated TFM to net5.0
+2021-07-01 15:18:56.841 +00:00 [INF] Upgrade step Update TFM applied successfully
+2021-07-01 15:18:59.759 +00:00 [INF] Initializing upgrade step Update NuGet Packages
+2021-07-01 15:19:01.817 +00:00 [INF] Marking assembly reference System.Web for removal based on package mapping configuration ASP.NET
+2021-07-01 15:19:01.822 +00:00 [INF] Adding framework reference Microsoft.AspNetCore.App based on package mapping configuration ASP.NET
+2021-07-01 15:19:01.824 +00:00 [INF] Marking assembly reference System.Web.Extensions for removal based on package mapping configuration ASP.NET
+2021-07-01 15:19:01.825 +00:00 [INF] Marking assembly reference System.Web.Mvc for removal based on package mapping configuration ASP.NET
+2021-07-01 15:19:01.827 +00:00 [INF] Marking assembly reference System.Web.Routing for removal based on package mapping configuration ASP.NET
+2021-07-01 15:19:01.985 +00:00 [INF] Marking package structuremap, Version=2.6.4.1 for removal because it doesn't support the target framework but a newer version (3.1.9.463) does
+2021-07-01 15:19:02.004 +00:00 [WRN] Package structuremap has been upgraded across major versions (2.6.4.1 -> 3.1.9.463) which may introduce breaking changes
+2021-07-01 15:19:02.289 +00:00 [INF] Marking package structuremap, Version=3.1.9.463 for removal because it doesn't support the target framework but a newer version (4.7.1) does
+2021-07-01 15:19:02.291 +00:00 [WRN] Package structuremap has been upgraded across major versions (3.1.9.463 -> 4.7.1) which may introduce breaking changes
+2021-07-01 15:19:02.294 +00:00 [FTL] Package analysis failed (analyzer Target compatibility reference analyzer: Collection was modified; enumeration operation may not execute.
+2021-07-01 15:20:57.383 +00:00 [INF] Applying upgrade step Update NuGet Packages
+2021-07-01 15:20:57.383 +00:00 [INF] Removing outdated assembly reference: System.Web
+2021-07-01 15:20:57.384 +00:00 [INF] Removing outdated assembly reference: System.Web.Extensions
+2021-07-01 15:20:57.384 +00:00 [INF] Removing outdated assembly reference: System.Web.Mvc
+2021-07-01 15:20:57.384 +00:00 [INF] Removing outdated assembly reference: System.Web.Routing
+2021-07-01 15:20:57.384 +00:00 [INF] Removing outdated package reference: structuremap, Version=2.6.4.1
+2021-07-01 15:20:57.384 +00:00 [INF] Adding package reference: structuremap, Version=3.1.9.463
+2021-07-01 15:20:57.384 +00:00 [INF] Adding package reference: structuremap, Version=4.7.1
+2021-07-01 15:20:57.384 +00:00 [INF] Adding framework reference: Microsoft.AspNetCore.App
+2021-07-01 15:21:05.014 +00:00 [INF] Marking package structuremap, Version=3.1.9.463 for removal because it is referenced elsewhere in the project with a higher version
+2021-07-01 15:21:05.336 +00:00 [INF] Removing outdated package reference: structuremap, Version=3.1.9.463
+2021-07-01 15:21:09.361 +00:00 [INF] Upgrade step Update NuGet Packages applied successfully
+2021-07-01 15:21:12.415 +00:00 [INF] Initializing upgrade step Add template files
+2021-07-01 15:21:12.427 +00:00 [INF] 0 expected template items needed
+2021-07-01 15:21:12.427 +00:00 [INF] Initializing upgrade step Upgrade app config files
+2021-07-01 15:21:12.488 +00:00 [INF] Found 0 app settings for upgrade: 
+2021-07-01 15:21:12.492 +00:00 [INF] Found 0 connection strings for upgrade: 
+2021-07-01 15:21:12.499 +00:00 [INF] 0 web page namespace imports need upgraded: 
+2021-07-01 15:21:12.515 +00:00 [INF] Initializing upgrade step Update source code
+2021-07-01 15:21:46.871 +00:00 [INF] Applying upgrade step Apply fix for UA0001: ASP.NET Core projects should not reference ASP.NET namespaces
+2021-07-01 15:21:47.183 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\CoreViewModelAndDTOs\GroupSelectViewModel.cs
+2021-07-01 15:21:47.230 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\CustomAttributes\LogAttribute.cs
+2021-07-01 15:21:47.259 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\DomainTools\Notification.cs
+2021-07-01 15:21:47.287 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\CCUI\Builders\GroupedSelectBuilder.cs
+2021-07-01 15:21:47.309 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\CCUI\Builders\SelectFromEnumerationBuilder2.cs
+2021-07-01 15:21:47.328 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\CCUI\Builders\SelectFromIEnumerableBuilder.cs
+2021-07-01 15:21:47.350 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\CCUI\CCUIHtmlExtensions.cs
+2021-07-01 15:21:47.372 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\CCUI\HtmlExpressions\DropdownInputExpression.cs
+2021-07-01 15:21:47.402 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\CCUI\HtmlExpressions\EditorExpression.cs
+2021-07-01 15:21:47.432 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Grid\ImageButtonColumn.cs
+2021-07-01 15:21:47.456 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Grid\LinkColumn.cs
+2021-07-01 15:21:47.479 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Menu\IMenuBuilder.cs
+2021-07-01 15:21:47.504 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Menu\UrlContext.cs
+2021-07-01 15:21:47.533 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Services\IDynamicExpressionBuilder.cs
+2021-07-01 15:21:47.565 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Services\IDynamicExpressionQuery.cs
+2021-07-01 15:21:47.591 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Services\IFileHandlerService.cs
+2021-07-01 15:21:47.629 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Services\ISelectListItemService.cs
+2021-07-01 15:21:47.723 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\HtmlTags\HtmlTag.cs
+2021-07-01 15:21:47.744 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\HtmlTags\JsonUtil.cs
+2021-07-01 15:21:47.768 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\HtmlTags\TagList.cs
+2021-07-01 15:21:51.951 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\CustomAttributes\LogAttribute.cs
+2021-07-01 15:21:51.974 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Menu\IMenuBuilder.cs
+2021-07-01 15:21:52.000 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Menu\UrlContext.cs
+2021-07-01 15:21:52.032 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\HtmlTags\HtmlTag.cs
+2021-07-01 15:21:55.993 +00:00 [INF] Upgrade step Apply fix for UA0001: ASP.NET Core projects should not reference ASP.NET namespaces applied successfully
+2021-07-01 15:22:05.204 +00:00 [INF] Applying upgrade step Apply fix for UA0002: Types should be upgraded
+2021-07-01 15:22:05.645 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\CustomAttributes\LogAttribute.cs
+2021-07-01 15:22:05.799 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\HtmlTags\HtmlTag.cs
+2021-07-01 15:22:05.860 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\HtmlTags\TagList.cs
+2021-07-01 15:22:05.928 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Menu\UrlContext.cs
+2021-07-01 15:22:06.002 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Menu\IMenuBuilder.cs
+2021-07-01 15:22:06.084 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Grid\LinkColumn.cs
+2021-07-01 15:22:06.174 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Grid\ImageButtonColumn.cs
+2021-07-01 15:22:09.811 +00:00 [INF] Upgrade step Apply fix for UA0002: Types should be upgraded applied successfully
+2021-07-01 15:22:16.084 +00:00 [INF] Applying upgrade step Apply fix for UA0005: Do not use HttpContext.Current
+2021-07-01 15:22:16.414 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Services\IFileHandlerService.cs
+2021-07-01 15:22:16.487 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Menu\UrlContext.cs
+2021-07-01 15:22:16.577 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\HtmlTags\HtmlTag.cs
+2021-07-01 15:22:20.203 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Services\IFileHandlerService.cs
+2021-07-01 15:22:20.287 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\HtmlTags\HtmlTag.cs
+2021-07-01 15:22:20.344 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Html\Menu\UrlContext.cs
+2021-07-01 15:22:23.848 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\CC.Core\Core\Services\IFileHandlerService.cs
+2021-07-01 15:22:27.188 +00:00 [INF] Applying upgrade step Update source code
+2021-07-01 15:22:28.479 +00:00 [INF] Upgrade step Update source code applied successfully
+2021-07-01 15:22:28.484 +00:00 [INF] Upgrade step Apply fix for UA0005: Do not use HttpContext.Current applied successfully
+2021-07-01 15:22:36.043 +00:00 [INF] Initializing upgrade step Move to next project
+2021-07-01 15:22:41.064 +00:00 [INF] Applying upgrade step Move to next project
+2021-07-01 15:22:41.067 +00:00 [INF] Upgrade step Move to next project applied successfully
+2021-07-01 15:22:45.211 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 15:22:50.069 +00:00 [INF] Applying upgrade step Select project to upgrade
+2021-07-01 15:22:52.706 +00:00 [INF] Upgrade step Select project to upgrade applied successfully
+2021-07-01 15:22:55.556 +00:00 [INF] Initializing upgrade step Back up project
+2021-07-01 15:22:57.814 +00:00 [INF] Applying upgrade step Back up project
+2021-07-01 15:23:17.975 +00:00 [INF] Backing up c:\Dev\MethodFitness2\src\Projects\MF.Core to c:\Dev\MethodFitness2\src\Solutions\MethodFitness.backup\MF.Core
+2021-07-01 15:23:25.540 +00:00 [INF] Project backed up to c:\Dev\MethodFitness2\src\Solutions\MethodFitness.backup\MF.Core
+2021-07-01 15:23:25.543 +00:00 [INF] Upgrade step Back up project applied successfully
+2021-07-01 15:23:33.120 +00:00 [INF] Initializing upgrade step Convert project file to SDK style
+2021-07-01 15:23:37.527 +00:00 [INF] Applying upgrade step Convert project file to SDK style
+2021-07-01 15:23:37.529 +00:00 [INF] Converting project file format with try-convert, version 0.7.226301
+2021-07-01 15:23:37.899 +00:00 [INF] [dotnet] c:\Dev\MethodFitness2\src\Projects\MF.Core\MF.Core.csproj contains a reference to System.Web, which is not supported on .NET Core. You may have significant work ahead of you to fully port this project.
+2021-07-01 15:23:39.821 +00:00 [INF] [dotnet] Conversion complete!
+2021-07-01 15:23:40.583 +00:00 [INF] Project file converted successfully! The project may require additional changes to build successfully against the new .NET target.
+2021-07-01 15:23:43.290 +00:00 [INF] Upgrade step Convert project file to SDK style applied successfully
+2021-07-01 15:24:20.233 +00:00 [INF] Initializing upgrade step Clean up NuGet package references
+2021-07-01 15:24:22.758 +00:00 [INF] Marking package Common.Logging for removal because it appears to be a transitive dependency
+2021-07-01 15:24:22.764 +00:00 [INF] Marking package MarkdownSharp for removal because it appears to be a transitive dependency
+2021-07-01 15:24:22.768 +00:00 [INF] Marking package Microsoft.ReportViewer.Runtime.Common for removal because it appears to be a transitive dependency
+2021-07-01 15:24:22.809 +00:00 [INF] Marking assembly reference System.Configuration for removal based on package mapping configuration System.Configuration
+2021-07-01 15:24:22.811 +00:00 [INF] Adding package System.Configuration.ConfigurationManager based on package mapping configuration System.Configuration
+2021-07-01 15:24:23.963 +00:00 [WRN] No version of System.Configuration.ConfigurationManager found that supports ["net45"]; leaving unchanged
+2021-07-01 15:24:23.971 +00:00 [INF] Reference to .NET Upgrade Assistant analyzer package (Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, version 0.2.233001) needs added
+2021-07-01 15:24:23.982 +00:00 [INF] References to be removed: System.Configuration
+2021-07-01 15:24:23.985 +00:00 [INF] Packages to be removed: Common.Logging, Version=2.3.1
+MarkdownSharp, Version=1.13.0.0
+Microsoft.ReportViewer.Runtime.Common, Version=12.0.2402.15
+2021-07-01 15:24:23.989 +00:00 [INF] Packages to be added: System.Configuration.ConfigurationManager, Version=5.0.0
+Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, Version=0.2.233001
+2021-07-01 15:24:28.972 +00:00 [INF] Applying upgrade step Clean up NuGet package references
+2021-07-01 15:24:28.974 +00:00 [INF] Removing outdated assembly reference: System.Configuration
+2021-07-01 15:24:28.976 +00:00 [INF] Removing outdated package reference: Common.Logging, Version=2.3.1
+2021-07-01 15:24:28.977 +00:00 [INF] Removing outdated package reference: MarkdownSharp, Version=1.13.0.0
+2021-07-01 15:24:28.979 +00:00 [INF] Removing outdated package reference: Microsoft.ReportViewer.Runtime.Common, Version=12.0.2402.15
+2021-07-01 15:24:28.981 +00:00 [INF] Adding package reference: System.Configuration.ConfigurationManager, Version=5.0.0
+2021-07-01 15:24:28.983 +00:00 [INF] Adding package reference: Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, Version=0.2.233001
+2021-07-01 15:24:33.295 +00:00 [WRN] No version of System.Configuration.ConfigurationManager found that supports ["net45"]; leaving unchanged
+2021-07-01 15:24:33.324 +00:00 [INF] Upgrade step Clean up NuGet package references applied successfully
+2021-07-01 15:24:36.269 +00:00 [INF] Initializing upgrade step Update TFM
+2021-07-01 15:24:36.333 +00:00 [INF] TFM needs updated to net5.0-windows
+2021-07-01 15:24:38.850 +00:00 [INF] Applying upgrade step Update TFM
+2021-07-01 15:24:47.811 +00:00 [INF] Updated TFM to net5.0-windows
+2021-07-01 15:24:47.812 +00:00 [INF] Upgrade step Update TFM applied successfully
+2021-07-01 15:24:57.143 +00:00 [INF] Initializing upgrade step Update NuGet Packages
+2021-07-01 15:25:00.245 +00:00 [INF] Marking package Microsoft.CSharp for removal because it appears to be a transitive dependency
+2021-07-01 15:25:00.253 +00:00 [INF] Marking package Microsoft.ReportViewer.Runtime.WebForms for removal because it appears to be a transitive dependency
+2021-07-01 15:25:00.261 +00:00 [INF] Marking package Microsoft.ReportViewer.Web.2012 for removal because it appears to be a transitive dependency
+2021-07-01 15:25:00.285 +00:00 [INF] Marking package System.ComponentModel.Annotations for removal because it appears to be a transitive dependency
+2021-07-01 15:25:00.292 +00:00 [INF] Marking package System.Data.DataSetExtensions for removal because it appears to be a transitive dependency
+2021-07-01 15:25:00.346 +00:00 [INF] Marking assembly reference System.Web for removal based on package mapping configuration ASP.NET
+2021-07-01 15:25:00.348 +00:00 [INF] Adding framework reference Microsoft.AspNetCore.App based on package mapping configuration ASP.NET
+2021-07-01 15:25:00.349 +00:00 [INF] Marking assembly reference System.Web.Extensions for removal based on package mapping configuration ASP.NET
+2021-07-01 15:25:00.352 +00:00 [INF] Marking assembly reference System.Web.Mvc for removal based on package mapping configuration ASP.NET
+2021-07-01 15:25:00.477 +00:00 [INF] Marking package FluentNHibernate, Version=1.4.0.0 for removal because it doesn't support the target framework but a newer version (2.1.2) does
+2021-07-01 15:25:00.490 +00:00 [WRN] Package FluentNHibernate has been upgraded across major versions (1.4.0.0 -> 2.1.2) which may introduce breaking changes
+2021-07-01 15:25:00.550 +00:00 [INF] Marking package Iesi.Collections, Version=3.2.0.4000 for removal because it doesn't support the target framework but a newer version (3.4.1.4000) does
+2021-07-01 15:25:00.682 +00:00 [INF] Marking package log4net, Version=2.0.3 for removal because it doesn't support the target framework but a newer version (2.0.12) does
+2021-07-01 15:25:00.828 +00:00 [INF] Marking package NHibernate, Version=3.3.3.4001 for removal because it doesn't support the target framework but a newer version (3.4.1.4000) does
+2021-07-01 15:25:00.926 +00:00 [INF] Marking package Quartz, Version=2.3 for removal because it doesn't support the target framework but a newer version (2.6.2) does
+2021-07-01 15:25:00.952 +00:00 [INF] Marking package structuremap, Version=2.6.4.1 for removal because it doesn't support the target framework but a newer version (3.1.9.463) does
+2021-07-01 15:25:00.954 +00:00 [WRN] Package structuremap has been upgraded across major versions (2.6.4.1 -> 3.1.9.463) which may introduce breaking changes
+2021-07-01 15:25:01.258 +00:00 [INF] Marking package Topshelf, Version=3.1.4 for removal because it doesn't support the target framework but a newer version (3.3.1) does
+2021-07-01 15:25:01.553 +00:00 [INF] Marking package Iesi.Collections, Version=3.4.1.4000 for removal because it doesn't support the target framework but a newer version (4.0.4) does
+2021-07-01 15:25:01.556 +00:00 [WRN] Package Iesi.Collections has been upgraded across major versions (3.4.1.4000 -> 4.0.4) which may introduce breaking changes
+2021-07-01 15:25:01.558 +00:00 [FTL] Package analysis failed (analyzer Target compatibility reference analyzer: Collection was modified; enumeration operation may not execute.
+2021-07-01 15:25:01.783 +00:00 [INF] Adding Microsoft.Windows.Compatibility 5.0.2
+2021-07-01 15:25:07.171 +00:00 [INF] Applying upgrade step Update NuGet Packages
+2021-07-01 15:25:07.174 +00:00 [INF] Removing outdated assembly reference: System.Web
+2021-07-01 15:25:07.175 +00:00 [INF] Removing outdated assembly reference: System.Web.Extensions
+2021-07-01 15:25:07.176 +00:00 [INF] Removing outdated assembly reference: System.Web.Mvc
+2021-07-01 15:25:07.178 +00:00 [INF] Removing outdated package reference: FluentNHibernate, Version=1.4.0.0
+2021-07-01 15:25:07.179 +00:00 [INF] Removing outdated package reference: Iesi.Collections, Version=3.2.0.4000
+2021-07-01 15:25:07.182 +00:00 [INF] Removing outdated package reference: log4net, Version=2.0.3
+2021-07-01 15:25:07.183 +00:00 [INF] Removing outdated package reference: Microsoft.CSharp, Version=4.7.0
+2021-07-01 15:25:07.185 +00:00 [INF] Removing outdated package reference: Microsoft.ReportViewer.Runtime.WebForms, Version=12.0.2402.15
+2021-07-01 15:25:07.186 +00:00 [INF] Removing outdated package reference: Microsoft.ReportViewer.Web.2012, Version=1.0.0
+2021-07-01 15:25:07.188 +00:00 [INF] Removing outdated package reference: NHibernate, Version=3.3.3.4001
+2021-07-01 15:25:07.189 +00:00 [INF] Removing outdated package reference: Quartz, Version=2.3
+2021-07-01 15:25:07.192 +00:00 [INF] Removing outdated package reference: structuremap, Version=2.6.4.1
+2021-07-01 15:25:07.193 +00:00 [INF] Removing outdated package reference: System.ComponentModel.Annotations, Version=5.0.0
+2021-07-01 15:25:07.195 +00:00 [INF] Removing outdated package reference: System.Data.DataSetExtensions, Version=4.5.0
+2021-07-01 15:25:07.196 +00:00 [INF] Removing outdated package reference: Topshelf, Version=3.1.4
+2021-07-01 15:25:07.198 +00:00 [INF] Adding package reference: FluentNHibernate, Version=2.1.2
+2021-07-01 15:25:07.200 +00:00 [INF] Adding package reference: Iesi.Collections, Version=3.4.1.4000
+2021-07-01 15:25:07.203 +00:00 [INF] Adding package reference: log4net, Version=2.0.12
+2021-07-01 15:25:07.207 +00:00 [INF] Adding package reference: NHibernate, Version=3.4.1.4000
+2021-07-01 15:25:07.209 +00:00 [INF] Adding package reference: Quartz, Version=2.6.2
+2021-07-01 15:25:07.213 +00:00 [INF] Adding package reference: structuremap, Version=3.1.9.463
+2021-07-01 15:25:07.214 +00:00 [INF] Adding package reference: Topshelf, Version=3.3.1
+2021-07-01 15:25:07.216 +00:00 [INF] Adding package reference: Iesi.Collections, Version=4.0.4
+2021-07-01 15:25:07.217 +00:00 [INF] Adding package reference: Microsoft.Windows.Compatibility, Version=5.0.2
+2021-07-01 15:25:07.219 +00:00 [INF] Adding framework reference: Microsoft.AspNetCore.App
+2021-07-01 15:25:22.941 +00:00 [INF] Marking package Iesi.Collections, Version=3.4.1.4000 for removal because it is referenced elsewhere in the project with a higher version
+2021-07-01 15:25:22.987 +00:00 [INF] Marking package System.Configuration.ConfigurationManager for removal because it appears to be a transitive dependency
+2021-07-01 15:25:23.392 +00:00 [INF] Marking package NHibernate, Version=3.4.1.4000 for removal because it doesn't support the target framework but a newer version (4.1.2.4000) does
+2021-07-01 15:25:23.402 +00:00 [WRN] Package NHibernate has been upgraded across major versions (3.4.1.4000 -> 4.1.2.4000) which may introduce breaking changes
+2021-07-01 15:25:23.445 +00:00 [INF] Marking package Quartz, Version=2.6.2 for removal because it doesn't support the target framework but a newer version (3.3.2) does
+2021-07-01 15:25:23.457 +00:00 [WRN] Package Quartz has been upgraded across major versions (2.6.2 -> 3.3.2) which may introduce breaking changes
+2021-07-01 15:25:23.516 +00:00 [INF] Marking package structuremap, Version=3.1.9.463 for removal because it doesn't support the target framework but a newer version (4.7.1) does
+2021-07-01 15:25:23.519 +00:00 [WRN] Package structuremap has been upgraded across major versions (3.1.9.463 -> 4.7.1) which may introduce breaking changes
+2021-07-01 15:25:23.552 +00:00 [INF] Marking package Topshelf, Version=3.3.1 for removal because it doesn't support the target framework but a newer version (4.3.0) does
+2021-07-01 15:25:23.555 +00:00 [WRN] Package Topshelf has been upgraded across major versions (3.3.1 -> 4.3.0) which may introduce breaking changes
+2021-07-01 15:25:23.807 +00:00 [INF] Marking package NHibernate, Version=4.1.2.4000 for removal because it doesn't support the target framework but a newer version (5.3.8) does
+2021-07-01 15:25:23.809 +00:00 [WRN] Package NHibernate has been upgraded across major versions (4.1.2.4000 -> 5.3.8) which may introduce breaking changes
+2021-07-01 15:25:23.813 +00:00 [FTL] Package analysis failed (analyzer Target compatibility reference analyzer: Collection was modified; enumeration operation may not execute.
+2021-07-01 15:25:23.840 +00:00 [WRN] Upgrade step Update NuGet Packages failed: "Failed": Package analysis failed
+2021-07-01 15:25:30.517 +00:00 [INF] Applying upgrade step Update NuGet Packages
+2021-07-01 15:25:30.520 +00:00 [INF] Removing outdated package reference: System.Configuration.ConfigurationManager, Version=5.0.0
+2021-07-01 15:25:30.521 +00:00 [INF] Removing outdated package reference: Iesi.Collections, Version=3.4.1.4000
+2021-07-01 15:25:30.523 +00:00 [INF] Removing outdated package reference: NHibernate, Version=3.4.1.4000
+2021-07-01 15:25:30.524 +00:00 [INF] Removing outdated package reference: Quartz, Version=2.6.2
+2021-07-01 15:25:30.526 +00:00 [INF] Removing outdated package reference: structuremap, Version=3.1.9.463
+2021-07-01 15:25:30.528 +00:00 [INF] Removing outdated package reference: Topshelf, Version=3.3.1
+2021-07-01 15:25:30.530 +00:00 [INF] Adding package reference: NHibernate, Version=4.1.2.4000
+2021-07-01 15:25:30.531 +00:00 [INF] Adding package reference: Quartz, Version=3.3.2
+2021-07-01 15:25:30.533 +00:00 [INF] Adding package reference: structuremap, Version=4.7.1
+2021-07-01 15:25:30.534 +00:00 [INF] Adding package reference: Topshelf, Version=4.3.0
+2021-07-01 15:25:30.539 +00:00 [INF] Adding package reference: NHibernate, Version=5.3.8
+2021-07-01 15:25:39.645 +00:00 [INF] Marking package NHibernate, Version=4.1.2.4000 for removal because it is referenced elsewhere in the project with a higher version
+2021-07-01 15:25:39.763 +00:00 [INF] Marking package structuremap for removal because it appears to be a transitive dependency
+2021-07-01 15:25:40.822 +00:00 [INF] Removing outdated package reference: NHibernate, Version=4.1.2.4000
+2021-07-01 15:25:40.824 +00:00 [INF] Removing outdated package reference: structuremap, Version=4.7.1
+2021-07-01 15:25:48.944 +00:00 [INF] Marking package Iesi.Collections for removal because it appears to be a transitive dependency
+2021-07-01 15:25:49.126 +00:00 [INF] Removing outdated package reference: Iesi.Collections, Version=4.0.4
+2021-07-01 15:25:55.286 +00:00 [INF] Upgrade step Update NuGet Packages applied successfully
+2021-07-01 15:26:00.710 +00:00 [INF] Initializing upgrade step Add template files
+2021-07-01 15:26:00.712 +00:00 [INF] 0 expected template items needed
+2021-07-01 15:26:00.715 +00:00 [INF] Initializing upgrade step Upgrade app config files
+2021-07-01 15:26:00.733 +00:00 [INF] Found 0 app settings for upgrade: 
+2021-07-01 15:26:00.734 +00:00 [INF] Found 0 connection strings for upgrade: 
+2021-07-01 15:26:00.739 +00:00 [INF] 0 web page namespace imports need upgraded: 
+2021-07-01 15:26:00.761 +00:00 [INF] Initializing upgrade step Update source code
+2021-07-01 15:26:07.772 +00:00 [INF] Applying upgrade step Apply fix for UA0001: ASP.NET Core projects should not reference ASP.NET namespaces
+2021-07-01 15:26:07.793 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Config\CustomIdentitiy.cs
+2021-07-01 15:26:07.813 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Domain\Tools\CustomAttributes\LogAttribute.cs
+2021-07-01 15:26:07.831 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Html\HtmlExtensions.cs
+2021-07-01 15:26:07.855 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\IGetCompanyId.cs
+2021-07-01 15:26:07.887 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISecurityDataService.cs
+2021-07-01 15:26:07.911 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:09.040 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Domain\Tools\CustomAttributes\LogAttribute.cs
+2021-07-01 15:26:10.124 +00:00 [INF] Upgrade step Apply fix for UA0001: ASP.NET Core projects should not reference ASP.NET namespaces applied successfully
+2021-07-01 15:26:12.137 +00:00 [INF] Applying upgrade step Apply fix for UA0002: Types should be upgraded
+2021-07-01 15:26:12.282 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Domain\Tools\CustomAttributes\LogAttribute.cs
+2021-07-01 15:26:13.427 +00:00 [INF] Upgrade step Apply fix for UA0002: Types should be upgraded applied successfully
+2021-07-01 15:26:18.173 +00:00 [INF] Applying upgrade step Apply fix for UA0005: Do not use HttpContext.Current
+2021-07-01 15:26:18.355 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:18.384 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\IGetCompanyId.cs
+2021-07-01 15:26:19.587 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:20.739 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:21.872 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:23.030 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:24.211 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:25.341 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:26.477 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:27.605 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Core\Services\ISessionContext.cs
+2021-07-01 15:26:28.687 +00:00 [INF] Applying upgrade step Update source code
+2021-07-01 15:26:30.864 +00:00 [INF] Upgrade step Update source code applied successfully
+2021-07-01 15:26:30.877 +00:00 [INF] Upgrade step Apply fix for UA0005: Do not use HttpContext.Current applied successfully
+2021-07-01 15:26:33.069 +00:00 [INF] Initializing upgrade step Move to next project
+2021-07-01 15:26:35.854 +00:00 [INF] Applying upgrade step Move to next project
+2021-07-01 15:26:35.857 +00:00 [INF] Upgrade step Move to next project applied successfully
+2021-07-01 15:26:39.220 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 15:26:42.689 +00:00 [INF] Applying upgrade step Select project to upgrade
+2021-07-01 15:26:43.647 +00:00 [INF] Upgrade step Select project to upgrade applied successfully
+2021-07-01 15:26:44.908 +00:00 [INF] Initializing upgrade step Back up project
+2021-07-01 15:26:46.742 +00:00 [INF] Applying upgrade step Back up project
+2021-07-01 15:26:48.375 +00:00 [INF] Backing up c:\Dev\MethodFitness2\src\Projects\MF.Web to c:\Dev\MethodFitness2\src\Solutions\MethodFitness.backup\MF.Web
+2021-07-01 15:27:02.468 +00:00 [INF] Project backed up to c:\Dev\MethodFitness2\src\Solutions\MethodFitness.backup\MF.Web
+2021-07-01 15:27:02.469 +00:00 [INF] Upgrade step Back up project applied successfully
+2021-07-01 15:27:07.004 +00:00 [INF] Initializing upgrade step Convert project file to SDK style
+2021-07-01 15:27:09.311 +00:00 [INF] Applying upgrade step Convert project file to SDK style
+2021-07-01 15:27:09.314 +00:00 [INF] Converting project file format with try-convert, version 0.7.226301
+2021-07-01 15:27:09.686 +00:00 [INF] [dotnet] c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj contains a reference to System.Web, which is not supported on .NET Core. You may have significant work ahead of you to fully port this project.
+2021-07-01 15:27:09.690 +00:00 [INF] [dotnet] 'c:\Dev\MethodFitness2\src\Projects\MF.Web\MF.Web.csproj' is a legacy web project and/or references System.Web. Legacy Web projects and System.Web are unsupported on .NET Core. You will need to rewrite your application or find a way to not depend on System.Web to convert this project.
+2021-07-01 15:27:10.794 +00:00 [INF] [dotnet] This project has an unrecognized custom import which may need reviewed after conversion: AutoMapper.targets
+2021-07-01 15:27:12.786 +00:00 [INF] [dotnet] Conversion complete!
+2021-07-01 15:27:14.005 +00:00 [INF] Project file converted successfully! The project may require additional changes to build successfully against the new .NET target.
+2021-07-01 15:27:17.665 +00:00 [INF] Upgrade step Convert project file to SDK style applied successfully
+2021-07-01 15:27:29.214 +00:00 [INF] Initializing upgrade step Clean up NuGet package references
+2021-07-01 15:27:32.753 +00:00 [INF] Marking package Iesi.Collections for removal because it appears to be a transitive dependency
+2021-07-01 15:27:32.756 +00:00 [INF] Marking package ImageResizer for removal because it appears to be a transitive dependency
+2021-07-01 15:27:32.763 +00:00 [INF] Marking package MarkdownSharp for removal because it appears to be a transitive dependency
+2021-07-01 15:27:32.769 +00:00 [INF] Marking package Microsoft.ReportViewer.Runtime.Common for removal because it appears to be a transitive dependency
+2021-07-01 15:27:32.779 +00:00 [INF] Marking package NHibernate for removal because it appears to be a transitive dependency
+2021-07-01 15:27:32.788 +00:00 [INF] Marking assembly reference System.Configuration for removal based on package mapping configuration System.Configuration
+2021-07-01 15:27:32.790 +00:00 [INF] Adding package System.Configuration.ConfigurationManager based on package mapping configuration System.Configuration
+2021-07-01 15:27:33.171 +00:00 [WRN] No version of System.Configuration.ConfigurationManager found that supports ["net45"]; leaving unchanged
+2021-07-01 15:27:33.183 +00:00 [INF] Reference to .NET Upgrade Assistant analyzer package (Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, version 0.2.233001) needs added
+2021-07-01 15:27:33.194 +00:00 [INF] References to be removed: System.Configuration
+2021-07-01 15:27:33.196 +00:00 [INF] Packages to be removed: Iesi.Collections, Version=3.2.0.4000
+ImageResizer, Version=3.4.3
+MarkdownSharp, Version=1.13.0.0
+Microsoft.ReportViewer.Runtime.Common, Version=12.0.2402.15
+NHibernate, Version=3.3.1.4000
+2021-07-01 15:27:33.199 +00:00 [INF] Packages to be added: System.Configuration.ConfigurationManager, Version=5.0.0
+Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, Version=0.2.233001
+2021-07-01 15:27:37.486 +00:00 [INF] Applying upgrade step Clean up NuGet package references
+2021-07-01 15:27:37.488 +00:00 [INF] Removing outdated assembly reference: System.Configuration
+2021-07-01 15:27:37.490 +00:00 [INF] Removing outdated package reference: Iesi.Collections, Version=3.2.0.4000
+2021-07-01 15:27:37.493 +00:00 [INF] Removing outdated package reference: ImageResizer, Version=3.4.3
+2021-07-01 15:27:37.495 +00:00 [INF] Removing outdated package reference: MarkdownSharp, Version=1.13.0.0
+2021-07-01 15:27:37.498 +00:00 [INF] Removing outdated package reference: Microsoft.ReportViewer.Runtime.Common, Version=12.0.2402.15
+2021-07-01 15:27:37.500 +00:00 [INF] Removing outdated package reference: NHibernate, Version=3.3.1.4000
+2021-07-01 15:27:37.501 +00:00 [INF] Adding package reference: System.Configuration.ConfigurationManager, Version=5.0.0
+2021-07-01 15:27:37.502 +00:00 [INF] Adding package reference: Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, Version=0.2.233001
+2021-07-01 15:27:42.566 +00:00 [WRN] No version of System.Configuration.ConfigurationManager found that supports ["net45"]; leaving unchanged
+2021-07-01 15:27:42.593 +00:00 [INF] Upgrade step Clean up NuGet package references applied successfully
+2021-07-01 15:27:43.898 +00:00 [INF] Initializing upgrade step Update TFM
+2021-07-01 15:27:44.070 +00:00 [INF] TFM needs updated to net5.0-windows
+2021-07-01 15:27:47.116 +00:00 [INF] Applying upgrade step Update TFM
+2021-07-01 15:27:52.836 +00:00 [INF] Updated TFM to net5.0-windows
+2021-07-01 15:27:52.840 +00:00 [INF] Upgrade step Update TFM applied successfully
+2021-07-01 15:27:55.155 +00:00 [INF] Initializing upgrade step Update NuGet Packages
+2021-07-01 15:27:59.106 +00:00 [INF] Marking package Microsoft.CSharp for removal because it appears to be a transitive dependency
+2021-07-01 15:27:59.157 +00:00 [INF] Marking package Microsoft.ReportViewer.Runtime.WebForms for removal because it appears to be a transitive dependency
+2021-07-01 15:27:59.174 +00:00 [INF] Marking package Microsoft.ReportViewer.Web.2012 for removal because it appears to be a transitive dependency
+2021-07-01 15:27:59.226 +00:00 [INF] Marking package System.ComponentModel.Annotations for removal because it appears to be a transitive dependency
+2021-07-01 15:27:59.235 +00:00 [INF] Marking package System.Data.DataSetExtensions for removal because it appears to be a transitive dependency
+2021-07-01 15:27:59.254 +00:00 [INF] Marking package TownCrier for removal because it appears to be a transitive dependency
+2021-07-01 15:27:59.265 +00:00 [INF] Marking package System.Configuration.ConfigurationManager for removal because it appears to be a transitive dependency
+2021-07-01 15:27:59.277 +00:00 [INF] Marking assembly reference System.Web.Mvc for removal based on package mapping configuration ASP.NET
+2021-07-01 15:27:59.279 +00:00 [INF] Adding framework reference Microsoft.AspNetCore.App based on package mapping configuration ASP.NET
+2021-07-01 15:27:59.781 +00:00 [INF] Marking package AutoMapper, Version=3.2.1 for removal because it doesn't support the target framework but a newer version (3.3.1) does
+2021-07-01 15:27:59.898 +00:00 [INF] Marking package Elmah.MVC, Version=2.1.1 for removal because it doesn't support the target framework but a newer version (2.1.2) does
+2021-07-01 15:27:59.920 +00:00 [INF] Marking package FluentNHibernate, Version=1.4.0.0 for removal because it doesn't support the target framework but a newer version (2.1.2) does
+2021-07-01 15:27:59.922 +00:00 [WRN] Package FluentNHibernate has been upgraded across major versions (1.4.0.0 -> 2.1.2) which may introduce breaking changes
+2021-07-01 15:28:00.017 +00:00 [INF] Marking package log4net, Version=2.0.3 for removal because it doesn't support the target framework but a newer version (2.0.12) does
+2021-07-01 15:28:00.126 +00:00 [INF] Marking package Newtonsoft.Json, Version=6.0.3 for removal because it doesn't support the target framework but a newer version (6.0.8) does
+2021-07-01 15:28:00.149 +00:00 [INF] Marking package structuremap, Version=2.6.4.1 for removal because it doesn't support the target framework but a newer version (3.1.9.463) does
+2021-07-01 15:28:00.151 +00:00 [WRN] Package structuremap has been upgraded across major versions (2.6.4.1 -> 3.1.9.463) which may introduce breaking changes
+2021-07-01 15:28:00.402 +00:00 [INF] Marking package AutoMapper, Version=3.3.1 for removal because it doesn't support the target framework but a newer version (5.2.0) does
+2021-07-01 15:28:00.404 +00:00 [WRN] Package AutoMapper has been upgraded across major versions (3.3.1 -> 5.2.0) which may introduce breaking changes
+2021-07-01 15:28:00.410 +00:00 [FTL] Package analysis failed (analyzer Target compatibility reference analyzer: Collection was modified; enumeration operation may not execute.
+2021-07-01 15:28:00.559 +00:00 [INF] Reference to Newtonsoft package (Microsoft.AspNetCore.Mvc.NewtonsoftJson, version 5.0.7) needs added
+2021-07-01 15:28:03.236 +00:00 [INF] Applying upgrade step Update NuGet Packages
+2021-07-01 15:28:03.238 +00:00 [INF] Removing outdated assembly reference: System.Web.Mvc
+2021-07-01 15:28:03.240 +00:00 [INF] Removing outdated package reference: AutoMapper, Version=3.2.1
+2021-07-01 15:28:03.241 +00:00 [INF] Removing outdated package reference: Elmah.MVC, Version=2.1.1
+2021-07-01 15:28:03.243 +00:00 [INF] Removing outdated package reference: FluentNHibernate, Version=1.4.0.0
+2021-07-01 15:28:03.244 +00:00 [INF] Removing outdated package reference: log4net, Version=2.0.3
+2021-07-01 15:28:03.247 +00:00 [INF] Removing outdated package reference: Microsoft.CSharp, Version=4.7.0
+2021-07-01 15:28:03.248 +00:00 [INF] Removing outdated package reference: Microsoft.ReportViewer.Runtime.WebForms, Version=12.0.2402.15
+2021-07-01 15:28:03.250 +00:00 [INF] Removing outdated package reference: Microsoft.ReportViewer.Web.2012, Version=1.0.0
+2021-07-01 15:28:03.251 +00:00 [INF] Removing outdated package reference: Newtonsoft.Json, Version=6.0.3
+2021-07-01 15:28:03.252 +00:00 [INF] Removing outdated package reference: structuremap, Version=2.6.4.1
+2021-07-01 15:28:03.254 +00:00 [INF] Removing outdated package reference: System.ComponentModel.Annotations, Version=5.0.0
+2021-07-01 15:28:03.255 +00:00 [INF] Removing outdated package reference: System.Data.DataSetExtensions, Version=4.5.0
+2021-07-01 15:28:03.261 +00:00 [INF] Removing outdated package reference: TownCrier, Version=1.1
+2021-07-01 15:28:03.264 +00:00 [INF] Removing outdated package reference: System.Configuration.ConfigurationManager, Version=5.0.0
+2021-07-01 15:28:03.267 +00:00 [INF] Adding package reference: AutoMapper, Version=3.3.1
+2021-07-01 15:28:03.268 +00:00 [INF] Adding package reference: Elmah.MVC, Version=2.1.2
+2021-07-01 15:28:03.269 +00:00 [INF] Adding package reference: FluentNHibernate, Version=2.1.2
+2021-07-01 15:28:03.271 +00:00 [INF] Adding package reference: log4net, Version=2.0.12
+2021-07-01 15:28:03.272 +00:00 [INF] Adding package reference: Newtonsoft.Json, Version=6.0.8
+2021-07-01 15:28:03.273 +00:00 [INF] Adding package reference: structuremap, Version=3.1.9.463
+2021-07-01 15:28:03.275 +00:00 [INF] Adding package reference: AutoMapper, Version=5.2.0
+2021-07-01 15:28:03.278 +00:00 [INF] Adding package reference: Microsoft.AspNetCore.Mvc.NewtonsoftJson, Version=5.0.7
+2021-07-01 15:28:03.279 +00:00 [INF] Adding framework reference: Microsoft.AspNetCore.App
+2021-07-01 15:28:11.768 +00:00 [INF] Marking package AutoMapper, Version=3.3.1 for removal because it is referenced elsewhere in the project with a higher version
+2021-07-01 15:28:11.849 +00:00 [INF] Marking package FluentNHibernate for removal because it appears to be a transitive dependency
+2021-07-01 15:28:11.904 +00:00 [INF] Marking package log4net for removal because it appears to be a transitive dependency
+2021-07-01 15:28:12.033 +00:00 [WRN] No version of Elmah.MVC found that supports ["net5.0-windows"]; leaving unchanged
+2021-07-01 15:28:12.079 +00:00 [INF] Marking package Newtonsoft.Json, Version=6.0.8 for removal because it doesn't support the target framework but a newer version (7.0.1) does
+2021-07-01 15:28:12.082 +00:00 [WRN] Package Newtonsoft.Json has been upgraded across major versions (6.0.8 -> 7.0.1) which may introduce breaking changes
+2021-07-01 15:28:12.114 +00:00 [INF] Marking package structuremap, Version=3.1.9.463 for removal because it doesn't support the target framework but a newer version (4.7.1) does
+2021-07-01 15:28:12.116 +00:00 [WRN] Package structuremap has been upgraded across major versions (3.1.9.463 -> 4.7.1) which may introduce breaking changes
+2021-07-01 15:28:12.369 +00:00 [INF] Marking package Newtonsoft.Json, Version=7.0.1 for removal because it doesn't support the target framework but a newer version (8.0.3) does
+2021-07-01 15:28:12.372 +00:00 [WRN] Package Newtonsoft.Json has been upgraded across major versions (7.0.1 -> 8.0.3) which may introduce breaking changes
+2021-07-01 15:28:12.375 +00:00 [FTL] Package analysis failed (analyzer Target compatibility reference analyzer: Collection was modified; enumeration operation may not execute.
+2021-07-01 15:28:12.411 +00:00 [WRN] Upgrade step Update NuGet Packages failed: "Failed": Package analysis failed
+2021-07-01 15:28:21.838 +00:00 [INF] Applying upgrade step Update NuGet Packages
+2021-07-01 15:28:21.841 +00:00 [INF] Removing outdated package reference: AutoMapper, Version=3.3.1
+2021-07-01 15:28:21.842 +00:00 [INF] Removing outdated package reference: FluentNHibernate, Version=2.1.2
+2021-07-01 15:28:21.844 +00:00 [INF] Removing outdated package reference: log4net, Version=2.0.12
+2021-07-01 15:28:21.845 +00:00 [INF] Removing outdated package reference: Newtonsoft.Json, Version=6.0.8
+2021-07-01 15:28:21.847 +00:00 [INF] Removing outdated package reference: structuremap, Version=3.1.9.463
+2021-07-01 15:28:21.848 +00:00 [INF] Adding package reference: Newtonsoft.Json, Version=7.0.1
+2021-07-01 15:28:21.851 +00:00 [INF] Adding package reference: structuremap, Version=4.7.1
+2021-07-01 15:28:21.852 +00:00 [INF] Adding package reference: Newtonsoft.Json, Version=8.0.3
+2021-07-01 15:28:28.460 +00:00 [INF] Marking package Newtonsoft.Json, Version=7.0.1 for removal because it is referenced elsewhere in the project with a higher version
+2021-07-01 15:28:28.584 +00:00 [INF] Marking package structuremap for removal because it appears to be a transitive dependency
+2021-07-01 15:28:28.693 +00:00 [WRN] No version of Elmah.MVC found that supports ["net5.0-windows"]; leaving unchanged
+2021-07-01 15:28:28.901 +00:00 [INF] Marking package Newtonsoft.Json, Version=8.0.3 for removal because it doesn't support the target framework but a newer version (9.0.1) does
+2021-07-01 15:28:28.903 +00:00 [WRN] Package Newtonsoft.Json has been upgraded across major versions (8.0.3 -> 9.0.1) which may introduce breaking changes
+2021-07-01 15:28:29.094 +00:00 [INF] Removing outdated package reference: Newtonsoft.Json, Version=7.0.1
+2021-07-01 15:28:29.096 +00:00 [INF] Removing outdated package reference: structuremap, Version=4.7.1
+2021-07-01 15:28:29.097 +00:00 [INF] Removing outdated package reference: Newtonsoft.Json, Version=8.0.3
+2021-07-01 15:28:29.099 +00:00 [INF] Adding package reference: Newtonsoft.Json, Version=9.0.1
+2021-07-01 15:28:35.215 +00:00 [WRN] No version of Elmah.MVC found that supports ["net5.0-windows"]; leaving unchanged
+2021-07-01 15:28:35.368 +00:00 [INF] Upgrade step Update NuGet Packages applied successfully
+2021-07-01 15:28:37.694 +00:00 [INF] Initializing upgrade step Add template files
+2021-07-01 15:28:37.715 +00:00 [INF] 4 expected template items needed
+2021-07-01 15:28:40.781 +00:00 [INF] Applying upgrade step Add template files
+2021-07-01 15:28:40.841 +00:00 [INF] Added template file Program.cs
+2021-07-01 15:28:40.871 +00:00 [INF] Added template file Startup.cs
+2021-07-01 15:28:40.887 +00:00 [INF] Added template file appsettings.json
+2021-07-01 15:28:40.904 +00:00 [INF] Added template file appsettings.Development.json
+2021-07-01 15:28:43.566 +00:00 [INF] 4 template items added
+2021-07-01 15:28:43.568 +00:00 [INF] Upgrade step Add template files applied successfully
+2021-07-01 15:28:46.459 +00:00 [INF] Initializing upgrade step Upgrade app config files
+2021-07-01 15:28:46.749 +00:00 [INF] Found 30 app settings for upgrade: MethodFitness.sql_server_connection_string, constring_DEV, constring_CANNIBAL_QA, constring_CANNIBAL_PROD, Debug, Version, Name, Host, LanguageDefault, ScriptsPath, CssPath, ImagesPath, WebSiteRoot, TrainerClientRateDefault, jsApplicationName, LastDayOfPayWeek, AdminEmail, SMTPServer, SMTPPW, SMTPUN, ClientValidationEnabled, UnobtrusiveJavaScriptEnabled, elmah.mvc.disableHandler, elmah.mvc.disableHandleErrorFilter, elmah.mvc.requiresAuthentication, elmah.mvc.IgnoreDefaultRoute, elmah.mvc.allowedRoles, elmah.mvc.allowedUsers, elmah.mvc.route, webpages:Enabled
+2021-07-01 15:28:46.756 +00:00 [INF] Found 0 connection strings for upgrade: 
+2021-07-01 15:28:46.781 +00:00 [INF] 0 web page namespace imports need upgraded: 
+2021-07-01 15:28:51.849 +00:00 [INF] Applying upgrade step Convert Application Settings
+2021-07-01 15:28:51.879 +00:00 [INF] Upgrade step Convert Application Settings applied successfully
+2021-07-01 15:28:51.881 +00:00 [INF] Applying upgrade step Upgrade app config files
+2021-07-01 15:28:51.883 +00:00 [INF] Upgrade step Upgrade app config files applied successfully
+2021-07-01 15:28:53.814 +00:00 [INF] Initializing upgrade step Update Razor files
+2021-07-01 15:29:01.736 +00:00 [INF] Identified 11 diagnostics in Razor files in project MF.Web
+2021-07-01 15:29:01.739 +00:00 [INF]   5 diagnostics need fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\MethodFitness\Home.cshtml
+2021-07-01 15:29:01.740 +00:00 [INF]   2 diagnostics need fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\Login\Login.cshtml
+2021-07-01 15:29:01.742 +00:00 [INF]   1 diagnostics need fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\Shared\_Layout.cshtml
+2021-07-01 15:29:01.744 +00:00 [INF]   3 diagnostics need fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\UserProfile\UserProfile.cshtml
+2021-07-01 15:29:01.758 +00:00 [INF] Found @helper functions in 0 documents
+2021-07-01 15:29:07.050 +00:00 [INF] Applying upgrade step Apply code fixes to Razor documents
+2021-07-01 15:29:43.251 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\Login\Login.cshtml at line 60
+2021-07-01 15:29:43.254 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\Login\Login.cshtml at line 57
+2021-07-01 15:29:43.279 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\Shared\_Layout.cshtml at line 25
+2021-07-01 15:29:43.312 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\MethodFitness\Home.cshtml at line 15
+2021-07-01 15:29:43.316 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\MethodFitness\Home.cshtml at line 14
+2021-07-01 15:29:43.318 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\MethodFitness\Home.cshtml at line 13
+2021-07-01 15:29:43.320 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\MethodFitness\Home.cshtml at line 12
+2021-07-01 15:29:43.324 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\MethodFitness\Home.cshtml at line 11
+2021-07-01 15:29:43.335 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\UserProfile\UserProfile.cshtml at line 13
+2021-07-01 15:29:43.338 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\UserProfile\UserProfile.cshtml at line 12
+2021-07-01 15:29:43.342 +00:00 [INF] Updating source code in Razor document c:\Dev\MethodFitness2\src\Projects\MF.Web\Views\UserProfile\UserProfile.cshtml at line 11
+2021-07-01 15:29:44.783 +00:00 [INF] Upgrade step Apply code fixes to Razor documents applied successfully
+2021-07-01 15:29:44.785 +00:00 [INF] Applying upgrade step Update Razor files
+2021-07-01 15:29:44.787 +00:00 [INF] Upgrade step Update Razor files applied successfully
+2021-07-01 15:29:48.578 +00:00 [INF] Initializing upgrade step Update source code
+2021-07-01 15:29:57.214 +00:00 [INF] Applying upgrade step Apply fix for UA0001: ASP.NET Core projects should not reference ASP.NET namespaces
+2021-07-01 15:29:57.243 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\BillingAreaRegistration.cs
+2021-07-01 15:29:57.266 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\BaseSessionRateController.cs
+2021-07-01 15:29:57.293 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\PaymentController.cs
+2021-07-01 15:29:57.320 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\PayTrainerController.cs
+2021-07-01 15:29:57.341 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\PayTrainerListController.cs
+2021-07-01 15:29:57.366 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerPaymentController.cs
+2021-07-01 15:29:57.384 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerPaymentListController.cs
+2021-07-01 15:29:57.402 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerSessionVerificationController.cs
+2021-07-01 15:29:57.421 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerSessionVerificationListController.cs
+2021-07-01 15:29:57.440 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerSessionViewController.cs
+2021-07-01 15:29:57.465 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\VerifiedTrainerSessionsController.cs
+2021-07-01 15:29:57.493 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\Controllers\ActivityController.cs
+2021-07-01 15:29:57.514 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\Controllers\DailyPaymentsController.cs
+2021-07-01 15:29:57.532 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\Controllers\TrainerMetricController.cs
+2021-07-01 15:29:57.557 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\Bootstrapper.cs
+2021-07-01 15:29:57.576 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\CustomAuthorizationAttribute.cs
+2021-07-01 15:29:57.593 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\CustomJsonResult.cs
+2021-07-01 15:29:57.616 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\ModelBinders.cs
+2021-07-01 15:29:57.633 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\ModelBindingBootstaper.cs
+2021-07-01 15:29:57.654 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\StructureMapControllerFactory.cs
+2021-07-01 15:29:57.680 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\ReportingAreaRegistration.cs
+2021-07-01 15:29:57.708 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Schedule\Controllers\AppointmentCalendarController.cs
+2021-07-01 15:29:57.732 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Schedule\Controllers\AppointmentController.cs
+2021-07-01 15:29:57.754 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Schedule\ScheduleAreaRegistration.cs
+2021-07-01 15:29:57.792 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\ClientController.cs
+2021-07-01 15:29:57.814 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\ClientListController.cs
+2021-07-01 15:29:57.830 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\EmployeeDashboardController.cs
+2021-07-01 15:29:57.857 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\ErrorController.cs
+2021-07-01 15:29:57.883 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\LocationController.cs
+2021-07-01 15:29:57.909 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\LocationListController.cs
+2021-07-01 15:29:57.931 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\LoginController.cs
+2021-07-01 15:29:57.958 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\MethodFitnessController.cs
+2021-07-01 15:29:57.985 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\MFController.cs
+2021-07-01 15:29:58.007 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\OrthoganalController.cs
+2021-07-01 15:29:58.034 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\TrainerController.cs
+2021-07-01 15:29:58.061 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\TrainerListController.cs
+2021-07-01 15:29:58.081 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\CustomWebViewPage.cs
+2021-07-01 15:29:58.102 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Filters\AddUserToViewModelFilter.cs
+2021-07-01 15:29:58.122 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Global.asax.cs
+2021-07-01 15:29:58.141 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Models\CalendarViewModel.cs
+2021-07-01 15:29:58.157 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Services\IAuthenticationContext.cs
+2021-07-01 15:29:58.180 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Services\ISecuritySetupService.cs
+2021-07-01 15:29:58.210 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Services\RouteTokens\IRouteTokenBuilder.cs
+2021-07-01 15:29:58.239 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Services\RouteTokens\RouteToken.cs
+2021-07-01 15:30:03.102 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\CustomJsonResult.cs
+2021-07-01 15:30:03.121 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\StructureMapControllerFactory.cs
+2021-07-01 15:30:03.144 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\LoginController.cs
+2021-07-01 15:30:03.165 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Global.asax.cs
+2021-07-01 15:30:03.184 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Services\IAuthenticationContext.cs
+2021-07-01 15:30:07.933 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\StructureMapControllerFactory.cs
+2021-07-01 15:30:07.951 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Global.asax.cs
+2021-07-01 15:30:12.637 +00:00 [INF] Diagnostic UA0001 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Global.asax.cs
+2021-07-01 15:30:17.426 +00:00 [INF] Upgrade step Apply fix for UA0001: ASP.NET Core projects should not reference ASP.NET namespaces applied successfully
+2021-07-01 15:30:25.025 +00:00 [INF] Applying upgrade step Apply fix for UA0002: Types should be upgraded
+2021-07-01 15:30:25.078 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\CustomAuthorizationAttribute.cs
+2021-07-01 15:30:25.117 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\ErrorController.cs
+2021-07-01 15:30:25.168 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\LoginController.cs
+2021-07-01 15:30:25.218 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\MFController.cs
+2021-07-01 15:30:25.263 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\OrthoganalController.cs
+2021-07-01 15:30:25.308 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Filters\AddUserToViewModelFilter.cs
+2021-07-01 15:30:25.438 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Schedule\Controllers\AppointmentController.cs
+2021-07-01 15:30:25.525 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Schedule\Controllers\AppointmentCalendarController.cs
+2021-07-01 15:30:25.642 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\TrainerController.cs
+2021-07-01 15:30:25.695 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\Controllers\TrainerMetricController.cs
+2021-07-01 15:30:25.749 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\Controllers\DailyPaymentsController.cs
+2021-07-01 15:30:25.838 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\Controllers\ActivityController.cs
+2021-07-01 15:30:25.888 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\VerifiedTrainerSessionsController.cs
+2021-07-01 15:30:25.947 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerSessionViewController.cs
+2021-07-01 15:30:26.011 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerSessionVerificationListController.cs
+2021-07-01 15:30:26.087 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerSessionVerificationController.cs
+2021-07-01 15:30:26.162 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\MethodFitnessController.cs
+2021-07-01 15:30:26.219 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerPaymentListController.cs
+2021-07-01 15:30:26.285 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\LocationController.cs
+2021-07-01 15:30:26.330 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\TrainerPaymentController.cs
+2021-07-01 15:30:26.390 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\PayTrainerListController.cs
+2021-07-01 15:30:26.456 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\EmployeeDashboardController.cs
+2021-07-01 15:30:26.556 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\ClientController.cs
+2021-07-01 15:30:26.621 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\PayTrainerController.cs
+2021-07-01 15:30:26.710 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\PaymentController.cs
+2021-07-01 15:30:26.784 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\CustomWebViewPage.cs
+2021-07-01 15:30:26.840 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Billing\Controllers\BaseSessionRateController.cs
+2021-07-01 15:30:26.896 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Services\RouteTokens\IRouteTokenBuilder.cs
+2021-07-01 15:30:27.005 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Services\ISecuritySetupService.cs
+2021-07-01 15:30:31.812 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\CustomWebViewPage.cs
+2021-07-01 15:30:31.867 +00:00 [INF] Diagnostic UA0002 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Areas\Reporting\RDLC\Config\CustomAuthorizationAttribute.cs
+2021-07-01 15:30:36.535 +00:00 [INF] Upgrade step Apply fix for UA0002: Types should be upgraded applied successfully
+2021-07-01 15:30:40.491 +00:00 [INF] Applying upgrade step Apply fix for UA0005: Do not use HttpContext.Current
+2021-07-01 15:30:40.730 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Services\IAuthenticationContext.cs
+2021-07-01 15:30:40.783 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Global.asax.cs
+2021-07-01 15:30:45.574 +00:00 [INF] Diagnostic UA0005 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Global.asax.cs
+2021-07-01 15:30:50.260 +00:00 [INF] Upgrade step Apply fix for UA0005: Do not use HttpContext.Current applied successfully
+2021-07-01 15:30:53.237 +00:00 [INF] Applying upgrade step Apply fix for UA0008: UrlHelper should be replaced with IUrlHelper
+2021-07-01 15:30:53.285 +00:00 [INF] Diagnostic UA0008 fixed in c:\Dev\MethodFitness2\src\Projects\MF.Web\Controllers\MFController.cs
+2021-07-01 15:30:57.895 +00:00 [INF] Applying upgrade step Update source code
+2021-07-01 15:31:00.642 +00:00 [INF] Upgrade step Update source code applied successfully
+2021-07-01 15:31:00.648 +00:00 [INF] Upgrade step Apply fix for UA0008: UrlHelper should be replaced with IUrlHelper applied successfully
+2021-07-01 15:31:03.226 +00:00 [INF] Initializing upgrade step Move to next project
+2021-07-01 15:31:06.148 +00:00 [INF] Applying upgrade step Move to next project
+2021-07-01 15:31:06.151 +00:00 [INF] Upgrade step Move to next project applied successfully
+2021-07-01 15:31:08.317 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 15:31:08.406 +00:00 [INF] No projects need upgraded for selected entrypoint
+2021-07-01 15:31:08.408 +00:00 [INF] Initializing upgrade step Finalize upgrade
+2021-07-01 15:31:11.372 +00:00 [INF] Applying upgrade step Finalize upgrade
+2021-07-01 15:31:11.374 +00:00 [INF] Upgrade step Finalize upgrade applied successfully
+2021-07-01 15:31:12.920 +00:00 [INF] Upgrade has completed. Please review any changes.
+2021-07-01 15:31:12.930 +00:00 [INF] Deleting upgrade progress file at c:\Dev\MethodFitness2\src\Solutions\MethodFitness\.upgrade-assistant
+2021-07-01 15:32:48.440 +00:00 [INF] Loaded 3 extensions
+2021-07-01 15:32:49.515 +00:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.301\
+2021-07-01 15:32:53.857 +00:00 [INF] Initializing upgrade step Select an entrypoint
+2021-07-01 15:32:57.292 +00:00 [INF] Applying upgrade step Select an entrypoint
+2021-07-01 15:33:03.886 +00:00 [INF] Upgrade step Select an entrypoint applied successfully
+2021-07-01 15:33:06.268 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 15:33:06.471 +00:00 [INF] No projects need upgraded for selected entrypoint
+2021-07-01 15:33:06.473 +00:00 [INF] Initializing upgrade step Finalize upgrade
+2021-07-01 15:33:15.494 +00:00 [INF] Applying upgrade step Finalize upgrade
+2021-07-01 15:33:15.497 +00:00 [INF] Upgrade step Finalize upgrade applied successfully
+2021-07-01 15:33:18.212 +00:00 [INF] Upgrade has completed. Please review any changes.
+2021-07-01 15:33:18.223 +00:00 [INF] No state to save
+2021-07-01 15:34:34.346 +00:00 [INF] Loaded 3 extensions
+2021-07-01 15:34:35.445 +00:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.301\
+2021-07-01 15:34:39.596 +00:00 [INF] Initializing upgrade step Select an entrypoint
+2021-07-01 15:34:45.241 +00:00 [INF] Applying upgrade step Select an entrypoint
+2021-07-01 15:34:51.246 +00:00 [INF] Upgrade step Select an entrypoint applied successfully
+2021-07-01 15:34:54.201 +00:00 [INF] Initializing upgrade step Select project to upgrade
+2021-07-01 15:34:54.323 +00:00 [INF] No projects need upgraded for selected entrypoint
+2021-07-01 15:34:54.324 +00:00 [INF] Initializing upgrade step Finalize upgrade
+2021-07-01 15:34:58.964 +00:00 [INF] Applying upgrade step Finalize upgrade
+2021-07-01 15:34:58.967 +00:00 [INF] Upgrade step Finalize upgrade applied successfully
+2021-07-01 15:35:02.151 +00:00 [INF] Upgrade has completed. Please review any changes.
+2021-07-01 15:35:02.162 +00:00 [INF] No state to save

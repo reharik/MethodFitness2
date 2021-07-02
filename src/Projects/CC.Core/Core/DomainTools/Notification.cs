@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
 using CC.Core.Core.ValidationServices;
 using CC.Core.DataValidation;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CC.Core.Core.DomainTools
 {
@@ -10,11 +10,11 @@ namespace CC.Core.Core.DomainTools
     /// </summary>
     public class Notification : JsonResult
     {
-        public Notification()
+        public Notification(bool Success, string Message) : base( new{ Success=Success, Message=Message})
         {
         }
 
-        public Notification(Notification report)
+        public Notification(Notification report) : base(report)
         {
             Message = report.Message;
             Success = report.Success;
@@ -22,7 +22,7 @@ namespace CC.Core.Core.DomainTools
             //Target = continuation.Target;
         }
 
-        public Notification(Continuation report)
+        public Notification(Continuation report) : base(report)
         {
             Errors = new List<ErrorInfo>();
             Message = report.Message;

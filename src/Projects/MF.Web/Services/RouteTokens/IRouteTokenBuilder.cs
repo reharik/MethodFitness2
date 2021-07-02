@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Web.Mvc;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Enumerations;
 using CC.Core.Core.Html.Menu;
@@ -10,6 +9,7 @@ using CC.Core.Utilities;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MF.Web.Services.RouteTokens
 {

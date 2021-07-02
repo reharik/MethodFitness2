@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace CC.Core.HtmlTags
 {
@@ -11,7 +11,7 @@ namespace CC.Core.HtmlTags
 #pragma warning disable 618,612
         public static string ToJson(object objectToSerialize)
         {
-            return new JavaScriptSerializer().Serialize(objectToSerialize);
+            return JsonConvert.SerializeObject(objectToSerialize);
         }
 
         /// <summary>
@@ -19,18 +19,18 @@ namespace CC.Core.HtmlTags
         /// </summary>
         /// <param name = "objectToSerialize"></param>
         /// <returns></returns>
-        public static string ToUnsafeJson(object objectToSerialize)
-        {
-            var serializer = new JavaScriptSerializer();
-            serializer.RegisterConverters(new JavaScriptConverter[]{new JavascriptFunctionConverter()});
-            var output = serializer.Serialize(objectToSerialize);
-            const string pattern = @"\{""__jsfunction"":""(?<function>\w+)""}";
-            return Regex.Replace(output, pattern, m => m.Groups["function"].Value);
-        }
+        //public static string ToUnsafeJson(object objectToSerialize)
+        //{
+        //    var serializer = new JavaScriptSerializer();
+        //    serializer.RegisterConverters(new JavaScriptConverter[]{new JavascriptFunctionConverter()});
+        //    var output = serializer.Serialize(objectToSerialize);
+        //    const string pattern = @"\{""__jsfunction"":""(?<function>\w+)""}";
+        //    return Regex.Replace(output, pattern, m => m.Groups["function"].Value);
+        //}
 
         public static T Get<T>(string rawJson)
         {
-            return new JavaScriptSerializer().Deserialize<T>(rawJson);
+            return JsonConvert.DeserializeObject<T>(rawJson);
         }
 
         public static T Get<T>(byte[] rawJson)
@@ -41,29 +41,29 @@ namespace CC.Core.HtmlTags
 
         public static object Get(string rawJson)
         {
-            return new JavaScriptSerializer().DeserializeObject(rawJson);
+            return JsonConvert.DeserializeObject(rawJson);
         }
 
-        public class JavascriptFunctionConverter : JavaScriptConverter
-        {
-            public override IEnumerable<Type> SupportedTypes
-            {
-                get { return new[]{typeof (javascript.JavascriptFunction)}; }
-            }
+        //public class JavascriptFunctionConverter : JavaScriptConverter
+        //{
+        //    public override IEnumerable<Type> SupportedTypes
+        //    {
+        //        get { return new[]{typeof (javascript.JavascriptFunction)}; }
+        //    }
 
-            public override object Deserialize(IDictionary<string, object> dictionary, Type type,
-                                               JavaScriptSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
+        //    public override object Deserialize(IDictionary<string, object> dictionary, Type type,
+        //                                       JavaScriptSerializer serializer)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
 
-            public override IDictionary<string, object> Serialize(object obj, JavaScriptSerializer serializer)
-            {
-                var dictionary = new Dictionary<string, object>();
-                dictionary["__jsfunction"] = obj.ToString();
-                return dictionary;
-            }
-        }
+        //    public override IDictionary<string, object> Serialize(object obj, JavaScriptSerializer serializer)
+        //    {
+        //        var dictionary = new Dictionary<string, object>();
+        //        dictionary["__jsfunction"] = obj.ToString();
+        //        return dictionary;
+        //    }
+        //}
 
 #pragma warning restore 618,612
     }

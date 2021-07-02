@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
 using CC.Core.Core.Html.Menu;
 using CC.Core.Core.Localization;
 using MF.Core.Html.Expressions;
+using Microsoft.AspNetCore.Html;
 
 namespace MF.Web
 {
@@ -34,9 +34,9 @@ namespace MF.Web
             return new StandardButtonExpression(name).LocalizedText(text);
         }
 
-        public MvcHtmlString EndForm()
+        public HtmlString EndForm()
         {
-            return MvcHtmlString.Create("</form>");
+            return HtmlString.Create("</form>");
         }
 
         public static MenuExpression MenuItems(IList<MenuItem> items)

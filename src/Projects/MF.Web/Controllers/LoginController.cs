@@ -1,7 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using System.Web.Security;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Html;
@@ -12,11 +10,12 @@ using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Services;
+using Microsoft.AspNetCore.Mvc;
 using StructureMap;
 
 namespace MF.Web.Controllers
 {
-    public class LoginController:Controller
+    public class LoginController: Controller
     {
         private readonly ISecurityDataService _securityDataService;
         private readonly IAuthenticationContext _authenticationContext;
@@ -52,7 +51,7 @@ namespace MF.Web.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel input)
         {
-            var notification = new Notification {Message = WebLocalizationKeys.INVALID_USERNAME_OR_PASSWORD.ToString()};
+            var notification = new Notification (false, WebLocalizationKeys.INVALID_USERNAME_OR_PASSWORD.ToString());
 
 //            try
 //            {
@@ -76,7 +75,7 @@ namespace MF.Web.Controllers
 //                ex.Source = "CATCH RAISED";
 //                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
 //            }
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
             
 //            

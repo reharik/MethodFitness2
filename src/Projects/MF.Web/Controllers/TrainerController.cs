@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web.Mvc;
 using AutoMapper;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
@@ -22,6 +21,8 @@ using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
 using StructureMap;
 using NHibernate.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MF.Web.Controllers
 {
@@ -29,7 +30,7 @@ namespace MF.Web.Controllers
     {
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
-        private readonly IFileHandlerService _fileHandlerService;
+        //private readonly IFileHandlerService _fileHandlerService;
         private readonly ISessionContext _sessionContext;
         private readonly ISecurityDataService _securityDataService;
         private readonly IAuthorizationRepository _authorizationRepository;
@@ -38,7 +39,7 @@ namespace MF.Web.Controllers
 
         public TrainerController(IRepository repository,
             ISaveEntityService saveEntityService,
-            IFileHandlerService fileHandlerService,
+            //IFileHandlerService fileHandlerService,
             ISessionContext sessionContext,
             ISecurityDataService securityDataService,
             IAuthorizationRepository authorizationRepository,
@@ -47,7 +48,7 @@ namespace MF.Web.Controllers
         {
             _repository = repository;
             _saveEntityService = saveEntityService;
-            _fileHandlerService = fileHandlerService;
+            //_fileHandlerService = fileHandlerService;
             _sessionContext = sessionContext;
             _securityDataService = securityDataService;
             _authorizationRepository = authorizationRepository;
@@ -99,7 +100,7 @@ namespace MF.Web.Controllers
             model._deleteUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.Delete(null));
             model._saveUrl= UrlContext.GetUrlForAction<TrainerController>(x => x.Save(null));
             model._Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString();
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public ActionResult Display_Template(ViewModel input)
@@ -112,7 +113,7 @@ namespace MF.Web.Controllers
             var model = Mapper.Map<User, TrainerViewModel>(trainer);
             model.addUpdateUrl = UrlContext.GetUrlForAction<TrainerController>(x => x.AddUpdate(null)) + "/" + trainer.EntityId;
             model._Title = WebLocalizationKeys.TRAINER_INFORMATION.ToString();
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -125,7 +126,7 @@ namespace MF.Web.Controllers
                 _repository.Delete(trainer);
             }
             var notification = validationManager.FinishWithAction();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
 
         }
 
@@ -144,7 +145,7 @@ namespace MF.Web.Controllers
                 }
             });
             var notification = validationManager.FinishWithAction();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
         public ActionResult Save(TrainerViewModel input)
@@ -170,7 +171,7 @@ namespace MF.Web.Controllers
 
 //            _fileHandlerService.SaveUploadedFile(file, trainer.FirstName + "_" + trainer.LastName);
             var notification = crudManager.Finish();
-            return new CustomJsonResult(notification){ ContentType = "text/plain" };
+            return new JsonResult(notification){ ContentType = "text/plain" };
         }
 
         private bool userRoleRules(User trainer, out ActionResult json)
@@ -178,54 +179,54 @@ namespace MF.Web.Controllers
             Notification notification;
             if (!trainer.UserRoles.Any())
             {
-                notification = new Notification {Success = false};
+                notification = new Notification(false, "");
                 notification.Errors = new List<ErrorInfo>
                                           {
                                               new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(),
                                                             WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
                                           };
                 {
-                    json = new CustomJsonResult(notification);
+                    json = new JsonResult(notification);
 
                     return true;
                 }
             }
             if (trainer.UserRoles.FirstOrDefault(x => x.Name == "Trainer") == null)
             {
-                notification = new Notification {Success = false};
+                notification = new Notification(false, "");
                 notification.Errors = new List<ErrorInfo>
                                           {
                                               new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(),
                                                             WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
                                           };
                 {
-                    json = new CustomJsonResult(notification);
+                    json = new JsonResult(notification);
                     return true;
                 }
             }
             if (!trainer.UserRoles.Any())
             {
-                notification = new Notification {Success = false};
+                notification = new Notification(false, "");
                 notification.Errors = new List<ErrorInfo>
                                           {
                                               new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(),
                                                             WebLocalizationKeys.SELECT_AT_LEAST_ONE_USER_ROLE.ToString())
                                           };
                 {
-                    json = new CustomJsonResult(notification);
+                    json = new JsonResult(notification);
                     return true;
                 }
             }
             if (trainer.UserRoles.FirstOrDefault(x => x.Name == "Trainer") == null)
             {
-                notification = new Notification {Success = false};
+                notification = new Notification(false, "");
                 notification.Errors = new List<ErrorInfo>
                                           {
                                               new ErrorInfo(WebLocalizationKeys.USER_ROLES.ToString(),
                                                             WebLocalizationKeys.MUST_HAVE_TRAINER_USER_ROLE.ToString())
                                           };
                 {
-                    json = new CustomJsonResult(notification);
+                    json = new JsonResult(notification);
                     return true;
                 }
             }
@@ -327,7 +328,7 @@ namespace MF.Web.Controllers
                 validationManager = _saveEntityService.ProcessSave(trainer);
             }
             var notification = validationManager.Finish();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
     }
 

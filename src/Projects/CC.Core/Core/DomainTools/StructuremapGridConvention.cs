@@ -1,7 +1,9 @@
 ﻿using System;
 using CC.Core.Core.Html.Grid;
+using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
+using StructureMap.Graph.Scanning;
 using StructureMap.Pipeline;
 
 namespace CC.Core.Core.DomainTools
@@ -30,6 +32,11 @@ namespace CC.Core.Core.DomainTools
             }
 
             return null;
+        }
+
+        public void ScanTypes(TypeSet types, Registry registry)
+        {
+            throw new NotImplementedException();
         }
     }
 }

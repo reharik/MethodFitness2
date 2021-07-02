@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using AutoMapper;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
@@ -16,7 +15,9 @@ using MF.Core.Rules;
 using MF.Core.Services;
 using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
+using Microsoft.AspNetCore.Mvc;
 using StructureMap;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MF.Web.Controllers
 {
@@ -49,7 +50,7 @@ namespace MF.Web.Controllers
             model._deleteUrl = UrlContext.GetUrlForAction<LocationController>(x => x.Delete(null));
             model._saveUrl = UrlContext.GetUrlForAction<LocationController>(x => x.Save(null));
             model._StateList = _selectListItemService.CreateList<State>();
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -62,7 +63,7 @@ namespace MF.Web.Controllers
                 _repository.Delete(location);
             }
             var notification = validationManager.Finish();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
 
         }
 
@@ -81,7 +82,7 @@ namespace MF.Web.Controllers
                 }
             });
             var notification = validationManager.FinishWithAction();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
         public ActionResult Save(LocationViewModel input)
@@ -91,7 +92,7 @@ namespace MF.Web.Controllers
             var crudManager = _saveEntityService.ProcessSave(location);
 
             var notification = crudManager.Finish();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
         private Location mapToDomain(LocationViewModel locationModel, Location location)

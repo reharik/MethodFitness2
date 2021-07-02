@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Security.Cryptography;
-using System.Web.Security;
 using CC.Core.Core.DomainTools;
 using CC.Core.Utilities;
 using MF.Core.Domain;

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Web.Mvc;
 using CC.Core.Core.Html.CCUI.HtmlConventionRegistries;
 using CC.Core.Core.Localization;
 using CC.Core.HtmlTags;
 using CC.Core.Reflection;
 using CC.Core.UI.Helpers.Configuration;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CC.Core.Core.Html.CCUI.Builders
 {

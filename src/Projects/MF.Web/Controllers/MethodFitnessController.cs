@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using MF.Web.Services.RouteTokens;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MF.Web.Controllers
 {

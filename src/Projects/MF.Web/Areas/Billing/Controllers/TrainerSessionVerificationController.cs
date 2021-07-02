@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Enumerations;
@@ -22,6 +21,7 @@ using MF.Web.Config;
 using MF.Web.Controllers;
 using StructureMap;
 using System.Net.Mail;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
@@ -67,14 +67,14 @@ namespace MF.Web.Areas.Billing.Controllers
                 AcceptSessionsUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x => AcceptSessions(null), AreaName.Billing),
                 AlertAdminEmailUrl = UrlContext.GetUrlForAction<TrainerSessionVerificationController>(x=>AlertAdminEmail(null),AreaName.Billing)
             };
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public JsonResult AcceptSessions(BulkActionViewModel input)
         {
             if (input.EntityIds == null || !input.EntityIds.Any())
             {
-                return new CustomJsonResult(new Notification{Success = false,Message = WebLocalizationKeys.NO_SESSIONS_TO_VERIFY.ToString()});
+                return new JsonResult(new Notification(false,WebLocalizationKeys.NO_SESSIONS_TO_VERIFY.ToString()));
             }
             var user = (User) input.User;
             user.SessionVerification(input.EntityIds);
@@ -92,12 +92,12 @@ namespace MF.Web.Areas.Billing.Controllers
 
                 _emailService.SendEmail(emailDto);
             }
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
         public JsonResult AlertAdminEmail(TrainersPaymentListViewModel input)
         {
-            var notification = new Notification{Success = true,Message = WebLocalizationKeys.EMAIL_SENT_SUCCESSFULLY.ToString()};
+            var notification = new Notification(true,WebLocalizationKeys.EMAIL_SENT_SUCCESSFULLY.ToString());
             var emailDto = new EmailDTO
                 {
                     Body = input.Body,
@@ -115,7 +115,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 notification.Errors= new List<ErrorInfo> {new ErrorInfo("", exception)};
             }
 
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
@@ -136,7 +136,7 @@ namespace MF.Web.Areas.Billing.Controllers
 
             var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos, input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, input.User);
-            return new CustomJsonResult(gridItemsViewModel);
+            return new JsonResult(gridItemsViewModel);
         }
 
         public JsonResult Display(ViewModel input)

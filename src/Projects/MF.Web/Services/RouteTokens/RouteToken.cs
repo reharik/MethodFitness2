@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Web.Script.Serialization;
 using CC.Core.Core.Enumerations;
 using CC.Core.Core.Html;
 using CC.Core.Core.Html.Menu;

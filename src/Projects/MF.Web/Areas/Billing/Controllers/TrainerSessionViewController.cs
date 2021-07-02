@@ -1,5 +1,4 @@
 using System;
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Enumerations;
@@ -14,6 +13,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using StructureMap;
 
 namespace MF.Web.Areas.Billing.Controllers
@@ -45,7 +45,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 TrainersName = user.FullNameFNF,
                 EntityId = user.EntityId,
             };
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public JsonResult TrainerSessions(TrainerPaymentGridItemsRequestModel input)
@@ -54,7 +54,7 @@ namespace MF.Web.Areas.Billing.Controllers
 
             var items = _dynamicExpressionQuery.PerformQuery<TrainerSessionDto>(input.filters, x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate && !x.TrainerVerified);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, (IUser)input.User);
-            return new CustomJsonResult(gridItemsViewModel);
+            return new JsonResult(gridItemsViewModel);
         }
     }
 

@@ -1,4 +1,3 @@
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Enumerations;
@@ -11,6 +10,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using NHibernate.Linq;
 using System.Linq;
 
@@ -48,7 +48,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 EntityId = trainer.EntityId
             };
             model.headerButtons.Add("return");
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public JsonResult TrainerPayments(GridItemsRequestModel input)
@@ -58,7 +58,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var trainer = _repository.Query<User>(x=>x.EntityId==userId).FetchMany(x=>x.TrainerPayments).ToList().FirstOrDefault();
             var items = _dynamicExpressionQuery.PerformQuery(trainer.TrainerPayments,input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult(gridItemsViewModel);
+            return new JsonResult(gridItemsViewModel);
         }
     }
 }

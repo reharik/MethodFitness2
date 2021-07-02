@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web.Mvc;
 using AutoMapper;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.CustomAttributes;
@@ -20,6 +19,8 @@ using MF.Core.Enumerations;
 using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MF.Web.Areas.Schedule.Controllers
 {
@@ -61,7 +62,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             return View("AddUpdate", new AppointmentViewModel());
         }
 
-        public CustomJsonResult AddUpdate(AddEditAppointmentViewModel input)
+        public JsonResult AddUpdate(AddEditAppointmentViewModel input)
         {
             var appointment = input.EntityId > 0 ? _repository.Find<Appointment>(input.EntityId) : new Appointment();
             appointment.Date = input.ScheduledDate.HasValue ? input.ScheduledDate.Value : appointment.Date;
@@ -92,7 +93,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
             model.EndTimeString = getEndTime(model.AppointmentType, appointment.StartTime.Value).ToShortTimeString();
             handleTrainer(model);
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         private DateTime getEndTime(string length, DateTime startTime)
@@ -136,7 +137,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             model._clientItems = appointment.Clients.Select(x => x.FullNameFNF);
             model.StartTimeString = appointment.StartTime.Value.ToShortTimeString();
             model.EndTimeString = appointment.EndTime.Value.ToShortTimeString();
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -151,7 +152,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             {
                 if (!_authorizationService.IsAllowed(user, "/Calendar/CanDeleteRetroactiveAppointments"))
                 {
-                    var notification = new Notification { Message = WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString() };
+                    var notification = new Notification(false, WebLocalizationKeys.YOU_CAN_NOT_DELETE_RETROACTIVELY.ToString() );
                     return Json(notification, JsonRequestBehavior.AllowGet);
                 }
                 _logger.LogInfo("appointmentId: {0}, being deleted happened in the past".ToFormat(appointment.EntityId));
@@ -161,7 +162,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             }
             _repository.HardDelete(appointment);
             _repository.UnitOfWork.Commit();
-            return new CustomJsonResult(new Notification{Success = true});
+            return new JsonResult(new Notification(true, ""));
         }
 
         public ActionResult Save(AppointmentViewModel input)
@@ -187,7 +188,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             // check here to see if session that is removed (or possibly client that is removed) is still on apt
             var crudManager = _saveEntityService.ProcessSave(appointment);
             var continuation = crudManager.Finish();
-            return new CustomJsonResult(new Notification(continuation));
+            return new JsonResult(new Notification(continuation));
         }
 
         private Notification validateAppointment(User user, Appointment appointment, AppointmentViewModel input)
@@ -212,7 +213,7 @@ namespace MF.Web.Areas.Schedule.Controllers
 
             if (input.ClientsDtos==null || !input.ClientsDtos.selectedItems.Any())
             {
-                notification = new Notification { Success = false };
+                notification = new Notification (false,"");
                 notification.Errors = new List<ErrorInfo> { new ErrorInfo(CoreLocalizationKeys.CLIENTS.ToString(), CoreLocalizationKeys.SELECT_AT_LEAST_ONE_CLIENT.ToString()) };
             }
             return notification;
@@ -220,7 +221,7 @@ namespace MF.Web.Areas.Schedule.Controllers
 
         private Notification validateOverBooking(User user, AppointmentViewModel input, DateTime startTime, DateTime endTime)
         {
-            var notification = new Notification { Success = true };
+            var notification = new Notification(true,"");
             if (user.UserRoles.Exists(x => x.Name == "Administrator"))
             {
                 return notification;

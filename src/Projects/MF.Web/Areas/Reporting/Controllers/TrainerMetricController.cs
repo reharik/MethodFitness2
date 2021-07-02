@@ -6,9 +6,10 @@ using MF.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MF.Web.Areas.Reporting.Controllers
 {
@@ -27,7 +28,7 @@ namespace MF.Web.Areas.Reporting.Controllers
             return this.View("Display", new TrainerMetricViewModel());
         }
 
-        public CustomJsonResult Display(ViewModel input)
+        public JsonResult Display(ViewModel input)
         {
             var trainers = this._repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
             var model = new TrainerMetricViewModel
@@ -38,7 +39,7 @@ namespace MF.Web.Areas.Reporting.Controllers
                 _Title = WebLocalizationKeys.TRAINER_METRIC.ToString(),
                 ReportUrl = "/Areas/Reporting/ReportViewer/TrainerMetric.aspx"
             };
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
     }
 

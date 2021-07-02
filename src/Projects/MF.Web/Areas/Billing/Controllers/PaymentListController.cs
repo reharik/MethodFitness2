@@ -8,7 +8,7 @@ using MF.Core.Domain;
 using MF.Core.Enumerations;
 using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
-using MF.Web.Config;
+using Microsoft.AspNetCore.Mvc;
 using MF.Web.Controllers;
 using System.Linq;
 
@@ -31,7 +31,7 @@ namespace MF.Web.Areas.Billing.Controllers
             _sessionContext = sessionContext;
         }
 
-        public CustomJsonResult ItemList(ViewModel input)
+        public JsonResult ItemList(ViewModel input)
         {
             var user = _sessionContext.GetCurrentUser();
             var client = _repository.Find<Client>(input.EntityId);
@@ -45,16 +45,16 @@ namespace MF.Web.Areas.Billing.Controllers
             };
             model.headerButtons.Add("new");
             model.headerButtons.Add("delete");
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
-        public CustomJsonResult Payments(GridItemsRequestModel input)
+        public JsonResult Payments(GridItemsRequestModel input)
         {
             var user = _sessionContext.GetCurrentUser();
             var client = _repository.Find<Client>(input.ParentId);
             var items = _dynamicExpressionQuery.PerformQuery(client.Payments.OrderBy(x=>x.CreatedDate), input.filters);
             var gridItemsViewModel = _paymentListGrid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult(gridItemsViewModel);
+            return new JsonResult(gridItemsViewModel);
         }
     }
 }

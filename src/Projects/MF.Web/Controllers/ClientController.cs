@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web.Mvc;
 using AutoMapper;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.CustomAttributes;
@@ -22,6 +21,8 @@ using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
 using MF.Core;
 using StructureMap;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MF.Web.Controllers
 {
@@ -90,7 +91,7 @@ namespace MF.Web.Controllers
             model._saveUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Save(null));
             model._StateList = _selectListItemService.CreateList<State>();
             model._SourceList = _selectListItemService.CreateList<Source>();
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public ActionResult Delete(ViewModel input)
@@ -103,11 +104,11 @@ namespace MF.Web.Controllers
                 _repository.Delete(client);
             }
             var notification = validationManager.Finish();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
 
         }
 
-        public ActionResult DeleteMultiple(BulkActionViewModel input)
+        public JsonResult DeleteMultiple(BulkActionViewModel input)
         {
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
             IValidationManager validationManager = new ValidationManager(_repository);
@@ -122,7 +123,7 @@ namespace MF.Web.Controllers
                 }
             });
             var notification = validationManager.FinishWithAction();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
         public ActionResult Save(ClientViewModel input)
@@ -147,7 +148,7 @@ namespace MF.Web.Controllers
 
             //            _uploadedFileHandlerService.SaveUploadedFile(file, client.FirstName + "_" + client.LastName);
             var notification = crudManager.Finish();
-            return new CustomJsonResult(notification) { ContentType = "text/plain" };
+            return new JsonResult(notification) { ContentType = "text/plain" };
         }
 
         private void associateWithUser(Client client)
@@ -215,7 +216,7 @@ namespace MF.Web.Controllers
                 validationManager = _saveEntityService.ProcessSave(client);
             }
             var notification = validationManager.Finish();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
     }
 

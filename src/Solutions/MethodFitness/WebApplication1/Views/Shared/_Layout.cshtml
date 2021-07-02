@@ -1,0 +1,98 @@
+@using CC.Core.HtmlTags
+@using MF.Web
+
+<!--[if IE]>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <!-- [Else]>
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+        <!-- [endif]-->
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.Partial("_CssScriptsDebugFalse")
+    @RenderSection("ExtraCss", false)
+    
+    @Html.Partial("_JavascriptDebugFalse")
+@*    @Html.Partial("_JavascriptDebug"+HttpContext.Current.IsDebuggingEnabled)*@
+
+    
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
+    @RenderSection("HeaderScripts", false)
+
+
+     <script type="text/javascript">
+        MF.routeTokens = @MvcHtmlString.Create(JsonUtil.ToJson(@Model.SerializedRoutes));
+        @RenderSection("HeaderJavascript", false);
+     </script>
+    </head>
+
+    <body id="methodFitness" >
+    <div id="ajaxLoading" style="z-index: 1000">&nbsp;</div>
+        @Html.Action("MethodFitnessHeader", "Orthogonal")
+        <div id="top-separator"></div>
+        <div id="main-body">
+            <div id="left-navigation" class="mf_menuContainer">
+            </div>
+            <div id="main-content">
+                <div class="content-outer" >
+                    <div id="messageContainer">
+                    </div> 
+                    <div id="contentInner">
+                        @RenderBody()
+                    </div>
+                    <div class="content-footer"><span>&nbsp;</span></div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+    
+    
+    
+    <script id="gridTemplate" type="text/x-jQuery-tmpl">
+        <div class="content-header">
+            <input class="search" /> 
+            <button style="display:none" id="new" class="new" title="@WebLocalizationKeys.NEW"></button>
+            <button style="display:none" class="delete" title="@WebLocalizationKeys.DELETE_ITEMS"></button>
+            <button style="display:none" class="return" title="@WebLocalizationKeys.RETURN"></button>
+            <button style="display:none" class="toggleArchived" data-togglestate="hide" title="@WebLocalizationKeys.TOGGLE_ARCHIVE">@WebLocalizationKeys.TOGGLE_ARCHIVE</button>
+            <span class="title-name">${_Title}</span>
+        </div>
+        <div class="form-scroll-inner">
+            <div id="contentArea" class="content-inner">
+                {{if EntityId}}
+                <input id="EntityId" type="hidden" value="${EntityId}"/>
+                {{/if}}
+                {{if ParentId}}
+                <input id="ParentId" type="hidden" value="${ParentId}"/>
+                {{/if}}
+                <table id="gridContainer" class="scroll"></table>
+            </div>
+        </div>
+    </script>
+    
+    <script id="payTrainerTemplate" type="text/x-jQuery-tmpl">
+        <div class="col left">
+            <div class="fieldRow">
+                Are you sure you would like to pay $${amount} to ${trainersName}?
+            </div>
+        </div>
+    </script>
+
+    <script id="payTrainerSearchTemplate" type="text/x-jQuery-tmpl">
+        <div id="filterArea">
+            <div class="headerInput">
+                @WebLocalizationKeys.END_DATE
+                <input type="text" data-bind="value:EndDate" name="EndDate" class="datePicker" >
+            </div>
+            <button id="search" class="filter" title="@WebLocalizationKeys.FILTER"></button>
+            <button id='payTrainerButton' class='dollar_sign' ></button>
+        </div>
+    </script>
+    
+@*    <div style="display:none" id="emailTemplate" >*@
+@*        @Html.Partial("EmailTemplate", new EmailViewModel())*@
+@*    </div>*@
+
+</html>

@@ -1,0 +1,111 @@
+﻿@model MF.Web.Controllers.LoginViewModel
+@using CC.Core.Core.Html.CCUI
+@using CC.Core.HtmlTags
+@using MF.Web
+
+@{
+    Layout = "";
+}
+<!--[if IE]>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <!-- [Else]>
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+        <!-- [endif]-->
+<html>
+    <head>
+    <title>Login</title>
+
+    @CSS("bootstrap.css").ToHtmlTag()
+    @CSS("jquery-ui-1.10.0.custom.css").ToHtmlTag()
+    @CSS("main.css").ToHtmlTag()
+    <!--[if gt IE 7]>
+    @CSS("ie.css").ToHtmlTag()
+     <![endif]-->
+     @CSS("mf.css").ToHtmlTag()
+     @Script("jqueryPlugins/jquery-1.9.0.js").ToHtmlTag() 
+     @Script("jqueryPlugins/jquery-ui-1.10.0.custom.js").ToHtmlTag()
+
+    @Script("externalHelpers/underscore.js").ToHtmlTag()
+    @Script("externalHelpers/backbone.js").ToHtmlTag()
+    @Script("externalHelpers/backbone.marionette.js").ToHtmlTag()
+    @Script("externalHelpers/knockout-2.1.0.debug.js").ToHtmlTag()    
+    @Script("externalHelpers/knockout.mapping-lastest.debug.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/jquery.noty.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/inline.js").ToHtmlTag()    
+    @Script("jqueryPlugins/noty/default.js").ToHtmlTag()    
+
+    @Script("MF/MF.App.js").ToHtmlTag()
+    @Script("MF/MF.Views.js").ToHtmlTag()
+    @Script("MF/MF.State.js").ToHtmlTag()
+    @Script("MF/MF.Mixins.js").ToHtmlTag()
+    @Script("MF/MF.OneOffViews.js").ToHtmlTag()
+
+    
+    @Script("MF/CC.ModelBinding/CC.Elements.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ModelService.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ValidationRules.js").ToHtmlTag()
+    @Script("MF/CC.ModelBinding/CC.ValidationRunner.js").ToHtmlTag()
+        @Script("internalHelpers/mf.repository.js").ToHtmlTag()
+    @Script("internalHelpers/MF.blockedTimes.js").ToHtmlTag()
+
+        @Script("externalHelpers/json2.js").ToHtmlTag()
+    
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/content/images/favicon.ico")"/>
+    <script type="text/javascript">
+        
+       var extraFormOptions = {};
+        extraFormOptions.forgotPasswordUrl=@MvcHtmlString.Create(JsonUtil.ToJson(Model.ForgotPasswordUrl));
+                
+        $(document).ready(function () {
+            var model =  @MvcHtmlString.Create(JsonUtil.ToJson(Model));
+            var view = new MF.Views.LoginView({el:".signin"});
+            view.rawModel = model;
+            view.render();
+        });
+        
+        </script>
+        <script type="text/javascript" src="https://cloudfront.loggly.com/js/loggly.tracker-latest.min.js"></script>
+        <script>
+            var _LTracker = _LTracker || [];
+            _LTracker.push({
+                'logglyKey': '282a8581-13b3-4c55-94f3-106fd3fb8508',
+                'sendConsoleErrors' : true,
+                'tag' : 'loggly-jslogger'
+            });
+        </script>
+    </head>
+  <body id="signin">
+        <div id="outer-wrapper">
+            <div class="content-outer">
+                <div class="content-header"></div>
+                <div class="content-inner norequired">
+                    <div id="messageContainer"></div> 
+                    <div class="signin">
+                        <div class="form">
+                        <div class="row">
+                            <div class="span10">
+                                <label class="big">@WebLocalizationKeys.SIGN_IN</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.SubmissionFor(x => x.UserName).Size("10").ToHtmlTag()
+                        </div>
+                        <div class="row">
+                            @Html.SubmissionFor(x => x.Password).Size("10").ToHtmlTag()
+                        </div>
+                        <div class="row">
+                            @Html.SubmissionFor(x => x.RememberMe).Size("5").AddClassToInputRoot("reverse").AddClassToLabelRoot("ckbLabel").InlineReverse().ToHtmlTag()
+                       </div>
+                        </div>
+                        
+                        <div class="footer some-top-padding">
+                            @StandardButtonFor("save", WebLocalizationKeys.SIGN_IN).AddClass("save").AddClass("kyt_submitButton").ToHtmlTag()
+                            <a href="#" id="forgotPassword">@WebLocalizationKeys.FORGOT_YOUR_PASSWORD</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-footer"><span></span></div>
+            </div>
+        </div>
+    </body>
+</html>

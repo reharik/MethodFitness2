@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Threading;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Security;
 using CC.Core.Core.DomainTools;
 using MF.Core.Config;
 using MF.Web.Config;
 using StructureMap;
 using MF.Core;
+using Microsoft.AspNetCore.Http;
 namespace MF.Web
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -60,14 +57,14 @@ namespace MF.Web
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            HttpCookie authCookie = HttpContextHelper.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie == null) return;
             FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
             var userData = authTicket.UserData;
 
             CustomIdentitiy identity = new CustomIdentitiy(authTicket);
             CustomPrincipal principal = new CustomPrincipal(identity, userData);
-            HttpContext.Current.User = principal;
+            HttpContextHelper.Current.User = principal;
             Thread.CurrentPrincipal = principal;
         }
     }

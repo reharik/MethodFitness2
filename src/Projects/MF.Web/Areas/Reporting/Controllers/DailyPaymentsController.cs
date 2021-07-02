@@ -6,9 +6,10 @@ using MF.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MF.Web.Areas.Reporting.Controllers
 {
@@ -27,7 +28,7 @@ namespace MF.Web.Areas.Reporting.Controllers
             return this.View("Display", new DailyPaymentViewModel());
         }
 
-        public CustomJsonResult Display(ViewModel input)
+        public JsonResult Display(ViewModel input)
         {
             var trainers = this._repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
 
@@ -40,7 +41,7 @@ namespace MF.Web.Areas.Reporting.Controllers
                                 _Title = WebLocalizationKeys.DAILY_PAYMENTS.ToString(),
                                 ReportUrl = "/Areas/Reporting/ReportViewer/DailyPayments.aspx"
                             };
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
     }
 

@@ -5,15 +5,15 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
-using System.Web;
-using System.Web.UI;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
 
 namespace CC.Core.HtmlTags
 {
     public class HtmlTag : ITagSource
-#if !LEGACY
-        , IHtmlString
-#endif
+//#if !LEGACY
+//        , HtmlString
+//#endif
     {
         public static HtmlTag Empty()
         {
@@ -660,9 +660,9 @@ namespace CC.Core.HtmlTags
 
         private static IPrincipal findPrincipal()
         {
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.Current != null)
             {
-                return HttpContext.Current.User;
+                return HttpContextHelper.Current.User;
             }
 
             // Rather throw up on nulls than put a fake in

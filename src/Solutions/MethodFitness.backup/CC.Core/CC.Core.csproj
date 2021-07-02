@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5E0B0CA2-BD5E-4953-A336-2AADC00CD81B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CC.Core</RootNamespace>
+    <AssemblyName>CC.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ImageResizer, Version=3.4.3.103, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\ImageResizer.3.4.3\lib\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net-loggly, Version=8.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\log4net-loggly.8.0.1\lib\net40\log4net-loggly.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\Solutions\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Microsoft.ReportViewer.Runtime.WebForms.12.0.2402.15\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\Solutions\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\BasicExtensions.cs" />
+    <Compile Include="Core\CCCoreLocalizationKeys.cs" />
+    <Compile Include="Core\CoreViewModelAndDTOs\GridItemViewModel.cs" />
+    <Compile Include="Core\CoreViewModelAndDTOs\GroupSelectViewModel.cs" />
+    <Compile Include="Core\CoreViewModelAndDTOs\PhotoDto.cs" />
+    <Compile Include="Core\CoreViewModelAndDTOs\TokenInputDto.cs" />
+    <Compile Include="Core\CoreViewModelAndDTOs\ViewModel.cs" />
+    <Compile Include="Core\CustomAttributes\ValidateFileNotEmptyAttribute.cs" />
+    <Compile Include="Core\CustomAttributes\LinkDisplayAttribute.cs" />
+    <Compile Include="Core\CustomAttributes\LogAttribute.cs" />
+    <Compile Include="Core\CustomAttributes\TextAreaAttribute.cs" />
+    <Compile Include="Core\CustomAttributes\ValidateDateComesAfterAttribute.cs" />
+    <Compile Include="Core\CustomAttributes\ValidateDCIRangeAttribute.cs" />
+    <Compile Include="Core\CustomAttributes\ValidateSqlDateTimeAttribute.cs" />
+    <Compile Include="Core\CustomAttributes\ValidateUrlAttribute.cs" />
+    <Compile Include="Core\DomainTools\IRepository.cs" />
+    <Compile Include="Core\DomainTools\IUnitOfWork.cs" />
+    <Compile Include="Core\DomainTools\Notification.cs" />
+    <Compile Include="Core\DomainTools\Repository.cs" />
+    <Compile Include="Core\DomainTools\SqlStatementInterceptor.cs" />
+    <Compile Include="Core\DomainTools\StructuremapGridConvention.cs" />
+    <Compile Include="Core\DomainTools\TextAreaConvention.cs" />
+    <Compile Include="Core\DomainTools\UnitOfWork.cs" />
+    <Compile Include="Core\Domain\DomainEntity.cs" />
+    <Compile Include="Core\Domain\IPersistableObject.cs" />
+    <Compile Include="Core\Domain\LocalizedEnumeration.cs" />
+    <Compile Include="Core\Domain\LocalizedProperty.cs" />
+    <Compile Include="Core\Domain\LocalizedText.cs" />
+    <Compile Include="Core\Enumerations\Enumerations.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\DatePickerBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\DatePickerBuilder2.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\DateTimeDisplayBuilder2.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\EmailDisplayBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\GroupedSelectBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\GroupedSelectBuilder2.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\ImageFileDisplayBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\LinkDisplayBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\ListDisplayBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\ListDisplayBuilder2.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\SelectFromEnumerationBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\SelectFromEnumerationBuilder2.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\SelectFromIEnumerableBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\TextAreaBuilder.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\TextAreaBuilder2.cs" />
+    <Compile Include="Core\Html\CCUI\Builders\ValidationModifier.cs" />
+    <Compile Include="Core\Html\CCUI\CCUIHtmlExtensions.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlConventionRegistries\CustomTagActionExpressions.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlConventionRegistries\CCElementNamingConvention.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlConventionRegistries\CCHtmlConventions.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlConventionRegistries\CCHtmlConventions2.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\DropdownInputExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\EditorExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\EditorInputExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\EditorLabelExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\ViewDisplayAddressExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\ViewDisplayCityStateExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\ViewDisplayDateRangeExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\ViewDisplayExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\ViewExpression.cs" />
+    <Compile Include="Core\Html\CCUI\HtmlExpressions\ViewLabelExpression.cs" />
+    <Compile Include="Core\Html\CCUI\Tags\PasswordTag.cs" />
+    <Compile Include="Core\Html\CCUI\Tags\RadioButtonListTag.cs" />
+    <Compile Include="Core\Html\CCUI\Tags\RadioButtonTag.cs" />
+    <Compile Include="Core\Html\Expressions\HtmlTagExpressionBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Html\Grid\ColumnBase.cs" />
+    <Compile Include="Core\Html\Grid\DisplayColumn.cs" />
+    <Compile Include="Core\Html\Grid\Grid.cs" />
+    <Compile Include="Core\Html\Grid\GridBuilder.cs" />
+    <Compile Include="Core\Html\Grid\GroupingColumn.cs" />
+    <Compile Include="Core\Html\Grid\HiddenColumn.cs" />
+    <Compile Include="Core\Html\Grid\ImageButtonColumn.cs" />
+    <Compile Include="Core\Html\Grid\ImageColumn.cs" />
+    <Compile Include="Core\Html\Grid\LinkColumn.cs" />
+    <Compile Include="Core\Html\Grid\Pager.cs" />
+    <Compile Include="Core\Html\Grid\PageSortFilter.cs" />
+    <Compile Include="Core\Html\Menu\IMenuBuilder.cs" />
+    <Compile Include="Core\Html\Menu\MenuExpression.cs" />
+    <Compile Include="Core\Html\Menu\UrlContext.cs" />
+    <Compile Include="Core\Localization\Enumeration.cs" />
+    <Compile Include="Core\Localization\Header.cs" />
+    <Compile Include="Core\Localization\LocalizationDataProvider.cs" />
+    <Compile Include="Core\Localization\LocalizationManager.cs" />
+    <Compile Include="Core\Localization\LocalizedEnum.cs" />
+    <Compile Include="Core\Localization\LocalizedEnumRegistry.cs" />
+    <Compile Include="Core\Localization\StringToken.cs" />
+    <Compile Include="DataValidation\Attributes\DoNotValidateAttribute.cs" />
+    <Compile Include="DataValidation\Attributes\LengthAttribute.cs" />
+    <Compile Include="DataValidation\Attributes\ValidCreditCard.cs" />
+    <Compile Include="DataValidation\Attributes\ValidEmail.cs" />
+    <Compile Include="DataValidation\Attributes\ValidUrl.cs" />
+    <Compile Include="DataValidation\DataValidationRegistry.cs" />
+    <Compile Include="DataValidation\ErrorInfo.cs" />
+    <Compile Include="DataValidation\ValidationRunner.cs" />
+    <Compile Include="HtmlTags\Cache.cs" />
+    <Compile Include="HtmlTags\CheckboxTag.cs" />
+    <Compile Include="HtmlTags\DivTag.cs" />
+    <Compile Include="HtmlTags\DLTag.cs" />
+    <Compile Include="HtmlTags\Extended\AttributesExtensions.cs" />
+    <Compile Include="HtmlTags\Extended\TagBuilderExtensions.cs" />
+    <Compile Include="HtmlTags\FormTag.cs" />
+    <Compile Include="HtmlTags\HiddenTag.cs" />
+    <Compile Include="HtmlTags\HtmlDocument.cs" />
+    <Compile Include="HtmlTags\HtmlTag.cs" />
+    <Compile Include="HtmlTags\ITagSource.cs" />
+    <Compile Include="HtmlTags\JsonUtil.cs" />
+    <Compile Include="HtmlTags\LinkTag.cs" />
+    <Compile Include="HtmlTags\NoTag.cs" />
+    <Compile Include="HtmlTags\SelectTag.cs" />
+    <Compile Include="HtmlTags\SharedExtensions.cs" />
+    <Compile Include="HtmlTags\TableTag.cs" />
+    <Compile Include="HtmlTags\TagList.cs" />
+    <Compile Include="HtmlTags\TextboxTag.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Services\ICCSessionContext.cs" />
+    <Compile Include="Core\Services\IDynamicExpressionBuilder.cs" />
+    <Compile Include="Core\Services\IDynamicExpressionQuery.cs" />
+    <Compile Include="Core\Services\IFileHandlerService.cs" />
+    <Compile Include="Core\Services\IInjectableSiteConfig.cs" />
+    <Compile Include="Core\Services\ISaveEntityService.cs" />
+    <Compile Include="Core\Services\ISelectListItemService.cs" />
+    <Compile Include="Core\Services\IUpdateCollectionService.cs" />
+    <Compile Include="Core\Services\IValidationManager.cs" />
+    <Compile Include="Core\Services\SystemClock.cs" />
+    <Compile Include="Core\ValidationServices\Continuation.cs" />
+    <Compile Include="Core\ValidationServices\ISaveEntityService.cs" />
+    <Compile Include="Core\ValidationServices\IValidateDTOService.cs" />
+    <Compile Include="Core\ValidationServices\IValidationManager.cs" />
+    <Compile Include="Core\ValidationServices\ICCValidationRunner.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reflection\Accessor.cs" />
+    <Compile Include="Reflection\Cache.cs" />
+    <Compile Include="Reflection\IValueGetter.cs" />
+    <Compile Include="Reflection\MethodValueGetter.cs" />
+    <Compile Include="Reflection\PropertyChain.cs" />
+    <Compile Include="Reflection\PropertyValueGetter.cs" />
+    <Compile Include="Reflection\ReflectionExtentions.cs" />
+    <Compile Include="Reflection\ReflectionHelper.cs" />
+    <Compile Include="Reflection\SingleMethod.cs" />
+    <Compile Include="Reflection\SingleProperty.cs" />
+    <Compile Include="Reflection\TypeDescriptionCache.cs" />
+    <Compile Include="Reflection\TypeExtensions.cs" />
+    <Compile Include="Security\AuthorizationInformation.cs" />
+    <Compile Include="Security\Impl\CollectionExtensions.cs" />
+    <Compile Include="Security\Impl\Guard.cs" />
+    <Compile Include="Security\Impl\MappingRewriting\SchemaChanger.cs" />
+    <Compile Include="Security\Impl\MappingRewriting\UserMapper.cs" />
+    <Compile Include="Security\Impl\Util\Strings.cs" />
+    <Compile Include="Security\Interfaces\IAuthorizationRepository.cs" />
+    <Compile Include="Security\Interfaces\IAuthorizationService.cs" />
+    <Compile Include="Security\Interfaces\IForPermissionBuilder.cs" />
+    <Compile Include="Security\Interfaces\IIDentifiable.cs" />
+    <Compile Include="Security\Interfaces\ILevelPermissionBuilder.cs" />
+    <Compile Include="Security\Interfaces\IOnPermissionBuilder.cs" />
+    <Compile Include="Security\Interfaces\IPermissionBuilder.cs" />
+    <Compile Include="Security\Interfaces\IPermissionsBuilderService.cs" />
+    <Compile Include="Security\Interfaces\IPermissionsService.cs" />
+    <Compile Include="Security\IUser.cs" />
+    <Compile Include="Security\Model\EqualityAndHashCodeProvider.cs" />
+    <Compile Include="Security\Model\NamedEntity.cs" />
+    <Compile Include="Security\Model\Operation.cs" />
+    <Compile Include="Security\Model\Permission.cs" />
+    <Compile Include="Security\Model\UsersGroup.cs" />
+    <Compile Include="Security\Security.cs" />
+    <Compile Include="Security\SecurityInfo.cs" />
+    <Compile Include="Security\SecurityKeyType.cs" />
+    <Compile Include="Security\SecurityTableStructure.cs" />
+    <Compile Include="Security\Services\AuthorizationRepository.cs" />
+    <Compile Include="Security\Services\AuthorizationService.cs" />
+    <Compile Include="Security\Services\PermissionsBuilderService.cs" />
+    <Compile Include="Security\Services\PermissionsService.cs" />
+    <Compile Include="Security\Services\SecurityCriterions.cs" />
+    <Compile Include="Security\TextAreaAttribute.cs" />
+    <Compile Include="UI.Helpers\Configuration\AccessorDef.cs" />
+    <Compile Include="UI.Helpers\Configuration\DefaultElementNamingConvention.cs" />
+    <Compile Include="UI.Helpers\Configuration\DefaultHtmlConventions.cs" />
+    <Compile Include="UI.Helpers\Configuration\ElementBuilder.cs" />
+    <Compile Include="UI.Helpers\Configuration\ElementRequest.cs" />
+    <Compile Include="UI.Helpers\Configuration\HtmlConventionCompiler.cs" />
+    <Compile Include="UI.Helpers\Configuration\IElementBuilder.cs" />
+    <Compile Include="UI.Helpers\Configuration\IElementModifier.cs" />
+    <Compile Include="UI.Helpers\Configuration\IElementNamingConvention.cs" />
+    <Compile Include="UI.Helpers\Configuration\LambdaElementBuilder.cs" />
+    <Compile Include="UI.Helpers\Configuration\LambdaElementModifier.cs" />
+    <Compile Include="UI.Helpers\Configuration\TagBuilder.cs" />
+    <Compile Include="UI.Helpers\Configuration\TagModifier.cs" />
+    <Compile Include="UI.Helpers\HtmlConventionRegistry.cs" />
+    <Compile Include="UI.Helpers\Stringifier.cs" />
+    <Compile Include="UI.Helpers\Tags\ITagGenerator.cs" />
+    <Compile Include="UI.Helpers\Tags\TagActionExpression.cs" />
+    <Compile Include="UI.Helpers\Tags\TagFactory.cs" />
+    <Compile Include="UI.Helpers\Tags\TagFactoryExpression.cs" />
+    <Compile Include="UI.Helpers\Tags\TagGenerator.cs" />
+    <Compile Include="UI.Helpers\Tags\TagProfile.cs" />
+    <Compile Include="UI.Helpers\Tags\TagProfileExpression.cs" />
+    <Compile Include="UI.Helpers\Tags\TagProfileLibrary.cs" />
+    <Compile Include="Utilities\BasicExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

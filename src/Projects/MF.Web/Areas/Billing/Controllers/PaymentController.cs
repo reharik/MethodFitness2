@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Mvc;
 using AutoMapper;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.CustomAttributes;
@@ -16,6 +15,7 @@ using MF.Core.Services;
 using MF.Web.Areas.Schedule.Models.BulkAction;
 using MF.Web.Config;
 using MF.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using StructureMap;
 
 namespace MF.Web.Areas.Billing.Controllers
@@ -46,7 +46,7 @@ namespace MF.Web.Areas.Billing.Controllers
             return View("AddUpdate", new PaymentViewModel());
         }
 
-        public CustomJsonResult AddUpdate(ViewModel input)
+        public JsonResult AddUpdate(ViewModel input)
         {
 //            var payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
             var client = _repository.Find<Client>(input.ParentId);
@@ -81,7 +81,7 @@ namespace MF.Web.Areas.Billing.Controllers
             model._deleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null));
             model.ParentId = client.EntityId;
             model._saveUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.Save(null));
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public ActionResult Display_Template(ViewModel input)
@@ -89,16 +89,16 @@ namespace MF.Web.Areas.Billing.Controllers
             return View("Display", new PaymentViewModel());
         }
 
-        public CustomJsonResult Display(ViewModel input)
+        public JsonResult Display(ViewModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
             var payment =  client.Payments.FirstOrDefault(x=>x.EntityId == input.EntityId);
             var model = Mapper.Map<Payment, PaymentViewModel>(payment);
             model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
-        public CustomJsonResult Delete(ViewModel input)
+        public JsonResult Delete(ViewModel input)
         {
             _logger.LogInfo("Delete request for PaymentId {0}".ToFormat(input.EntityId));   
             var client = _repository.Find<Client>(input.ParentId);
@@ -112,10 +112,10 @@ namespace MF.Web.Areas.Billing.Controllers
                 payment.Client = null;
                 var validationManager = _saveEntityService.ProcessSave(client);
                 var saveClientNotification = validationManager.Finish();
-                return new CustomJsonResult(saveClientNotification);
+                return new JsonResult(saveClientNotification);
             }
             var notification = rulesResult.Finish();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
         private void removeSessionsByPayment(Client client, Payment payment)
@@ -130,7 +130,7 @@ namespace MF.Web.Areas.Billing.Controllers
             sessions.Where(x => !x.SessionUsed).ForEachItem(client.RemoveSession);
         }
 
-        public CustomJsonResult DeleteMultiple(BulkActionViewModel input)
+        public JsonResult DeleteMultiple(BulkActionViewModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
@@ -152,13 +152,13 @@ namespace MF.Web.Areas.Billing.Controllers
             {
                 var processSave = _saveEntityService.ProcessSave(client);
                 var saveClientNotification = processSave.Finish();
-                return new CustomJsonResult(saveClientNotification);
+                return new JsonResult(saveClientNotification);
             }
             var notification = validationManager.Finish();
-            return new CustomJsonResult(notification);
+            return new JsonResult(notification);
         }
 
-        public CustomJsonResult Save(PaymentViewModel input)
+        public JsonResult Save(PaymentViewModel input)
         {
             var client = _repository.Find<Client>(input.ParentId);
             Payment payment;
@@ -178,7 +178,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var crudManager = _saveEntityService.ProcessSave(client);
 
             var notification = crudManager.Finish();
-            return new CustomJsonResult(notification){ ContentType = "text/plain" };
+            return new JsonResult(notification){ ContentType = "text/plain" };
 
         }
 

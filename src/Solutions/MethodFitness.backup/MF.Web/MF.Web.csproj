@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{67429FBB-EAAC-4E70-A9B5-9591E8E3BCD2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MF.Web</RootNamespace>
+    <AssemblyName>MF.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Alpinely.TownCrier, Version=1.1.0.20141, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\TownCrier.1.1\lib\Alpinely.TownCrier.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\Solutions\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\..\Solutions\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\..\Solutions\packages\elmah.corelibrary.1.2.1\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Mvc">
+      <HintPath>..\..\Solutions\packages\Elmah.MVC.2.1.1\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer, Version=3.4.3.103, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\ImageResizer.3.4.3\lib\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer.Mvc, Version=3.3.3.123, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\ImageResizer.Mvc.3.4.3\lib\ImageResizer.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Jurassic, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Jurassic.2.2.0\lib\Jurassic.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic">
+      <HintPath>..\..\Solutions\packages\IronRuby.1.1.3\Lib\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0ecfe41405c30fb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\Microsoft.ReportViewer.Runtime.WebForms.12.0.2402.15\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting">
+      <HintPath>..\..\Solutions\packages\IronRuby.1.1.3\Lib\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata">
+      <HintPath>..\..\Solutions\packages\IronRuby.1.1.3\Lib\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\NHibernate.3.3.1.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\Solutions\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\..\Solutions\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Activity.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
+    <Compile Include="Areas\Billing\Controllers\BaseSessionRateController.cs" />
+    <Compile Include="Areas\Billing\Controllers\VerifiedTrainerSessionsController.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationListController.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationController.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerSessionViewController.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerPaymentController.cs" />
+    <Compile Include="Areas\Billing\Controllers\PayTrainerListController.cs" />
+    <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
+    <Compile Include="Areas\Billing\Controllers\PaymentController.cs" />
+    <Compile Include="Areas\Billing\Controllers\PaymentListController.cs" />
+    <Compile Include="Areas\Reporting\Controllers\ActivityController.cs" />
+    <Compile Include="Areas\Reporting\Controllers\TrainerMetricController.cs" />
+    <Compile Include="Areas\Reporting\Controllers\DailyPaymentsController.cs" />
+    <Compile Include="Areas\Reporting\ReportingAreaRegistration.cs" />
+    <Compile Include="Areas\Reporting\ReportViewer\Activity.aspx.cs">
+      <DependentUpon>Activity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Areas\Reporting\ReportViewer\Activity.aspx.designer.cs">
+      <DependentUpon>Activity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx.cs">
+      <DependentUpon>TrainerMetric.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx.designer.cs">
+      <DependentUpon>TrainerMetric.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Reporting\ReportViewer\DailyPayments.aspx.cs">
+      <DependentUpon>DailyPayments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Areas\Reporting\ReportViewer\DailyPayments.aspx.designer.cs">
+      <DependentUpon>DailyPayments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Schedule\Controllers\AppointmentController.cs" />
+    <Compile Include="CassetteConfiguration.cs" />
+    <Compile Include="Areas\Reporting\RDLC\Config\CustomJsonResult.cs" />
+    <Compile Include="Areas\Schedule\Grids\IEntityListGrid.cs" />
+    <Compile Include="Areas\Reporting\RDLC\Config\AutomapperBootstrapper.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\LocationListController.cs" />
+    <Compile Include="Controllers\ScheduledTasksController.cs" />
+    <Compile Include="CustomWebViewPage.cs" />
+    <Compile Include="DailyPayments.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\AddUserToViewModelFilter.cs" />
+    <Compile Include="Grids\ClientListGrid.cs" />
+    <Compile Include="Grids\LocationListGrid.cs" />
+    <Compile Include="Grids\TrainerSessionVerificationListGrid.cs" />
+    <Compile Include="Grids\SessionVerificationListGrid.cs" />
+    <Compile Include="Grids\TrainerPaymentListGrid.cs" />
+    <Compile Include="Grids\SessionPaymentListGrid.cs" />
+    <Compile Include="Grids\PaymentListGrid.cs" />
+    <Compile Include="Grids\TrainerListGrid.cs" />
+    <Compile Include="Areas\Schedule\Models\BulkAction\BulkActionViewModel.cs" />
+    <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
+    <Compile Include="Areas\Reporting\RDLC\Config\Bootstrapper.cs" />
+    <Compile Include="Areas\Reporting\RDLC\Config\CustomAuthorizationAttribute.cs" />
+    <Content Include="Areas\Reporting\ReportViewer\Activity.aspx" />
+    <Content Include="Areas\Reporting\ReportViewer\TrainerMetric.aspx" />
+    <Content Include="Areas\Reporting\ReportViewer\DailyPayments.aspx" />
+    <Compile Include="Areas\Reporting\RDLC\Config\ModelBinders.cs" />
+    <Compile Include="Areas\Reporting\RDLC\Config\ModelBindingBootstaper.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\ClientListController.cs" />
+    <Compile Include="Controllers\MethodFitnessController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\TrainerController.cs" />
+    <Compile Include="Controllers\EmployeeDashboardController.cs" />
+    <Compile Include="Areas\Schedule\Controllers\AppointmentCalendarController.cs" />
+    <Compile Include="Controllers\TrainerListController.cs" />
+    <Compile Include="Areas\Billing\Controllers\TrainerPaymentListController.cs" />
+    <Compile Include="MFTestRegistry.cs" />
+    <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\IMenuConfig.cs" />
+    <Compile Include="Areas\Reporting\RDLC\Config\StructureMapBootstrapper.cs" />
+    <Compile Include="Areas\Reporting\RDLC\Config\StructureMapControllerFactory.cs" />
+    <Compile Include="Areas\Reporting\RDLC\Config\StructureMapServiceLocator.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\OrthoganalController.cs" />
+    <Compile Include="Controllers\MFController.cs" />
+    <Compile Include="Menus\HeaderMenu.cs" />
+    <Compile Include="Models\CalendarViewModel.cs" />
+    <Compile Include="Models\EmailViewModel.cs" />
+    <Compile Include="MoreLinq\MoreEnumerable.DistinctBy.cs" />
+    <Compile Include="PaymentDetail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Services\IAuthenticationContext.cs" />
+    <Compile Include="Services\ISecuritySetupService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\RouteTokens\IRouteTokenBuilder.cs" />
+    <Compile Include="Services\RouteTokens\IRouteTokenConfig.cs" />
+    <Compile Include="Services\RouteTokens\RouteToken.cs" />
+    <Compile Include="TrainerMetric.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="WebLocalizationKeys.cs" />
+    <Compile Include="MFWebRegistry.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\CC.css" />
+    <Content Include="Content\css\fg.menu.css" />
+    <Content Include="Content\css\fileinput.css" />
+    <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\css\ie.css" />
+    <Content Include="Content\css\jquery-ui-1.8.16.custom.css" />
+    <Content Include="Content\css\jquery.miniColors.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\mf.css" />
+    <Content Include="Content\css\overcast\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\css\overcast\images\ui-bg_flat_0_eeeeee_40x100.png" />
+    <Content Include="Content\css\overcast\images\ui-bg_flat_55_c0402a_40x100.png" />
+    <Content Include="Content\css\overcast\images\ui-bg_flat_55_eeeeee_40x100.png" />
+    <Content Include="Content\css\overcast\images\ui-bg_glass_100_f8f8f8_1x400.png" />
+    <Content Include="Content\css\overcast\images\ui-bg_glass_35_dddddd_1x400.png" />
+    <Content Include="Content\css\overcast\images\ui-bg_glass_60_eeeeee_1x400.png" />
+    <Content Include="Content\css\overcast\images\ui-bg_inset-hard_75_999999_1x100.png" />
+    <Content Include="Content\css\overcast\images\ui-bg_inset-soft_50_c9c9c9_1x100.png" />
+    <Content Include="Content\css\overcast\images\ui-icons_3383bb_256x240.png" />
+    <Content Include="Content\css\overcast\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\css\overcast\images\ui-icons_70b2e1_256x240.png" />
+    <Content Include="Content\css\overcast\images\ui-icons_999999_256x240.png" />
+    <Content Include="Content\css\overcast\images\ui-icons_fbc856_256x240.png" />
+    <Content Include="Content\css\overcast\jquery-ui-1.10.0.custom.css" />
+    <Content Include="Content\css\overcast\jquery-ui-1.10.0.custom.min.css" />
+    <Content Include="Content\css\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\css\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Content\css\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\css\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Content\css\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\css\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Content\css\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\css\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\css\redmond\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\css\redmond\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\css\redmond\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\css\redmond\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\css\redmond\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\css\redmond\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\css\redmond\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\css\redmond\jquery-ui-1.10.0.custom.css" />
+    <Content Include="Content\css\redmond\jquery-ui-1.10.0.custom.min.css" />
+    <Content Include="Content\css\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\css\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\css\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\css\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\css\smoothness\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\css\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\css\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\css\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\css\smoothness\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\css\smoothness\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\css\smoothness\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\css\smoothness\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\css\smoothness\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\css\smoothness\jquery-ui-1.10.0.custom.css" />
+    <Content Include="Content\css\smoothness\jquery-ui-1.10.0.custom.min.css" />
+    <Content Include="Content\css\token-input.css" />
+    <Content Include="Content\css\ui.jqgrid.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Views\Location\AddUpdate.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Billing\Models\" />
+    <Folder Include="Areas\Billing\Views\Shared\" />
+    <Folder Include="Areas\Reporting\Models\" />
+    <Folder Include="Areas\Schedule\Views\Shared\" />
+    <Folder Include="Logs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_popupLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Permissions\ShowPermissions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Login\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orthogonal\MethodFitnessMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orthogonal\MethodFitnessHeader.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MethodFitness\Home.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orthogonal\MainMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\AddressTemplate.cshtml" />
+    <Content Include="Views\Shared\EmailTemplate.cshtml" />
+    <Content Include="Views\Shared\PhoneTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CC.Core\CC.Core.csproj">
+      <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
+      <Name>CC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MF.Core\MF.Core.csproj">
+      <Project>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</Project>
+      <Name>MF.Core</Name>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_FormLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_DetailLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Schedule\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Trainer\TrainerView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\TrainerList\ItemList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Trainer\TrainerAddUpdate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Schedule\Views\AppointmentCalendar\AppointmentCalendar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Schedule\Views\Appointment\AddUpdate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Schedule\Views\Appointment\Display.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Client\AddUpdate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ClientList\ItemList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Reporting\RDLC\Activity.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Areas\Reporting\RDLC\DailyPayments.rdlc" />
+    <EmbeddedResource Include="Areas\Reporting\RDLC\TrainerMetric.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Reporting\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Reporting\Views\Shared\_ReportLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Billing\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Billing\Views\Payment\AddUpdate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Billing\Views\Payment\PaymentList\ItemList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Billing\Views\Payment\Display.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_DisplayLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Billing\Views\PayTrainer\TrainerReceipt.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Reporting\Views\DailyPayments\Display.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_ReportLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Reporting\Views\TrainerMetric\Display.cshtml" />
+    <Content Include="DailyPayments.xsc">
+      <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Content>
+    <Content Include="Areas\Reporting\Views\Activity\Display.cshtml" />
+    <Content Include="Activity.xsc">
+      <DependentUpon>Activity.xsd</DependentUpon>
+    </Content>
+    <None Include="Activity.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Activity.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Activity.xss">
+      <DependentUpon>Activity.xsd</DependentUpon>
+    </Content>
+    <Content Include="Areas\Billing\Views\BaseSessionRate\AddUpdate.cshtml" />
+    <Content Include="Content\css\main.css.orig" />
+    <Content Include="Views\Shared\_CssScriptsDebugFalse.cshtml" />
+    <Content Include="Views\Shared\_JavascriptDebugFalse.cshtml" />
+    <Content Include="Areas\Reporting\Views\Manager\Display.cshtml" />
+    <None Include="Web.config.hbs">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DailyPayments.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DailyPayments.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DailyPayments.xss">
+      <DependentUpon>DailyPayments.xsd</DependentUpon>
+    </Content>
+    <Content Include="PaymentDetail.xsc">
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
+    </Content>
+    <Content Include="packages.config" />
+    <None Include="PaymentDetail.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PaymentDetail.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="PaymentDetail.xss">
+      <DependentUpon>PaymentDetail.xsd</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\fucknutz.pubxml" />
+    <Content Include="TrainerMetric.xsc">
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Content>
+    <None Include="TrainerMetric.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TrainerMetric.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="TrainerMetric.xss">
+      <DependentUpon>TrainerMetric.xsd</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>888</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49920/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+   <!--  <Import Project="$(SolutionDir)\.nuget\nuget.targets" /> -->
+  <Import Project="..\..\Solutions\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\..\Solutions\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
+</Project>

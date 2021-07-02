@@ -1,0 +1,101 @@
+﻿@using CC.Core.Core.Html.CCUI
+@using MF.Web
+@model MF.Web.Controllers.TrainerViewModel
+
+@{
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+
+  
+@section ExtraContentHeaderButtons{
+    <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+    <button id="trainerPayments" class="trainer_payment_history" title="@WebLocalizationKeys.TRAINER_PAYMENTS"></button>
+    <button id="payTrainer" class="pay_trainer" title="@WebLocalizationKeys.PAY_TRAINER"></button>
+}
+
+<div class="row">
+@*-----------Left Column-------------*@
+    <div class="span10">
+        <div class="row">
+                <h5 class="stdTxtColor span5 ml2">@WebLocalizationKeys.PERSONAL_INFORMATION</h5>
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.FirstName).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.LastName).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.ViewFor(x => x.UserLoginInfoLoginName).LabelDisplay(WebLocalizationKeys.LOGIN_NAME).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.BirthDate).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.Address1).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.Address2).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.City).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.State).Size("2").ToHtmlTag()
+            @Html.SubmissionFor(x => x.ZipCode).Size("3").ToHtmlTag()
+        </div>
+        <div class="row">
+                <h5 class="stdTxtColor ml2 span10">@WebLocalizationKeys.SELECT_COLOR_TO_ASSOCIATE_WITH_THIS_PERSON.ToString()</h5>
+        </div>
+        <div class="row">
+                @Html.SubmissionFor(x => x.Color).HideLabel().Size("10").InputId("colorPickerInput").ToHtmlTag()
+        </div>
+        <div class="row ">
+            @Html.SubmissionFor(x => x.UserRolesDtos).Size("10").ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.USER_ROLES).ToHtmlTag()
+        </div>
+    </div>
+
+    <div class="span1"></div>
+@*-----------Right Column-------------*@
+    <div class="span10">
+        <div class="row">
+                 <h5 class="stdTxtColor ml2 span5">@WebLocalizationKeys.PASSWORD</h5>
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.UserLoginInfoLoginName).Size("5").LabelDisplay(WebLocalizationKeys.LOGIN_NAME).ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.Password).Size("5").InputId("Password").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.PasswordConfirmation).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.Email).Size("8").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.PhoneMobile).Size("5").ToHtmlTag()
+            @Html.SubmissionFor(x => x.SecondaryPhone).Size("5").ToHtmlTag()
+        </div>
+            <div class="row">
+            @Html.SubmissionFor(x => x.ClientRateDefault).Size("5").ToHtmlTag()
+        </div>
+        <div class="row">
+            @Html.SubmissionFor(x => x.ClientsDtos).Size("10").ElType("MultiSelect").LabelDisplay(WebLocalizationKeys.CLIENTS).ToHtmlTag()
+        </div>
+    </div>
+</div>
+     
+<script id="percentageTemplate" type="text/x-jQuery-tmpl">
+    <input type="hidden" id="editingId" value="${id}" />
+    <div class="content-inner">
+        <div class="form">
+
+            <div class="row">
+                    <h4 class="stdTxtColor ml2 span10">@WebLocalizationKeys.TRAINER_PERCENTAGE_FOR_CLIENT</h4>
+            </div>
+            <div class="row">
+                <div class="editor_root span5">
+                    <div class="editor_label">
+                        <label for="newTrainerPercentage">Trainer Percentage</label>
+                    </div>
+                    <div class="editor_input">
+                        <input id="newTrainerPercentage" type="text" value='${percentage}'/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

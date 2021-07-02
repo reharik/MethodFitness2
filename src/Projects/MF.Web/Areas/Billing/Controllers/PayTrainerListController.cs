@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.DomainTools;
 using CC.Core.Core.Enumerations;
@@ -14,6 +13,7 @@ using MF.Core.Services;
 using MF.Web.Config;
 using MF.Web.Controllers;
 using MF.Web.Grids;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
@@ -48,7 +48,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 PayTrainerUrl = UrlContext.GetUrlForAction<PayTrainerController>(x=>x.PayTrainer(null),AreaName.Billing),
             };
             model.headerButtons.Add("return");
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public JsonResult TrainerPayments(TrainerPaymentGridItemsRequestModel input)
@@ -60,7 +60,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var trainerSessionDtos = _repository.Query<TrainerSessionDto>(x => x.TrainerId == input.ParentId && x.AppointmentDate <= endDate && !x.TrainerPaid);
             var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos, input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, user);
-            return new CustomJsonResult(gridItemsViewModel);
+            return new JsonResult(gridItemsViewModel);
         }
     }
 

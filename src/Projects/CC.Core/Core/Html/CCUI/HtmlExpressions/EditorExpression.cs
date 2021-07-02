@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web.Mvc;
 using CC.Core.Core.Html.CCUI.Tags;
 using CC.Core.Core.Localization;
 using CC.Core.Core.Services;
@@ -11,6 +10,7 @@ using CC.Core.Security.Interfaces;
 using CC.Core.UI.Helpers.Tags;
 using CC.Core.Utilities;
 using StructureMap;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CC.Core.Core.Html.CCUI.HtmlExpressions
 {
@@ -44,8 +44,9 @@ namespace CC.Core.Core.Html.CCUI.HtmlExpressions
         private List<string> _rootClasses;
         private bool _readOnly;
 
-        public EditorExpression(ITagGenerator<VIEWMODEL> generator, Expression<Func<VIEWMODEL, object>> expression)
+        public EditorExpression(IServiceProvider serviceProvider, ITagGenerator<VIEWMODEL> generator, Expression<Func<VIEWMODEL, object>> expression)
         {
+            _serviceProvider = serviceProvider;
             _generator = generator;
             _expression = expression;
         }
@@ -70,7 +71,7 @@ namespace CC.Core.Core.Html.CCUI.HtmlExpressions
 
         private bool checkAuthentication()
         {
-            _authorizationService = ObjectFactory.Container.GetInstance<IAuthorizationService>();
+            _authorizationService = this.HttpContext.RequestServices.GetService<IAuthorizationService>();
             _sessionContext = ObjectFactory.Container.GetInstance<ICCSessionContext>();
             var user = _sessionContext.GetCurrentUser();
             return _authorizationService.IsAllowed(user, _operation);

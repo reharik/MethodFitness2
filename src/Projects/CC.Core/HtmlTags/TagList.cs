@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace CC.Core.HtmlTags
 {
     public class TagList : ITagSource
-#if !LEGACY
-                           , IHtmlString
-#endif
+//#if !LEGACY
+//                           , HtmlString
+//#endif
     {
         private readonly IEnumerable<HtmlTag> _tags;
 

@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Web.Mvc;
 using CC.Core.Core.CoreViewModelAndDTOs;
 using CC.Core.Core.Html;
 using CC.Core.Core.Html.Menu;
@@ -8,6 +7,7 @@ using MF.Core.Domain;
 using MF.Core.Services;
 using MF.Web.Areas.Schedule.Grids;
 using MF.Web.Config;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MF.Web.Controllers
 {
@@ -38,7 +38,7 @@ namespace MF.Web.Controllers
             model.headerButtons.Add("new");
             model.headerButtons.Add("delete");
             model.headerButtons.Add("toggleArchived");
-            return new CustomJsonResult(model);
+            return new JsonResult(model);
         }
 
         public JsonResult Trainers(GridItemsRequestModel input)
@@ -50,7 +50,7 @@ namespace MF.Web.Controllers
             //TODO find way to deal with string here
             var items = _dynamicExpressionQuery.PerformQuery<User>(input.filters, x=>x.UserRoles.Any(r=>r.Name == "Trainer" ));
             var gridItemsViewModel = _trainerListGrid.GetGridItemsViewModel(input.PageSortFilter, items,user);
-            return new CustomJsonResult(gridItemsViewModel);
+            return new JsonResult(gridItemsViewModel);
         }
     }
 

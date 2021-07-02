@@ -1,5 +1,5 @@
-﻿using System.Web;
-using MF.Core.Config;
+﻿using MF.Core.Config;
+using Microsoft.AspNetCore.Http;
 
 namespace MF.Core.Services
 {
@@ -16,7 +16,7 @@ namespace MF.Core.Services
     {
         public int Execute()
         {
-            var httpContext = HttpContext.Current;
+            var httpContext = HttpContextHelper.Current;
             var customPrincipal = httpContext != null ? httpContext.User as CustomPrincipal : null;
             return customPrincipal != null ? customPrincipal.CompanyId : 1;
         }
