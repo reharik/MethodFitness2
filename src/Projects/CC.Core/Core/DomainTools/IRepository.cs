@@ -36,7 +36,7 @@ namespace CC.Core.Core.DomainTools
         IList<T> CreateSQLQuery<T>(string sql, object properties) where T : class;
         IList<T> CreateSQLQuery<T>(string sql, object properties, int setTimeoutSeconds) where T : class;
         void AssociateUserWith(IUser user, string groupName);
-
+        void DetachUserFromGroup(IUser user, string usersGroupName);
         void Commit();
         void Rollback();
         void Initialize();

@@ -151,6 +151,16 @@ namespace CC.Core.Core.DomainTools
             group.Users.Add(user);
             _unitOfWork.CurrentSession.SaveOrUpdate(group);
         }
+        public void DetachUserFromGroup(IUser user, string usersGroupName)
+        {
+            UsersGroup group = _unitOfWork.CurrentSession.CreateCriteria<UsersGroup>()
+               .Add(Restrictions.Eq("Name", usersGroupName))
+               .UniqueResult<UsersGroup>();
+            Guard.Against(group == null, "There is no users group named: " + usersGroupName);
+
+            group.Users.Remove(user);
+        }
+
 
         public void Initialize()
         {
