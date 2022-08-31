@@ -51,7 +51,9 @@ module.exports = function(grunt) {
                 platform: 'Any CPU',
                 targets: ['Clean', 'Build'],
                 version: 4.0,
-                verbosity: 'quiet'
+                verbosity: 'quiet',
+                msbuildPath: "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"
+                
             }
         },
         copy: {
