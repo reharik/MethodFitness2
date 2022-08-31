@@ -57,3 +57,4 @@ Backup*/
 UpgradeLog*.XML
 
 src/logs
+src/Solutions/MethodFitness/.vs/

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using CC.Core.Core.Domain;
 using CC.Core.Core.Services;
+using CC.Core.Security.Impl;
+using CC.Core.Security.Model;
+using CC.Core.Security;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
@@ -138,6 +141,15 @@ namespace CC.Core.Core.DomainTools
         public IList<T> GetNamedQuery<T>(string sprocName)
         {
             return _unitOfWork.CurrentSession.GetNamedQuery(sprocName).List<T>();
+        }
+        public void AssociateUserWith(IUser user, string groupName)
+        {
+            UsersGroup group = _unitOfWork.CurrentSession.CreateCriteria<UsersGroup>()
+                .Add(Restrictions.Eq("Name", groupName))
+                .UniqueResult<UsersGroup>();
+            Guard.Against(group == null, "There is no users group named: " + groupName);
+            group.Users.Add(user);
+            _unitOfWork.CurrentSession.SaveOrUpdate(group);
         }
 
         public void Initialize()

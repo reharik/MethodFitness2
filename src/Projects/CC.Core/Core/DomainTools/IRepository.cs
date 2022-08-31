@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using CC.Core.Core.Domain;
+using CC.Core.Security;
 using NHibernate;
 using NHibernate.Criterion;
 
@@ -34,6 +35,7 @@ namespace CC.Core.Core.DomainTools
         void HardDelete(object target);
         IList<T> CreateSQLQuery<T>(string sql, object properties) where T : class;
         IList<T> CreateSQLQuery<T>(string sql, object properties, int setTimeoutSeconds) where T : class;
+        void AssociateUserWith(IUser user, string groupName);
 
         void Commit();
         void Rollback();
