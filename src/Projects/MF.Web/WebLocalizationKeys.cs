@@ -183,6 +183,8 @@ namespace MF.Web
 
         public static readonly StringToken TRAINER_SESSIONS_VERIFIED = new WebLocalizationKeys("TRAINER_SESSIONS_VERIFIED", "Trainer {0} has verified his appointments.");
         public static readonly StringToken TOGGLE_ARCHIVE = new WebLocalizationKeys("TOGGLE_ARCHIVE", "Toggle Archive");
+        
+        public static readonly StringToken APPOINTMENT_TYPE = new WebLocalizationKeys("APPOINTMENT_TYPE", "Appt Type");
 
 
     }

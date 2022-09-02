@@ -14,6 +14,8 @@ using MF.Web.Controllers;
 using NHibernate.Linq;
 using MoreLinq;
 using System.Collections.Generic;
+using System;
+
 namespace MF.Web.Areas.Billing.Controllers
 {
     public class PayTrainerController:MFController
@@ -88,12 +90,21 @@ namespace MF.Web.Areas.Billing.Controllers
               .ToList().DistinctBy(x => x.Session.EntityId)
               .OrderBy(x => x.Client.LastName)
               .ThenBy(x => x.Appointment.Date);
+            var hourTotal = payment
+              .TrainerPaymentSessionItems.Count(x => x.Appointment.AppointmentType == "Hour");
+            var halfHourTotal = (payment
+              .TrainerPaymentSessionItems.Count(x => x.Appointment.AppointmentType == "Half Hour")+0.0m)/2;
+            var pairTotal = payment
+              .TrainerPaymentSessionItems.Count(x => x.Appointment.AppointmentType == "Pair");
             var model = new TrainerReceiptViewModel
-                                              {
-                                                  Trainer = trainer,
-                                                  TrainerPayment = payment,
-                                                  SessionItems = sessionItems 
-                                              };
+            {
+                Trainer = trainer,
+                TrainerPayment = payment,
+                SessionItems = sessionItems,
+                hourTotal = hourTotal,
+                halfHourTotal = halfHourTotal,
+                pairTotal = pairTotal
+            };
             return View(model);
         }
     }
@@ -103,5 +114,8 @@ namespace MF.Web.Areas.Billing.Controllers
         public User Trainer { get; set; }
         public TrainerPayment TrainerPayment { get; set; }
         public IEnumerable<TrainerPaymentSessionItem> SessionItems { get; set; }
+        public int hourTotal { get; set; }
+        public decimal halfHourTotal { get; set; }
+        public int pairTotal { get; set; }
     }
 }

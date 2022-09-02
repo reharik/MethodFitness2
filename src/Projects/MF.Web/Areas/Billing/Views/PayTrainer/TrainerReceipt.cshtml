@@ -30,11 +30,15 @@
               <td>
                   @WebLocalizationKeys.CLIENT_NAME
               </td>
-              <td>()
+              <td>
+                  ()
                   @WebLocalizationKeys.DATE
               </td>
               <td>
                   @WebLocalizationKeys.TIME
+              </td>
+              <td>
+                  @WebLocalizationKeys.APPOINTMENT_TYPE
               </td>
               <td>
                   @WebLocalizationKeys.CLIENT_COST
@@ -52,9 +56,12 @@
                       @item.Appointment.Date.Value.ToShortDateString()
                   </td>
                   <td>
-                      @item.Appointment.StartTime.Value.ToShortTimeString().Substring(0, @item.Appointment.StartTime.Value.ToShortTimeString().Length-3)
+                      @item.Appointment.StartTime.Value.ToShortTimeString().Substring(0, @item.Appointment.StartTime.Value.ToShortTimeString().Length - 3)
                       -
                       @item.Appointment.EndTime.Value.ToShortTimeString()
+                  </td>
+                  <td>
+                      @item.Session.AppointmentType
                   </td>
                   <td>
                       $@item.AppointmentCost
@@ -64,14 +71,29 @@
                   </td>
               </tr>
           }
-          <tr>
-              <td colspan="4">
-                  <span style="float: right;">@WebLocalizationKeys.TOTAL</span> 
-              </td>
-              <td>
-                  $@Model.TrainerPayment.Total
-              </td>
-          </tr>
+      <tr>
+          <td colspan="2"></td>
+
+          <td>@WebLocalizationKeys.FULL_HOUR</td>
+          <td>@WebLocalizationKeys.HALF_HOUR</td>
+          <td>@WebLocalizationKeys.PAIR</td>
+          <td>@WebLocalizationKeys.TOTAL</td>
+      </tr>
+      <tr>
+          <td colspan="2"></td>
+          <td>
+              @Model.hourTotal
+          </td>
+          <td>
+              @Model.halfHourTotal
+          </td>
+          <td>
+              @Model.pairTotal
+          </td>
+          <td>
+              $@Model.TrainerPayment.Total
+          </td>
+      </tr>
       </table>
       </div>
     </body>
