@@ -4,54 +4,32 @@ if (typeof MF == "undefined") {
 
 MF.blockedTimes = (function () {
 	const locationMap = { 2: "Providence", 1: "East Greenwhich" };
-	const maxAppointments = { 2: 4, 1: 2 };
-	const blockedByLocationAndTime = {};
-	const hash = {};
-	const addAppt = (appt, hash, blocked, cutOff) => {
-		const startD = new XDate(appt.start);
-		const endD = new XDate(appt.end);
-		while (startD.diffMinutes(endD) > 0) {
-			const dateStr = startD.toString("M/d/yyyy h:mm ss TT");
-			hash[dateStr] = dateStr in hash ? hash[dateStr] + 1 : 1;
-			if (hash[dateStr] >= cutOff) {
-				blocked[dateStr] = true;
-			}
-			startD.addMinutes(15);
-		}
-	};
-	const calculate = (appts) => {
-		for (i = 0; i < appts.length; i++) {
-			if (!hash[appts[i].locationId]) {
-				hash[appts[i].locationId] = {};
-			}
-			if (!blockedByLocationAndTime[appts[i].locationId]) {
-				blockedByLocationAndTime[appts[i].locationId] = {};
-			}
-			addAppt(
-				appts[i],
-				hash[appts[i].locationId],
-				blockedByLocationAndTime[appts[i].locationId],
-				maxAppointments[appts[i].locationId]
-			);
-		}
-		return blockedByLocationAndTime;
+	const calculate = (blockedSlots) => {
+		return (blockedSlots.Location||[]).reduce((locs, loc) => {
+			locs[loc.LocationId] = loc.TimeSlots.reduce((slots, slot) => {
+				slots[slot.TimeSlot] = slot.TimeSlot;
+				return slots;
+			}, {});
+			return locs;
+		}, {});
 	};
 
 	const shouldBlockAppointment = (
-		blockedByLocationAndTime,
+		blockedSlots,
 		targetSlot,
 		location
 	) => {
 		let blockedMsg = "";
-		if (blockedByLocationAndTime == null) {
+		if (blockedSlots == null) {
 			return;
 		}
-
+		const blockedLocs = [];
 		// all location view
 		if (!location || location === "0") {
-			blockedMsg = Object.keys(blockedByLocationAndTime)
+			blockedMsg = Object.keys(blockedSlots)
 				.map((location) => {
-					if (blockedByLocationAndTime[location][targetSlot]) {
+					if (blockedSlots[location][targetSlot]) {
+						blockedLocs.push(location);
 						return (
 							"There are no appointments left at the " +
 							locationMap[location] +
@@ -66,13 +44,17 @@ MF.blockedTimes = (function () {
 					? "There are no appointments left at any facility.  You may only book an offsite appointment"
 					: blockedMsg;
 			// specific location view
-		} else if (blockedByLocationAndTime[location][targetSlot]) {
+		} else if (blockedSlots[location][targetSlot]) {
+			blockedLocs.push(location);
 			blockedMsg =
 				"There are no appointments left at the " +
 				locationMap[location] +
-				" location.   You may only book an offsite appointment";
+				" location.   Please switch the view to book an appointment at a different site";
 		}
-		return blockedMsg;
+		return {
+			blockedMsg,
+			blockedLocs
+		}
 	};
 	return {
 		calculate,

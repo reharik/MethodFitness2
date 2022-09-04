@@ -234,7 +234,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var locationSlots = 999;
             if(input.LocationEntityId == 2)
             {
-                locationSlots = 4;
+                locationSlots = 5;
             }
             if(input.LocationEntityId == 1)
             {

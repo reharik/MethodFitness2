@@ -120,6 +120,9 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		ui,
 		view
 	) {
+		if (event.EntityId == 0) {
+			return;
+        }
 		var data = {
 			EntityId: event.EntityId,
 			ScheduledDate: $.fullCalendar.formatDate(
@@ -147,24 +150,28 @@ MF.Views.CalendarView = MF.Views.View.extend({
 			return;
 		}
 
-		const targetDateString = targetDate.toString("M/d/yyyy h:mm ss TT");
+		const targetDateString = targetDate.toString("M/d/yyyy h:mm:ss TT");
 
-		const blockedMsg = MF.blockedTimes.shouldBlockAppointment(
-			this.model.blockedByLocationAndTime,
+		const { blockedMsg, blockedLocs } = MF.blockedTimes.shouldBlockAppointment(
+			this.model.blockedSlotsByLocation,
 			targetDateString,
 			this.model.location
 		);
 		if (blockedMsg.length > 0) {
 			alert(blockedMsg);
+			if (this.model.location === "1" || this.model.location === "2") {
+				return;
+            }
 		}
 		var data = {
+			blockedLocs,
 			ScheduledDate: new XDate(date).toString("M/d/yyyy"),
 			ScheduledStartTime: new XDate(date).toString("hh:mm TT"),
 		};
 		this.editEvent(this.model.CalendarDefinition.AddUpdateUrl, data);
 	},
 	eventClick: function (calEvent, jsEvent, view) {
-		if (this.displayAppointmentDisabled == true) {
+		if (this.displayAppointmentDisabled == true || calEvent.EntityId == 0) {
 			return;
 		}
 		this.displayAppointmentDisabled = true;
@@ -305,11 +312,10 @@ MF.Views.CalendarView = MF.Views.View.extend({
 					end: ~~(end.getTime() / 1000),
 				})
 				.then((response) => {
-					model.blockedByLocationAndTime = MF.blockedTimes.calculate(response);
-					callback(response);
+					model.blockedSlotsByLocation = MF.blockedTimes.calculate(response.BlockedSlotsByLocation);
+					callback(response.Events);
 				});
 		};
-
 		this.replaceSource({ events: source });
 		this.reload();
 	},
@@ -361,6 +367,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 	},
 	events: {
 		'change [name="AppointmentType"]': "handleSwitchFromPairToInd",
+		'change [name="LocationEntityId"]': "setDisabledOptionsOnLocation",
 		'change [name="StartTimeString"]': "handleTimeChange",
 		"click #save": "saveItem",
 		"click #cancel": "cancel",
@@ -379,6 +386,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 			this
 		);
 		this.handleSwitchFromPairToInd();
+		this.setDisabledOptionsOnLocation();
 	},
 
 	setCurrentSelectionForAptType: function (isPair) {
@@ -421,6 +429,15 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 				} else {
 					$item.removeAttr("disabled");
 				}
+			}
+		});
+	},
+	setDisabledOptionsOnLocation: function () {
+		const blockedLocs = this.options.data.blockedLocs;
+		$("[name='LocationEntityId'] option").each(function () {
+			var $item = $(this);
+			if (blockedLocs.includes($item.val())) {
+				$item.attr("disabled", "disabled");
 			}
 		});
 	},

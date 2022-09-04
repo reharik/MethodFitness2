@@ -53,22 +53,25 @@ namespace MF.Web.Areas.Schedule.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var locations = _selectListItemService.CreateList<Location>(x=>x.Name,x=>x.EntityId,false).ToList();
-            locations.Insert(0,new SelectListItem{Text=WebLocalizationKeys.ALL.ToString(),Value = "0"});
+            var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, false).ToList();
+            locations.Insert(0, new SelectListItem { Text = WebLocalizationKeys.ALL.ToString(), Value = "0" });
             var trainersDto = new List<TrainerLegendDto>();
-            if(user.UserRoles.Any(x=>x.Name==UserType.Administrator.ToString()))
+            if (user.UserRoles.Any(x => x.Name == UserType.Administrator.ToString()))
             {
                 var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Name == UserType.Trainer.ToString()));
-                trainersDto = trainers.Select(x=> new TrainerLegendDto {Name=processTrainerName(x),
-                    Color=x.Color,
-                EntityId = x.EntityId}).ToList();
+                trainersDto = trainers.Select(x => new TrainerLegendDto
+                {
+                    Name = processTrainerName(x),
+                    Color = x.Color,
+                    EntityId = x.EntityId
+                }).ToList();
             }
 
             var model = new CalendarViewModel
             {
                 Trainers = trainersDto,
                 _LocationList = locations,
-//                CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
+                //                CalendarUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x=>x.AppointmentCalendar(null)),
                 CalendarDefinition = new CalendarDefinition
                 {
                     Url = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.Events(null), AreaName.Schedule),
@@ -89,7 +92,7 @@ namespace MF.Web.Areas.Schedule.Controllers
         public string processTrainerName(User trainer)
         {
             var name = trainer.LastName + ", " + trainer.FirstName[0];
-            if(name.Length>12)
+            if (name.Length > 12)
             {
                 name = name.Substring(0, 12);
             }
@@ -118,7 +121,7 @@ namespace MF.Web.Areas.Schedule.Controllers
 
         private Notification validateAppointment(User user, AppointmentChangedViewModel input, DateTime? ost, DateTime? osd)
         {
-            var notification = new Notification {Success = true};
+            var notification = new Notification { Success = true };
             // nice to pull this off user
             var currentTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var original = new DateTime(osd.Value.Year, osd.Value.Month, osd.Value.Day, ost.Value.Hour, ost.Value.Minute, 0);
@@ -140,9 +143,9 @@ namespace MF.Web.Areas.Schedule.Controllers
             var events = new List<CalendarEvent>();
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
-            var appointments = input.Loc<=0
+            var appointments = input.Loc <= 0
                 ? _repository.Query<Appointment>(x => x.StartTime >= startDateTime && x.Date <= endDateTime).Fetch(x => x.Clients).Fetch(x => x.Trainer).AsEnumerable()
-                : _repository.Query<Appointment>(x => x.StartTime >= startDateTime 
+                : _repository.Query<Appointment>(x => x.StartTime >= startDateTime
                                                 && x.Date <= endDateTime
                                                 && x.Location.EntityId == input.Loc).Fetch(x => x.Clients).Fetch(x => x.Trainer).AsEnumerable();
             if (input.TrainerIds.IsNotEmpty())
@@ -155,42 +158,146 @@ namespace MF.Web.Areas.Schedule.Controllers
                     appointments = appointments.Where(x => ids.Contains(x.Trainer.EntityId) || x.Trainer.Archived);
                 }
             }
+            BlockedSlotsByLocation blockingSlots = CalculateBlockedSlots(appointments, user);
+
+            if (!user.UserRoles.Any(x => x.Name == "Administrator"))
+            {
+                CreateBlockingEvents(blockingSlots, events);
+            }
             appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
-            return new CustomJsonResult(events);
+            var payload = new CalendarEventPayload
+            {
+                Events = events,
+                BlockedSlotsByLocation = blockingSlots
+            };
+            return new CustomJsonResult(payload);
         }
 
+        private BlockedSlotsByLocation CalculateBlockedSlots(IEnumerable<Appointment> appts, User user)
+        {
+            var blocked = new BlockedSlotsByLocation();
+            if (user.UserRoles.Any(x => x.Name == "Administrator"))
+            {
+                return blocked;
+            }
+            
+            var location2CutOff = 4;
+            var location1CutOff = 2;
+
+            blocked.Location = new List<LocationBlockedSlots>();
+
+            appts.Where(x => x.Location.EntityId <= 2
+                    && x.StartTime > DateTime.Now.AddHours(6)
+                    && x.Trainer.EntityId != user.EntityId)
+                .OrderBy(x => x.StartTime)
+                .ForEach(appt =>
+            {
+                if (appt.StartTime != null && appt.EndTime != null)
+                {
+                    LocationBlockedSlots loc = blocked.Location
+                        .FirstOrDefault(x => x.LocationId == appt.Location.EntityId)
+                        ?? new LocationBlockedSlots();
+                    if (loc.LocationId == 0)
+                    {
+                        loc.LocationId = appt.Location.EntityId;
+                        loc.TimeSlots = new List<BlockedSlot>();
+                        loc.Name = appt.Location.Name;
+                        blocked.Location.Add(loc);
+                    }
+                    var startD = new DateTime((appt.StartTime ?? new DateTime()).Ticks);
+                    while (startD < appt.EndTime)
+                    {
+                        var slotString = startD.ToString("M/d/yyyy h:mm:ss tt");
+                        BlockedSlot slot = loc.TimeSlots
+                            .FirstOrDefault(x => x.TimeSlot == slotString)
+                            ?? new BlockedSlot();
+                        if (slot.TimeSlot == null)
+                        {
+                            slot.TimeSlot = slotString;
+                            loc.TimeSlots.Add(slot);
+                        }
+                        slot.count++;
+                        if ((loc.LocationId == 2 && slot.count >= location2CutOff)
+                        || (loc.LocationId == 1 && slot.count >= location1CutOff))
+                        {
+                            slot.Blocked = true;
+                        }
+
+                        startD = startD.AddMinutes(15);
+                    }
+                }
+
+            });
+            blocked.Location.ForEach(loc => loc.TimeSlots = loc.TimeSlots.Where(x => x.Blocked).ToList());
+            return blocked;
+        }
+
+        private void CreateBlockingEvents(BlockedSlotsByLocation blocked, List<CalendarEvent> events)
+        {
+            if(blocked.Location == null)
+            {
+                return;
+            }
+            for (int i = 0; i < blocked.Location.Count(); i++)
+            {
+                var loc = blocked.Location[i];
+                for (int j = 0; j < loc.TimeSlots.Count(); j++)
+                {
+                    var k = j;
+                    while (k < loc.TimeSlots.Count() - 1 &&
+                        DateTime.Parse(loc.TimeSlots[k].TimeSlot).AddMinutes(15)
+                        == DateTime.Parse(loc.TimeSlots[k + 1].TimeSlot))
+                    {
+                        k = k + 1;
+                    }
+                    var calendarEvent = new CalendarEvent
+                    {
+                        EntityId = 0,
+                        start = DateTime.Parse(loc.TimeSlots[j].TimeSlot).ToString(),
+                        end = DateTime.Parse(loc.TimeSlots[k].TimeSlot).ToString(),
+                        color = "#808080",
+                        locationId = loc.LocationId,
+                        title = loc.Name
+                    };
+                    events.Add(calendarEvent);
+                    j = k;
+                }
+            }
+        }
         private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)
         {
             var calendarEvent = new CalendarEvent
-                                    {
-                                        EntityId = x.EntityId,
-                                        start = x.StartTime.ToString(),
-                                        end = x.EndTime.ToString(),
-                                        color = x.Trainer.Color,
-                                        trainerId = x.Trainer.EntityId,
-                                        locationId = x.Location.EntityId,
-                                        appointmentType = x.AppointmentType
-                                    };
-            if(x.Clients.Count()>1)
+            {
+                EntityId = x.EntityId,
+                start = x.StartTime.ToString(),
+                end = x.EndTime.ToString(),
+                color = x.Trainer.Color,
+                trainerId = x.Trainer.EntityId,
+                locationId = x.Location.EntityId,
+                appointmentType = x.AppointmentType
+            };
+            if (x.Clients.Count() > 1)
             {
                 calendarEvent.title = x.Location.Name + ": Multiple";
-            }else if(x.Clients.Count()==1)
+            }
+            else if (x.Clients.Count() == 1)
             {
-                calendarEvent.title = x.Location.Name + ": " +x.Clients.FirstOrDefault().FullNameLNF;
+                calendarEvent.title = x.Location.Name + ": " + x.Clients.FirstOrDefault().FullNameLNF;
             }
 
             if (x.Trainer != user && !canSeeOthers)
             {
                 return;
-                calendarEvent.color = "#fffff";
-                calendarEvent.title = string.Empty;
-                calendarEvent.className = "hiddenEvent";
+                //calendarEvent.color = "#fffff";
+                //calendarEvent.title = string.Empty;
+                //calendarEvent.className = "hiddenEvent";
+                //calendarEvent.trainerId= 0;
             }
             events.Add(calendarEvent);
         }
     }
 
-    public class TrainerLegendDto   
+    public class TrainerLegendDto
     {
         public string Name { get; set; }
 
@@ -212,8 +319,29 @@ namespace MF.Web.Areas.Schedule.Controllers
         public DateTime? ScheduledDate { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
+    }
 
 
+    public class BlockedSlot
+    {
+        public string TimeSlot { get; set; }
+        public bool Blocked { get; set; }
+        public int count { get; set; }
+    }
+    public class LocationBlockedSlots
+    {
+        public int LocationId { get; set; }
+        public string Name { get; set; }
+        public List<BlockedSlot> TimeSlots { get; set; }
+    }
+    public class BlockedSlotsByLocation
+    {
+        public List<LocationBlockedSlots> Location { get; set; }
+    }
 
+    public class CalendarEventPayload
+    {
+        public List<CalendarEvent> Events { get; set; }
+        public BlockedSlotsByLocation BlockedSlotsByLocation { get; set; }
     }
 }
