@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     grunt.option('buildConfig',grunt.option('buildConfig') || 'Debug');
     grunt.option('target',grunt.option('target') || 'QA');
     grunt.option('slnFile','../../Solutions/'+grunt.option('solutionName')+'/'+grunt.option('solutionName')+'.sln');
-    grunt.option('deployFolder','/MethodFitness/WebSites/MethodFitness_'+grunt.option('target'));
+    grunt.option('deployFolder','/MethodFitness/MethodFitness_'+grunt.option('target'));
     grunt.option('startTime',new Date());
 
     grunt.option( 'QA',{
@@ -51,9 +51,7 @@ module.exports = function(grunt) {
                 platform: 'Any CPU',
                 targets: ['Clean', 'Build'],
                 version: 4.0,
-                verbosity: 'quiet',
-                msbuildPath: "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"
-                
+                verbosity: 'quiet'
             }
         },
         copy: {
@@ -126,6 +124,16 @@ module.exports = function(grunt) {
             }
         },
 
+				compress: {
+					main: {
+						options: {
+							archive: `/MethodFitness/MethodFitness_PROD_${new Date().getFullYear()}.${new Date().getMonth()}.${new Date().getDate()}.zip`
+						},
+             expand: true,
+						 cwd: grunt.option('deployFolder'),
+             src: ['**/*']
+          }
+				},
         cleanempty: {
             options: {},
             src: [grunt.option('destFolder')+'/**']
@@ -156,7 +164,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
-    grunt.registerTask('default', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','logEnd']);
-    grunt.registerTask('deploy', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'cleanempty', 'hbsconfigpoke','copy:deploy','logEnd']);
+    grunt.registerTask('default', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'uglify','cleanempty', 'hbsconfigpoke','compress','logEnd']);
+    grunt.registerTask('deploy', ['logStart', 'clean:build', 'msbuild', 'copy:buildArtifacts', 'hbsconfigpoke','clean:deploy','copy:deploy','cleanempty','compress','logEnd']);
 };
