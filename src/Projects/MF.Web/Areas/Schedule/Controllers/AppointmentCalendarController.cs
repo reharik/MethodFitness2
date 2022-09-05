@@ -207,7 +207,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                     var startD = new DateTime((appt.StartTime ?? new DateTime()).Ticks);
                     while (startD < appt.EndTime)
                     {
-                        var slotString = startD.ToString("M/d/yyyy h:mm:ss tt");
+                        var slotString = startD.ToString("M/d/yyyy h:mm tt");
                         BlockedSlot slot = loc.TimeSlots
                             .FirstOrDefault(x => x.TimeSlot == slotString)
                             ?? new BlockedSlot();
@@ -254,10 +254,11 @@ namespace MF.Web.Areas.Schedule.Controllers
                     {
                         EntityId = 0,
                         start = DateTime.Parse(loc.TimeSlots[j].TimeSlot).ToString(),
-                        end = DateTime.Parse(loc.TimeSlots[k].TimeSlot).ToString(),
+                        end = DateTime.Parse(loc.TimeSlots[k].TimeSlot).AddMinutes(15).ToString(),
                         color = "#808080",
                         locationId = loc.LocationId,
-                        title = loc.Name
+                        title = loc.Name,
+                        editable = false
                     };
                     events.Add(calendarEvent);
                     j = k;
@@ -274,7 +275,8 @@ namespace MF.Web.Areas.Schedule.Controllers
                 color = x.Trainer.Color,
                 trainerId = x.Trainer.EntityId,
                 locationId = x.Location.EntityId,
-                appointmentType = x.AppointmentType
+                appointmentType = x.AppointmentType,
+                editable = true
             };
             if (x.Clients.Count() > 1)
             {

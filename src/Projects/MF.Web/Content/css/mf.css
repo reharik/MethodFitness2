@@ -241,3 +241,7 @@ div.headerInput input{
 .ui-jqgrid tr.gridRowGrey td{
     background-color: #e9e9e3 !important;
 }
+
+select option:disabled {
+    background-color: lightgray;
+}

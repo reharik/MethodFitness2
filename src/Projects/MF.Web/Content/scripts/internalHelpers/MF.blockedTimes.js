@@ -46,18 +46,34 @@ MF.blockedTimes = (function () {
 			// specific location view
 		} else if (blockedSlots[location][targetSlot]) {
 			blockedLocs.push(location);
-			blockedMsg =
-				"There are no appointments left at the " +
-				locationMap[location] +
-				" location.   Please switch the view to book an appointment at a different site";
+			blockedMsg = `There are no ${locationMap[location]} appointments available at that time. Please choose a different time or location.`
 		}
 		return {
 			blockedMsg,
 			blockedLocs
 		}
 	};
+
+	const shouldBounceAppointment = (blockedSlots,
+		startTime,
+		endTime,
+		location) => {
+		const slots = blockedSlots[location];
+		let idx = startTime;
+		while (new XDate(idx) < new XDate(endTime)) {
+			console.log(idx)
+			console.log(slots[idx])
+			if (slots[idx]) {
+				return true;
+            }
+			idx = new XDate(idx).addMinutes(15).toString("M/d/yyyy h:mm TT");
+		}
+		return false;
+	}
+
 	return {
 		calculate,
 		shouldBlockAppointment,
+		shouldBounceAppointment,
 	};
 })();

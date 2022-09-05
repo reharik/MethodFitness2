@@ -94,14 +94,20 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		});
 	},
 	eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
+		const StartTime = $.fullCalendar.formatDate(event.start, "M/d/yyyy hh:mm TT");
+		const EndTime = $.fullCalendar.formatDate(event.end, "M/d/yyyy hh:mm TT");
+		if (MF.blockedTimes.shouldBounceAppointment(this.model.blockedSlotsByLocation, StartTime, EndTime, event.locationId)) {
+			revertFunc();
+			return;
+		}
 		var data = {
 			EntityId: event.EntityId,
 			ScheduledDate: $.fullCalendar.formatDate(
 				event.start,
 				"M/d/yyyy hh:mm TT"
 			),
-			StartTime: $.fullCalendar.formatDate(event.start, "M/d/yyyy hh:mm TT"),
-			EndTime: $.fullCalendar.formatDate(event.end, "M/d/yyyy hh:mm TT"),
+			StartTime,
+			EndTime,
 		};
 		MF.repository
 			.ajaxGet(this.model.CalendarDefinition.EventChangedUrl, data)
@@ -120,25 +126,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		ui,
 		view
 	) {
-		if (event.EntityId == 0) {
-			return;
-        }
-		var data = {
-			EntityId: event.EntityId,
-			ScheduledDate: $.fullCalendar.formatDate(
-				event.start,
-				"M/d/yyyy hh:mm TT"
-			),
-			StartTime: $.fullCalendar.formatDate(event.start, "M/d/yyyy hh:mm TT"),
-			EndTime: $.fullCalendar.formatDate(event.end, "M/d/yyyy hh:mm TT"),
-		};
-		MF.repository
-			.ajaxGet(this.model.CalendarDefinition.EventChangedUrl, data)
-			.done(
-				$.proxy(function (result) {
-					this.changeEventCallback(result, revertFunc);
-				}, this)
-			);
+		revertFunc();
 	},
 	dayClick: function (date, allDay, jsEvent, view) {
 		const targetDate = new XDate(date);
@@ -150,7 +138,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 			return;
 		}
 
-		const targetDateString = targetDate.toString("M/d/yyyy h:mm:ss TT");
+		const targetDateString = targetDate.toString("M/d/yyyy h:mm TT");
 
 		const { blockedMsg, blockedLocs } = MF.blockedTimes.shouldBlockAppointment(
 			this.model.blockedSlotsByLocation,
@@ -171,7 +159,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		this.editEvent(this.model.CalendarDefinition.AddUpdateUrl, data);
 	},
 	eventClick: function (calEvent, jsEvent, view) {
-		if (this.displayAppointmentDisabled == true || calEvent.EntityId == 0) {
+		if (this.displayAppointmentDisabled == true ) {
 			return;
 		}
 		this.displayAppointmentDisabled = true;
@@ -222,7 +210,9 @@ MF.Views.CalendarView = MF.Views.View.extend({
 			route: this.model.CalendarDefinition.AddUpdateRoute,
 			url: url,
 			templateUrl: url + "_Template?Popup=true",
-			data: data,
+			data: {
+				...data, blockedSlotsByLocation: this.model.blockedSlotsByLocation
+			},
 			view: "AppointmentView",
 			buttons: MF.Views.popupButtonBuilder
 				.builder("editModule")
@@ -366,7 +356,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 		MF.mixin(this, "modelAndElementsMixin");
 	},
 	events: {
-		'change [name="AppointmentType"]': "handleSwitchFromPairToInd",
+		'change [name="AppointmentType"]': "onApptTypeChange",
 		'change [name="LocationEntityId"]': "setDisabledOptionsOnLocation",
 		'change [name="StartTimeString"]': "handleTimeChange",
 		"click #save": "saveItem",
@@ -377,16 +367,18 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 		this.setEndTime(startDate);
 		MF.vent.bind(
 			"ClientsDtos:tokenizer:add",
-			this.handleSwitchFromPairToInd,
+			this.onApptTypeChange,
 			this
 		);
 		MF.vent.bind(
 			"ClientsDtos:tokenizer:remove",
-			this.handleSwitchFromPairToInd,
+			this.onApptTypeChange,
 			this
 		);
-		this.handleSwitchFromPairToInd();
+		this.onApptTypeChange();
 		this.setDisabledOptionsOnLocation();
+		this.setDisabledOptionsOnStartTime();
+		this.setDisabledOptionsOnApptType();
 	},
 
 	setCurrentSelectionForAptType: function (isPair) {
@@ -408,13 +400,15 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 		}
 	},
 
-	handleSwitchFromPairToInd: function () {
+	onApptTypeChange: function () {
 		var isPair = $(this.model.ClientsDtos.selectedItems()).size() > 1;
 		this.setCurrentSelectionForAptType(isPair);
-		this.setDisabledOptionsOnAptType(isPair);
+		this.disableApptTypeBasedOnSelected(isPair);
 		this.handleTimeChange();
+		this.setDisabledOptionsOnStartTime();
+
 	},
-	setDisabledOptionsOnAptType: function (isPair) {
+	disableApptTypeBasedOnSelected: function (isPair) {
 		$("[name='AppointmentType'] option").each(function () {
 			var $item = $(this);
 			if ($item.text() == "Pair") {
@@ -436,10 +430,73 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 		const blockedLocs = this.options.data.blockedLocs;
 		$("[name='LocationEntityId'] option").each(function () {
 			var $item = $(this);
-			if (blockedLocs.includes($item.val())) {
+			if (blockedLocs?.includes($item.val())) {
 				$item.attr("disabled", "disabled");
 			}
 		});
+		this.setDisabledOptionsOnStartTime();
+		this.setDisabledOptionsOnApptType();
+		this.setDisabledOptionsOnStartTime();
+	},
+
+	setDisabledOptionsOnApptType: function () {
+		const blockedLocs = this.options.data.blockedSlotsByLocation;
+		const date = new XDate(this.model.Date()).toString("M/d/yyyy");
+		const blockedSlots = Object.keys(blockedLocs[this.model.LocationEntityId()] || {})
+			.filter(x => x.startsWith(date));
+		const options = $("[name='StartTimeString'] option");
+		if (options.length <= 0) {
+			return;
+		}
+		let startIdx = 0;
+		for (var i = 0; i < options.length; i++) {
+			if ($(options[i]).text() === this.model.StartTimeString()) {
+				startIdx = i;
+				break;
+			}
+		}
+		let hourLong = true;
+		if (blockedSlots.includes(`${date} ${$(options[startIdx + 2]).text()}`)
+			|| blockedSlots.includes(`${date} ${$(options[startIdx + 3]).text()}`)) {
+			hourLong = false;
+		}
+		if (!hourLong) {
+			this.model.AppointmentType("Half Hour");
+		}
+		$("[name='AppointmentType'] option").each(function () {
+			var $item = $(this);
+			if (!hourLong && ($item.text() == "Pair" || $item.text() == "Hour")) {
+				$item.attr("disabled", "disabled");
+			} else {
+				$item.removeAttr("disabled");
+            }
+		});
+	},
+	setDisabledOptionsOnStartTime: function () {
+		const blockedLocs = this.options.data.blockedSlotsByLocation;
+		let apptSlots = 2;
+		switch (this.model.AppointmentType()) {
+			case "Hour":
+			case "Pair":
+				apptSlots = 4;
+				break;
+			case "Half Hour":
+				apptSlots = 2;
+				break;
+		}
+		const date = new XDate(this.model.Date()).toString("M/d/yyyy");
+		const blocked = Object.keys(blockedLocs[this.model.LocationEntityId()] || {})
+			.filter(x => x.startsWith(date));
+		const options = $("[name='StartTimeString'] option");
+		for (var i = 0; i < options.length; i++) {
+			if (blocked.includes(`${date} ${$(options[i]).text()}`)) {
+				let s = 0;
+				while (s < apptSlots && i - s >= 0) {
+					$(options[i - s]).attr("disabled", "disabled");
+					s = s + 1;
+                }
+            }
+        }
 	},
 	onClose: function () {
 		MF.vent.unbind("ClientsDtos:tokenizer:add");
@@ -450,6 +507,8 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 			this.model.Date().split("T")[0] + "t" + this.model.StartTimeString()
 		);
 		this.setEndTime(startTime);
+		this.setDisabledOptionsOnApptType();
+
 		return startTime;
 	},
 	setEndTime: function (startTime) {

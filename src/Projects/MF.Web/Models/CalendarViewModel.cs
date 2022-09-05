@@ -68,5 +68,6 @@ namespace MF.Web.Models
         public int locationId { get; set; }
         public string appointmentType { get; set; }
         public int trainerId { get; set; }
+        public bool editable{ get; set; }
     }
 }
