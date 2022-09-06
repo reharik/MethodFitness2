@@ -15,6 +15,7 @@ using NHibernate.Linq;
 using MoreLinq;
 using System.Collections.Generic;
 using System;
+using NHibernate.Transform;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
@@ -78,29 +79,21 @@ namespace MF.Web.Areas.Billing.Controllers
 
         public ActionResult TrainerReceipt(ViewModel input)
         {
-            var trainer = _repository.Query<User>(x => x.EntityId == input.ParentId)
-                .FetchMany(x => x.TrainerPayments)
-                .ThenFetchMany(x => x.TrainerPaymentSessionItems)
-                .ThenFetch(x=>x.Appointment)    
-                .ThenFetchMany(x=>x.Clients).ToList()
-                .FirstOrDefault();
-            var payment = trainer.TrainerPayments.FirstOrDefault(x => x.EntityId == input.EntityId);
-            var sessionItems = payment
-              .TrainerPaymentSessionItems
-              .ToList().DistinctBy(x => x.Session.EntityId)
-              .OrderBy(x => x.Client.LastName)
-              .ThenBy(x => x.Appointment.Date);
-            var hourTotal = payment
-              .TrainerPaymentSessionItems.Count(x => x.Appointment.AppointmentType == "Hour");
-            var halfHourTotal = (payment
-              .TrainerPaymentSessionItems.Count(x => x.Appointment.AppointmentType == "Half Hour")+0.0m)/2;
-            var pairTotal = payment
-              .TrainerPaymentSessionItems.Count(x => x.Appointment.AppointmentType == "Pair");
+            var data = _repository.CurrentSession()
+                .CreateSQLQuery("exec TrainerPaymentItems :TrainerPaymentId")
+                        .SetResultTransformer(Transformers.AliasToBean<TrainerPaymentItems>())
+                        .SetParameter("TrainerPaymentId", input.EntityId)
+                        .List<TrainerPaymentItems>().ToList();
+            
+            var hourTotal = data.Count(x => x.AppointmentType == "Hour");
+            var halfHourTotal = (data.Count(x => x.AppointmentType == "Half Hour")+0.0m)/2;
+            var pairTotal = data.Count(x => x.AppointmentType == "Pair");
             var model = new TrainerReceiptViewModel
             {
-                Trainer = trainer,
-                TrainerPayment = payment,
-                SessionItems = sessionItems,
+                TrainerName = data[0].TrainerName,
+                Total = data[0].Total,
+                CreatedDate= data[0].CreatedDate,
+                SessionItems = data,
                 hourTotal = hourTotal,
                 halfHourTotal = halfHourTotal,
                 pairTotal = pairTotal
@@ -111,11 +104,26 @@ namespace MF.Web.Areas.Billing.Controllers
 
     public class TrainerReceiptViewModel : ViewModel
     {
-        public User Trainer { get; set; }
-        public TrainerPayment TrainerPayment { get; set; }
-        public IEnumerable<TrainerPaymentSessionItem> SessionItems { get; set; }
+        public string TrainerName { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public IEnumerable<TrainerPaymentItems> SessionItems { get; set; }
+        public double Total { get; set; }
         public int hourTotal { get; set; }
         public decimal halfHourTotal { get; set; }
         public int pairTotal { get; set; }
+    }
+
+    public class TrainerPaymentItems
+    {
+        public double Total { get; set; }
+        public double AppointmentCost { get; set; }
+        public double TrainerPay { get; set; }
+        public string ClientName { get; set; }
+        public string TrainerName { get; set; }
+        public DateTime Date { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public string AppointmentType { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

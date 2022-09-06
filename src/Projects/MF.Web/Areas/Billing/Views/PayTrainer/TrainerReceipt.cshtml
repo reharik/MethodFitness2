@@ -23,7 +23,8 @@
             <button id="print">Print</button>
         </div>
       <div id="paymentForm">
-        Payment for @Model.Trainer.FullNameFNF on @Model.TrainerPayment.CreatedDate.Value.ToLongDateString()
+        Payment for @Model.TrainerName on
+          @Model.CreatedDate.ToLongDateString()
         <br/>
       <table border="2">
           <tr>
@@ -31,7 +32,6 @@
                   @WebLocalizationKeys.CLIENT_NAME
               </td>
               <td>
-                  ()
                   @WebLocalizationKeys.DATE
               </td>
               <td>
@@ -50,18 +50,18 @@
           @foreach (var item in Model.SessionItems)          {
               <tr>
                   <td>
-                      @item.Client.FullNameLNF
+                      @item.ClientName
                   </td>
                   <td>
-                      @item.Appointment.Date.Value.ToShortDateString()
+                      @item.Date.ToShortDateString()
                   </td>
                   <td>
-                      @item.Appointment.StartTime.Value.ToShortTimeString().Substring(0, @item.Appointment.StartTime.Value.ToShortTimeString().Length - 3)
+                      @item.StartTime.ToShortTimeString().Substring(0, @item.StartTime.ToShortTimeString().Length - 3)
                       -
-                      @item.Appointment.EndTime.Value.ToShortTimeString()
+                      @item.EndTime.ToShortTimeString()
                   </td>
                   <td>
-                      @item.Session.AppointmentType
+                      @item.AppointmentType
                   </td>
                   <td>
                       $@item.AppointmentCost
@@ -91,7 +91,7 @@
               @Model.pairTotal
           </td>
           <td>
-              $@Model.TrainerPayment.Total
+              $@Model.Total
           </td>
       </tr>
       </table>
