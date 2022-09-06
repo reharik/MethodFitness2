@@ -412,7 +412,7 @@ MF.Views.TrainerSessionView = MF.Views.View.extend({
 
 MF.Views.TrainerPaymentListGridView = MF.Views.View.extend({
      initialize:function(){
-        this.options.gridOptions ={multiselect:false};
+        this.options.gridOptions ={multiselect:false, sortorder:"desc"};
         MF.mixin(this, "ajaxGridMixin");
         MF.mixin(this, "setupGridMixin");
         MF.mixin(this, "defaultGridEventsMixin");
