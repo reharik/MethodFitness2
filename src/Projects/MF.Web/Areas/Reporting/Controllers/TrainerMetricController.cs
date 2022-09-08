@@ -35,7 +35,7 @@ namespace MF.Web.Areas.Reporting.Controllers
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
                 _TrainerEntityIdList = this._selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true),
-                _Title = WebLocalizationKeys.TRAINER_METRIC.ToString(),
+                _Title = WebLocalizationKeys.PRODUCTIVITY.ToString(),
                 ReportUrl = "/Areas/Reporting/ReportViewer/TrainerMetric.aspx"
             };
             return new CustomJsonResult(model);

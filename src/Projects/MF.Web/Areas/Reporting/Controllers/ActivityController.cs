@@ -37,7 +37,7 @@ namespace MF.Web.Areas.Reporting.Controllers
                                 _LocationList = this._selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true),
                                 StartDate = DateTime.Now,
                                 EndDate = DateTime.Now,
-                                _Title = WebLocalizationKeys.DAILY_PAYMENTS.ToString(),
+                                _Title = WebLocalizationKeys.PAYMENTS.ToString(),
                                 ReportUrl = "/Areas/Reporting/ReportViewer/Activity.aspx"
                             };
             return new CustomJsonResult(model);

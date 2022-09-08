@@ -136,24 +136,50 @@ namespace CC.Core.Core.Html.Menu
         public virtual IList<MenuItem> MenuTree(IUser user = null)
         {
             if (user == null) return _items;
-            IList<MenuItem> permittedItems = modifyListForPermissions(user);
+            IList<MenuItem> permittedItems = modifyListForPermissions(_items, user, new List<string>());
             return permittedItems;
         }
 
-        protected IList<MenuItem> modifyListForPermissions(IUser user)
+        protected IList<MenuItem> modifyListForPermissions(IList<MenuItem> list, IUser user, List<string> parentKeys)
         {
-            var permittedItems = new List<MenuItem>();
-            _items.ForEachItem(x =>
+            if(list.Count == 0)
+            {
+                return list;
+            }
+            var newList = new List<MenuItem>();
+            list.ForEachItem(x =>
                 {
-                    var operationKey = x.Operation.IsNotEmpty() ? x.Operation : x.Text.RemoveWhiteSpace();
-                    var operationName = "/MenuItem/" + operationKey;
-                    if (_authorizationService.IsAllowed(user, operationName))
+                    var operationName = buildOperationName(x, parentKeys);
+                    var isAllowed = _authorizationService.IsAllowed(user, operationName);
+                    if (isAllowed)
                     {
-                        permittedItems.Add(x);
+                        if (x.Children != null)
+                        {
+                            parentKeys.Add(getOperationKey(x));
+                            x.Children = modifyListForPermissions(x.Children, user, parentKeys);
+                            parentKeys.RemoveAt(parentKeys.Count - 1);
+                        }
+                        newList.Add(x);
                     }
                 });
-            return permittedItems;
+            return newList;
         }
+
+        private string buildOperationName(MenuItem item, List<String> parentKeys)
+        {
+            var operationKey = getOperationKey(item);
+            var operationName = "/MenuItem";
+            parentKeys.ForEachItem(key =>
+            {
+                operationName += key;
+            });
+            operationName += operationKey;
+            return operationName;
+        }
+        private string getOperationKey(MenuItem item)
+        {
+            return "/" + (item.Operation.IsNotEmpty() ? item.Operation : item.Text.RemoveWhiteSpace());
+        } 
 
         protected void getLinksOnly(IEnumerable<MenuItem> items, IList<MenuItem> result)
         {

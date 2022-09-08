@@ -37,7 +37,7 @@ namespace MF.Web.Areas.Reporting.Controllers
                                 _ClientList = this._selectListItemService.CreateList<Client>(x => x.FullNameFNF, x => x.EntityId, true),
                                 StartDate = DateTime.Now,
                                 EndDate = DateTime.Now,
-                                _Title = WebLocalizationKeys.DAILY_PAYMENTS.ToString(),
+                                _Title = WebLocalizationKeys.PAYMENTS.ToString(),
                                 ReportUrl = "/Areas/Reporting/ReportViewer/DailyPayments.aspx"
                             };
             return new CustomJsonResult(model);

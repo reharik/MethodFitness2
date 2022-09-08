@@ -69,13 +69,14 @@ namespace CC.Core.Security.Services
 		/// <returns></returns>
 		public Permission[] GetGlobalPermissionsFor(IUser user, string operationName)
 		{
-			string[] operationNames = Strings.GetHierarchicalOperationNames(operationName);
+			//string[] operationNames = Strings.GetHierarchicalOperationNames(operationName);
 			DetachedCriteria criteria = DetachedCriteria.For<Permission>()
 				.Add(Expression.Eq("User", user)
 				     || Subqueries.PropertyIn("UsersGroup.EntityId",
 				                              SecurityCriterions.AllGroups(user).SetProjection(Projections.Id())))
                 .CreateAlias("Operation", "op")
-				.Add(Expression.In("op.Name", operationNames));
+				//.Add(Expression.In("op.Name", operationNames));
+				.Add(Expression.Eq("op.Name", operationName));
 
 			return FindResults(criteria);
 		}
