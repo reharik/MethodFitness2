@@ -28,7 +28,7 @@ namespace MF.Core.Domain.Persistence
             HasMany(x => x.TrainerClientRates).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
             HasMany(x => x.TrainerPayments).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
             HasMany(x => x.TrainerSessionVerifications).Access.CamelCaseField(Prefix.Underscore).KeyColumn("TrainerId");
-            HasManyToMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
+            HasMany(x => x.UserRoles).Access.CamelCaseField(Prefix.Underscore);
             HasManyToMany(x => x.Clients).Access.CamelCaseField(Prefix.Underscore);
 
         }

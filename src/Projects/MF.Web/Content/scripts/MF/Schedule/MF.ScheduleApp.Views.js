@@ -176,9 +176,15 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		this.currentEventId = calEvent.EntityId;
 		var data = { EntityId: calEvent.EntityId };
 		var builder = MF.Views.popupButtonBuilder.builder("displayModule");
-		builder.addButton("Delete", $.proxy(this.deleteItem, this));
-		builder.addButton("Edit", $.proxy(this.editItem, this));
-		builder.addButton("Copy Event", $.proxy(this.copyItem, this));
+		if (
+			(this.model.CalendarDefinition.CanSeeOthersAppointments
+				&& this.model.CalendarDefinition.CanEditOthersAppointments)
+			|| calEvent.trainerId === this.model.CalendarDefinition.TrainerId
+		) {
+			builder.addButton("Delete", $.proxy(this.deleteItem, this));
+			builder.addButton("Edit", $.proxy(this.editItem, this));
+			builder.addButton("Copy Event", $.proxy(this.copyItem, this));
+		}
 		builder.addCancelButton();
 
 		var formOptions = {

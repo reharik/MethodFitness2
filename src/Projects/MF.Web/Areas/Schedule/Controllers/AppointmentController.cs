@@ -112,7 +112,7 @@ namespace MF.Web.Areas.Schedule.Controllers
         {
             if (_userPermissionService.IsAllowed("/Calendar/SetAppointmentForOthers"))
             {
-                var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Name == "Trainer"));
+                var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Role.Name == "Trainer"));
                 model._TrainerEntityIdList = _selectListItemService.CreateList(trainers, x => x.FullNameFNF, x => x.EntityId, true);
             }else
             {
@@ -221,7 +221,7 @@ namespace MF.Web.Areas.Schedule.Controllers
         private Notification validateOverBooking(User user, AppointmentViewModel input, DateTime startTime, DateTime endTime)
         {
             var notification = new Notification { Success = true };
-            if (user.UserRoles.Exists(x => x.Name == "Administrator"))
+            if (user.UserRoles.Exists(x => x.Role.Name == "Administrator"))
             {
                 return notification;
             }

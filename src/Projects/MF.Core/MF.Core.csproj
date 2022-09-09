@@ -155,6 +155,7 @@
     <Compile Include="Domain\Persistence\ClientMap.cs" />
     <Compile Include="Domain\Persistence\BaseSessionRateMap.cs" />
     <Compile Include="Domain\Persistence\ClientStatusMap.cs" />
+    <Compile Include="Domain\Persistence\UsersRoleAndPermissionsMap.cs" />
     <Compile Include="Domain\Persistence\TrainerSessionMap.cs" />
     <Compile Include="Domain\Persistence\TrainerSessionVerificationMap.cs" />
     <Compile Include="Domain\Persistence\OperationsMap.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Domain\Tools\NullNHSetupConfig.cs" />
     <Compile Include="Domain\Tools\NullSessionFactory.cs" />
     <Compile Include="Domain\Tools\NoFilterRepository.cs" />
+    <Compile Include="Domain\UsersRoleAndPermissions.cs" />
     <Compile Include="Domain\TrainerClientRate.cs" />
     <Compile Include="Domain\TrainerPayment.cs" />
     <Compile Include="Domain\TrainerSessionVerification.cs" />

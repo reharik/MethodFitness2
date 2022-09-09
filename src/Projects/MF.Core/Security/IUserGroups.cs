@@ -39,15 +39,15 @@ namespace MF.Core.Security
 
         public void AssociateAllUsersWithTheirTypeGroup()
         {
-            var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Administrator.ToString()));
+            var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Role.Name == SecurityUserGroups.Administrator.ToString()));
             admins.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Administrator.ToString()));
-            var employees = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == SecurityUserGroups.Trainer.ToString()));
+            var employees = _repository.Query<User>(x => x.UserRoles.Any(y => y.Role.Name == SecurityUserGroups.Trainer.ToString()));
             employees.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, SecurityUserGroups.Trainer.ToString()));
         }
 
         public void DissassociateUsersWithTheirGroup(SecurityUserGroups group)
         {
-            var users = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == group.Key));
+            var users = _repository.Query<User>(x => x.UserRoles.Any(y => y.Role.Name == group.Key));
             users.ForEachItem(x => _authorizationRepository.DetachUserFromGroup(x, group.Key));
         }
     }

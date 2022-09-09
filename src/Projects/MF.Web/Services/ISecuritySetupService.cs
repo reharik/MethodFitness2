@@ -130,11 +130,11 @@ namespace MF.Web.Services
         public void AssociateAllUsersWithThierTypeGroup()
         {
            // _repository.DisableFilter("CompanyConditionFilter");
-            var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == UserType.Administrator.ToString()));
+            var admins = _repository.Query<User>(x => x.UserRoles.Any(y => y.Role.Name == UserType.Administrator.ToString()));
             admins.ForEachItem(x =>
                 _authorizationRepository.AssociateUserWith(x, UserType.Administrator.ToString()));
             
-            var manager = _repository.Query<User>(x => x.UserRoles.Any(y => y.Name == UserType.Manager.ToString()));
+            var manager = _repository.Query<User>(x => x.UserRoles.Any(y => y.Role.Name == UserType.Manager.ToString()));
             manager.ForEachItem(x => _authorizationRepository.AssociateUserWith(x, UserType.Manager.ToString())); 
             
             var employees = _repository.FindAll<User>();

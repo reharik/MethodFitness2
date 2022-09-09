@@ -53,12 +53,13 @@ namespace MF.Web.Areas.Schedule.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
+            var usersRole = _repository.Find<UsersRoleAndPermissions>(userEntityId);
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, false).ToList();
             locations.Insert(0, new SelectListItem { Text = WebLocalizationKeys.ALL.ToString(), Value = "0" });
             var trainersDto = new List<TrainerLegendDto>();
-            if (user.UserRoles.Any(x => x.Name == UserType.Administrator.ToString()))
+            if (user.UserRoles.Any(x => x.Role.Name == UserType.Administrator.ToString()))
             {
-                var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Name == UserType.Trainer.ToString()));
+                var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Role.Name == UserType.Trainer.ToString()));
                 trainersDto = trainers.Select(x => new TrainerLegendDto
                 {
                     Name = processTrainerName(x),
@@ -82,7 +83,13 @@ namespace MF.Web.Areas.Schedule.Controllers
                     DisplayRoute = "eventdisplay",
                     EventChangedUrl = UrlContext.GetUrlForAction<AppointmentCalendarController>(x => x.EventChanged(null), AreaName.Schedule),
                     CanEditPastAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEditPastAppointments"),
+                    CanEditOthersAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEditOthersAppointments"),
                     CanEnterRetroactiveAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"),
+                   
+                    
+                    
+                    
+                    
                     CanSeeOthersAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOthersAppointments"),
                     TrainerId = user.EntityId
                 }
@@ -160,7 +167,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             }
             BlockedSlotsByLocation blockingSlots = CalculateBlockedSlots(appointments, user);
 
-            if (!user.UserRoles.Any(x => x.Name == "Administrator"))
+            if (!user.UserRoles.Any(x => x.Role.Name == "Administrator"))
             {
                 CreateBlockingEvents(blockingSlots, events);
             }
@@ -176,7 +183,7 @@ namespace MF.Web.Areas.Schedule.Controllers
         private BlockedSlotsByLocation CalculateBlockedSlots(IEnumerable<Appointment> appts, User user)
         {
             var blocked = new BlockedSlotsByLocation();
-            if (user.UserRoles.Any(x => x.Name == "Administrator"))
+            if (user.UserRoles.Any(x => x.Role.Name == "Administrator"))
             {
                 return blocked;
             }

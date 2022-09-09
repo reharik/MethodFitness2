@@ -45,17 +45,17 @@ namespace MF.Core.Domain
         }
        
         #region Collections
-        private IList<UserRole> _userRoles = new List<UserRole>();
+        private IList<UsersRoleAndPermissions> _userRoles = new List<UsersRoleAndPermissions>();
         public virtual void EmptyUserRoles() { _userRoles.Clear(); }
-        public virtual IEnumerable<UserRole> UserRoles { get { return _userRoles; } }
-        public virtual void RemoveUserRole(UserRole userRole)
+        public virtual IEnumerable<UsersRoleAndPermissions> UserRoles { get { return _userRoles; } }
+        public virtual void RemoveUserRole(UsersRoleAndPermissions UsersRoleAndPermissions)
         {
-            _userRoles.Remove(userRole);
+            _userRoles.Remove(UsersRoleAndPermissions);
         }
-        public virtual void AddUserRole(UserRole userRole)
+        public virtual void AddUserRole(UsersRoleAndPermissions UsersRoleAndPermissions)
         {
-            if (_userRoles.Contains(userRole)) return;
-            _userRoles.Add(userRole);
+            if (_userRoles.Contains(UsersRoleAndPermissions)) return;
+            _userRoles.Add(UsersRoleAndPermissions);
         }
 
         private IList<Client> _clients = new List<Client>();

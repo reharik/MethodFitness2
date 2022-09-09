@@ -90,8 +90,8 @@ namespace MF.Web.Controllers
             model.ClientsDtos = new TCRTokenInputViewModel { _availableItems = _availableClients, selectedItems = selectedClients.OrderBy(x=>x.name) };
 
             var userRoles = _repository.FindAll<UserRole>();
-            var _availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.Name});
-            var selectedUserRoles = trainer.UserRoles.Select(x => new TokenInputDto {id = x.EntityId.ToString(), name = x.Name});
+            var _availableUserRoles = userRoles.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.Name });
+            var selectedUserRoles = trainer.UserRoles.Select(x => new TokenInputDto {id = x.EntityId.ToString(), name = x.Role.Name});
             model.UserRolesDtos = new TokenInputViewModel { _availableItems = _availableUserRoles, selectedItems = selectedUserRoles };
 
             model._StateList = _selectListItemService.CreateList<State>();
@@ -190,7 +190,7 @@ namespace MF.Web.Controllers
                     return true;
                 }
             }
-            if (trainer.UserRoles.FirstOrDefault(x => x.Name == "Trainer") == null)
+            if (trainer.UserRoles.FirstOrDefault(x => x.Role.Name == "Trainer") == null)
             {
                 notification = new Notification {Success = false};
                 notification.Errors = new List<ErrorInfo>
@@ -216,7 +216,7 @@ namespace MF.Web.Controllers
                     return true;
                 }
             }
-            if (trainer.UserRoles.FirstOrDefault(x => x.Name == "Trainer") == null)
+            if (trainer.UserRoles.FirstOrDefault(x => x.Role.Name == "Trainer") == null)
             {
                 notification = new Notification {Success = false};
                 notification.Errors = new List<ErrorInfo>
@@ -236,7 +236,7 @@ namespace MF.Web.Controllers
         private void addSecurityUserGroups(User trainer)
         {
             _repository.AssociateUserWith(trainer,UserType.Trainer.ToString());
-            if(trainer.UserRoles.Any(x=>x.Name==UserType.Administrator.ToString()))
+            if(trainer.UserRoles.Any(x=>x.Role.Name==UserType.Administrator.ToString()))
             {
                 _repository.AssociateUserWith(trainer, UserType.Administrator.ToString());
             }else
@@ -271,11 +271,35 @@ namespace MF.Web.Controllers
             trainer.Color = model.Color.IsNotEmpty() ? model.Color : "#3366CC";
             if (trainer.UserLoginInfo==null) trainer.UserLoginInfo = new UserLoginInfo();
             trainer.UserLoginInfo.LoginName = model.UserLoginInfoLoginName;
-            
-            _updateCollectionService.Update(trainer.UserRoles, model.UserRolesDtos, trainer.AddUserRole, trainer.RemoveUserRole);
+            updateUserRoles(model, trainer);
             updateClientInfo(model, trainer);
             return trainer;
         }
+
+        private User updateUserRoles(TrainerViewModel model, User trainer)
+        {
+            var remove = new List<UsersRoleAndPermissions>();
+            var add = new List<UsersRoleAndPermissions>();
+            model.UserRolesDtos.selectedItems.ForEachItem(x =>
+            {
+                if (!trainer.UserRoles.Any(ur => ur.Role.Name == x.name))
+                {
+                    var userRole = _repository.Find<UserRole>(Int32.Parse(x.id));
+                    add.Add(new UsersRoleAndPermissions { Role = userRole, Trainer = trainer });
+                }
+            });
+            trainer.UserRoles.ForEachItem(x =>
+            {
+                if (!model.UserRolesDtos.selectedItems.Any(ur => ur.name == x.Role.Name))
+                {
+                    remove.Add(x);
+                }
+            });
+            add.ForEachItem(trainer.AddUserRole);
+            remove.ForEachItem(trainer.RemoveUserRole);
+            return trainer;
+        }
+
         private User updateClientInfo(TrainerViewModel model, User trainer)
         {
             var remove = new List<Client>();

@@ -48,7 +48,7 @@ namespace MF.Web.Controllers
             }
             var user = _sessionContext.GetCurrentUser();
             //TODO find way to deal with string here
-            var items = _dynamicExpressionQuery.PerformQuery<User>(input.filters, x=>x.UserRoles.Any(r=>r.Name == "Trainer" ));
+            var items = _dynamicExpressionQuery.PerformQuery<User>(input.filters, x=>x.UserRoles.Any(r=>r.Role.Name == "Trainer" ));
             var gridItemsViewModel = _trainerListGrid.GetGridItemsViewModel(input.PageSortFilter, items,user);
             return new CustomJsonResult(gridItemsViewModel);
         }

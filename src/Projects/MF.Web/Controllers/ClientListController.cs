@@ -65,7 +65,7 @@ namespace MF.Web.Controllers
             var userEntityId = _sessionContext.GetUserId();
             var trainer = _repository.Find<User>(userEntityId);
             IQueryable<Client> items;
-            if (trainer.UserRoles.Any(x => x.Name == "Administrator"))
+            if (trainer.UserRoles.Any(x => x.Role.Name == "Administrator"))
             {
                 items = _dynamicExpressionQuery.PerformQuery<Client>(input.filters);
             }else

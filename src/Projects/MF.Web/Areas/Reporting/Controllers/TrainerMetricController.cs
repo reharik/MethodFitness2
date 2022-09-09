@@ -29,7 +29,7 @@ namespace MF.Web.Areas.Reporting.Controllers
 
         public CustomJsonResult Display(ViewModel input)
         {
-            var trainers = this._repository.Query<User>(x => x.UserRoles.Any(y => y.Name == "Trainer"));
+            var trainers = this._repository.Query<User>(x => x.UserRoles.Any(y => y.Role.Name == "Trainer"));
             var model = new TrainerMetricViewModel
             {
                 StartDate = DateTime.Now,
