@@ -54,6 +54,8 @@ namespace MF.Web.Models
         public string AddUpdateRoute { get; set; }
 
         public string DisplayRoute { get; set; }
+
+        public int locationsAvailableToManager { get; set; }
     }
 
     public class CalendarEvent

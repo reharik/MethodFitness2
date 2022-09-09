@@ -20,7 +20,7 @@ using StructureMap;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
-    public class PaymentController : MFController
+    public class ClientPurchaseController : MFController
     {
         private readonly IRepository _repository;
         private readonly ISaveEntityService _saveEntityService;
@@ -28,7 +28,7 @@ namespace MF.Web.Areas.Billing.Controllers
         private readonly IClientPaymentToSessions _clientPaymentToSessions;
         private readonly ILogger _logger;
 
-        public PaymentController(IRepository repository,
+        public ClientPurchaseController(IRepository repository,
             ISaveEntityService saveEntityService,
             ISessionContext sessionContext,
             IClientPaymentToSessions clientPaymentToSessions,
@@ -78,9 +78,9 @@ namespace MF.Web.Areas.Billing.Controllers
             model._sessionRateDto = sessionRatesDto;
             model._sessionsAvailable = clientSessionsDto;
             model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
-            model._deleteUrl = UrlContext.GetUrlForAction<PaymentController>(x=>x.Delete(null));
+            model._deleteUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x=>x.Delete(null));
             model.ParentId = client.EntityId;
-            model._saveUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.Save(null));
+            model._saveUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.Save(null));
             return new CustomJsonResult(model);
         }
 

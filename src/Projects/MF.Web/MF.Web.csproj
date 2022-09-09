@@ -30,7 +30,7 @@
     <TargetFrameworkProfile />
     <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
     <UseGlobalApplicationHostFile />
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -226,11 +226,10 @@
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationListController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionVerificationController.cs" />
     <Compile Include="Areas\Billing\Controllers\TrainerSessionViewController.cs" />
-    <Compile Include="Areas\Billing\Controllers\TrainerPaymentController.cs" />
     <Compile Include="Areas\Billing\Controllers\PayTrainerListController.cs" />
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
-    <Compile Include="Areas\Billing\Controllers\PaymentController.cs" />
-    <Compile Include="Areas\Billing\Controllers\PaymentListController.cs" />
+    <Compile Include="Areas\Billing\Controllers\ClientPurchaseController.cs" />
+    <Compile Include="Areas\Billing\Controllers\ClientPurchaseListController.cs" />
     <Compile Include="Areas\Reporting\Controllers\ActivityController.cs" />
     <Compile Include="Areas\Reporting\Controllers\TrainerMetricController.cs" />
     <Compile Include="Areas\Reporting\Controllers\DailyPaymentsController.cs" />
@@ -277,7 +276,7 @@
     <Compile Include="Grids\SessionVerificationListGrid.cs" />
     <Compile Include="Grids\TrainerPaymentListGrid.cs" />
     <Compile Include="Grids\SessionPaymentListGrid.cs" />
-    <Compile Include="Grids\PaymentListGrid.cs" />
+    <Compile Include="Grids\ClientPurchaseListGrid.cs" />
     <Compile Include="Grids\TrainerListGrid.cs" />
     <Compile Include="Areas\Schedule\Models\BulkAction\BulkActionViewModel.cs" />
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
@@ -519,13 +518,13 @@
     <Content Include="Areas\Billing\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Billing\Views\Payment\AddUpdate.cshtml" />
+    <Content Include="Areas\Billing\Views\ClientPurchase\AddUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Billing\Views\Payment\PaymentList\ItemList.cshtml" />
+    <Content Include="Areas\Billing\Views\ClientPurchase\PaymentList\ItemList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Billing\Views\Payment\Display.cshtml" />
+    <Content Include="Areas\Billing\Views\ClientPurchase\Display.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_DisplayLayout.cshtml" />

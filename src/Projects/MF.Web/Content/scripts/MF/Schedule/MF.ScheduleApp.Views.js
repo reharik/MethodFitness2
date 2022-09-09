@@ -162,14 +162,15 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		if (this.displayAppointmentDisabled == true ) {
 			return;
 		}
-		this.displayAppointmentDisabled = true;
-
 		if (
-			calEvent.trainerId != this.model.CalendarDefinition.TrainerId &&
-			!this.model.CalendarDefinition.CanSeeOthersAppointments
+			(calEvent.trainerId != this.model.CalendarDefinition.TrainerId &&
+				!this.model.CalendarDefinition.CanSeeOthersAppointments) ||
+			calEvent.EntityId ===0 
 		) {
 			return;
 		}
+		this.displayAppointmentDisabled = true;
+
 		this.model.CalendarDefinition.canEdit =
 			new XDate(calEvent.start).diffHours(new XDate()) < 0 ||
 			this.model.CalendarDefinition.CanEditPastAppointments;
@@ -565,7 +566,7 @@ MF.Views.ClientFormView = MF.Views.View.extend({
 	},
 	payment: function () {
 		var id = this.model.EntityId();
-		MF.vent.trigger("route", MF.generateRoute("paymentlist", id), true);
+		MF.vent.trigger("route", MF.generateRoute("clientpurchaselist", id), true);
 	},
 	deleteItem: function () {
 		if (confirm("Are you sure you would like to delete this Item?")) {
@@ -592,7 +593,7 @@ MF.Views.ClientFormView = MF.Views.View.extend({
 		this._super("onClose", arguments);
 	},
 });
-MF.Views.PaymentListView = MF.Views.View.extend({
+MF.Views.ClientPurchaseListView = MF.Views.View.extend({
 	initialize: function () {
 		this.options.gridOptions = { multiselect: false };
 		MF.mixin(this, "ajaxGridMixin");
@@ -632,7 +633,7 @@ MF.Views.PaymentListView = MF.Views.View.extend({
 	},
 });
 
-MF.Views.PaymentFormView = MF.Views.View.extend({
+MF.Views.ClientPurchaseView = MF.Views.View.extend({
 	initialize: function () {
 		MF.mixin(this, "formMixin");
 		MF.mixin(this, "ajaxFormMixin");
@@ -995,6 +996,6 @@ MF.Views.ClientGridView = MF.Views.View.extend({
 		this.unbindBindings();
 	},
 	showPayGrid: function (id) {
-		MF.vent.trigger("route", MF.generateRoute("paymentlist", id), true);
+		MF.vent.trigger("route", MF.generateRoute("clientpurchaselist", id), true);
 	},
 });

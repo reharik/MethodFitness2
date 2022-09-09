@@ -53,7 +53,6 @@ namespace MF.Web.Areas.Schedule.Controllers
         {
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
-            var usersRole = _repository.Find<UsersRoleAndPermissions>(userEntityId);
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, false).ToList();
             locations.Insert(0, new SelectListItem { Text = WebLocalizationKeys.ALL.ToString(), Value = "0" });
             var trainersDto = new List<TrainerLegendDto>();
@@ -67,7 +66,10 @@ namespace MF.Web.Areas.Schedule.Controllers
                     EntityId = x.EntityId
                 }).ToList();
             }
-
+            var managerRole = user.UserRoles.FirstOrDefault(x => x.Role.Name == "Manager");
+            var canSeeOthersAppointments = user.UserRoles.FirstOrDefault(x => x.Role.Name == "Administrator") !=null
+                || managerRole != null;
+            var locationsAvailableToManager = managerRole != null ? managerRole.LocationId.EntityId : -1;
             var model = new CalendarViewModel
             {
                 Trainers = trainersDto,
@@ -85,12 +87,8 @@ namespace MF.Web.Areas.Schedule.Controllers
                     CanEditPastAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEditPastAppointments"),
                     CanEditOthersAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEditOthersAppointments"),
                     CanEnterRetroactiveAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"),
-                   
-                    
-                    
-                    
-                    
                     CanSeeOthersAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOthersAppointments"),
+                    locationsAvailableToManager= locationsAvailableToManager,
                     TrainerId = user.EntityId
                 }
             };
@@ -147,6 +145,14 @@ namespace MF.Web.Areas.Schedule.Controllers
             var userEntityId = _sessionContext.GetUserId();
             var user = _repository.Find<User>(userEntityId);
             var canSeeOthers = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOthersAppointments");
+            var managerRole = user.UserRoles.FirstOrDefault(x => x.Role.Name == "Manager");
+            var adminRole = user.UserRoles.FirstOrDefault(x => x.Role.Name == "Administrator");
+            var locationsAvailableToView = managerRole != null 
+                ? managerRole.LocationId.EntityId 
+                : adminRole != null
+                ? 0 //all locations
+                : -1; // no locations
+
             var events = new List<CalendarEvent>();
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
             var endDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.end);
@@ -169,9 +175,9 @@ namespace MF.Web.Areas.Schedule.Controllers
 
             if (!user.UserRoles.Any(x => x.Role.Name == "Administrator"))
             {
-                CreateBlockingEvents(blockingSlots, events);
+                CreateBlockingEvents(blockingSlots, events, locationsAvailableToView);
             }
-            appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers));
+            appointments.ForEachItem(x => GetValue(x, events, user, canSeeOthers, locationsAvailableToView));
             var payload = new CalendarEventPayload
             {
                 Events = events,
@@ -188,7 +194,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                 return blocked;
             }
             
-            var location2CutOff = 4;
+            var location2CutOff = 2;
             var location1CutOff = 2;
 
             blocked.Location = new List<LocationBlockedSlots>();
@@ -239,7 +245,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             return blocked;
         }
 
-        private void CreateBlockingEvents(BlockedSlotsByLocation blocked, List<CalendarEvent> events)
+        private void CreateBlockingEvents(BlockedSlotsByLocation blocked, List<CalendarEvent> events, int locationsAvailableToView)
         {
             if(blocked.Location == null)
             {
@@ -248,31 +254,34 @@ namespace MF.Web.Areas.Schedule.Controllers
             for (int i = 0; i < blocked.Location.Count(); i++)
             {
                 var loc = blocked.Location[i];
-                for (int j = 0; j < loc.TimeSlots.Count(); j++)
+                if (loc.LocationId != locationsAvailableToView)
                 {
-                    var k = j;
-                    while (k < loc.TimeSlots.Count() - 1 &&
-                        DateTime.Parse(loc.TimeSlots[k].TimeSlot).AddMinutes(15)
-                        == DateTime.Parse(loc.TimeSlots[k + 1].TimeSlot))
+                    for (int j = 0; j < loc.TimeSlots.Count(); j++)
                     {
-                        k = k + 1;
+                        var k = j;
+                        while (k < loc.TimeSlots.Count() - 1 &&
+                            DateTime.Parse(loc.TimeSlots[k].TimeSlot).AddMinutes(15)
+                            == DateTime.Parse(loc.TimeSlots[k + 1].TimeSlot))
+                        {
+                            k = k + 1;
+                        }
+                        var calendarEvent = new CalendarEvent
+                        {
+                            EntityId = 0,
+                            start = DateTime.Parse(loc.TimeSlots[j].TimeSlot).ToString(),
+                            end = DateTime.Parse(loc.TimeSlots[k].TimeSlot).AddMinutes(15).ToString(),
+                            color = "#808080",
+                            locationId = loc.LocationId,
+                            title = loc.Name,
+                            editable = false
+                        };
+                        events.Add(calendarEvent);
+                        j = k;
                     }
-                    var calendarEvent = new CalendarEvent
-                    {
-                        EntityId = 0,
-                        start = DateTime.Parse(loc.TimeSlots[j].TimeSlot).ToString(),
-                        end = DateTime.Parse(loc.TimeSlots[k].TimeSlot).AddMinutes(15).ToString(),
-                        color = "#808080",
-                        locationId = loc.LocationId,
-                        title = loc.Name,
-                        editable = false
-                    };
-                    events.Add(calendarEvent);
-                    j = k;
                 }
             }
         }
-        private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers)
+        private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers, int locationsAvailableToView)
         {
             var calendarEvent = new CalendarEvent
             {
@@ -294,7 +303,10 @@ namespace MF.Web.Areas.Schedule.Controllers
                 calendarEvent.title = x.Location.Name + ": " + x.Clients.FirstOrDefault().FullNameLNF;
             }
 
-            if (x.Trainer != user && !canSeeOthers)
+            if (x.Trainer != user && !canSeeOthers 
+                || (canSeeOthers 
+                    && locationsAvailableToView != x.Location.EntityId 
+                    && locationsAvailableToView != 0))
             {
                 return;
                 //calendarEvent.color = "#fffff";

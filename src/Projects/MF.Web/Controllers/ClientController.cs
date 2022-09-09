@@ -85,7 +85,7 @@ namespace MF.Web.Controllers
 
             model._Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString();
             model._deleteUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Delete(null));
-            model._paymentListUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null), AreaName.Billing) + "?ParentId=" + client.EntityId;
+            model._paymentListUrl = UrlContext.GetUrlForAction<ClientPurchaseListController>(x => x.ItemList(null), AreaName.Billing) + "?ParentId=" + client.EntityId;
             model._sessionsAvailable = clientSessionsDto;
             model._saveUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Save(null));
             model._StateList = _selectListItemService.CreateList<State>();

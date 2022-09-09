@@ -33,9 +33,9 @@ namespace MF.Web.Services.RouteTokens
             _builder.UrlForList<TrainerListController>(x => x.ItemList(null)).ViewName("TrainerGridView").End();
             _builder.UrlForForm<TrainerController>(x => x.AddUpdate(null)).ViewName("TrainerFormView").End();
 
-            _builder.UrlForList<PaymentListController>(x => x.ItemList(null), AreaName.Billing).ViewName("PaymentListView").End();
-            _builder.UrlForForm<PaymentController>(x => x.AddUpdate(null), AreaName.Billing).ViewName("PaymentFormView").End();
-            _builder.UrlForDisplay<PaymentController>(x => x.Display(null), AreaName.Billing).End();
+            _builder.UrlForList<ClientPurchaseListController>(x => x.ItemList(null), AreaName.Billing).ViewName("ClientPurchaseListView").End();
+            _builder.UrlForForm<ClientPurchaseController>(x => x.AddUpdate(null), AreaName.Billing).ViewName("ClientPurchaseView").End();
+            _builder.UrlForDisplay<ClientPurchaseController>(x => x.Display(null), AreaName.Billing).End();
 
             _builder.UrlForList<PayTrainerListController>(x => x.ItemList(null), AreaName.Billing).ViewName("PayTrainerGridView").IsChild().End();
 
@@ -47,7 +47,6 @@ namespace MF.Web.Services.RouteTokens
             //_builder.UrlForForm<PayTrainerController>(x => x.AddUpdate(null), AreaName.Billing).End();
 
             _builder.UrlForList<TrainerPaymentListController>(x => x.ItemList(null), AreaName.Billing).ViewName("TrainerPaymentListGridView").IsChild().End();
-            _builder.UrlForForm<TrainerPaymentController>(x => x.Display(null), AreaName.Billing).End();
 
             //_builder.UrlForForm<ManagerController>(x => x.Display(null), AreaName.Reporting).ViewName("ManagerView").End();
             _builder.UrlForForm<DailyPaymentsController>(x => x.Display(null), AreaName.Reporting).ViewName("DailyPaymentsView").End();

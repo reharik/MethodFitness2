@@ -22,7 +22,7 @@ namespace MF.Web.Grids
             GridBuilder.DisplayFor(x => x.FirstName);
             GridBuilder.DisplayFor(x => x.Email);
             GridBuilder.DisplayFor(x => x.MobilePhone);
-            GridBuilder.ImageButtonColumn().ForAction<PaymentListController>(x => x.ItemList(null))
+            GridBuilder.ImageButtonColumn().ForAction<ClientPurchaseListController>(x => x.ItemList(null))
                 .ToPerformAction(ColumnAction.Redirect).ImageName("client_payment.png");
             GridBuilder.SetSearchField(x => x.LastName);
             GridBuilder.SetDefaultSortColumn(x => x.LastName);

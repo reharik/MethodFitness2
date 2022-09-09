@@ -4,10 +4,10 @@ using MF.Web.Areas.Schedule.Grids;
 
 namespace MF.Web.Grids
 {
-    public class PaymentListGrid : Grid<Payment>, IEntityListGrid<Payment>
+    public class ClientPurchaseListGrid : Grid<Payment>, IEntityListGrid<Payment>
     {
 
-        public PaymentListGrid(IGridBuilder<Payment> gridBuilder)
+        public ClientPurchaseListGrid(IGridBuilder<Payment> gridBuilder)
             : base(gridBuilder)
         {
         }

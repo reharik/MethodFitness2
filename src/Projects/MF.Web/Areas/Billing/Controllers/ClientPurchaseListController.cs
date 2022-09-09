@@ -14,14 +14,14 @@ using System.Linq;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
-    public class PaymentListController:MFController
+    public class ClientPurchaseListController:MFController
     {
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
         private readonly IEntityListGrid<Payment> _paymentListGrid;
         private readonly IRepository _repository;
         private readonly ISessionContext _sessionContext;
 
-        public PaymentListController(IDynamicExpressionQuery dynamicExpressionQuery,
+        public ClientPurchaseListController(IDynamicExpressionQuery dynamicExpressionQuery,
             IEntityListGrid<Payment> paymentListGrid,
             IRepository repository,ISessionContext sessionContext)
         {
@@ -35,10 +35,10 @@ namespace MF.Web.Areas.Billing.Controllers
         {
             var user = _sessionContext.GetCurrentUser();
             var client = _repository.Find<Client>(input.EntityId);
-            var url = UrlContext.GetUrlForAction<PaymentListController>(x => x.Payments(null),AreaName.Billing) + "?ParentId=" + input.EntityId;
+            var url = UrlContext.GetUrlForAction<ClientPurchaseListController>(x => x.Purchase(null),AreaName.Billing) + "?ParentId=" + input.EntityId;
             var model = new ListViewModel()
             {
-                addUpdateUrl = UrlContext.GetUrlForAction<PaymentController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
+                addUpdateUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
                 gridDef = _paymentListGrid.GetGridDefinition(url,user),
                 _Title = WebLocalizationKeys.CLIENT_PAYMENTS.ToFormat(client.FullNameFNF),
                 ParentId = input.EntityId
@@ -48,7 +48,7 @@ namespace MF.Web.Areas.Billing.Controllers
             return new CustomJsonResult(model);
         }
 
-        public CustomJsonResult Payments(GridItemsRequestModel input)
+        public CustomJsonResult Purchase(GridItemsRequestModel input)
         {
             var user = _sessionContext.GetCurrentUser();
             var client = _repository.Find<Client>(input.ParentId);

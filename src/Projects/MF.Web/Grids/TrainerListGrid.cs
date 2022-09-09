@@ -24,7 +24,7 @@ namespace MF.Web.Grids
             GridBuilder.DisplayFor(x => x.Email);
             GridBuilder.DisplayFor(x => x.PhoneMobile);
             GridBuilder.ImageButtonColumn().ForAction<PayTrainerListController>(x => x.ItemList(null))
-                .ToPerformAction(ColumnAction.Redirect).ImageName("pay_trainer.png");
+                .ToPerformAction(ColumnAction.Redirect).ImageName("pay_trainer.png").SecurityOperation("/PayTrainer"); ;
             GridBuilder.SetSearchField(x => x.LastName);
             GridBuilder.SetDefaultSortColumn(x => x.LastName);
             GridBuilder.LinkColumnFor(x => x.Archived)
