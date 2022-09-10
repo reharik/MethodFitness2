@@ -69,7 +69,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var managerRole = user.UserRoles.FirstOrDefault(x => x.Role.Name == "Manager");
             var canSeeOthersAppointments = user.UserRoles.FirstOrDefault(x => x.Role.Name == "Administrator") !=null
                 || managerRole != null;
-            var locationsAvailableToManager = managerRole != null ? managerRole.LocationId.EntityId : -1;
+            var locationsAvailableToManager = managerRole != null ? managerRole.Locations.Select(x=>x.EntityId) : new List<int>() { -1 };
             var model = new CalendarViewModel
             {
                 Trainers = trainersDto,
@@ -88,7 +88,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                     CanEditOthersAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEditOthersAppointments"),
                     CanEnterRetroactiveAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"),
                     CanSeeOthersAppointments = _authorizationService.IsAllowed(user, "/Calendar/CanSeeOthersAppointments"),
-                    locationsAvailableToManager= locationsAvailableToManager,
+                    //locationsAvailableToManager= locationsAvailableToManager,
                     TrainerId = user.EntityId
                 }
             };
@@ -148,10 +148,10 @@ namespace MF.Web.Areas.Schedule.Controllers
             var managerRole = user.UserRoles.FirstOrDefault(x => x.Role.Name == "Manager");
             var adminRole = user.UserRoles.FirstOrDefault(x => x.Role.Name == "Administrator");
             var locationsAvailableToView = managerRole != null 
-                ? managerRole.LocationId.EntityId 
+                ? managerRole.Locations.Select(x => x.EntityId)
                 : adminRole != null
-                ? 0 //all locations
-                : -1; // no locations
+                ? new List<int>(){ 0 } //all locations
+                : new List<int>() { -1 }; // no locations
 
             var events = new List<CalendarEvent>();
             var startDateTime = DateTimeUtilities.ConvertFromUnixTimestamp(input.start);
@@ -245,7 +245,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             return blocked;
         }
 
-        private void CreateBlockingEvents(BlockedSlotsByLocation blocked, List<CalendarEvent> events, int locationsAvailableToView)
+        private void CreateBlockingEvents(BlockedSlotsByLocation blocked, List<CalendarEvent> events, IEnumerable<int> locationsAvailableToView)
         {
             if(blocked.Location == null)
             {
@@ -254,7 +254,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             for (int i = 0; i < blocked.Location.Count(); i++)
             {
                 var loc = blocked.Location[i];
-                if (loc.LocationId != locationsAvailableToView)
+                if (!locationsAvailableToView.Any(x=>x == loc.LocationId))
                 {
                     for (int j = 0; j < loc.TimeSlots.Count(); j++)
                     {
@@ -281,7 +281,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                 }
             }
         }
-        private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers, int locationsAvailableToView)
+        private void GetValue(Appointment x, List<CalendarEvent> events, User user, bool canSeeOthers, IEnumerable<int> locationsAvailableToView)
         {
             var calendarEvent = new CalendarEvent
             {
@@ -305,8 +305,8 @@ namespace MF.Web.Areas.Schedule.Controllers
 
             if (x.Trainer != user && !canSeeOthers 
                 || (canSeeOthers 
-                    && locationsAvailableToView != x.Location.EntityId 
-                    && locationsAvailableToView != 0))
+                    && !locationsAvailableToView.Any(l => l == x.Location.EntityId)
+                    && !locationsAvailableToView.Any(l => l == 0)))
             {
                 return;
                 //calendarEvent.color = "#fffff";

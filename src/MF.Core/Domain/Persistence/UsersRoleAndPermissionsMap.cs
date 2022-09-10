@@ -4,7 +4,7 @@ namespace MF.Core.Domain.Persistence
     {
         public UsersRoleAndPermissionsMap()
         {
-            References(x => x.LocationId).Column("`LocationId`");
+            HasManyToMany(x => x.Locations).Table("UsersRoleAndPermissions_Location");
             References(x => x.Trainer).Column("`UserId`");
             References(x => x.Role).Column("`UserRoleId`");
         }

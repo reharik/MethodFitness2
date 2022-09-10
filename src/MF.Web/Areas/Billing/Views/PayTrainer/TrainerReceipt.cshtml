@@ -72,15 +72,16 @@
               </tr>
           }
       <tr>
-          <td colspan="2"></td>
+          <td></td>
 
           <td>@WebLocalizationKeys.FULL_HOUR</td>
           <td>@WebLocalizationKeys.HALF_HOUR</td>
           <td>@WebLocalizationKeys.PAIR</td>
+          <td>@WebLocalizationKeys.TOTAL_HOURS</td>
           <td>@WebLocalizationKeys.TOTAL</td>
       </tr>
       <tr>
-          <td colspan="2"></td>
+          <td></td>
           <td>
               @Model.hourTotal
           </td>
@@ -89,6 +90,9 @@
           </td>
           <td>
               @Model.pairTotal
+          </td>
+          <td>
+              @Model.totalHours
           </td>
           <td>
               $@Model.Total

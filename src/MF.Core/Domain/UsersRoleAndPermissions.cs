@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CC.Core.Core;
 using CC.Core.Core.Domain;
 using CC.Core.DataValidation.Attributes;
@@ -11,7 +12,7 @@ namespace MF.Core.Domain
         public virtual UserRole Role { get; set; }
         [DoNotValidate]
         public virtual User Trainer { get; set; }
-        public virtual Location LocationId { get; set; }
+        public virtual IEnumerable<Location> Locations { get; set; }
 
         #region IEquatable
 
@@ -20,7 +21,7 @@ namespace MF.Core.Domain
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (this.GetTypeWhenProxy() != obj.GetTypeWhenProxy()) return false;
-            return (Role == obj.Role && Trainer == obj.Trainer && LocationId == obj.LocationId);
+            return (Role == obj.Role && Trainer == obj.Trainer && Locations == obj.Locations);
         }
 
         public override bool Equals(object obj)
