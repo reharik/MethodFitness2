@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3CBC320B-ECD3-4A3C-A6A3-704A23E6D1D7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MF.Core</RootNamespace>
+    <AssemblyName>MF.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Alpinely.TownCrier, Version=1.1.0.20141, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TownCrier.1.1\lib\Alpinely.TownCrier.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.WebForms.12.0.2402.15\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGridMail">
+      <HintPath>..\packages\Sendgrid.5.0.0\lib\SendGridMail.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Topshelf">
+      <HintPath>..\packages\Topshelf.3.1.4\lib\net40-full\Topshelf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\FilterDefinitions.cs" />
+    <Compile Include="Config\ManyToManyTableNameConvention.cs" />
+    <Compile Include="Config\ForeignKeyConstraintNameConvention.cs" />
+    <Compile Include="Config\MsSqlAzureDialect.cs" />
+    <Compile Include="Config\StructuremapGridConvention.cs" />
+    <Compile Include="Config\TextAreaConvention.cs" />
+    <Compile Include="CoreViewModelAndDTOs\OrderDetailsDto.cs" />
+    <Compile Include="CoreViewModelAndDTOs\PaymentDetailsDto.cs" />
+    <Compile Include="Config\CustomIdentitiy.cs" />
+    <Compile Include="Config\CustomPrincipal.cs" />
+    <Compile Include="Config\SaveUpdateInterceptor.cs" />
+    <Compile Include="Config\SqlServerSessionSourceConfiguration.cs" />
+    <Compile Include="CoreLocalizationKeys.cs" />
+    <Compile Include="CoreViewModelAndDTOs\DocumentDto.cs" />
+    <Compile Include="CoreViewModelAndDTOs\MembershipDto.cs" />
+    <Compile Include="CoreViewModelAndDTOs\TrainerSessionDto.cs" />
+    <Compile Include="Domain\Appointment.cs" />
+    <Compile Include="Domain\BaseSessionRate.cs" />
+    <Compile Include="Domain\ClientStatus.cs" />
+    <Compile Include="Domain\Company.cs" />
+    <Compile Include="Domain\Client.cs" />
+    <Compile Include="Domain\DomainEntity.cs" />
+    <Compile Include="Domain\Location.cs" />
+    <Compile Include="Domain\Payment.cs" />
+    <Compile Include="Domain\Persistence\CompanyMap.cs" />
+    <Compile Include="Domain\Persistence\AppointmentMap.cs" />
+    <Compile Include="Domain\Persistence\ClientMap.cs" />
+    <Compile Include="Domain\Persistence\BaseSessionRateMap.cs" />
+    <Compile Include="Domain\Persistence\ClientStatusMap.cs" />
+    <Compile Include="Domain\Persistence\UsersRoleAndPermissionsMap.cs" />
+    <Compile Include="Domain\Persistence\TrainerSessionMap.cs" />
+    <Compile Include="Domain\Persistence\TrainerSessionVerificationMap.cs" />
+    <Compile Include="Domain\Persistence\OperationsMap.cs" />
+    <Compile Include="Domain\Persistence\PermissionMap.cs" />
+    <Compile Include="Domain\Persistence\SessionMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\Persistence\TrainerPaymentMap.cs" />
+    <Compile Include="Domain\Persistence\TrainerClientRateMap.cs" />
+    <Compile Include="Domain\Persistence\PaymentMap.cs" />
+    <Compile Include="Domain\Persistence\SessionRatesMap.cs" />
+    <Compile Include="Domain\Persistence\LocationMap.cs" />
+    <Compile Include="Domain\Persistence\UserRoleMap.cs" />
+    <Compile Include="Domain\Persistence\UserMap.cs" />
+    <Compile Include="Domain\Persistence\DomainEntityMap.cs" />
+    <Compile Include="Domain\Persistence\UsersGroupMap.cs" />
+    <Compile Include="Domain\Session.cs" />
+    <Compile Include="Domain\SessionRates.cs" />
+    <Compile Include="Domain\SiteConfiguration.cs" />
+    <Compile Include="Domain\Tools\MFUnitOfWork.cs" />
+    <Compile Include="Domain\Tools\NoInterceptorNoFiltersUnitOfWork.cs" />
+    <Compile Include="Domain\Tools\NoInterceptorNoFiltersRepository.cs" />
+    <Compile Include="Domain\Tools\CustomAttributes\LinkDisplayAttribute.cs" />
+    <Compile Include="Domain\Tools\CustomAttributes\LogAttribute.cs" />
+    <Compile Include="Domain\Tools\CustomAttributes\TextAreaAttribute.cs" />
+    <Compile Include="Domain\Tools\CustomAttributes\ValidateDCIRangeAttribute.cs" />
+    <Compile Include="Domain\Tools\CustomAttributes\ValidateSqlDateTimeAttribute.cs" />
+    <Compile Include="Domain\Tools\CustomAttributes\ValidateUrlAttribute.cs" />
+    <Compile Include="Domain\Tools\INHSetupConfig.cs" />
+    <Compile Include="Domain\Tools\NullNHibernateUnitOfWork.cs" />
+    <Compile Include="Domain\Tools\NullNHSetupConfig.cs" />
+    <Compile Include="Domain\Tools\NullSessionFactory.cs" />
+    <Compile Include="Domain\Tools\NoFilterRepository.cs" />
+    <Compile Include="Domain\UsersRoleAndPermissions.cs" />
+    <Compile Include="Domain\TrainerClientRate.cs" />
+    <Compile Include="Domain\TrainerPayment.cs" />
+    <Compile Include="Domain\TrainerSessionVerification.cs" />
+    <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\UserRole.cs" />
+    <Compile Include="Enumerations\Enumerations.cs" />
+    <Compile Include="Html\Expressions\LinkExpression.cs" />
+    <Compile Include="Html\Expressions\ScriptReferenceExpression.cs" />
+    <Compile Include="Html\Expressions\StandardButtonExpression.cs" />
+    <Compile Include="Html\HtmlExtensions.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="Config\NullSqlServerSessionSourceConfiguration.cs" />
+    <Compile Include="NamedQueries\TrainerSessionQuery.cs" />
+    <Compile Include="Rules\LocationHasNoOutstandingTasks.cs" />
+    <Compile Include="Rules\DeleteLocationRules.cs" />
+    <Compile Include="Rules\NoTrainerHasBeenPaidForPaymentSessions.cs" />
+    <Compile Include="Rules\DeletePaymentRules.cs" />
+    <Compile Include="Security\IOperations.cs" />
+    <Compile Include="Rules\TrainerHasNoOutstandingTasks.cs" />
+    <Compile Include="Rules\DeleteTrainerRules.cs" />
+    <Compile Include="Rules\DeleteEmployeeRules.cs" />
+    <Compile Include="Rules\DeleteFieldRules.cs" />
+    <Compile Include="Rules\EmployeeHasNoOutstandingTasks.cs" />
+    <Compile Include="Rules\FieldHasNoOutstandingEvents.cs" />
+    <Compile Include="Rules\FieldHasNoOutstandingTasks.cs" />
+    <Compile Include="Rules\RulesEngineBase.cs" />
+    <Compile Include="Security\IPermissions.cs" />
+    <Compile Include="Security\IUserGroups.cs" />
+    <Compile Include="Services\CustomAuthorizationRepository.cs" />
+    <Compile Include="Services\DateTimeUtilities.cs" />
+    <Compile Include="Services\IClientPaymentToSessions.cs" />
+    <Compile Include="Services\IClientSessionService.cs" />
+    <Compile Include="Services\IEmailService.cs" />
+    <Compile Include="Services\IGetCompanyId.cs" />
+    <Compile Include="Services\IMFPermissionsService.cs" />
+    <Compile Include="Services\IPermissionService.cs" />
+    <Compile Include="Services\ISessionContext.cs" />
+    <Compile Include="Services\ISecurityDataService.cs" />
+    <Compile Include="Services\SessionManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-1.9.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CC.Core\CC.Core.csproj">
+      <Project>{5e0b0ca2-bd5e-4953-a336-2aadc00cd81b}</Project>
+      <Name>CC.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
