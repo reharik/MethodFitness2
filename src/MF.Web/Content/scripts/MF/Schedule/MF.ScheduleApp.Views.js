@@ -217,9 +217,8 @@ MF.Views.CalendarView = MF.Views.View.extend({
 			route: this.model.CalendarDefinition.AddUpdateRoute,
 			url: url,
 			templateUrl: url + "_Template?Popup=true",
-			data: {
-				...data, blockedSlotsByLocation: this.model.blockedSlotsByLocation
-			},
+			blockedSlotsByLocation: this.model.blockedSlotsByLocation,
+			data,
 			view: "AppointmentView",
 			buttons: MF.Views.popupButtonBuilder
 				.builder("editModule")
@@ -447,7 +446,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 	},
 
 	setDisabledOptionsOnApptType: function () {
-		const blockedLocs = this.options.data.blockedSlotsByLocation;
+		const blockedLocs = this.options.blockedSlotsByLocation;
 		const date = new XDate(this.model.Date()).toString("M/d/yyyy");
 		const blockedSlots = Object.keys(blockedLocs[this.model.LocationEntityId()] || {})
 			.filter(x => x.startsWith(date));
@@ -480,7 +479,7 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 		});
 	},
 	setDisabledOptionsOnStartTime: function () {
-		const blockedLocs = this.options.data.blockedSlotsByLocation;
+		const blockedLocs = this.options.blockedSlotsByLocation;
 		let apptSlots = 2;
 		switch (this.model.AppointmentType()) {
 			case "Hour":
