@@ -88,7 +88,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var hourTotal = data.Count(x => x.AppointmentType == "Hour");
             var halfHourTotal = data.Count(x => x.AppointmentType == "Half Hour");
             var pairTotal = data.Count(x => x.AppointmentType == "Pair");
-            var totalHours = hourTotal + pairTotal + (data.Count(x => x.AppointmentType == "Half Hour")+0.0m)/2;
+            var totalHours = hourTotal + pairTotal + (halfHourTotal+0.0m)/2;
             var model = new TrainerReceiptViewModel
             {
                 TrainerName = data[0].TrainerName,
@@ -98,7 +98,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 hourTotal = hourTotal,
                 halfHourTotal = halfHourTotal,
                 pairTotal = pairTotal,
-                totalHours = hourTotal + halfHourTotal + pairTotal
+                totalHours = totalHours
             };
             return View(model);
         }
