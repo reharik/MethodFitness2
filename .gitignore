@@ -61,4 +61,5 @@ src/Solutions/MethodFitness/.vs/
 .vs/
 build/
 
+logs/
 .history/

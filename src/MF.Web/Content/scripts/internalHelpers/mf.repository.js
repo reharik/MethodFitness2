@@ -32,23 +32,41 @@ MF.repository= (function(){
         }
     };
     return {
-        ajaxPost:function(url, data){
-            throbber();
-            $.post(url,data).done(repositoryCallback);
-        },
-        ajaxGet:function(url, data){
-            throbber();
-            return $.get(url,data).done(repositoryCallback);
-        },
-        ajaxPostModel:function(url, data){
-            throbber();
-            return $.ajax({
-                type:"post",
-                url: url,
-                data:data,
-                contentType:  "application/json; charset=utf-8",
-                traditional:true
-            }).done(repositoryCallback);
-        }
-    }
+			ajaxPost:function(url, data){
+				throbber();
+				return $.ajax({
+						type:"post",
+						url: url,
+						data:data,
+						beforeSend: function(xhr){
+							 xhr.withCredentials = true;
+						}
+				}).done(repositoryCallback);
+		},
+		ajaxGet:function(url, data){
+				throbber();
+				return $.ajax({
+						type:"get",
+						url: url,
+						data:data,
+						beforeSend: function(xhr){
+							 xhr.withCredentials = true;
+						}
+				}).done(repositoryCallback);
+
+		},
+		ajaxPostModel:function(url, data){
+				throbber();
+				return $.ajax({
+						type:"post",
+						url: url,
+						data:data,
+						contentType:  "application/json; charset=utf-8",
+						traditional:true,
+						beforeSend: function(xhr){
+							 xhr.withCredentials = true;
+						}
+				}).done(repositoryCallback);
+		}
+	}
 }());
