@@ -76,7 +76,6 @@ MF.repository= (function(){
 			})
 			const json = await  res.json()
 			return repositoryCallback(json);
-
 		}
 	}
 }());
