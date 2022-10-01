@@ -58,7 +58,7 @@ MF.blockedTimes = (function () {
 		startTime,
 		endTime,
 		location) => {
-		const slots = blockedSlots[location];
+		const slots = blockedSlots[location] || {};
 		let idx = startTime;
 		while (new XDate(idx) < new XDate(endTime)) {
 			console.log(idx)
