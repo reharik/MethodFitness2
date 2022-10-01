@@ -56,7 +56,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, false).ToList();
             locations.Insert(0, new SelectListItem { Text = WebLocalizationKeys.ALL.ToString(), Value = "0" });
             var trainersDto = new List<TrainerLegendDto>();
-            if (user.UserRoles.Any(x => x.Role.Name == UserType.Administrator.ToString()))
+            if (user.UserRoles.Any(x => x.Role.Name == UserType.Administrator.ToString() || x.Role.Name == UserType.Manager.ToString()))
             {
                 var trainers = _repository.Query<User>(x => !x.Archived && x.UserRoles.Any(y => y.Role.Name == UserType.Trainer.ToString()));
                 trainersDto = trainers.Select(x => new TrainerLegendDto

@@ -216,7 +216,7 @@ MF.mixins.ajaxFormMixin = {
 
 MF.mixins.ajaxGridMixin = {
     render:function(){
-        MF.repository.ajaxGetJSON(this.options.url, this.options.data)
+        MF.repository.ajaxGet(this.options.url, this.options.data)
             .then($.proxy(this.renderCallback,this));
     },
     renderCallback:function(result){

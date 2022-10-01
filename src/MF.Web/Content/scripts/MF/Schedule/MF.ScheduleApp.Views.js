@@ -16,9 +16,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		"click .legendHeader": "legendHeaderClick",
 	},
 	render: function () {
-		$.when(MF.loadTemplateAndModel(this)).then(
-			$.proxy(this.renderCallback, this)
-		);
+		MF.loadTemplateAndModel(this).then($.proxy(this.renderCallback, this))
 		//       MF.repository.ajaxGet(this.options.url, this.options.data).done($.proxy(this.renderCallback,this));
 	},
 	renderCallback: function () {
@@ -301,7 +299,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		let url = model.CalendarDefinition.Url;
 		let source = function (start, end, callback) {
 			MF.repository
-				.ajaxGet(url, {
+				.ajaxGetJSON(url, {
 					Loc: model.location,
 					TrainerIds: ids,
 					start: ~~(start.getTime() / 1000),
