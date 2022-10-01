@@ -299,7 +299,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		let url = model.CalendarDefinition.Url;
 		let source = function (start, end, callback) {
 			MF.repository
-				.ajaxGetJSON(url, {
+				.ajaxGet(url, {
 					Loc: model.location,
 					TrainerIds: ids,
 					start: ~~(start.getTime() / 1000),

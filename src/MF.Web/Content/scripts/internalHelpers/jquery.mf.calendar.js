@@ -18,7 +18,7 @@
             maxTime:22,
 
             events: function(start, end, callback) {
-                MF.repository.ajaxGetJSON(calendarDefinition.Url,
+                MF.repository.ajaxGet(calendarDefinition.Url,
                     { Loc: $("[name=Location]").val(),
                         start, end})
                     .then((response)=> callback(response) );

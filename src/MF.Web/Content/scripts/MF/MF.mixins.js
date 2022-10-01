@@ -190,8 +190,7 @@ MF.mixins.displayMixin = {
 
 MF.mixins.ajaxDisplayMixin = {
     render:function(){
-        $.when(MF.loadTemplateAndModel(this))
-            .then($.proxy(this.renderCallback,this));
+			MF.loadTemplateAndModel(this).then($.proxy(this.renderCallback, this))
     },
     renderCallback:function(){
         this.bindModelAndElements();
@@ -203,8 +202,7 @@ MF.mixins.ajaxDisplayMixin = {
 
 MF.mixins.ajaxFormMixin = {
     render:function(){
-        $.when(MF.loadTemplateAndModel(this))
-            .then($.proxy(this.renderCallback,this));
+			MF.loadTemplateAndModel(this).then($.proxy(this.renderCallback, this))
     },
     renderCallback:function(){
         this.bindModelAndElements();
