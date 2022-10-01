@@ -119,7 +119,7 @@ MF.Views.PayTrainerGridView = MF.Views.View.extend({
         model.EntityId = MF.State.get("Relationships").entityId;
         var data = JSON.stringify(model);
         var promise = MF.repository.ajaxPostModel(this.options.PayTrainerUrl,data);
-        promise.done($.proxy(this.paymentCallback,this));
+        promise.then($.proxy(this.paymentCallback,this));
     },
     paymentCallback:function(result){
         if(result.Success){
@@ -259,7 +259,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
             model.EntityIds = _.pluck(model.eligableRows,"id");
             var data = JSON.stringify(model);
             var promise = MF.repository.ajaxPostModel(this.options.AcceptSessionsUrl,data);
-            promise.done($.proxy(this.acceptSessionsCallback,this));
+            promise.then($.proxy(this.acceptSessionsCallback,this));
         }
     },
     acceptSessionsCallback:function(_result){
@@ -316,7 +316,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
         var model = ko.mapping.toJS(popup.options.data);
         var data = JSON.stringify(model);
         var promise = MF.repository.ajaxPostModel(this.options.AlertAdminEmailUrl,data);
-        promise.done($.proxy(this.emailCallback,this));
+        promise.then($.proxy(this.emailCallback,this));
     },
     emailCallback:function(_result){
         var that = this;

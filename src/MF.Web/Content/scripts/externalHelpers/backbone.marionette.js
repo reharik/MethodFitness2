@@ -1211,20 +1211,23 @@ _.extend(Marionette.TemplateCache.prototype, {
   // Internal method to load the template asynchronously.
   //REH 8.4.12 made load return a promise.
     load: function(){
-    var that = this;
-    var dfd = new $.Deferred();
+    // var that = this;
+    // var dfd = new $.Deferred();
     if (this.compiledTemplate){
-        dfd.resolve(this.compiledTemplate);
-        return dfd.promise();
+        // dfd.resolve(this.compiledTemplate);
+        // return dfd.promise();
+        return this.compiledTemplate;
+
     }
 
     // Load the template and compile it
-    $.when(this.loadTemplate(this.templateId))
-    .then(function(template){
-        that.compiledTemplate = that.compileTemplate(template);
-        dfd.resolve(that.compiledTemplate);
-    });
-    return dfd.promise();
+    // $.when(this.loadTemplate(this.templateId))
+    return this.loadTemplate(this.templateId);
+    // .then(function(template){
+    //     that.compiledTemplate = that.compileTemplate(template);
+    //     dfd.resolve(that.compiledTemplate);
+    // });
+    // return dfd.promise();
   },
 
   // Load a template from the DOM, by default. Override
@@ -1289,7 +1292,7 @@ _.extend(Marionette.Callbacks.prototype, {
   // guaranteed to execute, even if they are added after the 
   // `run` method is called.
   add: function(callback, contextOverride){
-    this.promise.done(function(context, options){
+    this.promise.then(function(context, options){
       if (contextOverride){ context = contextOverride; }
       callback.call(context, options);
     });

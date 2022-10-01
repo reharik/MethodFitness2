@@ -5,68 +5,74 @@
  * Time: 10:52 AM
  * To change this template use File | Settings | File Templates.
  */
-if (typeof MF == "undefined") {
-    var MF = {};
+ if (typeof MF == "undefined") {
+	var MF = {};
 }
 
 MF.repository= (function(){
-    var repositoryCallback = function(result,callback){
-
-        if(result.LoggedOut){
-            window.location.replace(result.RedirectUrl);
-            return null;
-        }
-        clearTimeout(MF.throbberTimeout);
-        MF.showThrob=false;
-        $("#ajaxLoading").hide();
-        return result;
-    };
-    var throbber = function(){
-        MF.showThrob=true;
-        if(!MF.throbberTimeout){
-            MF.throbberTimeout = setTimeout(function() {
-                if(MF.showThrob) {
-                    $("#ajaxLoading").show();
-                }
-            }, 500);
-        }
-    };
-    return {
-			ajaxPost:function(url, data){
+	var repositoryCallback = function(result,callback){
+			if(result.LoggedOut){
+					window.location.replace(result.RedirectUrl);
+					return null;
+			}
+			clearTimeout(MF.throbberTimeout);
+			MF.showThrob=false;
+			$("#ajaxLoading").hide();
+			return result;
+	};
+	var throbber = function(){
+			MF.showThrob=true;
+			if(!MF.throbberTimeout){
+					MF.throbberTimeout = setTimeout(function() {
+							if(MF.showThrob) {
+									$("#ajaxLoading").show();
+							}
+					}, 500);
+			}
+	};
+	return {
+		ajaxPost: async function(url, data){
+			throbber();
+			const res = await fetch(url, {
+				method: "POST",
+				body: data,
+				credentials: 'include',
+			});
+			const json = await res.json()
+			return repositoryCallback(json);
+	},
+		ajaxGet:async function(url, data){
 				throbber();
-				return $.ajax({
-						type:"post",
-						url: url,
-						data:data,
-						beforeSend: function(xhr){
-							 xhr.withCredentials = true;
-						}
-				}).done(repositoryCallback);
+			
+			const res = await fetch(url +"?"+ new URLSearchParams(data), {method:"GET", 
+			// headers: {
+			// 		"Content-Type": "text/html; charset=utf-8"
+			// 	},
+				credentials: 'include',
+			})
+      let body;
+      try{
+        body = await res.json();
+      }catch(err) {
+        // no-op testing for json
+      }
+      if(!body) {			
+        body = await res.text();
+      }
+			return repositoryCallback(body);
 		},
-		ajaxGet:function(url, data){
+		ajaxPostModel: async function(url, data){
 				throbber();
-				return $.ajax({
-						type:"get",
-						url: url,
-						data:data,
-						beforeSend: function(xhr){
-							 xhr.withCredentials = true;
-						}
-				}).done(repositoryCallback);
-
-		},
-		ajaxPostModel:function(url, data){
-				throbber();
-				return $.ajax({
-						type:"post",
-						url: url,
-						data:data,
-						contentType:  "application/json; charset=utf-8",
-						traditional:true,
-						beforeSend: function(xhr){
-							 xhr.withCredentials = true;
-						}
-				}).done(repositoryCallback);
+			const res = await fetch(url, {
+						method:"POST",
+						body:data,
+						headers: {
+							'Content-Type': "application/json; charset=utf-8",
+						},
+						credentials: 'include',
+			})
+			const json = await  res.json()
+			return repositoryCallback(json);
 		}
 	}
 }());

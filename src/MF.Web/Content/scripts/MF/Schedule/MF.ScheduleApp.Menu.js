@@ -20,7 +20,7 @@ MF.ScheduleApp.Menu = (function(MF, Backbone, $){
 
     var MenuView =  MF.Views.View.extend({
         render:function(){
-            MF.repository.ajaxGet(this.options.url, this.options.data).done($.proxy(this.renderCallback,this));
+            MF.repository.ajaxGet(this.options.url, this.options.data).then($.proxy(this.renderCallback,this));
         },
         renderCallback:function(result){
             if(result.LoggedOut){

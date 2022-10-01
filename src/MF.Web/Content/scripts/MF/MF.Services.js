@@ -9,7 +9,7 @@ MF.loadTemplateAndModel = function(view){
     var d = new $.Deferred();
     $.when(Backbone.Marionette.TemplateCache.get(view.options.route,view.options.templateUrl, view.options.data),
         MF.repository.ajaxGet(view.options.url, view.options.data))
-    .done(function(html,data){
+    .then(function(html,data){
             view.$el.html(html);
             view.rawModel = data[0];
                 d.resolve();

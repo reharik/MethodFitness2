@@ -67,7 +67,7 @@ MF.Views.LoginView = MF.Views.View.extend({
         if(!isValid){return;}
         var data = JSON.stringify(ko.mapping.toJS(this.model));
         var promise = MF.repository.ajaxPostModel(this.model._saveUrl(),data);
-        promise.done($.proxy(this.success,this));
+        promise.then($.proxy(this.success,this));
     },
     success:function(result){
         if(result.Success){

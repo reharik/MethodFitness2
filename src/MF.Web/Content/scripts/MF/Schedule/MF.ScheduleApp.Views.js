@@ -16,7 +16,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		"click .legendHeader": "legendHeaderClick",
 	},
 	render: function () {
-		$.when(MF.loadTemplateAndModel(this)).done(
+		$.when(MF.loadTemplateAndModel(this)).then(
 			$.proxy(this.renderCallback, this)
 		);
 		//       MF.repository.ajaxGet(this.options.url, this.options.data).done($.proxy(this.renderCallback,this));
@@ -111,7 +111,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		};
 		MF.repository
 			.ajaxGet(this.model.CalendarDefinition.EventChangedUrl, data)
-			.done(
+			.then(
 				$.proxy(function (result) {
 					this.changeEventCallback(result, revertFunc);
 				}, this)
@@ -259,7 +259,7 @@ MF.Views.CalendarView = MF.Views.View.extend({
 				.ajaxGet(this.model.CalendarDefinition.DeleteUrl, {
 					EntityId: this.currentEventId,
 				})
-				.done(
+				.then(
 					$.proxy(function (result) {
 						this.ajaxPopupDisplay.close();
 						if (!result.Success) {
@@ -943,7 +943,7 @@ MF.Views.TrainerGridView = MF.Views.View.extend({
 	archiveTrainer: function (id) {
 		MF.repository
 			.ajaxGet(this.options.ArchiveTrainerUrl, { EntityId: id })
-			.done($.proxy(this.successHandler, this));
+			.then($.proxy(this.successHandler, this));
 	},
 	onClose: function () {
 		this.unbindBindings();
@@ -988,7 +988,7 @@ MF.Views.ClientGridView = MF.Views.View.extend({
 	archiveClient: function (id) {
 		MF.repository
 			.ajaxGet(this.options.ArchiveClientUrl, { EntityId: id })
-			.done($.proxy(this.successHandler, this));
+			.then($.proxy(this.successHandler, this));
 	},
 	onClose: function () {
 		MF.vent.unbind(this.options.gridId + ":Redirect", this.showPayGrid, this);

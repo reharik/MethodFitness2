@@ -143,7 +143,7 @@ MF.mixins.formMixin = {
         else{
             data = JSON.stringify(ko.mapping.toJS(this.model,this.mappingOptions));
             var promise = MF.repository.ajaxPostModel(this.model._saveUrl(),data);
-            promise.done($.proxy(this.successHandler,this));
+            promise.then($.proxy(this.successHandler,this));
         }
         this.$el.find("#save").attr("disabled","disabled");
     },
@@ -191,7 +191,7 @@ MF.mixins.displayMixin = {
 MF.mixins.ajaxDisplayMixin = {
     render:function(){
         $.when(MF.loadTemplateAndModel(this))
-            .done($.proxy(this.renderCallback,this));
+            .then($.proxy(this.renderCallback,this));
     },
     renderCallback:function(){
         this.bindModelAndElements();
@@ -204,7 +204,7 @@ MF.mixins.ajaxDisplayMixin = {
 MF.mixins.ajaxFormMixin = {
     render:function(){
         $.when(MF.loadTemplateAndModel(this))
-            .done($.proxy(this.renderCallback,this));
+            .then($.proxy(this.renderCallback,this));
     },
     renderCallback:function(){
         this.bindModelAndElements();
@@ -216,8 +216,8 @@ MF.mixins.ajaxFormMixin = {
 
 MF.mixins.ajaxGridMixin = {
     render:function(){
-        MF.repository.ajaxGet(this.options.url, this.options.data)
-            .done($.proxy(this.renderCallback,this));
+        MF.repository.ajaxGetJSON(this.options.url, this.options.data)
+            .then($.proxy(this.renderCallback,this));
     },
     renderCallback:function(result){
         $(this.el).html($("#gridTemplate").tmpl(result));
@@ -287,7 +287,7 @@ MF.mixins.defaultGridEventsMixin = {
         if (confirm("Are you sure you would like to delete this Item?")) {
             var ids = cc.gridMultiSelect.getCheckedBoxes(this.options.gridId);
             MF.repository.ajaxGet(this.options.deleteMultipleUrl, $.param({ "EntityIds": ids }, true))
-                .done($.proxy(function (result) { this.successHandler(result) }, this));
+                .then($.proxy(function (result) { this.successHandler(result) }, this));
         }
     },
     toggleArchived: function () {
