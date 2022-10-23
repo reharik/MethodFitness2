@@ -236,7 +236,7 @@ MF.Views.TrainerSessionVerificationView = MF.Views.View.extend({
     setupElements:function(){
         if($("#acceptSessionsButton").size()==0){
 //            $(this.el).find(".content-header").append($("#payTrainerSearchTemplate").tmpl());
-            $(this.el).find(".content-header").prepend('<a href="#" id="acceptSessionsButton"><img src="http://localhost:3002/csharp/content/images/thumbs_up.jpg" title="Accept Sessions" class="thumbsImage" /></a><a href="#" id="alertAdminButton"><img src="http://localhost:3002/csharp/content/images/thumbs_down.jpg" title="Email Admin of a problem" class="thumbsImage thumbsLeft" /></a>' );
+            $(this.el).find(".content-header").prepend('<a href="#" id="acceptSessionsButton"><img src="http://proxyv2.methodfit.net/csharp/content/images/thumbs_up.jpg" title="Accept Sessions" class="thumbsImage" /></a><a href="#" id="alertAdminButton"><img src="http://proxyv2.methodfit.net/csharp/content/images/thumbs_down.jpg" title="Email Admin of a problem" class="thumbsImage thumbsLeft" /></a>' );
 //            $("#filterArea").empty();
             $(".title-name",this.el).append("<span class='paymentAmount' data-bind='text:paymentAmount'></span>");
             $("[name='EndDate']",this.$el).datepicker();

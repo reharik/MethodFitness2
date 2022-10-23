@@ -51,8 +51,8 @@ MF.repository= (function(){
 				throbber();
 			
 			const res = await fetch(validUrl(url) +"?"+ new URLSearchParams(data), {method:"GET", 
-			headers: {
-					"Content-Type": "text/html; charset=utf-8"
+				headers: {
+					"Content-Type": "text/html; charset=utf-8".path
 				},
 				credentials: 'include',
 			})

@@ -51,13 +51,14 @@ MF.repository= (function(){
 				credentials: 'include',
 			})
       let body;
+      let temp = await res.text();
       try{
-        body = await res.json();
+        body = JSON.parse(temp);
       }catch(err) {
         // no-op testing for json
       }
       if(!body) {			
-        body = await res.text();
+        body = temp;
       }
 			return repositoryCallback(body);
 		},

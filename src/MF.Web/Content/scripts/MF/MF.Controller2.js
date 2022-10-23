@@ -71,9 +71,6 @@ MF.Controller = (function(MF, Backbone){
            }
        };
 
-      //  MF.addInitializer(function(){
-      //      MF.ScheduleApp.Menu.show();
-      //  });
 
        return Controller;
    })(MF, Backbone);

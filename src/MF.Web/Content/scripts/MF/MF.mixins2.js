@@ -112,7 +112,7 @@ MF.mixins.reportMixin = {
         var isValid = CC.ValidationRunner.runViewModel(this.cid, this.elementsViewmodel,this.errorSelector);
         if(!isValid){return;}
         var url = this.createUrl();
-        window.open(url);
+        window.location.replace(url);
     },
     createUrl:function(data){
     }
@@ -244,7 +244,7 @@ MF.mixins.setupGridMixin = {
                 :this.options.gridOptions={multiselect:false};
         }
         this.options.searchField = this.options.gridDef.SearchField ||this.options.searchField;
-				this.options.gridDef.Url =  `http://localhost:3002/csharp${this.options.gridDef.Url}`;
+				this.options.gridDef.Url =  `http://proxyv2.methodfit.net/csharp${this.options.gridDef.Url}`;
         $("#" + this.options.gridId, this.el).AsGrid(this.options.gridDef, this.options.gridOptions);
         ///////
         $(this.el).gridSearch({onClear:$.proxy(this.removeSearch, this),onSubmit:$.proxy(this.search, this)});
