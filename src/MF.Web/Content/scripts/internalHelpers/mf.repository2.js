@@ -11,7 +11,7 @@
 
 const validUrl = (url) => {
 	return (url || "").startsWith("/")
-		? `http://localhost:3002/csharp${url}`
+		? `http://proxy.methodfit.net/csharp${url}`
 		: url;
 }
 
@@ -51,8 +51,8 @@ MF.repository= (function(){
 				throbber();
 			
 			const res = await fetch(validUrl(url) +"?"+ new URLSearchParams(data), {method:"GET", 
-				headers: {
-					"Content-Type": "text/html; charset=utf-8".path
+			headers: {
+					"Content-Type": "text/html; charset=utf-8"
 				},
 				credentials: 'include',
 			})

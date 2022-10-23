@@ -21,7 +21,7 @@ hr {
 }
 
 #main-header {
-    background: url(var(--apiUrl)header-title.gif)
+	background: url(http://proxy.methodfit.net/csharp/Content/images/header-title.gif)
 				no-repeat 
 				scroll 
 				top 
