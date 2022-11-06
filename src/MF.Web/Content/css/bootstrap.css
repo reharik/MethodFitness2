@@ -204,7 +204,7 @@ textarea {
   }
 }
 .row {
-  margin-left: -5;
+  margin-left: -5px;
   *zoom: 1;
 }
 .row:before,
@@ -219,157 +219,157 @@ textarea {
 [class*="span"] {
   float: left;
   min-height: 1px;
-  margin-left: 5;
+  margin-left: 5px;
 }
 .container,
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 835;
+  width: 835px;
 }
 .span24 {
-  width: 835;
+  width: 835px;
 }
 .span23 {
-  width: 800;
+  width: 800px;
 }
 .span22 {
-  width: 765;
+  width: 765px;
 }
 .span21 {
-  width: 730;
+  width: 730px;
 }
 .span20 {
-  width: 695;
+  width: 695px;
 }
 .span19 {
-  width: 660;
+  width: 660px;
 }
 .span18 {
-  width: 625;
+  width: 625px;
 }
 .span17 {
-  width: 590;
+  width: 590px;
 }
 .span16 {
-  width: 555;
+  width: 555px;
 }
 .span15 {
-  width: 520;
+  width: 520px;
 }
 .span14 {
-  width: 485;
+  width: 485px;
 }
 .span13 {
-  width: 450;
+  width: 450px;
 }
 .span12 {
-  width: 415;
+  width: 415px;
 }
 .span11 {
-  width: 380;
+  width: 380px;
 }
 .span10 {
-  width: 345;
+  width: 345px;
 }
 .span9 {
-  width: 310;
+  width: 310px;
 }
 .span8 {
-  width: 275;
+  width: 275px;
 }
 .span7 {
-  width: 240;
+  width: 240px;
 }
 .span6 {
-  width: 205;
+  width: 205px;
 }
 .span5 {
-  width: 170;
+  width: 170px;
 }
 .span4 {
-  width: 135;
+  width: 135px;
 }
 .span3 {
-  width: 100;
+  width: 100px;
 }
 .span2 {
-  width: 65;
+  width: 65px;
 }
 .span1 {
-  width: 30;
+  width: 30px;
 }
 .offset24 {
-  margin-left: 845;
+  margin-left: 845px;
 }
 .offset23 {
-  margin-left: 810;
+  margin-left: 810px;
 }
 .offset22 {
-  margin-left: 775;
+  margin-left: 775px;
 }
 .offset21 {
-  margin-left: 740;
+  margin-left: 740px;
 }
 .offset20 {
-  margin-left: 705;
+  margin-left: 705px;
 }
 .offset19 {
-  margin-left: 670;
+  margin-left: 670px;
 }
 .offset18 {
-  margin-left: 635;
+  margin-left: 635px;
 }
 .offset17 {
-  margin-left: 600;
+  margin-left: 600px;
 }
 .offset16 {
-  margin-left: 565;
+  margin-left: 565px;
 }
 .offset15 {
-  margin-left: 530;
+  margin-left: 530px;
 }
 .offset14 {
-  margin-left: 495;
+  margin-left: 495px;
 }
 .offset13 {
-  margin-left: 460;
+  margin-left: 460px;
 }
 .offset12 {
-  margin-left: 425;
+  margin-left: 425px;
 }
 .offset11 {
-  margin-left: 390;
+  margin-left: 390px;
 }
 .offset10 {
-  margin-left: 355;
+  margin-left: 355px;
 }
 .offset9 {
-  margin-left: 320;
+  margin-left: 320px;
 }
 .offset8 {
-  margin-left: 285;
+  margin-left: 285px;
 }
 .offset7 {
-  margin-left: 250;
+  margin-left: 250px;
 }
 .offset6 {
-  margin-left: 215;
+  margin-left: 215px;
 }
 .offset5 {
-  margin-left: 180;
+  margin-left: 180px;
 }
 .offset4 {
-  margin-left: 145;
+  margin-left: 145px;
 }
 .offset3 {
-  margin-left: 110;
+  margin-left: 110px;
 }
 .offset2 {
-  margin-left: 75;
+  margin-left: 75px;
 }
 .offset1 {
-  margin-left: 40;
+  margin-left: 40px;
 }
 .row-fluid {
   width: 100%;
@@ -976,79 +976,79 @@ textarea,
   margin-left: 0;
 }
 .controls-row [class*="span"] + [class*="span"] {
-  margin-left: 5;
+  margin-left: 5px;
 }
 input.span24, textarea.span24, .uneditable-input.span24 {
-  width: 821;
+  width: 821px;
 }
 input.span23, textarea.span23, .uneditable-input.span23 {
-  width: 786;
+  width: 786px;
 }
 input.span22, textarea.span22, .uneditable-input.span22 {
-  width: 751;
+  width: 751px;
 }
 input.span21, textarea.span21, .uneditable-input.span21 {
-  width: 716;
+  width: 716px;
 }
 input.span20, textarea.span20, .uneditable-input.span20 {
-  width: 681;
+  width: 681px;
 }
 input.span19, textarea.span19, .uneditable-input.span19 {
-  width: 646;
+  width: 646px;
 }
 input.span18, textarea.span18, .uneditable-input.span18 {
-  width: 611;
+  width: 611px;
 }
 input.span17, textarea.span17, .uneditable-input.span17 {
-  width: 576;
+  width: 576px;
 }
 input.span16, textarea.span16, .uneditable-input.span16 {
-  width: 541;
+  width: 541px;
 }
 input.span15, textarea.span15, .uneditable-input.span15 {
-  width: 506;
+  width: 506px;
 }
 input.span14, textarea.span14, .uneditable-input.span14 {
-  width: 471;
+  width: 471px;
 }
 input.span13, textarea.span13, .uneditable-input.span13 {
-  width: 436;
+  width: 436px;
 }
 input.span12, textarea.span12, .uneditable-input.span12 {
-  width: 401;
+  width: 401px;
 }
 input.span11, textarea.span11, .uneditable-input.span11 {
-  width: 366;
+  width: 366px;
 }
 input.span10, textarea.span10, .uneditable-input.span10 {
-  width: 331;
+  width: 331px;
 }
 input.span9, textarea.span9, .uneditable-input.span9 {
-  width: 296;
+  width: 296px;
 }
 input.span8, textarea.span8, .uneditable-input.span8 {
-  width: 261;
+  width: 261px;
 }
 input.span7, textarea.span7, .uneditable-input.span7 {
-  width: 226;
+  width: 226px;
 }
 input.span6, textarea.span6, .uneditable-input.span6 {
-  width: 191;
+  width: 191px;
 }
 input.span5, textarea.span5, .uneditable-input.span5 {
-  width: 156;
+  width: 156px;
 }
 input.span4, textarea.span4, .uneditable-input.span4 {
-  width: 121;
+  width: 121px;
 }
 input.span3, textarea.span3, .uneditable-input.span3 {
-  width: 86;
+  width: 86px;
 }
 input.span2, textarea.span2, .uneditable-input.span2 {
-  width: 51;
+  width: 51px;
 }
 input.span1, textarea.span1, .uneditable-input.span1 {
-  width: 16;
+  width: 16px;
 }
 .controls-row {
   *zoom: 1;

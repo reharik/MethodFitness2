@@ -16,11 +16,13 @@ const validUrl = (url) => {
 }
 
 MF.repository= (function(){
-	var repositoryCallback = function(result,callback){
-			if(result.LoggedOut){
-					window.location.replace(result.RedirectUrl);
+	var repositoryCallback = async function(response, bodyType){
+			if(response.type==="opaqueredirect"){
+					window.location.replace('/signin');
 					return null;
 			}
+			const result = bodyType === "text" ? await response.text() : await  response.json()
+
 			clearTimeout(MF.throbberTimeout);
 			MF.showThrob=false;
 			$("#ajaxLoading").hide();
@@ -43,8 +45,8 @@ MF.repository= (function(){
 				method: "POST",
 				body: data,
 				credentials: 'include',
+				redirect: 'manual'
 			});
-			const json = await res.json()
 			return repositoryCallback(json);
 	},
 		ajaxGet:async function(url, data){
@@ -55,14 +57,10 @@ MF.repository= (function(){
 					"Content-Type": "text/html; charset=utf-8"
 				},
 				credentials: 'include',
+				redirect: 'manual'
 			})
-      let body;
-			if(res.headers.get("content-type").includes("json")){
-        body = await res.json();
-			} else {
-        body = await res.text();
-			}
-			return repositoryCallback(body);
+			let bodyType = !res?.headers?.get("content-type")?.includes("json") ?"text":"";
+			return repositoryCallback(res, bodyType );
 		},
 		ajaxPostModel: async function(url, data){
 				throbber();
@@ -73,9 +71,9 @@ MF.repository= (function(){
 							'Content-Type': "application/json; charset=utf-8",
 						},
 						credentials: 'include',
+						redirect: 'manual'
 			})
-			const json = await  res.json()
-			return repositoryCallback(json);
+			return repositoryCallback(res);
 		}
 	}
 }());
