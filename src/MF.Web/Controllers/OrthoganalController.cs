@@ -52,6 +52,11 @@ namespace MF.Web.Controllers
                 MenuItems = _menuConfig.Build()
             });
         }
+
+				public CustomJsonResult MainMenuJSON()
+				{
+					return new CustomJsonResult(_menuConfig.Build());
+				}
     }
 
     public class MenuViewModel
