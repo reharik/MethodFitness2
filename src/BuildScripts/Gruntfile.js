@@ -127,7 +127,7 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: `${grunt.option('buildFolder') }/MethodFitness_PROD_${new Date().getFullYear()}_${new Date().getMonth()}_${new Date().getDate()}-${new Date().getHours()}_${new Date().getMinutes()}.zip`
+                    archive: `${grunt.option('buildFolder') }/MethodFitness_PROD_${new Date().getFullYear()}_${new Date().getMonth()+1}_${new Date().getDate()}-${new Date().getHours()}_${new Date().getMinutes()}.zip`
                 },
                 expand: true,
                 cwd: grunt.option('buildFolder'),
