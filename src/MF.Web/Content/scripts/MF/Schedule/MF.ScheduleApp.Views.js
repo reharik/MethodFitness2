@@ -284,6 +284,10 @@ MF.Views.CalendarView = MF.Views.View.extend({
 		let model = this.model;
 		model.location = this.viewModel.Location();
 
+		const getUTCDateTime = (date) => {
+			const isoString = date.toISOString();
+			return new Date(isoString.substring(0,isoString.indexOf('T')))
+		}
 		var ids = "";
 		$(".legendLabel").each(function (i, item) {
 			if ($(item).hasClass("showing")) {
@@ -298,12 +302,14 @@ MF.Views.CalendarView = MF.Views.View.extend({
 
 		let url = model.CalendarDefinition.Url;
 		let source = function (start, end, callback) {
+			let s = getUTCDateTime(start);
+			let e = getUTCDateTime(end);
 			MF.repository
 				.ajaxGet(url, {
 					Loc: model.location,
 					TrainerIds: ids,
-					start: ~~(start.getTime() / 1000),
-					end: ~~(end.getTime() / 1000),
+					start: ~~(s.getTime() / 1000),
+					end: ~~(e.getTime() / 1000),
 				})
 				.then((response) => {
 					model.blockedSlotsByLocation = MF.blockedTimes.calculate(response.BlockedSlotsByLocation);
