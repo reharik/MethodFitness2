@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     });
 
     grunt.option( 'PROD',{
-       connection_String:'Server=localhost;Database=MethodFitness_PROD;User ID=methodFitness;Password=m3th0df1t;Connection Timeout=30;',
+       connection_String:'Server=localhost;Database=MethodFitness_PROD;User ID=methodFitness;Password=M3th0df1t;Connection Timeout=30;',
        host_Name:'http://methodfit.net',
         AdminEmail:'methodfit@methodfit.com',
         environment:grunt.option('target'),
@@ -127,7 +127,7 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: `${grunt.option('buildFolder') }/MethodFitness_PROD_${new Date().getFullYear()}_${new Date().getMonth()}_${new Date().getDate()}-${new Date().getHours()}_${new Date().getMinutes()}.zip`
+                    archive: `${grunt.option('buildFolder') }/MethodFitness_PROD.zip`
                 },
                 expand: true,
                 cwd: grunt.option('buildFolder'),
