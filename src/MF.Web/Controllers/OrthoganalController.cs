@@ -5,6 +5,7 @@ using CC.Core.Core.Html.Menu;
 using MF.Core;
 using MF.Core.Domain;
 using MF.Core.Services;
+using MF.Web.Config;
 using MF.Web.Menus;
 using StructureMap;
 
@@ -30,17 +31,17 @@ namespace MF.Web.Controllers
 
         public PartialViewResult MethodFitnessHeader()
         {
-            User user=null;
+            User user = null;
             if (User.Identity.IsAuthenticated)
             {
                 user = _repository.Find<User>(_sessionContext.GetUserId());
             }
             HeaderViewModel model = new HeaderViewModel
-                                        {
-                                            User = user,
-                                            LoggedIn = User.Identity.IsAuthenticated,
-                                            NotificationSuccessFunction = "mf.popupCrud.controller.success"
-                                        };
+            {
+                User = user,
+                LoggedIn = User.Identity.IsAuthenticated,
+                NotificationSuccessFunction = "mf.popupCrud.controller.success"
+            };
             return PartialView(model);
         }
 
@@ -53,10 +54,10 @@ namespace MF.Web.Controllers
             });
         }
 
-				public CustomJsonResult MainMenuJSON()
-				{
-					return new CustomJsonResult(_menuConfig.Build());
-				}
+        public CustomJsonResult MainMenuJSON()
+        {
+            return new CustomJsonResult(_menuConfig.Build());
+        }
     }
 
     public class MenuViewModel
