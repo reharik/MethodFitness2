@@ -11,7 +11,7 @@
 
 const validUrl = (url) => {
 	return (url || "").startsWith("/")
-		? `http://proxy.methodfit.net/csharp${url}`
+		? `http://qa.proxy.methodfit.net/csharp${url}`
 		: url;
 }
 

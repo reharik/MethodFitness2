@@ -1,5 +1,5 @@
 ﻿  /*
-	http://proxy.methodfit.net/csharp/Content/images/
+	http://qa.proxy.methodfit.net/csharp/Content/images/
   http://localhost:3002/csharp/Content/images/
 */
 
@@ -38,33 +38,33 @@ div.right {
     padding-bottom: 5px;
  }
  button.save {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/button-save-bg.png") repeat-x scroll 0 0 #CCCCCC;
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/button-save-bg.png") repeat-x scroll 0 0 #CCCCCC;
     border: 1px solid #B7D6DE;
     height: 27px;
     width: 80px;
     color: #437182;
  }
  button.cancel {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/button-cancel-bg.png") repeat-x scroll 0 0 #CCCCCC;
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/button-cancel-bg.png") repeat-x scroll 0 0 #CCCCCC;
     border: 1px solid #dfdfdf;
     height: 27px;
     width: 80px;
     color: #8F8F8F;
  }
  button.save:hover {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/button-save-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/button-save-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
  }
 button.cancel:hover {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/button-cancel-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/button-cancel-bg-hover.png") repeat-x scroll 0 0 #CCCCCC;
 }
  button.save:active {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/button-save-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/button-save-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
     -webkit-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
     -moz-box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
     box-shadow: inset 2px 2px 12px 2px rgba(66, 66, 66, 0.3);
 }
  button.cancel:active {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/button-cancel-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/button-cancel-bg-active.png") repeat-x scroll 0 0 #CCCCCC;
  }
 
 
@@ -92,7 +92,7 @@ button.cancel:hover {
 	width: 30px;
 	left: 50%;
 	top: 50%;
-	background: url(http://proxy.methodfit.net/csharp/Content/images/ajax-loader.gif);
+	background: url(http://qa.proxy.methodfit.net/csharp/Content/images/ajax-loader.gif);
 }
 .ui-jqgrid .loading {
 	position: absolute;
@@ -100,7 +100,7 @@ button.cancel:hover {
 	width: 30px;
 	left: 50%;
 	top: 50%;
-	background: url(http://proxy.methodfit.net/csharp/Content/images/ajax-loader.gif);
+	background: url(http://qa.proxy.methodfit.net/csharp/Content/images/ajax-loader.gif);
 }
 /*********** Overrides to make menu wider ********************/
 
@@ -206,7 +206,7 @@ button.cancel:hover {
     text-decoration: underline;
 }
 .gridRowStrikeThrough{
-    background: url(http://proxy.methodfit.net/csharp/Content/images/strike.png) center center !important;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/strike.png) center center !important;
 }
 
 .gridRowRedFont{

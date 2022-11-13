@@ -26,7 +26,7 @@ $.fn.gridSearch = function(opts){
         var $searchElement = $context.find(context.options.searchSelector);
 
         this.render = function() {
-            $searchElement.parent().append('<img class="clear-search" src="http://proxy.methodfit.net/csharp/content/images/clear-search.png">');
+            $searchElement.parent().append('<img class="clear-search" src="http://qa.proxy.methodfit.net/csharp/content/images/clear-search.png">');
             button = $searchElement.parent().find('img.clear-search');
             if ($.trim($searchElement.val())=='') {
                 $searchElement.val(context.options.default_empty_message);

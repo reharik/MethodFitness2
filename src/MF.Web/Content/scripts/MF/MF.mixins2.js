@@ -244,7 +244,7 @@ MF.mixins.setupGridMixin = {
                 :this.options.gridOptions={multiselect:false};
         }
         this.options.searchField = this.options.gridDef.SearchField ||this.options.searchField;
-				this.options.gridDef.Url =  `http://proxy.methodfit.net/csharp${this.options.gridDef.Url}`;
+				this.options.gridDef.Url =  `http://qa.proxy.methodfit.net/csharp${this.options.gridDef.Url}`;
         $("#" + this.options.gridId, this.el).AsGrid(this.options.gridDef, this.options.gridOptions);
         ///////
         $(this.el).gridSearch({onClear:$.proxy(this.removeSearch, this),onSubmit:$.proxy(this.search, this)});

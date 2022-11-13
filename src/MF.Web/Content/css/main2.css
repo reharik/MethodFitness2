@@ -1,5 +1,5 @@
   /*
-	http://proxy.methodfit.net/csharp/Content/images/
+	http://qa.proxy.methodfit.net/csharp/Content/images/
   http://localhost:3002/csharp/Content/images/
 */
 	* {margin:0; padding:0; }
@@ -21,7 +21,7 @@ hr {
 }
 
 #main-header {
-	background: url(http://proxy.methodfit.net/csharp/Content/images/header-title.gif)
+	background: url(http://qa.proxy.methodfit.net/csharp/Content/images/header-title.gif)
 				no-repeat 
 				scroll 
 				top 
@@ -84,7 +84,7 @@ span#login-links a.active {
 }
 
 #main-body {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/main-content.png) repeat-x scroll top left
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/main-content.png) repeat-x scroll top left
         #f2f2f2;
     border-top: 1px solid #e5e5e5;
     margin: 0;
@@ -143,12 +143,12 @@ span#login-links a.active {
 .content-outer .content-footer {
     height: 17px;
     width: 100%;
-    background: url(http://proxy.methodfit.net/csharp/Content/images/footer-shadow-left.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/footer-shadow-left.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-footer span {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/footer-shadow-right.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/footer-shadow-right.png) no-repeat scroll 0 0
         transparent;
     width: 180px;
     height: 17px;
@@ -159,13 +159,13 @@ span#login-links a.active {
 .content-outer .content-header {
     width: 100%;
     height: 41px;
-    background: url(http://proxy.methodfit.net/csharp/Content/images/content-header-silver.png) repeat-x scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/content-header-silver.png) repeat-x scroll 0 0
         transparent;
     position: relative;
 }
 
 .content-outer .content-header .search {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/search-bg.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/search-bg.png) no-repeat scroll 0 0
         transparent;
     width: 178px;
     height: 25px;
@@ -189,7 +189,7 @@ span#login-links a.active {
 }
 
 .content-outer .content-header .close {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/close-x.png) no-repeat scroll 0 0 transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/close-x.png) no-repeat scroll 0 0 transparent;
     width: 14px;
     height: 16px;
     position: absolute;
@@ -232,129 +232,129 @@ span#login-links a.active {
 }
 
 .content-outer .content-header button.return{
-    background: url(http://proxy.methodfit.net/csharp/Content/images/return_button.jpg) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/return_button.jpg) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.dollar_sign{
-    background: url(http://proxy.methodfit.net/csharp/Content/images/dollar-sign.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/dollar-sign.png) no-repeat scroll 0 0
         transparent;
 }
 .content-outer .content-header button.filter{
-    background: url(http://proxy.methodfit.net/csharp/Content/images/filter.gif) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/filter.gif) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.pay_trainer {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/pay_trainer.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/pay_trainer.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.trainer_payment_history{
-    background: url(http://proxy.methodfit.net/csharp/Content/images/trainer_payment_history.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/trainer_payment_history.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.client_payment {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/client_payment.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/client_payment.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.delete {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-delete.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-delete.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.new {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-plus.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-plus.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.print {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-print.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-print.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.arrow {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-arrow.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-arrow.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.mail {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-mail.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-mail.png) no-repeat scroll 0 0
         transparent;
 }
 .content-outer .content-header button.download {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-down.png) no-repeat scroll 0 0
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-down.png) no-repeat scroll 0 0
         transparent;
 }
 
 .content-outer .content-header button.img {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-img.png) no-repeat scroll
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-img.png) no-repeat scroll
         0 0 transparent;
 }
 /******  HOVER STATE  ******/
 
 .content-outer .content-header button.delete:hover {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-delete.png) no-repeat scroll 0 -23px
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-delete.png) no-repeat scroll 0 -23px
         transparent;
 }
 
 .content-outer .content-header button.new:hover {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-plus.png) no-repeat scroll 0 -23px
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-plus.png) no-repeat scroll 0 -23px
         transparent;
 }
 
 .content-outer .content-header button.print:hover {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-print.png) no-repeat scroll 0 -23px
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-print.png) no-repeat scroll 0 -23px
         transparent;
 }
 
 .content-outer .content-header button.arrow:hover {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-arrow.png) no-repeat scroll 0 -23px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-arrow.png) no-repeat scroll 0 -23px transparent;
 }
 
 .content-outer .content-header button.mail:hover {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-mail.png) no-repeat scroll 0 -23px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-mail.png) no-repeat scroll 0 -23px transparent;
 }
 
 .content-outer .content-header button.download:hover {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-down.png) no-repeat scroll 0 -23px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-down.png) no-repeat scroll 0 -23px transparent;
 }
 
 .content-outer .content-header button.img:hover {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-img.png) no-repeat scroll 0 -23px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-img.png) no-repeat scroll 0 -23px transparent;
 }
 
 .content-outer .content-header button.delete:active {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-delete.png) no-repeat scroll 0 -46px
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-delete.png) no-repeat scroll 0 -46px
         transparent;
 }
 
 .content-outer .content-header button.new:active {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-plus.png) no-repeat scroll 0 -46px
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-plus.png) no-repeat scroll 0 -46px
         transparent;
 }
 
 .content-outer .content-header button.print:active {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-print.png) no-repeat scroll 0 -46px
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-print.png) no-repeat scroll 0 -46px
         transparent;
 }
 
 .content-outer .content-header button.arrow:active {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-arrow.png) no-repeat scroll 0 -46px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-arrow.png) no-repeat scroll 0 -46px transparent;
 }
 
 .content-outer .content-header button.mail:active {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-mail.png) no-repeat scroll 0 -46px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-mail.png) no-repeat scroll 0 -46px transparent;
 }
 
 .content-outer .content-header button.download:active {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-down.png) no-repeat scroll 0 -46px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-down.png) no-repeat scroll 0 -46px transparent;
 }
 
 .content-outer .content-header button.img:active {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-img.png) no-repeat scroll	0 -46px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-img.png) no-repeat scroll	0 -46px transparent;
 }
 
 
@@ -411,7 +411,7 @@ div.form-scroll-inner {
 
 /*******   SIGN-IN PAGE   *******/
 body#signin {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/bg-signin.png") repeat scroll 0 0 #F6F6F6;
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/bg-signin.png") repeat scroll 0 0 #F6F6F6;
     height: 100%;
     width: 100%;
     color: #666;
@@ -436,7 +436,7 @@ body#signin {
 }
 
 #signin .content-header {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/banner-short.jpg") no-repeat scroll 0 0
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/banner-short.jpg") no-repeat scroll 0 0
     #8eb9ce;
     height: 73px;
 }
@@ -489,7 +489,7 @@ div.ui-dialog {
 }
 
 .ui-draggable .ui-dialog-titlebar {
-    background: url("http://proxy.methodfit.net/csharp/Content/images/bg-header-dialog.png") repeat-x scroll 0 0
+    background: url("http://qa.proxy.methodfit.net/csharp/Content/images/bg-header-dialog.png") repeat-x scroll 0 0
         transparent;
     height: 38px;
     padding: 0;
@@ -508,7 +508,7 @@ div.ui-dialog {
 }
 
 /*.ui-widget-header .ui-icon {*/
-    /*background: url("http://proxy.methodfit.net/csharp/Content/images/close-dialog.png");*/
+    /*background: url("http://qa.proxy.methodfit.net/csharp/Content/images/close-dialog.png");*/
 /*}*/
 
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: none; }
@@ -599,7 +599,7 @@ div.ui-dialog {
 }
 
 .ui-th-ltr,.ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
-    background: url(http://proxy.methodfit.net/csharp/Content/images/header-silver.png) repeat-x scroll 0 0 #eeeeee;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/header-silver.png) repeat-x scroll 0 0 #eeeeee;
 }
 
 .ui-jqgrid .ui-jqgrid-htable th.is-sorted {
@@ -689,7 +689,7 @@ div.ui-dialog {
 .ui-jqgrid .ui-jqgrid-htable th div span.camera-grid-header {
     width:29px;
     height: 20px;
-    background: url(http://proxy.methodfit.net/csharp/Content/images/icon-header-img.png) no-repeat scroll 0 -2px transparent;
+    background: url(http://qa.proxy.methodfit.net/csharp/Content/images/icon-header-img.png) no-repeat scroll 0 -2px transparent;
     display:block;
 }
 
