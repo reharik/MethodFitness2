@@ -132,8 +132,8 @@ namespace MF.Web.Areas.Billing.Controllers
                 endDate = endDate.AddDays(-1 * diff).Date;
             }
             var trainerSessionDtos = _repository.Query<TrainerSessionDto>(
-                    x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate && !x.TrainerVerified);
-
+							// adding !x.TrainerPaid because A pays inarrears, when the client pays up with out requiring new verification sometimes
+                    x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate && !x.TrainerVerified && !x.TrainerPaid);
             var items = _dynamicExpressionQuery.PerformQuery(trainerSessionDtos, input.filters);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, input.User);
             return new CustomJsonResult(gridItemsViewModel);
