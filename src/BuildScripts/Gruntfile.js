@@ -127,7 +127,7 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: `${grunt.option('buildFolder') }/MethodFitness_PROD.zip`
+                    archive: `${grunt.option('buildFolder') }/csharpMethodFitness.zip`
                 },
                 expand: true,
                 cwd: grunt.option('buildFolder'),

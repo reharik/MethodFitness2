@@ -24,7 +24,8 @@
     "grunt-xunit-runner": "~0.1.0"
   },
   "scripts": {
-    "build": "grunt deploy --target PROD --buildConfig Release -v"
+    "build": "grunt deploy --target PROD --buildConfig Release -v;",
+    "trans": "cp ../build/csharpMethodFitness.zip /z/csharpMethodFitness.zip"
   },
   "author": "",
   "license": "BSD-2-Clause"
