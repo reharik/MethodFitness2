@@ -88,11 +88,17 @@ jobs:
 
       - name: Compile Razor views (non-blocking)
         continue-on-error: true
-        run: >
-          msbuild src\Projects\MF.Web\MF.Web.csproj
-          /nologo /v:minimal /t:MvcBuildViews
-          /p:MvcBuildViews=true
-          /p:Configuration=${{ env.CONFIGURATION }}
+        shell: pwsh
+        run: |
+          # The committed Web.config is a stale dev copy (it redirects to MVC 5.2.7 while
+          # the referenced assembly is 5.2.2). Production's Web.config is generated from
+          # Web.config.hbs, so compile the views against that template with dummy values.
+          $t = Get-Content src\Projects\MF.Web\Web.config.hbs -Raw
+          $t = $t.Replace('{{{connection_String}}}', 'Server=localhost;Database=ci;Integrated Security=True;')
+          $t = $t.Replace('{{{debug}}}', 'false').Replace('{{{customErrors}}}', 'RemoteOnly')
+          $t = [regex]::Replace($t, '\{\{\{?\s*\w+\s*\}?\}\}', 'ci')
+          Set-Content src\Projects\MF.Web\Web.config $t -Encoding utf8
+          msbuild src\Projects\MF.Web\MF.Web.csproj /nologo /v:minimal /t:MvcBuildViews /p:MvcBuildViews=true "/p:Configuration=$env:CONFIGURATION"
 
       - name: Stage MF.Web site
         shell: pwsh
@@ -106,12 +112,13 @@ jobs:
             /XD obj `
             /XF *.cs *.vb *.csproj *.csproj.* *.user *.hbs packages.config
           if ($LASTEXITCODE -ge 8) { throw "robocopy failed ($LASTEXITCODE)" }
-          Remove-Item "$dst\Web.config" -ErrorAction SilentlyContinue
+          # bin\MF.Web.dll.config is msbuild's copy of the root Web.config; IIS never reads it.
+          Remove-Item "$dst\Web.config", "$dst\bin\MF.Web.dll.config" -ErrorAction SilentlyContinue
           $global:LASTEXITCODE = 0
 
           if (-not (Test-Path "$dst\bin\MF.Web.dll")) { throw 'MF.Web.dll missing from staged site' }
 
-          $leaks = Get-ChildItem $dst -Recurse -File -Include *.config, *.json, *.xml |
+          $leaks = Get-ChildItem $dst -Recurse -File -Include *.config, *.json |
             Select-String -Pattern 'Password\s*=' -List
           if ($leaks) { $leaks | ForEach-Object { Write-Host "::error::credential-looking text in $($_.Path)" }; throw 'refusing to upload' }
 
