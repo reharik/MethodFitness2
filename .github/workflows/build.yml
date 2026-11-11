@@ -98,10 +98,14 @@ jobs:
           $t = $t.Replace('{{{debug}}}', 'false').Replace('{{{customErrors}}}', 'RemoteOnly')
           $t = [regex]::Replace($t, '\{\{\{?\s*\w+\s*\}?\}\}', 'ci')
           Set-Content src\Projects\MF.Web\Web.config $t -Encoding utf8
-          # Two views are orphaned (their controllers and view models no longer exist).
-          # The compiler stops at the first error, which would hide every other view, so
-          # set them aside for the check and put them back so the artifact is unchanged.
-          $orphans = 'Areas\Reporting\Views\Manager\Display.cshtml', 'Views\Permissions\ShowPermissions.cshtml'
+          # These views are dead: no controller renders them and they reference types or
+          # namespaces that no longer exist. The compiler stops at the first error, which
+          # would hide every other view, so set them aside for the check and put them
+          # back afterwards so the artifact is unchanged.
+          $orphans = 'Areas\Reporting\Views\Manager\Display.cshtml',
+                     'Views\Permissions\ShowPermissions.cshtml',
+                     'Views\TrainerList\ItemList.cshtml',
+                     'Views\UserProfile\UserProfile.cshtml'
           $web = 'src\Projects\MF.Web'
           $i = 0
           foreach ($o in $orphans) { Move-Item "$web\$o" "$env:RUNNER_TEMP\orphan$i.cshtml"; $i++ }
