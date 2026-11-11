@@ -98,16 +98,19 @@ jobs:
           $t = $t.Replace('{{{debug}}}', 'false').Replace('{{{customErrors}}}', 'RemoteOnly')
           $t = [regex]::Replace($t, '\{\{\{?\s*\w+\s*\}?\}\}', 'ci')
           Set-Content src\Projects\MF.Web\Web.config $t -Encoding utf8
-          # Views\Manager\Display.cshtml is orphaned (its controller and view model no
-          # longer exist) and stops the compiler at the first error, hiding every other
-          # view. Set it aside for the check and put it back so the artifact is unchanged.
-          $orphan = 'src\Projects\MF.Web\Areas\Reporting\Views\Manager\Display.cshtml'
-          Move-Item $orphan "$env:RUNNER_TEMP\Display.cshtml"
+          # Two views are orphaned (their controllers and view models no longer exist).
+          # The compiler stops at the first error, which would hide every other view, so
+          # set them aside for the check and put them back so the artifact is unchanged.
+          $orphans = 'Areas\Reporting\Views\Manager\Display.cshtml', 'Views\Permissions\ShowPermissions.cshtml'
+          $web = 'src\Projects\MF.Web'
+          $i = 0
+          foreach ($o in $orphans) { Move-Item "$web\$o" "$env:RUNNER_TEMP\orphan$i.cshtml"; $i++ }
           try {
-            msbuild src\Projects\MF.Web\MF.Web.csproj /nologo /v:minimal /t:MvcBuildViews /p:MvcBuildViews=true "/p:Configuration=$env:CONFIGURATION"
+            msbuild "$web\MF.Web.csproj" /nologo /v:minimal /t:MvcBuildViews /p:MvcBuildViews=true "/p:Configuration=$env:CONFIGURATION"
             $code = $LASTEXITCODE
           } finally {
-            Move-Item "$env:RUNNER_TEMP\Display.cshtml" $orphan
+            $i = 0
+            foreach ($o in $orphans) { Move-Item "$env:RUNNER_TEMP\orphan$i.cshtml" "$web\$o"; $i++ }
           }
           exit $code
 
