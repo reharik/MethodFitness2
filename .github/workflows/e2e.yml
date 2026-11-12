@@ -11,6 +11,7 @@ on:
     branches:
       - production
       - 'e2e/**'
+      - 'feature/**'
     paths:
       - 'tests/e2e/**'
       - '.github/workflows/e2e.yml'

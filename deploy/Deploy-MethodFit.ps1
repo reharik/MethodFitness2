@@ -13,6 +13,7 @@
 
 .EXAMPLE
   .\Deploy-MethodFit.ps1 -Target QA
+  .\Deploy-MethodFit.ps1 -Target QA -Build qa-feature-session-completion   # a branch's build
   .\Deploy-MethodFit.ps1 -Target PROD -Compare     # show differences, change nothing
   .\Deploy-MethodFit.ps1 -Target PROD
 #>
@@ -21,7 +22,12 @@ param(
     [ValidateSet('QA', 'PROD')]
     [string]$Target,
 
-    [string]$Url = 'https://github.com/reharik/MethodFitness2/releases/download/qa-latest/MF.Web.zip',
+    # Which published build to deploy. "qa-latest" is the production branch's newest
+    # build; a branch build is published as "qa-<branch>", e.g. qa-feature-session-completion.
+    [string]$Build = 'qa-latest',
+
+    # Overrides -Build with a full download address.
+    [string]$Url,
 
     # List what differs between the live site and the build, then stop.
     [switch]$Compare,
@@ -31,6 +37,14 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
+
+if (-not $Url) {
+    if ($Build -notmatch '^[A-Za-z0-9._-]+$') { throw "Unexpected build name: $Build" }
+    $Url = "https://github.com/reharik/MethodFitness2/releases/download/$Build/MF.Web.zip"
+}
+if ($Target -eq 'PROD' -and $Build -ne 'qa-latest' -and -not $Compare) {
+    Write-Warning "Deploying a branch build ($Build) to PROD, not the production branch's build."
+}
 
 $root    = 'C:\MethodFitness'
 $site    = Join-Path $root "WebSites\$Target\csharpMethodFit"

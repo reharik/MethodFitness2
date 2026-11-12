@@ -225,6 +225,7 @@
     <Compile Include="Services\ISessionContext.cs" />
     <Compile Include="Services\ISecurityDataService.cs" />
     <Compile Include="Services\SessionManager.cs" />
+    <Compile Include="Services\SessionCompletionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
