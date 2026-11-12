@@ -66,7 +66,7 @@ export interface SaveResult { Success: boolean; Message?: string; Errors?: { Err
  * The app answers every save and delete with { Success, Message, Errors },
  * though not always with a JSON content type, so the body is what is checked.
  */
-export async function submitAndRead(page: Page, action: () => Promise<void>, method: 'POST' | 'GET' = 'POST'): Promise<SaveResult> {
+export async function submitAndRead(page: Page, action: () => Promise<void>, method: 'POST' | 'GET' = 'POST', timeout = 30_000): Promise<SaveResult> {
   const origin = new URL(page.url()).origin;
   let verdict: SaveResult | undefined;
   const seen: string[] = [];
@@ -82,7 +82,7 @@ export async function submitAndRead(page: Page, action: () => Promise<void>, met
     return false;
   };
   try {
-    await Promise.all([page.waitForResponse(isVerdict, { timeout: 30_000 }), action()]);
+    await Promise.all([page.waitForResponse(isVerdict, { timeout }), action()]);
   } catch (e) {
     // Paths only, no bodies: enough to see what the app did instead of answering.
     throw new Error(`the app gave no ${method} verdict. Requests it made meanwhile: ${seen.slice(-8).join(' ; ') || 'none'}`);
@@ -120,4 +120,15 @@ export async function searchList(page: Page, screen: string, text: string): Prom
   await search.fill(text);
   await search.press('Enter');
   await gridReady(page, screen);
+}
+
+/** The text of one cell in a list row, found by its column heading. */
+export async function cellUnder(page: Page, screen: string, rowText: string, heading: string): Promise<string | undefined> {
+  return page.locator(`#${screen}`).evaluate((root, { rowText, heading }) => {
+    const heads = Array.from(root.querySelectorAll('.ui-jqgrid-htable th')).map((th) => (th.textContent ?? '').trim());
+    const column = heads.indexOf(heading);
+    if (column < 0) return undefined;
+    const row = Array.from(root.querySelectorAll('.ui-jqgrid-btable tr.jqgrow')).find((r) => (r.textContent ?? '').includes(rowText));
+    return row ? (row.querySelectorAll('td')[column]?.textContent ?? '').trim() : undefined;
+  }, { rowText, heading });
 }
