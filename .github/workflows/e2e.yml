@@ -1,0 +1,56 @@
+name: e2e
+
+# Browser tests against the QA site (http://qa.reports.methodfit.net).
+# QA must be running on the server:  Start-WebAppPool MethodFitness_QA
+#
+# Nothing is uploaded from these runs. QA's database is a copy of production,
+# so traces and screenshots would contain real names.
+
+on:
+  push:
+    branches:
+      - production
+      - 'e2e/**'
+    paths:
+      - 'tests/e2e/**'
+      - '.github/workflows/e2e.yml'
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'test (the suite) or recon (print screen outlines)'
+        default: test
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-qa        # one run at a time against the small QA box
+  cancel-in-progress: false
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: tests/e2e
+    env:
+      E2E_USER: ${{ secrets.E2E_USER }}
+      E2E_PASS: ${{ secrets.E2E_PASS }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tests/e2e/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Check the QA site answers
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 http://qa.reports.methodfit.net/ || true)
+          echo "QA answered HTTP $code"
+          case "$code" in 2*|3*) ;; *) echo "::error::QA is not reachable (HTTP $code). Start it on the server with: Start-WebAppPool MethodFitness_QA"; exit 1;; esac
+      - name: Run
+        run: |
+          if [ "${{ github.event.inputs.suite }}" = "recon" ] || [ -f .run-recon ]; then npm run recon; else npm test; fi
