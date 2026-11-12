@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write   # the last step publishes the build as a prerelease
 
 env:
   PACKAGES_DIR: src\packages
@@ -132,3 +132,23 @@ jobs:
           path: artifacts/MF.Web
           if-no-files-found: error
           retention-days: 14
+
+      # A rolling prerelease gives the server a plain download URL for the latest
+      # build, so deploying does not need a browser or a GitHub login on the box:
+      # https://github.com/<owner>/<repo>/releases/download/qa-latest/MF.Web.zip
+      - name: Publish build as the qa-latest prerelease
+        if: github.event_name == 'push'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          7z a -tzip MF.Web.zip .\artifacts\MF.Web\* | Select-Object -Last 3
+          if ($LASTEXITCODE -ne 0) { throw '7z failed' }
+          gh release delete qa-latest --yes --cleanup-tag 2>$null
+          $global:LASTEXITCODE = 0
+          $short = $env:GITHUB_SHA.Substring(0, 7)
+          gh release create qa-latest MF.Web.zip --prerelease --target $env:GITHUB_SHA `
+            --title "QA build $short ($env:GITHUB_REF_NAME)" `
+            --notes "MF.Web site built from $env:GITHUB_SHA on .NET Framework 4.8. Does not include the root Web.config."
+          if ($LASTEXITCODE -ne 0) { throw 'gh release create failed' }
+
