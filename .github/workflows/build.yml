@@ -196,8 +196,13 @@ jobs:
           Run "create table MF_Src.dbo.Marker (Name varchar(20)); insert MF_Src.dbo.Marker values ('from source')"
           Run 'create table MF_Dst.dbo.OldStuff (Id int)'
 
-          # No -BackupDir here: the script has to find the server's default backup folder itself.
-          $out = .\deploy\Refresh-QaDatabase.ps1 -Server $srv -Source MF_Src -Target MF_Dst *>&1 | Out-String
+          # A full SQL Server reports a default backup folder and the script finds it itself;
+          # LocalDB may not have one, in which case the folder is passed in.
+          $default = Scalar "select serverproperty('InstanceDefaultBackupPath')"
+          Write-Host "default backup folder reported by this server: '$default'"
+          $extra = @{}
+          if ($default -is [DBNull] -or -not $default) { $extra.BackupDir = $env:RUNNER_TEMP }
+          $out = .\deploy\Refresh-QaDatabase.ps1 -Server $srv -Source MF_Src -Target MF_Dst @extra *>&1 | Out-String
           Write-Host $out
           if ($out -notmatch 'ONLINE, MULTI_USER') { throw 'the script did not report the target state' }
 
