@@ -179,3 +179,32 @@ jobs:
           if (Test-Path "$site\app_offline.htm") { throw 'app_offline.htm was left behind' }
           if (-not (Get-ChildItem C:\MethodFitness\Backups -Directory -Filter 'QA_*')) { throw 'no backup was made' }
           Write-Host 'deploy script OK'
+
+      # Exercises the QA database refresh script against LocalDB with two scratch databases.
+      - name: Smoke-test the QA database refresh script
+        if: github.event_name == 'push'
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          sqllocaldb start MSSQLLocalDB | Out-Null
+          $srv = '(localdb)\MSSQLLocalDB'
+          $c = New-Object System.Data.SqlClient.SqlConnection "Server=$srv;Database=master;Integrated Security=True"
+          $c.Open()
+          function Run($sql) { $q = $c.CreateCommand(); $q.CommandText = $sql; [void]$q.ExecuteNonQuery() }
+          function Scalar($sql) { $q = $c.CreateCommand(); $q.CommandText = $sql; $q.ExecuteScalar() }
+          Run 'create database MF_Src'; Run 'create database MF_Dst'
+          Run "create table MF_Src.dbo.Marker (Name varchar(20)); insert MF_Src.dbo.Marker values ('from source')"
+          Run 'create table MF_Dst.dbo.OldStuff (Id int)'
+
+          .\deploy\Refresh-QaDatabase.ps1 -Server $srv -Source MF_Src -Target MF_Dst -BackupDir $env:RUNNER_TEMP
+
+          if ((Scalar 'select Name from MF_Dst.dbo.Marker') -ne 'from source') { throw 'target does not contain the source data' }
+          if ((Scalar "select object_id('MF_Dst.dbo.OldStuff')") -isnot [DBNull]) { throw 'target still has its old contents' }
+          if ((Scalar 'select count(*) from MF_Src.dbo.Marker') -ne 1) { throw 'source was changed' }
+          if ((Scalar "select user_access_desc from sys.databases where name = 'MF_Dst'") -ne 'MULTI_USER') { throw 'target left in single-user mode' }
+
+          $refused = $false
+          try { .\deploy\Refresh-QaDatabase.ps1 -Server $srv -Source MF_Src -Target MethodFitness_PROD -BackupDir $env:RUNNER_TEMP } catch { $refused = $true }
+          if (-not $refused) { throw 'the script agreed to overwrite a PROD database' }
+          $c.Close()
+          Write-Host 'refresh script OK'
