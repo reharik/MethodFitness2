@@ -35,13 +35,22 @@ export async function outline(page: Page, scope = 'body'): Promise<string> {
       lines.push(`  ${sel(el)} name=${f.name || '-'} type=${f.type || '-'} label="${clip(label?.textContent)}"`);
     });
 
-    lines.push('-- buttons and links');
-    root.querySelectorAll('button, a, input[type=button], input[type=submit], [role=button]').forEach((el) => {
+    // Button captions are interface text. Link text is only printed inside the
+    // menu: elsewhere a link can be a person's name (for example the client
+    // tokens on a trainer's page), so only its selector and length are shown.
+    lines.push('-- buttons');
+    root.querySelectorAll('button, input[type=button], input[type=submit]').forEach((el) => {
       if (el.closest(dataZones) || !visible(el)) return;
-      const a = el as HTMLAnchorElement;
-      const href = a.getAttribute && a.getAttribute('href');
-      lines.push(`  ${sel(el)} text="${clip(el.textContent || (el as HTMLInputElement).value)}"${href ? ` href=${clip(href, 80)}` : ''}`);
+      lines.push(`  ${sel(el)} text="${clip(el.textContent || (el as HTMLInputElement).value, 30)}"`);
     });
+    lines.push('-- links');
+    const linkKinds = new Map<string, number>();
+    root.querySelectorAll('a').forEach((el) => {
+      if (el.closest(dataZones) || !visible(el)) return;
+      if (el.closest('#left-navigation')) { lines.push(`  ${sel(el)} menu="${clip(el.textContent, 30)}" rel=${el.getAttribute('rel') ?? '-'}`); return; }
+      linkKinds.set(sel(el), (linkKinds.get(sel(el)) ?? 0) + 1);
+    });
+    linkKinds.forEach((n, k) => lines.push(`  ${k} x${n} (text withheld)`));
 
     lines.push('-- data containers (contents withheld)');
     root.querySelectorAll('table, .ui-jqgrid, .fc').forEach((el) => {

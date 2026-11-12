@@ -51,6 +51,10 @@ jobs:
           code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 http://qa.reports.methodfit.net/ || true)
           echo "QA answered HTTP $code"
           case "$code" in 2*|3*) ;; *) echo "::error::QA is not reachable (HTTP $code). Start it on the server with: Start-WebAppPool MethodFitness_QA"; exit 1;; esac
-      - name: Run
-        run: |
-          if [ "${{ github.event.inputs.suite }}" = "recon" ] || [ -f .run-recon ]; then npm run recon; else npm test; fi
+      - name: Run the tests
+        if: github.event.inputs.suite != 'recon'
+        run: npm test
+      # Exploration output used while writing tests; runs when tests/e2e/.run-recon exists.
+      - name: Print screen outlines
+        if: always() && (github.event.inputs.suite == 'recon' || hashFiles('tests/e2e/.run-recon') != '')
+        run: npm run recon
