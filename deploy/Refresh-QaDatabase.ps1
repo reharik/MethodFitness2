@@ -53,7 +53,7 @@ try {
     if ($existing -notcontains $Target) { throw "Target database $Target not found on $Server. Create it once (empty) and run this again." }
 
     if (-not $BackupDir) {
-        $BackupDir = (Invoke-Query "select cast(serverproperty('InstanceDefaultBackupPath') as nvarchar(260)) as p")[0].p
+        $BackupDir = (Invoke-Query "select cast(serverproperty('InstanceDefaultBackupPath') as nvarchar(260)) as p" | Select-Object -First 1).p
     }
     if (-not $BackupDir -or $BackupDir -is [DBNull]) { throw 'Could not find the default backup folder; pass -BackupDir.' }
     $file = Join-Path $BackupDir ("{0}_{1}.bak" -f $Source, (Get-Date -Format 'yyyy-MM-dd_HHmmss'))
@@ -84,7 +84,7 @@ try {
         Invoke-Statement "if databasepropertyex('$Target', 'Status') = 'ONLINE' alter database [$Target] set multi_user"
     }
 
-    $state = (Invoke-Query "select state_desc, user_access_desc from sys.databases where name = '$Target'")[0]
+    $state = Invoke-Query "select state_desc, user_access_desc from sys.databases where name = '$Target'" | Select-Object -First 1
     Write-Host ''
     Write-Host "$Target is now a copy of $Source ($($state.state_desc), $($state.user_access_desc))."
     Write-Host "Backup kept at: $file"

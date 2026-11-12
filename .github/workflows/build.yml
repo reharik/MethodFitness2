@@ -196,7 +196,10 @@ jobs:
           Run "create table MF_Src.dbo.Marker (Name varchar(20)); insert MF_Src.dbo.Marker values ('from source')"
           Run 'create table MF_Dst.dbo.OldStuff (Id int)'
 
-          .\deploy\Refresh-QaDatabase.ps1 -Server $srv -Source MF_Src -Target MF_Dst -BackupDir $env:RUNNER_TEMP
+          # No -BackupDir here: the script has to find the server's default backup folder itself.
+          $out = .\deploy\Refresh-QaDatabase.ps1 -Server $srv -Source MF_Src -Target MF_Dst *>&1 | Out-String
+          Write-Host $out
+          if ($out -notmatch 'ONLINE, MULTI_USER') { throw 'the script did not report the target state' }
 
           if ((Scalar 'select Name from MF_Dst.dbo.Marker') -ne 'from source') { throw 'target does not contain the source data' }
           if ((Scalar "select object_id('MF_Dst.dbo.OldStuff')") -isnot [DBNull]) { throw 'target still has its old contents' }
