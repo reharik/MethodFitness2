@@ -31,7 +31,8 @@ export async function openRoute(page: Page, hash: string): Promise<void> {
  * because the app keeps earlier screens in the page, hidden, with the same ids.
  */
 export async function gridReady(page: Page, screen: string): Promise<void> {
-  await expect(page.locator(`#${screen} .ui-jqgrid-btable`)).toBeVisible();
+  // the grid's frame, not its body table: an empty list has a zero-height body
+  await expect(page.locator(`#${screen} .ui-jqgrid-hdiv`)).toBeVisible();
   await expect(page.locator(`#${screen} .ui-jqgrid .loading:visible`)).toHaveCount(0);
   await settle(page, 300);
 }

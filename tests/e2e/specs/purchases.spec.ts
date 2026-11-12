@@ -28,8 +28,8 @@ test.describe('client purchases', () => {
       await gridReady(page, 'clientpurchaselist');
       await expect(purchases).toHaveCount(1);
     } finally {
-      const cleanup = await archiveClient(page, client.lastName).catch(() => undefined);
-      console.log(`test client archived afterwards: ${cleanup?.Success ?? false}`);
+      const cleanup = await archiveClient(page, client.lastName).catch(() => 'failed');
+      console.log(`test client afterwards: ${cleanup}`);
     }
 
     expect(problems, problems.join('\n')).toEqual([]);

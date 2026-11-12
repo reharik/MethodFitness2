@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { login } from '../support/session';
 import { acceptDialogs, expectSaved, listRows, openRoute, searchList, setField, stamp, submitAndRead, usDate, watchForTrouble } from '../support/app';
-import { archiveClient } from '../support/world';
+import { archiveClient, archiveState } from '../support/world';
 
 test.describe('clients', () => {
   test('add, find, edit and archive a client', async ({ page }) => {
@@ -40,13 +40,11 @@ test.describe('clients', () => {
     await expect(page.locator('#client [name="City"]')).toHaveValue('Austin');
     await page.locator('#client #cancel').click();
 
-    // archive: the list hides archived clients, so the row goes away
+    // archive: the row stays findable by search, marked as archived
     await expect(page.locator('#clientlist')).toBeVisible();
-    const archived = await archiveClient(page, lastName);
-    expect(archived, 'the client was found in the list').toBeDefined();
-    expectSaved(archived!);
+    expect(await archiveClient(page, lastName)).toBe('archived');
     await searchList(page, 'clientlist', lastName);
-    await expect(row).toHaveCount(0);
+    expect(await archiveState(page, lastName)).toBe('UnArchive');
 
     expect(problems, problems.join('\n')).toEqual([]);
   });

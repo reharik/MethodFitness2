@@ -63,8 +63,8 @@ test.describe('appointments', () => {
       await settle(page, 1000);
       await expect(event, 'the appointment is gone from the calendar').toHaveCount(0);
     } finally {
-      const cleanup = await archiveClient(page, client.lastName).catch(() => undefined);
-      console.log(`test client archived afterwards: ${cleanup?.Success ?? false}`);
+      const cleanup = await archiveClient(page, client.lastName).catch(() => 'failed');
+      console.log(`test client afterwards: ${cleanup}`);
       if (notices.length) console.log(`messages the app showed: ${JSON.stringify(notices)}`);
     }
 

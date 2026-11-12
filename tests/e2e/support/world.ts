@@ -46,20 +46,29 @@ export async function createClient(page: Page, prefix = 'E2EClient'): Promise<Te
   return { lastName, id: idFromHash(page, 'client') };
 }
 
-/**
- * Archives a client from the client list, which is how the app retires one
- * (the list hides archived clients by default). Tests must have dialogs
- * accepted (acceptDialogs). Returns undefined when the client is not listed.
- */
-export async function archiveClient(page: Page, lastName: string): Promise<SaveResult | undefined> {
-  if (!lastName.startsWith('E2E')) throw new Error('refusing to archive a client these tests did not create');
-  await openRoute(page, 'clientlist');
-  await searchList(page, 'clientlist', lastName);
+/** The text of a list row's Archive cell: "Archive" for a live record, "UnArchive" for an archived one. */
+export async function archiveState(page: Page, lastName: string): Promise<string | undefined> {
   const row = listRows(page, 'clientlist', lastName);
   if ((await row.count()) === 0) return undefined;
-  const result = await submitAndRead(page, () => row.first().locator('td').last().locator('a, span').first().click(), 'GET');
+  return (await row.first().locator('td').last().innerText()).trim();
+}
+
+/**
+ * Archives a client from the client list, which is how the app retires one.
+ * The same link un-archives, so it is only clicked on a client that is live.
+ * Tests must have dialogs accepted (acceptDialogs).
+ */
+export async function archiveClient(page: Page, lastName: string): Promise<'archived' | 'already archived' | 'not listed'> {
+  if (!lastName.startsWith('E2E')) throw new Error('refusing to archive a client these tests did not create');
+  await openRoute(page, 'clientlist');
+  await searchList(page, 'clientlist', lastName);   // a search lists archived clients too
+  const state = await archiveState(page, lastName);
+  if (state === undefined) return 'not listed';
+  if (state !== 'Archive') return 'already archived';
+  const row = listRows(page, 'clientlist', lastName);
+  expectSaved(await submitAndRead(page, () => row.first().locator('td').last().locator('a, span').first().click(), 'GET'));
   await settle(page);
-  return result;
+  return 'archived';
 }
 
 /**
