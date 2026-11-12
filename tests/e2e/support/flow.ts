@@ -1,5 +1,5 @@
 import { expect, type Page } from '@playwright/test';
-import { expectSaved, gridReady, openRoute, setField, settle, submitAndRead } from './app';
+import { expectSaved, gridReady, openRoute, setField, settle, submitAndRead, usDate } from './app';
 import { pickToken, type TestClient, type TestTrainer } from './world';
 
 export const dialogButton = (page: Page, name: string) =>
@@ -29,15 +29,25 @@ export async function saveAppointment(page: Page, trainer: TestTrainer, client: 
 }
 
 /**
- * Books an hour-long appointment in a past week, which only an administrator may do.
- * The week and slot vary with the client so repeated runs do not pile onto one slot.
+ * Books an hour-long appointment in the past, which only an administrator may do.
+ *
+ * Past weeks on the calendar are crowded with real appointments, and clicking one
+ * opens it instead of the booking form. So this opens the form from an empty slot
+ * next week and then moves the date back. The day and time vary with the client
+ * so repeated runs do not land on the same slot for the test trainer.
  */
 export async function bookPastAppointment(page: Page, trainer: TestTrainer, client: TestClient): Promise<void> {
   const seed = Number(client.id);
   await openRoute(page, 'calendar');
-  for (let i = 0; i < 1 + (seed % 6); i++) await page.locator('#calendar .fc-button-prev').click();
+  await page.locator('#calendar .fc-button-next').click();
   await settle(page, 800);
-  await clickSlot(page, 12 + (seed % 40), 0.2 + ((seed % 5) * 0.15));
+  await clickSlot(page, 30, 0.5);
+
+  const form = '#editModule';
+  await setField(page, form, 'Date', usDate(-(2 + (seed % 26))));
+  const times = page.locator(`${form} [name="StartTimeString"] option`);
+  const count = await times.count();
+  if (count > 4) await page.locator(`${form} [name="StartTimeString"]`).selectOption({ index: 2 + (seed % (count - 4)) });
   await saveAppointment(page, trainer, client, 'created by the browser tests');
 }
 
