@@ -11,7 +11,8 @@ export default defineConfig({
   retries: 0,
   timeout: 90_000,
   expect: { timeout: 15_000 },
-  reporter: [['list']],
+  // not the built-in reporters: see support/quiet-reporter.ts for why
+  reporter: [['./support/quiet-reporter.ts']],
   use: {
     baseURL: process.env.E2E_BASE_URL ?? 'http://qa.reports.methodfit.net',
     trace: 'off',
