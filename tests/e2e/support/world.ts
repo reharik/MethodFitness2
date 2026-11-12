@@ -17,9 +17,12 @@ function idFromHash(page: Page, screen: string): string {
 }
 
 async function openFromList(page: Page, listRoute: string, formScope: string, text: string): Promise<boolean> {
-  await openRoute(page, listRoute);
-  await searchList(page, listRoute, text);
   const row = page.locator('#gridContainer tr.jqgrow', { hasText: text });
+  // The list reloads on its own after a save, which can swallow a search typed too soon.
+  for (let attempt = 0; attempt < 3 && (await row.count()) === 0; attempt++) {
+    await openRoute(page, listRoute);
+    await searchList(page, listRoute, text);
+  }
   if ((await row.count()) === 0) return false;
   await row.first().locator('a').first().click();
   await expect(page.locator(`${formScope} [name="LastName"]`)).toBeVisible();

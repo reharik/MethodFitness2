@@ -19,9 +19,18 @@ export async function settle(page: Page, ms = 400): Promise<void> {
 
 /** Opens one of the app's screens by its client-side route, e.g. "clientlist". */
 export async function openRoute(page: Page, hash: string): Promise<void> {
-  await page.goto(`/Scheduler#${hash}`);
-  await page.evaluate((h) => { if (window.location.hash !== '#' + h) window.location.hash = h; }, hash);
+  const current = page.url().includes('/Scheduler') ? new URL(page.url()).hash : null;
+  if (current === null) await page.goto(`/Scheduler#${hash}`);
+  else if (current !== `#${hash}`) await page.evaluate((h) => { window.location.hash = h; }, hash);
+  await expect(page.locator(`#${hash.split('/')[0]}`)).toBeVisible({ timeout: 30_000 });
   await settle(page);
+}
+
+/** Waits until the list on screen has finished loading its rows. */
+export async function gridReady(page: Page): Promise<void> {
+  await expect(page.locator('.ui-jqgrid-btable').first()).toBeVisible();
+  await expect(page.locator('.ui-jqgrid .loading:visible')).toHaveCount(0);
+  await settle(page, 300);
 }
 
 /** Sets a knockout-bound text or date field and makes sure the binding sees the change. */
@@ -44,15 +53,24 @@ export interface SaveResult { Success: boolean; Message?: string; Errors?: { Err
 export async function submitAndRead(page: Page, action: () => Promise<void>, method: 'POST' | 'GET' = 'POST'): Promise<SaveResult> {
   const origin = new URL(page.url()).origin;
   let verdict: SaveResult | undefined;
+  const seen: string[] = [];
   const isVerdict = async (r: Response) => {
-    if (r.request().method() !== method || !r.url().startsWith(origin)) return false;
+    if (!r.url().startsWith(origin)) return false;
+    const path = r.url().slice(origin.length).split('?')[0].slice(0, 70);
+    if (!/\.(js|css|png|jpg|gif|ico)$/i.test(path)) seen.push(`${r.request().method()} ${r.status()} ${path}`);
+    if (r.request().method() !== method) return false;
     try {
       const body = JSON.parse(await r.text());
       if (body && typeof body === 'object' && 'Success' in body) { verdict = body as SaveResult; return true; }
     } catch { /* not JSON: a template, a grid page, a script */ }
     return false;
   };
-  await Promise.all([page.waitForResponse(isVerdict, { timeout: 45_000 }), action()]);
+  try {
+    await Promise.all([page.waitForResponse(isVerdict, { timeout: 30_000 }), action()]);
+  } catch (e) {
+    // Paths only, no bodies: enough to see what the app did instead of answering.
+    throw new Error(`the app gave no ${method} verdict. Requests it made meanwhile: ${seen.slice(-8).join(' ; ') || 'none'}`);
+  }
   return verdict!;
 }
 
@@ -80,9 +98,10 @@ export function watchForTrouble(page: Page): { problems: string[] } {
 
 /** Types into a list screen's search box and applies it (the box searches on Enter). */
 export async function searchList(page: Page, screen: string, text: string): Promise<void> {
+  await gridReady(page);
   const search = page.locator(`#${screen} input.search`);
   await search.click();
   await search.fill(text);
   await search.press('Enter');
-  await settle(page, 800);
+  await gridReady(page);
 }
