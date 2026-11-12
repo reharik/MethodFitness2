@@ -10,7 +10,8 @@ test.describe('calendar', () => {
 
     const calendar = page.locator('#calendar');
     await expect(calendar.locator('table.fc-agenda-slots')).toBeVisible();
-    await expect(calendar.locator('table.fc-agenda-days th.fc-widget-header:not(.fc-agenda-axis):not(.fc-agenda-gutter)')).toHaveCount(7);
+    // seven day columns, headed like "Mon 11/9"
+    await expect(calendar.locator('table.fc-agenda-days thead th').filter({ hasText: /^\w{3} \d{1,2}\/\d{1,2}$/ })).toHaveCount(7);
 
     await calendar.locator('.fc-button-month').click();
     await settle(page);

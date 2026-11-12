@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { login } from '../support/session';
-import { expectSaved, openRoute, setField, settle, stamp, submitAndRead, usDate, watchForTrouble } from '../support/app';
+import { deleteFromList, expectSaved, openRoute, searchList, setField, stamp, submitAndRead, usDate, watchForTrouble } from '../support/app';
 
 test.describe('clients', () => {
   test('add, find, edit and delete a client', async ({ page }) => {
@@ -21,10 +21,7 @@ test.describe('clients', () => {
 
     // find it in the list
     await expect(page.locator('#clientlist')).toBeVisible();
-    const search = page.locator('#clientlist input.search');
-    await search.fill(lastName);
-    await search.press('Enter');
-    await settle(page, 800);
+    await searchList(page, 'clientlist', lastName);
     const row = page.locator('#gridContainer tr.jqgrow', { hasText: lastName });
     await expect(row).toHaveCount(1);
 
@@ -36,22 +33,15 @@ test.describe('clients', () => {
 
     // the edit stuck
     await expect(page.locator('#clientlist')).toBeVisible();
-    await search.fill(lastName);
-    await search.press('Enter');
-    await settle(page, 800);
+    await searchList(page, 'clientlist', lastName);
     await row.locator('a').first().click();
     await expect(page.locator('#client [name="City"]')).toHaveValue('Austin');
     await page.locator('#client #cancel').click();
 
     // delete
     await expect(page.locator('#clientlist')).toBeVisible();
-    await search.fill(lastName);
-    await search.press('Enter');
-    await settle(page, 800);
-    await row.locator('input.cbox').check();
-    page.once('dialog', (d) => d.accept());
-    expectSaved(await submitAndRead(page, () => page.locator('#clientlist button.delete').click(), 'GET', 'Delete'));
-    await settle(page, 800);
+    expect(await deleteFromList(page, 'clientlist', lastName)).toBe(1);
+    await searchList(page, 'clientlist', lastName);
     await expect(row).toHaveCount(0);
 
     expect(problems, problems.join('\n')).toEqual([]);
