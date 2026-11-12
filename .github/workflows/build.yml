@@ -152,3 +152,30 @@ jobs:
             --notes "MF.Web site built from $env:GITHUB_SHA on .NET Framework 4.8. Does not include the root Web.config."
           if ($LASTEXITCODE -ne 0) { throw 'gh release create failed' }
 
+
+      # Runs the real deploy script under Windows PowerShell 5.1 (what the server has)
+      # against a throwaway copy of the site, using the build published just above.
+      - name: Smoke-test the deploy script
+        if: github.event_name == 'push'
+        shell: powershell
+        run: |
+          $site = 'C:\MethodFitness\WebSites\QA\csharpMethodFit'
+          New-Item -ItemType Directory -Force $site | Out-Null
+          robocopy artifacts\MF.Web $site /E /NFL /NDL /NJH /NJS /NP | Out-Null
+          Set-Content "$site\Web.config" '<configuration><!-- server copy --></configuration>'
+          Set-Content "$site\uploaded-on-server.txt" 'keep me'
+          Add-Content "$site\SiteDown.htm" '<!-- edited on server -->'
+          Remove-Item "$site\bin\MF.Web.dll"
+
+          Write-Host '--- compare'
+          .\deploy\Deploy-MethodFit.ps1 -Target QA -Compare
+          if (Test-Path "$site\bin\MF.Web.dll") { throw 'compare mode changed the site' }
+
+          Write-Host '--- deploy'
+          .\deploy\Deploy-MethodFit.ps1 -Target QA
+          if (-not (Test-Path "$site\bin\MF.Web.dll")) { throw 'MF.Web.dll was not deployed' }
+          if ((Get-Content "$site\Web.config" -Raw) -notmatch 'server copy') { throw 'Web.config was overwritten' }
+          if (-not (Test-Path "$site\uploaded-on-server.txt")) { throw 'a server-only file was deleted' }
+          if (Test-Path "$site\app_offline.htm") { throw 'app_offline.htm was left behind' }
+          if (-not (Get-ChildItem C:\MethodFitness\Backups -Directory -Filter 'QA_*')) { throw 'no backup was made' }
+          Write-Host 'deploy script OK'
