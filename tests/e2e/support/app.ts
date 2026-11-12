@@ -86,18 +86,3 @@ export async function searchList(page: Page, screen: string, text: string): Prom
   await search.press('Enter');
   await settle(page, 800);
 }
-
-/** Deletes every row a list search finds. Only ever called with this suite's own "E2E" prefix. */
-export async function deleteFromList(page: Page, route: string, searchText: string): Promise<number> {
-  if (!searchText.startsWith('E2E')) throw new Error('refusing to bulk-delete anything not created by these tests');
-  await openRoute(page, route);
-  await searchList(page, route, searchText);
-  const rows = page.locator('#gridContainer tr.jqgrow', { hasText: searchText });
-  const count = await rows.count();
-  if (count === 0) return 0;
-  for (let i = 0; i < count; i++) await rows.nth(i).locator('input.cbox').check();
-  page.once('dialog', (d) => d.accept());
-  expectSaved(await submitAndRead(page, () => page.locator(`#${route} button.delete`).click(), 'GET'));
-  await settle(page, 800);
-  return count;
-}

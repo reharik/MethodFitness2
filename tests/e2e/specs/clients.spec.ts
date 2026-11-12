@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { login } from '../support/session';
-import { deleteFromList, expectSaved, openRoute, searchList, setField, stamp, submitAndRead, usDate, watchForTrouble } from '../support/app';
+import { expectSaved, openRoute, searchList, setField, stamp, submitAndRead, usDate, watchForTrouble } from '../support/app';
+import { deleteClient } from '../support/world';
 
 test.describe('clients', () => {
   test('add, find, edit and delete a client', async ({ page }) => {
@@ -40,7 +41,10 @@ test.describe('clients', () => {
 
     // delete
     await expect(page.locator('#clientlist')).toBeVisible();
-    expect(await deleteFromList(page, 'clientlist', lastName)).toBe(1);
+    const deleted = await deleteClient(page, lastName);
+    expect(deleted, 'the client was found for deletion').toBeDefined();
+    expectSaved(deleted!);
+    await openRoute(page, 'clientlist');
     await searchList(page, 'clientlist', lastName);
     await expect(row).toHaveCount(0);
 
