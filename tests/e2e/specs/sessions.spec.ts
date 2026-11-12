@@ -104,4 +104,61 @@ test.describe('sessions', () => {
     }
     expect(problems, problems.join('\n')).toEqual([]);
   });
+
+  test("the trainer's session report lists an unverified, unpaid session and drops it once it is paid", async ({ page }) => {
+    test.setTimeout(300_000);
+    const { problems } = watchForTrouble(page);
+    const notices = acceptDialogs(page);
+    await login(page);
+    const client = await createClient(page);
+    await purchaseHours(page, client, 2);
+    const trainer = await ensureTrainer(page, [client]);
+    const asTrainer = { user: trainer.loginName, pass: trainer.password };
+
+    try {
+      await bookPastAppointment(page, trainer, client);
+      const run = await runSessionCompletion(page);
+      test.skip(run === undefined, NEEDS_ACTION);
+      expect(run!.Success, run!.Message).toBe(true);
+
+      // not verified, not paid: the trainer sees it on the session report
+      await logout(page);
+      await login(page, asTrainer);
+      await openRoute(page, 'trainersessionview');
+      await gridReady(page, 'trainersessionview');
+      await expect(listRows(page, 'trainersessionview', client.lastName), 'an unverified, unpaid session is on the report').toHaveCount(1);
+
+      // the administrator pays it without the trainer having verified it
+      await logout(page);
+      await login(page);
+      await openRoute(page, `paytrainerlist/${trainer.id}`);
+      await gridReady(page, 'paytrainerlist');
+      const row = listRows(page, 'paytrainerlist', client.lastName);
+      await expect(row).toHaveCount(1);
+      expect(await cellUnder(page, 'paytrainerlist', client.lastName, 'Trainer Verified')).toBe('False');
+      await row.locator('input.cbox').check();
+      await expect(page.locator('#payTrainerButton')).toBeVisible();
+      await page.locator('#payTrainerButton').click();
+      await expect(dialogButton(page, 'Ok')).toBeVisible();
+      expectSaved(await submitAndRead(page, () => dialogButton(page, 'Ok').click()));
+      await settle(page, 1000);
+
+      // paid but never verified: it must not come back onto the trainer's lists.
+      // (This is the condition that was missing from the repo in November 2026.)
+      await logout(page);
+      await login(page, asTrainer);
+      await openRoute(page, 'trainersessionview');
+      await gridReady(page, 'trainersessionview');
+      await expect(listRows(page, 'trainersessionview', client.lastName), 'a paid session is off the session report').toHaveCount(0);
+      await openRoute(page, 'trainersessionverification');
+      await gridReady(page, 'trainersessionverification');
+      await expect(listRows(page, 'trainersessionverification', client.lastName), 'a paid session is not offered for verification').toHaveCount(0);
+    } finally {
+      await logout(page).catch(() => {});
+      await login(page).catch(() => {});
+      console.log(`test client afterwards: ${await archiveClient(page, client.lastName).catch(() => 'failed')}`);
+      if (notices.length) console.log(`messages the app showed: ${JSON.stringify(notices)}`);
+    }
+    expect(problems, problems.join('\n')).toEqual([]);
+  });
 });
