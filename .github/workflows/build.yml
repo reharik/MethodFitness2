@@ -1,0 +1,134 @@
+name: build
+
+# Builds the .NET Framework 4.8 solution on a Windows runner and uploads the
+# MF.Web site as a deployable artifact. Replaces the old local Grunt + msbuild flow.
+
+on:
+  push:
+    branches:
+      - newProd
+      - 'modernize/**'
+  pull_request:
+    branches:
+      - newProd
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PACKAGES_DIR: src\packages
+  CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: windows-2022   # same OS family as the production server
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - uses: nuget/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        shell: pwsh
+        run: |
+          # HintPaths in every project point at src\packages.
+          $configs = Get-ChildItem src\CC.Core, src\MF.Core, src\MF.Web -Filter packages.config
+          foreach ($c in $configs) {
+            Write-Host "::group::restore $($c.FullName)"
+            nuget restore $c.FullName -PackagesDirectory $env:PACKAGES_DIR -NonInteractive
+            if ($LASTEXITCODE -ne 0) { throw "nuget restore failed for $($c.FullName)" }
+            Write-Host "::endgroup::"
+          }
+
+      - name: Check that every HintPath resolves
+        shell: pwsh
+        run: |
+          # Diagnostic only: lists references msbuild will not find, so a failed
+          # compile further down is easy to trace back to a missing package.
+          $missing = 0
+          foreach ($proj in Get-ChildItem src -Recurse -Filter *.csproj) {
+            [xml]$x = Get-Content $proj.FullName
+            foreach ($h in $x.GetElementsByTagName('HintPath')) {
+              $p = Join-Path $proj.DirectoryName $h.InnerText
+              if (-not (Test-Path $p)) {
+                Write-Host "::warning::$($proj.Name): missing $($h.InnerText)"
+                $missing++
+              }
+            }
+          }
+          Write-Host "$missing unresolved HintPath(s)"
+
+      - name: Build MethodFitness.sln
+        run: >
+          msbuild src\MethodFitness.sln
+          /m /nologo /v:minimal
+          /p:Configuration=${{ env.CONFIGURATION }}
+          "/p:Platform=Any CPU"
+
+      - name: Compile Razor views (non-blocking)
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          # The committed Web.config is a stale dev copy (it redirects to MVC 5.2.7 while
+          # the referenced assembly is 5.2.2). Production's Web.config is generated from
+          # Web.config.hbs, so compile the views against that template with dummy values.
+          $t = Get-Content src\MF.Web\Web.config.hbs -Raw
+          $t = $t.Replace('{{{connection_String}}}', 'Server=localhost;Database=ci;Integrated Security=True;')
+          $t = $t.Replace('{{{debug}}}', 'false').Replace('{{{customErrors}}}', 'RemoteOnly')
+          $t = [regex]::Replace($t, '\{\{\{?\s*\w+\s*\}?\}\}', 'ci')
+          Set-Content src\MF.Web\Web.config $t -Encoding utf8
+          # These views are dead: no controller renders them and they reference types or
+          # namespaces that no longer exist. The compiler stops at the first error, which
+          # would hide every other view, so set them aside for the check and put them
+          # back afterwards so the artifact is unchanged.
+          $orphans = 'Areas\Reporting\Views\Manager\Display.cshtml',
+                     'Views\Permissions\ShowPermissions.cshtml',
+                     'Views\TrainerList\ItemList.cshtml',
+                     'Views\UserProfile\UserProfile.cshtml'
+          $web = 'src\MF.Web'
+          $i = 0
+          foreach ($o in $orphans) { Move-Item "$web\$o" "$env:RUNNER_TEMP\orphan$i.cshtml"; $i++ }
+          try {
+            msbuild "$web\MF.Web.csproj" /nologo /v:minimal /t:MvcBuildViews /p:MvcBuildViews=true "/p:Configuration=$env:CONFIGURATION"
+            $code = $LASTEXITCODE
+          } finally {
+            $i = 0
+            foreach ($o in $orphans) { Move-Item "$env:RUNNER_TEMP\orphan$i.cshtml" "$web\$o"; $i++ }
+          }
+          exit $code
+
+      - name: Stage MF.Web site
+        shell: pwsh
+        run: |
+          # Mirrors the old Grunt copy task: the project folder minus sources and
+          # project files. The root Web.config is left out on purpose - the server
+          # keeps its own, so no connection strings travel in the artifact.
+          $src = 'src\MF.Web'
+          $dst = 'artifacts\MF.Web'
+          robocopy $src $dst /E /NFL /NDL /NJH /NP `
+            /XD obj `
+            /XF *.cs *.vb *.csproj *.csproj.* *.user *.hbs packages.config
+          if ($LASTEXITCODE -ge 8) { throw "robocopy failed ($LASTEXITCODE)" }
+          # bin\MF.Web.dll.config is msbuild's copy of the root Web.config; IIS never reads it.
+          Remove-Item "$dst\Web.config", "$dst\bin\MF.Web.dll.config" -ErrorAction SilentlyContinue
+          $global:LASTEXITCODE = 0
+
+          if (-not (Test-Path "$dst\bin\MF.Web.dll")) { throw 'MF.Web.dll missing from staged site' }
+
+          $leaks = Get-ChildItem $dst -Recurse -File -Include *.config, *.json |
+            Select-String -Pattern 'Password\s*=' -List
+          if ($leaks) { $leaks | ForEach-Object { Write-Host "::error::credential-looking text in $($_.Path)" }; throw 'refusing to upload' }
+
+          Get-ChildItem "$dst\bin" -Filter *.dll | Sort-Object Name |
+            ForEach-Object { '{0,-55} {1}' -f $_.Name, $_.VersionInfo.FileVersion }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MF.Web-${{ github.sha }}
+          path: artifacts/MF.Web
+          if-no-files-found: error
+          retention-days: 14
