@@ -1,5 +1,5 @@
 import { expect, type Page } from '@playwright/test';
-import { expectSaved, openRoute, searchList, setField, settle, stamp, submitAndRead, usDate, type SaveResult } from './app';
+import { expectSaved, listRows, openRoute, searchList, setField, settle, stamp, submitAndRead, usDate, type SaveResult } from './app';
 
 // Everything these tests create is named with an "E2E" prefix, so it is easy to
 // tell apart from real records and safe to find and remove.
@@ -17,7 +17,7 @@ function idFromHash(page: Page, screen: string): string {
 }
 
 async function openFromList(page: Page, listRoute: string, formScope: string, text: string): Promise<boolean> {
-  const row = page.locator('#gridContainer tr.jqgrow', { hasText: text });
+  const row = listRows(page, listRoute, text);
   // The list reloads on its own after a save, which can swallow a search typed too soon.
   for (let attempt = 0; attempt < 3 && (await row.count()) === 0; attempt++) {
     await openRoute(page, listRoute);
@@ -46,12 +46,18 @@ export async function createClient(page: Page, prefix = 'E2EClient'): Promise<Te
   return { lastName, id: idFromHash(page, 'client') };
 }
 
-/** Deletes a client through its form. Returns the app's verdict rather than failing, so cleanup can be best-effort. */
-export async function deleteClient(page: Page, lastName: string): Promise<SaveResult | undefined> {
-  if (!lastName.startsWith('E2E')) throw new Error('refusing to delete a client these tests did not create');
-  if (!(await openFromList(page, 'clientlist', '#client', lastName))) return undefined;
-  page.once('dialog', (d) => d.accept());
-  const result = await submitAndRead(page, () => page.locator('#client button.delete').click());
+/**
+ * Archives a client from the client list, which is how the app retires one
+ * (the list hides archived clients by default). Tests must have dialogs
+ * accepted (acceptDialogs). Returns undefined when the client is not listed.
+ */
+export async function archiveClient(page: Page, lastName: string): Promise<SaveResult | undefined> {
+  if (!lastName.startsWith('E2E')) throw new Error('refusing to archive a client these tests did not create');
+  await openRoute(page, 'clientlist');
+  await searchList(page, 'clientlist', lastName);
+  const row = listRows(page, 'clientlist', lastName);
+  if ((await row.count()) === 0) return undefined;
+  const result = await submitAndRead(page, () => row.first().locator('td').last().locator('a, span').first().click(), 'GET');
   await settle(page);
   return result;
 }

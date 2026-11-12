@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import { login } from '../support/session';
-import { expectSaved, openRoute, setField, settle, submitAndRead, watchForTrouble } from '../support/app';
-import { createClient, deleteClient, ensureTrainer, pickToken } from '../support/world';
+import { acceptDialogs, expectSaved, openRoute, setField, settle, submitAndRead, watchForTrouble } from '../support/app';
+import { archiveClient, createClient, ensureTrainer, pickToken } from '../support/world';
 
 /** Clicks an empty slot around midday on the calendar's current week and waits for the appointment form. */
 async function clickSlot(page: Page, dayFraction: number) {
@@ -20,8 +20,7 @@ const dialogButton = (page: Page, name: string) =>
 test.describe('appointments', () => {
   test('book, change and delete an appointment', async ({ page }) => {
     const { problems } = watchForTrouble(page);
-    const notices: string[] = [];
-    page.on('dialog', (d) => { notices.push(d.message().slice(0, 100)); d.accept().catch(() => {}); });
+    const notices = acceptDialogs(page);
 
     await login(page);
     const client = await createClient(page);
@@ -64,8 +63,8 @@ test.describe('appointments', () => {
       await settle(page, 1000);
       await expect(event, 'the appointment is gone from the calendar').toHaveCount(0);
     } finally {
-      const cleanup = await deleteClient(page, client.lastName).catch(() => undefined);
-      console.log(`test client removed afterwards: ${cleanup?.Success ?? false}`);
+      const cleanup = await archiveClient(page, client.lastName).catch(() => undefined);
+      console.log(`test client archived afterwards: ${cleanup?.Success ?? false}`);
       if (notices.length) console.log(`messages the app showed: ${JSON.stringify(notices)}`);
     }
 

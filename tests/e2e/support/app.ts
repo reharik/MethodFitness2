@@ -26,11 +26,26 @@ export async function openRoute(page: Page, hash: string): Promise<void> {
   await settle(page);
 }
 
-/** Waits until the list on screen has finished loading its rows. */
-export async function gridReady(page: Page): Promise<void> {
-  await expect(page.locator('.ui-jqgrid-btable').first()).toBeVisible();
-  await expect(page.locator('.ui-jqgrid .loading:visible')).toHaveCount(0);
+/**
+ * Waits until a list screen has finished loading its rows. Scoped to the screen
+ * because the app keeps earlier screens in the page, hidden, with the same ids.
+ */
+export async function gridReady(page: Page, screen: string): Promise<void> {
+  await expect(page.locator(`#${screen} .ui-jqgrid-btable`)).toBeVisible();
+  await expect(page.locator(`#${screen} .ui-jqgrid .loading:visible`)).toHaveCount(0);
   await settle(page, 300);
+}
+
+/** The rows of a list screen that contain the given text. */
+export function listRows(page: Page, screen: string, text: string | RegExp) {
+  return page.locator(`#${screen} .ui-jqgrid-btable tr.jqgrow`, { hasText: text });
+}
+
+/** Accepts every confirm/alert the app raises and keeps their messages. Call once per test. */
+export function acceptDialogs(page: Page): string[] {
+  const messages: string[] = [];
+  page.on('dialog', (d) => { messages.push(d.message().slice(0, 100)); d.accept().catch(() => {}); });
+  return messages;
 }
 
 /** Sets a knockout-bound text or date field and makes sure the binding sees the change. */
@@ -98,10 +113,10 @@ export function watchForTrouble(page: Page): { problems: string[] } {
 
 /** Types into a list screen's search box and applies it (the box searches on Enter). */
 export async function searchList(page: Page, screen: string, text: string): Promise<void> {
-  await gridReady(page);
+  await gridReady(page, screen);
   const search = page.locator(`#${screen} input.search`);
   await search.click();
   await search.fill(text);
   await search.press('Enter');
-  await gridReady(page);
+  await gridReady(page, screen);
 }

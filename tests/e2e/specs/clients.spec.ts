@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { login } from '../support/session';
-import { expectSaved, openRoute, searchList, setField, stamp, submitAndRead, usDate, watchForTrouble } from '../support/app';
-import { deleteClient } from '../support/world';
+import { acceptDialogs, expectSaved, listRows, openRoute, searchList, setField, stamp, submitAndRead, usDate, watchForTrouble } from '../support/app';
+import { archiveClient } from '../support/world';
 
 test.describe('clients', () => {
-  test('add, find, edit and delete a client', async ({ page }) => {
+  test('add, find, edit and archive a client', async ({ page }) => {
     const { problems } = watchForTrouble(page);
+    acceptDialogs(page);
     const lastName = `E2ETest${stamp()}`;
     await login(page);
 
@@ -23,7 +24,7 @@ test.describe('clients', () => {
     // find it in the list
     await expect(page.locator('#clientlist')).toBeVisible();
     await searchList(page, 'clientlist', lastName);
-    const row = page.locator('#gridContainer tr.jqgrow', { hasText: lastName });
+    const row = listRows(page, 'clientlist', lastName);
     await expect(row).toHaveCount(1);
 
     // edit
@@ -39,12 +40,11 @@ test.describe('clients', () => {
     await expect(page.locator('#client [name="City"]')).toHaveValue('Austin');
     await page.locator('#client #cancel').click();
 
-    // delete
+    // archive: the list hides archived clients, so the row goes away
     await expect(page.locator('#clientlist')).toBeVisible();
-    const deleted = await deleteClient(page, lastName);
-    expect(deleted, 'the client was found for deletion').toBeDefined();
-    expectSaved(deleted!);
-    await openRoute(page, 'clientlist');
+    const archived = await archiveClient(page, lastName);
+    expect(archived, 'the client was found in the list').toBeDefined();
+    expectSaved(archived!);
     await searchList(page, 'clientlist', lastName);
     await expect(row).toHaveCount(0);
 

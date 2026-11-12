@@ -1,24 +1,23 @@
 import { test } from '@playwright/test';
 import { login } from '../support/session';
-import { openRoute, searchList } from '../support/app';
-import { deleteClient } from '../support/world';
+import { acceptDialogs, gridReady, openRoute, searchList } from '../support/app';
+import { archiveClient } from '../support/world';
 
-// Runs first (files run in name order). Removes clients that earlier, interrupted
-// runs left behind. Every record these tests create has a name starting "E2E".
-// Best-effort: a client the app will not delete (for example one with session
-// history) is left alone and reported.
-test('remove leftover test clients', async ({ page }) => {
+// Runs first (files run in name order). Archives clients that earlier, interrupted
+// runs left in the list. Every record these tests create has a name starting "E2E".
+test('archive leftover test clients', async ({ page }) => {
+  acceptDialogs(page);
   await login(page);
-  let removed = 0;
-  const kept: string[] = [];
+  let archived = 0;
   for (let i = 0; i < 25; i++) {
     await openRoute(page, 'clientlist');
     await searchList(page, 'clientlist', 'E2E');
-    const names = await page.locator('#gridContainer tr.jqgrow td', { hasText: /^E2E\w+$/ }).allTextContents();
-    const next = names.map((n) => n.trim()).find((n) => !kept.includes(n));
-    if (!next) break;
-    const result = await deleteClient(page, next);
-    if (result?.Success) removed++; else kept.push(next);
+    await gridReady(page, 'clientlist');
+    const names = await page.locator('#clientlist .ui-jqgrid-btable tr.jqgrow td', { hasText: /^E2E\w+$/ }).allTextContents();
+    if (names.length === 0) break;
+    const result = await archiveClient(page, names[0].trim());
+    if (!result?.Success) break;
+    archived++;
   }
-  console.log(`leftover test clients removed: ${removed}; could not be removed: ${kept.length}`);
+  console.log(`leftover test clients archived: ${archived}`);
 });
