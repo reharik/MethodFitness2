@@ -52,7 +52,7 @@ namespace MF.Web.Areas.Billing.Controllers
         {
             var endDate = input.endDate.HasValue ? input.endDate : DateTime.Now;
 
-            var items = _dynamicExpressionQuery.PerformQuery<TrainerSessionDto>(input.filters, x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate && !x.TrainerVerified);
+            var items = _dynamicExpressionQuery.PerformQuery<TrainerSessionDto>(input.filters, x => x.TrainerId == input.User.EntityId && x.AppointmentDate <= endDate && !x.TrainerVerified && !x.TrainerPaid);
             var gridItemsViewModel = _grid.GetGridItemsViewModel(input.PageSortFilter, items, (IUser)input.User);
             return new CustomJsonResult(gridItemsViewModel);
         }
