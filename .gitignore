@@ -57,5 +57,11 @@ Backup*/
 UpgradeLog*.XML
 
 src/logs
-.vs
-.history
+src/Solutions/MethodFitness/.vs/
+.vs/
+build/
+
+logs/
+.history/
+
+csharpMethodFitness.zip

@@ -1,0 +1,181 @@
+name: build
+
+# Builds the .NET Framework 4.8 solution on a Windows runner and uploads the
+# MF.Web site as a deployable artifact. Replaces the old local Grunt + msbuild flow.
+
+on:
+  push:
+    branches:
+      - production
+      - 'modernize/**'
+  pull_request:
+    branches:
+      - production
+  workflow_dispatch:
+
+permissions:
+  contents: write   # the last step publishes the build as a prerelease
+
+env:
+  PACKAGES_DIR: src\packages
+  CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: windows-2022   # same OS family as the production server
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - uses: nuget/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        shell: pwsh
+        run: |
+          # HintPaths in every project point at src\packages.
+          $configs = Get-ChildItem src\CC.Core, src\MF.Core, src\MF.Web -Filter packages.config
+          foreach ($c in $configs) {
+            Write-Host "::group::restore $($c.FullName)"
+            nuget restore $c.FullName -PackagesDirectory $env:PACKAGES_DIR -NonInteractive
+            if ($LASTEXITCODE -ne 0) { throw "nuget restore failed for $($c.FullName)" }
+            Write-Host "::endgroup::"
+          }
+
+      - name: Check that every HintPath resolves
+        shell: pwsh
+        run: |
+          # Diagnostic only: lists references msbuild will not find, so a failed
+          # compile further down is easy to trace back to a missing package.
+          $missing = 0
+          foreach ($proj in Get-ChildItem src -Recurse -Filter *.csproj) {
+            [xml]$x = Get-Content $proj.FullName
+            foreach ($h in $x.GetElementsByTagName('HintPath')) {
+              $p = Join-Path $proj.DirectoryName $h.InnerText
+              if (-not (Test-Path $p)) {
+                Write-Host "::warning::$($proj.Name): missing $($h.InnerText)"
+                $missing++
+              }
+            }
+          }
+          Write-Host "$missing unresolved HintPath(s)"
+
+      - name: Build MethodFitness.sln
+        run: >
+          msbuild src\MethodFitness.sln
+          /m /nologo /v:minimal
+          /p:Configuration=${{ env.CONFIGURATION }}
+          "/p:Platform=Any CPU"
+
+      - name: Compile Razor views (non-blocking)
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          # Production's Web.config is generated from Web.config.hbs, so compile the
+          # views against that template with dummy values.
+          $t = Get-Content src\MF.Web\Web.config.hbs -Raw
+          $t = $t.Replace('{{{connection_String}}}', 'Server=localhost;Database=ci;Integrated Security=True;')
+          $t = $t.Replace('{{{debug}}}', 'false').Replace('{{{customErrors}}}', 'RemoteOnly')
+          $t = [regex]::Replace($t, '\{\{\{?\s*\w+\s*\}?\}\}', 'ci')
+          Set-Content src\MF.Web\Web.config $t -Encoding utf8
+          # These views are dead: no controller renders them and they reference types or
+          # namespaces that no longer exist. The compiler stops at the first error, which
+          # would hide every other view, so set them aside for the check and put them
+          # back afterwards so the artifact is unchanged.
+          $orphans = 'Areas\Reporting\Views\Manager\Display.cshtml',
+                     'Views\Permissions\ShowPermissions.cshtml',
+                     'Views\TrainerList\ItemList.cshtml',
+                     'Views\UserProfile\UserProfile.cshtml'
+          $web = 'src\MF.Web'
+          $i = 0
+          foreach ($o in $orphans) { Move-Item "$web\$o" "$env:RUNNER_TEMP\orphan$i.cshtml"; $i++ }
+          try {
+            # The web targets import is disabled in MF.Web.csproj, so say where the site is.
+            msbuild "$web\MF.Web.csproj" /nologo /v:minimal /t:MvcBuildViews /p:MvcBuildViews=true "/p:Configuration=$env:CONFIGURATION" "/p:WebProjectOutputDir=$PWD\$web"
+            $code = $LASTEXITCODE
+          } finally {
+            $i = 0
+            foreach ($o in $orphans) { Move-Item "$env:RUNNER_TEMP\orphan$i.cshtml" "$web\$o"; $i++ }
+          }
+          exit $code
+
+      - name: Stage MF.Web site
+        shell: pwsh
+        run: |
+          # Mirrors the old Grunt copy task: the project folder minus sources and
+          # project files. The root Web.config is left out on purpose - the server
+          # keeps its own, so no connection strings travel in the artifact.
+          $src = 'src\MF.Web'
+          $dst = 'artifacts\MF.Web'
+          robocopy $src $dst /E /NFL /NDL /NJH /NP `
+            /XD obj `
+            /XF *.cs *.vb *.csproj *.csproj.* *.user *.hbs packages.config
+          if ($LASTEXITCODE -ge 8) { throw "robocopy failed ($LASTEXITCODE)" }
+          # bin\MF.Web.dll.config is msbuild's copy of the root Web.config; IIS never reads it.
+          Remove-Item "$dst\Web.config", "$dst\bin\MF.Web.dll.config" -ErrorAction SilentlyContinue
+          $global:LASTEXITCODE = 0
+
+          if (-not (Test-Path "$dst\bin\MF.Web.dll")) { throw 'MF.Web.dll missing from staged site' }
+
+          $leaks = Get-ChildItem $dst -Recurse -File -Include *.config, *.json |
+            Select-String -Pattern 'Password\s*=' -List
+          if ($leaks) { $leaks | ForEach-Object { Write-Host "::error::credential-looking text in $($_.Path)" }; throw 'refusing to upload' }
+
+          Get-ChildItem "$dst\bin" -Filter *.dll | Sort-Object Name |
+            ForEach-Object { '{0,-55} {1}' -f $_.Name, $_.VersionInfo.FileVersion }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MF.Web-${{ github.sha }}
+          path: artifacts/MF.Web
+          if-no-files-found: error
+          retention-days: 14
+
+      # A rolling prerelease gives the server a plain download URL for the latest
+      # build, so deploying does not need a browser or a GitHub login on the box:
+      # https://github.com/<owner>/<repo>/releases/download/qa-latest/MF.Web.zip
+      - name: Publish build as the qa-latest prerelease
+        if: github.event_name == 'push'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          7z a -tzip MF.Web.zip .\artifacts\MF.Web\* | Select-Object -Last 3
+          if ($LASTEXITCODE -ne 0) { throw '7z failed' }
+          gh release delete qa-latest --yes --cleanup-tag 2>$null
+          $global:LASTEXITCODE = 0
+          $short = $env:GITHUB_SHA.Substring(0, 7)
+          gh release create qa-latest MF.Web.zip --prerelease --target $env:GITHUB_SHA `
+            --title "QA build $short ($env:GITHUB_REF_NAME)" `
+            --notes "MF.Web site built from $env:GITHUB_SHA on .NET Framework 4.8. Does not include the root Web.config."
+          if ($LASTEXITCODE -ne 0) { throw 'gh release create failed' }
+
+
+      # Runs the real deploy script under Windows PowerShell 5.1 (what the server has)
+      # against a throwaway copy of the site, using the build published just above.
+      - name: Smoke-test the deploy script
+        if: github.event_name == 'push'
+        shell: powershell
+        run: |
+          $site = 'C:\MethodFitness\WebSites\QA\csharpMethodFit'
+          New-Item -ItemType Directory -Force $site | Out-Null
+          robocopy artifacts\MF.Web $site /E /NFL /NDL /NJH /NJS /NP | Out-Null
+          Set-Content "$site\Web.config" '<configuration><!-- server copy --></configuration>'
+          Set-Content "$site\uploaded-on-server.txt" 'keep me'
+          Add-Content "$site\SiteDown.htm" '<!-- edited on server -->'
+          Remove-Item "$site\bin\MF.Web.dll"
+
+          Write-Host '--- compare'
+          .\deploy\Deploy-MethodFit.ps1 -Target QA -Compare
+          if (Test-Path "$site\bin\MF.Web.dll") { throw 'compare mode changed the site' }
+
+          Write-Host '--- deploy'
+          .\deploy\Deploy-MethodFit.ps1 -Target QA
+          if (-not (Test-Path "$site\bin\MF.Web.dll")) { throw 'MF.Web.dll was not deployed' }
+          if ((Get-Content "$site\Web.config" -Raw) -notmatch 'server copy') { throw 'Web.config was overwritten' }
+          if (-not (Test-Path "$site\uploaded-on-server.txt")) { throw 'a server-only file was deleted' }
+          if (Test-Path "$site\app_offline.htm") { throw 'app_offline.htm was left behind' }
+          if (-not (Get-ChildItem C:\MethodFitness\Backups -Directory -Filter 'QA_*')) { throw 'no backup was made' }
+          Write-Host 'deploy script OK'
