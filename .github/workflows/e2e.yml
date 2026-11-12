@@ -53,7 +53,7 @@ jobs:
           echo "QA answered HTTP $code"
           case "$code" in 2*|3*) ;; *) echo "::error::QA is not reachable (HTTP $code). Start it on the server with: Start-WebAppPool MethodFitness_QA"; exit 1;; esac
       - name: Run the tests
-        if: github.event.inputs.suite != 'recon'
+        if: github.event.inputs.suite != 'recon' && hashFiles('tests/e2e/.recon-only') == ''
         run: npm test
       # Exploration output used while writing tests; runs when tests/e2e/.run-recon exists.
       - name: Print screen outlines
