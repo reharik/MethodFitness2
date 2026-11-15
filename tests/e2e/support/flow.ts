@@ -18,11 +18,13 @@ export async function clickSlot(page: Page, slotRow: number, dayFraction: number
 }
 
 /** Fills in and saves the appointment form that clickSlot opened. */
-export async function saveAppointment(page: Page, trainer: TestTrainer, client: TestClient, notes: string, type: SessionType = 'Hour'): Promise<void> {
+export async function saveAppointment(page: Page, trainer: TestTrainer, client: TestClient, notes: string, type: SessionType = 'Hour', partners: TestClient[] = []): Promise<void> {
   const form = '#editModule';
   await page.locator(`${form} [name="LocationEntityId"]`).selectOption({ index: 1 });
   await page.locator(`${form} [name="TrainerEntityId"]`).selectOption(trainer.id);
   await pickToken(page, `${form} #token-input-ClientsDtos`, client.lastName.slice(0, 12), client.lastName);
+  // the form only allows Pair once a second client is on the appointment, and forces it then
+  for (const partner of partners) await pickToken(page, `${form} #token-input-ClientsDtos`, partner.lastName.slice(0, 12), partner.lastName);
   await page.locator(`${form} [name="AppointmentType"]`).selectOption({ label: type });
   await setField(page, form, 'Notes', notes);
   expectSaved(await submitAndRead(page, () => dialogButton(page, 'Save').click()));
@@ -37,7 +39,7 @@ export async function saveAppointment(page: Page, trainer: TestTrainer, client: 
  * next week and then moves the date back. The day and time vary with the client
  * so repeated runs do not land on the same slot for the test trainer.
  */
-export async function bookPastAppointment(page: Page, trainer: TestTrainer, client: TestClient, type: SessionType = 'Hour', nth = 0): Promise<void> {
+export async function bookPastAppointment(page: Page, trainer: TestTrainer, client: TestClient, type: SessionType = 'Hour', nth = 0, partners: TestClient[] = []): Promise<void> {
   // nth spreads several appointments for one client over different days
   const seed = Number(client.id) + nth * 5;
   await openRoute(page, 'calendar');
@@ -50,7 +52,7 @@ export async function bookPastAppointment(page: Page, trainer: TestTrainer, clie
   const times = page.locator(`${form} [name="StartTimeString"] option`);
   const count = await times.count();
   if (count > 4) await page.locator(`${form} [name="StartTimeString"]`).selectOption({ index: 2 + (seed % (count - 4)) });
-  await saveAppointment(page, trainer, client, 'created by the browser tests', type);
+  await saveAppointment(page, trainer, client, 'created by the browser tests', type, partners);
 }
 
 export interface CompletionRun { Success: boolean; Message?: string; Appointments?: { ClientId: number; InArrears: boolean }[] }

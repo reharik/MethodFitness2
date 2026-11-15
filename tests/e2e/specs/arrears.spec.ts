@@ -24,10 +24,12 @@ test.describe('arrears', () => {
       const notices = acceptDialogs(page);
       await login(page);
       const client = await createClient(page);          // has bought nothing
-      const trainer = await ensureTrainer(page, [client]);
+      // a pair appointment needs two clients; with one, the form books it as an hour
+      const partners = type === 'Pair' ? [await createClient(page)] : [];
+      const trainer = await ensureTrainer(page, [client, ...partners]);
 
       try {
-        for (let n = 0; n < 3; n++) await bookPastAppointment(page, trainer, client, type, n);
+        for (let n = 0; n < 3; n++) await bookPastAppointment(page, trainer, client, type, n, partners);
 
         const run = await runSessionCompletion(page);
         test.skip(run === undefined, NEEDS_ACTION);
@@ -46,6 +48,7 @@ test.describe('arrears', () => {
       } finally {
         await payEverythingPayable(page, trainer.id).catch(() => 0);
         console.log(`test client afterwards: ${await archiveClient(page, client.lastName).catch(() => 'failed')}`);
+        for (const partner of partners) await archiveClient(page, partner.lastName).catch(() => 'failed');
         if (notices.length) console.log(`messages the app showed: ${JSON.stringify(notices)}`);
       }
       expect(problems, problems.join('\n')).toEqual([]);
