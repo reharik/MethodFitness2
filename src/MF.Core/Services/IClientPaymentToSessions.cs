@@ -17,198 +17,85 @@ namespace MF.Core.Services
         {
             if (payment.FullHour > 0)
             {
-                HourSessions(client, payment);
+                AddSessions(client,
+                    payment,
+                    AppointmentType.Hour,
+                    payment.FullHour,
+                    payment.FullHourPrice);
             }
             if (payment.HalfHour > 0)
             {
-                HalfHourSessions(client, payment);
-            }
-            if (payment.FullHourTenPack> 0)
-            {
-                FullHourTenPackSessions(client, payment);
-            }
-            if (payment.HalfHourTenPack > 0)
-            {
-                HalfHourTenPackSessions(client, payment);
+                AddSessions(client,
+                    payment,
+                    AppointmentType.HalfHour,
+                    payment.HalfHour,
+                    payment.HalfHourPrice);
             }
             if (payment.Pair > 0)
             {
-                PairSessions(client, payment);
+                AddSessions(client,
+                    payment,
+                    AppointmentType.Pair,
+                    payment.Pair,
+                    payment.PairPrice);
+            }
+            if (payment.FullHourTenPack> 0)
+            {
+                AddSessions(client,
+                    payment,
+                    AppointmentType.Hour,
+                    payment.FullHourTenPack * 10,
+                    payment.FullHourTenPackPrice/10);
+            }
+            if (payment.HalfHourTenPack > 0)
+            {
+                AddSessions(client,
+                    payment,
+                    AppointmentType.HalfHour,
+                    payment.HalfHourTenPack * 10,
+                    payment.HalfHourTenPackPrice/10);
             }
             if (payment.PairTenPack > 0)
             {
-                PairTenPackSessions(client, payment);
+                AddSessions(client,
+                    payment,
+                    AppointmentType.Pair,
+                    payment.PairTenPack * 10,
+                    payment.PairTenPackPrice/10);
             }
             return client;
         }
 
-        private static void PairSessions(Client client, Payment payment)
+        private static void AddSessions(Client client,
+            Payment payment,
+            AppointmentType type,
+            int count,
+            double price)
         {
-            var sessions = payment.Pair;
+            var sessions = count;
+            var typeName = type.ToString();
             client.Sessions
-                .Where(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears).OrderBy(x=>x.Appointment.Date)
-                .ForEachItem(x =>
-                          {
-                              x.InArrears = false;
-                              x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
-                              x.Cost = payment.PairPrice;
-                              sessions--;
-                          });
-            for (int i = 0; i < sessions; i++)
-            {
-                var session = new Session
-                                  {
-                                      Client = client,
-                                      Cost = payment.PairPrice,
-                                      AppointmentType = AppointmentType.Pair.ToString(),
-                                      PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
-                                  };
-                client.AddSession(session);
-            }
-        }
-
-        private static void PairTenPackSessions(Client client, Payment payment)
-        {
-            var inArrears = client.Sessions.Count(x => x.AppointmentType == AppointmentType.Pair.ToString() && x.InArrears);
-            var price = payment.PairTenPackPrice/10;
-            for (int i = 0; i < payment.PairTenPack; i++)
-            {
-                for (int x = 0; x < 10; x++)
-                {
-                    if (inArrears>0)
-                    {
-                        var arrear = client.Sessions.Where(s => s.AppointmentType == AppointmentType.Pair.ToString() && s.InArrears).OrderBy(s => s.Appointment.Date).First();
-                        arrear.InArrears = false;
-                        arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
-                        arrear.Cost = price;
-                        inArrears--;
-                    }
-                    else
-                    {
-                        var session = new Session
-                                          {
-                                              Client = client,
-                                              Cost = price,
-                                              AppointmentType = AppointmentType.Pair.ToString(),
-                                              PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
-                                          };
-                        client.AddSession(session);
-                    }
-                }
-            }
-        }
-
-        private static void HalfHourTenPackSessions(Client client, Payment payment)
-        {
-            var inArrears = client.Sessions.Count(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears);
-            var price = payment.HalfHourTenPackPrice/10;
-            for (int i = 0; i < payment.HalfHourTenPack; i++)
-            {
-                for (int x = 0; x < 10; x++)
-                {
-                    if (inArrears>0)
-                    {
-                        var arrear = client.Sessions.Where(s => s.AppointmentType == AppointmentType.HalfHour.ToString() && s.InArrears).OrderBy(s => s.Appointment.Date).First();
-                        arrear.InArrears = false;
-                        arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
-                        arrear.Cost = price;
-                        inArrears--;
-                    }
-                    else
-                    {
-                        var session = new Session
-                                          {
-                                              Client = client,
-                                              Cost = price,
-                                              AppointmentType = AppointmentType.HalfHour.ToString(),
-                                              PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
-                                          };
-                        client.AddSession(session);
-                    }
-                }
-            }
-        }
-
-        private static void FullHourTenPackSessions(Client client, Payment payment)
-        {
-            var inArrears = client.Sessions.Count(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears);
-            var price = payment.FullHourTenPackPrice/10;
-            for (int i = 0; i < payment.FullHourTenPack; i++)
-            {
-                for (int x = 0; x < 10; x++)
-                {
-                    if (inArrears>0)
-                    {
-                        var arrear = client.Sessions.Where(s => s.AppointmentType == AppointmentType.Hour.ToString() && s.InArrears).OrderBy(s => s.Appointment.Date).First();
-                        arrear.InArrears = false;
-                        arrear.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
-                        arrear.Cost = price;
-                        inArrears--;
-                    }
-                    else
-                    {
-                        var session = new Session
-                                          {
-                                              Client = client,
-                                              Cost = price,
-                                              AppointmentType = AppointmentType.Hour.ToString(),
-                                              PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
-                                          };
-                        client.AddSession(session);
-                    }
-                }
-            }
-        }
-
-        private static void HalfHourSessions(Client client, Payment payment)
-        {
-            var sessions = payment.HalfHour;
-            client.Sessions.Where(x => x.AppointmentType == AppointmentType.HalfHour.ToString() && x.InArrears).OrderBy(x => x.Appointment.Date)
+                .Where(x => x.AppointmentType == typeName && x.InArrears)
+                .OrderBy(x => x.Appointment.Date)
                 .ForEachItem(x =>
                 {
-                    x.InArrears = false;
-                    x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
-                    x.Cost = payment.HalfHourPrice;
-                    sessions--;
-                });
-            for (int i = 0; i < sessions; i++)
-            {
-                var session = new Session
-                                  {
-                                      Client = client,
-                                      Cost = payment.HalfHourPrice,
-                                      AppointmentType = AppointmentType.HalfHour.ToString(),
-                                      PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
-                                  };
-                client.AddSession(session);
-            }
-        }
-
-        private static void HourSessions(Client client, Payment payment)
-        {
-            var sessions = payment.FullHour;
-            client.Sessions
-                .Where(x => x.AppointmentType == AppointmentType.Hour.ToString() && x.InArrears).OrderBy(x => x.Appointment.Date)
-                .ForEachItem(x =>
-                {
-                    if (sessions > 0)
+                    if(sessions > 0)
                     {
                         x.InArrears = false;
                         x.PurchaseBatchNumber = payment.PaymentBatchId.ToString();
-                        x.Cost = payment.FullHourPrice;
+                        x.Cost = price;
                         sessions--;
                     }
                 });
             for (int i = 0; i < sessions; i++)
             {
-                var session = new Session
-                                  {
-                                      Client = client,
-                                      Cost = payment.FullHourPrice,
-                                      AppointmentType = AppointmentType.Hour.ToString(),
-                                      PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
-                                  };
-                client.AddSession(session);
+                client.AddSession(new Session
+                {
+                    Client = client,
+                    Cost = price,
+                    AppointmentType = typeName,
+                    PurchaseBatchNumber = payment.PaymentBatchId.ToString(),
+                });
             }
         }
     }
