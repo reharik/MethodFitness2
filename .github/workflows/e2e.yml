@@ -1,0 +1,58 @@
+name: e2e
+
+# Browser tests against the QA site (http://qa.reports.methodfit.net).
+# QA must be running on the server:  Start-WebAppPool MethodFitness_QA
+#
+# Nothing is uploaded from these runs. QA's database is a copy of production,
+# so traces and screenshots would contain real names.
+
+# Runs as the last stage of the build workflow (build -> deploy to QA -> these
+# tests), and can be started by hand from the Actions tab.
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'test (the suite) or recon (print screen outlines)'
+        default: test
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-qa        # one run at a time against the small QA box
+  cancel-in-progress: false
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: tests/e2e
+    env:
+      E2E_USER: ${{ secrets.E2E_USER }}
+      E2E_PASS: ${{ secrets.E2E_PASS }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tests/e2e/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Check the QA site answers
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 http://qa.reports.methodfit.net/ || true)
+          echo "QA answered HTTP $code"
+          case "$code" in 2*|3*) ;; *) echo "::error::QA is not reachable (HTTP $code). Start it on the server with: Start-WebAppPool MethodFitness_QA"; exit 1;; esac
+      - name: Run the tests
+        if: github.event.inputs.suite != 'recon'
+        # While tests are being written, tests/e2e/.only may name the spec files to run.
+        run: |
+          if [ -s .only ]; then echo "running only: $(cat .only)"; npx playwright test $(cat .only); else npm test; fi
+      # Exploration output used while writing tests; runs when tests/e2e/.run-recon exists.
+      - name: Print screen outlines
+        if: always() && (github.event.inputs.suite == 'recon' || hashFiles('tests/e2e/.run-recon') != '')
+        run: npm run recon

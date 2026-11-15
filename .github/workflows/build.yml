@@ -8,6 +8,7 @@ on:
     branches:
       - production
       - 'modernize/**'
+      - 'feature/**'
   pull_request:
     branches:
       - production
@@ -15,6 +16,12 @@ on:
 
 permissions:
   contents: write   # the last step publishes the build as a prerelease
+
+# One pipeline at a time: there is a single QA site, and a deploy in the middle
+# of a test run breaks that run. A newer push waits, then replaces older waiting ones.
+concurrency:
+  group: qa-pipeline
+  cancel-in-progress: false
 
 env:
   PACKAGES_DIR: src\packages
@@ -24,6 +31,8 @@ jobs:
   build:
     runs-on: windows-2022   # same OS family as the production server
     timeout-minutes: 20
+    outputs:
+      build_tag: ${{ steps.publish.outputs.build_tag }}
 
     steps:
       - uses: actions/checkout@v4
@@ -133,25 +142,32 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-      # A rolling prerelease gives the server a plain download URL for the latest
-      # build, so deploying does not need a browser or a GitHub login on the box:
-      # https://github.com/<owner>/<repo>/releases/download/qa-latest/MF.Web.zip
-      - name: Publish build as the qa-latest prerelease
+      # A rolling prerelease gives the server a plain download URL for a build, so
+      # deploying does not need a browser or a GitHub login on the box.
+      #   production branch  -> tag "qa-latest"      (what Deploy-MethodFit.ps1 fetches by default)
+      #   any other branch   -> tag "qa-<branch>"    (deploy with -Build qa-<branch>)
+      # Keeping them apart means an unreviewed branch can never be what a plain
+      # "deploy to PROD" picks up.
+      - name: Publish the build as a prerelease
+        id: publish
         if: github.event_name == 'push'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          $tag = if ($env:GITHUB_REF_NAME -eq 'production') { 'qa-latest' } else { 'qa-' + ($env:GITHUB_REF_NAME -replace '[^A-Za-z0-9]+', '-').ToLower() }
+          "BUILD_TAG=$tag" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "build_tag=$tag" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           7z a -tzip MF.Web.zip .\artifacts\MF.Web\* | Select-Object -Last 3
           if ($LASTEXITCODE -ne 0) { throw '7z failed' }
-          gh release delete qa-latest --yes --cleanup-tag 2>$null
+          gh release delete $tag --yes --cleanup-tag 2>$null
           $global:LASTEXITCODE = 0
           $short = $env:GITHUB_SHA.Substring(0, 7)
-          gh release create qa-latest MF.Web.zip --prerelease --target $env:GITHUB_SHA `
-            --title "QA build $short ($env:GITHUB_REF_NAME)" `
+          gh release create $tag MF.Web.zip --prerelease --target $env:GITHUB_SHA `
+            --title "Build $short ($env:GITHUB_REF_NAME)" `
             --notes "MF.Web site built from $env:GITHUB_SHA on .NET Framework 4.8. Does not include the root Web.config."
           if ($LASTEXITCODE -ne 0) { throw 'gh release create failed' }
-
+          Write-Host "published as $tag"
 
       # Runs the real deploy script under Windows PowerShell 5.1 (what the server has)
       # against a throwaway copy of the site, using the build published just above.
@@ -168,11 +184,11 @@ jobs:
           Remove-Item "$site\bin\MF.Web.dll"
 
           Write-Host '--- compare'
-          .\deploy\Deploy-MethodFit.ps1 -Target QA -Compare
+          .\deploy\Deploy-MethodFit.ps1 -Target QA -Build $env:BUILD_TAG -Compare
           if (Test-Path "$site\bin\MF.Web.dll") { throw 'compare mode changed the site' }
 
           Write-Host '--- deploy'
-          .\deploy\Deploy-MethodFit.ps1 -Target QA
+          .\deploy\Deploy-MethodFit.ps1 -Target QA -Build $env:BUILD_TAG
           if (-not (Test-Path "$site\bin\MF.Web.dll")) { throw 'MF.Web.dll was not deployed' }
           if ((Get-Content "$site\Web.config" -Raw) -notmatch 'server copy') { throw 'Web.config was overwritten' }
           if (-not (Test-Path "$site\uploaded-on-server.txt")) { throw 'a server-only file was deleted' }
@@ -185,8 +201,20 @@ jobs:
         if: github.event_name == 'push'
         shell: powershell
         run: |
+          # LocalDB on the hosted runner sometimes fails its first start; recreate and retry.
+          $ErrorActionPreference = 'Continue'
+          $started = $false
+          foreach ($try in 1..3) {
+            sqllocaldb start MSSQLLocalDB 2>&1 | Out-Null
+            if ($LASTEXITCODE -eq 0) { $started = $true; break }
+            Write-Host "LocalDB did not start (attempt $try); recreating the instance"
+            sqllocaldb stop MSSQLLocalDB -k 2>&1 | Out-Null
+            sqllocaldb delete MSSQLLocalDB 2>&1 | Out-Null
+            sqllocaldb create MSSQLLocalDB 2>&1 | Out-Null
+            Start-Sleep -Seconds 5
+          }
+          if (-not $started) { throw 'LocalDB would not start on this runner' }
           $ErrorActionPreference = 'Stop'
-          sqllocaldb start MSSQLLocalDB | Out-Null
           $srv = '(localdb)\MSSQLLocalDB'
           $c = New-Object System.Data.SqlClient.SqlConnection "Server=$srv;Database=master;Integrated Security=True"
           $c.Open()
@@ -216,3 +244,49 @@ jobs:
           if (-not $refused) { throw 'the script agreed to overwrite a PROD database' }
           $c.Close()
           Write-Host 'refresh script OK'
+
+  # Tells the server to deploy the build just published to the QA site.
+  # GitHub proves its identity to AWS (no stored keys) and may run exactly one
+  # Systems Manager document, MethodFit-DeployQA, which is fixed to -Target QA.
+  # PROD is never deployed from here: that stays a command typed on the server.
+  deploy-qa:
+    needs: build
+    if: github.event_name == 'push' && needs.build.outputs.build_tag != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-2
+      - name: Deploy to QA
+        env:
+          INSTANCE_ID: ${{ secrets.AWS_INSTANCE_ID }}
+          BUILD_TAG: ${{ needs.build.outputs.build_tag }}
+        run: |
+          id=$(aws ssm send-command --document-name MethodFit-DeployQA --instance-ids "$INSTANCE_ID" \
+                 --parameters "Build=$BUILD_TAG" --comment "deploy $BUILD_TAG ($GITHUB_SHA)" \
+                 --query Command.CommandId --output text)
+          echo "sent deploy of $BUILD_TAG"
+          status=Pending
+          for i in $(seq 1 90); do
+            sleep 5
+            status=$(aws ssm get-command-invocation --command-id "$id" --instance-id "$INSTANCE_ID" --query Status --output text 2>/dev/null || echo Pending)
+            case "$status" in Pending|InProgress|Delayed) ;; *) break ;; esac
+          done
+          aws ssm get-command-invocation --command-id "$id" --instance-id "$INSTANCE_ID" --query StandardOutputContent --output text | tail -n 6
+          if [ "$status" != "Success" ]; then
+            aws ssm get-command-invocation --command-id "$id" --instance-id "$INSTANCE_ID" --query StandardErrorContent --output text | tail -n 20
+            echo "::error::deploy to QA ended with status $status"; exit 1
+          fi
+
+  # Browser tests against the QA site that was just deployed.
+  e2e:
+    needs: deploy-qa
+    permissions:
+      contents: read
+    uses: ./.github/workflows/e2e.yml
+    secrets: inherit

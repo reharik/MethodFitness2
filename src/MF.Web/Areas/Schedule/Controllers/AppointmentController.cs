@@ -226,7 +226,8 @@ namespace MF.Web.Areas.Schedule.Controllers
                 return notification;
             }
             var surroundingApts = _repository.Query<Appointment>(x => x.StartTime < endTime
-                && x.EndTime > startTime).Where(x => x.Location.EntityId == input.LocationEntityId).ToList();
+                && x.EndTime > startTime).Where(x => x.Location.EntityId == input.LocationEntityId
+                    && x.EntityId != input.EntityId).ToList();
 
             var map = new TimeMap();
             var length = 0;
@@ -234,7 +235,7 @@ namespace MF.Web.Areas.Schedule.Controllers
             var locationSlots = 999;
             if(input.LocationEntityId == 2)
             {
-                locationSlots = 5;
+                locationSlots = 4;
             }
             if(input.LocationEntityId == 1)
             {

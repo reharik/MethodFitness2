@@ -219,6 +219,7 @@
     <Compile Include="Areas\Billing\Controllers\TrainerSessionViewController.cs" />
     <Compile Include="Areas\Billing\Controllers\PayTrainerListController.cs" />
     <Compile Include="Areas\Billing\Controllers\PayTrainerController.cs" />
+    <Compile Include="Areas\Billing\Controllers\SessionCompletionController.cs" />
     <Compile Include="Areas\Billing\Controllers\ClientPurchaseController.cs" />
     <Compile Include="Areas\Billing\Controllers\ClientPurchaseListController.cs" />
     <Compile Include="Areas\Reporting\Controllers\ActivityController.cs" />

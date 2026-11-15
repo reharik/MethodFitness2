@@ -130,7 +130,8 @@ namespace MF.Web.Areas.Schedule.Controllers
             // nice to pull this off user
             var currentTime = DateTime.Now.LocalizedDateTime("Eastern Standard Time");
             var original = new DateTime(osd.Value.Year, osd.Value.Month, osd.Value.Day, ost.Value.Hour, ost.Value.Minute, 0);
-            if ((original < currentTime.AddHours(8) || input.StartTime < currentTime.AddHours(8))
+            var cutOff = currentTime.AddHours(6);
+            if ((original < cutOff || input.StartTime < cutOff)
                 && !_authorizationService.IsAllowed(user, "/Calendar/CanEnterRetroactiveAppointments"))
             {
                 notification.Success = false;
