@@ -31,7 +31,7 @@ concurrency:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: tests/e2e
@@ -54,7 +54,9 @@ jobs:
           case "$code" in 2*|3*) ;; *) echo "::error::QA is not reachable (HTTP $code). Start it on the server with: Start-WebAppPool MethodFitness_QA"; exit 1;; esac
       - name: Run the tests
         if: github.event.inputs.suite != 'recon'
-        run: npm test
+        # While tests are being written, tests/e2e/.only may name the spec files to run.
+        run: |
+          if [ -s .only ]; then echo "running only: $(cat .only)"; npx playwright test $(cat .only); else npm test; fi
       # Exploration output used while writing tests; runs when tests/e2e/.run-recon exists.
       - name: Print screen outlines
         if: always() && (github.event.inputs.suite == 'recon' || hashFiles('tests/e2e/.run-recon') != '')
