@@ -37,10 +37,12 @@ test.describe('arrears', () => {
         expect(await arrearsFlags(page, trainer.id, client.lastName), 'three sessions owed').toEqual(['True', 'True', 'True']);
 
         await purchaseSingles(page, client, type, 1);
-        expect(await arrearsFlags(page, trainer.id, client.lastName), 'buying one clears exactly one').toEqual(['False', 'True', 'True']);
+        const afterOne = await arrearsFlags(page, trainer.id, client.lastName);
+        expect(afterOne, `buying one clears exactly one (in-arrears flags were ${afterOne.join(',')})`).toEqual(['False', 'True', 'True']);
 
         await purchaseSingles(page, client, type, 2);
-        expect(await arrearsFlags(page, trainer.id, client.lastName), 'buying two more clears the rest').toEqual(['False', 'False', 'False']);
+        const afterThree = await arrearsFlags(page, trainer.id, client.lastName);
+        expect(afterThree, `buying two more clears the rest (in-arrears flags were ${afterThree.join(',')})`).toEqual(['False', 'False', 'False']);
       } finally {
         await payEverythingPayable(page, trainer.id).catch(() => 0);
         console.log(`test client afterwards: ${await archiveClient(page, client.lastName).catch(() => 'failed')}`);
