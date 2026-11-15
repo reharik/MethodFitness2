@@ -136,3 +136,15 @@ export async function cellUnder(page: Page, screen: string, rowText: string, hea
     return row ? (row.querySelectorAll('td')[column]?.textContent ?? '').trim() : undefined;
   }, { rowText, heading });
 }
+
+/** One column's text for every list row containing rowText. Returns values only, never the row. */
+export async function cellsUnder(page: Page, screen: string, rowText: string, heading: string): Promise<string[]> {
+  return page.locator(`#${screen}`).evaluate((root, { rowText, heading }) => {
+    const heads = Array.from(root.querySelectorAll('.ui-jqgrid-htable th')).map((th) => (th.textContent ?? '').trim());
+    const column = heads.indexOf(heading);
+    if (column < 0) return [];
+    return Array.from(root.querySelectorAll('.ui-jqgrid-btable tr.jqgrow'))
+      .filter((r) => (r.textContent ?? '').includes(rowText))
+      .map((r) => (r.querySelectorAll('td')[column]?.textContent ?? '').trim());
+  }, { rowText, heading });
+}

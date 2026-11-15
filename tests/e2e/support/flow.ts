@@ -18,12 +18,12 @@ export async function clickSlot(page: Page, slotRow: number, dayFraction: number
 }
 
 /** Fills in and saves the appointment form that clickSlot opened. */
-export async function saveAppointment(page: Page, trainer: TestTrainer, client: TestClient, notes: string): Promise<void> {
+export async function saveAppointment(page: Page, trainer: TestTrainer, client: TestClient, notes: string, type: SessionType = 'Hour'): Promise<void> {
   const form = '#editModule';
   await page.locator(`${form} [name="LocationEntityId"]`).selectOption({ index: 1 });
   await page.locator(`${form} [name="TrainerEntityId"]`).selectOption(trainer.id);
   await pickToken(page, `${form} #token-input-ClientsDtos`, client.lastName.slice(0, 12), client.lastName);
-  await page.locator(`${form} [name="AppointmentType"]`).selectOption({ label: 'Hour' });
+  await page.locator(`${form} [name="AppointmentType"]`).selectOption({ label: type });
   await setField(page, form, 'Notes', notes);
   expectSaved(await submitAndRead(page, () => dialogButton(page, 'Save').click()));
   await settle(page, 1000);
@@ -37,8 +37,9 @@ export async function saveAppointment(page: Page, trainer: TestTrainer, client: 
  * next week and then moves the date back. The day and time vary with the client
  * so repeated runs do not land on the same slot for the test trainer.
  */
-export async function bookPastAppointment(page: Page, trainer: TestTrainer, client: TestClient): Promise<void> {
-  const seed = Number(client.id);
+export async function bookPastAppointment(page: Page, trainer: TestTrainer, client: TestClient, type: SessionType = 'Hour', nth = 0): Promise<void> {
+  // nth spreads several appointments for one client over different days
+  const seed = Number(client.id) + nth * 5;
   await openRoute(page, 'calendar');
   await page.locator('#calendar .fc-button-next').click();
   await settle(page, 800);
@@ -49,7 +50,7 @@ export async function bookPastAppointment(page: Page, trainer: TestTrainer, clie
   const times = page.locator(`${form} [name="StartTimeString"] option`);
   const count = await times.count();
   if (count > 4) await page.locator(`${form} [name="StartTimeString"]`).selectOption({ index: 2 + (seed % (count - 4)) });
-  await saveAppointment(page, trainer, client, 'created by the browser tests');
+  await saveAppointment(page, trainer, client, 'created by the browser tests', type);
 }
 
 export interface CompletionRun { Success: boolean; Message?: string; Appointments?: { ClientId: number; InArrears: boolean }[] }
@@ -68,17 +69,25 @@ export async function runSessionCompletion(page: Page): Promise<CompletionRun | 
 }
 
 /** Records a purchase of full-hour sessions for a client. */
-export async function purchaseHours(page: Page, client: TestClient, count: number): Promise<void> {
+/** The three kinds of session, as the appointment form labels them, and the purchase-form field that buys singles of each. */
+export type SessionType = 'Hour' | 'Half Hour' | 'Pair';
+export const SINGLE_FIELD: Record<SessionType, string> = { 'Hour': 'FullHour', 'Half Hour': 'HalfHour', 'Pair': 'Pair' };
+
+/** Buys `count` single sessions of one kind for a client. */
+export async function purchaseSingles(page: Page, client: TestClient, type: SessionType, count: number): Promise<void> {
+  const field = SINGLE_FIELD[type];
   await openRoute(page, `clientpurchaselist/${client.id}`);
   await gridReady(page, 'clientpurchaselist');
   await page.locator('#clientpurchaselist #new').click();
-  await expect(page.locator('[name="FullHour"]:visible')).toBeVisible();
+  await expect(page.locator(`[name="${field}"]:visible`)).toBeVisible();
   const form = '#' + new URL(page.url()).hash.slice(1).split('/')[0];
-  await setField(page, form, 'FullHour', String(count));
+  await setField(page, form, field, String(count));
   await setField(page, form, 'Notes', 'created by the browser tests');
   expectSaved(await submitAndRead(page, () => page.locator(`${form} #save`).click()));
   await gridReady(page, 'clientpurchaselist');
 }
+
+export const purchaseHours = (page: Page, client: TestClient, count: number) => purchaseSingles(page, client, 'Hour', count);
 
 /**
  * Opens a trainer's pay screen from a fresh page load. The screen builds its
