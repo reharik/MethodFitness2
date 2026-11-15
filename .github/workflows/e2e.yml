@@ -6,15 +6,10 @@ name: e2e
 # Nothing is uploaded from these runs. QA's database is a copy of production,
 # so traces and screenshots would contain real names.
 
+# Runs as the last stage of the build workflow (build -> deploy to QA -> these
+# tests), and can be started by hand from the Actions tab.
 on:
-  push:
-    branches:
-      - production
-      - 'e2e/**'
-      - 'feature/**'
-    paths:
-      - 'tests/e2e/**'
-      - '.github/workflows/e2e.yml'
+  workflow_call:
   workflow_dispatch:
     inputs:
       suite:
