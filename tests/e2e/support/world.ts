@@ -7,8 +7,10 @@ import { expectSaved, listRows, openRoute, searchList, setField, settle, stamp, 
 export interface TestClient { lastName: string; id: string }
 export interface TestTrainer { lastName: string; id: string; loginName: string; password: string }
 
-/** The one trainer account these tests use. Trainers cannot be deleted in the app, so it is reused. */
+/** The trainer account these tests use. Trainers cannot be deleted in the app, so it is reused. */
 export const TRAINER_LAST_NAME = 'E2ETrainerMain';
+/** A second reused trainer, standing in for "the other trainers" in the scheduling-rule tests. */
+export const OTHER_TRAINER_LAST_NAME = 'E2ETrainerB';
 
 function idFromHash(page: Page, screen: string): string {
   const match = new URL(page.url()).hash.match(new RegExp(`^#${screen}/(\\d+)`));
@@ -75,16 +77,17 @@ export async function archiveClient(page: Page, lastName: string): Promise<'arch
  * Makes sure the test trainer exists, has the given clients, and has a password
  * this run knows. Reuses the account from earlier runs when it is there.
  */
-export async function ensureTrainer(page: Page, clients: TestClient[] = []): Promise<TestTrainer> {
+export async function ensureTrainer(page: Page, clients: TestClient[] = [], lastName: string = TRAINER_LAST_NAME): Promise<TestTrainer> {
+  if (!lastName.startsWith('E2ETrainer')) throw new Error('refusing to touch a trainer these tests did not create');
   const password = `E2e-${stamp()}-pw9`;
-  const loginName = TRAINER_LAST_NAME.toLowerCase();
-  const exists = await openFromList(page, 'trainerlist', '#trainer', TRAINER_LAST_NAME);
+  const loginName = lastName.toLowerCase();
+  const exists = await openFromList(page, 'trainerlist', '#trainer', lastName);
   if (!exists) {
     await openRoute(page, 'trainerlist');
     await page.locator('#trainerlist #new').click();
     await expect(page.locator('#trainer [name="FirstName"]')).toBeVisible();
     await setField(page, '#trainer', 'FirstName', 'Auto');
-    await setField(page, '#trainer', 'LastName', TRAINER_LAST_NAME);
+    await setField(page, '#trainer', 'LastName', lastName);
     await setField(page, '#trainer', 'Email', `${loginName}@example.invalid`);
     await setField(page, '#trainer', 'PhoneMobile', '512-555-0101');
     await setField(page, '#trainer', 'UserLoginInfoLoginName', loginName);
@@ -93,11 +96,11 @@ export async function ensureTrainer(page: Page, clients: TestClient[] = []): Pro
   }
   await setField(page, '#trainer', 'Password', password);
   await setField(page, '#trainer', 'PasswordConfirmation', password);
-  for (const c of clients) await pickToken(page, '#trainer #token-input-ClientsDtos', c.lastName.slice(0, 12), c.lastName);
+  for (const c of clients) await pickToken(page, '#trainer #token-input-ClientsDtos', c.lastName, c.lastName);
   expectSaved(await submitAndRead(page, () => page.locator('#trainer #save').click()));
   await expect(page.locator('#trainerlist')).toBeVisible();
-  expect(await openFromList(page, 'trainerlist', '#trainer', TRAINER_LAST_NAME), 'the test trainer is in the trainer list').toBe(true);
-  return { lastName: TRAINER_LAST_NAME, id: idFromHash(page, 'trainer'), loginName, password };
+  expect(await openFromList(page, 'trainerlist', '#trainer', lastName), 'the test trainer is in the trainer list').toBe(true);
+  return { lastName, id: idFromHash(page, 'trainer'), loginName, password };
 }
 
 /** Types into one of the app's token pickers and chooses the matching suggestion. */

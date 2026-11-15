@@ -12,7 +12,8 @@ export async function clickSlot(page: Page, slotRow: number, dayFraction: number
   const box = await row.boundingBox();
   if (!box) throw new Error('calendar slot row not found');
   await page.mouse.click(box.x + box.width * dayFraction, box.y + box.height / 2);
-  await expect(page.locator('#editModule [name="TrainerEntityId"]')).toBeVisible();
+  // the location field: a trainer's form has no trainer field, an administrator's does
+  await expect(page.locator('#editModule [name="LocationEntityId"]')).toBeVisible();
   await settle(page);
 }
 
@@ -77,4 +78,51 @@ export async function purchaseHours(page: Page, client: TestClient, count: numbe
   await setField(page, form, 'Notes', 'created by the browser tests');
   expectSaved(await submitAndRead(page, () => page.locator(`${form} #save`).click()));
   await gridReady(page, 'clientpurchaselist');
+}
+
+/**
+ * Opens a trainer's pay screen from a fresh page load. The screen builds its
+ * date filter once per page, so revisiting it without a reload can leave it out.
+ */
+export async function openPayList(page: Page, trainerId: string): Promise<void> {
+  await page.goto(`/Scheduler?t=${Date.now()}#paytrainerlist/${trainerId}`);
+  await expect(page.locator('#paytrainerlist')).toBeVisible({ timeout: 30_000 });
+  await gridReady(page, 'paytrainerlist');
+}
+
+/** Applies the pay screen's End Date filter. */
+export async function filterPayList(page: Page, endDate: string): Promise<void> {
+  await setField(page, '#paytrainerlist', 'EndDate', endDate);
+  await page.locator('#paytrainerlist #search').click();
+  await gridReady(page, 'paytrainerlist');
+  await settle(page, 500);
+}
+
+/** Presses the pay button and confirms. The rows to pay must already be ticked. */
+export async function payTicked(page: Page): Promise<void> {
+  await expect(page.locator('#payTrainerButton'), 'the pay button shows once something payable is ticked').toBeVisible();
+  await page.locator('#payTrainerButton').click();
+  await expect(dialogButton(page, 'Ok')).toBeVisible();
+  expectSaved(await submitAndRead(page, () => dialogButton(page, 'Ok').click()));
+  await settle(page, 1000);
+  await gridReady(page, 'paytrainerlist');
+}
+
+const SELECT_ALL = '#paytrainerlist #cb_trainerPayment';
+export const selectAllBox = (page: Page) => page.locator(SELECT_ALL);
+
+/**
+ * Housekeeping for the test trainer: pays everything on the pay screen that can
+ * be paid, so sessions left by earlier runs do not pile up. Returns how many
+ * rows were on the list beforehand.
+ */
+export async function payEverythingPayable(page: Page, trainerId: string): Promise<number> {
+  await openPayList(page, trainerId);
+  const rows = await page.locator('#paytrainerlist .ui-jqgrid-btable tr.jqgrow').count();
+  const tickable = await page.locator('#paytrainerlist .ui-jqgrid-btable tr.jqgrow input.cbox').count();
+  if (tickable === 0) return rows;
+  await selectAllBox(page).check();
+  await settle(page, 300);
+  if (await page.locator('#payTrainerButton').isVisible()) await payTicked(page);
+  return rows;
 }

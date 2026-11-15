@@ -102,6 +102,10 @@ export function watchForTrouble(page: Page): { problems: string[] } {
     // Known, harmless: leaving a list's search box with text in it throws this
     // (mf.gridSearch.js calls submitSearch on the wrong object in its blur handler).
     if (e.message.includes('this.submitSearch is not a function')) return;
+    // Known, harmless: the calendar is the landing screen, and leaving it before it has
+    // finished drawing its trainer legend throws this (MF.ScheduleApp.Views.js). Only a
+    // test moves on that fast.
+    if (e.message.includes('.tmpl(...).appendTo is not a function')) return;
     problems.push(`script error: ${e.message.slice(0, 160)}`);
   });
   page.on('response', (r) => {
