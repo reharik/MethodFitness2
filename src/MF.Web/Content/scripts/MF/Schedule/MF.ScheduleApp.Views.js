@@ -627,6 +627,7 @@ MF.Views.ClientPurchaseDisplayView = MF.Views.View.extend({
     MF.mixin(this, "displayMixin");
     MF.mixin(this, "ajaxDisplayMixin");
     MF.mixin(this, "modelAndElementsMixin");
+    MF.mixin(this, "resultMixin");
   },
   viewLoaded: function () {
     MF.vent.bind("delete:" + this.id + ":success", this.deleteSuccess, this);
@@ -650,33 +651,8 @@ MF.Views.ClientPurchaseDisplayView = MF.Views.View.extend({
       .then($.proxy(this.deleteCallback, this));
   },
 
-  errorSelector: "#messageContainer",
-  // Same handling as formMixin.successHandler: errors go to the message bar
-  // through noty. (CC.notification, which ClientFormView's old delete called,
-  // is never created any more, so calling it throws and shows nothing.)
-  deleteCallback: function (_result) {
-    var that = this;
-    var result = typeof _result == "string" ? JSON.parse(_result) : _result;
-    if (!result.Success) {
-      if (result.Message) {
-        $(this.errorSelector).noty({
-          type: "error",
-          text: result.Message,
-          viewId: this.cid,
-          closeWith: ["button"],
-        });
-      }
-      _.each(result.Errors || [], function (item) {
-        $(that.errorSelector).noty({
-          type: "error",
-          text: item.ErrorMessage,
-          viewId: that.cid,
-          closeWith: ["button"],
-        });
-      });
-      return;
-    }
-    $.noty.closeAllErrorsByViewId(this.cid);
+  deleteCallback: function (result) {
+    if (!this.showResultErrors(result)) return;
     MF.vent.trigger("delete:" + this.id + ":success", result);
   },
   deleteSuccess: function (result) {
