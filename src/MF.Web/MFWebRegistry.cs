@@ -91,6 +91,7 @@ namespace MF.Web
             For<RulesEngineBase>().Use<DeleteEmployeeRules>().Named("DeleteClientRules");
             For<RulesEngineBase>().Add<DeleteTrainerRules>().Named("DeleteTrainerRules");
             For<RulesEngineBase>().Add<DeleteLocationRules>().Named("DeleteLocationRules");
+            For<RulesEngineBase>().Add<DeletePaymentRules>().Named("DeletePaymentRules");
 
             For<ISessionContext>().Use<SessionContext>();
             For<ICCSessionContext>().Use<SessionContext>();

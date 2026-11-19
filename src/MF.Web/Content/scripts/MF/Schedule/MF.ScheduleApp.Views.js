@@ -652,7 +652,13 @@ MF.Views.ClientPurchaseDisplayView = MF.Views.View.extend({
     MF.mixin(this, "ajaxDisplayMixin");
     MF.mixin(this, "modelAndElementsMixin");
   },
-  viewLoaded: function () {},
+  viewLoaded: function () {
+    MF.vent.bind("delete:" + this.id + ":success", this.deleteSuccess, this);
+  },
+  onClose: function () {
+    MF.vent.unbind("delete:" + this.id + ":success", this.deleteSuccess, this);
+    this._super("onClose", arguments);
+  },
   deleteItem: function () {
     if (!confirm("Delete this payment?")) return;
     MF.repository.ajaxPost(
@@ -667,7 +673,9 @@ MF.Views.ClientPurchaseDisplayView = MF.Views.View.extend({
     if (!CC.notification.handleResult(result, this.cid)) {
       return;
     }
-    // back to the client's payment list, reloading it
+    MF.vent.trigger("delete:" + this.id + ":success", result);
+  },
+  deleteSuccess: function (result) {
     MF.WorkflowManager.returnParentView(result, true);
   },
 });

@@ -39,6 +39,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var model = new ListViewModel()
             {
                 addUpdateUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
+                deleteMultipleUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.DeleteMultiple(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
                 gridDef = _paymentListGrid.GetGridDefinition(url,user),
                 _Title = WebLocalizationKeys.CLIENT_PAYMENTS.ToFormat(client.FullNameFNF),
                 ParentId = input.EntityId
