@@ -10,28 +10,42 @@
     <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
 }
 
-<div class="col left">
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.FullHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()
-    </div>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.HalfHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHour").ToHtmlTag()
-    </div>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.FullHourTenPack).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHourTenPack").ToHtmlTag()
-    </div>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.HalfHourTenPack).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("halfHourTenPack").ToHtmlTag()
-    </div>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.Pair).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pair").ToHtmlTag()
-    </div>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.PairTenPack).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("pairTenPack").ToHtmlTag()
-    </div>
-    <hr/>
-    <div class="fieldRow">
-        @Html.ViewFor(x => x.PaymentTotal).AddClassToRoot("two-thirds").AddClassToInput("payment_input disableInput").InputId("total").ToHtmlTag()
+@* Same row/span markup as AddUpdate.cshtml. The old "col left" / "fieldRow" /
+   "two-thirds" classes this view used are no longer in the stylesheets. *@
+<div class="form-scroll-inner form">
+    <div class="row">
+        <div class="span10">
+            <div class="row">
+                <h5 class="stdTxtColor ml2 span8">@WebLocalizationKeys.CLIENT_PURCHASE</h5>
+            </div>
+            <div class="row">
+                @Html.ViewFor(x => x.FullHour).Size("5").AddClassToInput("payment_input").ToHtmlTag()
+            </div>
+            <div class="row">
+                @Html.ViewFor(x => x.FullHourTenPack).Size("5").AddClassToInput("payment_input").ToHtmlTag()
+            </div>
+            <div class="row">
+                @Html.ViewFor(x => x.HalfHour).Size("5").AddClassToInput("payment_input").ToHtmlTag()
+            </div>
+            <div class="row">
+                @Html.ViewFor(x => x.HalfHourTenPack).Size("5").AddClassToInput("payment_input").ToHtmlTag()
+            </div>
+            <div class="row">
+                @Html.ViewFor(x => x.Pair).Size("5").AddClassToInput("payment_input").ToHtmlTag()
+            </div>
+            <div class="row">
+                @Html.ViewFor(x => x.PairTenPack).Size("5").AddClassToInput("payment_input").ToHtmlTag()
+            </div>
+            <div class="row">
+                <hr class="hrClear span5"/>
+            </div>
+            <div class="row">
+                @Html.ViewFor(x => x.PaymentTotal).Size("5").AddClassToInput("payment_input").ToHtmlTag()
+            </div>
+            <div class="row">
+                @Html.ViewFor(x => x.Notes).Size("8").AddClassToInput("payment_input").ToHtmlTag()
+            </div>
+        </div>
     </div>
 </div>
 @section FooterButtons
