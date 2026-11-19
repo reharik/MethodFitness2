@@ -94,7 +94,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var model = Mapper.Map<Payment, PaymentViewModel>(payment);
             model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
             model._deleteUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.Delete(null));
-model.ParentId = client.EntityId;
+            model.ParentId = client.EntityId;
             return new CustomJsonResult(model);
         }
 
@@ -121,13 +121,14 @@ model.ParentId = client.EntityId;
         private void removeSessionsByPayment(Client client, Payment payment)
         {
             _logger.LogInfo("Removing Sessions for ClientId: {0}, by paymentId: {1}", client.EntityId, payment.EntityId);
-            var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString());
+            // a list, not a live query: the loops below change the very fields it filters on
+            var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString()).ToList();
             sessions.Where(x => x.SessionUsed).ForEachItem(y =>
             {
                 y.InArrears = true;
                 y.PurchaseBatchNumber = string.Empty;
             });
-            sessions.Where(x => !x.SessionUsed).ToList<Session>.ForEachItem(client.RemoveSession);
+            sessions.Where(x => !x.SessionUsed).ToList().ForEachItem(client.RemoveSession);
         }
 
         public CustomJsonResult DeleteMultiple(BulkActionViewModel input)

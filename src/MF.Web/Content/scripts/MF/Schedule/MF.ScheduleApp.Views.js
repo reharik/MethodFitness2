@@ -667,9 +667,7 @@ MF.Views.ClientPurchaseDisplayView = MF.Views.View.extend({
     if (!CC.notification.handleResult(result, this.cid)) {
       return;
     }
-    MF.vent.trigger("delete:" + this.id + ":success", result);
-  },
-  deleteSuccess: function (result) {
+    // back to the client's payment list, reloading it
     MF.WorkflowManager.returnParentView(result, true);
   },
 });

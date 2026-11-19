@@ -16,8 +16,9 @@ namespace MF.Web.Grids
         {
             GridBuilder.LinkColumnFor(x => x.CreatedDate)
                 .ToPerformAction(ColumnAction.DisplayItem)
-                .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
-                .SecurityOperation("/Payment/Display");
+                .ToolTip(WebLocalizationKeys.DISPLAY_ITEM);
+            // no SecurityOperation: admins are denied "/Payment/Display" (it used to pick
+            // between the edit and read-only links), and everyone gets the read-only screen now
             GridBuilder.DisplayFor(x => x.PaymentTotal);
             GridBuilder.SetSearchField(x => x.CreatedDate);
             GridBuilder.SetDefaultSortColumn(x => x.CreatedDate);
