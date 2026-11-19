@@ -56,6 +56,7 @@ test.describe('deleting a payment', () => {
 
       const verdict = await deleteOnlyPayment(page, client);
       expect(verdict.Success, `the delete was refused: ${verdict.Message ?? ''}`).toBe(true);
+      await expect(page.locator('#clientpurchaselist'), 'after deleting, the screen goes back to the payment list').toBeVisible();
       expect(await paymentCount(page, client), 'the payment is gone from the list').toBe(0);
       const after = await arrearsFlags(page, trainer.id, client.lastName);
       expect(after, `the session it paid for is owed again (flags were ${after.join(',')})`).toEqual(['True']);
@@ -90,6 +91,7 @@ test.describe('deleting a payment', () => {
 
       const verdict = await deleteOnlyPayment(page, client);
       expect(verdict.Success, 'deleting a payment with a paid-out session is refused').toBe(false);
+      await expect(page.locator('.noty_bar:visible').first(), 'the reason for the refusal is shown on screen').toBeVisible();
       expect(await paymentCount(page, client), 'the payment is still there').toBe(1);
     } finally {
       console.log(`test client afterwards: ${await archiveClient(page, client.lastName).catch(() => 'failed')}`);
