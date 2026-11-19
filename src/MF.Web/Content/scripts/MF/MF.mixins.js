@@ -178,29 +178,6 @@ MF.mixins.formMixin = {
     }
 };
 
-// Shows what the server said went wrong, in the message bar.
-// Returns true when the result is a success, so a caller can write
-//     if (!this.showResultErrors(result)) return;
-// formMixin.successHandler and defaultGridEventsMixin.successHandler each carry
-// their own copy of this, welded to what they do next; new code should use this.
-MF.mixins.resultMixin = {
-    errorSelector:"#messageContainer",
-    showResultErrors:function(_result){
-        var that = this;
-        var result = typeof _result =="string" ? JSON.parse(_result) : _result;
-        if(result.Success){
-            $.noty.closeAllErrorsByViewId(this.cid);
-            return true;
-        }
-        var messages = _.pluck(result.Errors || [], "ErrorMessage");
-        if(result.Message){ messages.unshift(result.Message); }
-        _.each(messages,function(text){
-            $(that.errorSelector).noty({type: "error", text: text, viewId:that.cid, closeWith:['button']});
-        });
-        return false;
-    }
-};
-
 MF.mixins.displayMixin = {
     events:{
         'click #cancel' : 'cancel'

@@ -627,15 +627,10 @@ MF.Views.ClientPurchaseDisplayView = MF.Views.View.extend({
     MF.mixin(this, "displayMixin");
     MF.mixin(this, "ajaxDisplayMixin");
     MF.mixin(this, "modelAndElementsMixin");
-    MF.mixin(this, "resultMixin");
+    // for successHandler: show the server's errors, or go back to the list
+    MF.mixin(this, "formMixin");
   },
-  viewLoaded: function () {
-    MF.vent.bind("delete:" + this.id + ":success", this.deleteSuccess, this);
-  },
-  onClose: function () {
-    MF.vent.unbind("delete:" + this.id + ":success", this.deleteSuccess, this);
-    this._super("onClose", arguments);
-  },
+  viewLoaded: function () {},
   deleteItem: function () {
     if (!confirm("Delete this payment?")) return;
     // ajaxPostModel, not ajaxPost: ajaxPost sends the object as the text
@@ -648,15 +643,7 @@ MF.Views.ClientPurchaseDisplayView = MF.Views.View.extend({
           ParentId: this.model.ParentId(),
         }),
       )
-      .then($.proxy(this.deleteCallback, this));
-  },
-
-  deleteCallback: function (result) {
-    if (!this.showResultErrors(result)) return;
-    MF.vent.trigger("delete:" + this.id + ":success", result);
-  },
-  deleteSuccess: function (result) {
-    MF.WorkflowManager.returnParentView(result, true);
+      .then($.proxy(this.successHandler, this));
   },
 });
 
