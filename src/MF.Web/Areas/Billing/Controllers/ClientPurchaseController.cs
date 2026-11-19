@@ -136,7 +136,12 @@ namespace MF.Web.Areas.Billing.Controllers
             var client = _repository.Find<Client>(input.ParentId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
             IValidationManager validationManager = new ValidationManager(_repository);
-            
+            if (input.EntityIds == null || !input.EntityIds.Any())
+            {
+                // delete pressed with nothing ticked
+                return new CustomJsonResult(new Notification { Success = true });
+            }
+
             input.EntityIds.ForEachItem(x =>
             {
                 var payment = client.Payments.FirstOrDefault(i => i.EntityId == x);

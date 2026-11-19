@@ -44,7 +44,10 @@ MF.repository= (function(){
 		ajaxGet:async function(url, data){
 				throbber();
 			
-			const res = await fetch(url +"?"+ new URLSearchParams(data), {method:"GET", 
+			// a url may already carry a query (…?ParentId=5); then more goes on with "&"
+			const query = new URLSearchParams(data).toString();
+			const target = query ? url + (url.indexOf("?") < 0 ? "?" : "&") + query : url;
+			const res = await fetch(target, {method:"GET", 
 			// headers: {
 			// 		"Content-Type": "text/html; charset=utf-8"
 			// 	},

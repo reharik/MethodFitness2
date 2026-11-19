@@ -75,6 +75,8 @@ MF.Views.View = Backbone.View.extend({
         this.elementsViewmodel.destroy();
       }
       this.remove();
+      // a screen's error bars leave with it; otherwise they follow the user around
+      if($.noty && $.noty.closeAllErrorsByViewId){ $.noty.closeAllErrorsByViewId(this.cid); }
 
       this.closeChildren();
 
