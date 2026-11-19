@@ -84,7 +84,6 @@ namespace MF.Web.Controllers
             var model = Mapper.Map<Client, ClientViewModel>(client);
 
             model._Title = WebLocalizationKeys.CLIENT_INFORMATION.ToString();
-            model._deleteUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Delete(null));
             model._paymentListUrl = UrlContext.GetUrlForAction<ClientPurchaseListController>(x => x.ItemList(null), AreaName.Billing) + "?ParentId=" + client.EntityId;
             model._sessionsAvailable = clientSessionsDto;
             model._saveUrl = UrlContext.GetUrlForAction<ClientController>(x => x.Save(null));
@@ -93,37 +92,7 @@ namespace MF.Web.Controllers
             return new CustomJsonResult(model);
         }
 
-        public ActionResult Delete(ViewModel input)
-        {
-            var client = _repository.Find<Client>(input.EntityId);
-            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
-            var validationManager = rulesEngineBase.ExecuteRules(client);
-            if (validationManager.GetLastValidationReport().Success)
-            {
-                _repository.Delete(client);
-            }
-            var notification = validationManager.Finish();
-            return new CustomJsonResult(notification);
-
-        }
-
-        public ActionResult DeleteMultiple(BulkActionViewModel input)
-        {
-            var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeleteClientRules");
-            IValidationManager validationManager = new ValidationManager(_repository);
-            input.EntityIds.ForEachItem(x =>
-            {
-                var client = _repository.Find<Client>(x);
-                validationManager = rulesEngineBase.ExecuteRules(client, validationManager);
-                var report = validationManager.GetLastValidationReport();
-                if (report.Success)
-                {
-                    report.SuccessAction = a => _repository.Delete((Client)a);
-                }
-            });
-            var notification = validationManager.FinishWithAction();
-            return new CustomJsonResult(notification);
-        }
+        // No Delete actions: clients are never deleted, only archived (ClientStatus).
 
         public ActionResult Save(ClientViewModel input)
         {
@@ -221,7 +190,6 @@ namespace MF.Web.Controllers
 
     public class ClientViewModel:ViewModel
     {
-        public string _deleteUrl { get; set; }
         public string _paymentListUrl { get; set; }
         [Required]
         public string FirstName { get; set; }

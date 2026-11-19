@@ -42,13 +42,11 @@ namespace MF.Web.Controllers
             {
                 ArchiveClientUrl = UrlContext.GetUrlForAction<ClientController>(x => x.ClientStatus(null)),
                 addUpdateUrl = UrlContext.GetUrlForAction<ClientController>(x => x.AddUpdate(null)),
-                deleteMultipleUrl = UrlContext.GetUrlForAction<ClientController>(x => x.DeleteMultiple(null)),
                // PaymentUrl = UrlContext.GetUrlForAction<PaymentListController>(x => x.ItemList(null),AreaName.Billing),
                 gridDef = _clientListGrid.GetGridDefinition(url,user),
                 _Title = WebLocalizationKeys.CLIENTS.ToString()
             };
             model.headerButtons.Add("new");
-            model.headerButtons.Add("delete");
             if (_authorizationService.IsAllowed(user, "/ArchiveClient"))
             {
                 model.headerButtons.Add("toggleArchived");

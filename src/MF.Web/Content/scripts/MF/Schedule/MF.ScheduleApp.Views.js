@@ -556,7 +556,6 @@ MF.Views.AppointmentView = MF.Views.View.extend({
 MF.Views.ClientFormView = MF.Views.View.extend({
   events: _.extend({
     "click .client_payment": "payment",
-    "click .delete": "deleteItem",
     "click #save": "saveItem",
     "click #cancel": "cancel",
   }),
@@ -568,35 +567,12 @@ MF.Views.ClientFormView = MF.Views.View.extend({
   viewLoaded: function () {
     this._setupBindings();
   },
-  _setupBindings: function () {
-    MF.vent.bind("delete:" + this.id + ":success", this.deleteSuccess, this);
-  },
-  _unbindBindings: function () {
-    MF.vent.unbind("delete:" + this.id + ":success", this.deleteSuccess, this);
-  },
+  // Clients are never deleted, only archived (from the client list).
+  _setupBindings: function () {},
+  _unbindBindings: function () {},
   payment: function () {
     var id = this.model.EntityId();
     MF.vent.trigger("route", MF.generateRoute("clientpurchaselist", id), true);
-  },
-  deleteItem: function () {
-    if (confirm("Are you sure you would like to delete this Item?")) {
-      var id = this.model.EntityId();
-      MF.repository.ajaxPost(
-        this.model._deleteUrl,
-        { EntityId: id },
-        $.proxy(this.deleteCallback, this),
-      );
-    }
-  },
-  deleteCallback: function (_result) {
-    var result = typeof _result == "string" ? JSON.parse(_result) : _result;
-    if (!CC.notification.handleResult(result, this.cid)) {
-      return;
-    }
-    MF.vent.trigger("delete:" + this.id + ":success", result);
-  },
-  deleteSuccess: function (result) {
-    MF.WorkflowManager.returnParentView(result, true);
   },
   onClose: function () {
     this._unbindBindings();

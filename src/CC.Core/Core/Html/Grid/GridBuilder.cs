@@ -43,6 +43,25 @@ namespace CC.Core.Core.Html.Grid
 
         private List<IGridColumn> _columns = new List<IGridColumn>();
 
+        // A list asks "may this user see this column?" for every row. Each ask is a
+        // database query, so a 1,000 row list made 1,000 of them. The answer cannot
+        // change while one list is being built, so it is kept here. A builder lives
+        // for one request (StructureMap's default lifecycle), never longer.
+        private readonly Dictionary<string, bool> _allowed = new Dictionary<string, bool>();
+
+        private bool isAllowed(IUser user, string operation)
+        {
+            if (!operation.IsNotEmpty()) return true;
+            var key = (user == null ? 0 : user.EntityId) + "|" + operation;
+            bool allowed;
+            if (!_allowed.TryGetValue(key, out allowed))
+            {
+                allowed = _authorizationService.IsAllowed(user, operation);
+                _allowed[key] = allowed;
+            }
+            return allowed;
+        }
+
         private string _SortOnProperty;
 
         public List<IGridColumn> columns
@@ -55,8 +74,8 @@ namespace CC.Core.Core.Html.Grid
             var cellValues = new List<string>();
             foreach (var column in columns)
             {
-                bool isAllowed = !column.Operation.IsNotEmpty() || _authorizationService.IsAllowed(user, column.Operation);
-                if (isAllowed)
+                bool allowed = isAllowed(user, column.Operation);
+                if (allowed)
                 {
                     modifications.ForEachItem(x => x.Invoke(column, item));
                     string value = column.BuildColumn(item, gridName);
@@ -72,8 +91,8 @@ namespace CC.Core.Core.Html.Grid
             var values = new List<IDictionary<string, string>>();
             foreach (var column in columns)
             {
-                bool isAllowed = !column.Operation.IsNotEmpty() || _authorizationService.IsAllowed(user, column.Operation);
-                if (!isAllowed) continue;
+                bool allowed = isAllowed(user, column.Operation);
+                if (!allowed) continue;
                 values.Add(column.Properties);
             }
             return values;
