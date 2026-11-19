@@ -661,11 +661,17 @@ MF.Views.ClientPurchaseDisplayView = MF.Views.View.extend({
   },
   deleteItem: function () {
     if (!confirm("Delete this payment?")) return;
-    MF.repository.ajaxPost(
-      this.model._deleteUrl(),
-      { EntityId: this.model.EntityId(), ParentId: this.model.ParentId() },
-      $.proxy(this.deleteCallback, this),
-    );
+    // ajaxPostModel, not ajaxPost: ajaxPost sends the object as the text
+    // "[object Object]" and takes no callback, so the server saw EntityId 0.
+    MF.repository
+      .ajaxPostModel(
+        this.model._deleteUrl(),
+        JSON.stringify({
+          EntityId: this.model.EntityId(),
+          ParentId: this.model.ParentId(),
+        }),
+      )
+      .then($.proxy(this.deleteCallback, this));
   },
 
   deleteCallback: function (_result) {
