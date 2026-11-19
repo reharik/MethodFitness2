@@ -50,6 +50,7 @@ namespace MF.Core
         public static readonly StringToken CLIENT_HAS_APPOINTMENTS_IN_FUTURE = new CoreLocalizationKeys("CLIENT_HAS_APPOINTMENTS_IN_FUTURE", "This Client has {0} Appointment(s) in the Future.");
         public static readonly StringToken TRAINER_HAS_APPOINTMENTS_IN_FUTURE = new CoreLocalizationKeys("TRAINER_HAS_APPOINTMENTS_IN_FUTURE", "This Trainer has {0} Appointment(s) in the Future.");
         public static readonly StringToken LOCATION_HAS_APPOINTMENTS_IN_FUTURE = new CoreLocalizationKeys("LOCATION_HAS_APPOINTMENTS_IN_FUTURE", "This Location has {0} Appointment(s) in the Future.");
+        public static readonly StringToken PAYMENT_CONTAINS_SESSIONS_THAT_HAVE_BEEN_PAID_OUT = new CoreLocalizationKeys("PAYMENT_CONTAINS_SESSIONS_THAT_HAVE_BEEN_PAID_OUT", "This Payment has {0} Session(s) for which the trainer has been paid.");
 
         public static readonly StringToken LOCATION_HAS_NO_SPACE_AVAILABLE = new CoreLocalizationKeys("LOCATION_HAS_NO_SPACE_AVAILABLE", "This Location has no space available for Appointments at the selected time.");
 

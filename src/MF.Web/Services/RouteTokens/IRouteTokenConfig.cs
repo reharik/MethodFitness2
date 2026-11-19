@@ -35,7 +35,7 @@ namespace MF.Web.Services.RouteTokens
 
             _builder.UrlForList<ClientPurchaseListController>(x => x.ItemList(null), AreaName.Billing).ViewName("ClientPurchaseListView").End();
             _builder.UrlForForm<ClientPurchaseController>(x => x.AddUpdate(null), AreaName.Billing).ViewName("ClientPurchaseView").End();
-            _builder.UrlForDisplay<ClientPurchaseController>(x => x.Display(null), AreaName.Billing).End();
+            _builder.UrlForDisplay<ClientPurchaseController>(x => x.Display(null), AreaName.Billing).ViewName("ClientPurchaseDisplayView").End();
 
             _builder.UrlForList<PayTrainerListController>(x => x.ItemList(null), AreaName.Billing).ViewName("PayTrainerGridView").IsChild().End();
 

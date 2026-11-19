@@ -4,6 +4,7 @@ namespace MF.Core.Domain.Persistence
     {
         public PaymentMap()
         {
+            Map(x => x.PaymentBatchId);
             Map(x => x.FullHour);
             Map(x => x.FullHourTenPack);
             Map(x => x.HalfHour);

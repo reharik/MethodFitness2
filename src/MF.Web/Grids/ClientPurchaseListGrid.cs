@@ -15,10 +15,6 @@ namespace MF.Web.Grids
         protected override Grid<Payment> BuildGrid()
         {
             GridBuilder.LinkColumnFor(x => x.CreatedDate)
-                .ToPerformAction(ColumnAction.AddUpdateItem)
-                .ToolTip(WebLocalizationKeys.EDIT_ITEM)
-                .SecurityOperation("/Payment/AddUpdate");
-            GridBuilder.LinkColumnFor(x => x.CreatedDate)
                 .ToPerformAction(ColumnAction.DisplayItem)
                 .ToolTip(WebLocalizationKeys.DISPLAY_ITEM)
                 .SecurityOperation("/Payment/Display");

@@ -6,6 +6,10 @@
     Layout = "~/Views/Shared/_DisplayLayout.cshtml";
 }
 
+@section ExtraContentHeaderButtons{
+    <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+}
+
 <div class="col left">
     <div class="fieldRow">
         @Html.ViewFor(x => x.FullHour).AddClassToRoot("two-thirds").AddClassToInput("payment_input").InputId("fullHour").ToHtmlTag()

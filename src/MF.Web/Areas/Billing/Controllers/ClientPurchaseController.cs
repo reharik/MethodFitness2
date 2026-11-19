@@ -48,7 +48,6 @@ namespace MF.Web.Areas.Billing.Controllers
 
         public CustomJsonResult AddUpdate(ViewModel input)
         {
-//            var payment = input.EntityId > 0 ? _repository.Find<Payment>(input.EntityId) : new Payment();
             var client = _repository.Find<Client>(input.ParentId);
             var baseSessionRate = _repository.Query<BaseSessionRate>().FirstOrDefault();
             var payment = input.EntityId > 0 ? client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId) : new Payment();
@@ -78,7 +77,6 @@ namespace MF.Web.Areas.Billing.Controllers
             model._sessionRateDto = sessionRatesDto;
             model._sessionsAvailable = clientSessionsDto;
             model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
-            model._deleteUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x=>x.Delete(null));
             model.ParentId = client.EntityId;
             model._saveUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.Save(null));
             return new CustomJsonResult(model);
@@ -95,6 +93,8 @@ namespace MF.Web.Areas.Billing.Controllers
             var payment =  client.Payments.FirstOrDefault(x=>x.EntityId == input.EntityId);
             var model = Mapper.Map<Payment, PaymentViewModel>(payment);
             model._Title = WebLocalizationKeys.PAYMENT_INFORMATION.ToFormat(client.FullNameFNF);
+            model._deleteUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.Delete(null));
+model.ParentId = client.EntityId;
             return new CustomJsonResult(model);
         }
 
@@ -127,7 +127,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 y.InArrears = true;
                 y.PurchaseBatchNumber = string.Empty;
             });
-            sessions.Where(x => !x.SessionUsed).ForEachItem(client.RemoveSession);
+            sessions.Where(x => !x.SessionUsed).ToList<Session>.ForEachItem(client.RemoveSession);
         }
 
         public CustomJsonResult DeleteMultiple(BulkActionViewModel input)

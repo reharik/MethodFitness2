@@ -19,13 +19,12 @@ namespace MF.Core.Rules
         public ValidationReport Execute<ENTITY>(ENTITY trainer) where ENTITY : Entity
         {
             var result = new ValidationReport { Success = true };
-//            var _trainer = trainer as User;
-//            var appointments = _repository.Query<Appointment>(x => x.Trainer == _trainer);
-//            if (appointments.Any())
-//            {
-//                result.Success = false;
-//                result.AddErrorInfo(new ErrorInfo("Rule", CoreLocalizationKeys.TRAINER_HAS_APPOINTMENTS_IN_FUTURE.ToFormat(appointments.Count())));
-//            }
+            var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString() && x.TrainerPaid);
+            if(sessions.Count() > 0)
+           {
+               result.Success = false;
+               result.AddErrorInfo(new ErrorInfo("Rule", CoreLocalizationKeys.PAYMENT_CONTAINS_SESSIONS_THAT_HAVE_BEEN_PAID_OUT.ToFormat(sessions.Count())));
+           }
             return result;
         }
     }
