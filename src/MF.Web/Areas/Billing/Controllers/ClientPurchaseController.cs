@@ -125,11 +125,12 @@ namespace MF.Web.Areas.Billing.Controllers
         private void removeSessionsByPayment(Client client, Payment payment)
         {
             _logger.LogInfo("Removing Sessions for ClientId: {0}, by paymentId: {1}", client.EntityId, payment.EntityId);
-            // a list, not a live query: the loops below change the very fields it filters on
+            var batch = payment.PaymentBatchId.ToString();
+            // lists, not live queries: the loops below change the very fields they filter on
             var spares = client.Sessions
                 .Where(x => x.PurchaseBatchNumber != batch && !x.SessionUsed)
                 .OrderBy(x => x.CreatedDate)
-                .ToList();var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString()).ToList();
+                .ToList();
             var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == batch).ToList();
 
             sessions.Where(x => x.SessionUsed).ForEachItem(y =>
@@ -137,10 +138,11 @@ namespace MF.Web.Areas.Billing.Controllers
                 var unused = spares.FirstOrDefault(x => x.AppointmentType == y.AppointmentType);
                 if(unused!=null)
                 {
+                    // a session from another payment takes over this appointment
                     spares.Remove(unused);
                     unused.Date = y.Date;
                     unused.Appointment = y.Appointment;
-                    unused.trainer = y.Trainer;
+                    unused.Trainer = y.Trainer;
                     unused.TrainerVerified = y.TrainerVerified;
                     unused.SessionUsed = true;
                     client.RemoveSession(y);

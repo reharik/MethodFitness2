@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
-import { login } from '../support/session';
+import { login, logout } from '../support/session';
 import { acceptDialogs, cellsUnder, gridReady, openRoute, SaveResult, settle, submitAndRead, watchForTrouble } from '../support/app';
 import { archiveClient, createClient, ensureTrainer, TestClient } from '../support/world';
 import { bookPastAppointment, payEverythingPayable, purchaseSingles, runSessionCompletion } from '../support/flow';
@@ -26,6 +26,24 @@ async function deleteOnlyPayment(page: Page, client: TestClient): Promise<SaveRe
   const button = page.locator('.content-header button.delete:visible').last();
   await expect(button, 'a payment opens with a delete button').toBeVisible();
   expect(await page.locator('#save:visible').count(), 'an existing payment opens read-only, with no save button').toBe(0);
+  return submitAndRead(page, () => button.click());
+}
+
+/** Opens whichever of the client's payments has the smallest total and presses delete. */
+async function deleteSmallestPayment(page: Page, client: TestClient): Promise<SaveResult> {
+  await paymentCount(page, client);
+  // totals only; picks the row without reading anything else from it
+  const index = await page.locator('#clientpurchaselist').evaluate((root) => {
+    const heads = Array.from(root.querySelectorAll('.ui-jqgrid-htable th')).map((th) => (th.textContent ?? '').trim().toLowerCase());
+    const column = heads.findIndex((h) => h.includes('total'));
+    const totals = Array.from(root.querySelectorAll('.ui-jqgrid-btable tr.jqgrow'))
+      .map((r) => Number((r.querySelectorAll('td')[column]?.textContent ?? '').replace(/[^0-9.]/g, '')));
+    return column < 0 ? -1 : totals.indexOf(Math.min(...totals));
+  });
+  expect(index, 'the payment list shows a total for each payment').toBeGreaterThanOrEqual(0);
+  await page.locator('#clientpurchaselist .ui-jqgrid-btable tr.jqgrow').nth(index).locator('a').first().click();
+  const button = page.locator('.content-header button.delete:visible').last();
+  await expect(button, 'a payment opens with a delete button').toBeVisible();
   return submitAndRead(page, () => button.click());
 }
 
@@ -96,6 +114,90 @@ test.describe('deleting a payment', () => {
     } finally {
       console.log(`test client afterwards: ${await archiveClient(page, client.lastName).catch(() => 'failed')}`);
       if (notices.length) console.log(`messages the app showed: ${JSON.stringify(notices)}`);
+    }
+    expect(problems, problems.join('\n')).toEqual([]);
+  });
+
+  test('lets another payment cover the sessions already used, so nothing goes into arrears', async ({ page }) => {
+    test.setTimeout(420_000);
+    const { problems } = watchForTrouble(page);
+    const notices = acceptDialogs(page);
+    await login(page);
+    const client = await createClient(page);
+    const trainer = await ensureTrainer(page, [client]);
+
+    try {
+      // payment A: two hours, both used
+      await purchaseSingles(page, client, 'Hour', 2);
+      await bookPastAppointment(page, trainer, client, 'Hour', 0);
+      await bookPastAppointment(page, trainer, client, 'Hour', 1);
+      const first = await runSessionCompletion(page);
+      test.skip(first === undefined, NEEDS_ACTION);
+      expect(await arrearsFlags(page, trainer.id, client.lastName), 'both sessions were paid for by A').toEqual(['False', 'False']);
+
+      // payment B: three hours, none used yet
+      await purchaseSingles(page, client, 'Hour', 3);
+
+      const verdict = await deleteSmallestPayment(page, client);   // A has the smaller total
+      expect(verdict.Success, `the delete was refused: ${verdict.Message ?? ''}`).toBe(true);
+      expect(await paymentCount(page, client), 'only payment B is left').toBe(1);
+      const after = await arrearsFlags(page, trainer.id, client.lastName);
+      expect(after, `B covers the two used sessions, none is owed (flags were ${after.join(',')})`).toEqual(['False', 'False']);
+
+      // B had three hours and two now cover the old appointments: one is left
+      await bookPastAppointment(page, trainer, client, 'Hour', 2);
+      await bookPastAppointment(page, trainer, client, 'Hour', 3);
+      const second = await runSessionCompletion(page);
+      const ours = (second!.Appointments?.filter((a) => String(a.ClientId) === client.id) ?? []).map((a) => a.InArrears).sort();
+      expect(ours, 'exactly one of B\'s hours was left to use').toEqual([false, true]);
+    } finally {
+      await payEverythingPayable(page, trainer.id).catch(() => 0);
+      console.log(`test client afterwards: ${await archiveClient(page, client.lastName).catch(() => 'failed')}`);
+      if (notices.length) console.log(`messages the app showed: ${JSON.stringify(notices)}`);
+    }
+    expect(problems, problems.join('\n')).toEqual([]);
+  });
+
+  test('is for administrators: a trainer gets no delete button and is refused if they ask anyway', async ({ page }) => {
+    test.setTimeout(300_000);
+    const { problems } = watchForTrouble(page);
+    acceptDialogs(page);
+    await login(page);
+    const client = await createClient(page);
+    const trainer = await ensureTrainer(page, [client]);
+    let asAdmin = true;
+
+    try {
+      await purchaseSingles(page, client, 'Hour', 1);
+      await logout(page);
+      asAdmin = false;
+      await login(page, { user: trainer.loginName, pass: trainer.password });
+
+      expect(await paymentCount(page, client), 'the trainer sees the payment').toBe(1);
+      expect(await page.locator('#clientpurchaselist button.delete:visible').count(), 'no delete button on the trainer\'s payment list').toBe(0);
+      await page.locator('#clientpurchaselist .ui-jqgrid-btable tr.jqgrow a').first().click();
+      await expect(page.locator('#cancel:visible').last(), 'the payment opens read-only').toBeVisible();
+      expect(await page.locator('.content-header button.delete:visible').count(), 'no delete button on the payment itself').toBe(0);
+
+      // asking the server directly, as the trainer
+      const paymentId = Number(new URL(page.url()).hash.split('/')[1]);
+      expect(paymentId, 'the payment\'s id is in the address').toBeGreaterThan(0);
+      const allowed = await page.evaluate(async ({ id, parent }) => {
+        const r = await fetch('/ClientPurchase/Delete', {
+          method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json; charset=utf-8' },
+          body: JSON.stringify({ EntityId: id, ParentId: parent }),
+        });
+        try { return (await r.json()).Success === true; } catch { return false; }
+      }, { id: paymentId, parent: Number(client.id) });
+      expect(allowed, 'the server refuses a delete from a trainer').toBe(false);
+
+      await logout(page);
+      await login(page);
+      asAdmin = true;
+      expect(await paymentCount(page, client), 'the payment is still there').toBe(1);
+    } finally {
+      if (!asAdmin) { await logout(page).catch(() => {}); await login(page).catch(() => {}); }
+      console.log(`test client afterwards: ${await archiveClient(page, client.lastName).catch(() => 'failed')}`);
     }
     expect(problems, problems.join('\n')).toEqual([]);
   });

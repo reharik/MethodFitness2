@@ -4,7 +4,7 @@ import { acceptDialogs, cellUnder, expectSaved, gridReady, listRows, openRoute, 
 import { archiveClient, createClient, ensureTrainer, pickToken } from '../support/world';
 import { clickSlot, dialogButton, openPayList, payEverythingPayable, purchaseHours, runSessionCompletion } from '../support/flow';
 import { calendarData, calendarInfo, clearBookings, dragTo, offsiteLocation, PROVIDENCE, saveBooking, type CalendarInfo } from '../support/api';
-import { addDays, at, easternNow } from '../support/eastern';
+import { addDays, at, easternNow, lastSunday } from '../support/eastern';
 
 // A trainer's own week, signed in as the test trainer rather than as the
 // administrator: book a client, move the appointment, take a payment from a
@@ -162,9 +162,11 @@ test.describe('a trainer', () => {
     try {
       await payEverythingPayable(page, trainer.id);
       const adminInfo = await calendarInfo(page);
-      // the appointment happened three days ago; only an administrator can enter it after the fact
+      // The trainer's sign-off list only goes up to last Sunday, so the appointment is
+      // put on the Friday before it. ("Three days ago" only worked when run on a Sunday.)
+      // Only an administrator can enter it after the fact.
       expectSaved(await saveBooking(page, adminInfo, {
-        when: at(addDays(easternNow(), -3), 9), locationId: offsiteLocation(adminInfo) ?? PROVIDENCE, trainerId: trainer.id, clientIds: [client.id],
+        when: at(addDays(lastSunday(), -2), 9), locationId: offsiteLocation(adminInfo) ?? PROVIDENCE, trainerId: trainer.id, clientIds: [client.id],
       }));
       const run = await runSessionCompletion(page);
       expect(run, 'this site has the session completion action').toBeDefined();
