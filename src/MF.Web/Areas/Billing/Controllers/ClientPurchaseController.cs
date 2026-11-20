@@ -122,11 +122,28 @@ namespace MF.Web.Areas.Billing.Controllers
         {
             _logger.LogInfo("Removing Sessions for ClientId: {0}, by paymentId: {1}", client.EntityId, payment.EntityId);
             // a list, not a live query: the loops below change the very fields it filters on
-            var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString()).ToList();
+            var spares = client.Sessions
+                .Where(x => x.PurchaseBatchNumber != batch && !x.SessionUsed)
+                .OrderBy(x => x.CreatedDate)
+                .ToList();var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == payment.PaymentBatchId.ToString()).ToList();
+            var sessions = client.Sessions.Where(x => x.PurchaseBatchNumber == batch).ToList();
+
             sessions.Where(x => x.SessionUsed).ForEachItem(y =>
             {
-                y.InArrears = true;
-                y.PurchaseBatchNumber = string.Empty;
+                var unused = spares.FirstOrDefault(x => x.AppointmentType == y.AppointmentType);
+                if(unused!=null)
+                {
+                    spares.Remove(unused);
+                    unused.Date = y.Date;
+                    unused.Appointment = y.Appointment;
+                    unused.trainer = y.Trainer;
+                    unused.TrainerVerified = y.TrainerVerified;
+                    unused.SessionUsed = true;
+                    client.RemoveSession(y);
+                } else {
+                    y.InArrears = true;
+                    y.PurchaseBatchNumber = string.Empty;
+                }
             });
             sessions.Where(x => !x.SessionUsed).ToList().ForEachItem(client.RemoveSession);
         }
