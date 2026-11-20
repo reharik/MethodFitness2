@@ -45,7 +45,10 @@ namespace MF.Web.Areas.Billing.Controllers
                 ParentId = input.EntityId
             };
             model.headerButtons.Add("new");
-            model.headerButtons.Add("delete");
+            if (UserPermissionService.Allow("/Payment/AddUpdate"))
+            {
+                model.headerButtons.Add("delete");
+            }
             return new CustomJsonResult(model);
         }
 

@@ -100,6 +100,10 @@ namespace MF.Web.Areas.Billing.Controllers
 
         public CustomJsonResult Delete(ViewModel input)
         {
+            if (!UserPermissionService.Allow("/Payment/AddUpdate"))
+            {
+                return new CustomJsonResult(new Notification { Success = false, Message = "You do not have permission to delete payments." });
+            }
             _logger.LogInfo("Delete request for PaymentId {0}".ToFormat(input.EntityId));   
             var client = _repository.Find<Client>(input.ParentId);
             var payment = client.Payments.FirstOrDefault(x => x.EntityId == input.EntityId);
@@ -150,6 +154,10 @@ namespace MF.Web.Areas.Billing.Controllers
 
         public CustomJsonResult DeleteMultiple(BulkActionViewModel input)
         {
+            if (!UserPermissionService.Allow("/Payment/AddUpdate"))
+            {
+                return new CustomJsonResult(new Notification { Success = false, Message = "You do not have permission to delete payments." });
+            }
             var client = _repository.Find<Client>(input.ParentId);
             var rulesEngineBase = ObjectFactory.Container.GetInstance<RulesEngineBase>("DeletePaymentRules");
             IValidationManager validationManager = new ValidationManager(_repository);

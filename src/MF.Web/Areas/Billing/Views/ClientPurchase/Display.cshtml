@@ -7,7 +7,10 @@
 }
 
 @section ExtraContentHeaderButtons{
-    <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+     @if (UserPermissionService.Allow("/Payment/AddUpdate"))
+    {
+        <button class="delete" title="@WebLocalizationKeys.REMOVE"></button>
+    }
 }
 
 @* Same row/span markup as AddUpdate.cshtml. The old "col left" / "fieldRow" /
