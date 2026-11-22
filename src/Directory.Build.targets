@@ -1,0 +1,11 @@
+<Project>
+  <!--
+    Off Windows there is no installed .NET Framework to compile against, so point
+    the build at the reference assemblies that tools/linux-restore.py downloads.
+    With this, a plain `dotnet build` works on Linux, which is also what VS Code's
+    C# extension runs. Windows builds are untouched.
+  -->
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <TargetFrameworkRootPath>$(MSBuildThisFileDirectory)packages/Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.3/build/</TargetFrameworkRootPath>
+  </PropertyGroup>
+</Project>

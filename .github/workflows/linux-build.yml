@@ -5,7 +5,7 @@ name: linux-build
 on:
   push:
     branches: ['tools/**']
-    paths: ['tools/**', 'src/**/*.cs', 'src/**/*.csproj', '.github/workflows/linux-build.yml']
+    paths: ['tools/**', 'src/**/*.cs', 'src/**/*.csproj', 'src/Directory.Build.targets', '.github/workflows/linux-build.yml']
   workflow_dispatch:
 
 permissions:
@@ -19,3 +19,5 @@ jobs:
       - uses: actions/checkout@v4
       - run: dotnet --version
       - run: tools/linux-build.sh
+      - name: the way VS Code's C# extension builds
+        run: dotnet build src/MethodFitness.sln /property:GenerateFullPaths=true /p:Configuration=Debug /consoleloggerparameters:NoSummary -nologo -v:quiet
