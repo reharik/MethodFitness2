@@ -1,0 +1,15 @@
+{
+  // Ctrl+Shift+B compiles the C# on Linux (see tools/linux-build.sh).
+  // Errors land in the Problems panel; click one to jump to the line.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compile",
+      "type": "shell",
+      "command": "${workspaceFolder}/tools/linux-build.sh",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "silent", "panel": "dedicated", "clear": true },
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
