@@ -69,7 +69,7 @@ if [ "$mode" = "--dry-run" ]; then echo "dry run: nothing sent ($(du -h "$zip" |
 
 # The server has no access to the bucket. It gets a link that works for five minutes.
 key="qa-sync/$(date -u +%Y%m%dT%H%M%S)-$$.zip"
-aws s3 cp --quiet --region "$region" "$zip" "s3://$MF_SYNC_BUCKET/$key"
+aws s3 cp --only-show-errors --region "$region" "$zip" "s3://$MF_SYNC_BUCKET/$key"
 url=$(aws s3 presign --region "$region" --expires-in 300 "s3://$MF_SYNC_BUCKET/$key")
 
 params=$(python3 - "$url" "$site" <<'PY'
@@ -97,7 +97,7 @@ for _ in $(seq 1 60); do
   case "$status" in Pending|InProgress|Delayed) ;; *) break ;; esac
 done
 aws ssm get-command-invocation --region "$region" --command-id "$id" --instance-id "$MF_INSTANCE_ID" --query StandardOutputContent --output text | tail -n 3
-aws s3 rm --quiet --region "$region" "s3://$MF_SYNC_BUCKET/$key" || true
+aws s3 rm --only-show-errors --region "$region" "s3://$MF_SYNC_BUCKET/$key" || true
 if [ "$status" != "Success" ]; then
   aws ssm get-command-invocation --region "$region" --command-id "$id" --instance-id "$MF_INSTANCE_ID" --query StandardErrorContent --output text | tail -n 15
   echo "sync failed: $status"; exit 1
