@@ -7,5 +7,7 @@
   -->
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <TargetFrameworkRootPath>$(MSBuildThisFileDirectory)packages/Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.3/build/</TargetFrameworkRootPath>
+    <!-- worked out from the line above before this file is read, so it is set here too -->
+    <FrameworkPathOverride>$(TargetFrameworkRootPath).NETFramework/v4.8</FrameworkPathOverride>
   </PropertyGroup>
 </Project>
