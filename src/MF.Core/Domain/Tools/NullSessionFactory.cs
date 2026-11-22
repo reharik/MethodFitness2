@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Threading;
+using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.Engine;
 using NHibernate.Metadata;
@@ -15,7 +18,7 @@ namespace MF.Core.Domain.Tools
             throw new NotImplementedException();
         }
 
-        public ISession OpenSession(IDbConnection conn)
+        public ISession OpenSession(DbConnection conn)
         {
             throw new NotImplementedException();
         }
@@ -25,7 +28,7 @@ namespace MF.Core.Domain.Tools
             throw new NotImplementedException();
         }
 
-        public ISession OpenSession(IDbConnection conn, IInterceptor sessionLocalInterceptor)
+        public ISession OpenSession(DbConnection conn, IInterceptor sessionLocalInterceptor)
         {
             throw new NotImplementedException();
         }
@@ -110,7 +113,7 @@ namespace MF.Core.Domain.Tools
             throw new NotImplementedException();
         }
 
-        public IStatelessSession OpenStatelessSession(IDbConnection connection)
+        public IStatelessSession OpenStatelessSession(DbConnection connection)
         {
             throw new NotImplementedException();
         }
@@ -139,5 +142,16 @@ namespace MF.Core.Domain.Tools
         {
             get { throw new NotImplementedException(); }
         }
+        public ISessionBuilder WithOptions() { throw new NotImplementedException(); }
+        public IStatelessSessionBuilder WithStatelessOptions() { throw new NotImplementedException(); }
+        public Task CloseAsync(CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
+        public Task EvictAsync(Type persistentClass, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
+        public Task EvictAsync(Type persistentClass, object id, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
+        public Task EvictEntityAsync(string entityName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
+        public Task EvictEntityAsync(string entityName, object id, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
+        public Task EvictCollectionAsync(string roleName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
+        public Task EvictCollectionAsync(string roleName, object id, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
+        public Task EvictQueriesAsync(CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
+        public Task EvictQueriesAsync(string cacheRegion, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotImplementedException(); }
     }
 }

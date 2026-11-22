@@ -37,10 +37,11 @@ dotnet build "$root/src/MethodFitness.sln" -nologo -v:quiet -clp:NoSummary
 
 stage="$(mktemp -d)"; trap 'rm -rf "$stage"' EXIT
 mkdir -p "$stage/bin"
-for name in MF.Web MF.Core CC.Core; do
-  cp "$web/bin/$name.dll" "$stage/bin/"
-  [ -f "$web/bin/$name.pdb" ] && cp "$web/bin/$name.pdb" "$stage/bin/"
-done
+if [ "$mode" = "--all" ]; then
+  cp "$web"/bin/*.dll "$stage/bin/"     # every library, for when packages have changed
+else
+  for name in MF.Web MF.Core CC.Core; do cp "$web/bin/$name.dll" "$stage/bin/"; done
+fi
 
 newer=()
 if [ "$mode" != "--all" ] && [ -f "$stamp" ]; then newer=(-newer "$stamp"); fi

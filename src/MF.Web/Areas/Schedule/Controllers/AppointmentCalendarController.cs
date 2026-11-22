@@ -204,7 +204,7 @@ namespace MF.Web.Areas.Schedule.Controllers
                     && x.StartTime > DateTime.Now.AddHours(6)
                     && x.Trainer.EntityId != user.EntityId)
                 .OrderBy(x => x.StartTime)
-                .ForEach(appt =>
+                .ForEachItem(appt =>
             {
                 if (appt.StartTime != null && appt.EndTime != null)
                 {

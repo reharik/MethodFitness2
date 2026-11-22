@@ -5,6 +5,7 @@ using CC.Core.Core.DomainTools;
 using CC.Core.Core.Enumerations;
 using CC.Core.Core.Html;
 using CC.Core.Core.Html.Menu;
+using CC.Core.Utilities;
 using CC.Core.Core.ValidationServices;
 using MF.Core.Domain;
 using MF.Core.Enumerations;
@@ -40,7 +41,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 Trainer = trainer,
                 Total = input.paymentAmount
             };
-            input.eligableRows.ForEach(x=>{
+            input.eligableRows.ForEachItem(x=>{
 
                 var sessions = _repository.Query<Session>(s=>s.EntityId == x.id).Fetch(c=>c.Client);
                 var session = sessions.FirstOrDefault();

@@ -1,5 +1,4 @@
 using System;
-using JetBrains.Annotations;
 
 namespace CC.Core.Security.Impl
 {
@@ -21,8 +20,7 @@ namespace CC.Core.Security.Impl
         /// Guard.Against(string.IsNullOrEmpty(name), "Name must have a value");
         /// </code>
         /// </example>
-        [AssertionMethod]
-        public static void Against([AssertionCondition(AssertionConditionType.IS_FALSE)]bool assertion, string message)
+        public static void Against(bool assertion, string message)
         {
             if (assertion == false)
                 return;
@@ -44,8 +42,7 @@ namespace CC.Core.Security.Impl
         /// ]]>
         /// </code>
         /// </example>
-        [AssertionMethod]
-        public static void Against<TException>([AssertionCondition(AssertionConditionType.IS_FALSE)]bool assertion, string message) where TException : Exception
+        public static void Against<TException>(bool assertion, string message) where TException : Exception
         {
             if (assertion == false)
                 return;
