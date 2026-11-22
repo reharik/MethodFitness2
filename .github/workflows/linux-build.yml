@@ -19,5 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: dotnet --version
       - run: tools/linux-build.sh
+      - name: what a QA sync would send
+        run: tools/qa-sync.sh --dry-run
       - name: the way VS Code's C# extension builds
         run: dotnet build src/MethodFitness.sln /property:GenerateFullPaths=true /p:Configuration=Debug /consoleloggerparameters:NoSummary -nologo -v:quiet
