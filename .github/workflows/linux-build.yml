@@ -1,0 +1,21 @@
+name: linux-build
+
+# Proves that tools/linux-build.sh compiles the solution on Linux, so a
+# developer machine without Windows can check its C# before pushing.
+on:
+  push:
+    branches: ['tools/**']
+    paths: ['tools/**', 'src/**/*.cs', 'src/**/*.csproj', '.github/workflows/linux-build.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: dotnet --version
+      - run: tools/linux-build.sh
