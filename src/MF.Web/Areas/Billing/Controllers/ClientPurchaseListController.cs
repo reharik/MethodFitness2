@@ -14,6 +14,10 @@ using System.Linq;
 
 namespace MF.Web.Areas.Billing.Controllers
 {
+    public class ClientPurchaseListViewModel : ListViewModel
+    {
+        public bool NoMultiSelectGridView { get; set; }
+    }
     public class ClientPurchaseListController:MFController
     {
         private readonly IDynamicExpressionQuery _dynamicExpressionQuery;
@@ -36,7 +40,7 @@ namespace MF.Web.Areas.Billing.Controllers
             var user = _sessionContext.GetCurrentUser();
             var client = _repository.Find<Client>(input.EntityId);
             var url = UrlContext.GetUrlForAction<ClientPurchaseListController>(x => x.Purchase(null),AreaName.Billing) + "?ParentId=" + input.EntityId;
-            var model = new ListViewModel()
+            var model = new ClientPurchaseListViewModel()
             {
                 addUpdateUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.AddUpdate(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
                 deleteMultipleUrl = UrlContext.GetUrlForAction<ClientPurchaseController>(x => x.DeleteMultiple(null), AreaName.Billing) + "?ParentId=" + input.EntityId,
@@ -44,11 +48,12 @@ namespace MF.Web.Areas.Billing.Controllers
                 _Title = WebLocalizationKeys.CLIENT_PAYMENTS.ToFormat(client.FullNameFNF),
                 ParentId = input.EntityId
             };
-            model.headerButtons.Add("new");
-            if (UserPermissionService.Allow("/Payment/AddUpdate"))
-            {
+            var canDelete = UserPermissionService.Allow("/Payment/AddUpdate");
+            if (canDelete) {
                 model.headerButtons.Add("delete");
             }
+            model.NoMultiSelectGridView = !canDelete;
+
             return new CustomJsonResult(model);
         }
 
