@@ -1,12 +1,15 @@
-﻿<link href="../../Content/css/bootstrap.css" rel="stylesheet" />
-<link href="../../Content/css/jquery.miniColors.css" rel="stylesheet" />
-<link href="../../Content/css/fullcalendar.css" rel="stylesheet" />
-<link href="../../Content/css/token-input.css" rel="stylesheet" />
-<link href="../../Content/css/smoothness/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
-<link href="../../Content/css/fileinput.css" rel="stylesheet" />
-<link href="../../Content/css/ui.jqgrid.css" rel="stylesheet" />
-<link href="../../Content/css/fg.menu.css" rel="stylesheet" />
-<link href="../../Content/css/main.css" rel="stylesheet" />
-<link href="../../Content/css/mf.css" rel="stylesheet" />
-<link href="../../Content/css/CC.css" rel="stylesheet" /> 
-<link href="../../Content/css/mobile.css" rel="stylesheet" />
+﻿@* A version stamp on every link, taken from the site's build. Browsers keep these files
+   for a long time; without the stamp a deploy leaves people running old scripts with new pages. *@
+@{ var v = System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/bin/MF.Web.dll")).Ticks; }
+<link href="../../Content/css/bootstrap.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/jquery.miniColors.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/fullcalendar.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/token-input.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/smoothness/jquery-ui-1.10.0.custom.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/fileinput.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/ui.jqgrid.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/fg.menu.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/main.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/mf.css?v=@v" rel="stylesheet" />
+<link href="../../Content/css/CC.css?v=@v" rel="stylesheet" /> 
+<link href="../../Content/css/mobile.css?v=@v" rel="stylesheet" />
