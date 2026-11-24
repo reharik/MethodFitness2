@@ -23,6 +23,9 @@ if (typeof cc.grid == 'undefined') {
 //            height:"100%",
             width:"100%",
             autowidth:true,
+            // On a phone the columns keep a readable width and the list scrolls sideways,
+            // rather than every column being squeezed into the screen.
+            shrinkToFit: !MF.isPhone(),
             multiselect: true,
             // here we move the value of the entityId to ParentId since it's the Id of the containing element
             // and set EntityId to RowId as RowId is for the Particular entity we want to change

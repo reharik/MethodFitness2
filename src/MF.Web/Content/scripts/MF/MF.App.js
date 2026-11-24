@@ -24,6 +24,11 @@
 
 var MF = new Backbone.Marionette.Application();
 
+// True on a phone-sized screen. The same 700px line is in Content/css/mobile.css.
+MF.isPhone = function(){
+    return !!(window.matchMedia && window.matchMedia("(max-width: 700px)").matches);
+};
+
 
 MF.addRegions({
     header: "#main-header",

@@ -30,6 +30,12 @@
             eventResize: function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){MF.vent.trigger("calendar:"+calendarDefinition.id+":eventResize", event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view );}
         };
 
+        // A phone shows one day at a time, with the week a tap away; seven columns do not fit.
+        if (MF.isPhone()) {
+            calendarDefaultOptions.defaultView = 'agendaDay';
+            calendarDefaultOptions.header.right = 'agendaDay,agendaWeek';
+        }
+
         var calendarOptions = $.extend(calendarDefaultOptions, userOptions || {});
         var calendar = this;
         calendar.fullCalendar(calendarOptions);

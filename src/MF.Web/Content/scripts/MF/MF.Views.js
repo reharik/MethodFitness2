@@ -255,7 +255,8 @@ MF.Views.PopupView = MF.Views.View.extend({
 
         $(this.el).dialog({
             modal: true,
-            width: this.options.width||550,
+            // never wider than the screen (phones)
+            width: Math.min(this.options.width||550, $(window).width()-12),
             buttons:this.options.buttons,
             title: this.options.title,
             close:function(){

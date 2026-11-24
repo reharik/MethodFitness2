@@ -1,0 +1,102 @@
+/*
+ * Phone and tablet layout. Loaded last, and everything here sits inside a media
+ * query, so a desktop browser gets exactly what it had before.
+ *
+ *   up to 900px wide   phones, and tablets held upright: the menu goes behind a button
+ *   touch screens      taller calendar rows and bigger buttons, at any width
+ *   up to 700px wide   phones: day view, stacked forms, popups fitted to the screen
+ *
+ * The 700px line is also in MF.isPhone() (MF.App.js), which the calendar, the
+ * grids and the popups ask. Change both together.
+ */
+
+#menuToggle { display: none; }
+
+/* ---------- phones, and tablets held upright ---------- */
+@media (max-width: 900px) {
+    #main-header { min-width: 0; }
+
+    #menuToggle {
+        display: block;
+        position: absolute;
+        right: 8px;
+        bottom: 6px;
+        padding: 6px 14px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        background: #2f5a78;
+        border: 1px solid #23475f;
+        border-radius: 4px;
+    }
+
+    /* !important: the menu's own script shows it with an inline style */
+    #left-navigation {
+        display: none !important;
+        float: none;
+        position: absolute;
+        z-index: 900;
+        left: 0;
+        background: #fff;
+        border: 1px solid #b5b5b5;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.35);
+    }
+    body.menu-open #left-navigation { display: block !important; }
+    #left-navigation a { padding-top: 9px; padding-bottom: 9px; }
+
+    #main-content { margin: 6px 6px 0 6px; }
+
+    /* calendar: trainer legend becomes a strip across the top */
+    .legend { float: none; width: auto; margin: 4px; padding: 2px 4px; }
+    .legend .legendHeader, .legendItem { display: inline-block; clear: none; padding: 6px 8px; }
+    #legendItems { display: inline; }
+    .legendLabel { float: none; }
+    .calendarContainer { float: none; width: 100%; }
+}
+
+/* ---------- any touch screen ---------- */
+@media (pointer: coarse) {
+    /* a quarter-hour row tall enough for a fingertip; the calendar measures this itself */
+    .fc-agenda-slots td div { height: 28px; }
+    .fc-header .ui-state-default { padding: 5px 9px; }
+    .ui-dialog .ui-dialog-buttonpane button { padding: 5px 12px; font-size: 15px; }
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 700px) {
+    .content-outer .content-footer { display: none; }
+
+    /* calendar toolbar: arrows and "today" on the left, day/week on the right, date underneath */
+    .fc-header, .fc-header tbody, .fc-header tr { display: block; width: 100%; }
+    .fc-header { position: relative; }
+    .fc-header td { display: block; width: auto; white-space: nowrap; }
+    .fc-header td.fc-header-right { position: absolute; top: 0; right: 0; }
+    .fc-header td.fc-header-center { text-align: center; padding: 2px 0 4px; }
+    .fc-header-title h2 { font-size: 16px; margin: 0; }
+    .fc-event { font-size: 13px; }
+
+    /* forms: one field per line, full width */
+    .form .row, .ui-dialog .row { margin-left: 0; }
+    .form [class*="span"], .ui-dialog [class*="span"] { float: none; display: block; width: auto; margin-left: 0; }
+    .form input[type="text"], .form input[type="password"], .form select, .form textarea,
+    .ui-dialog input[type="text"], .ui-dialog select, .ui-dialog textarea {
+        font-size: 16px;            /* below 16px an iPhone zooms the page when a field is tapped */
+        height: auto;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    .form .view_label, .form .view_display { float: none; padding-left: 0; }
+    div.form-scroll-inner.form { height: auto !important; overflow: visible; }
+    div.footer { padding: 10px 8px; }
+    div.footer button { padding: 8px 18px; font-size: 15px; }
+
+    /* screen title: stays clear of the buttons and the search box */
+    .content-outer .content-header .title-name { position: static; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; }
+    .content-outer .content-header .title-added { display: none; }
+    .content-outer .content-header .search { width: 120px; right: 6px; background-size: 100% 100%; }
+
+    /* popups */
+    .ui-dialog { max-width: 100%; }
+    .ui-dialog .ui-dialog-content { padding: 6px; }
+}

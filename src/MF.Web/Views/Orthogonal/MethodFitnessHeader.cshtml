@@ -19,4 +19,9 @@
             @Html.ActionLink(WebLocalizationKeys.SIGN_IN.ToString(), "Login", "Login")
         }
         </span>
+        @if (Model.LoggedIn)
+        {
+            @* shown only on phones and upright tablets (mobile.css); opens the left menu *@
+            <button type="button" id="menuToggle">Menu</button>
+        }
     </div>

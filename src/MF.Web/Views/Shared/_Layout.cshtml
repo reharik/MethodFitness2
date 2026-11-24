@@ -10,6 +10,8 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
+    @* lets phones and tablets lay the page out at their own width; see Content/css/mobile.css *@
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     @Html.Partial("_CssScriptsDebugFalse")
     @RenderSection("ExtraCss", false)
     
