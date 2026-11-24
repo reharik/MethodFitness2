@@ -148,3 +148,46 @@ export async function cellsUnder(page: Page, screen: string, rowText: string, he
       .map((r) => (r.querySelectorAll('td')[column]?.textContent ?? '').trim());
   }, { rowText, heading });
 }
+
+/** A displayed amount as a number: "$1,234.50" and "1234.5" both give 1234.5. */
+export function money(text: string | null | undefined): number {
+  const cleaned = (text ?? '').replace(/[^0-9.\-]/g, '');
+  return cleaned === '' ? NaN : Number(cleaned);
+}
+
+/**
+ * One column of a list screen as numbers, for the rows containing rowText ('' for every row).
+ * The column is found by a word or two of its heading, in any letter case. When no heading
+ * matches, the error lists the headings the screen has (interface text, never data).
+ */
+export async function amountsUnder(page: Page, screen: string, rowText: string, headingPart: string): Promise<number[]> {
+  const found = await page.locator(`#${screen}`).evaluate((root, { rowText, headingPart }) => {
+    const heads = Array.from(root.querySelectorAll('.ui-jqgrid-htable th')).map((th) => (th.textContent ?? '').trim());
+    const column = heads.findIndex((h) => h.toLowerCase().includes(headingPart.toLowerCase()));
+    if (column < 0) return { heads, cells: null as string[] | null };
+    const cells = Array.from(root.querySelectorAll('.ui-jqgrid-btable tr.jqgrow'))
+      .filter((r) => (r.textContent ?? '').includes(rowText))
+      .map((r) => (r.querySelectorAll('td')[column]?.textContent ?? '').trim());
+    return { heads, cells };
+  }, { rowText, headingPart });
+  if (!found.cells) throw new Error(`the ${screen} list has no "${headingPart}" column; its headings are: ${found.heads.filter(Boolean).join(' | ')}`);
+  return found.cells.map(money);
+}
+
+/**
+ * The number a form or read-only screen is showing for one of its display fields (the
+ * read-only values next to a label, such as a payment's total), found by the field's name.
+ * Looks only at what is visible: the app keeps earlier screens in the page, hidden.
+ */
+export async function shownAmount(page: Page, name: string): Promise<number> {
+  const found = await page.locator('body').evaluate((root, name) => {
+    const bound = Array.from(root.querySelectorAll('.view_display [data-bind]'))
+      .filter((e) => (e as HTMLElement).offsetParent !== null);
+    const wanted = new RegExp(`:\\s*${name}\\s*(\\(\\))?\\s*(,|\\}|$)`);
+    const hit = bound.find((e) => wanted.test(e.getAttribute('data-bind') ?? ''));
+    // binding expressions are markup, not data; listed so a failure says what the screen does have
+    return { text: hit ? (hit.textContent ?? '').trim() : null, bindings: bound.map((e) => e.getAttribute('data-bind') ?? '').slice(0, 40) };
+  }, name);
+  if (found.text === null) throw new Error(`no visible display field is bound to ${name}; visible display bindings: ${found.bindings.join(' ; ') || 'none'}`);
+  return money(found.text);
+}

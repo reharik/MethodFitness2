@@ -89,6 +89,32 @@ export async function purchaseSingles(page: Page, client: TestClient, type: Sess
   await gridReady(page, 'clientpurchaselist');
 }
 
+/** What the purchase form can sell: singles and ten-packs of each kind of session. */
+export type PurchaseLine = 'FullHour' | 'FullHourTenPack' | 'HalfHour' | 'HalfHourTenPack' | 'Pair' | 'PairTenPack';
+
+/** Opens a new purchase for a client and returns the form's selector. */
+export async function openPurchaseForm(page: Page, client: TestClient): Promise<string> {
+  await openRoute(page, `clientpurchaselist/${client.id}`);
+  await gridReady(page, 'clientpurchaselist');
+  await page.locator('#clientpurchaselist #new').click();
+  await expect(page.locator('[name="FullHour"]:visible')).toBeVisible();
+  await settle(page);
+  return '#' + new URL(page.url()).hash.slice(1).split('/')[0];
+}
+
+/** Types quantities into the open purchase form. The form prices each line and totals them as you type. */
+export async function fillPurchase(page: Page, form: string, lines: Partial<Record<PurchaseLine, number>>): Promise<void> {
+  for (const [line, count] of Object.entries(lines)) await setField(page, form, line, String(count));
+  await setField(page, form, 'Notes', 'created by the browser tests');
+  await settle(page, 300);
+}
+
+/** Saves the open purchase form and waits for the client's payment list. */
+export async function savePurchase(page: Page, form: string): Promise<void> {
+  expectSaved(await submitAndRead(page, () => page.locator(`${form} #save`).click()));
+  await gridReady(page, 'clientpurchaselist');
+}
+
 export const purchaseHours = (page: Page, client: TestClient, count: number) => purchaseSingles(page, client, 'Hour', count);
 
 /**
@@ -110,10 +136,11 @@ export async function filterPayList(page: Page, endDate: string): Promise<void> 
 }
 
 /** Presses the pay button and confirms. The rows to pay must already be ticked. */
-export async function payTicked(page: Page): Promise<void> {
+export async function payTicked(page: Page, beforeConfirming?: () => Promise<void>): Promise<void> {
   await expect(page.locator('#payTrainerButton'), 'the pay button shows once something payable is ticked').toBeVisible();
   await page.locator('#payTrainerButton').click();
   await expect(dialogButton(page, 'Ok')).toBeVisible();
+  if (beforeConfirming) await beforeConfirming();
   expectSaved(await submitAndRead(page, () => dialogButton(page, 'Ok').click()));
   await settle(page, 1000);
   await gridReady(page, 'paytrainerlist');

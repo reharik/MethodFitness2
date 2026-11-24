@@ -32,7 +32,15 @@ async function openFromList(page: Page, listRoute: string, formScope: string, te
   return true;
 }
 
-export async function createClient(page: Page, prefix = 'E2EClient'): Promise<TestClient> {
+/** The prices a client is charged, as the client form names them. */
+export interface ClientRates { FullHour?: number; FullHourTenPack?: number; HalfHour?: number; HalfHourTenPack?: number; Pair?: number; PairTenPack?: number }
+
+/**
+ * Creates a client. With `rates`, also gives the client their own session prices
+ * (an administrator's fields on the client form), so a test can state the amounts
+ * it expects without depending on the studio's current price list.
+ */
+export async function createClient(page: Page, prefix = 'E2EClient', rates?: ClientRates): Promise<TestClient> {
   const lastName = `${prefix}${stamp()}`;
   await openRoute(page, 'clientlist');
   await page.locator('#clientlist #new').click();
@@ -45,7 +53,14 @@ export async function createClient(page: Page, prefix = 'E2EClient'): Promise<Te
   expectSaved(await submitAndRead(page, () => page.locator('#client #save').click()));
   await expect(page.locator('#clientlist')).toBeVisible();
   expect(await openFromList(page, 'clientlist', '#client', lastName), 'the new client is in the client list').toBe(true);
-  return { lastName, id: idFromHash(page, 'client') };
+  const id = idFromHash(page, 'client');
+  if (rates) {
+    await expect(page.locator('#client [name="SessionRatesFullHour"]'), 'the client form has the session price fields').toBeVisible();
+    for (const [kind, price] of Object.entries(rates)) await setField(page, '#client', `SessionRates${kind}`, String(price));
+    expectSaved(await submitAndRead(page, () => page.locator('#client #save').click()));
+    await expect(page.locator('#clientlist')).toBeVisible();
+  }
+  return { lastName, id };
 }
 
 /** The text of a list row's Archive cell: "Archive" for a live record, "UnArchive" for an archived one. */
