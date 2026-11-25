@@ -96,6 +96,12 @@
     .content-outer .content-header .title-added { display: none; }
     .content-outer .content-header .search { width: 120px; right: 6px; background-size: 100% 100%; }
 
+    /* lists: larger type and taller rows (the columns are widened to match in jquery.cc.grid.js) */
+    .ui-jqgrid .ui-jqgrid-view,
+    .ui-jqgrid .ui-jqgrid-htable th,
+    .ui-jqgrid tr.jqgrow td { font-size: 15px; }
+    .ui-jqgrid tr.jqgrow td { height: 34px; }
+
     /* popups */
     .ui-dialog { max-width: 100%; }
     .ui-dialog .ui-dialog-content { padding: 6px; }

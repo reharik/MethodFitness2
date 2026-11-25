@@ -11,12 +11,19 @@ if (typeof cc.grid == 'undefined') {
 (function($) {
    $.fn.AsGrid = function(gridDefinition, userOptions) {
         if(!this)return;
+        var colModel = cc.grid.columnService.columnModel(gridDefinition);
+        // Phones show lists in larger type (mobile.css), so each column gets more room.
+        if (MF.isPhone()) {
+            $.each(colModel, function(i, col) {
+                col.width = Math.round((parseInt(col.width, 10) || 100) * 1.35);
+            });
+        }
         var gridDefaultOptions = {
             url: gridDefinition.Url,
             datatype: 'json',
             mtype: 'GET',
             colNames: cc.grid.columnService.columnNames(gridDefinition),
-            colModel: cc.grid.columnService.columnModel(gridDefinition),
+            colModel: colModel,
             rowNum: 10000,
             scroll:false,
             altRows:true,
