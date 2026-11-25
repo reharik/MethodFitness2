@@ -48,6 +48,7 @@ namespace MF.Web.Areas.Billing.Controllers
                 _Title = WebLocalizationKeys.CLIENT_PAYMENTS.ToFormat(client.FullNameFNF),
                 ParentId = input.EntityId
             };
+            model.headerButtons.Add("new");
             var canDelete = UserPermissionService.Allow("/Payment/AddUpdate");
             if (canDelete) {
                 model.headerButtons.Add("delete");
