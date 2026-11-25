@@ -17,6 +17,11 @@ var DEFAULT_SETTINGS = {
     deleteText: "&times;",
     searchDelay: 300,
     minChars: 1,
+    // A list longer than this is never shown whole: the box asks for a name to be typed
+    // and shows this many matches at most. A shorter list (user roles, say) still opens in full.
+    maxResults: 20,
+    typeToSearchText: "Type a name to search",
+    moreResultsText: "Showing the first {0}. Keep typing to narrow it down.",
     tokenLimit: null,
     jsonContainer: null,
     method: "GET",
@@ -513,8 +518,14 @@ $.TokenList = function (_input, _viewModel, _settings) {
         function show_dropdown_results() {
             var query = input_box.val().toLowerCase();
             if(!query || !query.length){
-                populate_resultsModel(settings.viewModel._availableItems());
-                decorate_dropdown("");
+                var everything = settings.viewModel._availableItems();
+                if(everything.length <= settings.maxResults){
+                    populate_resultsModel(everything);
+                    decorate_dropdown("");
+                } else {
+                    populate_resultsModel([]);
+                    $(dropdown).append("<p>"+settings.typeToSearchText+"</p>");
+                }
                 show_dropdown();
                 return;
             }
@@ -523,12 +534,19 @@ $.TokenList = function (_input, _viewModel, _settings) {
 
         // Do the actual search
         function run_search(query) {
-                // Do the search through local data
+                // Do the search through local data: every word typed has to appear in the
+                // name, in any order, so "young sara" finds "Young, Sara" and so does "sara you".
+                var words = $.trim(query.toLowerCase()).split(/\s+/);
                 var results= $.grep(settings.viewModel._availableItems(), function (row) {
                     // added () to value
-                    return row.name().toLowerCase().indexOf(query.toLowerCase()) > -1;
+                    var name = row.name().toLowerCase();
+                    for(var i=0;i<words.length;i++){
+                        if(name.indexOf(words[i]) === -1) return false;
+                    }
+                    return true;
                 });
-                populate_resultsModel(results);
+                var found = results.length;
+                populate_resultsModel(results.slice(0, settings.maxResults));
 
 
                 if($.isFunction(settings.onResult)) {
@@ -537,7 +555,10 @@ $.TokenList = function (_input, _viewModel, _settings) {
                        populate_resultsModel(callbackResult);
                     }
                 }
-                decorate_dropdown(query);
+                decorate_dropdown(words.length === 1 ? words[0] : "");
+                if(found > settings.maxResults){
+                    $(dropdown).append("<p>"+settings.moreResultsText.replace("{0}", settings.maxResults)+"</p>");
+                }
                 show_dropdown();
         }
 

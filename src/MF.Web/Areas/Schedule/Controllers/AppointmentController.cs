@@ -69,10 +69,29 @@ namespace MF.Web.Areas.Schedule.Controllers
             var locations = _selectListItemService.CreateList<Location>(x => x.Name, x => x.EntityId, true);
             var userEntityId = _sessionContext.GetUserId();
             dynamic trainer = _repository.Find<User>(userEntityId);
-            IEnumerable<Client> clients = !this._authorizationService.IsAllowed(trainer, "/Clients/CanScheduleAllClients")
-                    ? trainer.Clients
-                    : this._repository.FindAll<Client>();
-            var _availableClients = clients.OrderBy(x=>x.LastName).Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF});
+            // The clients that can be picked: active ones only. This list goes out with every
+            // appointment form, so for someone who schedules all clients it asks the database
+            // for just each client's id and name. (It used to load every client record,
+            // archived ones included.)
+            bool schedulesAllClients = this._authorizationService.IsAllowed(trainer, "/Clients/CanScheduleAllClients");
+            List<TokenInputDto> _availableClients;
+            if (schedulesAllClients)
+            {
+                _availableClients = this._repository.Query<Client>(x => !x.Archived)
+                    .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
+                    .Select(x => new { x.EntityId, x.LastName, x.FirstName })
+                    .ToList()
+                    .Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.LastName + ", " + x.FirstName })
+                    .ToList();
+            }
+            else
+            {
+                IEnumerable<Client> ownClients = trainer.Clients;
+                _availableClients = ownClients.Where(x => !x.Archived)
+                    .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
+                    .Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF })
+                    .ToList();
+            }
             var selectedClients = appointment.Clients.Select(x => new TokenInputDto { id = x.EntityId.ToString(), name = x.FullNameLNF });
 
             if (input.Copy)
